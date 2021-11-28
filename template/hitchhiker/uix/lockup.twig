@@ -29,11 +29,11 @@
 {%- macro tile(info) -%}
 
 {% if info.gridVideoRenderer %}
-   {% set info = info.gridVideoRenderer %}
+   {% set info = info.videoRenderer %}
 {% elseif info.gridPlaylistRenderer %}
-   {% set info = info.gridPlaylistRenderer %}
+   {% set info = info.playlistRenderer %}
 {% elseif info.gridRadioRenderer %}
-   {% set info = info.gridRadioRenderer %}
+   {% set info = info.radioRenderer %}
 {% endif %}
 
 {{ _self.main(info, "tile") }}
