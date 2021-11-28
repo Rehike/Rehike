@@ -33,7 +33,7 @@
                {{ getText(info.title) }}
                </a>
                {%- if info.lengthText -%}
-                  {{ _self.accessible-description(info.lengthText.simpleText) }}
+                  {{ _self.accessibleDescription(info.lengthText.simpleText) }}
                {% endif %}
             </h3>
             <div class="yt-lockup-byline yt-ui-ellipsis yt-ui-ellipsis-2">
@@ -56,7 +56,7 @@
 </div>
 {% endmacro %}
 
-{%- macro accessible-description(lengthText) -%}
+{%- macro accessibleDescription(lengthText) -%}
 {# 
    don't really care about the description id thing for now
    it doesn't seem to have any effect on anything
