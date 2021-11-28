@@ -1,13 +1,4 @@
-{% set pageType = '404' %}
-
-{%- block title -%}
-<title>404 Not Found</title>
-{% endblock %}
-
-{% block header %}
-{% endblock %}
-
-{%- block head_css -%}
+<html>
 <head>
     <script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-38810586-1"></script>
     <script>
@@ -23,7 +14,7 @@
 
     <link rel="canonical" href="https://www.youtube.com/404/">
 
-
+    <title>404 Not Found</title>
 
 
     <link rel="shortcut icon" href="https://www.youtube.com/yts/img/favicon-vfl8qSV2F.ico" type="image/x-icon">
@@ -38,79 +29,8 @@
 
     <link rel="stylesheet" href="https://www.youtube.com/404/static/compiled/index.min.css">
     <link rel="preconnect" href="//lh3.googleusercontent.com">
-  <script id="ytfixscript">(function () {
-function replaceCounters (state) {
-            if (!state.m) {
-                state.m = new MutationObserver (replaceCountersCallback);
-                state.opt = { subtree: true, characterData: true };
-                }
-            function replaceCountersEach (x) {
-                x.setAttribute ('ytfix', '');
-                const ee = x.querySelectorAll ('#metadata-line span');
-                if (ee.length != 2)
-                    return;
-                const e = ee [0];
-                e.__ytfix_parent = x;
-                replaceCountersText (e.firstChild);
-                state.m.observe (e, state.opt);
-                }
-            document.querySelectorAll ('ytd-compact-video-renderer:not([ytfix])').forEach (replaceCountersEach);
-            document.querySelectorAll ('ytd-grid-video-renderer:not([ytfix])').forEach (replaceCountersEach);
-            document.querySelectorAll ('ytd-rich-item-renderer:not([ytfix])').forEach (replaceCountersEach);
-            document.querySelectorAll ('ytd-video-renderer:not([ytfix])').forEach (replaceCountersEach);
-            }
-function replaceCountersCallback (mm) {
-            for (let i = mm.length; --i >= 0; ) {
-                const m = mm [i];
-                if (m.type == 'characterData')
-                    replaceCountersText (m.target);
-                }
-            }
-function replaceCountersText (x) {
-            const par = x.parentNode.__ytfix_parent;
-            if (!par)
-                return;
-            const tgt = getCounterText (par);
-            if (tgt && x.textContent != tgt)
-                x.textContent = tgt;
-            }
-function getCounterText (x) {
-            try { return x.__data.data.viewCountText.simpleText; } catch (ex) { }
-            try { return x.__data.data.content.videoRenderer.viewCountText.simpleText; } catch (ex) { }
-            //console.log ('no viewers text found for:', x);
-            return undefined;
-            }
-let ints = [
-{ call: replaceCounters, params: [{}] },
-];
-function InjectInterval () {
-            for (let i = ints.length; --i >= 0; ) {
-                const Q = ints [i];
-                try { Q.call.apply (this, Q.params); }
-                catch (e) { }
-                }
-            }
-setInterval (InjectInterval, 1000);
-console.log ("Fixes injected");
-}) ();</script></head>
-{% endblock %}
-
-{%- block appbarContent -%}
-   {% set appbarContents = {
-      0: {
-         'title': 'Home',
-         'href': '/',
-         'selected': true
-      },
-      1: {
-         'title': 'Trending',
-         'href': '/feed/trending'
-      }
-   } %}
-   {{ appbar_nav.render(appbarContents) }}
-{% endblock %}
-
-{% block content %}
+</head>
+<body>
 <main class="yt-main">
 <div class="not-found">
   <div class="not-found-content">
@@ -134,5 +54,7 @@ console.log ("Fixes injected");
       </form>
     </div>
   </div>
-</div>    </main>
-{% endblock %}
+</div>
+</main>
+</body>
+</html>
