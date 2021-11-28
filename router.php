@@ -14,6 +14,10 @@ switch ($routerUrl->path[0]) {
         header('Location: /watch?v=' . $routerUrl->path[1]);
         ob_end_flush();
         exit();
+        break;
+    case 'attribution':
+        include($root . '/views/attribution.php');
+        break;
     case 'debug':
         include($root . '/debug.php');
         break;
