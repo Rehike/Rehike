@@ -89,7 +89,7 @@
                                                 <ul class="yt-uix-shelfslider-list">
                                                    {%- for item in shelfRenderer.content.horizontalListRenderer.items -%}
                                                     <li class="yt-shelf-grid-item yt-uix-shelfslider-item">
-                                                      {{ lockup.grid(item.gridVideoRenderer) }}
+                                                      {{ lockup.grid(item) }}
                                                     </li>
                                                     {% endfor %}
                                                 </ul>
