@@ -11,7 +11,7 @@ switch ($routerUrl->path[0]) {
     case 'shorts': // redirect to watch
         ob_end_clean();
         ob_start();
-        header('Location: /watch?v=' . $path[1]);
+        header('Location: /watch?v=' . $routerUrl->path[1]);
         ob_end_flush();
         exit();
     case 'debug':
