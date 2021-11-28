@@ -1,4 +1,4 @@
-{%- macro thumb(info, width, height) -%}
+{%- macro thumbnail(info, width, height) -%}
 <div class="yt-lockup-thumbnail contains-addto">
    <a aria-hidden="true"  href="/watch?v={{info.videoId}}" class=" yt-uix-sessionlink      spf-link " data-sessionlink="itct=CHkQlDUYACITCOLXzPvf6toCFRA7fwodgP0KKSiOHjIKZy1oaWdoLXRydloPRkV3aGF0X3RvX3dhdGNo" >
    <div class="yt-thumb video-thumb"><span class="yt-thumb-simple">
@@ -23,10 +23,50 @@
 </div>
 {% endmacro %}
 
+
+
+
+{%- macro tile(info) -%}
+
+{% if info.gridVideoRenderer %}
+   {% set info = info.gridVideoRenderer %}
+{% elseif info.gridPlaylistRenderer %}
+   {% set info = info.gridPlaylistRenderer %}
+{% elseif info.gridRadioRenderer %}
+   {% set info = info.gridRadioRenderer %}
+{% endif %}
+
+{{ main(info, "tile") }}
+
+{% endmacro %}
+
+
+
+
 {%- macro grid(info) -%}
-<div class="yt-lockup yt-lockup-grid yt-lockup-video vve-check clearfix" data-context-item-id="{{info.videoId}}" data-visibility-tracking="CHkQlDUYACITCOLXzPvf6toCFRA7fwodgP0KKSiOHkCbkbvm_eGjomU=">
-    <div class="yt-lockup-dismissable">
-        {{ _self.thumb(info, 196, 110) }}
+
+{% if info.gridVideoRenderer %}
+   {% set info = info.gridVideoRenderer %}
+{% elseif info.gridPlaylistRenderer %}
+   {% set info = info.gridPlaylistRenderer %}
+{% elseif info.gridRadioRenderer %}
+   {% set info = info.gridRadioRenderer %}
+{% endif %}
+
+{{ main(info, "grid") }}
+
+{% endmacro %}
+
+
+
+
+{%- macro main(info, style) -%}
+{#
+   used for both grid and tile renderers
+#}
+<div class="yt-lockup yt-lockup-{{ style }} yt-lockup-video vve-check clearfix" data-context-item-id="{{info.videoId}}" data-visibility-tracking="CHkQlDUYACITCOLXzPvf6toCFRA7fwodgP0KKSiOHkCbkbvm_eGjomU=">
+    <div class="yt-lockup-dismissable {{ style == 'tile' ? 'yt-uix-tile'}}">
+        {{ _self.thumbnail(info, 196, 110) }}
         <div class="yt-lockup-content">
             <h3 class="yt-lockup-title ">
                <a href="/watch?v={{info.videoId}}" class=" yt-ui-ellipsis yt-ui-ellipsis-2 yt-uix-sessionlink      spf-link " data-sessionlink="itct=CHkQlDUYACITCOLXzPvf6toCFRA7fwodgP0KKSiOHjIKZy1oaWdoLXRydloPRkV3aGF0X3RvX3dhdGNo"  title="{{ getText(info.title) }}" aria-describedby="description-id-956708" dir="ltr">
@@ -36,11 +76,7 @@
                   {{ _self.accessibleDescription(info.lengthText.simpleText) }}
                {% endif %}
             </h3>
-            <div class="yt-lockup-byline yt-ui-ellipsis yt-ui-ellipsis-2">
-               <a href="{{ info.longBylineText.runs.navigationEndpoint.browseEndpoint.canonicalBaseUrl }}" class="yt-uix-sessionlink       spf-link " data-sessionlink="itct=CHkQlDUYACITCOLXzPvf6toCFRA7fwodgP0KKSiOHg" >
-               {{ getText(info.longBylineText) }}
-               </a>{%- if info.ownerBadges -%}<span title="Verified" class="yt-uix-tooltip yt-channel-title-icon-verified yt-sprite"></span>{% endif %}
-            </div>
+            {{ _self.byline(info) }}
             <div class="yt-lockup-meta ">
             <ul class="yt-lockup-meta-info">
                 {%- if info.viewCountText -%}
@@ -51,10 +87,33 @@
                 {% endif %}
             </ul>
             </div>
+            {% if style == "tile" %}
+            <div class="yt-lockup-description yt-ui-ellipsis yt-ui-ellipsis-2" dir="ltr">
+               {{ getText(info.descriptionSnippet) }}
+            </div>
+            {% endif %}
         </div>
     </div>
 </div>
 {% endmacro %}
+
+
+
+
+
+{%- macro byline(info) -%}
+<div class="yt-lockup-byline yt-ui-ellipsis yt-ui-ellipsis-2">
+   {% if info.longBylineText.runs.navigationEndpoint.browseEndpoint.canonicalBaseUrl %}
+   <a href="{{ info.longBylineText.runs.navigationEndpoint.browseEndpoint.canonicalBaseUrl }}" class="yt-uix-sessionlink       spf-link " data-sessionlink="itct=CHkQlDUYACITCOLXzPvf6toCFRA7fwodgP0KKSiOHg" >
+   {% endif %}
+   {{ getText(info.longBylineText) }}
+   {% if info.longBylineText.runs.navigationEndpoint.browseEndpoint.canonicalBaseUrl %}
+   </a>{% endif %}{%- if info.ownerBadges -%}<span title="Verified" class="yt-uix-tooltip yt-channel-title-icon-verified yt-sprite"></span>{% endif %}
+</div>
+{% endmacro %}
+
+
+
 
 {%- macro accessibleDescription(lengthText) -%}
 {# 
