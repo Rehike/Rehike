@@ -1,0 +1,71 @@
+(function() {
+    var b = {
+        a: "content-snap-width-1",
+        b: "content-snap-width-2",
+        c: "content-snap-width-3"
+    };
+
+    function f() {
+        var a = [],
+            c;
+        for (c in b) a.push(b[c]);
+        return a
+    }
+
+    function h(a) {
+        var c = f().concat(["guide-pinned", "show-guide"]),
+            e = c.length,
+            g = [];
+        a.replace(/\S+/g, function(a) {
+            for (var d = 0; d < e; d++)
+                if (a == c[d]) return;
+            g.push(a)
+        });
+        return g
+    };
+
+    function k(a, c, e) {
+        var g = document.getElementsByTagName("html")[0],
+            d = h(g.className);
+        a && 1251 <= (window.innerWidth || document.documentElement.clientWidth) && (d.push("guide-pinned"), c && d.push("show-guide"));
+        e && (e = (window.innerWidth || document.documentElement.clientWidth) - 21 - 50, 1251 <= (window.innerWidth || document.documentElement.clientWidth) && a && c && (e -= 230), d.push(1262 <= e ? "content-snap-width-3" : 1056 <= e ? "content-snap-width-2" : "content-snap-width-1"));
+        g.className = d.join(" ")
+    }
+    var l = ["yt", "www", "masthead", "sizing", "runBeforeBodyIsReady"],
+        m = this;
+    l[0] in m || "undefined" == typeof m.execScript || m.execScript("var " + l[0]);
+    for (var n; l.length && (n = l.shift());) l.length || void 0 === k ? m[n] && m[n] !== Object.prototype[n] ? m = m[n] : m = m[n] = {} : m[n] = k;
+}).call(this);
+
+try {
+    window.ytbuffer = {};
+    ytbuffer.handleClick = function(e) {
+        var element = e.target || e.srcElement;
+        while (element.parentElement) {
+            if (/(^| )yt-can-buffer( |$)/.test(element.className)) {
+                window.ytbuffer = {
+                    bufferedClick: e
+                };
+                element.className += ' yt-is-buffered';
+                break;
+            }
+            element = element.parentElement;
+        }
+    };
+    if (document.addEventListener) {
+        document.addEventListener('click', ytbuffer.handleClick);
+    } else {
+        document.attachEvent('onclick', ytbuffer.handleClick);
+    }
+} catch (e) {}
+
+{# DOCUMENTATION - runBeforeBodyIsReady => k(bool a, bool c, bool e)
+   a: toggle guide-pinned
+   c: toggle show-guide
+   e: toggle content-snap-width-(n)
+#}
+yt.www.masthead.sizing.runBeforeBodyIsReady(
+   {{ defaultGuideVisibility ? 'true' : 'false' }}, 
+   {{ defaultGuideVisibility ? 'true' : 'false' }}, 
+   {{ enableSnapScaling ? 'true' : 'false' }}
+);

@@ -1,0 +1,896 @@
+{% extends yt.spf ? "core_spf.twig" : "core.twig" %}
+
+{% set pageType = 'watch' %}
+
+{% set appbarEnabled = true %}
+{% set defaultGuideVisibility = false %}
+{% set defaultAppbarVisibility = false %}
+{% set enableSnapScaling = true %}
+
+{%- block title -%}
+{{ yt.page.title }} - {{ parent() }}
+{% endblock %}
+
+{% block header %}
+{% endblock %}
+
+{%- block appbarContent -%}
+{% endblock %}
+
+{%- block content -%}
+<div id="placeholder-player">
+   <div class="player-api player-width player-height"></div>
+</div>
+<div id="watch7-container" class="">
+   <div id="player-messages">
+      <div class="yt-dialog hid mealbar-promo-renderer">
+         <div class="yt-dialog-base">
+            <span class="yt-dialog-align"></span>
+            <div class="yt-dialog-fg" role="dialog">
+               <div class="yt-dialog-fg-content">
+                  <div class="yt-dialog-header">
+                     <h2 class="yt-dialog-title" role="alert">
+                        It’s YouTube. Uninterrupted.
+                     </h2>
+                  </div>
+                  <div class="yt-dialog-loading">
+                     <div class="yt-dialog-waiting-content">
+                        <p class="yt-spinner ">
+                           <span title="Loading icon" class="yt-spinner-img  yt-sprite"></span>
+                           <span class="yt-spinner-message">
+                           Loading...
+                           </span>
+                        </p>
+                     </div>
+                  </div>
+                  <div class="yt-dialog-content">
+                     <div class="mealbar-promo-message" tabindex="0">Want music and videos with zero ads? Get YouTube Premium.</div>
+                  </div>
+                  <div class="yt-dialog-working">
+                     <div class="yt-dialog-working-overlay"></div>
+                     <div class="yt-dialog-working-bubble">
+                        <div class="yt-dialog-waiting-content">
+                           <p class="yt-spinner ">
+                              <span title="Loading icon" class="yt-spinner-img  yt-sprite"></span>
+                              <span class="yt-spinner-message">
+                              Working...
+                              </span>
+                           </p>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="yt-dialog-footer">
+                     <span class="generic-promo-impression-logging">
+                     <span data-feedback-token="AB9zfpL-kB7x2YGmNC9a66oco5SyBSCY_rPnMohm4KAykejA_Fc-lMXkxLOpwAqFwUZan5IIGgDQrqjb47rT_YirsNKD5M_M3vzSgjbtAlIpagaYjuiDHTVVaRP7xjnS_OoxtIQVMJUxLzI0B9wXrAFk_ReVnNhfvQ" class="generic-promo-impression-feedback"></span>
+                     </span>
+                     <div class="service-endpoint-action-container hid">
+                     </div>
+                     <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-blue-text  vve-check yt-uix-servicelink dismiss-menu-choice" type="button" onclick=";return false;" data-feedback-token="AB9zfpIzjrdfuscnt95IZafMnW7WpePYDrB1nGcolJmjpgOQtKVJ80s2qMVz5THHcvKYP_7rVfyCYTYzlB5KqzVZwcNX6b_2-6gBfwBas0m6Yk7djOepaj_iycZ-LZcUhm4v6eRzEmuS0nMpPEkHzJAJL-4zE25abg" data-servicelink="CAcQ7W8iEwjwm97Es-raAhXLon4KHc-dDBgo-B0" data-visibility-tracking="CAcQ7W8iEwjwm97Es-raAhXLon4KHc-dDBgo-B0" data-action="hide"><span class="yt-uix-button-content">Not now</span></button>
+                     <a  href="/premium" class="yt-uix-button   vve-check yt-uix-sessionlink yt-uix-button-primary yt-uix-button-size-default" data-sessionlink="itct=CAgQ7G8iEwjwm97Es-raAhXLon4KHc-dDBgo-B0" data-visibility-tracking="CAgQ7G8iEwjwm97Es-raAhXLon4KHc-dDBgo-B0"><span class="yt-uix-button-content">Try it free</span></a>
+                  </div>
+               </div>
+               <div class="yt-dialog-focus-trap" tabindex="0"></div>
+            </div>
+         </div>
+      </div>
+      <div class="mealbar-visibility" data-trigger-condition="TRIGGER_CONDITION_POST_AD" data-lact-th="" data-prompt-del-sec="" data-visibility-tracking="CAYQ42kYAiITCPCb3sSz6toCFcuifgodz50MGCj4HQ=="></div>
+   </div>
+   <div id="watch7-main-container">
+      <div id="watch7-main" class="clearfix">
+         <div id="watch7-preview" class="player-width player-height hid">
+         </div>
+         <div id="watch7-content" class="watch-main-col " itemscope itemid="" itemtype="http://schema.org/VideoObject">
+            <link itemprop="url" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
+            <meta itemprop="name" content="Rick Astley - Never Gonna Give You Up (Video)">
+            <meta itemprop="description" content="Rick Astley - Never Gonna Give You Up (Official Music Video) - Listen On Spotify: http://smarturl.it/AstleySpotify Download Rick&#39;s Number 1 album &quot;&quot;50&quot;&quot; - ht...">
+            <meta itemprop="paid" content="False">
+            <meta itemprop="channelId" content="UC38IQsAvIsxxjztdMZQtwHA">
+            <meta itemprop="videoId" content="dQw4w9WgXcQ">
+            <meta itemprop="duration" content="PT3M33S">
+            <meta itemprop="unlisted" content="False">
+            <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+               <link itemprop="url" href="http://www.youtube.com/user/RickAstleyVEVO">
+            </span>
+            <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+               <link itemprop="url" href="https://plus.google.com/118341150529602077100">
+            </span>
+            <script type="application/ld+json" >
+               {
+                 "@context": "http://schema.org",
+                 "@type": "BreadcrumbList",
+                 "itemListElement": [
+                   {
+                     "@type": "ListItem",
+                     "position": 1,
+                     "item": {
+                       "@id": "http:\/\/www.youtube.com\/user\/RickAstleyVEVO",
+                       "name": "RickAstleyVEVO"
+                     }
+                   }
+                 ]
+               }
+            </script>
+            <link itemprop="thumbnailUrl" href="https://i.ytimg.com/vi/dQw4w9WgXcQ/maxresdefault.jpg">
+            <span itemprop="thumbnail" itemscope itemtype="http://schema.org/ImageObject">
+               <link itemprop="url" href="https://i.ytimg.com/vi/dQw4w9WgXcQ/maxresdefault.jpg">
+               <meta itemprop="width" content="1280">
+               <meta itemprop="height" content="720">
+            </span>
+            <link itemprop="embedURL" href="https://www.youtube.com/embed/dQw4w9WgXcQ">
+            <meta itemprop="playerType" content="HTML5 Flash">
+            <meta itemprop="width" content="1280">
+            <meta itemprop="height" content="720">
+            <meta itemprop="isFamilyFriendly" content="True">
+            <meta itemprop="regionsAllowed" content="AD,AE,AF,AG,AI,AL,AM,AO,AQ,AR,AS,AT,AU,AW,AX,AZ,BA,BB,BD,BE,BF,BG,BH,BI,BJ,BL,BM,BN,BO,BR,BS,BT,BV,BW,BY,BZ,CA,CC,CD,CF,CG,CH,CI,CK,CL,CM,CN,CO,CR,CU,CV,CX,CY,DJ,DK,DM,DO,DZ,EC,EE,EG,EH,ER,ES,ET,FI,FJ,FK,FM,FO,FR,GA,GB,GD,GE,GF,GG,GH,GI,GL,GM,GN,GP,GQ,GR,GS,GT,GU,GW,GY,HK,HM,HN,HR,HT,HU,ID,IE,IL,IM,IN,IO,IQ,IR,IS,IT,JE,JM,JO,JP,KE,KG,KH,KI,KM,KN,KP,KR,KW,KY,KZ,LA,LB,LC,LI,LK,LR,LS,LT,LU,LV,LY,MA,MC,MD,ME,MF,MG,MH,MK,ML,MM,MN,MO,MP,MQ,MR,MS,MT,MU,MV,MW,MX,MY,MZ,NA,NC,NE,NF,NG,NI,NL,NO,NP,NR,NU,NZ,OM,PA,PE,PF,PG,PH,PK,PL,PM,PN,PR,PS,PT,PW,PY,QA,RE,RO,RS,RU,RW,SA,SB,SC,SD,SE,SG,SH,SI,SJ,SL,SM,SN,SO,SR,ST,SV,SY,SZ,TC,TD,TF,TG,TH,TJ,TK,TL,TM,TN,TO,TR,TT,TV,TW,TZ,UA,UG,UM,US,UY,UZ,VA,VC,VE,VG,VI,VN,VU,WF,WS,YE,YT,ZA,ZM,ZW">
+            <meta itemprop="interactionCount" content="432071848">
+            <meta itemprop="datePublished" content="2009-10-24">
+            <meta itemprop="genre" content="Music">
+            <div id="watch7-speedyg-area">
+               <div class="yt-alert yt-alert-actionable yt-alert-info hid " id="speedyg-template">
+                  <div class="yt-alert-icon">
+                     <span class="icon master-sprite yt-sprite"></span>
+                  </div>
+                  <div class="yt-alert-content" role="alert">
+                     <div class="yt-alert-message" tabindex="0">
+                     </div>
+                  </div>
+                  <div class="yt-alert-buttons"><a  href="https://www.google.com/get/videoqualityreport/?v=dQw4w9WgXcQ" class="yt-uix-button   yt-uix-sessionlink yt-uix-button-alert-info yt-uix-button-size-small" data-sessionlink="ei=23PrWrDCHMvF-gPPu7LAAQ" id="speedyg-link" target="_blank"><span class="yt-uix-button-content">Find out why</span></a><button class="yt-uix-button yt-uix-button-size-default yt-uix-button-close close yt-uix-close" type="button" onclick=";return false;" aria-label="Close" data-close-parent-class="yt-alert"><span class="yt-uix-button-content">Close</span></button></div>
+               </div>
+            </div>
+            <div id="watch-header" class="yt-card yt-card-has-padding">
+               <div id="watch7-headline" class="clearfix">
+                  <div id="watch-headline-title">
+                     <h1 class="watch-title-container">
+                        <span id="eow-title" class="watch-title" dir="ltr" title="{{ yt.page.title }}">
+                        {{ yt.page.title }}
+                        </span>
+                     </h1>
+                  </div>
+               </div>
+               <div id="watch7-user-header" class=" spf-link ">
+                  <a href="/channel/UCuAXFkgsw1L7xaCfnd5JJOw" class="yt-user-photo yt-uix-sessionlink      spf-link " data-sessionlink="itct=CDoQ4TkiEwjwm97Es-raAhXLon4KHc-dDBgo-B0" >
+                  <span class="video-thumb  yt-thumb yt-thumb-48">
+                  <span class="yt-thumb-square">
+                  <span class="yt-thumb-clip">
+                  <img data-ytimg="1" width="48" height="48" data-thumb="//yt3.ggpht.com/-J99ZnnSa7vE/AAAAAAAAAAI/AAAAAAAAAME/imsZkerych4/s88-nd-c-c0xffffffff-rj-k-no/photo.jpg" alt="Official Rick Astley" src="/yts/img/pixel-vfl3z5WfW.gif" onload=";window.__ytRIL &amp;&amp; __ytRIL(this)" >
+                  <span class="vertical-align"></span>
+                  </span>
+                  </span>
+                  </span>
+                  </a>
+                  <div class="yt-user-info">
+                     <a href="/channel/UCuAXFkgsw1L7xaCfnd5JJOw" class="yt-uix-sessionlink       spf-link " data-sessionlink="itct=CDoQ4TkiEwjwm97Es-raAhXLon4KHc-dDBgo-B0" >Official Rick Astley</a>
+                     <span data-tooltip-text="Verified" class="yt-channel-title-icon-verified yt-uix-tooltip yt-sprite" aria-label="Verified"></span>
+                  </div>
+                  <span id="watch7-subscription-container">
+                     <span class=" yt-uix-button-subscription-container">
+                        <span class="unsubscribe-confirmation-overlay-container">
+                           <div class="yt-uix-overlay "  data-overlay-style="primary" data-overlay-shape="tiny">
+                              <div class="yt-dialog hid ">
+                                 <div class="yt-dialog-base">
+                                    <span class="yt-dialog-align"></span>
+                                    <div class="yt-dialog-fg" role="dialog">
+                                       <div class="yt-dialog-fg-content">
+                                          <div class="yt-dialog-loading">
+                                             <div class="yt-dialog-waiting-content">
+                                                <p class="yt-spinner ">
+                                                   <span title="Loading icon" class="yt-spinner-img  yt-sprite"></span>
+                                                   <span class="yt-spinner-message">
+                                                   Loading...
+                                                   </span>
+                                                </p>
+                                             </div>
+                                          </div>
+                                          <div class="yt-dialog-content">
+                                             <div class="unsubscribe-confirmation-overlay-content-container">
+                                                <div class="unsubscribe-confirmation-overlay-content">
+                                                   <div class="unsubscribe-confirmation-message">
+                                                      Unsubscribe from Official Rick Astley?
+                                                   </div>
+                                                </div>
+                                                <div class="yt-uix-overlay-actions">
+                                                   <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-default yt-uix-overlay-close" type="button" onclick=";return false;"><span class="yt-uix-button-content">Cancel</span></button>
+                                                   <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-primary overlay-confirmation-unsubscribe-button yt-uix-overlay-close" type="button" onclick=";return false;"><span class="yt-uix-button-content">Unsubscribe</span></button>
+                                                </div>
+                                             </div>
+                                          </div>
+                                          <div class="yt-dialog-working">
+                                             <div class="yt-dialog-working-overlay"></div>
+                                             <div class="yt-dialog-working-bubble">
+                                                <div class="yt-dialog-waiting-content">
+                                                   <p class="yt-spinner ">
+                                                      <span title="Loading icon" class="yt-spinner-img  yt-sprite"></span>
+                                                      <span class="yt-spinner-message">
+                                                      Working...
+                                                      </span>
+                                                   </p>
+                                                </div>
+                                             </div>
+                                          </div>
+                                       </div>
+                                       <div class="yt-dialog-focus-trap" tabindex="0"></div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </span>
+                        <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-subscribe-branded yt-uix-button-has-icon no-icon-markup yt-uix-subscription-button yt-can-buffer yt-uix-servicelink vve-check" type="button" onclick=";return false;" aria-live="polite" aria-busy="false" data-subscribed-timestamp="0" data-href="https://accounts.google.com/ServiceLogin?hl=en&amp;service=youtube&amp;uilel=3&amp;continue=http%3A%2F%2Fwww.youtube.com%2Fsignin%3Fcontinue_action%3DQUFFLUhqbm5YUkxYSGRlWHphMjAwczlsLTBlcUFzTmpnQXxBQ3Jtc0trV2hlS1FyeWExa3hJQWtuRTB5TXEyckFwVGNuajAwZU5UWXZzM0ZRR0F5X1hISm8ybmczbUdqQkp6VGExTEhrRXdLOG94NmRlbWhYQ3FQcjRiSHFNbkhWV0dBZHdyNzJ3LW9PRFcwd21sQ0dWY05OemRFZV9hZUo2TGFlY0pjaXAyMEp2aEFPcEVBSHktU3d0dEdhdy1JaWhFUU1SWVVKcm9OUGNjSHc2Sm4yZ2t2Rmx4V2NOTm1MT1NQX1lLaEZ2RjZCMGk%253D%26feature%3Dsubscribe%26action_handle_signin%3Dtrue%26next%3D%252Fchannel%252FUCuAXFkgsw1L7xaCfnd5JJOw%26hl%3Den%26app%3Ddesktop&amp;passive=true" data-style-type="branded" data-clicktracking="itct=CDsQmysiEwjwm97Es-raAhXLon4KHc-dDBgo-B0yBXdhdGNo" data-servicelink="CDsQmysiEwjwm97Es-raAhXLon4KHc-dDBgo-B0yBXdhdGNo" data-show-unsub-confirm-dialog="true" data-visibility-tracking="CDsQmysiEwjwm97Es-raAhXLon4KHc-dDBgo-B0yBXdhdGNo" data-show-unsub-confirm-time-frame="always" data-channel-external-id="UCuAXFkgsw1L7xaCfnd5JJOw"><span class="yt-uix-button-content"><span class="subscribe-label" aria-label="Subscribe">Subscribe</span><span class="subscribed-label" aria-label="Unsubscribe">Subscribed</span><span class="unsubscribe-label" aria-label="Unsubscribe">Unsubscribe</span></span></button><button class="yt-uix-button yt-uix-button-size-default yt-uix-button-default yt-uix-button-empty yt-uix-button-has-icon yt-uix-subscription-preferences-button" type="button" onclick=";return false;" aria-live="polite" aria-busy="false" aria-role="button" aria-label="Subscription preferences" data-channel-external-id="UCuAXFkgsw1L7xaCfnd5JJOw"><span class="yt-uix-button-icon-wrapper"><span class="yt-uix-button-icon yt-uix-button-icon-subscription-preferences yt-sprite"></span></span></button><span class="yt-subscription-button-subscriber-count-branded-horizontal yt-subscriber-count" title="605K" aria-label="605K" tabindex="0">605K</span>  
+                        <span class="subscription-preferences-overlay-container">
+                           <div class="yt-uix-overlay "  data-overlay-style="primary" data-overlay-shape="tiny">
+                              <div class="yt-dialog hid ">
+                                 <div class="yt-dialog-base">
+                                    <span class="yt-dialog-align"></span>
+                                    <div class="yt-dialog-fg" role="dialog">
+                                       <div class="yt-dialog-fg-content">
+                                          <div class="yt-dialog-loading">
+                                             <div class="yt-dialog-waiting-content">
+                                                <p class="yt-spinner ">
+                                                   <span title="Loading icon" class="yt-spinner-img  yt-sprite"></span>
+                                                   <span class="yt-spinner-message">
+                                                   Loading...
+                                                   </span>
+                                                </p>
+                                             </div>
+                                          </div>
+                                          <div class="yt-dialog-content">
+                                             <div class="subscription-preferences-overlay-content-container">
+                                                <div class="subscription-preferences-overlay-loading ">
+                                                   <p class="yt-spinner ">
+                                                      <span title="Loading icon" class="yt-spinner-img  yt-sprite"></span>
+                                                      <span class="yt-spinner-message">
+                                                      Loading...
+                                                      </span>
+                                                   </p>
+                                                </div>
+                                                <div class="subscription-preferences-overlay-content">
+                                                </div>
+                                             </div>
+                                          </div>
+                                          <div class="yt-dialog-working">
+                                             <div class="yt-dialog-working-overlay"></div>
+                                             <div class="yt-dialog-working-bubble">
+                                                <div class="yt-dialog-waiting-content">
+                                                   <p class="yt-spinner ">
+                                                      <span title="Loading icon" class="yt-spinner-img  yt-sprite"></span>
+                                                      <span class="yt-spinner-message">
+                                                      Working...
+                                                      </span>
+                                                   </p>
+                                                </div>
+                                             </div>
+                                          </div>
+                                       </div>
+                                       <div class="yt-dialog-focus-trap" tabindex="0"></div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </span>
+                     </span>
+                  </span>
+               </div>
+               <div id="watch8-action-buttons" class="watch-action-buttons clearfix">
+                  <div id="watch8-secondary-actions" class="watch-secondary-actions yt-uix-button-group" data-button-toggle-group="optional">
+                     <span class="yt-uix-clickcard">
+                        <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-opacity yt-uix-button-has-icon no-icon-markup yt-uix-clickcard-target addto-button pause-resume-autoplay yt-uix-tooltip" type="button" onclick=";return false;" title="Add to" data-orientation="vertical" data-position="bottomleft"><span class="yt-uix-button-content">Add to</span></button>
+                        <div class="signin-clickcard yt-uix-clickcard-content">
+                           <h3 class="signin-clickcard-header">Want to watch this again later?</h3>
+                           <div class="signin-clickcard-message">
+                              Sign in to add this video to a playlist.
+                           </div>
+                           <a  href="https://accounts.google.com/ServiceLogin?hl=en&amp;service=youtube&amp;uilel=3&amp;continue=https%3A%2F%2Fwww.youtube.com%2Fsignin%3Fnext%3D%252Fwatch%253Fv%253DdQw4w9WgXcQ%26hl%3Den%26feature%3D__FEATURE__%26app%3Ddesktop%26action_handle_signin%3Dtrue&amp;passive=true" class="yt-uix-button  signin-button yt-uix-sessionlink yt-uix-button-primary yt-uix-button-size-default" data-sessionlink="ei=23PrWrDCHMvF-gPPu7LAAQ"><span class="yt-uix-button-content">Sign in</span></a>
+                        </div>
+                     </span>
+                     <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-opacity yt-uix-button-has-icon no-icon-markup pause-resume-autoplay action-panel-trigger action-panel-trigger-share   yt-uix-tooltip" type="button" onclick=";return false;" title="Share
+                        " data-trigger-for="action-panel-share" data-button-toggle="true"><span class="yt-uix-button-content">Share
+                     </span></button>
+                     <div class="yt-uix-menu " >
+                        <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-opacity yt-uix-button-has-icon no-icon-markup pause-resume-autoplay yt-uix-menu-trigger yt-uix-tooltip" type="button" onclick=";return false;" title="More actions" aria-haspopup="true" aria-pressed="false" id="action-panel-overflow-button" role="button" aria-label="Action menu."><span class="yt-uix-button-content">More</span></button>
+                        <div class="yt-uix-menu-content yt-ui-menu-content yt-uix-menu-content-hidden" role="menu">
+                           <ul id="action-panel-overflow-menu">
+                              <li>
+                                 <span class="yt-uix-clickcard" data-card-class=report-card>
+                                    <button type="button" class="yt-ui-menu-item has-icon action-panel-trigger action-panel-trigger-report report-button yt-uix-clickcard-target"
+                                       data-orientation="horizontal" data-position="topright">
+                                    <span class="yt-ui-menu-item-label">Report</span>
+                                    </button>
+                                    <div class="signin-clickcard yt-uix-clickcard-content">
+                                       <h3 class="signin-clickcard-header">Need to report the video?</h3>
+                                       <div class="signin-clickcard-message">
+                                          Sign in to report inappropriate content.
+                                       </div>
+                                       <a  href="https://accounts.google.com/ServiceLogin?hl=en&amp;service=youtube&amp;uilel=3&amp;continue=https%3A%2F%2Fwww.youtube.com%2Fsignin%3Fnext%3D%252Fwatch%253Fv%253DdQw4w9WgXcQ%26hl%3Den%26feature%3D__FEATURE__%26app%3Ddesktop%26action_handle_signin%3Dtrue&amp;passive=true" class="yt-uix-button  signin-button yt-uix-sessionlink yt-uix-button-primary yt-uix-button-size-default" data-sessionlink="ei=23PrWrDCHMvF-gPPu7LAAQ"><span class="yt-uix-button-content">Sign in</span></a>
+                                    </div>
+                                 </span>
+                              </li>
+                              <li>
+                                 <button type="button" class="yt-ui-menu-item has-icon yt-uix-menu-close-on-select action-panel-trigger action-panel-trigger-stats"
+                                    data-trigger-for="action-panel-stats">
+                                 <span class="yt-ui-menu-item-label">Statistics</span>
+                                 </button>
+                              </li>
+                              <a href="/timedtext_video?v=dQw4w9WgXcQ&amp;ref=wt&amp;auto=yes&amp;bl=watch" rel="nofollow" class="yt-ui-menu-item has-icon action-panel-trigger-translate"
+                                 >
+                              <span class="yt-ui-menu-item-label">Add translations</span>
+                              </a>
+                           </ul>
+                        </div>
+                     </div>
+                  </div>
+                  <div id="watch8-sentiment-actions">
+                     <div id="watch7-views-info">
+                        <div class="watch-view-count">432,071,848 views</div>
+                        <div class="video-extras-sparkbars">
+                           <div class="video-extras-sparkbar-likes" style="width: 95.4624038927%"></div>
+                           <div class="video-extras-sparkbar-dislikes" style="width: 4.53759610731%"></div>
+                        </div>
+                     </div>
+                     <span class="like-button-renderer " data-button-toggle-group="optional" >
+                        <span class="yt-uix-clickcard">
+                           <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-opacity yt-uix-button-has-icon no-icon-markup like-button-renderer-like-button like-button-renderer-like-button-unclicked yt-uix-clickcard-target   yt-uix-tooltip" type="button" onclick=";return false;" title="I like this" aria-label="like this video along with 2,818,832 other people" data-orientation="vertical" data-position="bottomright" data-force-position="true"><span class="yt-uix-button-content">2,818,832</span></button>
+                           <div class="signin-clickcard yt-uix-clickcard-content">
+                              <h3 class="signin-clickcard-header">Like this video?</h3>
+                              <div class="signin-clickcard-message">
+                                 Sign in to make your opinion count.
+                              </div>
+                              <a  href="https://accounts.google.com/ServiceLogin?hl=en&amp;service=youtube&amp;uilel=3&amp;continue=https%3A%2F%2Fwww.youtube.com%2Fsignin%3Fnext%3D%252Fwatch%253Fv%253DdQw4w9WgXcQ%26hl%3Den%26feature%3D__FEATURE__%26app%3Ddesktop%26action_handle_signin%3Dtrue&amp;passive=true" class="yt-uix-button  signin-button yt-uix-sessionlink yt-uix-button-primary yt-uix-button-size-default" data-sessionlink="ei=23PrWrDCHMvF-gPPu7LAAQ"><span class="yt-uix-button-content">Sign in</span></a>
+                           </div>
+                        </span>
+                        <span class="yt-uix-clickcard">
+                        <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-opacity yt-uix-button-has-icon no-icon-markup like-button-renderer-like-button like-button-renderer-like-button-clicked yt-uix-button-toggled  hid yt-uix-tooltip" type="button" onclick=";return false;" title="Unlike" aria-label="like this video along with 2,818,832 other people" data-orientation="vertical" data-position="bottomright" data-force-position="true"><span class="yt-uix-button-content">2,818,833</span></button>
+                        </span>
+                        <span class="yt-uix-clickcard">
+                           <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-opacity yt-uix-button-has-icon no-icon-markup like-button-renderer-dislike-button like-button-renderer-dislike-button-unclicked yt-uix-clickcard-target   yt-uix-tooltip" type="button" onclick=";return false;" title="I dislike this" aria-label="dislike this video along with 133,987 other people" data-orientation="vertical" data-position="bottomright" data-force-position="true"><span class="yt-uix-button-content">133,987</span></button>
+                           <div class="signin-clickcard yt-uix-clickcard-content">
+                              <h3 class="signin-clickcard-header">Don't like this video?</h3>
+                              <div class="signin-clickcard-message">
+                                 Sign in to make your opinion count.
+                              </div>
+                              <a  href="https://accounts.google.com/ServiceLogin?hl=en&amp;service=youtube&amp;uilel=3&amp;continue=https%3A%2F%2Fwww.youtube.com%2Fsignin%3Fnext%3D%252Fwatch%253Fv%253DdQw4w9WgXcQ%26hl%3Den%26feature%3D__FEATURE__%26app%3Ddesktop%26action_handle_signin%3Dtrue&amp;passive=true" class="yt-uix-button  signin-button yt-uix-sessionlink yt-uix-button-primary yt-uix-button-size-default" data-sessionlink="ei=23PrWrDCHMvF-gPPu7LAAQ"><span class="yt-uix-button-content">Sign in</span></a>
+                           </div>
+                        </span>
+                        <span class="yt-uix-clickcard">
+                        <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-opacity yt-uix-button-has-icon no-icon-markup like-button-renderer-dislike-button like-button-renderer-dislike-button-clicked yt-uix-button-toggled  hid yt-uix-tooltip" type="button" onclick=";return false;" title="I dislike this" aria-label="dislike this video along with 133,987 other people" data-orientation="vertical" data-position="bottomright" data-force-position="true"><span class="yt-uix-button-content">133,988</span></button>
+                        </span>
+                     </span>
+                  </div>
+               </div>
+            </div>
+            <div id="watch-action-panels" class="watch-action-panels yt-uix-button-panel hid yt-card yt-card-has-padding">
+               <div id="action-panel-share" class="action-panel-content hid">
+                  <div id="watch-actions-share-loading">
+                     <div class="action-panel-loading">
+                        <p class="yt-spinner ">
+                           <span title="Loading icon" class="yt-spinner-img  yt-sprite"></span>
+                           <span class="yt-spinner-message">
+                           Loading...
+                           </span>
+                        </p>
+                     </div>
+                  </div>
+                  <div id="watch-actions-share-panel"></div>
+               </div>
+               <div id="action-panel-stats" class="action-panel-content hid">
+                  <div class="action-panel-loading">
+                     <p class="yt-spinner ">
+                        <span title="Loading icon" class="yt-spinner-img  yt-sprite"></span>
+                        <span class="yt-spinner-message">
+                        Loading...
+                        </span>
+                     </p>
+                  </div>
+               </div>
+               <div id="action-panel-report" class="action-panel-content hid"
+                  data-auth-required="true"
+                  >
+                  <div class="action-panel-loading">
+                     <p class="yt-spinner ">
+                        <span title="Loading icon" class="yt-spinner-img  yt-sprite"></span>
+                        <span class="yt-spinner-message">
+                        Loading...
+                        </span>
+                     </p>
+                  </div>
+               </div>
+               <div id="action-panel-rental-required" class="action-panel-content hid">
+                  <div id="watch-actions-rental-required">
+                     <strong>Rating is available when the video has been rented.</strong>
+                  </div>
+               </div>
+               <div id="action-panel-error" class="action-panel-content hid">
+                  <div class="action-panel-error">
+                     This feature is not available right now. Please try again later.
+                  </div>
+               </div>
+               <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-default yt-uix-button-empty yt-uix-button-has-icon no-icon-markup yt-uix-button-opacity yt-uix-close" type="button" onclick=";return false;" id="action-panel-dismiss" aria-label="Close" data-close-parent-id="watch8-action-panels"></button>
+            </div>
+            <div id="promotion-shelf" class="promotion-shelf-slot yt-card yt-card-has-padding hid"></div>
+            <div id="action-panel-details" class="action-panel-content yt-uix-expander yt-card yt-card-has-padding yt-uix-expander-collapsed">
+               <div id="watch-description" class="yt-uix-button-panel">
+                  <div id="watch-description-content">
+                     <div id="watch-description-clip">
+                        <div id="watch-uploader-info"><strong class="watch-time-text">Published on Oct 24, 2009</strong></div>
+                        <div id="watch-description-text" class="">
+                           <p id="eow-description" class="" >Rick Astley - Never Gonna Give You Up (Official Music Video) - Listen On Spotify: <a href="/redirect?q=http%3A%2F%2Fsmarturl.it%2FAstleySpotify&amp;redir_token=DwA8y95l-kl8hiUg2TJfhi2DNwV8MTUyNTQ2NjQ1OUAxNTI1MzgwMDU5&amp;v=dQw4w9WgXcQ&amp;event=video_description" class="yt-uix-sessionlink  " data-sessionlink="itct=CDgQ6TgYACITCPCb3sSz6toCFcuifgodz50MGCj4HUjEu4GtvZiOhnU" data-target-new-window="True" data-url="/redirect?q=http%3A%2F%2Fsmarturl.it%2FAstleySpotify&amp;redir_token=DwA8y95l-kl8hiUg2TJfhi2DNwV8MTUyNTQ2NjQ1OUAxNTI1MzgwMDU5&amp;v=dQw4w9WgXcQ&amp;event=video_description" rel="nofollow noopener" target="_blank">http://smarturl.it/AstleySpotify</a><br />Download Rick's Number 1 album ""50"" -  <a href="/redirect?q=https%3A%2F%2FBMG.lnk.to%2FRickAstley50NG%2Fitunes&amp;redir_token=DwA8y95l-kl8hiUg2TJfhi2DNwV8MTUyNTQ2NjQ1OUAxNTI1MzgwMDU5&amp;v=dQw4w9WgXcQ&amp;event=video_description" class="yt-uix-sessionlink  " data-sessionlink="itct=CDgQ6TgYACITCPCb3sSz6toCFcuifgodz50MGCj4HUjEu4GtvZiOhnU" data-target-new-window="True" data-url="/redirect?q=https%3A%2F%2FBMG.lnk.to%2FRickAstley50NG%2Fitunes&amp;redir_token=DwA8y95l-kl8hiUg2TJfhi2DNwV8MTUyNTQ2NjQ1OUAxNTI1MzgwMDU5&amp;v=dQw4w9WgXcQ&amp;event=video_description" rel="nofollow noopener" target="_blank">https://BMG.lnk.to/RickAstley50NG/itunes</a><br /><br />Buy On iTunes: <a href="/redirect?q=http%3A%2F%2Fsmarturl.it%2FAstleyGHiTunes&amp;redir_token=DwA8y95l-kl8hiUg2TJfhi2DNwV8MTUyNTQ2NjQ1OUAxNTI1MzgwMDU5&amp;v=dQw4w9WgXcQ&amp;event=video_description" class="yt-uix-sessionlink  " data-sessionlink="itct=CDgQ6TgYACITCPCb3sSz6toCFcuifgodz50MGCj4HUjEu4GtvZiOhnU" data-target-new-window="True" data-url="/redirect?q=http%3A%2F%2Fsmarturl.it%2FAstleyGHiTunes&amp;redir_token=DwA8y95l-kl8hiUg2TJfhi2DNwV8MTUyNTQ2NjQ1OUAxNTI1MzgwMDU5&amp;v=dQw4w9WgXcQ&amp;event=video_description" rel="nofollow noopener" target="_blank">http://smarturl.it/AstleyGHiTunes</a><br />Amazon: <a href="/redirect?q=http%3A%2F%2Fsmarturl.it%2FAstleyGHAmazon&amp;redir_token=DwA8y95l-kl8hiUg2TJfhi2DNwV8MTUyNTQ2NjQ1OUAxNTI1MzgwMDU5&amp;v=dQw4w9WgXcQ&amp;event=video_description" class="yt-uix-sessionlink  " data-sessionlink="itct=CDgQ6TgYACITCPCb3sSz6toCFcuifgodz50MGCj4HUjEu4GtvZiOhnU" data-target-new-window="True" data-url="/redirect?q=http%3A%2F%2Fsmarturl.it%2FAstleyGHAmazon&amp;redir_token=DwA8y95l-kl8hiUg2TJfhi2DNwV8MTUyNTQ2NjQ1OUAxNTI1MzgwMDU5&amp;v=dQw4w9WgXcQ&amp;event=video_description" rel="nofollow noopener" target="_blank">http://smarturl.it/AstleyGHAmazon</a><br /><br />Follow Rick Astley<br />Website: <a href="/redirect?q=http%3A%2F%2Fwww.rickastley.co.uk%2F&amp;redir_token=DwA8y95l-kl8hiUg2TJfhi2DNwV8MTUyNTQ2NjQ1OUAxNTI1MzgwMDU5&amp;v=dQw4w9WgXcQ&amp;event=video_description" class="yt-uix-sessionlink  " data-sessionlink="itct=CDgQ6TgYACITCPCb3sSz6toCFcuifgodz50MGCj4HUjEu4GtvZiOhnU" data-target-new-window="True" data-url="/redirect?q=http%3A%2F%2Fwww.rickastley.co.uk%2F&amp;redir_token=DwA8y95l-kl8hiUg2TJfhi2DNwV8MTUyNTQ2NjQ1OUAxNTI1MzgwMDU5&amp;v=dQw4w9WgXcQ&amp;event=video_description" rel="nofollow noopener" target="_blank">http://www.rickastley.co.uk/</a><br />Twitter: <a href="/redirect?q=https%3A%2F%2Ftwitter.com%2Frickastley&amp;redir_token=DwA8y95l-kl8hiUg2TJfhi2DNwV8MTUyNTQ2NjQ1OUAxNTI1MzgwMDU5&amp;v=dQw4w9WgXcQ&amp;event=video_description" class="yt-uix-sessionlink  " data-sessionlink="itct=CDgQ6TgYACITCPCb3sSz6toCFcuifgodz50MGCj4HUjEu4GtvZiOhnU" data-target-new-window="True" data-url="/redirect?q=https%3A%2F%2Ftwitter.com%2Frickastley&amp;redir_token=DwA8y95l-kl8hiUg2TJfhi2DNwV8MTUyNTQ2NjQ1OUAxNTI1MzgwMDU5&amp;v=dQw4w9WgXcQ&amp;event=video_description" rel="nofollow noopener" target="_blank">https://twitter.com/rickastley</a><br />Facebook: <a href="/redirect?q=https%3A%2F%2Fwww.facebook.com%2FRickAstley%2F&amp;redir_token=DwA8y95l-kl8hiUg2TJfhi2DNwV8MTUyNTQ2NjQ1OUAxNTI1MzgwMDU5&amp;v=dQw4w9WgXcQ&amp;event=video_description" class="yt-uix-sessionlink  " data-sessionlink="itct=CDgQ6TgYACITCPCb3sSz6toCFcuifgodz50MGCj4HUjEu4GtvZiOhnU" data-target-new-window="True" data-url="/redirect?q=https%3A%2F%2Fwww.facebook.com%2FRickAstley%2F&amp;redir_token=DwA8y95l-kl8hiUg2TJfhi2DNwV8MTUyNTQ2NjQ1OUAxNTI1MzgwMDU5&amp;v=dQw4w9WgXcQ&amp;event=video_description" rel="nofollow noopener" target="_blank">https://www.facebook.com/RickAstley/</a><br />Instagram:  <a href="/redirect?q=https%3A%2F%2Fwww.instagram.com%2Fofficialric&amp;redir_token=DwA8y95l-kl8hiUg2TJfhi2DNwV8MTUyNTQ2NjQ1OUAxNTI1MzgwMDU5&amp;v=dQw4w9WgXcQ&amp;event=video_description" class="yt-uix-sessionlink  " data-sessionlink="itct=CDgQ6TgYACITCPCb3sSz6toCFcuifgodz50MGCj4HUjEu4GtvZiOhnU" data-target-new-window="True" data-url="/redirect?q=https%3A%2F%2Fwww.instagram.com%2Fofficialric&amp;redir_token=DwA8y95l-kl8hiUg2TJfhi2DNwV8MTUyNTQ2NjQ1OUAxNTI1MzgwMDU5&amp;v=dQw4w9WgXcQ&amp;event=video_description" rel="nofollow noopener" target="_blank">https://www.instagram.com/officialric</a>...<br /><br /><br />Lyrics<br /><br />We're no strangers to love<br />You know the rules and so do I<br />A full commitment's what I'm thinking of<br />You wouldn't get this from any other guy<br /><br />I just wanna tell you how I'm feeling<br />Gotta make you understand<br /><br />Never gonna give you up<br />Never gonna let you down<br />Never gonna run around and desert you<br />Never gonna make you cry<br />Never gonna say goodbye<br />Never gonna tell a lie and hurt you<br /><br />We've known each other for so long<br />Your heart's been aching, but<br />You're too shy to say it<br />Inside, we both know what's been going on<br />We know the game and we're gonna play it<br /><br />And if you ask me how I'm feeling<br />Don't tell me you're too blind to see<br /><br />Never gonna give you up<br />Never gonna let you down<br />Never gonna run around and desert you<br />Never gonna make you cry<br />Never gonna say goodbye<br />Never gonna tell a lie and hurt you<br /><br />Never gonna give you up<br />Never gonna let you down<br />Never gonna run around and desert you<br />Never gonna make you cry<br />Never gonna say goodbye<br />Never gonna tell a lie and hurt you<br /><br />(Ooh, give you up)<br />(Ooh, give you up)<br />Never gonna give, never gonna give<br />(Give you up)<br />Never gonna give, never gonna give<br />(Give you up)<br /><br />We've known each other for so long<br />Your heart's been aching, but<br />You're too shy to say it<br />Inside, we both know what's been going on<br />We know the game and we're gonna play it<br /><br />I just wanna tell you how I'm feeling<br />Gotta make you understand<br /><br />Never gonna give you up<br />Never gonna let you down<br />Never gonna run around and desert you<br />Never gonna make you cry<br />Never gonna say goodbye<br />Never gonna tell a lie and hurt you<br /><br />Never gonna give you up<br />Never gonna let you down<br />Never gonna run around and desert you<br />Never gonna make you cry<br />Never gonna say goodbye<br />Never gonna tell a lie and hurt you<br /><br />Never gonna give you up<br />Never gonna let you down<br />Never gonna run around and desert you<br />Never gonna make you cry<br />Never gonna say goodbye<br />Never gonna tell a lie and hurt you"</p>
+                        </div>
+                        <div id="watch-description-extras">
+                           <ul class="watch-extras-section">
+                              <li class="watch-meta-item yt-uix-expander-body">
+                                 <h4 class="title">
+                                    Category
+                                 </h4>
+                                 <ul class="content watch-info-tag-list">
+                                    <li><a href="/channel/UC-9-kyTW8ZkZNDHQJ6FgpwQ" class=" yt-uix-sessionlink      spf-link " data-sessionlink="ei=23PrWrDCHMvF-gPPu7LAAQ" >Music</a></li>
+                                 </ul>
+                              </li>
+                              <li class="watch-meta-item yt-uix-expander-body">
+                                 <h4 class="title">
+                                    License
+                                 </h4>
+                                 <ul class="content watch-info-tag-list">
+                                    <li>Standard YouTube License</li>
+                                 </ul>
+                              </li>
+                              <li class="watch-meta-item yt-uix-expander-body">
+                                 <h4 class="title">
+                                    Music
+                                 </h4>
+                                 <ul class="content watch-info-tag-list">
+                                    <li>&quot;Never Gonna Give You Up (7&#39;&#39; Mix)&quot; by Rick Astley <a href="/red" class=" yt-uix-sessionlink      spf-link " data-sessionlink="ei=23PrWrDCHMvF-gPPu7LAAQ&amp;feature=c2bytred" >Listen ad-free with </a><a href="/red" class=" yt-uix-sessionlink      spf-link " data-sessionlink="ei=23PrWrDCHMvF-gPPu7LAAQ&amp;feature=c2bytred" >YouTube Red</a></li>
+                                 </ul>
+                              </li>
+                           </ul>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-expander yt-uix-expander-head yt-uix-expander-collapsed-body yt-uix-gen204" type="button" onclick=";return false;" data-gen204="feature=watch-show-more-metadata"><span class="yt-uix-button-content">Show more</span></button>
+               <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-expander yt-uix-expander-head yt-uix-expander-body" type="button" onclick=";return false;"><span class="yt-uix-button-content">Show less</span></button>
+            </div>
+            <div id="watch-discussion" class="branded-page-box yt-card">
+               <div class="action-panel-loading">
+                  <p class="yt-spinner ">
+                     <span title="Loading icon" class="yt-spinner-img  yt-sprite"></span>
+                     <span class="yt-spinner-message">
+                     Loading...
+                     </span>
+                  </p>
+               </div>
+            </div>
+         </div>
+         <div id="watch7-sidebar" class="watch-sidebar">
+            <div id="placeholder-playlist" class="watch-playlist player-height  hid"></div>
+            <div id="watch7-sidebar-contents" class="watch-sidebar-gutter   yt-card yt-card-has-padding    yt-uix-expander yt-uix-expander-collapsed">
+               <div id="watch7-sidebar-offer">
+               </div>
+               <div id="watch7-sidebar-ads">
+                  <div id="watch-channel-brand-div" class="" >
+                     <div id="watch-channel-brand-div-text">
+                        Advertisement
+                     </div>
+                     <div id="google_companion_ad_div">
+                     </div>
+                  </div>
+               </div>
+               <div id="watch7-sidebar-modules">
+                  <div class="watch-sidebar-section">
+                     <div class="autoplay-bar">
+                        <div class="checkbox-on-off">
+                           <label for="autoplay-checkbox">Autoplay</label>
+                           <span class="autoplay-hovercard yt-uix-hovercard">
+                           <span class="autoplay-info-icon yt-uix-button-opacity yt-uix-hovercard-target yt-sprite" data-orientation="vertical" data-position="topright"></span>
+                           <span class="yt-uix-hovercard-content">When autoplay is enabled, a suggested video will automatically play next.</span>        </span>
+                           <span class="yt-uix-checkbox-on-off ">
+                           <input id="autoplay-checkbox" class="" type="checkbox" name=""  checked><label for="autoplay-checkbox" id="autoplay-checkbox-label"><span class="checked"></span><span class="toggle"></span><span class="unchecked"></span></label>  </span>
+                        </div>
+                        <h4 class="watch-sidebar-head">
+                           Up next
+                        </h4>
+                        <div class="watch-sidebar-body">
+                           <ul class="video-list">
+                              <li class="video-list-item related-list-item show-video-time">
+                                 <div class="content-wrapper">
+                                    <a href="/watch?v=djV11Xbc914" class=" content-link spf-link  yt-uix-sessionlink      spf-link " data-sessionlink="itct=CDEQpDAYACITCPCb3sSz6toCFcuifgodz50MGCj4HTIHYXV0b25hdkjEu4GtvZiOhnU"  title="a-ha - Take On Me (Official Video)" rel=" spf-prefetch nofollow" data-visibility-tracking="CDEQpDAYACITCPCb3sSz6toCFcuifgodz50MGCj4HUDe7vO217rdmnY=" >
+                                    <span dir="ltr" class="title" aria-describedby="description-id-923016">
+                                    a-ha - Take On Me (Official Video)
+                                    </span>
+                                    <span class="accessible-description" id="description-id-923016">
+                                    - Duration: 3:48.
+                                    </span>
+                                    <span class="stat attribution"><span class="" >RHINO</span></span>
+                                    <span class="stat view-count">630,177,810 views</span>
+                                    </a>
+                                 </div>
+                                 <div class="thumb-wrapper">
+                                    <a href="/watch?v=djV11Xbc914" class=" vve-check thumb-link spf-link  yt-uix-sessionlink      spf-link " data-sessionlink="itct=CDEQpDAYACITCPCb3sSz6toCFcuifgodz50MGCj4HTIHYXV0b25hdkjEu4GtvZiOhnU"  tabindex="-1" rel=" spf-prefetch nofollow" data-visibility-tracking="CDEQpDAYACITCPCb3sSz6toCFcuifgodz50MGCj4HUDe7vO217rdmnY=" aria-hidden="true"><span class="yt-uix-simple-thumb-wrap yt-uix-simple-thumb-related" tabindex="0" data-vid="djV11Xbc914"><img aria-hidden="true" style="top: 0px" width="168" height="94" data-thumb="https://i.ytimg.com/vi/djV11Xbc914/hqdefault.jpg?sqp=-oaymwEWCKgBEF5IWvKriqkDCQgBFQAAiEIYAQ==&amp;rs=AOn4CLDRHVOMeT9_AlEP1rXvje7MYFMCCg" alt="" src="/yts/img/pixel-vfl3z5WfW.gif" ><span class="video-time">3:48</span></span></a>
+                                 </div>
+                              </li>
+                           </ul>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="watch-sidebar-section">
+                     <hr class="watch-sidebar-separation-line">
+                     <div class="watch-sidebar-body">
+                        <ul id="watch-related" class="video-list">
+                           <li class="video-list-item related-list-item  show-video-time related-list-item-compact-radio">
+                              <a href="/watch?v=dQw4w9WgXcQ&amp;list=RDdQw4w9WgXcQ&amp;start_radio=1" class="related-playlist yt-pl-thumb-link spf-link  mix-playlist resumable-list vve-check yt-uix-sessionlink      spf-link " data-sessionlink="itct=CC4QozAYASITCPCb3sSz6toCFcuifgodz50MGCj4HTIKbGlzdF9vdGhlckjEu4GtvZiOhnU"  data-secondary-video-url="/watch?v=djV11Xbc914&amp;list=RDdQw4w9WgXcQ&amp;start_radio=1" rel="spf-prefetch" data-visibility-tracking="CC4QozAYASITCPCb3sSz6toCFcuifgodz50MGCj4HQ==">
+                                 <span class=" yt-mix-thumb yt-pl-thumb">
+                                    <span class="video-thumb  yt-thumb yt-thumb-168"
+                                       >
+                                    <span class="yt-thumb-default">
+                                    <span class="yt-thumb-clip">
+                                    <img aria-hidden="true" data-ytimg="1" width="168" data-thumb="https://i.ytimg.com/vi/dQw4w9WgXcQ/hqdefault.jpg?sqp=-oaymwEWCKgBEF5IWvKriqkDCQgBFQAAiEIYAQ==&amp;rs=AOn4CLBf45ycDkHw60O072DkeCeAw0TV-w" alt="" src="/yts/img/pixel-vfl3z5WfW.gif" onload=";window.__ytRIL &amp;&amp; __ytRIL(this)" >
+                                    <span class="vertical-align"></span>
+                                    </span>
+                                    </span>
+                                    </span>
+                                    <span class="sidebar">
+                                    <span class="yt-pl-sidebar-content yt-valign">
+                                    <span class="yt-valign-container">
+                                    <span class="formatted-video-count-label">
+                                    <b>50+</b> videos
+                                    </span>
+                                    <span class="yt-pl-icon yt-pl-icon-mix yt-sprite"></span>
+                                    </span>
+                                    </span>
+                                    </span>
+                                    <span class="yt-pl-thumb-overlay">
+                                    <span class="yt-pl-thumb-overlay-content">
+                                    <span class="play-icon yt-sprite"></span>
+                                    <span class="yt-pl-thumb-overlay-text">
+                                    Play all
+                                    </span>
+                                    </span>
+                                    </span>
+                                    <span class="yt-pl-watch-queue-overlay">
+                                       <span class="thumb-menu dark-overflow-action-menu video-actions">
+                                          <button onclick=";return false;" class="yt-uix-button-reverse flip addto-watch-queue-menu spf-nolink hide-until-delayloaded yt-uix-button yt-uix-button-dark-overflow-action-menu yt-uix-button-size-default yt-uix-button-has-icon no-icon-markup yt-uix-button-empty" type="button" aria-haspopup="true" aria-expanded="false" >
+                                             <span class="yt-uix-button-arrow yt-sprite"></span>
+                                             <ul class="watch-queue-thumb-menu yt-uix-button-menu yt-uix-button-menu-dark-overflow-action-menu hid">
+                                                <li role="menuitem" class="overflow-menu-choice addto-watch-queue-menu-choice addto-watch-queue-play-now yt-uix-button-menu-item" data-action="play-now" onclick=";return false;"  data-video-ids="dQw4w9WgXcQ" data-list-id="RDdQw4w9WgXcQ"><span class="addto-watch-queue-menu-text">Play now</span></li>
+                                             </ul>
+                                          </button>
+                                       </span>
+                                       <button class="yt-uix-button yt-uix-button-size-small yt-uix-button-default yt-uix-button-empty yt-uix-button-has-icon no-icon-markup addto-button addto-queue-button video-actions spf-nolink hide-until-delayloaded addto-tv-queue-button yt-uix-tooltip" type="button" onclick=";return false;" title="Queue" data-video-ids="dQw4w9WgXcQ" data-style="tv-queue" data-list-id="RDdQw4w9WgXcQ"></button>
+                                    </span>
+                                 </span>
+                                 <span dir="ltr" class="title" title="Mix - Rick Astley - Never Gonna Give You Up (Video)">Mix - Rick Astley - Never Gonna Give You Up (Video)</span><span class="stat attribution">YouTube</span>
+                              </a>
+                           </li>
+                           <li class="video-list-item related-list-item  show-video-time related-list-item-compact-video">
+                              <div class="content-wrapper">
+                                 <a href="/watch?v=yPYZpwSpKmA" class=" content-link spf-link  yt-uix-sessionlink      spf-link " data-sessionlink="itct=CC0QpDAYAiITCPCb3sSz6toCFcuifgodz50MGCj4HTIGcmVsbWZ1SMS7ga29mI6GdQ"  title="Rick Astley - Together Forever (Video)" rel=" spf-prefetch nofollow" data-visibility-tracking="CC0QpDAYAiITCPCb3sSz6toCFcuifgodz50MGCj4HUDg1KSl8LSG-8gB" >
+                                 <span dir="ltr" class="title" aria-describedby="description-id-13393">
+                                 Rick Astley - Together Forever (Video)
+                                 </span>
+                                 <span class="accessible-description" id="description-id-13393">
+                                 - Duration: 3:25.
+                                 </span>
+                                 <span class="stat attribution"><span class="" >Official Rick Astley</span></span>
+                                 <span class="stat view-count">52,388,222 views</span>
+                                 </a>
+                              </div>
+                              <div class="thumb-wrapper">
+                                 <a href="/watch?v=yPYZpwSpKmA" class=" vve-check thumb-link spf-link  yt-uix-sessionlink      spf-link " data-sessionlink="itct=CC0QpDAYAiITCPCb3sSz6toCFcuifgodz50MGCj4HTIGcmVsbWZ1SMS7ga29mI6GdQ"  tabindex="-1" rel=" spf-prefetch nofollow" data-visibility-tracking="CC0QpDAYAiITCPCb3sSz6toCFcuifgodz50MGCj4HUDg1KSl8LSG-8gB" aria-hidden="true"><span class="yt-uix-simple-thumb-wrap yt-uix-simple-thumb-related" tabindex="0" data-vid="yPYZpwSpKmA"><img aria-hidden="true" style="top: 0px" width="168" height="94" data-thumb="https://i.ytimg.com/vi/yPYZpwSpKmA/hqdefault.jpg?sqp=-oaymwEWCKgBEF5IWvKriqkDCQgBFQAAiEIYAQ==&amp;rs=AOn4CLA6g5QWF95TcEexTR3bbxVUIgeZBA" alt="" src="/yts/img/pixel-vfl3z5WfW.gif" ><span class="video-time">3:25</span></span></a>
+                              </div>
+                           </li>
+                           <li class="video-list-item related-list-item  show-video-time related-list-item-compact-video">
+                              <div class="content-wrapper">
+                                 <a href="/watch?v=cMtaFMZxOjk" class=" content-link spf-link  yt-uix-sessionlink      spf-link " data-sessionlink="itct=CCwQpDAYAyITCPCb3sSz6toCFcuifgodz50MGCj4HTIHcmVsYXRlZEjEu4GtvZiOhnU"  title="Guardians of the Galaxy: Awesome Mix Vol. 1 &amp; Vol. 2 (Full Soundtrack)" rel=" spf-prefetch nofollow" data-visibility-tracking="CCwQpDAYAyITCPCb3sSz6toCFcuifgodz50MGCj4HUC59MSzzMLW5XA=" >
+                                 <span dir="ltr" class="title" aria-describedby="description-id-920876">
+                                 Guardians of the Galaxy: Awesome Mix Vol. 1 &amp; Vol. 2 (Full Soundtrack)
+                                 </span>
+                                 <span class="accessible-description" id="description-id-920876">
+                                 - Duration: 1:34:36.
+                                 </span>
+                                 <span class="stat attribution"><span class="" >Library Music</span></span>
+                                 <span class="stat view-count">2,435,512 views</span>
+                                 </a>
+                              </div>
+                              <div class="thumb-wrapper">
+                                 <a href="/watch?v=cMtaFMZxOjk" class=" vve-check thumb-link spf-link  yt-uix-sessionlink      spf-link " data-sessionlink="itct=CCwQpDAYAyITCPCb3sSz6toCFcuifgodz50MGCj4HTIHcmVsYXRlZEjEu4GtvZiOhnU"  tabindex="-1" rel=" spf-prefetch nofollow" data-visibility-tracking="CCwQpDAYAyITCPCb3sSz6toCFcuifgodz50MGCj4HUC59MSzzMLW5XA=" aria-hidden="true"><span class="yt-uix-simple-thumb-wrap yt-uix-simple-thumb-related" tabindex="0" data-vid="cMtaFMZxOjk"><img aria-hidden="true" style="top: 0px" width="168" height="94" data-thumb="https://i.ytimg.com/vi/cMtaFMZxOjk/hqdefault.jpg?sqp=-oaymwEWCKgBEF5IWvKriqkDCQgBFQAAiEIYAQ==&amp;rs=AOn4CLDrcqb1No9S3kw1zu7pSyphF-qyjg" alt="" src="/yts/img/pixel-vfl3z5WfW.gif" ><span class="video-time">1:34:36</span></span></a>
+                              </div>
+                           </li>
+                           <li class="video-list-item related-list-item  show-video-time related-list-item-compact-video">
+                              <div class="content-wrapper">
+                                 <a href="/watch?v=pIgZ7gMze7A" class=" content-link spf-link  yt-uix-sessionlink      spf-link " data-sessionlink="itct=CCsQpDAYBCITCPCb3sSz6toCFcuifgodz50MGCj4HTIHcmVsYXRlZEjEu4GtvZiOhnU"  title="Wham! - Wake Me Up Before You Go-Go (Official Video)" rel=" spf-prefetch nofollow" data-visibility-tracking="CCsQpDAYBCITCPCb3sSz6toCFcuifgodz50MGCj4HUCw982Z4L2GxKQB" >
+                                 <span dir="ltr" class="title" aria-describedby="description-id-878418">
+                                 Wham! - Wake Me Up Before You Go-Go (Official Video)
+                                 </span>
+                                 <span class="accessible-description" id="description-id-878418">
+                                 - Duration: 3:51.
+                                 </span>
+                                 <span class="stat attribution"><span class="" >Whamtv</span></span>
+                                 <span class="stat view-count">209,426,517 views</span>
+                                 </a>
+                              </div>
+                              <div class="thumb-wrapper">
+                                 <a href="/watch?v=pIgZ7gMze7A" class=" vve-check thumb-link spf-link  yt-uix-sessionlink      spf-link " data-sessionlink="itct=CCsQpDAYBCITCPCb3sSz6toCFcuifgodz50MGCj4HTIHcmVsYXRlZEjEu4GtvZiOhnU"  tabindex="-1" rel=" spf-prefetch nofollow" data-visibility-tracking="CCsQpDAYBCITCPCb3sSz6toCFcuifgodz50MGCj4HUCw982Z4L2GxKQB" aria-hidden="true"><span class="yt-uix-simple-thumb-wrap yt-uix-simple-thumb-related" tabindex="0" data-vid="pIgZ7gMze7A"><img aria-hidden="true" style="top: 0px" width="168" height="94" data-thumb="https://i.ytimg.com/vi/pIgZ7gMze7A/hqdefault.jpg?sqp=-oaymwEWCKgBEF5IWvKriqkDCQgBFQAAiEIYAQ==&amp;rs=AOn4CLDX5U0l77KSIhS3GpqiDqOs8dNQdg" alt="" src="/yts/img/pixel-vfl3z5WfW.gif" ><span class="video-time">3:51</span></span></a>
+                              </div>
+                           </li>
+                           <li class="video-list-item related-list-item  show-video-time related-list-item-compact-playlist"><a href="/watch?v=OPf0YbXqDm0&amp;list=PLMC9KNkIncKtPzgY-5rmhvj7fax8fdxoj" class="related-playlist yt-pl-thumb-link spf-link  vve-check yt-uix-sessionlink      spf-link " data-sessionlink="itct=CCoQojAYBSITCPCb3sSz6toCFcuifgodz50MGCj4HTIHcmVsbGlzdEjEu4GtvZiOhnU"  rel="spf-prefetch" data-visibility-tracking="CCoQojAYBSITCPCb3sSz6toCFcuifgodz50MGCj4HQ==">  <span class=" yt-pl-thumb">
+                              <span class="video-thumb  yt-thumb yt-thumb-168"
+                                 >
+                              <span class="yt-thumb-default">
+                              <span class="yt-thumb-clip">
+                              <img aria-hidden="true" data-ytimg="1" width="168" data-thumb="https://i.ytimg.com/vi/OPf0YbXqDm0/hqdefault.jpg?sqp=-oaymwEWCKgBEF5IWvKriqkDCQgBFQAAiEIYAQ==&amp;rs=AOn4CLAJjHXZ-SRjcpNWlZH3jn1q8D02Lg" alt="" src="/yts/img/pixel-vfl3z5WfW.gif" onload=";window.__ytRIL &amp;&amp; __ytRIL(this)" >
+                              <span class="vertical-align"></span>
+                              </span>
+                              </span>
+                              </span>
+                              <span class="sidebar">
+                              <span class="yt-pl-sidebar-content yt-valign">
+                              <span class="yt-valign-container">
+                              <span class="formatted-video-count-label">
+                              <b>197</b> videos
+                              </span>
+                              <span class="yt-pl-icon yt-pl-icon-reg yt-sprite"></span>
+                              </span>
+                              </span>
+                              </span>
+                              <span class="yt-pl-thumb-overlay">
+                              <span class="yt-pl-thumb-overlay-content">
+                              <span class="play-icon yt-sprite"></span>
+                              <span class="yt-pl-thumb-overlay-text">
+                              Play all
+                              </span>
+                              </span>
+                              </span>
+                              </span>
+                              <span dir="ltr" class="title" title="Pop Music Playlist: Timeless Pop Hits (Updated Weekly 2018)">Pop Music Playlist: Timeless Pop Hits (Updated Weekly 2018)</span><span class="stat attribution"><span class="" >#RedMusic: Just Hits</span></span></a>
+                           </li>
+                           <li class="video-list-item related-list-item  show-video-time related-list-item-compact-video">
+                              <div class="content-wrapper">
+                                 <a href="/watch?v=q8w1d01Y2vY" class=" content-link spf-link  yt-uix-sessionlink      spf-link " data-sessionlink="itct=CCkQpDAYBiITCPCb3sSz6toCFcuifgodz50MGCj4HTIHcmVsYXRlZEjEu4GtvZiOhnU"  title="Michael Jackson - Smooth Criminal (Single Version) HD" rel=" spf-prefetch nofollow" data-visibility-tracking="CCkQpDAYBiITCPCb3sSz6toCFcuifgodz50MGCj4HUD2tePq9K6N5qsB" >
+                                 <span dir="ltr" class="title" aria-describedby="description-id-324515">
+                                 Michael Jackson - Smooth Criminal (Single Version) HD
+                                 </span>
+                                 <span class="accessible-description" id="description-id-324515">
+                                 - Duration: 4:01.
+                                 </span>
+                                 <span class="stat attribution"><span class="" >moogl3s</span></span>
+                                 <span class="stat view-count">10,826,344 views</span>
+                                 </a>
+                              </div>
+                              <div class="thumb-wrapper">
+                                 <a href="/watch?v=q8w1d01Y2vY" class=" vve-check thumb-link spf-link  yt-uix-sessionlink      spf-link " data-sessionlink="itct=CCkQpDAYBiITCPCb3sSz6toCFcuifgodz50MGCj4HTIHcmVsYXRlZEjEu4GtvZiOhnU"  tabindex="-1" rel=" spf-prefetch nofollow" data-visibility-tracking="CCkQpDAYBiITCPCb3sSz6toCFcuifgodz50MGCj4HUD2tePq9K6N5qsB" aria-hidden="true"><span class="yt-uix-simple-thumb-wrap yt-uix-simple-thumb-related" tabindex="0" data-vid="q8w1d01Y2vY"><img aria-hidden="true" style="top: 0px" width="168" height="94" data-thumb="https://i.ytimg.com/vi/q8w1d01Y2vY/hqdefault.jpg?sqp=-oaymwEWCKgBEF5IWvKriqkDCQgBFQAAiEIYAQ==&amp;rs=AOn4CLChzX_9dPDVzOUJlgv5bAyySIrbow" alt="" src="/yts/img/pixel-vfl3z5WfW.gif" ><span class="video-time">4:01</span></span></a>
+                              </div>
+                           </li>
+                           <li class="video-list-item related-list-item  show-video-time related-list-item-compact-video">
+                              <div class="content-wrapper">
+                                 <a href="/watch?v=rog8ou-ZepE" class=" content-link spf-link  yt-uix-sessionlink      spf-link " data-sessionlink="itct=CCgQpDAYByITCPCb3sSz6toCFcuifgodz50MGCj4HTIHcmVsYXRlZEjEu4GtvZiOhnU"  title="Vanilla Ice - Ice Ice Baby" rel=" spf-prefetch nofollow" data-visibility-tracking="CCgQpDAYByITCPCb3sSz6toCFcuifgodz50MGCj4HUCR9eX8rpSPxK4B" >
+                                 <span dir="ltr" class="title" aria-describedby="description-id-831692">
+                                 Vanilla Ice - Ice Ice Baby
+                                 </span>
+                                 <span class="accessible-description" id="description-id-831692">
+                                 - Duration: 4:01.
+                                 </span>
+                                 <span class="stat attribution"><span class="" >vanillaiceVEVO</span></span>
+                                 <span class="stat view-count">229,671,082 views</span>
+                                 </a>
+                              </div>
+                              <div class="thumb-wrapper">
+                                 <a href="/watch?v=rog8ou-ZepE" class=" vve-check thumb-link spf-link  yt-uix-sessionlink      spf-link " data-sessionlink="itct=CCgQpDAYByITCPCb3sSz6toCFcuifgodz50MGCj4HTIHcmVsYXRlZEjEu4GtvZiOhnU"  tabindex="-1" rel=" spf-prefetch nofollow" data-visibility-tracking="CCgQpDAYByITCPCb3sSz6toCFcuifgodz50MGCj4HUCR9eX8rpSPxK4B" aria-hidden="true"><span class="yt-uix-simple-thumb-wrap yt-uix-simple-thumb-related" tabindex="0" data-vid="rog8ou-ZepE"><img aria-hidden="true" style="top: 0px" width="168" height="94" data-thumb="https://i.ytimg.com/vi/rog8ou-ZepE/hqdefault.jpg?sqp=-oaymwEWCKgBEF5IWvKriqkDCQgBFQAAiEIYAQ==&amp;rs=AOn4CLCZTN1mwFg3m32j8ODt-q_9boaAYQ" alt="" src="/yts/img/pixel-vfl3z5WfW.gif" ><span class="video-time">4:01</span></span></a>
+                              </div>
+                           </li>
+                           <li class="video-list-item related-list-item  show-video-time related-list-item-compact-video">
+                              <div class="content-wrapper">
+                                 <a href="/watch?v=Gs069dndIYk" class=" content-link spf-link  yt-uix-sessionlink      spf-link " data-sessionlink="itct=CCcQpDAYCCITCPCb3sSz6toCFcuifgodz50MGCj4HTIHcmVsYXRlZEjEu4GtvZiOhnU"  title="Earth, Wind &amp; Fire - September" rel=" spf-prefetch nofollow" data-visibility-tracking="CCcQpDAYCCITCPCb3sSz6toCFcuifgodz50MGCj4HUCJw_TO3d7O5ho=" >
+                                 <span dir="ltr" class="title" aria-describedby="description-id-405059">
+                                 Earth, Wind &amp; Fire - September
+                                 </span>
+                                 <span class="accessible-description" id="description-id-405059">
+                                 - Duration: 3:36.
+                                 </span>
+                                 <span class="stat attribution"><span class="" >EarthWindandFireVEVO</span></span>
+                                 <span class="stat view-count">190,641,764 views</span>
+                                 </a>
+                              </div>
+                              <div class="thumb-wrapper">
+                                 <a href="/watch?v=Gs069dndIYk" class=" vve-check thumb-link spf-link  yt-uix-sessionlink      spf-link " data-sessionlink="itct=CCcQpDAYCCITCPCb3sSz6toCFcuifgodz50MGCj4HTIHcmVsYXRlZEjEu4GtvZiOhnU"  tabindex="-1" rel=" spf-prefetch nofollow" data-visibility-tracking="CCcQpDAYCCITCPCb3sSz6toCFcuifgodz50MGCj4HUCJw_TO3d7O5ho=" aria-hidden="true"><span class="yt-uix-simple-thumb-wrap yt-uix-simple-thumb-related" tabindex="0" data-vid="Gs069dndIYk"><img aria-hidden="true" style="top: 0px" width="168" height="94" data-thumb="https://i.ytimg.com/vi/Gs069dndIYk/hqdefault.jpg?sqp=-oaymwEWCKgBEF5IWvKriqkDCQgBFQAAiEIYAQ==&amp;rs=AOn4CLDTw3KGaMo5R5nQAeyvQSF6BrGenQ" alt="" src="/yts/img/pixel-vfl3z5WfW.gif" ><span class="video-time">3:36</span></span></a>
+                              </div>
+                           </li>
+                           <li class="video-list-item related-list-item  show-video-time related-list-item-compact-video">
+                              <div class="content-wrapper">
+                                 <a href="/watch?v=oRdxUFDoQe0" class=" content-link spf-link  yt-uix-sessionlink      spf-link " data-sessionlink="itct=CCYQpDAYCSITCPCb3sSz6toCFcuifgodz50MGCj4HTIHcmVsYXRlZEjEu4GtvZiOhnU"  title="Michael Jackson - Beat It (Official Video)" rel=" spf-prefetch nofollow" data-visibility-tracking="CCYQpDAYCSITCPCb3sSz6toCFcuifgodz50MGCj4HUDtg6GHharci6EB" >
+                                 <span dir="ltr" class="title" aria-describedby="description-id-65743">
+                                 Michael Jackson - Beat It (Official Video)
+                                 </span>
+                                 <span class="accessible-description" id="description-id-65743">
+                                 - Duration: 4:59.
+                                 </span>
+                                 <span class="stat attribution"><span class="" >Michael Jackson</span></span>
+                                 <span class="stat view-count">351,364,975 views</span>
+                                 </a>
+                              </div>
+                              <div class="thumb-wrapper">
+                                 <a href="/watch?v=oRdxUFDoQe0" class=" vve-check thumb-link spf-link  yt-uix-sessionlink      spf-link " data-sessionlink="itct=CCYQpDAYCSITCPCb3sSz6toCFcuifgodz50MGCj4HTIHcmVsYXRlZEjEu4GtvZiOhnU"  tabindex="-1" rel=" spf-prefetch nofollow" data-visibility-tracking="CCYQpDAYCSITCPCb3sSz6toCFcuifgodz50MGCj4HUDtg6GHharci6EB" aria-hidden="true"><span class="yt-uix-simple-thumb-wrap yt-uix-simple-thumb-related" tabindex="0" data-vid="oRdxUFDoQe0"><img aria-hidden="true" style="top: 0px" width="168" height="94" data-thumb="https://i.ytimg.com/vi/oRdxUFDoQe0/hqdefault.jpg?sqp=-oaymwEWCKgBEF5IWvKriqkDCQgBFQAAiEIYAQ==&amp;rs=AOn4CLB_AOvmBsQAKM9go0z94R7qRh-QsQ" alt="" src="/yts/img/pixel-vfl3z5WfW.gif" ><span class="video-time">4:59</span></span></a>
+                              </div>
+                           </li>
+                           <li class="video-list-item related-list-item  show-video-time related-list-item-compact-video">
+                              <div class="content-wrapper">
+                                 <a href="/watch?v=ggALN-UkQ88" class=" content-link spf-link  yt-uix-sessionlink      spf-link " data-sessionlink="itct=CCUQpDAYCiITCPCb3sSz6toCFcuifgodz50MGCj4HTIHcmVsYXRlZEjEu4GtvZiOhnU"  title="Greatest Hits Of The 80&#39;s - 80s Music Hits - Best Songs of The 80s" rel=" spf-prefetch nofollow" data-visibility-tracking="CCUQpDAYCiITCPCb3sSz6toCFcuifgodz50MGCj4HUDPh5Gp_uaCgIIB" >
+                                 <span dir="ltr" class="title" aria-describedby="description-id-515688">
+                                 Greatest Hits Of The 80&#39;s - 80s Music Hits - Best Songs of The 80s
+                                 </span>
+                                 <span class="accessible-description" id="description-id-515688">
+                                 - Duration: 2:30:07.
+                                 </span>
+                                 <span class="stat attribution"><span class="" >Time Music</span></span>
+                                 <span class="stat view-count">5,622,850 views</span>
+                                 </a>
+                              </div>
+                              <div class="thumb-wrapper">
+                                 <a href="/watch?v=ggALN-UkQ88" class=" vve-check thumb-link spf-link  yt-uix-sessionlink      spf-link " data-sessionlink="itct=CCUQpDAYCiITCPCb3sSz6toCFcuifgodz50MGCj4HTIHcmVsYXRlZEjEu4GtvZiOhnU"  tabindex="-1" rel=" spf-prefetch nofollow" data-visibility-tracking="CCUQpDAYCiITCPCb3sSz6toCFcuifgodz50MGCj4HUDPh5Gp_uaCgIIB" aria-hidden="true"><span class="yt-uix-simple-thumb-wrap yt-uix-simple-thumb-related" tabindex="0" data-vid="ggALN-UkQ88"><img aria-hidden="true" style="top: 0px" width="168" height="94" data-thumb="https://i.ytimg.com/vi/ggALN-UkQ88/hqdefault.jpg?sqp=-oaymwEWCKgBEF5IWvKriqkDCQgBFQAAiEIYAQ==&amp;rs=AOn4CLCD42TC3bRp2b5mosDJ5yE-Ut7cHg" alt="" src="/yts/img/pixel-vfl3z5WfW.gif" ><span class="video-time">2:30:07</span></span></a>
+                              </div>
+                           </li>
+                           <li class="video-list-item related-list-item  show-video-time related-list-item-compact-video">
+                              <div class="content-wrapper">
+                                 <a href="/watch?v=FTQbiNvZqaY" class=" content-link spf-link  yt-uix-sessionlink      spf-link " data-sessionlink="itct=CCQQpDAYCyITCPCb3sSz6toCFcuifgodz50MGCj4HTIHcmVsYXRlZEjEu4GtvZiOhnU"  title="Toto - Africa (Video)" rel=" spf-prefetch nofollow" data-visibility-tracking="CCQQpDAYCyITCPCb3sSz6toCFcuifgodz50MGCj4HUCm0-bejfGGmhU=" >
+                                 <span dir="ltr" class="title" aria-describedby="description-id-486512">
+                                 Toto - Africa (Video)
+                                 </span>
+                                 <span class="accessible-description" id="description-id-486512">
+                                 - Duration: 4:35.
+                                 </span>
+                                 <span class="stat attribution"><span class="" >Toto Toto</span></span>
+                                 <span class="stat view-count">310,864,690 views</span>
+                                 </a>
+                              </div>
+                              <div class="thumb-wrapper">
+                                 <a href="/watch?v=FTQbiNvZqaY" class=" vve-check thumb-link spf-link  yt-uix-sessionlink      spf-link " data-sessionlink="itct=CCQQpDAYCyITCPCb3sSz6toCFcuifgodz50MGCj4HTIHcmVsYXRlZEjEu4GtvZiOhnU"  tabindex="-1" rel=" spf-prefetch nofollow" data-visibility-tracking="CCQQpDAYCyITCPCb3sSz6toCFcuifgodz50MGCj4HUCm0-bejfGGmhU=" aria-hidden="true"><span class="yt-uix-simple-thumb-wrap yt-uix-simple-thumb-related" tabindex="0" data-vid="FTQbiNvZqaY"><img aria-hidden="true" style="top: 0px" width="168" height="94" data-thumb="https://i.ytimg.com/vi/FTQbiNvZqaY/hqdefault.jpg?sqp=-oaymwEWCKgBEF5IWvKriqkDCQgBFQAAiEIYAQ==&amp;rs=AOn4CLC_5Ni2mOPN-OAyVwpS_66BzHpXtw" alt="" src="/yts/img/pixel-vfl3z5WfW.gif" ><span class="video-time">4:35</span></span></a>
+                              </div>
+                           </li>
+                           <li class="video-list-item related-list-item  show-video-time related-list-item-compact-video">
+                              <div class="content-wrapper">
+                                 <a href="/watch?v=I_izvAbhExY" class=" content-link spf-link  yt-uix-sessionlink      spf-link " data-sessionlink="itct=CCMQpDAYDCITCPCb3sSz6toCFcuifgodz50MGCj4HTIHcmVsYXRlZEjEu4GtvZiOhnU"  title="Bee Gees - Stayin&#39; Alive (1977)" rel=" spf-prefetch nofollow" data-visibility-tracking="CCMQpDAYDCITCPCb3sSz6toCFcuifgodz50MGCj4HUCWpoS3wPes_CM=" >
+                                 <span dir="ltr" class="title" aria-describedby="description-id-930571">
+                                 Bee Gees - Stayin&#39; Alive (1977)
+                                 </span>
+                                 <span class="accessible-description" id="description-id-930571">
+                                 - Duration: 4:03.
+                                 </span>
+                                 <span class="stat attribution"><span class="" >beegees</span></span>
+                                 <span class="stat view-count">246,531,218 views</span>
+                                 </a>
+                              </div>
+                              <div class="thumb-wrapper">
+                                 <a href="/watch?v=I_izvAbhExY" class=" vve-check thumb-link spf-link  yt-uix-sessionlink      spf-link " data-sessionlink="itct=CCMQpDAYDCITCPCb3sSz6toCFcuifgodz50MGCj4HTIHcmVsYXRlZEjEu4GtvZiOhnU"  tabindex="-1" rel=" spf-prefetch nofollow" data-visibility-tracking="CCMQpDAYDCITCPCb3sSz6toCFcuifgodz50MGCj4HUCWpoS3wPes_CM=" aria-hidden="true"><span class="yt-uix-simple-thumb-wrap yt-uix-simple-thumb-related" tabindex="0" data-vid="I_izvAbhExY"><img aria-hidden="true" style="top: 0px" width="168" height="94" data-thumb="https://i.ytimg.com/vi/I_izvAbhExY/hqdefault.jpg?sqp=-oaymwEWCKgBEF5IWvKriqkDCQgBFQAAiEIYAQ==&amp;rs=AOn4CLCZ5-aXMM07G1BpozLAcM_IeuVazA" alt="" src="/yts/img/pixel-vfl3z5WfW.gif" ><span class="video-time">4:03</span></span></a>
+                              </div>
+                           </li>
+                           <li class="video-list-item related-list-item  show-video-time related-list-item-compact-video">
+                              <div class="content-wrapper">
+                                 <a href="/watch?v=rY0WxgSXdEE" class=" content-link spf-link  yt-uix-sessionlink      spf-link " data-sessionlink="itct=CCIQpDAYDSITCPCb3sSz6toCFcuifgodz50MGCj4HTIHcmVsYXRlZEjEu4GtvZiOhnU"  title="Queen - Another One Bites the Dust (Official Video)" rel=" spf-prefetch nofollow" data-visibility-tracking="CCIQpDAYDSITCPCb3sSz6toCFcuifgodz50MGCj4HUDB6N2k4NjFxq0B" >
+                                 <span dir="ltr" class="title" aria-describedby="description-id-343338">
+                                 Queen - Another One Bites the Dust (Official Video)
+                                 </span>
+                                 <span class="accessible-description" id="description-id-343338">
+                                 - Duration: 3:43.
+                                 </span>
+                                 <span class="stat attribution"><span class="" >Queen Official</span></span>
+                                 <span class="stat view-count">186,105,491 views</span>
+                                 </a>
+                              </div>
+                              <div class="thumb-wrapper">
+                                 <a href="/watch?v=rY0WxgSXdEE" class=" vve-check thumb-link spf-link  yt-uix-sessionlink      spf-link " data-sessionlink="itct=CCIQpDAYDSITCPCb3sSz6toCFcuifgodz50MGCj4HTIHcmVsYXRlZEjEu4GtvZiOhnU"  tabindex="-1" rel=" spf-prefetch nofollow" data-visibility-tracking="CCIQpDAYDSITCPCb3sSz6toCFcuifgodz50MGCj4HUDB6N2k4NjFxq0B" aria-hidden="true"><span class="yt-uix-simple-thumb-wrap yt-uix-simple-thumb-related" tabindex="0" data-vid="rY0WxgSXdEE"><img aria-hidden="true" style="top: 0px" width="168" height="94" data-thumb="https://i.ytimg.com/vi/rY0WxgSXdEE/hqdefault.jpg?sqp=-oaymwEWCKgBEF5IWvKriqkDCQgBFQAAiEIYAQ==&amp;rs=AOn4CLDun2H7eP23mREBwPNYWCPG9i66Ng" alt="" src="/yts/img/pixel-vfl3z5WfW.gif" ><span class="video-time">3:43</span></span></a>
+                              </div>
+                           </li>
+                           <li class="video-list-item related-list-item  show-video-time related-list-item-compact-video">
+                              <div class="content-wrapper">
+                                 <a href="/watch?v=wFWDGTVYqE8" class=" content-link spf-link  yt-uix-sessionlink      spf-link " data-sessionlink="itct=CCEQpDAYDiITCPCb3sSz6toCFcuifgodz50MGCj4HTIHcmVsYXRlZEjEu4GtvZiOhnU"  title="Footloose - Kenny Loggins" rel=" spf-prefetch nofollow" data-visibility-tracking="CCEQpDAYDiITCPCb3sSz6toCFcuifgodz50MGCj4HUDP0OKqk-PgqsAB" >
+                                 <span dir="ltr" class="title" aria-describedby="description-id-303529">
+                                 Footloose - Kenny Loggins
+                                 </span>
+                                 <span class="accessible-description" id="description-id-303529">
+                                 - Duration: 3:49.
+                                 </span>
+                                 <span class="stat attribution"><span class="" >caag4d</span></span>
+                                 <span class="stat view-count">67,177,061 views</span>
+                                 </a>
+                              </div>
+                              <div class="thumb-wrapper">
+                                 <a href="/watch?v=wFWDGTVYqE8" class=" vve-check thumb-link spf-link  yt-uix-sessionlink      spf-link " data-sessionlink="itct=CCEQpDAYDiITCPCb3sSz6toCFcuifgodz50MGCj4HTIHcmVsYXRlZEjEu4GtvZiOhnU"  tabindex="-1" rel=" spf-prefetch nofollow" data-visibility-tracking="CCEQpDAYDiITCPCb3sSz6toCFcuifgodz50MGCj4HUDP0OKqk-PgqsAB" aria-hidden="true"><span class="yt-uix-simple-thumb-wrap yt-uix-simple-thumb-related" tabindex="0" data-vid="wFWDGTVYqE8"><img aria-hidden="true" style="top: 0px" width="168" height="94" data-thumb="https://i.ytimg.com/vi/wFWDGTVYqE8/hqdefault.jpg?sqp=-oaymwEWCKgBEF5IWvKriqkDCQgBFQAAiEIYAQ==&amp;rs=AOn4CLC1u7D3VoAZDe1nkusyR1kl23jRuA" alt="" src="/yts/img/pixel-vfl3z5WfW.gif" ><span class="video-time">3:49</span></span></a>
+                              </div>
+                           </li>
+                           <li class="video-list-item related-list-item  show-video-time related-list-item-compact-video">
+                              <div class="content-wrapper">
+                                 <a href="/watch?v=MrTz5xjmso4" class=" content-link spf-link  yt-uix-sessionlink      spf-link " data-sessionlink="itct=CCAQpDAYDyITCPCb3sSz6toCFcuifgodz50MGCj4HTIHcmVsYXRlZEjEu4GtvZiOhnU"  title="Sean Kingston - Beautiful Girls" rel=" spf-prefetch nofollow" data-visibility-tracking="CCAQpDAYDyITCPCb3sSz6toCFcuifgodz50MGCj4HUCO5ZrH8fy82jI=" >
+                                 <span dir="ltr" class="title" aria-describedby="description-id-390832">
+                                 Sean Kingston - Beautiful Girls
+                                 </span>
+                                 <span class="accessible-description" id="description-id-390832">
+                                 - Duration: 4:18.
+                                 </span>
+                                 <span class="stat attribution"><span class="" >seankingston</span></span>
+                                 <span class="stat view-count">340,312,241 views</span>
+                                 </a>
+                              </div>
+                              <div class="thumb-wrapper">
+                                 <a href="/watch?v=MrTz5xjmso4" class=" vve-check thumb-link spf-link  yt-uix-sessionlink      spf-link " data-sessionlink="itct=CCAQpDAYDyITCPCb3sSz6toCFcuifgodz50MGCj4HTIHcmVsYXRlZEjEu4GtvZiOhnU"  tabindex="-1" rel=" spf-prefetch nofollow" data-visibility-tracking="CCAQpDAYDyITCPCb3sSz6toCFcuifgodz50MGCj4HUCO5ZrH8fy82jI=" aria-hidden="true"><span class="yt-uix-simple-thumb-wrap yt-uix-simple-thumb-related" tabindex="0" data-vid="MrTz5xjmso4"><img aria-hidden="true" style="top: 0px" width="168" height="94" data-thumb="https://i.ytimg.com/vi/MrTz5xjmso4/hqdefault.jpg?sqp=-oaymwEWCKgBEF5IWvKriqkDCQgBFQAAiEIYAQ==&amp;rs=AOn4CLCKOF6-suXIshT1Rtoh9EBqF5BwsQ" alt="" src="/yts/img/pixel-vfl3z5WfW.gif" ><span class="video-time">4:18</span></span></a>
+                              </div>
+                           </li>
+                           <li class="video-list-item related-list-item  show-video-time related-list-item-compact-video">
+                              <div class="content-wrapper">
+                                 <a href="/watch?v=4fndeDfaWCg" class=" content-link spf-link  yt-uix-sessionlink      spf-link " data-sessionlink="itct=CB8QpDAYECITCPCb3sSz6toCFcuifgodz50MGCj4HTIHcmVsYXRlZEjEu4GtvZiOhnU"  title="Backstreet Boys - I Want It That Way" rel=" spf-prefetch nofollow" data-visibility-tracking="CB8QpDAYECITCPCb3sSz6toCFcuifgodz50MGCj4HUCosOm-g6_3_OEB" >
+                                 <span dir="ltr" class="title" aria-describedby="description-id-726718">
+                                 Backstreet Boys - I Want It That Way
+                                 </span>
+                                 <span class="accessible-description" id="description-id-726718">
+                                 - Duration: 3:40.
+                                 </span>
+                                 <span class="stat attribution"><span class="" >Backstreet Boys</span></span>
+                                 <span class="stat view-count">455,905,951 views</span>
+                                 </a>
+                              </div>
+                              <div class="thumb-wrapper">
+                                 <a href="/watch?v=4fndeDfaWCg" class=" vve-check thumb-link spf-link  yt-uix-sessionlink      spf-link " data-sessionlink="itct=CB8QpDAYECITCPCb3sSz6toCFcuifgodz50MGCj4HTIHcmVsYXRlZEjEu4GtvZiOhnU"  tabindex="-1" rel=" spf-prefetch nofollow" data-visibility-tracking="CB8QpDAYECITCPCb3sSz6toCFcuifgodz50MGCj4HUCosOm-g6_3_OEB" aria-hidden="true"><span class="yt-uix-simple-thumb-wrap yt-uix-simple-thumb-related" tabindex="0" data-vid="4fndeDfaWCg"><img aria-hidden="true" style="top: 0px" width="168" height="94" data-thumb="https://i.ytimg.com/vi/4fndeDfaWCg/hqdefault.jpg?sqp=-oaymwEWCKgBEF5IWvKriqkDCQgBFQAAiEIYAQ==&amp;rs=AOn4CLBDFc1Wy-4gOPj698kspzVo8TewJg" alt="" src="/yts/img/pixel-vfl3z5WfW.gif" ><span class="video-time">3:40</span></span></a>
+                              </div>
+                           </li>
+                           <li class="video-list-item related-list-item  show-video-time related-list-item-compact-video">
+                              <div class="content-wrapper">
+                                 <a href="/watch?v=cc91EfoBh8A" class=" content-link spf-link  yt-uix-sessionlink      spf-link " data-sessionlink="itct=CB4QpDAYESITCPCb3sSz6toCFcuifgodz50MGCj4HTIGcmVsbWZ1SMS7ga29mI6GdQ"  title="Rick Astley - Angels On My Side" rel=" spf-prefetch nofollow" data-visibility-tracking="CB4QpDAYESITCPCb3sSz6toCFcuifgodz50MGCj4HUDAj4bQn6Ld53E=" >
+                                 <span dir="ltr" class="title" aria-describedby="description-id-344536">
+                                 Rick Astley - Angels On My Side
+                                 </span>
+                                 <span class="accessible-description" id="description-id-344536">
+                                 - Duration: 3:26.
+                                 </span>
+                                 <span class="stat attribution"><span class="" >Official Rick Astley</span></span>
+                                 <span class="stat view-count">4,793,202 views</span>
+                                 </a>
+                              </div>
+                              <div class="thumb-wrapper">
+                                 <a href="/watch?v=cc91EfoBh8A" class=" vve-check thumb-link spf-link  yt-uix-sessionlink      spf-link " data-sessionlink="itct=CB4QpDAYESITCPCb3sSz6toCFcuifgodz50MGCj4HTIGcmVsbWZ1SMS7ga29mI6GdQ"  tabindex="-1" rel=" spf-prefetch nofollow" data-visibility-tracking="CB4QpDAYESITCPCb3sSz6toCFcuifgodz50MGCj4HUDAj4bQn6Ld53E=" aria-hidden="true"><span class="yt-uix-simple-thumb-wrap yt-uix-simple-thumb-related" tabindex="0" data-vid="cc91EfoBh8A"><img aria-hidden="true" style="top: 0px" width="168" height="94" data-thumb="https://i.ytimg.com/vi/cc91EfoBh8A/hqdefault.jpg?sqp=-oaymwEWCKgBEF5IWvKriqkDCQgBFQAAiEIYAQ==&amp;rs=AOn4CLDrk4ly5qK5gF0AF_7DMPdwuOeghQ" alt="" src="/yts/img/pixel-vfl3z5WfW.gif" ><span class="video-time">3:26</span></span></a>
+                              </div>
+                           </li>
+                           <li class="video-list-item related-list-item  show-video-time related-list-item-compact-video">
+                              <div class="content-wrapper">
+                                 <a href="/watch?v=ZyhrYis509A" class=" content-link spf-link  yt-uix-sessionlink      spf-link " data-sessionlink="itct=CB0QpDAYEiITCPCb3sSz6toCFcuifgodz50MGCj4HTIHcmVsYXRlZEjEu4GtvZiOhnU"  title="Aqua - Barbie Girl" rel=" spf-prefetch nofollow" data-visibility-tracking="CB0QpDAYEiITCPCb3sSz6toCFcuifgodz50MGCj4HUDQp-fZouyalGc=" >
+                                 <span dir="ltr" class="title" aria-describedby="description-id-568293">
+                                 Aqua - Barbie Girl
+                                 </span>
+                                 <span class="accessible-description" id="description-id-568293">
+                                 - Duration: 3:22.
+                                 </span>
+                                 <span class="stat attribution"><span class="" >AquaVEVO</span></span>
+                                 <span class="stat view-count">492,675,531 views</span>
+                                 </a>
+                              </div>
+                              <div class="thumb-wrapper">
+                                 <a href="/watch?v=ZyhrYis509A" class=" vve-check thumb-link spf-link  yt-uix-sessionlink      spf-link " data-sessionlink="itct=CB0QpDAYEiITCPCb3sSz6toCFcuifgodz50MGCj4HTIHcmVsYXRlZEjEu4GtvZiOhnU"  tabindex="-1" rel=" spf-prefetch nofollow" data-visibility-tracking="CB0QpDAYEiITCPCb3sSz6toCFcuifgodz50MGCj4HUDQp-fZouyalGc=" aria-hidden="true"><span class="yt-uix-simple-thumb-wrap yt-uix-simple-thumb-related" tabindex="0" data-vid="ZyhrYis509A"><img aria-hidden="true" style="top: 0px" width="168" height="94" data-thumb="https://i.ytimg.com/vi/ZyhrYis509A/hqdefault.jpg?sqp=-oaymwEWCKgBEF5IWvKriqkDCQgBFQAAiEIYAQ==&amp;rs=AOn4CLAh_fkuIILxH45VW3-ukmUfI0rE0Q" alt="" src="/yts/img/pixel-vfl3z5WfW.gif" ><span class="video-time">3:22</span></span></a>
+                              </div>
+                           </li>
+                           <li class="video-list-item related-list-item  show-video-time related-list-item-compact-video">
+                              <div class="content-wrapper">
+                                 <a href="/watch?v=oGpFcHTxjZs" class=" content-link spf-link  yt-uix-sessionlink      spf-link " data-sessionlink="itct=CBwQpDAYEyITCPCb3sSz6toCFcuifgodz50MGCj4HTIHcmVsYXRlZEjEu4GtvZiOhnU"  title="Tina Turner - What&#39;s Love Got To Do With It" rel=" spf-prefetch nofollow" data-visibility-tracking="CBwQpDAYEyITCPCb3sSz6toCFcuifgodz50MGCj4HUCbm8anh66RtaAB" >
+                                 <span dir="ltr" class="title" aria-describedby="description-id-161029">
+                                 Tina Turner - What&#39;s Love Got To Do With It
+                                 </span>
+                                 <span class="accessible-description" id="description-id-161029">
+                                 - Duration: 3:48.
+                                 </span>
+                                 <span class="stat attribution"><span class="" >Tina Turner Official</span></span>
+                                 <span class="stat view-count">38,421,295 views</span>
+                                 </a>
+                              </div>
+                              <div class="thumb-wrapper">
+                                 <a href="/watch?v=oGpFcHTxjZs" class=" vve-check thumb-link spf-link  yt-uix-sessionlink      spf-link " data-sessionlink="itct=CBwQpDAYEyITCPCb3sSz6toCFcuifgodz50MGCj4HTIHcmVsYXRlZEjEu4GtvZiOhnU"  tabindex="-1" rel=" spf-prefetch nofollow" data-visibility-tracking="CBwQpDAYEyITCPCb3sSz6toCFcuifgodz50MGCj4HUCbm8anh66RtaAB" aria-hidden="true"><span class="yt-uix-simple-thumb-wrap yt-uix-simple-thumb-related" tabindex="0" data-vid="oGpFcHTxjZs"><img aria-hidden="true" style="top: 0px" width="168" height="94" data-thumb="https://i.ytimg.com/vi/oGpFcHTxjZs/hqdefault.jpg?sqp=-oaymwEWCKgBEF5IWvKriqkDCQgBFQAAiEIYAQ==&amp;rs=AOn4CLD6_Zw0uW8ZFVT6SO1wFWxiARJnFQ" alt="" src="/yts/img/pixel-vfl3z5WfW.gif" ><span class="video-time">3:48</span></span></a>
+                              </div>
+                           </li>
+                           <div id="watch-more-related" class="hid">
+                              <li id="watch-more-related-loading">
+                                 Loading more suggestions...
+                              </li>
+                           </div>
+                           <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-expander" type="button" onclick=";return false;" id="watch-more-related-button" data-button-action="yt.www.watch.related.loadMore" data-continuation="CBQSJhILZFF3NHc5V2dYY1HAAQDIAQDgAQGiAg0o____________AUAAGAAq1AEI3u7ztte63Zp2COTB1M2NrNKG6AEI4NSkpfC0hvvIAQi59MSzzMLW5XAIsPfNmeC9hsSkAQiJ4seqlImF068BCPa14-r0ro3mqwEIkfXl_K6Uj8SuAQiJw_TO3d7O5hoI7YOhh4Wq3IuhAQjPh5Gp_uaCgIIBCKbT5t6N8YaaFQiWpoS3wPes_CMIwejdpODYxcatAQjP0OKqk-PgqsABCI7lmsfx_LzaMgiosOm-g6_3_OEBCMCPhtCfot3ncQjQp-fZouyalGcIm5vGp4eukbWgAQ%3D%3D"><span class="yt-uix-button-content">Show more</span></button>
+                        </ul>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+{% endblock %}

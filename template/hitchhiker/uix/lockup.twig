@@ -1,0 +1,59 @@
+{%- macro thumb(info, width, height) -%}
+<div class="yt-lockup-thumbnail contains-addto">
+   <a aria-hidden="true"  href="/watch?v={{info.videoId}}" class=" yt-uix-sessionlink      spf-link " data-sessionlink="itct=CHkQlDUYACITCOLXzPvf6toCFRA7fwodgP0KKSiOHjIKZy1oaWdoLXRydloPRkV3aGF0X3RvX3dhdGNo" >
+   <div class="yt-thumb video-thumb"><span class="yt-thumb-simple">
+       <img height="{{ height }}" onload=";window.__ytRIL &amp;&amp; __ytRIL(this)" alt="" width="{{ width }}" data-ytimg="1" data-thumb="{{ info.thumbnail.thumbnails.0.url }}" src="//s.ytimg.com/yts/img/pixel-vfl3z5WfW.gif">
+       {% if info.lengthText %}
+       <span class="video-time" aria-hidden="true">{{ getText(info.lengthText) }}</span>
+       {% endif %}
+       </span>
+   </div>
+   </a>
+   <span class="thumb-menu dark-overflow-action-menu video-actions">
+   <button aria-expanded="false" onclick=";return false;" aria-haspopup="true" type="button" class="yt-uix-button-reverse flip addto-watch-queue-menu spf-nolink hide-until-delayloaded yt-uix-button yt-uix-button-dark-overflow-action-menu yt-uix-button-size-default yt-uix-button-has-icon no-icon-markup yt-uix-button-empty" >
+       <span class="yt-uix-button-arrow yt-sprite"></span>
+       <ul class="watch-queue-thumb-menu yt-uix-button-menu yt-uix-button-menu-dark-overflow-action-menu hid">
+           <li role="menuitem" class="overflow-menu-choice addto-watch-queue-menu-choice addto-watch-queue-play-next yt-uix-button-menu-item" data-action="play-next" onclick=";return false;"  data-video-ids="ZUSPD9zOyJs"><span class="addto-watch-queue-menu-text">Play next</span></li>
+           <li role="menuitem" class="overflow-menu-choice addto-watch-queue-menu-choice addto-watch-queue-play-now yt-uix-button-menu-item" data-action="play-now" onclick=";return false;"  data-video-ids="ZUSPD9zOyJs"><span class="addto-watch-queue-menu-text">Play now</span></li>
+       </ul>
+   </button>
+   </span>
+   <button class="yt-uix-button yt-uix-button-size-small yt-uix-button-default yt-uix-button-empty yt-uix-button-has-icon no-icon-markup addto-button video-actions spf-nolink hide-until-delayloaded addto-watch-later-button-sign-in yt-uix-tooltip" type="button" onclick=";return false;" title="Watch later" role="button" data-button-menu-id="shared-addto-watch-later-login" data-video-ids="{{info.videoId}}"><span class="yt-uix-button-arrow yt-sprite"></span></button>
+   <button class="yt-uix-button yt-uix-button-size-small yt-uix-button-default yt-uix-button-empty yt-uix-button-has-icon no-icon-markup addto-button addto-queue-button video-actions spf-nolink hide-until-delayloaded addto-tv-queue-button yt-uix-tooltip" type="button" onclick=";return false;" title="Queue" data-style="tv-queue" data-video-ids="{{info.videoId}}"></button>
+</div>
+{% endmacro %}
+
+{%- macro grid(info) -%}
+<div class="yt-lockup yt-lockup-grid yt-lockup-video vve-check clearfix" data-context-item-id="{{info.videoId}}" data-visibility-tracking="CHkQlDUYACITCOLXzPvf6toCFRA7fwodgP0KKSiOHkCbkbvm_eGjomU=">
+    <div class="yt-lockup-dismissable">
+        {{ _self.thumb(info, 196, 110) }}
+        <div class="yt-lockup-content">
+            <h3 class="yt-lockup-title ">
+               <a href="/watch?v={{info.videoId}}" class=" yt-ui-ellipsis yt-ui-ellipsis-2 yt-uix-sessionlink      spf-link " data-sessionlink="itct=CHkQlDUYACITCOLXzPvf6toCFRA7fwodgP0KKSiOHjIKZy1oaWdoLXRydloPRkV3aGF0X3RvX3dhdGNo"  title="{{ getText(info.title) }}" aria-describedby="description-id-956708" dir="ltr">
+               {{ getText(info.title) }}
+               </a>
+               {% if info.lengthText %}
+               <span class="accessible-description" id="description-id-956708">
+               - Duration: {{ info.lengthText.simpleText }}.
+               </span>
+               {% endif %}
+            </h3>
+            <div class="yt-lockup-byline yt-ui-ellipsis yt-ui-ellipsis-2">
+               <a href="{{ info.longBylineText.runs.navigationEndpoint.browseEndpoint.canonicalBaseUrl }}" class="yt-uix-sessionlink       spf-link " data-sessionlink="itct=CHkQlDUYACITCOLXzPvf6toCFRA7fwodgP0KKSiOHg" >
+               {{ getText(info.longBylineText) }}
+               </a>{%- if info.ownerBadges -%}<span title="Verified" class="yt-uix-tooltip yt-channel-title-icon-verified yt-sprite"></span>{% endif %}
+            </div>
+            <div class="yt-lockup-meta ">
+            <ul class="yt-lockup-meta-info">
+                {%- if info.viewCountText -%}
+                    <li>{{ getText(info.viewCountText) }}</li>
+                {% endif %}
+                {%- if info.publishedTimeText -%}
+                    <li>{{ getText(info.publishedTimeText) }}</li>
+                {% endif %}
+            </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endmacro %}

@@ -1,0 +1,33 @@
+{% extends 'core.twig' %}
+
+{% block youtubeResponse %}
+{
+   "body": {
+      "player-unavailable": "",
+      "debug": "",
+      "early-body": "",
+      "appbar-content": {% apply json_encode|raw %} {% block appbarContent %}{% endblock %} {% endapply %},
+      "alerts": "",
+      "content": {% apply json_encode|raw %} {% block content %}{% endblock %} {% endapply %},
+      "header": {% apply json_encode|raw %} {% block header %}{% endblock %} {% endapply %},
+      "ticker-content": "",
+      "player-playlist": ""
+   },
+   "attr": {
+      "player-unavailable": {
+         "class": "  hid  "
+      },
+      "appbar-content": {
+         "class": ""
+      },
+      "page": {
+         "class": "{% apply spaceless %} {%- block page_class -%}{{ parent() }}{% endblock %} {% endapply %}"
+      },
+      "body": {
+         "class": "{%- block body_class -%}{{ parent()|replace({' ': '', '\n': ' '}) }}{% endblock %}"
+      }
+   },
+   "title": "{% apply spaceless %} {%- block title -%}{{ parent() }}{% endblock %} {% endapply %}",
+   "url": "{{ yt.spf_url }}"
+}
+{% endblock %}

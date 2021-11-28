@@ -1,0 +1,19 @@
+{% macro render(nav_items) %}
+<div id="appbar-nav" class="appbar-content-hidable">
+   <ul class="appbar-nav-menu">
+      {%- for item in nav_items -%}
+         <li>
+         {%- if item.selected -%}
+            <h2 class="epic-nav-item-heading" aria-selected="true">
+               {{ item.title }}
+            </h2>
+         {% else %}
+            <a href="{{ item.href }}" class="yt-uix-button  spf-link yt-uix-sessionlink yt-uix-button-epic-nav-item yt-uix-button-size-default" data-sessionlink="ei=caLrWqLbKZD2_AOA-6vIAg&amp;ved=CJABEMMtGAEiEwji18z73-raAhUQO38KHYD9Cikojh4" aria-selected="false">
+               <span class="yt-uix-button-content">{{ item.title }}</span>
+            </a>
+         {% endif %}
+         </li>
+      {% endfor %}
+   </ul>
+</div>
+{% endmacro %}
