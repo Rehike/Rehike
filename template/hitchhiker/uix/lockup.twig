@@ -32,10 +32,8 @@
                <a href="/watch?v={{info.videoId}}" class=" yt-ui-ellipsis yt-ui-ellipsis-2 yt-uix-sessionlink      spf-link " data-sessionlink="itct=CHkQlDUYACITCOLXzPvf6toCFRA7fwodgP0KKSiOHjIKZy1oaWdoLXRydloPRkV3aGF0X3RvX3dhdGNo"  title="{{ getText(info.title) }}" aria-describedby="description-id-956708" dir="ltr">
                {{ getText(info.title) }}
                </a>
-               {% if info.lengthText %}
-               <span class="accessible-description" id="description-id-956708">
-               - Duration: {{ info.lengthText.simpleText }}.
-               </span>
+               {%- if info.lengthText -%}
+                  {{ _self.accessible-description(info.lengthText.simpleText) }}
                {% endif %}
             </h3>
             <div class="yt-lockup-byline yt-ui-ellipsis yt-ui-ellipsis-2">
@@ -56,4 +54,14 @@
         </div>
     </div>
 </div>
+{% endmacro %}
+
+{%- macro accessible-description(lengthText) -%}
+{# 
+   don't really care about the description id thing for now
+   it doesn't seem to have any effect on anything
+#}
+<span class="accessible-description" id="description-id-956708">
+- Duration: {{ lengthText }}.
+</span>
 {% endmacro %}
