@@ -1,5 +1,5 @@
 <?php
-require($root . '/lib/routerBase.php');
+require($root . '/mod/routerBase.php');
 
 switch ($routerUrl->path[0]) {
     case '':
