@@ -1,6 +1,7 @@
 {% extends 'core.twig' %}
 
 {% block youtubeResponse %}
+{{ contentType("application/json") }}
 {
    "body": {
       "player-unavailable": "",
