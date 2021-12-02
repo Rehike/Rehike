@@ -3,25 +3,28 @@ require($root . '/mod/routerBase.php');
 
 switch ($routerUrl->path[0]) {
     case '':
-        include($root . '/views/homepage.php');
+        include('views/homepage.php');
         break;
     case 'watch':
-        include($root . '/views/watch.php');
+        include('views/watch.php');
         break;
     case 'shorts': // redirect to watch
         ob_end_clean();
         ob_start();
-        header('Location: /watch?v=' . $routerUrl->path[1]);
+        header ('Location: /watch?v=' . $routerUrl->path[1]);
         ob_end_flush();
         exit();
         break;
+    case 'forcefatal':
+        $template = 'sdsadasds';
+        break;
     case 'attribution':
-        include($root . '/views/attribution.php');
+        include('views/attribution.php');
         break;
     case 'debug':
-        include($root . '/debug.php');
+        include('debug.php');
         break;
     default:
         $template = '404';
-    break;
+        break;
 }

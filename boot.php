@@ -26,6 +26,6 @@ function registerFunction($name, $cb) {
    $twig->addFunction(new \Twig\TwigFunction($name, $cb));
 }
 
-foreach (glob($root . '/mod/functions/*.php') as $file) include $file;
+foreach (glob('mod/functions/*.php') as $file) include $file;
 
 $twig->addGlobal('yt', $yt);
