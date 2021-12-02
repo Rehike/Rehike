@@ -1,6 +1,7 @@
 <?php
 ob_start();
 $root = $_SERVER['DOCUMENT_ROOT'];
+set_include_path($root);
 
 $visitor = null;
 if (isset($_COOKIE['VISITOR_INFO1_LIVE'])) {
@@ -15,10 +16,11 @@ $yt = (object) [];
 $template = '';
 
 // differentiates pages
-require($root . '/router.php');
+require ('router.php');
 
 // initialises twig
-include($root . '/boot.php');
+include ('boot.php');
+include ('fatalHandler.php');
 
 if (isset($_GET['spf'])) {
     $yt->spf = true;

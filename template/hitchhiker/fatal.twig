@@ -1,0 +1,61 @@
+{% extends 'core.twig' %}
+
+{% set pageType = 'page-default oops-content' %}
+
+{%- block head_css -%}
+<link rel="stylesheet" href="//s.ytimg.com/yts/cssbin/www-error-vflvD9R0Z.css" name="www-error">
+{% endblock %}
+
+{%- block oldAlerts -%}
+<div class="yt-alert yt-alert-actionable yt-alert-error ">  
+   <div class="yt-alert-icon">
+      <img src="//s.ytimg.com/yt/img/pixel-vfl3z5WfW.gif" class="icon master-sprite" alt="Alert icon">
+   </div>
+   <div class="yt-alert-content" role="alert">    
+      <span class="yt-alert-vertical-trick"></span>
+      <div class="yt-alert-message">
+         Fatal error: {{ errInfo.messagePreview }}
+      </div>
+   </div>
+   <div class="yt-alert-buttons">
+      <button target="_blank" class="yt-uix-button   yt-uix-sessionlink yt-uix-button-alert-error yt-uix-button-size-small" id="gterr-more"><span class="yt-uix-button-content">More information</span></button>
+   </div>
+</div>
+{% endblock %}
+
+{%- block content -%}
+<img src="//s.ytimg.com/yts/img/tv_stack-vflmeOpv_.png" alt="Sorry, something went wrong! Our tubes must be clogged." title="Sorry, something went wrong! Our tubes must be clogged.">
+<div id="gterr-dialog-template" class="hid">
+   <div id="gterr-dialog" class="yt-dialog preserve-players" data-player-ready-pubsub-key="589">
+      <div class="yt-dialog-base"> <span class="yt-dialog-align"></span>
+         <div role="dialog" tabindex="0" class="yt-dialog-fg yt-uix-overlay-primary yt-uix-overlay">
+            <div class="yt-dialog-fg-content yt-dialog-show-content">
+               <div class="yt-dialog-content">
+                  <div class="gterr-overlay-content-container">
+                     <div style="margin-top: 20px">
+                        <h1>Error log</h1>
+                     </div>
+                     <div style="margin-top: 20px;width: 600px;height: 300px;border: 1px solid #ccc;padding: 6px;overflow: scroll;overflow-x: auto;">
+                        errors
+                     </div>
+                     <div class="yt-uix-overlay-actions">
+                        <button id="gterr-log-close" class="yt-uix-button yt-uix-button-size-default yt-uix-button-default yt-uix-overlay-close" type="button" onclick=";return false;"><span class="yt-uix-button-content">Close</span></button>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="yt-dialog-focus-trap" tabindex="0"></div>
+         </div>
+      </div>
+   </div>       
+</div>
+<script>
+(
+function() {
+
+
+
+}
+)();
+</script>
+{% endblock %}
