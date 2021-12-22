@@ -22,6 +22,7 @@ require ('router.php');
 include ('boot.php');
 include ('fatalHandler.php');
 
+// lazy spf check
 if (isset($_GET['spf'])) {
     $yt->spf = true;
     $yt->spf_url = preg_replace('/.spf='.$_GET['spf'].'/', '', $_SERVER['REQUEST_URI']);
