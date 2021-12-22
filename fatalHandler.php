@@ -51,6 +51,7 @@ function fatalPreviewify($msg) {
    if (substr($msg, 0, 19) == "Uncaught Twig\Error") {
       return simplifyTwigError($msg);
    } else {
+      $msg = 'Fatal error: ' . $msg;
       if (strlen($msg) < 40) {
          return substr($msg, 0, 37) . '...';
       } else {
@@ -60,7 +61,7 @@ function fatalPreviewify($msg) {
 }
 
 function simplifyTwigError($msg) {
-   $response = '(in Twig)';
+   $response = 'Fatal error (in Twig): ';
    $re = '/(Uncaught Twig\\\\Error\\\\(.*?): )|( \()/';
    preg_match_all($re, $msg, $matches, PREG_OFFSET_CAPTURE);
    
