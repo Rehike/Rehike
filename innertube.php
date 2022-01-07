@@ -81,6 +81,14 @@ class Request {
       return self::apiURI . $this->api . '?key=' . self::apiKey;
    }
 
+   public function __doRequest(): object {
+      if ($this->continuative) {
+         return $this->continue( $this->params->continuation );
+      } else {
+         return $this->request();
+      }
+   }
+
    public function __construct(?YtSigninCore $sc = null, string $api, object $context, object $params) {
       $this->sc = $sc;
       $this->api = $api;
@@ -89,12 +97,6 @@ class Request {
       $this->context = new Context($context);
 
       $this->continuative = isset($this->params->continuation);
-
-      if ($this->continuative) {
-         return $this->continue( $this->params->continuation );
-      } else {
-         return $this->request();
-      }
    }
 }
 
@@ -102,8 +104,13 @@ class Request {
 class Environment {
    private ?YtSigninCore $sc;
 
-   public function request(...$args): Request {
-      return new Request($this->sc, ...$args);
+   public function request(...$args): object {
+      $requestHandler = new Request($this->sc, ...$args);
+      return $requestHandler->__doRequest();
+   }
+
+   public function setSigninCore(YtSigninCore $sc): void {
+      $this->sc = $sc;
    }
 
    public function __construct(?YtSigninCore $sc = null) {

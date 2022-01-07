@@ -1,0 +1,17 @@
+{%- macro getPath(type, name) -%}{{ resourcePath(ytConstants, type, name) }}{% endmacro %}
+
+{%- macro jsPath(name) -%}{{ _self.getPath('js', name) }}{% endmacro %}
+
+{%- macro cssPath(name) -%}{{ _self.getPath('css', name) }}{% endmacro %}
+
+{%- macro js(name) -%}
+<script src="{{ _self.jsPath(name) }}" type="text/javascript" name="{{ name }}"></script>
+{% endmacro %}
+
+{%- macro css(name) -%}
+<link rel="stylesheet" href="{{ _self.cssPath(name) }}" name="{{ name }}">
+{% endmacro %}
+
+{% macro sprite(sprite, alt) %}
+<span {{ alt ? ('title="' ~ alt ~ '"')|raw }} class="{{ sprite }} yt-sprite"></span>
+{% endmacro %}

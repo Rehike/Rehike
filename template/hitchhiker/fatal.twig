@@ -6,7 +6,7 @@
 <link rel="stylesheet" href="//s.ytimg.com/yts/cssbin/www-error-vflvD9R0Z.css" name="www-error">
 {% endblock %}
 
-{%- block oldAlerts -%}
+{%- block alerts -%}
 <div class="yt-alert yt-alert-actionable yt-alert-error ">  
    <div class="yt-alert-icon">
       <img src="//s.ytimg.com/yt/img/pixel-vfl3z5WfW.gif" class="icon master-sprite" alt="Alert icon">
@@ -14,7 +14,7 @@
    <div class="yt-alert-content" role="alert">    
       <span class="yt-alert-vertical-trick"></span>
       <div class="yt-alert-message">
-         {{ errInfo.messagePreview }}
+         {{ yt.errInfo.messagePreview }}
       </div>
    </div>
    <div class="yt-alert-buttons">
@@ -36,7 +36,7 @@
                         <h1>Error log</h1>
                      </div>
                      <div style="margin-top: 20px;width: 600px;height: 300px;border: 1px solid #ccc;padding: 6px;overflow: scroll;overflow-x: auto;">
-                        errors
+                        {{ yt.errInfo.message }}
                      </div>
                      <div class="yt-uix-overlay-actions">
                         <button id="gterr-log-close" class="yt-uix-button yt-uix-button-size-default yt-uix-button-default yt-uix-overlay-close" type="button" onclick=";return false;"><span class="yt-uix-button-content">Close</span></button>

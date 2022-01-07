@@ -2,16 +2,19 @@
 
 register_shutdown_function("fatalHandler");
 
+// wow this code really fucking sucks
+
 function fatalHandler() {
+   global $buildFatalPage;
    $e = error_get_last();
-   if ($e !== null) {
+   if ($e !== null && ($e['type'] == E_ERROR || $e['type'] == E_CORE_ERROR)) {
       ob_end_clean(); ob_start(); // wipe output buffer and restart
       
       try {
-         buildFatalPage($e);
+         $buildFatalPage($e);
       } catch (Error $err) {
          try {
-            buildFatalPage($e, true);
+            $buildFatalPage($e, true);
          } catch (Error $err) {
             echo 'Fatal error trying to catch fatal error trying to catch fatal error. Fuck.';
          }
@@ -21,7 +24,8 @@ function fatalHandler() {
    }
 }
 
-function buildFatalPage($e, $simple = false) {
+$buildFatalPage = function ($e, $simple = false) use (&$twig, $yt) {
+   /*
    if (!$simple) {
       $twig = new \Twig\Environment(
          new \Twig\Loader\FilesystemLoader(
@@ -29,6 +33,7 @@ function buildFatalPage($e, $simple = false) {
          )
       );
    }
+   // */
    
    $errInfo = (object) [];
    $errInfo->type = $e['type'] ?? E_CORE_ERROR;
@@ -38,13 +43,15 @@ function buildFatalPage($e, $simple = false) {
    $errInfo->messagePreview = fatalPreviewify($errInfo->message);
    
    if (!$simple) {
-      $twig->addGlobal('errInfo', $errInfo);
-      echo $twig->render('fatal.twig', [$errInfo]);
+      //$twig->addGlobal('errInfo', $errInfo);
+      $yt->errInfo = $errInfo;
+      $twig->addGlobal('yt', $yt);
+      echo $twig->render('fatal.twig', [$yt]);
    } else {
       header('Content-Type: application/json');
       echo json_encode($errInfo);
    }
-}
+};
 
 function fatalPreviewify($msg) {
    $response = "";
@@ -52,7 +59,7 @@ function fatalPreviewify($msg) {
       return simplifyTwigError($msg);
    } else {
       $msg = 'Fatal error: ' . $msg;
-      if (strlen($msg) < 40) {
+      if (strlen($msg) > 40) {
          return substr($msg, 0, 37) . '...';
       } else {
          return $msg;

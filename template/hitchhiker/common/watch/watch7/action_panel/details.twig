@@ -1,0 +1,54 @@
+<div id="action-panel-details" class="action-panel-content yt-uix-expander yt-card yt-card-has-padding yt-uix-expander-collapsed">
+    <div id="watch-description" class="yt-uix-button-panel">
+        <div id="watch-description-content">
+        <div id="watch-description-clip">
+            <div id="watch-uploader-info"><strong class="watch-time-text">{{ secondaryInfo.dateText }}</strong></div>
+            <div id="watch-description-text" class="">
+                <p id="eow-description" class="">
+                    {%- for snippet in secondaryInfo.description.runs -%}
+                    {%- if (snippet.navigationEndpoint) -%}
+                        <a href="#">
+                    {% endif %}
+                    {{ snippet.text|nl2br }}
+                    {%- if (snippet.navigationEndpoint) -%}
+                        </a>
+                    {% endif %}
+                    {% endfor %}
+                </p>
+            </div>
+            <div id="watch-description-extras">
+                <ul class="watch-extras-section">
+                    {#
+                    <li class="watch-meta-item yt-uix-expander-body">
+                    <h4 class="title">
+                        Category
+                    </h4>
+                    <ul class="content watch-info-tag-list">
+                        <li><a href="/channel/UC-9-kyTW8ZkZNDHQJ6FgpwQ" class=" yt-uix-sessionlink      spf-link " data-sessionlink="ei=23PrWrDCHMvF-gPPu7LAAQ" >Music</a></li>
+                    </ul>
+                    </li>
+                    <li class="watch-meta-item yt-uix-expander-body">
+                    <h4 class="title">
+                        License
+                    </h4>
+                    <ul class="content watch-info-tag-list">
+                        <li>Standard YouTube License</li>
+                    </ul>
+                    </li>
+                    <li class="watch-meta-item yt-uix-expander-body">
+                    <h4 class="title">
+                        Music
+                    </h4>
+                    <ul class="content watch-info-tag-list">
+                        <li>&quot;Never Gonna Give You Up (7&#39;&#39; Mix)&quot; by Rick Astley <a href="/red" class=" yt-uix-sessionlink      spf-link " data-sessionlink="ei=23PrWrDCHMvF-gPPu7LAAQ&amp;feature=c2bytred" >Listen ad-free with </a><a href="/red" class=" yt-uix-sessionlink      spf-link " data-sessionlink="ei=23PrWrDCHMvF-gPPu7LAAQ&amp;feature=c2bytred" >YouTube Red</a></li>
+                    </ul>
+                    </li>
+                    #}
+                </ul>
+            </div>
+        </div>
+        </div>
+    </div>
+    <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-expander yt-uix-expander-head yt-uix-expander-collapsed-body yt-uix-gen204" type="button" onclick=";return false;" data-gen204="feature=watch-show-more-metadata"><span class="yt-uix-button-content">Show more</span></button>
+    <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-expander yt-uix-expander-head yt-uix-expander-body" type="button" onclick=";return false;"><span class="yt-uix-button-content">Show less</span></button>
+</div>

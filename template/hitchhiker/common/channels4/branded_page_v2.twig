@@ -1,0 +1,26 @@
+<div class="{% apply spaceless %}
+    branded-page-v2-container 
+    {{ brandedPageConfig.baseBoldTitles ? 'branded-page-base-bold-titles' }} 
+    {{ brandedPageConfig.containerFlexWidth ? 'branded-page-v2-container-flex-width' }} 
+    {{ brandedPageConfig.hasTopRow ? 'branded-page-v2-has-top-row' }} 
+    {{ brandedPageConfig.secondaryColumnHidden ? 'branded-page-v2-secondary-column-hidden' }}
+    {% endapply %}">
+    {% if brandedPageConfig.hasTopRow %}
+    <div class="branded-page-v2-top-row">
+        {%- block branded_page_top_row -%}
+        {% endblock %}
+    </div>
+    {% endif %}
+    <div class="branded-page-v2-col-container">
+        <div class="branded-page-v2-col-container-inner">
+            <div class="branded-page-v2-primary-col">
+                <div class="   yt-card  clearfix">
+                    <div class="branded-page-v2-body branded-page-v2-primary-column-content" id="">
+                        {%- block branded_page_primary_column_content -%}
+                        {% endblock %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
