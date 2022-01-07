@@ -15,11 +15,14 @@ $templateRoot = '/template/hitchhiker';
 $yt = (object) [];
 $template = '';
 
+include ('boot.php');
+include ('defaultExperiments.php');
+include ('resourceConstants.php');
+
 // differentiates pages
 require ('router.php');
 
 // initialises twig
-include ('boot.php');
 include ('fatalHandler.php');
 
 // lazy spf check
@@ -28,6 +31,7 @@ if (isset($_GET['spf'])) {
     $yt->spf_url = preg_replace('/.spf='.$_GET['spf'].'/', '', $_SERVER['REQUEST_URI']);
 }
 
+$yt->spfEnabled = false; // DEBUG
 echo $twig->render($template . '.twig', [$yt]);
 
 ob_end_flush();

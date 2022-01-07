@@ -1,0 +1,32 @@
+{% import '/common/watch/watch7/sidebar/macros.twig' as sidebar %}
+
+<div id="watch7-sidebar" class="watch-sidebar">
+    <div id="placeholder-playlist" class="watch-playlist player-height  hid"></div>
+    <div id="watch7-sidebar-contents" class="watch-sidebar-gutter   yt-card yt-card-has-padding    yt-uix-expander yt-uix-expander-collapsed">
+        <div id="watch7-sidebar-offer">
+        </div>
+        <div id="watch7-sidebar-ads">
+            <div id="watch-channel-brand-div" class="" >
+                <div id="watch-channel-brand-div-text">
+                Advertisement
+                </div>
+                <div id="google_companion_ad_div">
+                </div>
+            </div>
+        </div>
+        <div id="watch7-sidebar-modules">
+            {% if secondaryResults.autoplayRenderer %}
+            <div class="watch-sidebar-section">
+                {% include '/common/watch/watch7/sidebar/autoplay_module.twig' %}
+            </div>
+            {% endif %}
+            <div class="watch-sidebar-section">
+                {{ secondaryResults.autoplayRenderer ? '<hr class="watch-sidebar-separation-line">'|raw }}
+                <div class="watch-sidebar-body">
+                {{ sidebar.video_list(secondaryResults.results, 'watch-related') }}
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</div>

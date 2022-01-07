@@ -1,0 +1,18 @@
+{% import 'core/macros.twig' as core %}
+<script>
+    var ytspf = ytspf || {};
+    ytspf.enabled = {{ yt.spfEnabled ? 'true' : 'false' }};
+    {%- if yt.spfEnabled -%}
+    ytspf.config = {
+        'reload-identifier': 'spfreload'
+    };
+    ytspf.config['request-headers'] = {
+        'X-YouTube-Identity-Token': null
+    };
+    ytspf.config['experimental-request-headers'] = ytspf.config['request-headers'];
+    ytspf.config['cache-max'] = 50;
+    ytspf.config['navigate-limit'] = 50;
+    ytspf.config['navigate-lifetime'] = 64800000;
+    {% endif %}
+</script>
+{{ core.js('spf/spf') }}

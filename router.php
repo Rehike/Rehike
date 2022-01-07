@@ -10,9 +10,7 @@ switch ($routerUrl->path[0]) {
         break;
     case 'shorts': // redirect to watch
         ob_end_clean();
-        ob_start();
         header ('Location: /watch?v=' . $routerUrl->path[1]);
-        ob_end_flush();
         exit();
         break;
     case 'forcefatal':
@@ -23,6 +21,18 @@ switch ($routerUrl->path[0]) {
         break;
     case 'debug':
         include('debug.php');
+        break;
+    case 'redirect':
+        // temporary logic?
+        // youtube has a redirect confirmation page in some cases
+        // TODO: research
+        ob_end_clean();
+        header('Location: ' . $_GET['q']);
+        exit();
+        break;
+    case 's':
+        include('simplefunnel.php');
+        die();
         break;
     default:
         $template = '404';

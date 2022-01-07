@@ -16,7 +16,7 @@ $twig = new \Twig\Environment($twigLoader, [
 
 
 
-function registerFunction($name, $cb) {
+function registerFunction($name, $cb): void {
    global $twig;
    
    $Jim = '_' . $name;
@@ -27,5 +27,13 @@ function registerFunction($name, $cb) {
 }
 
 foreach (glob('mod/functions/*.php') as $file) include $file;
+
+function findKey(array $array, string $key) {
+   for ($i = 0, $j = count($array); $i < $j; $i++) {
+      if (isset($array[$i]->{$key})) {
+         return $array[$i]->{$key};
+      }
+   }
+}
 
 $twig->addGlobal('yt', $yt);

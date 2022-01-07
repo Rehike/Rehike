@@ -1,0 +1,223 @@
+<script>
+    yt.setConfig({
+        APIARY_HOST_FIRSTPARTY: "",
+        INNERTUBE_CONTEXT_CLIENT_NAME: 1,
+        INNERTUBE_CONTEXT_CLIENT_VERSION: "1.20180501",
+        XHR_APIARY_HOST: "youtubei.youtube.com",
+        GAPI_HINT_PARAMS: "m;\/_\/scs\/abc-static\/_\/js\/k=gapi.gapi.en.fXLlmSb25lg.O\/m=__features__\/rt=j\/d=1\/rs=AHpOoo87O_nfyKCryZ5rvwwhVwktxKhiRA",
+        INNERTUBE_API_KEY: "AIzaSyAO_FJ2SlqU8Q4STEHLGCilw_Y9_11qcW8",
+        INNERTUBE_API_VERSION: "v1",
+        APIARY_HOST: "",
+        'VISITOR_DATA': "Cgt5dXB2SU8wTGxlNA%3D%3D",
+        'DELEGATED_SESSION_ID': null,
+        'GAPI_HOST': "https:\/\/apis.google.com",
+        'GAPI_LOCALE': "en_US",
+        'INNERTUBE_CONTEXT_HL': "en",
+        'INNERTUBE_CONTEXT_GL': "US",
+        'XHR_APIARY_HOST': "youtubei.youtube.com"
+    });
+    yt.setConfig({
+        'ROOT_VE_CHILDREN': [
+            "CAEQpmEiEwji18z73-raAhUQO38KHYD9Cikojh4", 
+            "CAIQ7VAiEwji18z73-raAhUQO38KHYD9Cikojh4", 
+            "CHoQ_h4iEwji18z73-raAhUQO38KHYD9Cikojh4", 
+            "CHsQ5isYACITCOLXzPvf6toCFRA7fwodgP0KKSiOHg", 
+            "CHwQtSwYACITCOLXzPvf6toCFRA7fwodgP0KKSiOHg", 
+            "CH0QtSwYASITCOLXzPvf6toCFRA7fwodgP0KKSiOHg", 
+            "CH4QtSwYAiITCOLXzPvf6toCFRA7fwodgP0KKSiOHg", 
+            "CH8QtSwYAyITCOLXzPvf6toCFRA7fwodgP0KKSiOHg", 
+            "CIABEOGLAhgEIhMI4tfM-9_q2gIVEDt_Ch2A_QopKI4e", 
+            "CIEBEOYrGAEiEwji18z73-raAhUQO38KHYD9Cikojh4", 
+            "CIIBELUsGAAiEwji18z73-raAhUQO38KHYD9Cikojh4", 
+            "CIMBELUsGAEiEwji18z73-raAhUQO38KHYD9Cikojh4", 
+            "CIQBELUsGAIiEwji18z73-raAhUQO38KHYD9Cikojh4", 
+            "CIUBELUsGAMiEwji18z73-raAhUQO38KHYD9Cikojh4", 
+            "CIYBELUsGAQiEwji18z73-raAhUQO38KHYD9Cikojh4", 
+            "CIcBELUsGAUiEwji18z73-raAhUQO38KHYD9Cikojh4", 
+            "CIgBELUsGAYiEwji18z73-raAhUQO38KHYD9Cikojh4", 
+            "CIkBELUsGAciEwji18z73-raAhUQO38KHYD9Cikojh4", 
+            "CIoBELUsGAgiEwji18z73-raAhUQO38KHYD9Cikojh4", 
+            "CIsBEOYrGAIiEwji18z73-raAhUQO38KHYD9Cikojh4", 
+            "CIwBELUsGAAiEwji18z73-raAhUQO38KHYD9Cikojh4", 
+            "CI0BENguGAMiEwji18z73-raAhUQO38KHYD9Cikojh4", 
+            "CI4BEMcxIhMI4tfM-9_q2gIVEDt_Ch2A_QopKI4e", 
+            "CI8BEMMtGAAiEwji18z73-raAhUQO38KHYD9Cikojh4", 
+            "CJABEMMtGAEiEwji18z73-raAhUQO38KHYD9Cikojh4"
+        ],
+    });
+    yt.setConfig({
+        'PAGE_NAME': "{{ pageName ?? pageType }}", {# page type usually works, but some pages (index) differ #}
+        'LOGGED_IN': false,
+        'SESSION_INDEX': null,
+        'VALID_SESSION_TEMPDATA_DOMAINS': ["www.youtube.com", "gaming.youtube.com"],
+        'PARENT_TRACKING_PARAMS': "",
+        'FORMATS_FILE_SIZE_JS': ["%s B", "%s KB", "%s MB", "%s GB", "%s TB"],
+        'ONE_PICK_URL': "",
+        'GOOGLEPLUS_HOST': "https:\/\/plus.google.com",
+        'PAGEFRAME_JS': "\//s.ytimg.com/yts\/jsbin\/www-pageframe-vfl1RI_FO\/www-pageframe.js",
+        'GAPI_LOADER_URL': "\//s.ytimg.com/yts\/jsbin\/www-gapi-loader-vflugy459\/www-gapi-loader.js",
+        'JS_COMMON_MODULE': "\//s.ytimg.com/yts\/jsbin\/www-en_US-vflkPQDpM\/common.js",
+        'PAGE_FRAME_DELAYLOADED_CSS': "\//s.ytimg.com/yts\/cssbin\/www-pageframedelayloaded-vflkvMhoL.css",
+        'EXPERIMENT_FLAGS': {% include 'core/experimentFlags.json' %},
+        'GUIDED_HELP_PARAMS': {
+            "logged_in": "0",
+            "context": "yt_web_w2w"
+        },
+        'HIGH_CONTRAST_MODE_CSS': {{ core.cssPath('www-highcontrastmode')|json_encode|raw }},
+        'PREFETCH_CSS_RESOURCES': ["\//s.ytimg.com/yts\/cssbin\/player-vflk34Vc2\/www-player.css"],
+        'PREFETCH_JS_RESOURCES': ["\//s.ytimg.com/yts\/jsbin\/www-pagead-id-vflikUYq3\/www-pagead-id.js", "\//s.ytimg.com/yts\/jsbin\/player-vflHFWD7-\/en_US\/base.js"],
+        'PREFETCH_LINKS': false,
+        'PREFETCH_LINKS_MAX': 1,
+        'PREFETCH_AUTOPLAY': false,
+        'PREFETCH_AUTOPLAY_TIME': 0,
+        'PREFETCH_AUTONAV': false,
+        'PREBUFFER_MAX': 1,
+        'PREBUFFER_LINKS': false,
+        'PREBUFFER_AUTOPLAY': false,
+        'PREBUFFER_AUTONAV': false,
+        'WATCH_LATER_BUTTON': "\n\n  \u003cbutton class=\"yt-uix-button yt-uix-button-size-small yt-uix-button-default yt-uix-button-empty yt-uix-button-has-icon no-icon-markup addto-button video-actions spf-nolink hide-until-delayloaded addto-watch-later-button-sign-in yt-uix-tooltip\" type=\"button\" onclick=\";return false;\" title=\"Watch later\" role=\"button\" data-button-menu-id=\"shared-addto-watch-later-login\" data-video-ids=\"__VIDEO_ID__\"\u003e\u003cspan class=\"yt-uix-button-arrow yt-sprite\"\u003e\u003c\/span\u003e\u003c\/button\u003e\n",
+        'WATCH_QUEUE_BUTTON': "  \u003cbutton class=\"yt-uix-button yt-uix-button-size-small yt-uix-button-default yt-uix-button-empty yt-uix-button-has-icon no-icon-markup addto-button addto-queue-button video-actions spf-nolink hide-until-delayloaded addto-tv-queue-button yt-uix-tooltip\" type=\"button\" onclick=\";return false;\" title=\"Queue\" data-style=\"tv-queue\" data-video-ids=\"__VIDEO_ID__\"\u003e\u003c\/button\u003e\n",
+        'WATCH_QUEUE_MENU': "  \u003cspan class=\"thumb-menu dark-overflow-action-menu video-actions\"\u003e\n    \u003cbutton aria-expanded=\"false\" onclick=\";return false;\" aria-haspopup=\"true\" type=\"button\" class=\"yt-uix-button-reverse flip addto-watch-queue-menu spf-nolink hide-until-delayloaded yt-uix-button yt-uix-button-dark-overflow-action-menu yt-uix-button-size-default yt-uix-button-has-icon no-icon-markup yt-uix-button-empty\" \u003e\u003cspan class=\"yt-uix-button-arrow yt-sprite\"\u003e\u003c\/span\u003e\u003cul class=\"watch-queue-thumb-menu yt-uix-button-menu yt-uix-button-menu-dark-overflow-action-menu hid\"\u003e\u003cli role=\"menuitem\" class=\"overflow-menu-choice addto-watch-queue-menu-choice addto-watch-queue-play-next yt-uix-button-menu-item\" data-action=\"play-next\" onclick=\";return false;\"  data-video-ids=\"__VIDEO_ID__\"\u003e\u003cspan class=\"addto-watch-queue-menu-text\"\u003ePlay next\u003c\/span\u003e\u003c\/li\u003e\u003cli role=\"menuitem\" class=\"overflow-menu-choice addto-watch-queue-menu-choice addto-watch-queue-play-now yt-uix-button-menu-item\" data-action=\"play-now\" onclick=\";return false;\"  data-video-ids=\"__VIDEO_ID__\"\u003e\u003cspan class=\"addto-watch-queue-menu-text\"\u003ePlay now\u003c\/span\u003e\u003c\/li\u003e\u003c\/ul\u003e\u003c\/button\u003e\n  \u003c\/span\u003e\n",
+        'SAFETY_MODE_PENDING': false,
+        'ZWIEBACK_PING_URLS': ["https:\/\/www.google.com\/pagead\/lvz?req_ts=1525391985\u0026pg=index\u0026evtid=ALJwLvToJXD0p3_Zrbrrfp9ih4rqwwAMLeJ3ElrnHltrNYrWsTByMCWniNX3mAadBuAdCje5foaJkSKkWgMjL4H28LIW72flyA\u0026sigh=AD56X6t_M9BxOrscJtOgog0u0lWO3nkLDw"],
+        'LOCAL_DATE_TIME_CONFIG': {
+            "amPms": ["AM", "PM"],
+            "formatLongDateOnly": "MMMM d, y",
+            "months": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+            "shortMonths": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+            "weekendRange": [6, 5],
+            "dateFormats": ["MMMM d, y 'at' h:mm a", "MMMM d, y", "MMM d, y", "MMM d, y"],
+            "formatWeekdayShortTime": "EE h:mm a",
+            "firstDayOfWeek": 0,
+            "formatShortDate": "MMM d, y",
+            "shortWeekdays": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+            "formatShortTime": "h:mm a",
+            "formatLongDate": "MMMM d, y 'at' h:mm a",
+            "firstWeekCutoffDay": 3,
+            "weekdays": ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+        },
+        'PAGE_CL': 194950063,
+        'PAGE_BUILD_LABEL': "youtube.ytfe.desktop_20180430_4_RC1",
+        'VARIANTS_CHECKSUM': "428a944d5eaeed109e12cae9cbe78c47",
+        'CLIENT_PROTOCOL': "HTTP\/1.0",
+        'CLIENT_TRANSPORT': "tcp",
+        'MDX_ENABLE_CASTV2': true,
+        'MDX_ENABLE_QUEUE': true,
+        'SERVICE_WORKER_PROMPT_NOTIFICATIONS': true,
+        'FEEDBACK_BUCKET_ID': "Home",
+        'FEEDBACK_LOCALE_LANGUAGE': "en",
+        'FEEDBACK_LOCALE_EXTRAS': {
+            "accept_language": null,
+            "experiments": "23700266,23700732,23701247,23701297,23701882,23702459,23703975,23705057,23705778,23706844,23706846,23707086,23708904,23708906,23708910,23709090,23709328,23709532,23709788,23709896,23709898,23709902,23709985,23710313,23710367,23710476,23710536,23710560,23710729,23710863,23711857,23711859,23712229,23712544,23712746,23712838,23713594,23714427,23714579,23714865,23715674,23715837,23715854,23716256,23716688,23717597,23718221,23718617,23720115,23720358,23720566,23721075,23721136,23721182,23721223,23721466,23721698,23721770,23721898,23721928,23722151,23722284,23722367,23722905,23723166,23723437,23723555,23723588,23723618,23724337,23725678,23725949,23726541,23726564,23726767,23726949,23726973,23727119,23727268,23727366,23727487,23727705,23727834,23728036,23728293,23728416,23728468,23728625,23728908,23729146,23729373,23729484,23729690,23729887,23730614,23730642,23730661,23730676,23731189,23731222,23731700,23731801,23731868,23731877,23731938,23731977,23732016,23732160,23732469,23732639,23732692,23732895,23733081,23733270,23733291,23733473,23733524,23733644,23733751,23733823,23733978,23734153,23734497,23734662,23734670,23734676,23734961,23734991,23735000,23735137,23735154,23735395,23735400,23736028,23736169,23736323,23736402,23736484,23736572,23736955,23736982,23737024,23737217,23737392,23737416,23737474,23737653,23737659,23737795,23737840,23737949,23737975,23738006,23738007,23738208,23738258,23738262,23738266,23738416,23738477,23738485,23738628,23738747,23738860,23738917,23738944,23739191,23739211,23739231,23739239,23739241,23739306,23739358,23739416,23739509,23739533,23739700,23739764,23739967,9405975,9415398,9419979,9422596,9445139,9449243,9451814,9453167,9453409,9457169,9459792,9459797,9460098,9460554,9460829,9460959,9463460,9463594,9463936,9463963,9464203,9466835,9467471,9467508,9467510,9467512,9467700,9467806,9467820,9467822,9468195,9469934,9470249,9471103,9471235,9471955,9473373,9473387,9473401,9474241,9474396,9476077,9476619,9476652,9478787,9479456,9479750,9482972,9483190,9483245,9483583,9483924,9485000,9486390,9487037,9487182,9487330,9488772,9489266,9489336,9489831,9489833",
+            "logged_in": false
+        }
+    });
+    yt.setConfig({
+        'GUIDED_HELP_LOCALE': "en_US",
+        'GUIDED_HELP_ENVIRONMENT': "prod"
+    });
+    yt.setConfig('SPF_SEARCH_BOX', true);
+    yt.setMsg({
+        'ADDTO_CREATE_NEW_PLAYLIST': "Create new playlist\n",
+        'ADDTO_CREATE_PLAYLIST_DYNAMIC_TITLE': "  $dynamic_title_placeholder (create new)\n",
+        'ADDTO_WATCH_LATER': "Watch later",
+        'ADDTO_WATCH_LATER_ADDED': "Added",
+        'ADDTO_WATCH_LATER_ERROR': "Error",
+        'ADDTO_WATCH_QUEUE': "Watch Queue",
+        'ADDTO_WATCH_QUEUE_ADDED': "Added",
+        'ADDTO_WATCH_QUEUE_ERROR': "Error",
+        'ADDTO_TV_QUEUE': "Queue",
+        'ADS_INSTREAM_FIRST_PLAY': "A video ad is playing.",
+        'ADS_INSTREAM_SKIPPABLE': "Video ad can be skipped.",
+        'ADS_OVERLAY_IMPRESSION': "Ad displayed.",
+        'MASTHEAD_NOTIFICATIONS_LABEL': {
+            "other": "# unread notifications.",
+            "case1": "1 unread notification.",
+            "case0": "0 unread notifications."
+        },
+        'MASTHEAD_NOTIFICATIONS_COUNT_99PLUS': "99+",
+        'MDX_AUTOPLAY_OFF': 'Autoplay is off',
+        'MDX_AUTOPLAY_ON': 'Autoplay is on'
+    });
+    yt.setConfig('FEED_PRIVACY_CSS_URL', "\//s.ytimg.com/yts\/cssbin\/www-feedprivacydialog-vflLtZObB.css");
+    yt.setConfig('FEED_PRIVACY_LIGHTBOX_ENABLED', true);
+    yt.setConfig({
+        'SBOX_JS_URL': "\//s.ytimg.com/yts\/jsbin\/www-searchbox-legacy-vflqS3UI_\/www-searchbox-legacy.js",
+        'SBOX_SETTINGS': {
+            "REQUEST_DOMAIN": "us",
+            "HAS_ON_SCREEN_KEYBOARD": false,
+            "SESSION_INDEX": null,
+            "REQUEST_LANGUAGE": "en",
+            "SUGG_EXP_ID": "",
+            "PSUGGEST_TOKEN": null,
+            "PQ": "",
+            "IS_FUSION": false
+        },
+        'SBOX_LABELS': {
+            "SUGGESTION_DISMISSED_LABEL": "Suggestion removed",
+            "SUGGESTION_DISMISS_LABEL": "Remove"
+        }
+    });
+    yt.setConfig({
+        'YPC_LOADER_JS': "\//s.ytimg.com/yts\/jsbin\/www-ypc-vflq-EGzT\/www-ypc.js",
+        'YPC_LOADER_CSS': "\//s.ytimg.com/yts\/cssbin\/www-ypc-vflbH3pUh.css",
+        'YPC_SIGNIN_URL': "https:\/\/accounts.google.com\/ServiceLogin?service=youtube\u0026uilel=3\u0026hl=en\u0026continue=http%3A%2F%2Fwww.youtube.com%2Fsignin%3Fapp%3Ddesktop%26action_handle_signin%3Dtrue%26hl%3Den%26next%3D%252F\u0026passive=true",
+        'DBLCLK_ADVERTISER_ID': "2542116",
+        'DBLCLK_YPC_ACTIVITY_GROUP': "youtu444",
+        'SUBSCRIPTION_URL': "\/subscription_ajax",
+        'YPC_SWITCH_URL': "\/signin?skip_identity_prompt=True\u0026action_handle_signin=true\u0026next=%2F\u0026feature=purchases",
+        'YPC_GB_LANGUAGE': "en_US",
+        'YPC_MB_URL': "https:\/\/payments.youtube.com\/payments\/v4\/js\/integrator.js?ss=md",
+        'YPC_TRANSACTION_URL': "\/transaction_handler",
+        'YPC_SUBSCRIPTION_URL': "\/ypc_subscription_ajax",
+        'YPC_POST_PURCHASE_URL': "\/ypc_post_purchase_ajax",
+        'YTR_FAMILY_CREATION_URL': "https:\/\/families.google.com\/webcreation?usegapi=1",
+        'YTO_GTM_DATA': {
+            'event': 'purchased',
+            'purchaseStatus': 'success'
+        },
+        'YTO_GTM_1_BUTTON_CLICK_DATA': {
+            'event': 'landingButtonClick',
+            'buttonPosition': '1'
+        },
+        'YTO_GTM_2_BUTTON_CLICK_DATA': {
+            'event': 'landingButtonClick',
+            'buttonPosition': '2'
+        }
+    });
+    yt.setMsg({
+        'YPC_OFFER_OVERLAY': "  \n",
+        'YPC_UNSUBSCRIBE_OVERLAY': "  \n"
+    });
+    yt.setConfig('GOOGLE_HELP_CONTEXT', "homepage");
+    ytcsi.info('st', 782);
+    ytcfg.set({
+        "TIMING_INFO": {
+            "yt_li": "0",
+            "GetBrowse_rid": "0xe3b9b04aca2f9134",
+            "yt_ref": "embed",
+            "yt_lt": "cold",
+            "cver": "1.20180501",
+            "c": "WEB",
+            "yt_fn": "what_to_watch"
+        },
+        "CSI_SERVICE_NAME": "youtube"
+    });;
+    ytcfg.set({
+        "TIMING_ACTION": "home",
+        "CSI_VIEWPORT": true,
+        "TIMING_AFT_KEYS": ["ol"]
+    });;
+    yt.setConfig({
+        'XSRF_TOKEN': "QUFFLUhqblpJSmpaekNVWmNDTG0yLWtydkljSDV4NTdwUXxBQ3Jtc0tuUlBKekxfRlozT2lXaEswVGZCUFpCd1dhTHNzWEFQN0hNNkFyOENZZWZISEpCaHJyNHAzTXZSaGJtVGt0Y3d0VExSTWtKTUg2QTFFamFydU1zYUlrcGhSNFZVcW91WlZaRW1RS1R6MDNUNUtQQ0UtNlc3aUExVWZkMnBwcFNYSzhCODZUSHdkZW43aEt1WGY3ZWFxWGlnUWNraGc=",
+        'XSRF_FIELD_NAME': "session_token",
+
+        'XSRF_REDIRECT_TOKEN': "5zwyZSJJ-Uiz2ANn_3WjC6YjC9B8MTUyNTQ3ODM4NkAxNTI1MzkxOTg2"
+    });
+    yt.setConfig('ID_TOKEN', null);
+    window.ytcfg.set('SERVICE_WORKER_KILLSWITCH', false);
+    yt.setConfig('THUMB_DELAY_LOAD_BUFFER', 300);
+    if (window.ytcsi) {
+        window.ytcsi.tick("jl", null, '');
+    }
+</script>

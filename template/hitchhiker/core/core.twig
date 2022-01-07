@@ -1,0 +1,97 @@
+{% block youtubeResponse %}
+{% import 'core/macros.twig' as core %}
+<!DOCTYPE html>
+<html lang="en" data-cast-api-enabled="true">
+   <head>
+      <style name="www-roboto" >@font-face{font-family:'Roboto';font-style:normal;font-weight:500;src:local('Roboto Medium'),local('Roboto-Medium'),url(//fonts.gstatic.com/s/roboto/v18/KFOlCnqEu92Fr1MmEU9fBBc9.ttf)format('truetype');}@font-face{font-family:'Roboto';font-style:normal;font-weight:400;src:local('Roboto Regular'),local('Roboto-Regular'),url(//fonts.gstatic.com/s/roboto/v18/KFOmCnqEu92Fr1Mu4mxP.ttf)format('truetype');}@font-face{font-family:'Roboto';font-style:italic;font-weight:500;src:local('Roboto Medium Italic'),local('Roboto-MediumItalic'),url(//fonts.gstatic.com/s/roboto/v18/KFOjCnqEu92Fr1Mu51S7ACc6CsE.ttf)format('truetype');}@font-face{font-family:'Roboto';font-style:italic;font-weight:400;src:local('Roboto Italic'),local('Roboto-Italic'),url(//fonts.gstatic.com/s/roboto/v18/KFOkCnqEu92Fr1Mu51xIIzc.ttf)format('truetype');}</style>
+      <script name="www-roboto" >if (document.fonts && document.fonts.load) {document.fonts.load("400 10pt Roboto", "E");document.fonts.load("500 10pt Roboto", "E");}</script>
+      <script>{{ include('/common/core/www-ytcsi.js') }}</script>
+      <script >var ytcfg = {d: function() {return (window.yt && yt.config_) || ytcfg.data_ || (ytcfg.data_ = {});},get: function(k, o) {return (k in ytcfg.d()) ? ytcfg.d()[k] : o;},set: function() {var a = arguments;if (a.length > 1) {ytcfg.d()[a[0]] = a[1];} else {for (var k in a[0]) {ytcfg.d()[k] = a[0][k];}}}};</script>  
+      <script>ytcfg.set("ROOT_VE_TYPE", 3854);ytcfg.set("EVENT_ID", "caLrWqLbKZD2_AOA-6vIAg");</script>
+      <script>{{ include('/common/core/www-pageframesizing.js.twig') }}</script>
+      {{ core.js('scheduler/scheduler') }}
+      {{ core.css('www-core') }}
+      {%- block head_css  -%}{% endblock %}
+      <link rel="stylesheet" href="//s.ytimg.com/yts/cssbin/player-vflk34Vc2/www-player.css" name="player/www-player">
+      {{ core.css('www-pageframe') }}
+      {{ core.css('www-guide') }}
+      <title>{% block title %}YouTube{% endblock %}</title>
+      {% include 'core/meta.twig' %}
+      {%- if yt.experiment.ringo -%}
+        {% include 'experiment/ringo/ringo.twig' %}
+      {% endif %}
+   </head>
+   <body dir="ltr" id="body" class="{%- block body_class -%}  
+      visibility-logging-enabled  
+      ltr    
+      {{ yt.experiment.ringo ? 'exp-invert-logo' }}
+      exp-mouseover-img 
+      exp-responsive 
+      exp-search-big-thumbs   
+      site-center-aligned 
+      site-as-giant-card 
+      {{ (appbarEnabled and defaultGuideVisibility) ? 'guide-pinning-enabled' }}   
+      {{ (appbarEnabled and not defaultAppbarVisibility) ? 'appbar-hidden' }}
+      not-nirvana-dogfood    
+      flex-width-enabled      
+      flex-width-enabled-snap    
+      delayed-frame-styles-not-in  
+      {% endblock %}" data-spf-name="other">
+      <div id="early-body"></div>
+      <div id="body-container">
+         <div id="a11y-announcements-container" role="alert">
+            <div id="a11y-announcements-message"></div>
+         </div>
+         <form name="logoutForm" method="POST" action="/logout"><input type="hidden" name="action_logout" value="1"></form>
+         {% block masthead %}
+         <div id="ticker-content">
+         </div>
+         <div id="masthead-positioner">
+         <div id="yt-masthead-container" class="clearfix yt-base-gutter">
+            {% include 'common/pageframe/masthead.twig' %}     
+         </div>
+            <div id="masthead-appbar-container" class="clearfix">
+               <div id="masthead-appbar">
+                  <div id="appbar-content" class="">
+                     {%- block appbarContent -%}{% endblock %}
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div id="masthead-positioner-height-offset"></div>
+         {% endblock masthead %}
+         <div id="page-container">
+            <div id="page" class="{{ pageType }}  clearfix">
+               {%- block guide_container -%}
+                  {% include 'pageframe/guide.twig' %}
+               {% endblock %}
+               <div class="alerts-wrapper">
+                  <div id="alerts" class="content-alignment">{% block alerts %}{% endblock %}</div>
+               </div>
+               <div id="header">
+               {% block header %}{% endblock %}
+               </div>
+               {% include 'common/core/offscreen_player_stub.twig' %}
+               <div id="content" class="  content-alignment" role="main">
+                  {% block content %}{% endblock %}
+               </div>
+            </div>
+         </div>
+      </div>
+      <div id="footer-container" class="yt-base-gutter force-layer">
+         {% include 'common/pageframe/footer.twig' %}
+      </div>
+      {% include 'common/component/lightbox/template_feed-privacy.twig' %}
+      {% include 'common/component/hidden_component_template_wrapper.twig' %}
+      {% include 'common/core/spf_module.twig' %}
+      {%- if yt.useModularCore -%}
+         {% include 'common/core/modular_js_v2.twig' %}
+      {% else %}
+         {{ core.js('www-core/www-core') }}
+      {% endif %}
+      <script>if (window.ytcsi) {window.ytcsi.tick("je", null, '');}</script>  
+      {%- block foot_scripts -%}{% endblock %}
+      {% include 'core/ytGlobalJsConfig.twig' %}
+   </body>
+</html>
+{% endblock %}

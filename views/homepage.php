@@ -1,6 +1,8 @@
 <?php
 $yt->spfEnabled = true;
+$yt->useModularCore = true;
 $template = 'home';
+$yt->modularCoreModules = ['www/feed'];
 $yt->page = (object) [];
 $yt->enableFooterCopyright = true;
 

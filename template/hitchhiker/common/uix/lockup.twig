@@ -2,7 +2,7 @@
 <div class="yt-lockup-thumbnail contains-addto">
    <a aria-hidden="true"  href="/watch?v={{info.videoId}}" class=" yt-uix-sessionlink      spf-link " data-sessionlink="itct=CHkQlDUYACITCOLXzPvf6toCFRA7fwodgP0KKSiOHjIKZy1oaWdoLXRydloPRkV3aGF0X3RvX3dhdGNo" >
    <div class="yt-thumb video-thumb"><span class="yt-thumb-simple">
-       <img height="{{ height }}" onload=";window.__ytRIL &amp;&amp; __ytRIL(this)" alt="" width="{{ width }}" data-ytimg="1" data-thumb="{{ info.thumbnail.thumbnails.0.url }}" src="//s.ytimg.com/yts/img/pixel-vfl3z5WfW.gif">
+       <img height="{{ height }}" onload=";window.__ytRIL &amp;&amp; __ytRIL(this)" alt="" width="{{ width }}" data-ytimg="1" data-thumb="{{ info.thumbnail.thumbnails.0.url }}" src="{{ PIXEL }}">
        {% if info.lengthText %}
        <span class="video-time" aria-hidden="true">{{ getText(info.lengthText) }}</span>
        {% endif %}
@@ -103,11 +103,11 @@
 
 {%- macro byline(info) -%}
 <div class="yt-lockup-byline yt-ui-ellipsis yt-ui-ellipsis-2">
-   {% if info.longBylineText.runs.navigationEndpoint.browseEndpoint.canonicalBaseUrl %}
-   <a href="{{ info.longBylineText.runs.navigationEndpoint.browseEndpoint.canonicalBaseUrl }}" class="yt-uix-sessionlink       spf-link " data-sessionlink="itct=CHkQlDUYACITCOLXzPvf6toCFRA7fwodgP0KKSiOHg" >
+   {% if info.longBylineText.runs.0.navigationEndpoint.browseEndpoint.canonicalBaseUrl %}
+   <a href="{{ info.longBylineText.runs.0.navigationEndpoint.browseEndpoint.canonicalBaseUrl }}" class="yt-uix-sessionlink       spf-link " data-sessionlink="itct=CHkQlDUYACITCOLXzPvf6toCFRA7fwodgP0KKSiOHg" >
    {% endif %}
    {{ getText(info.longBylineText) }}
-   {% if info.longBylineText.runs.navigationEndpoint.browseEndpoint.canonicalBaseUrl %}
+   {% if info.longBylineText.runs.0.navigationEndpoint.browseEndpoint.canonicalBaseUrl %}
    </a>{% endif %}{%- if info.ownerBadges -%}<span title="Verified" class="yt-uix-tooltip yt-channel-title-icon-verified yt-sprite"></span>{% endif %}
 </div>
 {% endmacro %}

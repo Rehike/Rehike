@@ -1,0 +1,28 @@
+{% extends '/common/channels4/branded_page_v2.twig' %}
+
+{% import '/common/core/spinner.twig' as spinner %}
+
+{% set brandedPageConfig = {
+    'baseBoldTitles': true,
+    'containerFlexWidth': true,
+    'hasTopRow': true,
+    'secondaryColumnHidden': true
+} %}
+
+{% block branded_page_primary_column_content %}
+<div id="feed" class="">
+    <div id="feed-main-{{ feed_name_placeholder }}" class="individual-feed" data-feed-name="{{ feed_name_placeholder }}" data-feed-type="main">
+        
+    </div>
+    <div id="feed-error" class="individual-feed  hid">
+        <p class="feed-message">
+            We were unable to complete the request, please try again later.
+        </p>
+    </div>
+    <div id="feed-loading-template" class=" hid">
+        <div class="feed-message">
+            {{ spinner.render('Loading...') }}
+        </div>
+    </div>
+</div>
+{% endblock %}
