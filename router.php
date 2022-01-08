@@ -27,12 +27,26 @@ switch ($routerUrl->path[0]) {
         // youtube has a redirect confirmation page in some cases
         // TODO: research
         ob_end_clean();
-        header('Location: ' . $_GET['q']);
+        if (isset($_GET['q'])) {
+            header("Location:" . $_GET('q'));
+        } else {
+            header("Location: /");
+        }
         exit();
         break;
     case 's':
         include('simplefunnel.php');
         die();
+        break;
+    case 'feed':
+        switch($routerUrl->path[1]) {
+            case 'what_to_watch':
+                header("Location: /");
+                break;
+            default:
+                header("Location: /");
+                break;
+        }
         break;
     default:
         $template = '404';
