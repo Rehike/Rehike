@@ -34,6 +34,10 @@ switch ($routerUrl->path[0]) {
         }
         exit();
         break;
+    case 'yts':
+        include('simplefunnel.php');
+        die();
+        break;
     case 's':
         include('simplefunnel.php');
         die();
