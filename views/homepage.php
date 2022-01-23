@@ -20,9 +20,12 @@ $apiUrl = 'https://www.youtube.com/youtubei/v1/browse?key=AIzaSyAO_FJ2SlqU8Q4STE
 
 $ch = curl_init($apiUrl);
 
+$timea = round(microtime(true) * 1000);
 curl_setopt_array($ch, [
-    CURLOPT_HTTPHEADER => ['Content-Type: application/json',
+    CURLOPT_HTTPHEADER => [
+        'Content-Type: application/json',
     'x-goog-visitor-id: ' . urlencode(encryptVisitorData($visitor))],
+    CURLOPT_ENCODING => 'gzip',
     CURLOPT_POST => 1,
     CURLOPT_POSTFIELDS => $yticfg,
     CURLOPT_FOLLOWLOCATION => 0,
@@ -31,6 +34,8 @@ curl_setopt_array($ch, [
 ]);
 
 $response = curl_exec($ch);
+$timeb = round(microtime(true) * 1000);
+//echo $timeb - $timea; die();
 $ytdata = json_decode($response);
 //var_dump( $ytdata);
 

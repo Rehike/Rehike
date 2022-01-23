@@ -1,0 +1,50 @@
+<div class="comments-header-renderer  vve-check-visible vve-check-hidden"
+    data-visibility-tracking="CAIQ7pgBIhMI_IXM6vaL4QIVgZLECh3BowD8"
+    data-visibility-types="12">
+    <h2 class="comment-section-header-renderer" tabindex="0">
+        <b>Comments</b>{% if yt.commentsHeader.commentsCountText %} • {{yt.commentsHeader.commentsCountText}}{% endif %}
+    </h2>
+    <div class="comment-simplebox-renderer yt-uix-servicelink vve-check"data-servicelink="itct=CAUQwXUiEwj8hczq9ovhAhWBksQKHcGjAPw"data-visibility-tracking="CAUQwXUiEwj8hczq9ovhAhWBksQKHcGjAPw">
+        <span class="video-thumb comment-author-thumbnail yt-thumb yt-thumb-48">
+        <span class="yt-thumb-square">
+            <span class="yt-thumb-clip">
+                <img alt="Default profile photo" height="48" onload=";window.__ytRIL &amp;&amp; __ytRIL(this)" src="//s.ytimg.com/yts/img/avatar_48-vfllY0UTT.png" width="48" data-ytimg="1" tabindex="0" role="img">
+                <span class="vertical-align"></span>
+            </span>
+        </span>
+        </span>
+        <div class="comment-simplebox-renderer-collapsed comment-section-renderer-redirect"data-target="https://accounts.google.com/ServiceLogin?passive=true&amp;se…n%3Dtrue%26next%3D%252Fwatch%253Fv%253DLWPlElIYF2U%26hl%3Den">
+        <div class="comment-simplebox-renderer-collapsed-content">{{ yt.commentsHeader.simpleBoxRenderer.placeholderText }}</div>
+        <div class="comment-simplebox-arrow">
+            <div class="arrow-inner"></div>
+            <div class="arrow-outer"></div>
+        </div>
+        </div>
+    </div>
+    {% if yt.commentsHeader.sortRenderer %}
+    {% set sortRenderer = yt.commentsHeader.sortRenderer %}
+    <div class="yt-uix-menu comment-section-sort-menu">
+        <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-default  yt-uix-menu-trigger" type="button" onclick=";return false;" aria-haspopup="true" aria-label="Sort comments" aria-pressed="false" role="button">
+            <span class="yt-uix-button-content">{{ sortRenderer.title }}</span>
+            <span class="yt-uix-button-arrow yt-sprite"></span>
+        </button>
+        <div class="yt-uix-menu-content yt-ui-menu-content yt-uix-menu-content-hidden" role="menu">
+            <ul>
+                {% for item in sortRenderer.items %}
+                <li>  
+                    <button type="button" class="yt-ui-menu-item yt-uix-menu-close-on-select comment-section-sort-menu-item yt-uix-sessionlink" data-menu_name="{{ item.menuName }}" data-sessionlink="itct=CAUQxqYCIhMI6bL2yIzE7QIVN8jBCh0WXA-s" data-sessionlink-target="/comment_service_ajax?action_get_comments=1" data-token="{{ item.continuation }}" data-url="/comment_service_ajax?action_get_comments=1">
+                    <span class="yt-ui-menu-item-label">{{ item.title }}</span>
+                    </button>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    {% endif %}
+    <div class="yt-alert yt-alert-naked yt-alert-success hid zero-step-tooltip">
+        <div class="yt-alert-icon">
+        <span class="icon master-sprite yt-sprite"></span>
+        </div>
+        <div class="yt-alert-content" role="alert"></div>
+    </div>
+</div>

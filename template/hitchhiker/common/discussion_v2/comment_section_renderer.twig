@@ -1,0 +1,20 @@
+{% import '/common/discussion_v2/main.twig' as main %}
+<div id="comment-section-renderer"
+   class="comment-section-renderer vve-check"
+   data-visibility-tracking="CAEQuy8iEwj8hczq9ovhAhWBksQKHcGjAPw"
+   data-child-tracking="CAAQg2ciEwj8hczq9ovhAhWBksQKHcGjAPw">
+   {% include '/common/discussion_v2/header.twig' %}
+   <div class="comment-section-renderer-items" id="comment-section-renderer-items">
+      {# spinner img for switching view #}
+      <span class="yt-spinner-img comment-section-items-loading yt-sprite" title="Loading icon"></span>
+        {% for item in yt.comments %}
+            {{ main.comment_thread(item) }}
+        {% endfor %}
+    </div>
+   {% include '/common/discussion_v2/simplebox.twig' %}
+   <div class="feedback-banner hid" aria-live="polite"></div>
+   <span class="yt-spinner-img comment-renderer-loading yt-sprite" title="Loading icon"></span>
+   <div class="hid" id="comment-renderer-abuse">
+      <div class="comment-renderer-abuse-content"></div>
+   </div>
+</div>

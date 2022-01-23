@@ -1,3 +1,4 @@
+{% import '/common/watch/watch7/sidebar/macros.twig' as sidebar %}
 <div class="autoplay-bar">
     <div class="checkbox-on-off">
         <label for="autoplay-checkbox">Autoplay</label>
@@ -18,24 +19,6 @@
         Up next
     </h4>
     <div class="watch-sidebar-body">
-        <ul class="video-list">
-            <li class="video-list-item related-list-item show-video-time">
-                <div class="content-wrapper">
-                <a href="/watch?v=djV11Xbc914" class=" content-link spf-link  yt-uix-sessionlink      spf-link " data-sessionlink="itct=CDEQpDAYACITCPCb3sSz6toCFcuifgodz50MGCj4HTIHYXV0b25hdkjEu4GtvZiOhnU"  title="a-ha - Take On Me (Official Video)" rel=" spf-prefetch nofollow" data-visibility-tracking="CDEQpDAYACITCPCb3sSz6toCFcuifgodz50MGCj4HUDe7vO217rdmnY=" >
-                <span dir="ltr" class="title" aria-describedby="description-id-923016">
-                a-ha - Take On Me (Official Video)
-                </span>
-                <span class="accessible-description" id="description-id-923016">
-                - Duration: 3:48.
-                </span>
-                <span class="stat attribution"><span class="" >RHINO</span></span>
-                <span class="stat view-count">630,177,810 views</span>
-                </a>
-                </div>
-                <div class="thumb-wrapper">
-                <a href="/watch?v=djV11Xbc914" class=" vve-check thumb-link spf-link  yt-uix-sessionlink      spf-link " data-sessionlink="itct=CDEQpDAYACITCPCb3sSz6toCFcuifgodz50MGCj4HTIHYXV0b25hdkjEu4GtvZiOhnU"  tabindex="-1" rel=" spf-prefetch nofollow" data-visibility-tracking="CDEQpDAYACITCPCb3sSz6toCFcuifgodz50MGCj4HUDe7vO217rdmnY=" aria-hidden="true"><span class="yt-uix-simple-thumb-wrap yt-uix-simple-thumb-related" tabindex="0" data-vid="djV11Xbc914"><img aria-hidden="true" style="top: 0px" width="168" height="94" data-thumb="https://i.ytimg.com/vi/djV11Xbc914/hqdefault.jpg?sqp=-oaymwEWCKgBEF5IWvKriqkDCQgBFQAAiEIYAQ==&amp;rs=AOn4CLDRHVOMeT9_AlEP1rXvje7MYFMCCg" alt="" src="{{ PIXEL }}" ><span class="video-time">3:48</span></span></a>
-                </div>
-            </li>
-        </ul>
+        {{ sidebar.video_list(secondaryResults.autoplayRenderer.results) }}
     </div>
 </div>

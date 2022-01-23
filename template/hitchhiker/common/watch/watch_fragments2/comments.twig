@@ -1,0 +1,13 @@
+{## 
+  # Fragments (version 2) / Comments
+  #
+  # This new version relies on SPF.js for loading fragments. However,
+  # element wrappers do not have to be complete. This only renders partial
+  # HTML to update the page.
+  #}
+<body>
+    <div id="masthead_search" data-is-crosswalk="0"></div>
+    <div id="watch-discussion">
+        {% include '/common/discussion_v2/comment_section_renderer.twig' %}
+    </div>
+</body>
