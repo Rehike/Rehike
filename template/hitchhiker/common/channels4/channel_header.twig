@@ -1,0 +1,115 @@
+{% set header = yt.page.header %}
+<div class="branded-page-v2-header channel-header yt-card">
+    <div id="gh-banner">
+        <style>
+            #c4-header-bg-container {
+                background-image: url({{ header.banner.thumbnails.0.url }});
+            }
+            
+            
+            @media screen and (-webkit-min-device-pixel-ratio: 1.5),
+            screen and (min-resolution: 1.5dppx) {
+                #c4-header-bg-container {
+                    background-image: url({{ header.banner.thumbnails.3.url }});
+                }
+            }
+            
+            #c4-header-bg-container .hd-banner-image {
+                background-image: url({{ header.banner.thumbnails.3.url }});
+            }
+        </style>
+        <div id="c4-header-bg-container" class="c4-visible-on-hover-container ">
+            <div class="hd-banner">
+                <div class="hd-banner-image "></div>
+            </div>
+            <div id="header-links">
+                {% if header.headerLinks.secondaryLinks %}
+                <ul class="about-secondary-links">
+                    {% for item in header.headerLinks.secondaryLinks %}
+                    <li class="channel-links-item">
+                        <a href="{{ item.href }}" rel="me nofollow" target="_blank" title="{{ getText(item.title) }}" class="about-channel-link yt-uix-redirect-link about-channel-link-with-icon">
+                            <img src="{{ item.icon.thumbnails.0.url }}" class="about-channel-link-favicon" alt="" width="16" height="16">
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+                {% if header.headerLinks.primaryLinks %}
+                <ul class="about-custom-links">
+                    {% for item in header.headerLinks.primaryLinks %}
+                    <li class="channel-links-item">
+                        <a href="{{ item.href }}" rel="me nofollow" target="_blank" title="{{ getText(item.title) }}" class="about-channel-link yt-uix-redirect-link about-channel-link-with-icon">
+                            <img src="{{ item.icon.thumbnails.0.url }}" class="about-channel-link-favicon" alt="" width="16" height="16">
+                            <span class="about-channel-link-text">
+                            {{ getText(item.title) }}
+                            </span>
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </div>
+
+            <a class="channel-header-profile-image-container spf-link" href="/user/jawed">
+            <img class="channel-header-profile-image" src="{{ header.thumbnail.thumbnails.0.url }}" title="{{ header.title }}" alt="{{ header.title }}">
+            </a>
+
+        </div>
+    </div>
+
+    <div class="primary-header-contents clearfix " id="c4-primary-header-contents">
+        <div class="primary-header-upper-section-wrapper clearfix">
+            <div class="primary-header-upper-section">
+                <div class="primary-header-upper-section-block">
+                    <h1 class="branded-page-header-title">
+                        <span class="qualified-channel-title ellipsized {{ header.badges ? 'has-badge' }}">
+                            {% apply spaceless %}
+                            <span class="qualified-channel-title-wrapper">
+                                <span dir="ltr" class="qualified-channel-title-text">
+                                    <a dir="ltr" href="/user/jawed" class="spf-link branded-page-header-title-link yt-uix-sessionlink" title="{{ header.title }}" data-sessionlink="ei=PYD4WYi3NtLY-AOXuqv4Aw"      >
+                                        {{ header.title }}
+                                    </a>
+                                </span>
+                            </span>
+                            {% if header.badges %}
+                            <a href="//support.google.com/youtube/answer/3046484?hl=en" target="_blank" class="qualified-channel-title-badge">
+                                <span aria-label="Verified" class="yt-channel-title-icon-verified yt-uix-tooltip yt-sprite" data-tooltip-text="Verified"></span>
+                            </a>
+                            {% endif %}
+                            {% endapply %}
+                        </span>
+                    </h1>
+                </div>
+                <div class="primary-header-upper-section-block">
+                    <div class="primary-header-actions">
+                    {% import 'common/uix/subscription_button.twig' as subscription_button %}
+                    {{ subscription_button.render(yt.page.header.subscriptionButton, {
+                        'withPreferences': true,
+                        'showCount': true,
+                        'showUnsubConfirmDialog': false,
+                        'showSubscriptionPreferences': true
+                    }, 'channel-header-subscription-button-container') }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="channel-subheader" class="clearfix branded-page-gutter-padding appbar-content-trigger">
+        <ul id="channel-navigation-menu" class="clearfix">
+            {%- for item in header.tabs -%}
+                {%- if item.tabRenderer -%}
+                    {% set item = item.tabRenderer %}
+                    <li class="">
+                        <a  href="{{ item.endpoint.commandMetadata.webCommandMetadata.url }}" class="yt-uix-button  spf-link {{ item.selected ? 'selected' }}  yt-uix-sessionlink yt-uix-button-epic-nav-item yt-uix-button-size-default" data-sessionlink="ei=PYD4WYi3NtLY-AOXuqv4Aw&amp;ved=CC8Qwy0iEwjIycGWgZvXAhVSLH4KHRfdCj8omxw"><span class="yt-uix-button-content">{{ item.title }}</span></a>
+                    </li>
+                {% elseif item.expandableTabRenderer %}
+                    {% set item = item.expandableTabRenderer %}
+                    <li class="">
+                        <div id="channel-search" ><button class="show-search epic-nav-item secondary-nav" title="Search Channel"><span class="epic-nav-item-heading-icon search-icon yt-sprite"></span></button><form class="search-form epic-nav-item secondary-nav" action="{{ item.endpoint.commandMetadata.webCommandMetadata.url }}" method="get"><span class=" yt-uix-form-input-container yt-uix-form-input-text-container "><input class="yt-uix-form-input-text search-field" name="query" id="channels-search-field" type="text" value="" placeholder="Search Channel" maxlength="100" autocomplete="off"></span></form></div>
+                    </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+</div>

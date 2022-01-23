@@ -9,7 +9,7 @@ switch($_SERVER['REQUEST_METHOD']) {
 }
 
 // Retrieve POST fields (if post):
-if ($reqmethod == true) {
+if ($reqmethod == 'POST') {
 	$postfields = file_get_contents('php://input');
 } else {
 	$postfields = '';

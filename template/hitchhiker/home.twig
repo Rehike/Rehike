@@ -1,4 +1,4 @@
-{% extends yt.spf ? "core_spf.twig" : "core.twig" %}
+{% extends "core.twig" %}
 {% import 'core/macros.twig' as core %}
 {% import 'common/appbar/appbar_nav.twig' as appbar_nav %}
 
@@ -40,14 +40,16 @@
 
 {%- block appbarContent -%}
    {% set appbarContents = {
-      0: {
-         'title': 'Home',
-         'href': '/',
-         'selected': true
-      },
-      1: {
-         'title': 'Trending',
-         'href': '/feed/trending'
+      'items': {
+        0: {
+            'title': 'Home',
+            'href': '/',
+            'selected': true
+        },
+        1: {
+            'title': 'Trending',
+            'href': '/feed/trending'
+        }
       }
    } %}
    {{ appbar_nav.render(appbarContents) }}

@@ -1,5 +1,5 @@
 {% macro render(info, cfg, class) %}
-<span class="{{ class }} yt-uix-button-subscription-container">
+<span class="{{ class }} yt-uix-button-subscription-container {{ cfg.withPreferences ? 'with-preferences' }}">
     {%- if cfg.showUnsubConfirmDialog -%}
         <span class="unsubscribe-confirmation-overlay-container">
             <div class="yt-uix-overlay "  data-overlay-style="primary" data-overlay-shape="tiny">

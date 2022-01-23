@@ -13,6 +13,14 @@ switch ($routerUrl->path[0]) {
         header ('Location: /watch?v=' . $routerUrl->path[1]);
         exit();
         break;
+    case 'user':
+    case 'channel':
+    case 'c':
+        include('views/channel.php');
+        break;
+    case 'results':
+        include('views/results.php');
+        break;
     case 'forcefatal':
         $template = 'sdsadasds';
         break;
@@ -27,12 +35,19 @@ switch ($routerUrl->path[0]) {
         // youtube has a redirect confirmation page in some cases
         // TODO: research
         ob_end_clean();
-        header('Location: ' . $_GET['q']);
+        $newLocation = urldecode(($_GET['q'] ?? ''));
+        header('Location: ' . $newLocation);
         exit();
         break;
+    case 'api':
+    case 'youtubei':
     case 's':
+    case '404':
         include('simplefunnel.php');
         die();
+        break;
+    case 'watch_fragments2_ajax':
+        include('views/ajax/watch_fragments2.php');
         break;
     default:
         $template = '404';

@@ -10,7 +10,7 @@ $ytConstants = (object) [
     'pixelGif' => '//' . YTS_HOST . '/yts/img/pixel-vfl3z5WfW.gif',
     'css' => (object) [
         'www-core' => '//' . YTS_HOST . '/yts/cssbin/www-core-vflZ7bM6S.css',
-        'www-pageframe' => '//' . YTS_HOST . '/yts/cssbin/www-pageframe-vfl3W5DTP.css',
+        'www-pageframe' => '//' . YTS_HOST . '/yts/cssbin/www-pageframe-vflhkpWhK.css',
         'www-highcontrastmode' => '//' . YTS_HOST . '/yts/cssbin/www-highcontrastmode-vflCxtOoT.css',
         'www-guide' => '//' . YTS_HOST . '/yts/cssbin/www-guide-vflNDDMf7.css',
         'www-home-c4' => '//' . YTS_HOST . '/yts/cssbin/www-home-c4-vflopQeuE.css',
@@ -54,6 +54,10 @@ $ytConstants = (object) [
         'www/watch_videoshelf' => jsModuleUrl('watch_videoshelf'),
         'www/ct_advancedsearch' => jsModuleUrl('www/ct_advancedsearch'),
         'www/my_videos' => jsModuleUrl('my_videos')
+    ],
+    'img' => (object) [
+        'channels/c4/default_banner' => '//' . YTS_HOST . '/yts/img/channels/c4/default_banner-vfl7DRgTn.png',
+        'channels/c4/default_banner_hq' => '//' . YTS_HOST . '/yts/img/channels/c4/default_banner_hq-vfl4dpY8T.png'
     ]
 ];
 
