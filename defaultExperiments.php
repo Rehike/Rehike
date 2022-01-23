@@ -1,4 +1,5 @@
 <?php
 $yt->experiment = (object) [
-    'ringo' => true
+    'ringo' => true,
+    'creatorMenu' => true
 ];
