@@ -214,8 +214,8 @@ class SpfPhp {
         for ($i = 0; $i < count($data->attrs); $i++) {
             $curAttr = $data->attrs[$i];
 
-            if ($element = $dom->getElementById($id)) {
-                $attributes->{$id}->{$curAttr} = $element->getAttribute($curAttr) ?? '';
+            if (($element = $dom->getElementById($id)) && $element->getAttribute($curAttr)) {
+                $attributes->{$id}->{$curAttr} = $element->getAttribute($curAttr);
             } else {
                 $attributes->{$id}->{$curAttr} = '';
             }
