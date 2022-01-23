@@ -1,6 +1,11 @@
 <?php
 require($root . '/mod/routerBase.php');
 
+if (isset($_GET["enable_polymer"]) && $_GET["enable_polymer"] == "1") {
+    include($root . "/simplefunnel.php");
+    die();
+}
+
 switch ($routerUrl->path[0]) {
     case '':
         include('views/homepage.php');
