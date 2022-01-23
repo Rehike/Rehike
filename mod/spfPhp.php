@@ -211,6 +211,9 @@ class SpfPhp {
     public static function pushAttributes(Dom $dom, object &$attributes, string $serialisedData): void {
         $data = self::parseAttributes($serialisedData);
         $id = $data->id;
+
+        $attributes->{$id} = (object) [];
+
         for ($i = 0; $i < count($data->attrs); $i++) {
             $curAttr = $data->attrs[$i];
 
