@@ -54,7 +54,7 @@
          <div id="alerts" class="content-alignment">{% block alerts %}{% endblock %}</div>
          {% block header %}{% endblock %}
          <div id="page-container">
-            <div id="page" class="{{ pageType }}">
+            <div id="page" class="{{ pageType }} {% block page_class %}{% endblock %}">
                 {% if guideEnabled %}
                     {%- block guide_container -%}
                         {% include 'pageframe/guide.twig' %}
