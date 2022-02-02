@@ -54,6 +54,9 @@ switch ($routerUrl->path[0]) {
     case 'watch_fragments2_ajax':
         include('views/ajax/watch_fragments2.php');
         break;
+    case 'internal': // forward to internal router
+        include('internal/internalRouter.php');
+        break;
     default:
         $template = '404';
         break;

@@ -30,6 +30,8 @@ class ExtractUtils {
             !preg_match('/Streamed/', $date)
         ) {
             return 'Published on ' . $date;
+        } else {
+            return $date;
         }
     }
 
