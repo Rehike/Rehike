@@ -40,7 +40,6 @@ class SpfPhp {
      *
      * @param string $html   Input HTML string to transform.
      * @param string[] $listenerIds   HTML element IDs to listen for.
-     * @param string[]|null $attrListenerIds   HTML element IDs to modify the attributes of too.
      * @param object|null $params   (Optional) Configuration options.
      * @return string|object
      */
