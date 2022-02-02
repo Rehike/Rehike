@@ -1,5 +1,7 @@
 <?php
 $yt->experiment = (object) [
     'ringo' => true,
-    'creatorMenu' => true
+    'creatorMenu' => false,
+    'oldRoboto' => false,
+    'timeOnRecoms' => false
 ];
