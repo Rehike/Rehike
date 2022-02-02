@@ -15,7 +15,9 @@
       </div>
       <div class="comment-renderer-content">
          {% if comment.pinnedCommentBadge %}
-         <div class="comment-renderer-pinned-comment-badge">{{ getText(comment.pinnedCommentBadge.pinnedCommentBadgeRenderer.label) }}</div>
+         <div class="comment-renderer-pinned-comment-badge">
+            {{ getText(comment.pinnedCommentBadge.pinnedCommentBadgeRenderer.label) }}
+          </div>
          {% endif %}
          <div class="comment-renderer-header">
             {% apply spaceless %}
