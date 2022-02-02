@@ -1,10 +1,10 @@
+{% import 'core/macros.twig' as core %}
 {% extends "core.twig" %}
 
 {% set pageType = 'attribution' %}
 
 {%- block head_css -%}
-<link rel="stylesheet" href="//s.ytimg.com/yts/cssbin/www-attribution-webp-vflhQnyPy.css" name="www-attribution"
-  class="css-httpssytimgcomytscssbinwwwattributionwebpvflhQnyPycss">
+{{ core.css('www-attribution') }}
 {% endblock %}
 
 {%- block content -%}
