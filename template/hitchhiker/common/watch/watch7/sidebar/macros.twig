@@ -20,7 +20,7 @@
         - Duration: {{ getText(data.thumbnailOverlays.0.thumbnailOverlayTimeStatusRenderer.text) }}.
         </span>
         <span class="stat attribution"><span class="" >{{ getText(data.shortBylineText) }}</span></span>
-        <span class="stat view-count">{{ getText(data.viewCountText) }}</span>
+        <span class="stat view-count">{{ getText(data.viewCountText) }}{% if yt.experiment.timeOnRecoms %} • {{ getText(data.publishedTimeText) }}{% endif %}</span>
         </a>
     </div>
     <div class="thumb-wrapper">
