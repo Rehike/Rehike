@@ -1,5 +1,4 @@
 <?php
-
 class ExtractUtils {
     public static function isolateCount(?string $input, string $substrRegex): string {
         if (!$input) return '';
@@ -34,7 +33,6 @@ class ExtractUtils {
             return $date;
         }
     }
-
     public static function resolveRedirectUrl(string $url): string {
         $a = betterParseUrl($url);
         if (isset($a->query['q'])) {
