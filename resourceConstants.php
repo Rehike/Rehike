@@ -15,7 +15,9 @@ $ytConstants = (object) [
         'www-guide' => '//' . YTS_HOST . '/yts/cssbin/www-guide-vflNDDMf7.css',
         'www-home-c4' => '//' . YTS_HOST . '/yts/cssbin/www-home-c4-vflopQeuE.css',
         'www-attribution' => '//' . YTS_HOST . '/yts/cssbin/www-attribution-vflhQnyPy.css',
-        'www-results' => '//' . YTS_HOST . '/yts/cssbin/www-results-vfl67U2zJ.css'
+        'www-results' => '//' . YTS_HOST . '/yts/cssbin/www-results-vfl67U2zJ.css',
+        'www-account-settings'=> '//' .  YTS_HOST . '/yts/cssbin/www-account-settings-vfl9mNWIu.css',
+        'www-creatorpage' => '//' . YTS_HOST . '/yts/cssbin/www-creatorpage-vflfgomxn.css'
     ],
     'jsModulesPath' => '//' . YTS_HOST . '/yts/jsbin/' . MODULAR_JS_PATH . '/',
     'js' => (object) [

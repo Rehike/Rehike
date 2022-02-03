@@ -1,0 +1,32 @@
+{% import "core/macros.twig" as core %}
+{% extends "core.twig" %}
+
+{% set pageType = 'account-page' %}
+
+{%- block title -%}
+Rehike settings - {{ parent() }}
+{% endblock %}
+
+{%- block head_css -%}
+{{ core.css('www-creatorpage') }}
+{{ core.css('www-account-settings') }}
+{% endblock %}
+
+{% set appbarEnabled = true %}
+
+{%- block content -%}
+<div id="creator-page" class="clearfix ytg-box account-page">
+    <div id="creator-page-sidebar" class="ytg-1col yt-card">
+        <ul id="creator-sidebar" class="ytg-1col single-section">
+            <li id="creator-sidebar-section-id-account" class="creator-sidebar-section selected">
+                <h3>Rehike settings</h3>
+                <ul class="creator-sidebar-submenu">
+                    <li class="creator-sidebar-item selected">
+                        <a href="/settings/general" class="creator-sidebar-item-link">General</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>
+{% endblock %}
