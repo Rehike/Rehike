@@ -5,3 +5,5 @@ $yt->experiment = (object) [
     'oldRoboto' => false,
     'timeOnRecoms' => false
 ];
+
+$yt->debugger = false;

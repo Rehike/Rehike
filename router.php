@@ -32,9 +32,6 @@ switch ($routerUrl->path[0]) {
     case 'attribution':
         include('views/attribution.php');
         break;
-    case 'debug':
-        include('debug.php');
-        break;
     case 'redirect':
         // temporary logic?
         // youtube has a redirect confirmation page in some cases
@@ -56,6 +53,10 @@ switch ($routerUrl->path[0]) {
         break;
     case 'internal': // forward to internal router
         include('internal/internalRouter.php');
+        break;
+    case 'embed':
+        include($root . "/simplefunnel.php");
+        die();
         break;
     default:
         $template = '404';
