@@ -44,4 +44,7 @@ function findKey($array, string $key) {
    }
 }
 
+$response = null;
+
 $twig->addGlobal('yt', $yt);
+$twig->addGlobal('response', $response);
