@@ -6,4 +6,4 @@ $yt->experiment = (object) [
     'timeOnRecoms' => false
 ];
 
-$yt->debugger = true;
+$yt->debugger = false;

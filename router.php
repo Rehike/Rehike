@@ -54,6 +54,10 @@ switch ($routerUrl->path[0]) {
     case 'internal': // forward to internal router
         include('internal/internalRouter.php');
         break;
+    case 'embed':
+        include($root . "/simplefunnel.php");
+        die();
+        break;
     default:
         $template = '404';
         break;
