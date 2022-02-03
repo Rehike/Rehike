@@ -32,9 +32,6 @@ switch ($routerUrl->path[0]) {
     case 'attribution':
         include('views/attribution.php');
         break;
-    case 'debug':
-        include('debug.php');
-        break;
     case 'redirect':
         // temporary logic?
         // youtube has a redirect confirmation page in some cases
