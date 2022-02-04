@@ -58,6 +58,9 @@ switch ($routerUrl->path[0]) {
         include($root . "/simplefunnel.php");
         die();
         break;
+    case 'settings':
+        include('views/rehike/settings.php');
+        break;
     default:
         $template = '404';
         break;
