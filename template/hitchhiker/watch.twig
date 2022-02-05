@@ -13,6 +13,10 @@
 {{ yt.page.title ? yt.page.title ~ ' - ' }}{{ parent() }}
 {% endblock %}
 
+{%- block page_class -%}
+{{ (yt.theaterMode) ? 'watch-wide watch-stage-mode' }}
+{% endblock %}
+
 {% block header %}
 {% endblock %}
 
