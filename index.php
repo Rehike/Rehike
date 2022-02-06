@@ -32,6 +32,13 @@ if (isset($_GET['spf'])) {
     $__spfUrl = preg_replace('/.spf='.$_GET['spf'].'/', '', $_SERVER['REQUEST_URI']);
 }
 
+if (isset($_COOKIE['wide'])) {
+    $yt -> theaterMode = $_COOKIE['wide'];
+} else {
+    $yt -> theaterMode = "0";
+    $_COOKIE['wide'] = "0";
+}
+
 //$yt->spfEnabled = false; // DEBUG
 echo $twig->render($template . '.twig', [$yt]);
 $timec = round(microtime(true) * 1000);
