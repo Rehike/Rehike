@@ -66,5 +66,11 @@
     {%- block branded_page_top_row -%}
         {% include '/common/channels4/channel_header.twig' %}
     {% endblock %}
+
+    {%- block branded_page_primary_column_content -%}
+        {%- if yt.page.aboutContents -%}
+            {% include '/common/channels4/modules/about.twig' %}
+        {%- endif -%}
+    {%- endblock -%}
 {% endembed %}
 {% endblock %}
