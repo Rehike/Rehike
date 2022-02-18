@@ -60,8 +60,17 @@ class PlayerCore {
 
     public static function generatePlayerCache(bool $cacheExists): object {
         // TODO: migrate to general cache utils
+        
+        // Patch: Major errors without "cache" folder
+        // ~ Coffee
+        
         $basepos = self::getPlayerBasePosition();
         $time = time();
+        
+        if (!is_dir(self::CACHE_DIR))
+        {
+            mkdir(self::CACHE_DIR);
+        }
 
         if ($cacheExists) {
             unlink(self::CACHE_PATH);
