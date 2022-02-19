@@ -1,5 +1,6 @@
 <?php
 //error_reporting(0);
+require "views/utils/watchUtils.php";
 $yt->spfEnabled = true;
 $yt->useModularCore = true;
 $template = 'watch';
@@ -230,10 +231,13 @@ if (!is_null($secondaryInfo)) {
 if (!is_null($secondaryResults)) {
     $rw->secondaryResults = $secondaryResults;
     // playlist (TODO: disable if playlist)
+    
+    $autoplayVideo = WatchUtils::getRecomAutoplay($secondaryResults->results, $recomIndex);
+    
     $rw->secondaryResults->autoplayRenderer = (object) [
-        'results' => [$secondaryResults->results[0]]
+        'results' => [$autoplayVideo]
     ];
-    array_splice($rw->secondaryResults->results, 0, 1);
+    array_splice($rw->secondaryResults->results, $recomIndex, 1);
 }
 /**
  * Comments RW
