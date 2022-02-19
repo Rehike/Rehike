@@ -1,4 +1,7 @@
 <?php
+require "rewriters/CommentThread.php";
+use Rewriter\CommentThread;
+
 $template = 'common/watch/watch_fragments2/comments';
 $yt->page = (object) [];
 $yt->comments = (object) [];
@@ -113,6 +116,9 @@ if ($a = ($_och->createRenderer->commentSimpleboxRenderer ?? false)) {
  * TODO: further rewrite may be necessary
  */
 $_oct = $ytdata->{ORRE}[1]->{RLC}->{CI}; // original comment threads
+$yt->comments = CommentThread::bakeComments($_oct);
+
+/*
 $yt->comments = $_oct;
 
 foreach ($yt->comments as $index => $comment) if (isset($comment->commentThreadRenderer->comment->commentRenderer->voteCount))
@@ -126,5 +132,6 @@ foreach ($yt->comments as $index => $comment) if (isset($comment->commentThreadR
         }
     )($likeButtonLabel);
 }
+*/
 
 //header('content-type: application/json'); echo json_encode($yt); die(); // debug

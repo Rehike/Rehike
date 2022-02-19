@@ -7,10 +7,26 @@
    <div class="comment-section-renderer-items" id="comment-section-renderer-items">
       {# spinner img for switching view #}
       <span class="yt-spinner-img comment-section-items-loading yt-sprite" title="Loading icon"></span>
-        {% for item in yt.comments %}
+        {% for item in yt.comments.comments %}
             {{ main.comment_thread(item) }}
         {% endfor %}
-    </div>
+   </div>
+   {% if yt.comments.commentContinuationRenderer %}
+   <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-default load-more-button yt-uix-load-more comment-section-renderer-paginator yt-uix-sessionlink" type="button" onclick=";return false;" aria-label="Show more
+      " data-uix-load-more-target-id="comment-section-renderer-items" data-uix-load-more-post-body="page_token={{ yt.comments.commentContinuationRenderer.token }}" data-sessionlink="itct=CAsQuy8iEwiOxOGjvpnRAhUXqH4KHR1AD08omxw" data-uix-load-more-href="/comment_service_ajax?action_get_comments=1" data-sessionlink-target="/comment_service_ajax?action_get_comments=1" data-uix-load-more-post="true">
+      <span class="yt-uix-button-content">
+         <span class="load-more-loading hid">
+            <span class="yt-spinner">
+               <span title="Loading icon" class="yt-spinner-img  yt-sprite"></span>
+               Loading...
+            </span>
+         </span>
+        <span class="load-more-text">
+            Show more
+         </span>
+      </span>
+   </button>
+   {% endif %}
    {% include '/common/discussion_v2/simplebox.twig' %}
    <div class="feedback-banner hid" aria-live="polite"></div>
    <span class="yt-spinner-img comment-renderer-loading yt-sprite" title="Loading icon"></span>
