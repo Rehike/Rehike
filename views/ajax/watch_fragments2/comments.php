@@ -115,4 +115,16 @@ if ($a = ($_och->createRenderer->commentSimpleboxRenderer ?? false)) {
 $_oct = $ytdata->{ORRE}[1]->{RLC}->{CI}; // original comment threads
 $yt->comments = $_oct;
 
+foreach ($yt->comments as $index => $comment) if (isset($comment->commentThreadRenderer->comment->commentRenderer->voteCount))
+{
+    $likeButtonLabel = $comment->commentThreadRenderer->comment->commentRenderer->actionButtons
+        ->commentActionButtonsRenderer->likeButton->toggleButtonRenderer->accessibilityData
+        ->accessibilityData->label;
+    $comment->commentThreadRenderer->comment->commentRenderer->voteCount = (function ($label)
+        {
+            return preg_replace("/(Like this comment along with )|(,)|( other person)|(other people)/", "", $label);
+        }
+    )($likeButtonLabel);
+}
+
 //header('content-type: application/json'); echo json_encode($yt); die(); // debug
