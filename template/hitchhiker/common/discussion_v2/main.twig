@@ -1,119 +1,13 @@
 {% macro comment_thread(item) %}
-{% set comment = item.commentThreadRenderer.comment.commentRenderer %}
+{% set comment = item.commentThreadRenderer.commentRenderer %}
 <section class="comment-thread-renderer  vve-check-visible vve-check-hidden" data-visibility-tracking="CL4BEMJ1GAAiEwjpsvbIjMTtAhU3yMEKHRZcD6w" data-visibility-types="12" data-priority="0">
-   <div class="comment-renderer   vve-check-visible vve-check-hidden" data-visibility-tracking="CMMBELZ1IhMI6bL2yIzE7QIVN8jBCh0WXA-s" data-visibility-types="12" data-cid="{{ comment.commentId }}">
-      <a href="{{ comment.authorEndpoint.commandMetadata.webCommandMetadata.url }}" class=" yt-uix-sessionlink      spf-link " data-sessionlink="itct=CMMBELZ1IhMI6bL2yIzE7QIVN8jBCh0WXA-s">  <span class="video-thumb comment-author-thumbnail yt-thumb yt-thumb-48">
-      <span class="yt-thumb-square">
-      <span class="yt-thumb-clip">
-      <img alt="F" data-ytimg="1" height="48" onload=";window.__ytRIL &amp;&amp; __ytRIL(this)" role="img" src="{{ comment.authorThumbnail.thumbnails.0.url }}" tabindex="0" width="48">
-      <span class="vertical-align"></span>
-      </span>
-      </span>
-      </span>
-      </a>
-      <div id="comment-renderer-edit-{{ comment.commentId }}" class="comment-simplebox-edit" data-editable-content-text="" data-image-src="" data-video-id="">
-      </div>
-      <div class="comment-renderer-content">
-         {% if comment.pinnedCommentBadge %}
-         <div class="comment-renderer-pinned-comment-badge">    {{ getText(comment.pinnedCommentBadge.pinnedCommentBadgeRenderer.label) }}</div>
-         {% endif %}
-         <div class="comment-renderer-header">
-            {% apply spaceless %}
-            {% if comment.authorIsChannelOwner %}
-            <span class="comment-renderer-author-comment-badge creator">
-            {% endif %}
-            <a href="{{ comment.authorEndpoint.commandMetadata.webCommandMetadata.url }}" class="comment-author-text yt-uix-sessionlink      spf-link " data-sessionlink="itct=CMMBELZ1IhMI6bL2yIzE7QIVN8jBCh0WXA-s">{{ getText(comment.authorText) }}</a>
-            {% endapply %}
-            {% if comment.authorCommentBadge and comment.authorIsChannelOwner %}
-            <span class="yt-badge comment-author-verified-badge yt-uix-tooltip" title="Verified"><span class="yt-comment-author-verified-icon yt-sprite"></span></span>
-            {% elseif comment.authorCommentBadge %}
-            <span aria-label="Verified" class="yt-channel-title-icon-verified yt-uix-tooltip yt-sprite" data-tooltip-text="Verified"></span>
-            {% endif %}
-            {% if comment.authorIsChannelOwner %}
-            </span>
-            {% endif %}
-            <span class="comment-renderer-time" tabindex="0"><a href="{{ comment.publishedTimeText.runs.0.navigationEndpoint.commandMetadata.webCommandMetadata.url }}" class="yt-uix-sessionlink       spf-link " data-sessionlink="itct=CMMBELZ1IhMI6bL2yIzE7QIVN8jBCh0WXA-s">{{ comment.publishedTimeText.runs.0.text }}</a>
-            </span>
-        </div>
-         <div class="comment-renderer-text" tabindex="0" role="article">
-            <div class="comment-renderer-text-content">{{ getText(comment.contentText) }}</div>
-            <div class="comment-text-toggle hid">
-               <div class="comment-text-toggle-link read-more">
-                   <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-link" type="button" onclick="return false;">
-                       <span class="yt-uix-button-content">Read more</span>
-                  </button>
-               </div>
-               <div class="comment-text-toggle-link show-less hid">
-                   <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-link" type="button" onclick="return false;">
-                       <span class="yt-uix-button-content">Show less</span>
-                   </button>
-               </div>
-            </div>
-         </div>
-         <div class="comment-renderer-footer" data-vote-status="INDIFFERENT">
-            <div class="comment-action-buttons-toolbar">
-                {% if comment.actionButtons.commentActionButtonsRenderer.replyButton %}
-               <button class="yt-uix-button yt-uix-button-size-small yt-uix-button-link comment-renderer-reply comment-simplebox-trigger" type="button" onclick=";return false;" data-placeholder="Add a public reply..." data-simplebox-event="replycreated" data-simplebox-id="comment-simplebox-reply-UgyQ8iceYjqMY000mJ54AaABAg" data-simplebox-label="Reply" data-simplebox-params="EgtteTJoX19sNDFxYyIaVWd5UThpY2VZanFNWTAwMG1KNTRBYUFCQWcqAggAUAc%3D" data-simplebox-sessionlink="itct=CMgBEPBbIhMI6bL2yIzE7QIVN8jBCh0WXA-s" data-simplebox-target="/comment_service_ajax?action_create_comment_reply=1"><span class="yt-uix-button-content">Reply</span></button>
-                {% endif %}
-               <span class="comment-renderer-like-count off">{{ comment.voteCount }}</span>
-               <span class="comment-renderer-like-count on">21</span>
-               <span role="radiogroup">
-               <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-default yt-uix-button-empty yt-uix-button-has-icon no-icon-markup comment-action-buttons-renderer-thumb yt-uix-sessionlink sprite-comment-actions sprite-like i-a-v-sprite-like" type="button" onclick=";return false;" aria-checked="false" aria-label="Like" role="radio" data-action="CAUQAhoaVWd5UThpY2VZanFNWTAwMG1KNTRBYUFCQWcqC215MmhfX2w0MXFjMAA4AEoVMTEyOTM1MjAzMzA1OTEyODQ0ODg1UACoAQy6ARhVQ202eUQyNkhsYWZ6cU5sWWFLN3VFYUE%3D" data-action-type="like" data-sessionlink="itct=CMkBEPBbIhMI6bL2yIzE7QIVN8jBCh0WXA-s" data-sessionlink-target="/comment_service_ajax?action_perform_comment_action=1" data-url="/comment_service_ajax?action_perform_comment_action=1"></button>
-               <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-default yt-uix-button-empty yt-uix-button-has-icon no-icon-markup comment-action-buttons-renderer-thumb yt-uix-sessionlink sprite-comment-actions sprite-dislike i-a-v-sprite-dislike" type="button" onclick=";return false;" aria-checked="false" aria-label="Dislike" role="radio" data-action="CAQQAhoaVWd5UThpY2VZanFNWTAwMG1KNTRBYUFCQWcqC215MmhfX2w0MXFjMAA4AEoVMTEyOTM1MjAzMzA1OTEyODQ0ODg1UACoAQy6ARhVQ202eUQyNkhsYWZ6cU5sWWFLN3VFYUE%3D" data-action-type="dislike" data-sessionlink="itct=CMcBEPBbIhMI6bL2yIzE7QIVN8jBCh0WXA-s" data-sessionlink-target="/comment_service_ajax?action_perform_comment_action=1" data-url="/comment_service_ajax?action_perform_comment_action=1"></button>
-               </span>
-               {% if comment.actionButtons.commentActionButtonsRenderer.creatorHeart %}
-               <button class="yt-uix-creator-heart-button yt-uix-tooltip" aria-label="{{ comment.actionButtons.commentActionButtonsRenderer.creatorHeart.creatorHeartRenderer.heartedTooltip }}" data-tooltip-text="{{ comment.actionButtons.commentActionButtonsRenderer.creatorHeart.creatorHeartRenderer.heartedTooltip }}">
-                  <div class="creator-heart">
-                     <img src="{{ comment.actionButtons.commentActionButtonsRenderer.creatorHeart.creatorHeartRenderer.creatorThumbnail.thumbnails.0.url }}" class="creator-heart-background-hearted">
-                     <div class="creator-heart-big-hearted"></div>
-                     <div class="creator-heart-small-hearted">
-                        <div class="creator-heart-small-container">
-                           <div class="creator-heart-small-left" style="background: #ff0000;"></div>
-                           <div class="creator-heart-small-right" style="background: #ff0000;"></div>
-                        </div>
-                     </div>
-                  </div>
-               </button>
-               {% endif %}
-               {# uncomment when login
-               <div class="yt-uix-menu-container comment-renderer-action-menu yt-section-hover-container">
-                  <div class="yt-uix-menu yt-uix-menu-flipped hide-until-delayloaded">
-                     <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-action-menu yt-uix-button-empty yt-uix-button-has-icon no-icon-markup  yt-uix-menu-trigger" type="button" onclick=";return false;" aria-haspopup="true" aria-label="Action menu." aria-pressed="false" role="button"><span class="yt-uix-button-arrow yt-sprite"></span></button>
-                     <div class="yt-uix-menu-content yt-ui-menu-content yt-uix-menu-content-hidden" role="menu">
-                        <ul>
-                           <li role="menuitem">
-                              <div class="service-endpoint-action-container hid">
-                              </div>
-                              <button type="button" class="yt-ui-menu-item yt-uix-menu-close-on-select  report-form-modal-renderer" data-innertube-clicktracking="CMMBELZ1IhMI6bL2yIzE7QIVN8jBCh0WXA-s" data-params="GhpVZ3lROGljZVlqcU1ZMDAwbUo1NEFhQUJBZygCMgFGOmkIARACGhpVZ3lROGljZVlqcU1ZMDAwbUo1NEFhQUJBZyoLbXkyaF9fbDQxcWMwAEoVMTEyOTM1MjAzMzA1OTEyODQ0ODg1UACoAQy6ARhVQ202eUQyNkhsYWZ6cU5sWWFLN3VFYUHgAQA%3D" data-url="/flag_service_ajax?action_get_report_form=1">
-                              <span class="yt-ui-menu-item-label">Report</span>
-                              </button>
-                           </li>
-                        </ul>
-                     </div>
-                  </div>
-               </div>
-            #}
-            </div>{#
-            <div class="comment-renderer-replybox" id="comment-simplebox-reply-UgyQ8iceYjqMY000mJ54AaABAg">
-               <span class="video-thumb comment-author-thumbnail yt-thumb yt-thumb-32">
-               <span class="yt-thumb-square">
-               <span class="yt-thumb-clip">
-               <img alt="F" data-ytimg="1" height="32" onload=";window.__ytRIL &amp;&amp; __ytRIL(this)" role="img" src="./and old youtube page maybe_ - YouTube_files/unnamed(3).png" tabindex="0" width="32">
-               <span class="vertical-align"></span>
-               </span>
-               </span>
-               </span>
-            </div>
-            #}
-         </div>
-      </div>
-   </div>
-   {% if item.commentThreadRenderer.replies.commentRepliesRenderer %}
-   {% set replies = item.commentThreadRenderer.replies.commentRepliesRenderer %}
+   {{ _self.comment(item) }}
+   {% if item.commentThreadRenderer.commentRepliesRenderer %}
+   {% set replies = item.commentThreadRenderer.commentRepliesRenderer %}
    <div class="comment-replies-renderer" data-visibility-tracking="CL8BEL51IhMI6bL2yIzE7QIVN8jBCh0WXA-s">
       <div class="yt-uix-expander yt-uix-expander-collapsed comment-replies-renderer-header" tabindex="0">
          <div class="yt-uix-expander-collapsed-body">
-            <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-default load-more-button yt-uix-load-more comment-replies-renderer-paginator comment-replies-renderer-expander-down yt-uix-button-link modThumbs" type="button" onclick=";return false;" aria-label="View reply" data-uix-load-more-href="/comment_service_ajax?action_get_comment_replies=1" data-uix-load-more-post="true" data-uix-load-more-post-body="page_token=EiMSC215MmhfX2w0MXFjyAEA4AEDogINKP___________wFAABgGMk0aSxIaVWd5UThpY2VZanFNWTAwMG1KNTRBYUFCQWciAggAKhhVQ202eUQyNkhsYWZ6cU5sWWFLN3VFYUEyC215MmhfX2w0MXFjQAFICg%253D%253D" data-uix-load-more-target-id="comment-replies-renderer-{{ comment.commentId }}"><span class="yt-uix-button-content">  <span class="load-more-loading hid">
+            <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-default load-more-button yt-uix-load-more comment-replies-renderer-paginator comment-replies-renderer-expander-down yt-uix-button-link modThumbs" type="button" onclick=";return false;" aria-label="View reply" data-uix-load-more-href="/comment_service_ajax?action_get_comment_replies=1" data-uix-load-more-post="true" data-uix-load-more-post-body="page_token={{ repliesToken }}" data-uix-load-more-target-id="comment-replies-renderer-{{ comment.commentId }}"><span class="yt-uix-button-content">  <span class="load-more-loading hid">
             <span class="yt-spinner">
             <span class="yt-spinner-img  yt-sprite" title="Loading icon"></span>
             Loading...
@@ -137,4 +31,118 @@
    </div>
    {% endif %}
 </section>
+{% endmacro %}
+
+{% macro comment(item) %}
+<div class="comment-renderer   vve-check-visible vve-check-hidden" data-visibility-tracking="CMMBELZ1IhMI6bL2yIzE7QIVN8jBCh0WXA-s" data-visibility-types="12" data-cid="{{ comment.commentId }}">
+   <a href="{{ comment.authorEndpoint.commandMetadata.webCommandMetadata.url }}" class=" yt-uix-sessionlink      spf-link " data-sessionlink="itct=CMMBELZ1IhMI6bL2yIzE7QIVN8jBCh0WXA-s">  
+      {% set thumbnailSize = item.isReply ? '32' : '48' %}
+      <span class="video-thumb comment-author-thumbnail yt-thumb yt-thumb-{{ thumbnailSize }}">
+         <span class="yt-thumb-square">
+            <span class="yt-thumb-clip">
+               <img alt="{{ getText(comment.authorText) }}" data-ytimg="1" height="{{ thumbnailSize }}" onload=";window.__ytRIL &amp;&amp; __ytRIL(this)" role="img" src="{{ comment.authorThumbnail.thumbnails.0.url }}" tabindex="0" width="{{ thumbnailSize }}">
+               <span class="vertical-align"></span>
+            </span>
+         </span>
+      </span>
+   </a>
+   <div id="comment-renderer-edit-{{ comment.commentId }}" class="comment-simplebox-edit" data-editable-content-text="" data-image-src="" data-video-id="">
+   </div>
+   <div class="comment-renderer-content">
+      {% if comment.pinnedCommentBadge %}
+      <div class="comment-renderer-pinned-comment-badge">    {{ getText(comment.pinnedCommentBadge.pinnedCommentBadgeRenderer.label) }}</div>
+      {% endif %}
+      <div class="comment-renderer-header">
+         {% apply spaceless %}
+         {% if comment.authorIsChannelOwner %}
+         <span class="comment-renderer-author-comment-badge creator">
+         {% endif %}
+         <a href="{{ comment.authorEndpoint.commandMetadata.webCommandMetadata.url }}" class="comment-author-text yt-uix-sessionlink      spf-link " data-sessionlink="itct=CMMBELZ1IhMI6bL2yIzE7QIVN8jBCh0WXA-s">{{ getText(comment.authorText) }}</a>
+         {% endapply %}
+         {% if comment.authorCommentBadge and comment.authorIsChannelOwner %}
+         <span class="yt-badge comment-author-verified-badge yt-uix-tooltip" title="Verified"><span class="yt-comment-author-verified-icon yt-sprite"></span></span>
+         {% elseif comment.authorCommentBadge %}
+         <span aria-label="Verified" class="yt-channel-title-icon-verified yt-uix-tooltip yt-sprite" data-tooltip-text="Verified"></span>
+         {% endif %}
+         {% if comment.authorIsChannelOwner %}
+         </span>
+         {% endif %}
+         <span class="comment-renderer-time" tabindex="0"><a href="{{ comment.publishedTimeText.runs.0.navigationEndpoint.commandMetadata.webCommandMetadata.url }}" class="yt-uix-sessionlink       spf-link " data-sessionlink="itct=CMMBELZ1IhMI6bL2yIzE7QIVN8jBCh0WXA-s">{{ comment.publishedTimeText.runs.0.text }}</a>
+         </span>
+     </div>
+      <div class="comment-renderer-text" tabindex="0" role="article">
+         <div class="comment-renderer-text-content">{{ getText(comment.contentText) }}</div>
+         <div class="comment-text-toggle hid">
+            <div class="comment-text-toggle-link read-more">
+                <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-link" type="button" onclick="return false;">
+                    <span class="yt-uix-button-content">Read more</span>
+               </button>
+            </div>
+            <div class="comment-text-toggle-link show-less hid">
+                <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-link" type="button" onclick="return false;">
+                    <span class="yt-uix-button-content">Show less</span>
+                </button>
+            </div>
+         </div>
+      </div>
+      <div class="comment-renderer-footer" data-vote-status="INDIFFERENT">
+         <div class="comment-action-buttons-toolbar">
+            {% apply spaceless %}
+            {% if comment.actionButtons.commentActionButtonsRenderer.replyButton %}
+            <button class="yt-uix-button yt-uix-button-size-small yt-uix-button-link comment-renderer-reply comment-simplebox-trigger" type="button" onclick=";return false;" data-placeholder="Add a public reply..." data-simplebox-event="replycreated" data-simplebox-id="comment-simplebox-reply-UgyQ8iceYjqMY000mJ54AaABAg" data-simplebox-label="Reply" data-simplebox-params="EgtteTJoX19sNDFxYyIaVWd5UThpY2VZanFNWTAwMG1KNTRBYUFCQWcqAggAUAc%3D" data-simplebox-sessionlink="itct=CMgBEPBbIhMI6bL2yIzE7QIVN8jBCh0WXA-s" data-simplebox-target="/comment_service_ajax?action_create_comment_reply=1"><span class="yt-uix-button-content">Reply</span></button>
+            {% endif %}
+            <span class="comment-renderer-like-count off">{{ comment.voteCount.indifferentText }}</span>
+            <span class="comment-renderer-like-count on">{{ comment.voteCount.likedText }}</span>
+            <span role="radiogroup">
+            <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-default yt-uix-button-empty yt-uix-button-has-icon no-icon-markup comment-action-buttons-renderer-thumb yt-uix-sessionlink sprite-comment-actions sprite-like i-a-v-sprite-like" type="button" onclick=";return false;" aria-checked="false" aria-label="Like" role="radio" data-action="CAUQAhoaVWd5UThpY2VZanFNWTAwMG1KNTRBYUFCQWcqC215MmhfX2w0MXFjMAA4AEoVMTEyOTM1MjAzMzA1OTEyODQ0ODg1UACoAQy6ARhVQ202eUQyNkhsYWZ6cU5sWWFLN3VFYUE%3D" data-action-type="like" data-sessionlink="itct=CMkBEPBbIhMI6bL2yIzE7QIVN8jBCh0WXA-s" data-sessionlink-target="/comment_service_ajax?action_perform_comment_action=1" data-url="/comment_service_ajax?action_perform_comment_action=1"></button>
+            <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-default yt-uix-button-empty yt-uix-button-has-icon no-icon-markup comment-action-buttons-renderer-thumb yt-uix-sessionlink sprite-comment-actions sprite-dislike i-a-v-sprite-dislike" type="button" onclick=";return false;" aria-checked="false" aria-label="Dislike" role="radio" data-action="CAQQAhoaVWd5UThpY2VZanFNWTAwMG1KNTRBYUFCQWcqC215MmhfX2w0MXFjMAA4AEoVMTEyOTM1MjAzMzA1OTEyODQ0ODg1UACoAQy6ARhVQ202eUQyNkhsYWZ6cU5sWWFLN3VFYUE%3D" data-action-type="dislike" data-sessionlink="itct=CMcBEPBbIhMI6bL2yIzE7QIVN8jBCh0WXA-s" data-sessionlink-target="/comment_service_ajax?action_perform_comment_action=1" data-url="/comment_service_ajax?action_perform_comment_action=1"></button>
+            </span>
+            {% endapply %}
+            {% if comment.actionButtons.commentActionButtonsRenderer.creatorHeart %}
+            <button class="yt-uix-creator-heart-button yt-uix-tooltip" aria-label="{{ comment.actionButtons.commentActionButtonsRenderer.creatorHeart.creatorHeartRenderer.heartedTooltip }}" data-tooltip-text="{{ comment.actionButtons.commentActionButtonsRenderer.creatorHeart.creatorHeartRenderer.heartedTooltip }}">
+               <div class="creator-heart">
+                  <img src="{{ comment.actionButtons.commentActionButtonsRenderer.creatorHeart.creatorHeartRenderer.creatorThumbnail.thumbnails.0.url }}" class="creator-heart-background-hearted">
+                  <div class="creator-heart-big-hearted"></div>
+                  <div class="creator-heart-small-hearted">
+                     <div class="creator-heart-small-container">
+                        <div class="creator-heart-small-left" style="background: #ff0000;"></div>
+                        <div class="creator-heart-small-right" style="background: #ff0000;"></div>
+                     </div>
+                  </div>
+               </div>
+            </button>
+            {% endif %}
+            {# uncomment when login
+            <div class="yt-uix-menu-container comment-renderer-action-menu yt-section-hover-container">
+               <div class="yt-uix-menu yt-uix-menu-flipped hide-until-delayloaded">
+                  <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-action-menu yt-uix-button-empty yt-uix-button-has-icon no-icon-markup  yt-uix-menu-trigger" type="button" onclick=";return false;" aria-haspopup="true" aria-label="Action menu." aria-pressed="false" role="button"><span class="yt-uix-button-arrow yt-sprite"></span></button>
+                  <div class="yt-uix-menu-content yt-ui-menu-content yt-uix-menu-content-hidden" role="menu">
+                     <ul>
+                        <li role="menuitem">
+                           <div class="service-endpoint-action-container hid">
+                           </div>
+                           <button type="button" class="yt-ui-menu-item yt-uix-menu-close-on-select  report-form-modal-renderer" data-innertube-clicktracking="CMMBELZ1IhMI6bL2yIzE7QIVN8jBCh0WXA-s" data-params="GhpVZ3lROGljZVlqcU1ZMDAwbUo1NEFhQUJBZygCMgFGOmkIARACGhpVZ3lROGljZVlqcU1ZMDAwbUo1NEFhQUJBZyoLbXkyaF9fbDQxcWMwAEoVMTEyOTM1MjAzMzA1OTEyODQ0ODg1UACoAQy6ARhVQ202eUQyNkhsYWZ6cU5sWWFLN3VFYUHgAQA%3D" data-url="/flag_service_ajax?action_get_report_form=1">
+                           <span class="yt-ui-menu-item-label">Report</span>
+                           </button>
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+            </div>
+         #}
+         </div>{#
+         <div class="comment-renderer-replybox" id="comment-simplebox-reply-UgyQ8iceYjqMY000mJ54AaABAg">
+            <span class="video-thumb comment-author-thumbnail yt-thumb yt-thumb-32">
+            <span class="yt-thumb-square">
+            <span class="yt-thumb-clip">
+            <img alt="F" data-ytimg="1" height="32" onload=";window.__ytRIL &amp;&amp; __ytRIL(this)" role="img" src="./and old youtube page maybe_ - YouTube_files/unnamed(3).png" tabindex="0" width="32">
+            <span class="vertical-align"></span>
+            </span>
+            </span>
+            </span>
+         </div>
+         #}
+      </div>
+   </div>
+</div>
 {% endmacro %}

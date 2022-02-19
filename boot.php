@@ -5,6 +5,9 @@ require_once($root . '/vendor/autoload.php');
 //require($root . '/signin/sc2stub.php');
 //$sc2 = new YtSigninCore();
 
+include "mod/YukisCoffee/CoffeeException.php";
+include "mod/YukisCoffee/GetPropertyAtPath.php";
+
 require('mod/spfPhp.php');
 require('mod/cacheUtils/cacheUtils.php');
 use \CacheUtils\Main as CacheUtils;
