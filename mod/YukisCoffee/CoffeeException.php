@@ -17,11 +17,18 @@ interface ICoffeeException
 
 abstract class CoffeeException extends \Exception implements ICoffeeException
 {
+    // PHP is really annoying ugh...
+    // - protected $file
+    // - protected $line
+    // Crash PHP 8, saying they must be typed
+    // - protected string $file
+    // - protected int $line
+    // Crash PHP 7, saying they must be untyped
+    // Fix: Remove the redefinition here and just
+    // inherit from Exception.
     public $message = "Unknown exception";
     private $string;
     protected $code = 0;
-    protected $file;
-    protected $line;
     private $trace;
     public $exceptionName;
 
