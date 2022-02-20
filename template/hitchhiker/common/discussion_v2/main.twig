@@ -1,7 +1,7 @@
 {% macro comment_thread(item) %}
 {% set comment = item.commentThreadRenderer.commentRenderer %}
 <section class="comment-thread-renderer  vve-check-visible vve-check-hidden" data-visibility-tracking="CL4BEMJ1GAAiEwjpsvbIjMTtAhU3yMEKHRZcD6w" data-visibility-types="12" data-priority="0">
-   {{ _self.comment(item) }}
+   {{ _self.comment(comment) }}
    {% if item.commentThreadRenderer.commentRepliesRenderer %}
    {% set replies = item.commentThreadRenderer.commentRepliesRenderer %}
    <div class="comment-replies-renderer" data-visibility-tracking="CL8BEL51IhMI6bL2yIzE7QIVN8jBCh0WXA-s">
@@ -33,7 +33,7 @@
 </section>
 {% endmacro %}
 
-{% macro comment(item) %}
+{% macro comment(comment) %}
 <div class="comment-renderer   vve-check-visible vve-check-hidden" data-visibility-tracking="CMMBELZ1IhMI6bL2yIzE7QIVN8jBCh0WXA-s" data-visibility-types="12" data-cid="{{ comment.commentId }}">
    <a href="{{ comment.authorEndpoint.commandMetadata.webCommandMetadata.url }}" class=" yt-uix-sessionlink      spf-link " data-sessionlink="itct=CMMBELZ1IhMI6bL2yIzE7QIVN8jBCh0WXA-s">  
       {% set thumbnailSize = item.isReply ? '32' : '48' %}
