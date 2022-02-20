@@ -41,7 +41,17 @@ function getPropertyAtPath(&$base, $propertyPath)
     $items = "";
     foreach($tree as $i => $property)
     {
-        $items .= "{$tokenL}{$property}{$tokenR}";
+        $arrayCarry = "";
+
+        if (strpos($property, "[") > 0)
+        {
+            $arrayWorker = explode("[", $property);
+            $property = $arrayWorker[0];
+            array_splice($arrayWorker, 0, 1);
+            $arrayCarry = "[" . implode("[", $arrayWorker);
+        }
+
+        $items .= "{$tokenL}{$property}{$tokenR}{$arrayCarry}";
         if (!@eval("return isset(\$base{$items});"))
         {
             throw new GetPropertyAtPathException(
