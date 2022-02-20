@@ -7,7 +7,7 @@
    <div class="comment-section-renderer-items" id="comment-section-renderer-items">
       {# spinner img for switching view #}
       <span class="yt-spinner-img comment-section-items-loading yt-sprite" title="Loading icon"></span>
-        {% for item in yt.comments.comments %}
+        {% for item in yt.comments.commentThreads %}
             {{ main.comment_thread(item) }}
         {% endfor %}
    </div>
