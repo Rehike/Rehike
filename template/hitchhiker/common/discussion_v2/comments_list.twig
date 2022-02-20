@@ -1,0 +1,4 @@
+{% import '/common/discussion_v2/main.twig' as main %}
+{% for item in yt.comments.comments %}
+   {{ main.comment(item) }}
+{% endfor %}

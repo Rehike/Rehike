@@ -4,6 +4,7 @@
    {{ _self.comment(comment) }}
    {% if item.commentThreadRenderer.commentRepliesRenderer %}
    {% set replies = item.commentThreadRenderer.commentRepliesRenderer %}
+   {% set repliesToken = replies.contents.0.continuationItemRenderer.continuationEndpoint.continuationCommand.token %}
    <div class="comment-replies-renderer" data-visibility-tracking="CL8BEL51IhMI6bL2yIzE7QIVN8jBCh0WXA-s">
       <div class="yt-uix-expander yt-uix-expander-collapsed comment-replies-renderer-header" tabindex="0">
          <div class="yt-uix-expander-collapsed-body">
@@ -36,7 +37,7 @@
 {% macro comment(comment) %}
 <div class="comment-renderer   vve-check-visible vve-check-hidden" data-visibility-tracking="CMMBELZ1IhMI6bL2yIzE7QIVN8jBCh0WXA-s" data-visibility-types="12" data-cid="{{ comment.commentId }}">
    <a href="{{ comment.authorEndpoint.commandMetadata.webCommandMetadata.url }}" class=" yt-uix-sessionlink      spf-link " data-sessionlink="itct=CMMBELZ1IhMI6bL2yIzE7QIVN8jBCh0WXA-s">  
-      {% set thumbnailSize = item.isReply ? '32' : '48' %}
+      {% set thumbnailSize = comment.isReply ? '32' : '48' %}
       <span class="video-thumb comment-author-thumbnail yt-thumb yt-thumb-{{ thumbnailSize }}">
          <span class="yt-thumb-square">
             <span class="yt-thumb-clip">
@@ -91,8 +92,12 @@
             {% if comment.actionButtons.commentActionButtonsRenderer.replyButton %}
             <button class="yt-uix-button yt-uix-button-size-small yt-uix-button-link comment-renderer-reply comment-simplebox-trigger" type="button" onclick=";return false;" data-placeholder="Add a public reply..." data-simplebox-event="replycreated" data-simplebox-id="comment-simplebox-reply-UgyQ8iceYjqMY000mJ54AaABAg" data-simplebox-label="Reply" data-simplebox-params="EgtteTJoX19sNDFxYyIaVWd5UThpY2VZanFNWTAwMG1KNTRBYUFCQWcqAggAUAc%3D" data-simplebox-sessionlink="itct=CMgBEPBbIhMI6bL2yIzE7QIVN8jBCh0WXA-s" data-simplebox-target="/comment_service_ajax?action_create_comment_reply=1"><span class="yt-uix-button-content">Reply</span></button>
             {% endif %}
+            {% if comment.voteCount and not comment.voteCount.indifferentText == "0" %}
             <span class="comment-renderer-like-count off">{{ comment.voteCount.indifferentText }}</span>
             <span class="comment-renderer-like-count on">{{ comment.voteCount.likedText }}</span>
+            {% else %}
+            <span class="comment-renderer-like-count on">1</span>
+            {% endif %}
             <span role="radiogroup">
             <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-default yt-uix-button-empty yt-uix-button-has-icon no-icon-markup comment-action-buttons-renderer-thumb yt-uix-sessionlink sprite-comment-actions sprite-like i-a-v-sprite-like" type="button" onclick=";return false;" aria-checked="false" aria-label="Like" role="radio" data-action="CAUQAhoaVWd5UThpY2VZanFNWTAwMG1KNTRBYUFCQWcqC215MmhfX2w0MXFjMAA4AEoVMTEyOTM1MjAzMzA1OTEyODQ0ODg1UACoAQy6ARhVQ202eUQyNkhsYWZ6cU5sWWFLN3VFYUE%3D" data-action-type="like" data-sessionlink="itct=CMkBEPBbIhMI6bL2yIzE7QIVN8jBCh0WXA-s" data-sessionlink-target="/comment_service_ajax?action_perform_comment_action=1" data-url="/comment_service_ajax?action_perform_comment_action=1"></button>
             <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-default yt-uix-button-empty yt-uix-button-has-icon no-icon-markup comment-action-buttons-renderer-thumb yt-uix-sessionlink sprite-comment-actions sprite-dislike i-a-v-sprite-dislike" type="button" onclick=";return false;" aria-checked="false" aria-label="Dislike" role="radio" data-action="CAQQAhoaVWd5UThpY2VZanFNWTAwMG1KNTRBYUFCQWcqC215MmhfX2w0MXFjMAA4AEoVMTEyOTM1MjAzMzA1OTEyODQ0ODg1UACoAQy6ARhVQ202eUQyNkhsYWZ6cU5sWWFLN3VFYUE%3D" data-action-type="dislike" data-sessionlink="itct=CMcBEPBbIhMI6bL2yIzE7QIVN8jBCh0WXA-s" data-sessionlink-target="/comment_service_ajax?action_perform_comment_action=1" data-url="/comment_service_ajax?action_perform_comment_action=1"></button>

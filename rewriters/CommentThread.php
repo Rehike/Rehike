@@ -17,12 +17,12 @@ class CommentThread
         // Top-level function
         // $context = (Array containing all commentThreadRenderer items)
         
-        $out = ["comments" => []];
+        $out = ["commentsThreads" => []];
         
         for ($i = 0, $count = count($context); $i < $count; $i++) {
             if (isset($context[$i]->commentThreadRenderer))
             {
-                $out["comments"][] = self::commentThreadRenderer($context[$i]->commentThreadRenderer);
+                $out["commentThreads"][] = self::commentThreadRenderer($context[$i]->commentThreadRenderer);
             }
             else if ($count - 1 == $i && isset($context[$i]->continuationItemRenderer))
             {
@@ -30,6 +30,24 @@ class CommentThread
             }
         }
         
+        return $out;
+    }
+
+    public static function bakeReplies($context)
+    {
+        // Top level function
+        // $context = (Array containing all commentRenderer items)
+
+        $out = ["comments" => []];
+
+        for ($i = 0, $count = count($context); $i < $count; $i++)
+        {
+            if (isset($context[$i]->commentRenderer))
+            {
+                $out["comments"][] = self::commentRenderer($context[$i]->commentRenderer, true);
+            }
+        }
+
         return $out;
     }
     
@@ -50,11 +68,12 @@ class CommentThread
         return ['commentThreadRenderer' => $out];
     }
     
-    public static function commentRenderer($context)
+    public static function commentRenderer($context, $isReply = false)
     {
         // Right now, the method is to modify a
         // standard InnerTube response.
 
+        $context->isReply = $isReply;
         if (isset($context->voteCount)) self::addLikeCount($context);
 
         return $context;
