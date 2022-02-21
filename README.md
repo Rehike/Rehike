@@ -1,3 +1,7 @@
-# Rehike
+# Rehike ([YukisCoffee](/YukisCoffee) Restructing Branch)
 
-A PHP 8 project that reconstructs YouTube's older layout, known as "Hitchhiker".
+<sub>Readme currently for developer notice.</sub>
+
+This branch vastly restructures the source code to be more organised and professional. Everything, from the bootloader to the page loading mechanism, has been rewritten to my standard.
+
+**Changes to `master` will likely be incompatible. Please be diligent to verify their compatiblity before merging.**

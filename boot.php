@@ -1,53 +1,33 @@
 <?php
-require_once($root . '/vendor/autoload.php');
-
-//require($root . '/signin/signincore2.php');
-//require($root . '/signin/sc2stub.php');
-//$sc2 = new YtSigninCore();
-
-include "mod/YukisCoffee/CoffeeException.php";
-include "mod/YukisCoffee/GetPropertyAtPath.php";
-
-require('mod/spfPhp.php');
-require('mod/cacheUtils/cacheUtils.php');
-use \CacheUtils\Main as CacheUtils;
-require('mod/playerCore.php');
-$_playerCore = PlayerCore::main();
-$yt->playerCore = $_playerCore;
-$yt->playerBasepos = $_playerCore->basepos;
-
-$twigLoader = new \Twig\Loader\FilesystemLoader(
-   $root . $templateRoot
-);
-
-$twig = new \Twig\Environment($twigLoader, [
-   'debug' => true
-]);
-
-
-
-
-function registerFunction($name, $cb): void {
-   global $twig;
-   
-   $Jim = '_' . $name;
-   global ${$Jim};
-   ${$Jim} = $cb;
-   
-   $twig->addFunction(new \Twig\TwigFunction($name, $cb));
+function YcRehikeAutoloader($class)
+{
+    if (file_exists("mod/{$class}.php")) {
+        require "mod/{$class}.php";
+    }
 }
 
-foreach (glob('mod/functions/*.php') as $file) include $file;
-
-function findKey($array, string $key) {
-   for ($i = 0, $j = count($array); $i < $j; $i++) {
-      if (isset($array[$i]->{$key})) {
-         return $array[$i]->{$key};
-      }
-   }
+function RehikeRegisterSharedFunction($name, $callback)
+{
+    \Rehike\SharedFunctions::addFunction($name, $callback);
+    \Rehike\Yt\TemplateController::queueFunction($name, $callback);
 }
 
-$response = null;
+function RehikeBoot()
+{
+    // Composer autoloader
+    require "vendor/autoload.php";
 
-$twig->addGlobal('yt', $yt);
-$twig->addGlobal('response', $response);
+    require('mod/spfPhp.php');
+    require('mod/cacheUtils/cacheUtils.php');
+    require('mod/playerCore.php');
+
+    // Autoload YukisCoffee modules
+    // (hey, that's me!)
+    // (this also does Rehike modules but I'm more awesome <3)
+    spl_autoload_register('YcRehikeAutoloader');
+    require "mod/YukisCoffee/GetPropertyAtPath.php"; // Can't be autoloaded
+
+    // Include old shared functions
+    // These probably should become deprecated.
+    foreach (glob('mod/functions/*.php') as $file) include $file;
+}

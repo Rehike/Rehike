@@ -1,4 +1,6 @@
 <?php
+namespace RehikeResourceConstantsScope;
+
 const YTS_HOST = 's.ytimg.com';
 const MODULAR_JS_PATH = 'www-en_US-vflkPQDpM';
 
@@ -64,5 +66,7 @@ $ytConstants = (object) [
     ]
 ];
 
-$twig->addGlobal('ytConstants', $ytConstants);
-$twig->addGlobal('PIXEL', $ytConstants->pixelGif);
+\Rehike\Yt\ResourcePathController::pushConstants($ytConstants);
+
+\Rehike\Yt\TemplateController::queueGlobal('ytConstants', $ytConstants);
+\Rehike\Yt\TemplateController::queueGlobal('PIXEL', $ytConstants->pixelGif);

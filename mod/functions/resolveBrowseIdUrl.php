@@ -1,6 +1,6 @@
 <?php
 
-registerFunction('resolveBrowseIdUrl', function ($id) {
+RehikeRegisterSharedFunction('resolveBrowseIdUrl', function ($id) {
    if (!isset($id)) {
       return "";
    }

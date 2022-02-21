@@ -1,5 +1,5 @@
 <?php
 
-registerFunction('contentType', function($type) {
+RehikeRegisterSharedFunction('contentType', function($type) {
    header('Content-Type: ' . $type);
 });

@@ -1,5 +1,5 @@
 <?php
 
-registerFunction('resourcePath', function ($consts, $type, $name) {
-    return $consts->{$type}->{$name};
+RehikeRegisterSharedFunction('resourcePath', function ($type, $name) {
+    return \Rehike\Yt\ResourcePathController::$constants->{$type}->{$name};
 });

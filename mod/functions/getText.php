@@ -1,6 +1,6 @@
 <?php
 
-registerFunction('getText', function ($obj) {
+RehikeRegisterSharedFunction('getText', function ($obj) {
    if (isset($obj->runs)) {
       //return '';
       $runs = $obj->runs;

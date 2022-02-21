@@ -1,4 +1,4 @@
-{%- macro getPath(type, name) -%}{{ resourcePath(ytConstants, type, name) }}{% endmacro %}
+{%- macro getPath(type, name) -%}{{ resourcePath(type, name) }}{% endmacro %}
 
 {%- macro jsPath(name) -%}{{ _self.getPath('js', name) }}{% endmacro %}
 
