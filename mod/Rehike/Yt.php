@@ -1,13 +1,18 @@
 <?php
 namespace Rehike;
 
-use Rehike\Yt\TemplateController;
-
 class Yt
 {
     public static $visitorData = "";
     public static $pageBuffer;
     public static $pageContentType = "text/html";
+
+    public static function __toObject()
+    {
+        $yt = (object)[];
+        $yt->page = Yt\PageController::$page;
+        return $yt;
+    }
 
     public static function setVisitorData($visitorData)
     {

@@ -1,16 +1,19 @@
 <?php
+namespace Rehike;
+
 return new class extends \Rehike\Page\NirvanaPage
 {
-    public function buildPage()
+    public function _buildPage()
     {
-        $template = 'home';
-        $yt->modularCoreModules = ['www/feed'];
-        $yt->page = (object) [];
-        $yt->enableFooterCopyright = true;
+        $visitor = Yt::$visitorData;
 
-        include_once($root.'/innertubeHelper.php');
+        Yt::setTemplate('home');
+        $this->pushJsModules(['www/feed']);
+        $this->enableFooterCopyright = true;
 
-        $innertubeBody = generateInnertubeInfoBase('WEB', '1.20200101.01.01', $visitor);
+        include_once('innertubeHelper.php');
+
+        $innertubeBody = \generateInnertubeInfoBase('WEB', '1.20200101.01.01', $visitor);
         $innertubeBody->browseId = 'FEwhat_to_watch';
         $yticfg = json_encode($innertubeBody);
 
@@ -26,7 +29,7 @@ return new class extends \Rehike\Page\NirvanaPage
         curl_setopt_array($ch, [
             CURLOPT_HTTPHEADER => [
                 'Content-Type: application/json',
-            'x-goog-visitor-id: ' . urlencode(encryptVisitorData($visitor))],
+            'x-goog-visitor-id: ' . \urlencode(\encryptVisitorData($visitor))],
             CURLOPT_ENCODING => 'gzip',
             CURLOPT_POST => 1,
             CURLOPT_POSTFIELDS => $yticfg,
@@ -50,8 +53,8 @@ return new class extends \Rehike\Page\NirvanaPage
         tabs[0]->tabRenderer->content->sectionListRenderer->contents;
         */
         
-        $yt->page->shelvesList = $shelvesList;
+        $this->shelvesList = $shelvesList;
 
         curl_close($ch);
     }
-}
+};

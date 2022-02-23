@@ -33,6 +33,7 @@ class TemplateController
         ]);
 
         self::addQueuedFunctions();
+        self::addQueuedGlobals();
     }
 
     public static function doTwigRender()

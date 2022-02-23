@@ -23,18 +23,9 @@ class AbstractPage
         throw new \Rehike\Exception\RehikePageException("Page may not be called statically.");
     }
 
-    public function manuallyHandlePage($callback)
-    {
-        $callback($this->page);
-        return $this;
-    }
+    protected function _registerRewriter($rewriter){}
 
-    public function registerRewriter($rewriter)
-    {
-        
-    }
+    public function _buildPage(){}
 
-    public function buildPage(){}
-
-    public function _postBuildPageCallback(){}
+    public function _postRenderCallback(){}
 }
