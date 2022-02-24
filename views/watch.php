@@ -97,6 +97,9 @@ curl_multi_close($mh);
 $ytdata = json_decode($response);
 $playerResponse = json_decode($presponse);
 $yt->playerResponse = $playerResponse;
+// remove ads lol
+if (isset($yt->playerResponse->playerAds)) unset($yt->playerResponse->playerAds);
+if (isset($yt->playerResponse->adPlacements)) unset($yt->playerResponse->adPlacements);
 // */
 
 // end request
