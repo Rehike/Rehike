@@ -8,17 +8,8 @@
    <div class="comment-replies-renderer" data-visibility-tracking="CL8BEL51IhMI6bL2yIzE7QIVN8jBCh0WXA-s">
       <div class="yt-uix-expander yt-uix-expander-collapsed comment-replies-renderer-header" tabindex="0">
          <div class="yt-uix-expander-collapsed-body">
-            <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-default load-more-button yt-uix-load-more comment-replies-renderer-paginator comment-replies-renderer-expander-down yt-uix-button-link modThumbs" type="button" onclick=";return false;" aria-label="View reply" data-uix-load-more-href="/comment_service_ajax?action_get_comment_replies=1" data-uix-load-more-post="true" data-uix-load-more-post-body="page_token={{ repliesToken }}" data-uix-load-more-target-id="comment-replies-renderer-{{ comment.commentId }}"><span class="yt-uix-button-content">  <span class="load-more-loading hid">
-            <span class="yt-spinner">
-            <span class="yt-spinner-img  yt-sprite" title="Loading icon"></span>
-            Loading...
-            </span>
-            </span>
             {% set viewRepliesText = getText(replies.viewReplies.buttonRenderer.text) %}
-            <span class="load-more-text">
-            {{ viewRepliesText }}
-            </span>
-            </span></button>
+            {{ _self.loadMoreLink('action_get_comment_replies', comment.commentId, repliesToken, viewRepliesText, true) }}
             <div class="yt-uix-expander-head comment-replies-renderer-expander-down comment-replies-renderer-view hid" tabindex="0">
                {{ viewRepliesText }}
             </div>
@@ -72,7 +63,7 @@
          </span>
      </div>
       <div class="comment-renderer-text" tabindex="0" role="article">
-         <div class="comment-renderer-text-content">{{ getText(comment.contentText) }}</div>
+         <div class="comment-renderer-text-content">{{ _self.textContent(comment.contentText) }}</div>
          <div class="comment-text-toggle hid">
             <div class="comment-text-toggle-link read-more">
                 <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-link" type="button" onclick="return false;">
@@ -88,7 +79,6 @@
       </div>
       <div class="comment-renderer-footer" data-vote-status="INDIFFERENT">
          <div class="comment-action-buttons-toolbar">
-            {% apply spaceless %}
             {% if comment.actionButtons.commentActionButtonsRenderer.replyButton %}
             <button class="yt-uix-button yt-uix-button-size-small yt-uix-button-link comment-renderer-reply comment-simplebox-trigger" type="button" onclick=";return false;" data-placeholder="Add a public reply..." data-simplebox-event="replycreated" data-simplebox-id="comment-simplebox-reply-UgyQ8iceYjqMY000mJ54AaABAg" data-simplebox-label="Reply" data-simplebox-params="EgtteTJoX19sNDFxYyIaVWd5UThpY2VZanFNWTAwMG1KNTRBYUFCQWcqAggAUAc%3D" data-simplebox-sessionlink="itct=CMgBEPBbIhMI6bL2yIzE7QIVN8jBCh0WXA-s" data-simplebox-target="/comment_service_ajax?action_create_comment_reply=1"><span class="yt-uix-button-content">Reply</span></button>
             {% endif %}
@@ -102,7 +92,6 @@
             <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-default yt-uix-button-empty yt-uix-button-has-icon no-icon-markup comment-action-buttons-renderer-thumb yt-uix-sessionlink sprite-comment-actions sprite-like i-a-v-sprite-like" type="button" onclick=";return false;" aria-checked="false" aria-label="Like" role="radio" data-action="CAUQAhoaVWd5UThpY2VZanFNWTAwMG1KNTRBYUFCQWcqC215MmhfX2w0MXFjMAA4AEoVMTEyOTM1MjAzMzA1OTEyODQ0ODg1UACoAQy6ARhVQ202eUQyNkhsYWZ6cU5sWWFLN3VFYUE%3D" data-action-type="like" data-sessionlink="itct=CMkBEPBbIhMI6bL2yIzE7QIVN8jBCh0WXA-s" data-sessionlink-target="/comment_service_ajax?action_perform_comment_action=1" data-url="/comment_service_ajax?action_perform_comment_action=1"></button>
             <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-default yt-uix-button-empty yt-uix-button-has-icon no-icon-markup comment-action-buttons-renderer-thumb yt-uix-sessionlink sprite-comment-actions sprite-dislike i-a-v-sprite-dislike" type="button" onclick=";return false;" aria-checked="false" aria-label="Dislike" role="radio" data-action="CAQQAhoaVWd5UThpY2VZanFNWTAwMG1KNTRBYUFCQWcqC215MmhfX2w0MXFjMAA4AEoVMTEyOTM1MjAzMzA1OTEyODQ0ODg1UACoAQy6ARhVQ202eUQyNkhsYWZ6cU5sWWFLN3VFYUE%3D" data-action-type="dislike" data-sessionlink="itct=CMcBEPBbIhMI6bL2yIzE7QIVN8jBCh0WXA-s" data-sessionlink-target="/comment_service_ajax?action_perform_comment_action=1" data-url="/comment_service_ajax?action_perform_comment_action=1"></button>
             </span>
-            {% endapply %}
             {% if comment.actionButtons.commentActionButtonsRenderer.creatorHeart %}
             <button class="yt-uix-creator-heart-button yt-uix-tooltip" aria-label="{{ comment.actionButtons.commentActionButtonsRenderer.creatorHeart.creatorHeartRenderer.heartedTooltip }}" data-tooltip-text="{{ comment.actionButtons.commentActionButtonsRenderer.creatorHeart.creatorHeartRenderer.heartedTooltip }}">
                <div class="creator-heart">
@@ -150,4 +139,48 @@
       </div>
    </div>
 </div>
+{% endmacro %}
+
+{%- macro textContent(content) -%}
+{%- for run in content.runs -%}
+   {%- if run.navigationEndpoint -%}{%- apply spaceless -%}
+      {%- set href = run.navigationEndpoint.commandMetadata.webCommandMetadata.url -%}
+      {%- set spf = (href|first == "/") -%}
+      <a href="{{ href }}" class="yt-uix-sessionlink {{ spf ? 'spf-link' }}">{{ run.text|spaceless }}</a>
+   {%- endapply -%}{%- elseif run.emoji.isCustomEmoji -%}
+      <img class="yt-comments-custom-emoji {{ loop.first and loop.last ? 'large' }} yt-uix-tooltip" title="{{ run.text }}" alt="{{ run.text }}" src="{{ run.emoji.image.thumbnails.0.url }}">
+   {%- else -%}
+      {{ run.text }}
+   {%- endif -%}
+{%- endfor -%}
+{%- endmacro -%}
+
+{% macro loadMoreWidget(token) %}
+<button class="yt-uix-button yt-uix-button-size-default yt-uix-button-default load-more-button yt-uix-load-more comment-section-renderer-paginator yt-uix-sessionlink" type="button" onclick=";return false;" aria-label="Show more
+   " data-uix-load-more-target-id="comment-section-renderer-items" data-uix-load-more-post-body="page_token={{ token }}" data-sessionlink="itct=CAsQuy8iEwiOxOGjvpnRAhUXqH4KHR1AD08omxw" data-uix-load-more-href="/comment_service_ajax?action_get_comments=1" data-sessionlink-target="/comment_service_ajax?action_get_comments=1" data-uix-load-more-post="true">
+   <span class="yt-uix-button-content">
+      <span class="load-more-loading hid">
+         <span class="yt-spinner">
+            <span title="Loading icon" class="yt-spinner-img  yt-sprite"></span>
+            Loading...
+         </span>
+      </span>
+     <span class="load-more-text">
+         Show more
+      </span>
+   </span>
+</button>
+{% endmacro %}
+
+{% macro loadMoreLink(action, commentId, token, text, style_down_arrow) %}
+<button class="yt-uix-button yt-uix-button-size-default yt-uix-button-default load-more-button yt-uix-load-more comment-replies-renderer-paginator {{ style_down_arrow ? 'comment-replies-renderer-expander-down' }} yt-uix-button-link" type="button" onclick=";return false;" aria-label="{{ text }}" data-uix-load-more-href="/comment_service_ajax?{{ action }}=1" data-uix-load-more-post="true" data-uix-load-more-post-body="page_token={{ token }}" data-uix-load-more-target-id="comment-replies-renderer-{{ commentId }}"><span class="yt-uix-button-content">  <span class="load-more-loading hid">
+<span class="yt-spinner">
+<span class="yt-spinner-img  yt-sprite" title="Loading icon"></span>
+Loading...
+</span>
+</span>
+<span class="load-more-text">
+{{ text }}
+</span>
+</span></button>
 {% endmacro %}

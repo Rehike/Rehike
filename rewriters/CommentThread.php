@@ -15,7 +15,9 @@ class CommentThread
     public static function bakeComments($context)
     {
         // Top-level function
-        // $context = (Array containing all commentThreadRenderer items)
+        // $context = continuation command
+
+        $context = $context->continuationItems;
         
         $out = ["commentsThreads" => []];
         
@@ -38,13 +40,19 @@ class CommentThread
         // Top level function
         // $context = (Array containing all commentRenderer items)
 
-        $out = ["comments" => []];
+        $items = $context->continuationItems;
 
-        for ($i = 0, $count = count($context); $i < $count; $i++)
+        $out = ["comments" => [], "repliesTargetId" => str_replace("comment-replies-item-", "", $context->targetId)];
+
+        for ($i = 0, $count = count($items); $i < $count; $i++)
         {
-            if (isset($context[$i]->commentRenderer))
+            if (isset($items[$i]->commentRenderer))
             {
-                $out["comments"][] = self::commentRenderer($context[$i]->commentRenderer, true);
+                $out["comments"][] = self::commentRenderer($items[$i]->commentRenderer, true);
+            }
+            else if ($count -1 == $i && isset($items[$i]->continuationItemRenderer))
+            {
+                $out += ["repliesContinuationRenderer" => self::repliesContinuationRenderer($items[$i]->continuationItemRenderer)];
             }
         }
 
@@ -88,6 +96,16 @@ class CommentThread
     {
         return $context->continuationEndpoint->continuationCommand;
     }
+
+    public static function repliesContinuationRenderer($context)
+    {
+        $context = $context->button->buttonRenderer;
+        return
+            [
+                "token" => $context->command->continuationCommand->token,
+                "text" => $context->text
+            ];
+    }
     
     public static function addLikeCount(&$context)
     {
@@ -118,6 +136,6 @@ class CommentThread
 
     public static function getLikeCountFromLabel($label)
     {
-        return preg_replace("/(Like this comment along with )|(,)|( other person)|(other people)/", "", $label);
+        return preg_replace("/(Like this )|(comment)|(reply)|( along with )|(,)|( other person)|(other people)/", "", $label);
     }
 }

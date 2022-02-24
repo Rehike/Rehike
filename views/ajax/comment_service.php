@@ -56,19 +56,28 @@ if (isset($action))
 }
 
 // Rewrite
-const COMMENTS_CONTINUATION_PATH = "onResponseReceivedEndpoints[0].appendContinuationItemsAction.continuationItems";
+const COMMENTS_CONTINUATION_PATH = "onResponseReceivedEndpoints[0].appendContinuationItemsAction";
+// Comments header renderer is item 0 in reload response
+const COMMENTS_RELOAD_PATH = "onResponseReceivedEndpoints[1].reloadContinuationItemsCommand";
 try 
 {
     $data = getProp($ytdata, COMMENTS_CONTINUATION_PATH);
 }
 catch (\YukisCoffee\GetPropertyAtPathException $e)
 {
-    echo json_encode(
-        (object)[
-            "error" => "Failed to get property at path " . COMMENTS_CONTINUATION_PATH
-        ]
-    );
-    exit();
+    try
+    {
+        $data = getProp($ytdata, COMMENTS_RELOAD_PATH);
+    }
+    catch (\YukisCoffee\GetPropertyAtPathException $e)
+    {
+        echo json_encode(
+            (object)[
+                "error" => "Failed to get property at path " . COMMENTS_CONTINUATION_PATH
+            ]
+        );
+        exit();
+    }
 }
 
 if ("action_get_comment_replies" == $action)

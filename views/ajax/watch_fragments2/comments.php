@@ -115,7 +115,7 @@ if ($a = ($_och->createRenderer->commentSimpleboxRenderer ?? false)) {
  * Comments Threads Rewrite
  * TODO: further rewrite may be necessary
  */
-$_oct = $ytdata->{ORRE}[1]->{RLC}->{CI}; // original comment threads
+$_oct = $ytdata->{ORRE}[1]->{RLC}; // original comment threads
 $yt->comments = CommentThread::bakeComments($_oct);
 
 /*
