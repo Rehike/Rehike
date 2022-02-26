@@ -164,7 +164,7 @@ class HtmlDomParser extends AbstractDomParser
 
         // DOMDocument settings
         $this->document->preserveWhiteSpace = true;
-        $this->document->formatOutput = true;
+        $this->document->formatOutput = false;
 
         if ($element instanceof SimpleHtmlDomInterface) {
             $element = $element->getNode();
