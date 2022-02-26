@@ -150,7 +150,7 @@
    {%- endapply -%}{%- elseif run.emoji.isCustomEmoji -%}
       <img class="yt-comments-custom-emoji {{ loop.first and loop.last ? 'large' }} yt-uix-tooltip" title="{{ run.text }}" alt="{{ run.text }}" src="{{ run.emoji.image.thumbnails.0.url }}">
    {%- else -%}
-      {{ run.text }}{# Todo: bold/italic #}
+      {{ run.bold ? '<b>' }}{{ run.italics ? '<i>' }}{{ run.strikethrough ? '<s>' }}{{ run.text }}{{ run.strikethrough ? '</s>' }}{{ run.italics ? '</i>' }}{{ run.bold ? '</b>' }}
    {%- endif -%}
 {%- endfor -%}
 {%- endmacro -%}
