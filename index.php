@@ -5,10 +5,11 @@ set_include_path($root);
 
 $visitor = null;
 if (isset($_COOKIE['VISITOR_INFO1_LIVE'])) {
-   $visitor = $_COOKIE['VISITOR_INFO1_LIVE'];
+    $visitor = $_COOKIE['VISITOR_INFO1_LIVE'];
+} else {
+    $visitor = 'QRe0LmmEJyY'; // DEBUG
+    setcookie("VISITOR_INFO1_LIVE", $visitor);
 }
-
-$visitor = 'QRe0LmmEJyY'; // DEBUG
 
 $templateRoot = '/template/hitchhiker';
 
