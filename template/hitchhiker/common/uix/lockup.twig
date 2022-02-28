@@ -92,6 +92,17 @@
                {{ getText(info.descriptionSnippet) }}
             </div>
             {% endif %}
+            {% if info.badges %}
+            <div class="yt-lockup-badges">
+               <ul class="yt-badge-list">
+                  {% if info.badges[0].liveBadge %}
+                  <li class="yt-badge-item">
+                     <span class="yt-badge yt-badge-live">{{ getText(info.badges[0].liveBadge.label) }}</span>
+                  </li>
+                  {% endif %}
+               </ul>
+            </div>
+            {% endif %}
         </div>
     </div>
 </div>
