@@ -126,7 +126,7 @@ class SpfPhp {
         $title = $html->find('head title');
         // title is an array (this is like querySelectorAll)
         if ($title[0]) {
-            $text = $title[0]->text;
+            $text = htmlspecialchars_decode($title[0]->text, ENT_QUOTES);
             $title[0]->delete();
             unset($title);
             return $text;
