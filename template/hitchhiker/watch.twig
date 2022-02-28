@@ -10,7 +10,7 @@
 {% set playerType = 'content-alignment       watch-small' %}
 
 {%- block title -%}
-{{ yt.page.title ? yt.page.title ~ ' - ' }}{{ parent() }}
+{{ yt.page.title ? yt.page.title|raw ~ ' - ' }}{{ parent() }}
 {% endblock %}
 
 {%- block page_class -%}
