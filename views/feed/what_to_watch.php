@@ -1,7 +1,7 @@
 <?php
 $yt->spfEnabled = true;
 $yt->useModularCore = true;
-$template = 'home';
+$template = 'feed/what_to_watch';
 $yt->modularCoreModules = ['www/feed'];
 $yt->page = (object) [];
 $yt->enableFooterCopyright = true;

@@ -8,7 +8,7 @@ if (isset($_GET["enable_polymer"]) && $_GET["enable_polymer"] == "1") {
 
 switch ($routerUrl->path[0]) {
     case '':
-        include('views/homepage.php');
+        include('views/feed/what_to_watch.php');
         break;
     case 'watch':
         include('views/watch.php');
@@ -63,6 +63,23 @@ switch ($routerUrl->path[0]) {
         break;
     case 'settings':
         include('views/rehike/settings.php');
+        break;
+    case 'feed':
+        if(isset($routerUrl->path[1])) {
+            switch ($routerUrl->path[1]) {
+                case 'what_to_watch':
+                    header('Location: /');
+                    break;
+                case 'history':
+                    include('views/feed/history.php');
+                    break;
+                default:
+                    $template = '404';
+                    break;
+            }
+        } else {
+            $template = '404';
+        }
         break;
     default:
         $template = '404';
