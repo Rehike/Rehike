@@ -3,7 +3,6 @@ ob_start();
 $root = $_SERVER['DOCUMENT_ROOT'];
 set_include_path($root);
 
-$visitor = null;
 if (isset($_COOKIE['VISITOR_INFO1_LIVE'])) {
     $visitor = $_COOKIE['VISITOR_INFO1_LIVE'];
 } else {
@@ -19,6 +18,9 @@ $template = '';
 include ('boot.php');
 include ('defaultExperiments.php');
 include ('resourceConstants.php');
+
+// Post boot events
+Rehike\ContextManager::$visitorData = $visitor;
 
 // differentiates pages
 require ('router.php');

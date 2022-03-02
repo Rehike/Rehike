@@ -1,4 +1,5 @@
 <?php
+use \Rehike\Request;
 //error_reporting(0);
 require "views/utils/watchUtils.php";
 $yt->spfEnabled = true;
@@ -18,81 +19,29 @@ $yt->videoId = $_GET['v'];
 
 require_once('views/utils/extractUtils.php');
 
-include_once($root.'/innertubeHelper.php');
-
-$innertubeBody = generateInnertubeInfoBase('WEB', '2.20200101.01.01', $visitor);
-$innertubeBody->videoId = $_GET['v'];
-$yticfg = json_encode($innertubeBody);
-
-$apiUrl = 'https://www.youtube.com/youtubei/v1/next?key=AIzaSyAO_FJ2SlqU8Q4STEHLGCilw_Y9_11qcW8';
-
-$ch = curl_init($apiUrl);
-
-curl_setopt_array($ch, [
-    CURLOPT_HTTPHEADER => ['Content-Type: application/json',
-    'x-goog-visitor-id: ' . urlencode(encryptVisitorData($visitor))],
-    CURLOPT_ENCODING => 'gzip',
-    CURLOPT_POST => 1,
-    CURLOPT_POSTFIELDS => $yticfg,
-    CURLOPT_FOLLOWLOCATION => 0,
-    CURLOPT_HEADER => 0,
-    CURLOPT_RETURNTRANSFER => 1
+Request::innertubeRequest("watch", "next", (object)[
+    "videoId" => $_GET["v"]
 ]);
-
-
-
-//header('content-type: application/json'); echo $response; die();
-
-// player request
-//*
-$innertubeBody->context->client->clientScreen = 'WATCH_FULL_SCREEN';
-$innertubeBody->context->client->platform = 'DESKTOP';
-$innertubeBody->context->client->playerType = 'UNIPLAYER';
-$innertubeBody->playbackContext = (object) [
-    'contentPlaybackContext' => (object) [
-        'autoCaptionsDefaultOn' => false,
-        'autonavState' => 'STATE_OFF',
-        'html5Preference' => 'HTML5_PREF_WANTS',
-        'lactMilliseconds' => '13407',
-        'mdxContext' => (object) [],
-        'playerHeightPixels' => 1080,
-        'playerWidthPixels' => 1920,
-        'signatureTimestamp' => $yt->playerCore->sts
+Request::innertubeRequest("player", "player", (object)[
+    "videoId" => $_GET["v"],
+    "playbackContext" => [
+        'contentPlaybackContext' => (object) [
+            'autoCaptionsDefaultOn' => false,
+            'autonavState' => 'STATE_OFF',
+            'html5Preference' => 'HTML5_PREF_WANTS',
+            'lactMilliseconds' => '13407',
+            'mdxContext' => (object) [],
+            'playerHeightPixels' => 1080,
+            'playerWidthPixels' => 1920,
+            'signatureTimestamp' => $yt->playerCore->sts
+        ]
     ]
-];
-$yticfg = json_encode($innertubeBody);
-
-$apiUrl = 'https://www.youtube.com/youtubei/v1/player?key=AIzaSyAO_FJ2SlqU8Q4STEHLGCilw_Y9_11qcW8';
-
-$ch2 = curl_init($apiUrl);
-
-curl_setopt_array($ch2, [
-    CURLOPT_HTTPHEADER => ['Content-Type: application/json',
-    'x-goog-visitor-id: ' . urlencode(encryptVisitorData($visitor))],
-    CURLOPT_POST => 1,
-    CURLOPT_POSTFIELDS => $yticfg,
-    CURLOPT_FOLLOWLOCATION => 0,
-    CURLOPT_HEADER => 0,
-    CURLOPT_RETURNTRANSFER => 1
 ]);
 
-$mh = curl_multi_init();
-curl_multi_add_handle($mh, $ch);
-curl_multi_add_handle($mh, $ch2);
+$responses = Request::getInnertubeResponses();
 
-do {
-    $status = curl_multi_exec($mh, $active);
-    if ($active) {
-        curl_multi_select($mh);
-    }
-} while ($active && $status == CURLM_OK);
-
-$response = curl_multi_getcontent($ch);
-$presponse = curl_multi_getcontent($ch2);
-
-curl_multi_remove_handle($mh, $ch);
-curl_multi_remove_handle($mh, $ch2);
-curl_multi_close($mh);
+$response = $responses["watch"];
+$presponse = $responses["player"];
 
 $ytdata = json_decode($response);
 $playerResponse = json_decode($presponse);

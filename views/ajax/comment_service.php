@@ -3,6 +3,7 @@
 require "rewriters/CommentThread.php";
 
 use Rewriter\CommentThread;
+use \Rehike\Request;
 use function YukisCoffee\getPropertyAtPath as getProp;
 
 header("Content-Type: application/json");
@@ -27,31 +28,12 @@ if (isset($action))
     $template = 'ajax/comment_service/' . $action;
     $yt->page = (object) [];
     $yt->comments = (object) [];
-    
-    include_once($root.'/innertubeHelper.php');
-    
-    $innertubeBody = generateInnertubeInfoBase('WEB', '2.20200101.01.01', $visitor);
-    $innertubeBody->continuation = $_POST['page_token'];
-    $yticfg = json_encode($innertubeBody);
-    
-    $apiUrl = 'https://www.youtube.com/youtubei/v1/next?key=AIzaSyAO_FJ2SlqU8Q4STEHLGCilw_Y9_11qcW8';
-    
-    $ch = curl_init($apiUrl);
-    
-    curl_setopt_array($ch, [
-        CURLOPT_HTTPHEADER => ['Content-Type: application/json',
-        'x-goog-visitor-id: ' . urlencode(encryptVisitorData($visitor))],
-        CURLOPT_ENCODING => 'gzip',
-        CURLOPT_POST => 1,
-        CURLOPT_POSTFIELDS => $yticfg,
-        CURLOPT_FOLLOWLOCATION => 0,
-        CURLOPT_HEADER => 0,
-        CURLOPT_RETURNTRANSFER => 1
+
+    Request::innertubeRequest("page", "next", (object)[
+        "continuation" => $_POST['page_token']
     ]);
-    
-    $response = curl_exec($ch);
-    curl_close($ch);
-    
+    $response = Request::getInnertubeResponses()["page"];
+
     $ytdata = json_decode($response);
 }
 
