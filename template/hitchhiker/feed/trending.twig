@@ -91,13 +91,22 @@ yt.setConfig('DISMISS_THROUGH_IT', true);
                 <li>
                 <ol id="item-section-760461" class="item-section">
                     <li>
-                        <div class="feed-item-container browse-list-item-container yt-section-hover-container compact-shelf shelf-item branded-page-box clearfix" data-visibility-tracking="CGYQ3BwYACITCOLXzPvf6toCFRA7fwodgP0KKSiOHg==">
+                        <div class="feed-item-container browse-list-item-container yt-section-hover-container compact-shelf shelf-item branded-page-box vve-check clearfix" data-visibility-tracking="CGYQ3BwYACITCOLXzPvf6toCFRA7fwodgP0KKSiOHg==">
                             <div class="feed-item-dismissable">
                                 <div class="shelf-title-table">
                                     <div class="shelf-title-row">
                                         <h2 class="branded-page-module-title shelf-title-cell">
                                             {%- if shelfRenderer.endpoint -%}
                                             <a href="{{ shelfRenderer.endpoint.commandMetadata.webCommandMetadata.url }}" class="branded-page-module-title-link yt-uix-sessionlink      spf-link " data-sessionlink="itct=CGYQ3BwYACITCOLXzPvf6toCFRA7fwodgP0KKSiOHg" >
+                                            {% endif %}
+                                            {%- if shelfRenderer.thumbnail -%}
+                                            <div class="yt-lockup-thumbnail">
+                                                <div class="yt-thumb video-thumb">
+                                                    <span class="yt-thumb-simple">
+                                                    <img height="20" onload=";window.__ytRIL &amp;&amp; __ytRIL(this)" alt="" width="20" data-ytimg="1" data-thumb="{{ shelfRenderer.thumbnail.thumbnails.0.url }}" src="{{ PIXEL }}">
+                                                    </span>
+                                                </div>
+                                            </div>
                                             {% endif %}
                                             <span class="branded-page-module-title-text">{{ getText(shelfRenderer.title) }}</span>
                                             {% if shelfRenderer.endpoint %}
@@ -110,17 +119,32 @@ yt.setConfig('DISMISS_THROUGH_IT', true);
                                         <div class="menu-container shelf-title-cell"></div>
                                     </div>
                                 </div>
-                                <div class="expanded-shelf">
-                                    <ul class="expanded-shelf-content-list has-multiple-items">
-                                        {%- for item in shelfRenderer.content.expandedShelfContentsRenderer.items -%}
-                                        <li class="expanded-shelf-content-item-wrapper">
-                                            <div class="expanded-shelf-content-item">
-                                                    {{ lockup.tile(item) }}
+                                        {% if shelfRenderer.content.expandedShelfContentsRenderer.items %}
+                                        <div class="expanded-shelf">
+                                            <ul class="expanded-shelf-content-list has-multiple-items">
+                                            {%- for item in shelfRenderer.content.expandedShelfContentsRenderer.items -%}
+                                            <li class="expanded-shelf-content-item-wrapper">
+                                                <div class="expanded-shelf-content-item">
+                                                        {{ lockup.tile(item) }}
+                                                </div>
+                                            </li>
+                                            {%- endfor -%}
+                                            </ul>
+                                        </div>
+                                        {% elseif shelfRenderer.content.horizontalListRenderer.items %}
+                                        <div class="compact-shelf yt-uix-shelfslider yt-uix-shelfslider-at-head">
+                                            <div class="yt-uix-shelfslider-body yt-viewport">
+                                                <ul class="yt-uix-shelfslider-list">
+                                                {%- for item in shelfRenderer.content.horizontalListRenderer.items -%}
+                                                    <li class="yt-shelf-grid-item yt-uix-shelfslider-item">
+                                                    {{ lockup.grid(item) }}
+                                                    </li>
+                                                {%- endfor -%}
+                                                </ul>
                                             </div>
-                                        </li>
-                                        {%- endfor -%}
-                                    </ul>
-                                </div>
+                                            <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-shelf-slider-pager yt-uix-shelfslider-prev" type="button" onclick=";return false;"><span class="yt-uix-button-content"><span data-tooltip-text="Previous" aria-label="Previous" class="yt-uix-shelfslider-prev-arrow yt-uix-tooltip yt-sprite"></span></span></button><button class="yt-uix-button yt-uix-button-size-default yt-uix-button-shelf-slider-pager yt-uix-shelfslider-next" type="button" onclick=";return false;"><span class="yt-uix-button-content"><span data-tooltip-text="Next" aria-label="Next" class="yt-uix-shelfslider-next-arrow yt-uix-tooltip yt-sprite"></span></span></button>
+                                        </div>
+                                        {% endif %}
                             </div>
                             <div class="feed-item-dismissal-notices"></div>
                         </div>
