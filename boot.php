@@ -24,7 +24,13 @@ $twig = new \Twig\Environment($twigLoader, [
    'debug' => true
 ]);
 
-
+function YcRehikeAutoloader($class)
+{
+    if (file_exists("mod/{$class}.php")) {
+        require "mod/{$class}.php";
+    }
+}
+spl_autoload_register('YcRehikeAutoloader');
 
 
 function registerFunction($name, $cb): void {
