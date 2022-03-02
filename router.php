@@ -70,6 +70,9 @@ switch ($routerUrl->path[0]) {
                 case 'what_to_watch':
                     header('Location: /');
                     break;
+                case 'trending':
+                    include('views/feed/trending.php');
+                    break;
                 case 'history':
                     include('views/feed/history.php');
                     break;

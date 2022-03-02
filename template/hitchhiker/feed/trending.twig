@@ -1,0 +1,135 @@
+{% extends "core.twig" %}
+{% import 'core/macros.twig' as core %}
+{% import 'common/appbar/appbar_nav.twig' as appbar_nav %}
+
+{% set pageType = 'feed' %}
+{% set pageName = 'trending' %}
+
+{% set appbarEnabled = true %}
+{% set defaultGuideVisibility = true %}
+{% set defaultAppbarVisibility = true %}
+{% set enableSnapScaling = true %}
+
+{%- block title -%}
+Trending - {{ parent() }}
+{% endblock %}
+
+{%- block page_class -%}
+not-fixed-width-tab-widescreen
+{% endblock %}
+
+{% block foot_scripts %}
+<script>
+    yt.setConfig('ANGULAR_JS', "\/yts\/jslib\/angular.min-vflWkvD5q.js");
+yt.setConfig('TRANSLATIONEDITOR_JS', "\/yts\/jsbin\/www-translationeditor-vflugm3V9\/www-translationeditor.js");
+yt.setMsg('UNSAVED_CHANGES_WARNING', "Some of the changes you have made to channel settings have not been saved and will be lost if you navigate away from this page.");
+
+  yt.setConfig(
+    'JS_PAGE_MODULES', [
+        'www/feed',
+      'www/ypc_bootstrap'
+    ]);
+
+
+
+
+yt.setConfig('DISMISS_THROUGH_IT', true);
+
+
+    yt.setConfig({
+      'GUIDE_SELECTED_ITEM': "0qDduQEMEgpGRXRyZW5kaW5n"
+    });
+
+    yt.setConfig({
+  'GUIDED_HELP_LOCALE': "en_US",
+  'GUIDED_HELP_ENVIRONMENT': "prod"
+});
+
+</script>
+{% endblock %}
+
+{%- block appbarContent -%}
+   {% set appbarContents = {
+      'items': {
+        0: {
+            'title': 'Home',
+            'href': '/',
+        },
+        1: {
+            'title': 'Trending',
+            'href': '/feed/trending',
+            'selected': true
+        }
+      }
+   } %}
+   {{ appbar_nav.render(appbarContents) }}
+{% endblock %}
+
+{%- block head_css  -%}
+    {{ core.css('www-home-c4') }}
+{% endblock %}
+
+{% block content %}
+<div id="debug" style="display:none">
+{{ yt.page.shelvesList|json_encode }}
+</div>
+    {% embed 'common/channels4/branded_page_v2.twig' %}
+    {% import 'common/uix/lockup.twig' as lockup %}
+    {% import 'common/core/spinner.twig' as spinner %}
+    {% set brandedPageConfig = {
+        'baseBoldTitles': true,
+        'containerFlexWidth': true,
+        'hasTopRow': true,
+        'secondaryColumnHidden': true
+    } %}
+    {% block branded_page_primary_column_content %}
+        <div id="browse-items-primary">
+            <ol id="section-list-874807" class="section-list">
+            {%- for shelf in yt.page.shelvesList -%}
+            {#{{ shelf|json_encode }}#}
+            {% set shelfRenderer = shelf.itemSectionRenderer.contents.0.shelfRenderer %}
+                <li>
+                <ol id="item-section-760461" class="item-section">
+                    <li>
+                        <div class="feed-item-container browse-list-item-container yt-section-hover-container compact-shelf shelf-item branded-page-box clearfix" data-visibility-tracking="CGYQ3BwYACITCOLXzPvf6toCFRA7fwodgP0KKSiOHg==">
+                            <div class="feed-item-dismissable">
+                                <div class="shelf-title-table">
+                                    <div class="shelf-title-row">
+                                        <h2 class="branded-page-module-title shelf-title-cell">
+                                            {%- if shelfRenderer.endpoint -%}
+                                            <a href="{{ shelfRenderer.endpoint.commandMetadata.webCommandMetadata.url }}" class="branded-page-module-title-link yt-uix-sessionlink      spf-link " data-sessionlink="itct=CGYQ3BwYACITCOLXzPvf6toCFRA7fwodgP0KKSiOHg" >
+                                            {% endif %}
+                                            <span class="branded-page-module-title-text">{{ getText(shelfRenderer.title) }}</span>
+                                            {% if shelfRenderer.endpoint %}
+                                            </a>
+                                            {% endif %} 
+                                            {% if shelfRenderer.badges %}
+                                            <span class="shelf-featured-badge">{{ shelfRenderer.badges[0].metadataBadgeRenderer.label }}</span>
+                                            {% endif %}
+                                        </h2>
+                                        <div class="menu-container shelf-title-cell"></div>
+                                    </div>
+                                </div>
+                                <div class="expanded-shelf">
+                                    <ul class="expanded-shelf-content-list has-multiple-items">
+                                        {%- for item in shelfRenderer.content.expandedShelfContentsRenderer.items -%}
+                                        <li class="expanded-shelf-content-item-wrapper">
+                                            <div class="expanded-shelf-content-item">
+                                                    {{ lockup.tile(item) }}
+                                            </div>
+                                        </li>
+                                        {%- endfor -%}
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="feed-item-dismissal-notices"></div>
+                        </div>
+                    </li>
+                </ol>
+                </li>
+            {% endfor %}
+            </ol>
+        </div>
+    {% endblock %}
+    {% endembed %}
+{% endblock %}
