@@ -57,3 +57,6 @@ $response = null;
 
 $twig->addGlobal('yt', $yt);
 $twig->addGlobal('response', $response);
+$twig->addFunction(new \Twig\TwigFunction('http_response_code', function($code) {
+   http_response_code($code);
+}));

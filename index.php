@@ -73,7 +73,7 @@ if (isset($__spfState) &&
     ];
     $yt->spfUrl = $__spfUrl;
 }
-if (isset($yt->spf) && $yt->spf) { // isset to prevent warning
+if (isset($yt->spf) && $yt->spf && http_response_code() == 200) { // isset to prevent warning; http_response_code to prevent broken spf 404 page
     $_htmlBuffer = ob_get_clean();
     header('Content-Type: application/json');
 
