@@ -10,7 +10,7 @@
 {% set enableSnapScaling = false %}
 
 {%- block title -%}
-{{ yt.page.title ? yt.page.title ~ ' - ' }}{{ parent() }}
+{{ yt.searchQuery ? yt.searchQuery ~ ' - ' }}{{ parent() }}
 {% endblock %}
 
 {%- block page_class -%}
@@ -76,7 +76,7 @@ branded-page-v2-secondary-column-wide no-flex
                                                             class="yt-uix-button-content">Filters</span><span
                                                             class="yt-uix-button-arrow yt-sprite"></span></button></div>
                                                 <div class="filter-crumb-spacer"></div>
-                                                <p class="num-results first-focus" tabindex="0">About 0 results</p>
+                                                <p class="num-results first-focus" tabindex="0">About {{ yt.resultCount|number_format }} results</p>
                                             </div>
                                         </div>
                                         <div id="filter-dropdown" class="yt-uix-expander-body">
@@ -268,7 +268,7 @@ branded-page-v2-secondary-column-wide no-flex
                                     <ol id="item-section-009175" class="item-section">
                                         {%- for videoRenderer in yt.page.resultsList -%}
                                             <li>
-                                                {{ lockup.tile(videoRenderer) }}
+                                                {{ lockup.tile(videoRenderer, 246, 138) }}
                                             </li>
                                         {% endfor %}
                                     </ol>

@@ -17,7 +17,7 @@ if(!isset($yt->spf) or $yt->spf == false) {
     require "mod/getGuide.php";
 }
 
-$yt->page->title = $_GET['search_query'];
+$yt->searchQuery = $_GET['search_query'];
 
 Request::innertubeRequest("page", "search", (object)[
     "query" => $_GET['search_query']
@@ -25,12 +25,7 @@ Request::innertubeRequest("page", "search", (object)[
 $response = Request::getInnertubeResponses()["page"];
 
 $ytdata = json_decode($response);
-
 $resultsList = $ytdata->contents->twoColumnSearchResultsRenderer->primaryContents->sectionListRenderer->contents[0]->itemSectionRenderer->contents;
-
-
 $yt->page->resultsList = $resultsList;
-
 $yt->response = $response;
-
-curl_close($ch);
+$yt->resultCount = $ytdata->estimatedResults;

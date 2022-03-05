@@ -26,7 +26,7 @@
 
 
 
-{%- macro tile(info) -%}
+{%- macro tile(info, thumbWidth = 196, thumbHeight = 110) -%}
 
 {% if info.videoRenderer %}
    {% set info = info.videoRenderer %}
@@ -36,14 +36,14 @@
    {% set info = info.radioRenderer %}
 {% endif %}
 
-{{ _self.main(info, "tile") }}
+{{ _self.main(info, "tile", thumbWidth, thumbHeight) }}
 
 {% endmacro %}
 
 
 
 
-{%- macro grid(info) -%}
+{%- macro grid(info, thumbWidth = 196, thumbHeight = 110) -%}
 
 {% if info.gridVideoRenderer %}
    {% set info = info.gridVideoRenderer %}
@@ -53,20 +53,20 @@
    {% set info = info.gridRadioRenderer %}
 {% endif %}
 
-{{ _self.main(info, "grid") }}
+{{ _self.main(info, "grid", thumbWidth, thumbHeight) }}
 
 {% endmacro %}
 
 
 
 
-{%- macro main(info, style) -%}
+{%- macro main(info, style, thumbWidth, thumbHeight) -%}
 {#
    used for both grid and tile renderers
 #}
 <div class="yt-lockup yt-lockup-{{ style }} yt-lockup-video vve-check clearfix" data-context-item-id="{{info.videoId}}" data-visibility-tracking="CHkQlDUYACITCOLXzPvf6toCFRA7fwodgP0KKSiOHkCbkbvm_eGjomU=">
     <div class="yt-lockup-dismissable {{ style == 'tile' ? 'yt-uix-tile'}}">
-        {{ _self.thumbnail(info, 196, 110) }}
+        {{ _self.thumbnail(info, thumbWidth, thumbHeight) }}
         <div class="yt-lockup-content">
             <h3 class="yt-lockup-title ">
                <a href="/watch?v={{info.videoId}}" class=" yt-ui-ellipsis yt-ui-ellipsis-2 yt-uix-sessionlink      spf-link " data-sessionlink="itct=CHkQlDUYACITCOLXzPvf6toCFRA7fwodgP0KKSiOHjIKZy1oaWdoLXRydloPRkV3aGF0X3RvX3dhdGNo"  title="{{ getText(info.title) }}" aria-describedby="description-id-956708" dir="ltr">
