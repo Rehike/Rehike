@@ -19,9 +19,10 @@ Request::innertubeRequest(
         "browseId" => "FEwhat_to_watch"
     ],
     "WEB",
-    "1.20200303.01.01"
+    "1.20220303.06.01"
 );
 $response = Request::getInnertubeResponses()["feed"];
+$yt -> response = $response;
 
 $timeb = round(microtime(true) * 1000);
 //echo $timeb - $timea; die();

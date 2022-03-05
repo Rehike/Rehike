@@ -137,7 +137,7 @@ yt.setConfig('DISMISS_THROUGH_IT', true);
                                                 <ul class="yt-uix-shelfslider-list">
                                                 {%- for item in shelfRenderer.content.horizontalListRenderer.items -%}
                                                     <li class="yt-shelf-grid-item yt-uix-shelfslider-item">
-                                                    {{ lockup.grid(item) }}
+                                                    {{ lockup.grid(item, false) }}
                                                     </li>
                                                 {%- endfor -%}
                                                 </ul>

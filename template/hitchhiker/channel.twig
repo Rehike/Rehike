@@ -53,6 +53,10 @@
    {{ appbar_nav.render(yt.appbarNav) }}
 {% endblock %}
 
+{%- block page_class -%}
+not-fixed-width-tab-widescreen
+{% endblock %}
+
 {% block content %}
 <div class="yt-card" id="debug" style="display:none!important;">{{ yt.page|json_encode() }}{{ yt.appbarNav|json_encode() }}</div>
 {% embed '/common/channels4/branded_page_v2.twig' %}
@@ -68,9 +72,23 @@
     {% endblock %}
 
     {%- block branded_page_primary_column_content -%}
-        {%- if yt.page.aboutContents -%}
-            {% include '/common/channels4/modules/about.twig' %}
-        {%- endif -%}
+    <ul id="browse-items-primary">
+        {% if yt.tab == "featured" %}
+            {% include "channel/featured.twig" %}
+        {% elseif yt.tab == "videos" %}
+            {% include "channel/videos.twig" %}
+        {% elseif yt.tab == "playlists" %}
+            {% include "channel/playlists.twig" %}
+        {% elseif yt.tab == "community" %}
+            {% include "channel/community.twig" %}
+        {% elseif yt.tab == "channels" %}
+            {% include "channel/channels.twig" %}
+        {% elseif yt.tab == "about" %}
+            {% include "channel/about.twig" %}
+        {% else %}
+            <p class="display-message">Channel tab "{{ yt.tab }}" not found. If you believe this is a mistake, please <a href="//github.com/Rehike/Rehike/issues/new">file an issue on our GitHub</a>.</p>
+        {% endif %}
+    </ul>
     {%- endblock -%}
 {% endembed %}
 {% endblock %}

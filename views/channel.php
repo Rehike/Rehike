@@ -16,7 +16,8 @@ if(!isset($yt->spf) or $yt->spf == false) {
     require "mod/getGuide.php";
 }
 
-$tab = $routerUrl->path[2] ?? 'featured';
+$tab = ($routerUrl->path[2] != '')  ? $routerUrl->path[2] : 'featured';
+$yt->tab = $tab;
 $tabParam = ChannelUtils::synthChannelTab($tab);
 
 Request::innertubeRequest("channel", "browse", (object)[
@@ -64,6 +65,7 @@ if (isset($ytdata->header->c4TabbedHeaderRenderer)) {
     // header.banner:
     if (isset($_oh->banner)) {
         $_h->banner = $_oh->banner;
+        $yt->page->hasCustomBanner = true;
     } else {
         $_h->banner = (object) [
             'thumbnails' => [(object) [
@@ -72,6 +74,7 @@ if (isset($ytdata->header->c4TabbedHeaderRenderer)) {
                 'url' => $_resourcePath($ytConstants, 'img', 'channels/c4/default_banner_hq')
             ]]
         ];
+        $yt->page->hasCustomBanner = false;
     }
     // header.headerLinks:
     if (isset($_oh->headerLinks->channelHeaderLinksRenderer)) {
@@ -117,4 +120,27 @@ if (isset($ytdata->header->c4TabbedHeaderRenderer)) {
             $_hs->shortSubscriberCountText = $_hs->subscriberCountText;
         }
     }
+}
+
+switch ($tab) { // for extracting info for certain tabs
+    case 'featured':
+        include('views/channel/featured.php');
+        break;
+    case 'videos':
+        include('views/channel/videos.php');
+        break;
+    case 'playlists':
+        include('views/channel/playlists.php');
+        break;
+    case 'community':
+        include('views/channel/community.php');
+        break;
+    case 'channels':
+        include('views/channel/channels.php');
+        break;
+    case 'about':
+        include('views/channel/about.php');
+        break;
+    default:
+        break;
 }

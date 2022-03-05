@@ -1,0 +1,49 @@
+{% macro aboutLink(info) %}
+<li class="channel-links-item">
+    <a href="{{ info.navigationEndpointcommandMetadata.webCommandMetadata.url }}" class="about-channel-link">
+        <img src="{{ info.icon.thumbnails[0].url }}" alt="" class="about-channel-link-icon" width="16" height="16" alt="{{ this.commandMetadata.webCommandMetadata.url }}">
+        <span class="about-channel-link-text">{{ getText(info.title) }}</span>
+    </a>
+</li>
+{% endmacro %}
+<li>
+    <div class="about-metadata-container">
+        <div class="about-metadata-stats branded-page-box-padding">
+            <div class="about-stats">
+                <span class="about-stat">
+                    <b>{{ yt.page.subCount }}</b> subscribers
+                </span>
+                <span class="about-stat">
+                    • <b>{{ yt.page.viewCount }}</b> views
+                </span>
+                <br>
+                <span class="about-stat">{{ yt.page.joinDate }}</span>
+            </div>
+        </div>
+        <div class="about-metadata-label branded-page-box-padding">
+            <span>Description</span>
+        </div>
+        <div class="about-description branded-page-box-padding">
+            <pre>{{ yt.page.aboutDescription }}</pre>
+        </div>
+        <div class="about-metadata-label about-metadata-label-border-top branded-page-box-padding">
+            <span>Details</span>
+        </div>
+        <div class="country-container branded-page-box-padding">
+            <span class="country-label">Country: </span>
+            <span class="country-inline">{{ yt.page.aboutCountry }}</span>
+        </div>
+        {% if yt.page.primaryLinks %}
+        <div class="about-metadata-label about-metadata-label-border-top branded-page-box-padding">
+            <span>Links</span>
+        </div>
+        <div class="about-metadata branded-page-box-padding clearfix">
+            <ul class="about-custom-links">
+                {% for link in yt.page.primaryLinks %}
+                {{ _self.aboutLink(link) }}
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+    </div>
+</li>

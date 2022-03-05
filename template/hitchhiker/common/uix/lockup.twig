@@ -26,7 +26,7 @@
 
 
 
-{%- macro tile(info, thumbWidth = 196, thumbHeight = 110) -%}
+{%- macro tile(info, showByline = true, thumbWidth = 196, thumbHeight = 110) -%}
 
 {% if info.videoRenderer %}
    {% set info = info.videoRenderer %}
@@ -36,14 +36,14 @@
    {% set info = info.radioRenderer %}
 {% endif %}
 
-{{ _self.main(info, "tile", thumbWidth, thumbHeight) }}
+{{ _self.main(info, "tile", showByline, thumbWidth, thumbHeight) }}
 
 {% endmacro %}
 
 
 
 
-{%- macro grid(info, thumbWidth = 196, thumbHeight = 110) -%}
+{%- macro grid(info, showByline = true, thumbWidth = 196, thumbHeight = 110) -%}
 
 {% if info.gridVideoRenderer %}
    {% set info = info.gridVideoRenderer %}
@@ -53,14 +53,14 @@
    {% set info = info.gridRadioRenderer %}
 {% endif %}
 
-{{ _self.main(info, "grid", thumbWidth, thumbHeight) }}
+{{ _self.main(info, "grid", showByline, thumbWidth, thumbHeight) }}
 
 {% endmacro %}
 
 
 
 
-{%- macro main(info, style, thumbWidth, thumbHeight) -%}
+{%- macro main(info, style, showByline, thumbWidth, thumbHeight) -%}
 {#
    used for both grid and tile renderers
 #}
@@ -76,7 +76,9 @@
                   {{ _self.accessibleDescription(info.lengthText.simpleText) }}
                {% endif %}
             </h3>
+            {% if showByline %}
             {{ _self.byline(info) }}
+            {% endif %}
             <div class="yt-lockup-meta ">
             <ul class="yt-lockup-meta-info">
                 {%- if info.viewCountText -%}

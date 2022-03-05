@@ -22,6 +22,15 @@ class ExtractUtils {
         }
     }
     
+    public static function isolateViewCnt(?string $viewCount): string {
+        $a = self::isolateCount($viewCount, '/( views)|( view)/');
+        if ($a != 'No') {
+            return $a;
+        } else {
+            return '0';
+        }
+    }
+    
     public static function resolveDate($date) {
         if (is_object($date)) $date = $date->simpleText;
         if (!preg_match('/Premiered/', $date) &&

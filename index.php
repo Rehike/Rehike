@@ -1,4 +1,7 @@
 <?php
+// why rehike when you already have hitchhiker?
+// hahahahaahahhhahaha :))))
+
 ob_start();
 $root = $_SERVER['DOCUMENT_ROOT'];
 set_include_path($root);
