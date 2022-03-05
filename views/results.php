@@ -13,6 +13,10 @@ if (!isset($_GET['search_query'])) {
     die();
 }
 
+if(!isset($yt->spf) or $yt->spf == false) {
+    require "mod/getGuide.php";
+}
+
 $yt->page->title = $_GET['search_query'];
 
 Request::innertubeRequest("page", "search", (object)[

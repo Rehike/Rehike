@@ -24,6 +24,10 @@ $twig = new \Twig\Environment($twigLoader, [
    'debug' => true
 ]);
 
+$twig -> addFilter (
+   new \Twig\TwigFilter("base64_encode", function($a){return base64_encode($a);})
+);
+
 function YcRehikeAutoloader($class)
 {
     if (file_exists("mod/{$class}.php")) {

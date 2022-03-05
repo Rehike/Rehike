@@ -10,6 +10,11 @@ $yt->page = (object) [];
 require_once('views/utils/extractUtils.php');
 require_once('views/utils/channelUtils.php');
 $ucid = ChannelUtils::getUcid($routerUrl);
+$yt->ucid = $ucid;
+
+if(!isset($yt->spf) or $yt->spf == false) {
+    require "mod/getGuide.php";
+}
 
 $tab = $routerUrl->path[2] ?? 'featured';
 $tabParam = ChannelUtils::synthChannelTab($tab);

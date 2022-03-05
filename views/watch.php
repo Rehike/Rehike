@@ -14,6 +14,10 @@ if (!isset($_GET['v'])) {
     die();
 }
 
+if(!isset($yt->spf) or $yt->spf == false) {
+    require "mod/getGuide.php";
+}
+
 // begin request
 $yt->videoId = $_GET['v'];
 

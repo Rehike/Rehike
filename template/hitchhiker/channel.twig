@@ -21,7 +21,7 @@
 
 
 
-    yt.setConfig('CHANNEL_ID', "UC4QobU6STFB0P71PMvOGN5A");
+    yt.setConfig('CHANNEL_ID', "{{ yt.ucid }}");
 
 
     yt.setConfig('CHANNEL_TAB', "feed");
@@ -31,7 +31,7 @@
 
 
         yt.setConfig({
-        'GUIDE_SELECTED_ITEM': "0qDduQEoEhhVQzRRb2JVNlNURkIwUDcxUE12T0dONUEaDE9BRmdBV29BdUFFQQ%3D%3D"
+        'GUIDE_SELECTED_ITEM': "0qDduQEaEhh{{ yt.ucid|base64_encode() }}%3D"
         });
 
         yt.setConfig({
