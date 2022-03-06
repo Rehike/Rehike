@@ -1,6 +1,6 @@
 {%- macro thumbnail(info, type, width, height) -%}
 <div class="yt-lockup-thumbnail {{ type == "video" ? "contains-addto" }}">
-   <a aria-hidden="true"  href="{{  info.navigationEndpoint.commandMetadata.webCommandMetadata.url }}" class=" yt-uix-sessionlink      spf-link " data-sessionlink="itct=CHkQlDUYACITCOLXzPvf6toCFRA7fwodgP0KKSiOHjIKZy1oaWdoLXRydloPRkV3aGF0X3RvX3dhdGNo" >
+   <a aria-hidden="true"  href="{% if type == "channel" %}{{  info.navigationEndpoint.commandMetadata.webCommandMetadata.url }}{% elseif type == "video" %}/watch?v={{ info.videoId }}{% endif %}" class=" yt-uix-sessionlink      spf-link " data-sessionlink="itct=CHkQlDUYACITCOLXzPvf6toCFRA7fwodgP0KKSiOHjIKZy1oaWdoLXRydloPRkV3aGF0X3RvX3dhdGNo" >
    <div class="yt-thumb video-thumb"><span class="yt-thumb-simple">
        <img height="{{ height }}" onload=";window.__ytRIL &amp;&amp; __ytRIL(this)" alt="" width="{{ width }}" data-ytimg="1" data-thumb="{{ info.thumbnail.thumbnails.0.url }}" src="{{ PIXEL }}">
        {% if info.lengthText %}
@@ -112,7 +112,7 @@
         {{ _self.thumbnail(info, type, thumbWidth, thumbHeight) }}
         <div class="yt-lockup-content">
             <h3 class="yt-lockup-title ">
-               <a href="{{  info.navigationEndpoint.commandMetadata.webCommandMetadata.url }}" class=" yt-ui-ellipsis yt-ui-ellipsis-2 yt-uix-sessionlink      spf-link " data-sessionlink="itct=CHkQlDUYACITCOLXzPvf6toCFRA7fwodgP0KKSiOHjIKZy1oaWdoLXRydloPRkV3aGF0X3RvX3dhdGNo"  title="{{ getText(info.title) }}" aria-describedby="description-id-956708" dir="ltr">
+               <a href="{% if type == "channel" %}{% if type == "channel" %}{{  info.navigationEndpoint.commandMetadata.webCommandMetadata.url }}{% elseif type == "video" %}/watch?v={{ info.videoId }}{% endif %}{% elseif type == "video" %}/watch?v={{ info.videoId }}{% endif %}" class=" yt-ui-ellipsis yt-ui-ellipsis-2 yt-uix-sessionlink      spf-link " data-sessionlink="itct=CHkQlDUYACITCOLXzPvf6toCFRA7fwodgP0KKSiOHjIKZy1oaWdoLXRydloPRkV3aGF0X3RvX3dhdGNo"  title="{{ getText(info.title) }}" aria-describedby="description-id-956708" dir="ltr">
                {{ getText(info.title) }}{% if info.ownerBadges and type == "channel" %}    <span title="Verified" class="yt-uix-tooltip yt-channel-title-icon-verified yt-sprite"></span>{% endif %}
                </a>
                {%- if info.lengthText -%}

@@ -46,6 +46,7 @@ $responses = Request::getInnertubeResponses();
 
 $response = $responses["watch"];
 $presponse = $responses["player"];
+$yt->response = $response;
 
 $ytdata = json_decode($response);
 $playerResponse = json_decode($presponse);
@@ -137,6 +138,7 @@ if (!is_null($primaryInfo)) {
     $rwp_ = $rw->results->videoPrimaryInfoRenderer;
     $rwp_->title = $primaryInfo->title ?? null;
     $rwp_->viewCount = $primaryInfo->viewCount->videoViewCountRenderer->viewCount ?? null;
+    $rwp_->badges = $primaryInfo->badges;
     $rwp_->actions = (object) [];
     $rwp_->actions->likeButton = (object) [];
     $rwp_->actions->likeButton->defaultText = ExtractUtils::isolateLikeCnt($primaryInfo->videoActions->menuRenderer
