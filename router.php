@@ -77,6 +77,9 @@ switch ($routerUrl->path[0]) {
                 case 'history':
                     include('views/feed/history.php');
                     break;
+                case 'guide_builder':
+                    include('views/feed/guide_builder.php');
+                    break;
                 default:
                     $template = '404';
                     break;

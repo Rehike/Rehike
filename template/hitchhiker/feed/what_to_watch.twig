@@ -73,9 +73,10 @@
         <div id="feed" class="">
             <div id="feed-main-what_to_watch" class="individual-feed" data-feed-name="what_to_watch" data-feed-type="main">
                 <ol id="section-list-874807" class="section-list">
-                {%- for shelf in yt.page.shelvesList -%}
-                {#{{ shelf|json_encode }}#}
-                {% set shelfRenderer = shelf.itemSectionRenderer.contents.0.shelfRenderer %}
+                {% import "common/uix/shelf.twig" as shelf %}
+                {%- for compactShelf in yt.page.shelvesList -%}
+                {{ shelf.compact(compactShelf) }}
+                {# {% set shelfRenderer = shelf.itemSectionRenderer.contents.0.shelfRenderer %}
                     <li>
                     <ol id="item-section-760461" class="item-section">
                         <li>
@@ -128,7 +129,7 @@
                             </div>
                         </li>
                     </ol>
-                    </li>
+                    </li> #}
                 {% endfor %}
                 </ol>
                 <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-default load-more-button yt-uix-load-more browse-items-load-more-button scrolldetect yt-uix-sessionlink" type="button" onclick=";return false;" aria-label="Load more

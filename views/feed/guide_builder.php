@@ -3,7 +3,7 @@ use \Rehike\Request;
 
 $yt->spfEnabled = true;
 $yt->useModularCore = true;
-$template = 'feed/trending';
+$template = 'feed/guide_builder';
 $yt->modularCoreModules = ['www/feed'];
 $yt->page = (object) [];
 $yt->enableFooterCopyright = true;
@@ -13,14 +13,12 @@ if(!isset($yt->spf) or $yt->spf == false) {
 }
 
 Request::innertubeRequest("feed", "browse", (object)[
-    "browseId" => "FEtrending"
+    "browseId" => "FEguide_builder"
 ]);
 $response = Request::getInnertubeResponses()["feed"];
 
 $timeb = round(microtime(true) * 1000);
-//echo $timeb - $timea; die();
 $ytdata = json_decode($response);
-//var_dump( $ytdata);
 
 $yt->page->data = $response;
 
