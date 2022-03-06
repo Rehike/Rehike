@@ -92,6 +92,10 @@ switch ($routerUrl->path[0]) {
             $template = 'error/404';
         }
         break;
+    case 'pb':
+        include('pbtest.php');
+        die();
+        break;
     default:
         $template = 'error/404';
         break;
