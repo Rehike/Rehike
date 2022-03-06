@@ -6,3 +6,4 @@ foreach ($ytdata->contents->twoColumnBrowseResultsRenderer->tabs as $tab) {
 }
 
 $yt->videoList = $videosTabContent;
+$yt->flow = $_GET["flow"] ?? "grid";

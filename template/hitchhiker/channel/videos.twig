@@ -1,37 +1,59 @@
 {% import "common/uix/lockup.twig" as lockup %}
 <li class="branded-page-gutter-padding branded-page-v2-subnav-container clearfix">
     <button aria-expanded=false aria-haspopup=true class="yt-uix-button yt-uix-button-default yt-uix-button-size-default subnav-flow-menu" data-button-menu-indicate-selected=true onclick=return!1 type=button>
+       {% if yt.flow == "grid" %}
        <span class=yt-uix-button-content>Grid</span><span class="yt-sprite yt-uix-button-arrow"></span>
        <ul aria-haspopup=true class="hid yt-uix-button-menu yt-uix-button-menu-default"role=menu>
           <li role=menuitem><span class="spf-link yt-uix-button-menu-item"href="/channel/{{ yt.ucid }}/videos?flow=list&view=0&live_view=500&sort=dd"onclick='return yt.window.navigate(this.getAttribute("href")),!1'>List</span>
        </ul>
+       {% elseif yt.flow == "list" %}
+       <span class=yt-uix-button-content>List</span><span class="yt-sprite yt-uix-button-arrow"></span>
+       <ul aria-haspopup=true class="hid yt-uix-button-menu yt-uix-button-menu-default"role=menu>
+          <li role=menuitem><span class="spf-link yt-uix-button-menu-item"href="/channel/{{ yt.ucid }}/videos?flow=grid&view=0&live_view=500&sort=dd"onclick='return yt.window.navigate(this.getAttribute("href")),!1'>Grid</span>
+       </ul>
+       {% endif %}
     </button>
     <button aria-expanded=false aria-haspopup=true class="yt-uix-button yt-uix-button-default yt-uix-button-size-default subnav-sort-menu" data-button-menu-indicate-selected=true onclick=return!1 type=button>
        <span class=yt-uix-button-content>Date added (newest)</span><span class="yt-sprite yt-uix-button-arrow"></span>
        <ul aria-haspopup=true class="hid yt-uix-button-menu yt-uix-button-menu-default"role=menu>
-          <li role=menuitem><span class="spf-link yt-uix-button-menu-item"href="/channel/{{ yt.ucid }}/videos?flow=grid&view=0&sort=p"onclick='return yt.window.navigate(this.getAttribute("href")),!1'>Most popular</span>
-          <li role=menuitem><span class="spf-link yt-uix-button-menu-item"href="/channel/{{ yt.ucid }}/videos?flow=grid&view=0&sort=da"onclick='return yt.window.navigate(this.getAttribute("href")),!1'>Date added (oldest)</span>
+          <li role=menuitem><span class="spf-link yt-uix-button-menu-item"href="/channel/{{ yt.ucid }}/videos?flow={{ yt.flow }}&view=0&sort=p"onclick='return yt.window.navigate(this.getAttribute("href")),!1'>Most popular</span>
+          <li role=menuitem><span class="spf-link yt-uix-button-menu-item"href="/channel/{{ yt.ucid }}/videos?flow={{ yt.flow }}&view=0&sort=da"onclick='return yt.window.navigate(this.getAttribute("href")),!1'>Date added (oldest)</span>
        </ul>
     </button>
-    <a aria-label=Back class="yt-uix-button yt-uix-button-default yt-uix-button-size-default sub-menu-back-button yt-uix-button-empty yt-uix-button-has-icon yt-uix-sessionlink" data-sessionlink="ei=kulLWoflCIn2-gPbnaCABA" href=/channel/{{ yt.ucid }}><span class=yt-uix-button-icon-wrapper><span class="yt-sprite yt-uix-button-icon yt-uix-button-icon-channel-back"></span></span></a> 
+    <a aria-label=Back class="yt-uix-button yt-uix-button-default yt-uix-button-size-default sub-menu-back-button yt-uix-button-empty yt-uix-button-has-icon yt-uix-sessionlink spf-link" data-sessionlink="ei=kulLWoflCIn2-gPbnaCABA" href=/channel/{{ yt.ucid }}><span class=yt-uix-button-icon-wrapper><span class="yt-sprite yt-uix-button-icon yt-uix-button-icon-channel-back"></span></span></a> 
     <button aria-expanded=false aria-haspopup=true class="yt-uix-button yt-uix-button-default yt-uix-button-size-default subnav-view-menu" data-button-menu-indicate-selected=true onclick=return!1 type=button>
        <span class=yt-uix-button-content>Uploads</span><span class="yt-sprite yt-uix-button-arrow"></span>
        <ul aria-haspopup=true class="hid yt-uix-button-menu yt-uix-button-menu-default"role=menu>
-          <li role=menuitem><span class="spf-link yt-uix-button-menu-item"href="/channel/{{ yt.ucid }}/videos?flow=grid&view=57"onclick='return yt.window.navigate(this.getAttribute("href")),!1'>All videos</span>
-          <li role=menuitem><span class="spf-link yt-uix-button-menu-item"href="/channel/{{ yt.ucid }}/videos?flow=grid&view=2"onclick='return yt.window.navigate(this.getAttribute("href")),!1'>Live streams</span>
+          <li role=menuitem><span class="spf-link yt-uix-button-menu-item"href="/channel/{{ yt.ucid }}/videos?flow={{ yt.flow }}&view=57"onclick='return yt.window.navigate(this.getAttribute("href")),!1'>All videos</span>
+          <li role=menuitem><span class="spf-link yt-uix-button-menu-item"href="/channel/{{ yt.ucid }}/videos?flow={{ yt.flow }}&view=2"onclick='return yt.window.navigate(this.getAttribute("href")),!1'>Live streams</span>
        </ul>
     </button>
 </li>
 <li>
+    {% if yt.flow == "grid" %}
     <ul id="channels-browse-content-grid" class="channels-browse-content-grid branded-page-gutter-padding grid-lockups-container">
         {% for item in yt.videoList %}
         <li class="channels-content-item yt-shelf-grid-item">
             {% if item.gridVideoRenderer %}
-            {{ lockup.grid(item, false) }}
+                {{ lockup.grid(item, false) }}
             {% endif %}
         </li>
         {% endfor %}
     </ul>
+    {% elseif yt.flow == "list" %}
+        {% for item in yt.videoList %}
+        <li class="feed-item-container yt-section-hover-container browse-list-item-container branded-page-box">
+            <div class="feed-item-dismissable">
+                <div class="feed-item-main feed-item-no-author">
+                    <div class="feed-item-main-content">
+                        {{ lockup.main(item.gridVideoRenderer, "tile", "video", false, 196, 110) }}
+                    </div>
+                </div>
+            </div>
+        </li>
+        {% endfor %}
+    {% endif %}
+        
     <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-default load-more-button yt-uix-load-more browse-items-load-more-button yt-uix-load-more-error" type="button" onclick=";return false;" aria-label="Load more" data-uix-load-more-target-id="channels-browse-content-grid" data-uix-load-more-href="/browse_ajax?action_continuation=1&amp;direct_render=1&amp;continuation=4qmFsgJAEhhVQy1sSEpaUjNHcXhtMjRfVmRfQUo1WXcaJEVnWjJhV1JsYjNNZ0FEZ0JZQUZxQUhvQk1yZ0JBQSUzRCUzRA%253D%253D">
         <span class="yt-uix-button-content">
             <span class="load-more-loading hid" style="display: none;">

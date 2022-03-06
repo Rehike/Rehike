@@ -138,7 +138,7 @@ if (!is_null($primaryInfo)) {
     $rwp_ = $rw->results->videoPrimaryInfoRenderer;
     $rwp_->title = $primaryInfo->title ?? null;
     $rwp_->viewCount = $primaryInfo->viewCount->videoViewCountRenderer->viewCount ?? null;
-    $rwp_->badges = $primaryInfo->badges;
+    $rwp_->badges = $primaryInfo->badges ?? null;
     $rwp_->actions = (object) [];
     $rwp_->actions->likeButton = (object) [];
     $rwp_->actions->likeButton->defaultText = ExtractUtils::isolateLikeCnt($primaryInfo->videoActions->menuRenderer
