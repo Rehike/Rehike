@@ -266,9 +266,13 @@ branded-page-v2-secondary-column-wide no-flex
                                 </li>
                                 <li>
                                     <ol id="item-section-009175" class="item-section">
-                                        {%- for videoRenderer in yt.page.resultsList -%}
+                                        {%- for result in yt.page.resultsList -%}
                                             <li>
-                                                {{ lockup.tile(videoRenderer, true, 246, 138) }}
+                                                {% if result.channelRenderer %}
+                                                    {{ lockup.tile(result, true, 138, 138) }}
+                                                {% else %}
+                                                    {{ lockup.tile(result, true, 246, 138) }}
+                                                {% endif %}
                                             </li>
                                         {% endfor %}
                                     </ol>

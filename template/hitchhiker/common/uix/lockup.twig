@@ -1,6 +1,6 @@
 {%- macro thumbnail(info, type, width, height) -%}
 <div class="yt-lockup-thumbnail {{ type == "video" ? "contains-addto" }}">
-   <a aria-hidden="true"  href="/watch?v={{info.videoId}}" class=" yt-uix-sessionlink      spf-link " data-sessionlink="itct=CHkQlDUYACITCOLXzPvf6toCFRA7fwodgP0KKSiOHjIKZy1oaWdoLXRydloPRkV3aGF0X3RvX3dhdGNo" >
+   <a aria-hidden="true"  href="{{  info.navigationEndpoint.commandMetadata.webCommandMetadata.url }}" class=" yt-uix-sessionlink      spf-link " data-sessionlink="itct=CHkQlDUYACITCOLXzPvf6toCFRA7fwodgP0KKSiOHjIKZy1oaWdoLXRydloPRkV3aGF0X3RvX3dhdGNo" >
    <div class="yt-thumb video-thumb"><span class="yt-thumb-simple">
        <img height="{{ height }}" onload=";window.__ytRIL &amp;&amp; __ytRIL(this)" alt="" width="{{ width }}" data-ytimg="1" data-thumb="{{ info.thumbnail.thumbnails.0.url }}" src="{{ PIXEL }}">
        {% if info.lengthText %}
@@ -37,8 +37,8 @@
    {% set info = info.playlistRenderer %}
 {% elseif info.radioRenderer %}
    {% set info = info.radioRenderer %}
-{% elseif info.gridChannelRenderer %}
-   {% set info = info.gridChannelRenderer %}
+{% elseif info.channelRenderer %}
+   {% set info = info.channelRenderer %}
    {% set type = "channel" %}
 {% endif %}
 
@@ -107,24 +107,24 @@
    used for both grid and tile renderers
 #}
 {% import "common/uix/subscription_button.twig" as subBtn %}
-<div class="yt-lockup yt-lockup-{{ style }} {{ type == "channel" ? "yt-lockup-channel" }} yt-lockup-video vve-check clearfix" data-context-item-id="{{info.videoId}}" data-visibility-tracking="CHkQlDUYACITCOLXzPvf6toCFRA7fwodgP0KKSiOHkCbkbvm_eGjomU=">
+<div class="yt-lockup yt-lockup-{{ style }} yt-lockup-{{ type }} vve-check clearfix" data-context-item-id="{{info.videoId}}" data-visibility-tracking="CHkQlDUYACITCOLXzPvf6toCFRA7fwodgP0KKSiOHkCbkbvm_eGjomU=">
     <div class="yt-lockup-dismissable {{ style == 'tile' ? 'yt-uix-tile'}}">
         {{ _self.thumbnail(info, type, thumbWidth, thumbHeight) }}
         <div class="yt-lockup-content">
             <h3 class="yt-lockup-title ">
-               <a href="/watch?v={{info.videoId}}" class=" yt-ui-ellipsis yt-ui-ellipsis-2 yt-uix-sessionlink      spf-link " data-sessionlink="itct=CHkQlDUYACITCOLXzPvf6toCFRA7fwodgP0KKSiOHjIKZy1oaWdoLXRydloPRkV3aGF0X3RvX3dhdGNo"  title="{{ getText(info.title) }}" aria-describedby="description-id-956708" dir="ltr">
-               {{ getText(info.title) }}
+               <a href="{{  info.navigationEndpoint.commandMetadata.webCommandMetadata.url }}" class=" yt-ui-ellipsis yt-ui-ellipsis-2 yt-uix-sessionlink      spf-link " data-sessionlink="itct=CHkQlDUYACITCOLXzPvf6toCFRA7fwodgP0KKSiOHjIKZy1oaWdoLXRydloPRkV3aGF0X3RvX3dhdGNo"  title="{{ getText(info.title) }}" aria-describedby="description-id-956708" dir="ltr">
+               {{ getText(info.title) }}{% if info.ownerBadges and type == "channel" %}    <span title="Verified" class="yt-uix-tooltip yt-channel-title-icon-verified yt-sprite"></span>{% endif %}
                </a>
                {%- if info.lengthText -%}
                   {{ _self.accessibleDescription(info.lengthText.simpleText) }}
                {% endif %}
             </h3>
-            {% if showByline %}
+            {% if showByline and type == "video" %}
             {{ _self.byline(info) }}
             {% endif %}
             <div class="yt-lockup-meta ">
             <ul class="yt-lockup-meta-info">
-                {%- if info.subscriberCountText -%}
+                {%- if info.subscriberCountText and style == "grid" -%}
                     <li>{{ getText(info.subscriberCountText) }}</li>
                 {% endif %}
                 {%- if info.viewCountText -%}
@@ -144,7 +144,7 @@
                {% endif %}
             </div>
             {% endif %}
-            {% if info.badges %}
+            {% if info.badges or style == "tile" and type == "channel" %}
             <div class="yt-lockup-badges">
                <ul class="yt-badge-list">
                   {% if info.badges[0].liveBadge %}
@@ -152,10 +152,23 @@
                      <span class="yt-badge yt-badge-live">{{ getText(info.badges[0].liveBadge.label) }}</span>
                   </li>
                   {% endif %}
+                  {% if style == "tile" and type == "channel" %}
+                     <li class="yt-badge-item">
+                        <span class="yt-badge">Channel</span>
+                     </li>
+                  {% endif %}
                </ul>
+               {% if info.subscribeButton %}
+               <span class="yt-uix-button-subscription-container">
+                  {{ subBtn.render(info.subscribeButton, {
+                     'showCount': true,
+                     'unbranded': true
+                  }) }}
+               </span>
+               {% endif %}
             </div>
             {% endif %}
-            {% if info.subscribeButton %}
+            {% if info.subscribeButton and style == "grid" %}
                <span class="yt-uix-button-subscription-container">
                   {{ subBtn.render(info.subscribeButton, {
                      'showCount': true,

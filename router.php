@@ -50,6 +50,7 @@ switch ($routerUrl->path[0]) {
     case 's':
     case 'embed':
     case '404':
+    case 'yts':
         include('simplefunnel.php');
         die();
         break;
@@ -57,8 +58,11 @@ switch ($routerUrl->path[0]) {
         include('views/ajax/watch_fragments2.php');
         break;
     case "comment_service_ajax":
-         include "views/ajax/comment_service.php";
-         break;
+        include "views/ajax/comment_service.php";
+        break;
+    case "share_ajax":
+        include "views/ajax/share.php";
+        break;
     case 'internal': // forward to internal router
         include('internal/internalRouter.php');
         break;
@@ -81,14 +85,14 @@ switch ($routerUrl->path[0]) {
                     include('views/feed/guide_builder.php');
                     break;
                 default:
-                    $template = '404';
+                    $template = 'error/404';
                     break;
             }
         } else {
-            $template = '404';
+            $template = 'error/404';
         }
         break;
     default:
-        $template = '404';
+        $template = 'error/404';
         break;
 }

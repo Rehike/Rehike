@@ -16,7 +16,7 @@ if(!isset($yt->spf) or $yt->spf == false) {
     require "mod/getGuide.php";
 }
 
-$tab = ($routerUrl->path[2] != '')  ? $routerUrl->path[2] : 'featured';
+$tab = (isset($routerUrl->path[2]) and $routerUrl->path[2] != '')  ? $routerUrl->path[2] : 'featured';
 $yt->tab = $tab;
 $tabParam = ChannelUtils::synthChannelTab($tab);
 
