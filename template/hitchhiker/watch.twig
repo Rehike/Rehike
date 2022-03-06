@@ -215,6 +215,10 @@
             {% endif %}
             {%- if yt.page.results.videoDiscussionRenderer -%}
                {% include '/common/watch/watch_discussion_module.twig' %}
+            {% else %}
+            <div id="watch-discussion" class="branded-page-box yt-card">
+               <p class="display-message">Comments are disabled for this video.</p>
+           </div>
             {% endif %}
          </div>
          {% set secondaryResults = yt.page.secondaryResults %}
