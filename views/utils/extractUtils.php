@@ -14,7 +14,7 @@ class ExtractUtils {
         if ($a != 'I like this') {
             return $a;
         } else {
-            return '0';
+            return '';
         }
     }
     
