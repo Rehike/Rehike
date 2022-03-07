@@ -7,7 +7,7 @@
                 <p id="eow-description" class="">
                     {%- for snippet in secondaryInfo.description.runs -%}
                     {%- if (snippet.navigationEndpoint) -%}
-                        <a href="#">
+                        <a href="{{ snippet.navigationEndpoint.commandMetadata.webCommandMetadata.url }}">
                     {% endif %}
                     {{ snippet.text|nl2br }}
                     {%- if (snippet.navigationEndpoint) -%}

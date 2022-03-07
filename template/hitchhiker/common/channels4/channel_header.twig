@@ -50,7 +50,7 @@
                 {% endif %}
             </div>
 
-            <a class="channel-header-profile-image-container spf-link" href="/user/jawed">
+            <a class="channel-header-profile-image-container spf-link" href="/channel/{{ yt.ucid }}">
             <img class="channel-header-profile-image" src="{{ header.thumbnail.thumbnails.0.url }}" title="{{ header.title }}" alt="{{ header.title }}">
             </a>
 
@@ -66,7 +66,7 @@
                             {% apply spaceless %}
                             <span class="qualified-channel-title-wrapper">
                                 <span dir="ltr" class="qualified-channel-title-text">
-                                    <a dir="ltr" href="/user/jawed" class="spf-link branded-page-header-title-link yt-uix-sessionlink" title="{{ header.title }}" data-sessionlink="ei=PYD4WYi3NtLY-AOXuqv4Aw"      >
+                                    <a dir="ltr" href="/channel/{{ yt.ucid }}" class="spf-link branded-page-header-title-link yt-uix-sessionlink" title="{{ header.title }}" data-sessionlink="ei=PYD4WYi3NtLY-AOXuqv4Aw"      >
                                         {{ header.title }}
                                     </a>
                                 </span>

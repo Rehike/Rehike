@@ -10,7 +10,12 @@ class ExtractUtils {
     }
     
     public static function isolateLikeCnt(?string $likeCount): string {
-        return self::isolateCount($likeCount, '/(like this video along with )|( other people)/');
+        $a = self::isolateCount($likeCount, '/(like this video along with )|( other people)|( other person)/');
+        if ($a != 'I like this') {
+            return $a;
+        } else {
+            return '0';
+        }
     }
     
     public static function isolateSubCnt(?string $subCount): string {

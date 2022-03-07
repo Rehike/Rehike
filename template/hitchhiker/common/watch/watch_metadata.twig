@@ -1,13 +1,13 @@
-<link itemprop="url" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
-<meta itemprop="name" content="Rick Astley - Never Gonna Give You Up (Video)">
+<link itemprop="url" href="https://www.youtube.com/watch?v={{ yt.videoId }}">
+<meta itemprop="name" content="{{ getText(info.title) }}">
 <meta itemprop="description" content="Rick Astley - Never Gonna Give You Up (Official Music Video) - Listen On Spotify: http://smarturl.it/AstleySpotify Download Rick&#39;s Number 1 album &quot;&quot;50&quot;&quot; - ht...">
 <meta itemprop="paid" content="False">
 <meta itemprop="channelId" content="UC38IQsAvIsxxjztdMZQtwHA">
-<meta itemprop="videoId" content="dQw4w9WgXcQ">
+<meta itemprop="videoId" content="{{ yt.videoId }}">
 <meta itemprop="duration" content="PT3M33S">
 <meta itemprop="unlisted" content="False">
 <span itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <link itemprop="url" href="http://www.youtube.com/user/RickAstleyVEVO">
+    <link itemprop="url" href="{{ owner.navigationEndpoint.browseEndpoint.canonicalBaseUrl }}">
 </span>
 <span itemprop="author" itemscope itemtype="http://schema.org/Person">
     <link itemprop="url" href="https://plus.google.com/118341150529602077100">
@@ -21,20 +21,20 @@
             "@type": "ListItem",
             "position": 1,
             "item": {
-            "@id": "http:\/\/www.youtube.com\/user\/RickAstleyVEVO",
+            "@id": "{{ owner.navigationEndpoint.browseEndpoint.canonicalBaseUrl|json_encode() }}",
             "name": "RickAstleyVEVO"
             }
         }
         ]
     }
 </script>
-<link itemprop="thumbnailUrl" href="https://i.ytimg.com/vi/dQw4w9WgXcQ/maxresdefault.jpg">
+<link itemprop="thumbnailUrl" href="https://i.ytimg.com/vi/{{ yt.videoId }}/maxresdefault.jpg">
 <span itemprop="thumbnail" itemscope itemtype="http://schema.org/ImageObject">
-    <link itemprop="url" href="https://i.ytimg.com/vi/dQw4w9WgXcQ/maxresdefault.jpg">
+    <link itemprop="url" href="https://i.ytimg.com/vi/{{ yt.videoId }}/maxresdefault.jpg">
     <meta itemprop="width" content="1280">
     <meta itemprop="height" content="720">
 </span>
-<link itemprop="embedURL" href="https://www.youtube.com/embed/dQw4w9WgXcQ">
+<link itemprop="embedURL" href="https://www.youtube.com/embed/{{ yt.videoId }}">
 <meta itemprop="playerType" content="HTML5 Flash">
 <meta itemprop="width" content="1280">
 <meta itemprop="height" content="720">

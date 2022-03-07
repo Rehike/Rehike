@@ -16,6 +16,18 @@ $_playerCore = PlayerCore::main();
 $yt->playerCore = $_playerCore;
 $yt->playerBasepos = $_playerCore->basepos;
 
+if (isset($_COOKIE["PREF"]->f5)) {
+   switch($_COOKIE["PREF"]->f5) {
+      case "30030":
+         $yt -> autoplay = false;
+         break;
+      default:
+      case "20030":
+         $yt -> autoplay = true;
+         break;
+   }
+}
+
 $twigLoader = new \Twig\Loader\FilesystemLoader(
    $root . $templateRoot
 );

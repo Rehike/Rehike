@@ -138,9 +138,25 @@
             {% if style == "tile" %}
             <div class="yt-lockup-description yt-ui-ellipsis yt-ui-ellipsis-2" dir="ltr">
                {% if info.descriptionSnippet %}
-                  {{ getText(info.descriptionSnippet) }}
+                  {% for snippet in info.descriptionSnippet.runs %}
+                  {% if snippet.navigationEndpoint %}
+                  <a href="{{ snippet.navigationEndpoint.commandMetadata.webCommandMetadata.url }}">
+                  {% endif %}
+                  {{ snippet.text }}   
+                  {% if snippet.navigationEndpoint %}
+                  </a>
+                  {% endif %}
+                  {% endfor %}
                {% else %}
-                  {{ getText(info.detailedMetadataSnippets[0].snippetText) }}
+                  {% for snippet in info.detailedMetadataSnippets[0].snippetText.runs %}
+                  {% if snippet.navigationEndpoint %}
+                  <a href="{{ snippet.navigationEndpoint.commandMetadata.webCommandMetadata.url }}">
+                  {% endif %}
+                  {{ snippet.text }}   
+                  {% if snippet.navigationEndpoint %}
+                  </a>
+                  {% endif %}
+                  {% endfor %}
                {% endif %}
             </div>
             {% endif %}
