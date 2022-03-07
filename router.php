@@ -96,6 +96,13 @@ switch ($routerUrl->path[0]) {
         include('pbtest.php');
         die();
         break;
+    case 'hashtag':
+        if (isset($routerUrl->path[1])) {
+            header("Location: /results?search_query=" . $routerUrl->path[1]);
+        } else {
+            $template = 'error/404';
+        }
+        break;
     default:
         $template = 'error/404';
         break;

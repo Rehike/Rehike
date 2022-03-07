@@ -241,9 +241,9 @@ if (!is_null($playlist)) {
     // previous/next video ids also need a little work
     // let's just catch two cases with one
     $curIndInt = $playlist->localCurrentIndex;
-    $plPrevId = $playlist->contents[$curIndInt - 1]->playlistPanelVideoRenderer->videoId;
+    $plPrevId = $playlist->contents[$curIndInt - 1]->playlistPanelVideoRenderer->videoId ?? null;
     $plPrevUrl = '/watch?v=' . $plPrevId . '&index=' . (string) ($curIndInt - 1) . '&list=' . $yt->playlistId;
-    $plNextId = $playlist->contents[$curIndInt + 1]->playlistPanelVideoRenderer->videoId;
+    $plNextId = $playlist->contents[$curIndInt + 1]->playlistPanelVideoRenderer->videoId ?? null;
     $plNextUrl = '/watch?v=' . $plNextId . '&index=' . (string) ($curIndInt + 1) . '&list=' . $yt->playlistId;
 
     $rw->playlist->previousVideo = [
