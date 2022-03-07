@@ -1,0 +1,47 @@
+{% set playlist = yt.page.playlist %}
+<div class="playlist-header">
+    <div class="playlist-header-content" data-loop-auto-clicktracking="CBYQ0TkiEwiZ0smi4d7ZAhU4H34KHf9DCpwo-B0yCGF1dG9wbGF5SMynl6LS1_rxtgE" data-normal-auto-clicktracking="CBYQ0TkiEwiZ0smi4d7ZAhU4H34KHf9DCpwo-B0yCGF1dG9wbGF5SMynl6LS1_rxtgE" data-list-author="" data-shareable="True" data-list-title="Favorites" data-loop_shuffle-auto-clicktracking="CBYQ0TkiEwiZ0smi4d7ZAhU4H34KHf9DCpwo-B0yCGF1dG9wbGF5SMynl6LS1_rxtgE" data-full-list-id="FLNaqshw8BAQ12nPRixBy4AA" data-shuffle-auto-clicktracking="CBYQ0TkiEwiZ0smi4d7ZAhU4H34KHf9DCpwo-B0yCGF1dG9wbGF5SMynl6LS1_rxtgE" data-initial-loop-state="false">
+        <div class="appbar-playlist-controls clearfix">
+            <span class="yt-uix-clickcard">
+                <span class="yt-uix-clickcard-target" data-position="bottomright" data-orientation="vertical">
+                <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-player-controls yt-uix-button-empty yt-uix-button-has-icon no-icon-markup yt-uix-playlistlike watch-playlist-like yt-uix-button-opacity yt-uix-tooltip" type="button" onclick=";return false;" id="gh-playlist-save" aria-label="Save to Playlists" title="Save to Playlists" data-like-label="" data-playlist-id="FLNaqshw8BAQ12nPRixBy4AA" data-unlike-label="" data-unlike-tooltip="Remove" data-like-tooltip="Save to Playlists" data-toggle-class="yt-uix-button-toggled" data-token="QUFFLUhqbVVlR1ZYZUVPZ1E0dnZ2U3lObzI3U3R1ajRId3xBQ3Jtc0tsMDhmX1JMZlh0dzB2MFBRQ2lEZy1DdlVtWFdxLXA3N0l3SUpYYUZ0blRpckVZaWMtbTlScXE4T2RHaG1mYWd2SnRtQWg0eXJfUC1fZFNvazNaY3ZOZ053TjZIZDBhNi14ZDhNS29FY1dCOERxX0gxWUh5aHpreUZZOVhjMU5BRllpY1N6SktLNk9vYzJZZXJ0dUpkSUc1TW8xZkE="></button>
+                </span>
+                <div class="signin-clickcard yt-uix-clickcard-content">
+                    <h3 class="signin-clickcard-header">Sign in to YouTube</h3>
+                    <div class="signin-clickcard-message">
+                    </div>
+                    <a  href="https://accounts.google.com/ServiceLogin?passive=true&amp;uilel=3&amp;hl=en&amp;continue=https%3A%2F%2Fwww.youtube.com%2Fsignin%3Fnext%3D%252Fwatch%253Fv%253DtuPqvSRF08w%2526list%253DFLNaqshw8BAQ12nPRixBy4AA%26action_handle_signin%3Dtrue%26hl%3Den%26app%3Ddesktop%26feature%3D__FEATURE__&amp;service=youtube" class="yt-uix-button  signin-button yt-uix-sessionlink yt-uix-button-primary yt-uix-button-size-default" data-sessionlink="ei=VD2iWpnYHbi--AP_h6ngCQ"><span class="yt-uix-button-content">Sign in</span></a>
+                </div>
+            </span>
+        </div>
+        <div class="playlist-info">
+            <h3 class="playlist-title">
+                <a href="/playlist?list={{ playlist.playlistId }}" class=" yt-uix-sessionlink      spf-link " data-sessionlink="ei=VD2iWpnYHbi--AP_h6ngCQ" >{{ playlist.title }}</a>
+            </h3>
+            <ul class="playlist-details">
+                {% if playlist.shortBylineText %}
+                    {% set author = playlist.shortBylineText.runs.0 %}
+                    {% set href = author.navigationEndpoint.commandMetadata.webCommandMetadata.url %}
+                    <li class="author-attribution">
+                        <a href="{{ href }}" class=" yt-uix-sessionlink      spf-link " data-sessionlink="ei=VD2iWpnYHbi--AP_h6ngCQ" >{{ author.text }}</a>
+                    </li>
+                {% endif %}
+                {% if playlist.videoCountText %}
+                    <li class="playlist-progress">
+                        <span id="playlist-current-index">{{ playlist.videoCountText.currentIndex }}</span><span id="playlist-length">{{ playlist.videoCountText.videoCount }}</span>                
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+    <div class="control-bar clearfix">
+        <div class="playlist-nav-controls">
+            <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-player-controls yt-uix-button-empty yt-uix-button-has-icon toggle-loop yt-uix-button-opacity yt-uix-tooltip yt-uix-tooltip" type="button" onclick=";return false;" title="Repeat playlist" data-button-toggle="true"><span class="yt-uix-button-icon-wrapper"><span class="yt-uix-button-icon yt-uix-button-icon-watch-appbar-autoplay yt-sprite"></span></span></button>
+            <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-player-controls yt-uix-button-empty yt-uix-button-has-icon shuffle-playlist yt-uix-button-opacity yt-uix-tooltip yt-uix-tooltip" type="button" onclick=";return false;" title="Shuffle" data-button-toggle="true"><span class="yt-uix-button-icon-wrapper"><span class="yt-uix-button-icon yt-uix-button-icon-watch-appbar-shuffle-video-list yt-sprite"></span></span></button>
+        </div>
+        <div class="playlist-behavior-controls">
+            <a  href="{{ playlist.previousVideo.url }}" class="yt-uix-button  hid prev-playlist-list-item yt-uix-button-opacity yt-uix-tooltip yt-uix-tooltip-masked spf-link  yt-uix-button-player-controls yt-uix-button-size-default yt-uix-button-has-icon yt-uix-tooltip yt-uix-button-empty" data-normal-prev-clicktracking="CBYQ0TkiEwiZ0smi4d7ZAhU4H34KHf9DCpwo-B0yB2JmX3ByZXZIzKeXotLX-vG2AQ" data-shuffle-prev-clicktracking="" data-loop-prev-clicktracking="CBYQ0TkiEwiZ0smi4d7ZAhU4H34KHf9DCpwo-B0yB2JmX3ByZXZIzKeXotLX-vG2AQ" data-loop_shuffle-prev-clicktracking="CBYQ0TkiEwiZ0smi4d7ZAhU4H34KHf9DCpwo-B0yB2JmX3ByZXZIzKeXotLX-vG2AQ" title="Previous video"><span class="yt-uix-button-icon-wrapper"><span class="yt-uix-button-icon yt-uix-button-icon-watch-appbar-play-prev yt-sprite"></span></span></a>
+            <a  href="{{ playlist.nextVideo.url }}" class="yt-uix-button  hid next-playlist-list-item yt-uix-button-opacity yt-uix-tooltip spf-link  yt-uix-button-player-controls yt-uix-button-size-default yt-uix-button-has-icon yt-uix-tooltip yt-uix-button-empty" data-shuffle-next-clicktracking="CBYQ0TkiEwiZ0smi4d7ZAhU4H34KHf9DCpwo-B0yB2JmX25leHRIzKeXotLX-vG2AQ" data-normal-next-clicktracking="CBYQ0TkiEwiZ0smi4d7ZAhU4H34KHf9DCpwo-B0yB2JmX25leHRIzKeXotLX-vG2AQ" data-loop_shuffle-next-clicktracking="CBYQ0TkiEwiZ0smi4d7ZAhU4H34KHf9DCpwo-B0yB2JmX25leHRIzKeXotLX-vG2AQ" data-loop-next-clicktracking="CBYQ0TkiEwiZ0smi4d7ZAhU4H34KHf9DCpwo-B0yB2JmX25leHRIzKeXotLX-vG2AQ" title="Next video"><span class="yt-uix-button-icon-wrapper"><span class="yt-uix-button-icon yt-uix-button-icon-watch-appbar-play-next yt-sprite"></span></span></a>
+        </div>
+    </div>
+</div>

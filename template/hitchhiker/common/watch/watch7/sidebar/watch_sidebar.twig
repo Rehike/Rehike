@@ -1,7 +1,7 @@
 {% import '/common/watch/watch7/sidebar/macros.twig' as sidebar %}
 
 <div id="watch7-sidebar" class="watch-sidebar">
-    <div id="placeholder-playlist" class="watch-playlist player-height  hid"></div>
+    <div id="placeholder-playlist" class="watch-playlist player-height {{ not yt.page.playlist ? ' hid' }}"></div>
     <div id="watch7-sidebar-contents" class="watch-sidebar-gutter   yt-card yt-card-has-padding    yt-uix-expander yt-uix-expander-collapsed">
         <div id="watch7-sidebar-offer">
         </div>

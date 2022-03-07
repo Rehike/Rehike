@@ -14,7 +14,7 @@
 {% endblock %}
 
 {%- block page_class -%}
-{{ (yt.theaterMode) ? 'watch-wide watch-stage-mode' }}
+video-{{ yt.videoId }} {{ (yt.theaterMode) ? 'watch-wide watch-stage-mode' }}
 {% endblock %}
 
 {% block header %}
@@ -27,6 +27,9 @@
 <script>
     yt.setConfig({
       'VIDEO_ID': "{{ yt.videoId }}",
+      {% if yt.playlistId and yt.page.playlist %}
+         'LIST_ID': "{{ yt.playlistId }}",
+      {% endif %}
       'WAIT_TO_DELAYLOAD_FRAME_CSS': false,
       'IS_UNAVAILABLE_PAGE': false,
       'DROPDOWN_ARROW_URL': "\/yts\/img\/pixel-vfl3z5WfW.gif",
@@ -73,7 +76,7 @@
       'IS_DISTILLER': true,
       'SHARE_CAPTION': null,
       'SHARE_REFERER': "",
-      'PLAYLIST_INDEX': null
+      'PLAYLIST_INDEX': {{ yt.playlistIndex ?? 'null' }}
     });
 
       yt.pushConfigArray('TIMING_WAIT', 'parn');
@@ -101,12 +104,23 @@
   });
 
 </script>
+{# Hacky playlists fix #}
+<script>
+(function(g){
+   var a = _yt_www.Ci('player-api');
+   if (a) {
+      a.addEventListener('onReady', q);
+   }
+   function q() {
+      var vT = 0;
+      g.wf() ? (g.tf(vT), vT = g.sf(g.u(g.gf, 'watch-list-change'))) : g.E('watch-list-change');
+      a.removeEventListener('onReady', q);
+   }
+})(_yt_www);
+</script>
 {% endblock %}
 
 {%- block content -%}
-<div id="debug" class="hid">
-   {{ yt.response }}
-</div>
 <div id="placeholder-player">
    <div class="player-api player-width player-height"></div>
 </div>
@@ -212,14 +226,13 @@
             {%- if yt.page.results.videoSecondaryInfoRenderer -%}
                {% set secondaryInfo = yt.page.results.videoSecondaryInfoRenderer %}
                {% include '/common/watch/watch7/action_panel/details.twig' %}
-            {% endif %}
+            {%- endif -%}
             {%- if yt.page.results.videoDiscussionRenderer -%}
                {% include '/common/watch/watch_discussion_module.twig' %}
-            {% else %}
-            <div id="watch-discussion" class="branded-page-box yt-card">
-               <p class="display-message">Comments are turned off.</p>
-           </div>
-            {% endif %}
+            {%- endif -%}
+            {%- if yt.page.results.videoDiscussionNotice -%}
+               {% include '/common/watch/watch_discussion_disabled.twig' %}
+            {%- endif -%}
          </div>
          {% set secondaryResults = yt.page.secondaryResults %}
          {% include '/common/watch/watch7/sidebar/watch_sidebar.twig' %}

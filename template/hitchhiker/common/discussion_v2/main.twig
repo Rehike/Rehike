@@ -146,7 +146,7 @@
    {%- if run.navigationEndpoint -%}{%- apply spaceless -%}
       {%- set href = run.navigationEndpoint.commandMetadata.webCommandMetadata.url -%}
       {%- set spf = (href|first == "/") -%}
-      <a href="{{ href }}" class="yt-uix-sessionlink {{ spf ? 'spf-link' }}">{{ run.text|spaceless }}</a>
+      <a href="{{ href }}" class="yt-uix-sessionlink {{ spf ? 'spf-link' }}" target="_blank">{{ run.text|spaceless }}</a>
    {%- endapply -%}{%- elseif run.emoji.isCustomEmoji -%}
       <img class="yt-comments-custom-emoji {{ loop.first and loop.last ? 'large' }} yt-uix-tooltip" title="{{ run.text }}" alt="{{ run.text }}" src="{{ run.emoji.image.thumbnails.0.url }}">
    {%- else -%}

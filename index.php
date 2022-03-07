@@ -71,7 +71,7 @@ if (isset($__spfState) &&
         '@page<class>',
         'header',
         'ticker-content',
-        'player-playlist',
+        'player-playlist<class>',
         '@player<class>'
     ];
     $yt->spfUrl = $__spfUrl;
@@ -97,6 +97,12 @@ if (isset($yt->spf) && $yt->spf && http_response_code() == 200) { // isset to pr
         ]]];
         $spfResponse->data->swfcfg->args->raw_player_response = $yt->playerResponse;
         $spfResponse->data->swfcfg->args->raw_watch_next_response = json_decode($yt->rawWatchNextResponse);
+
+        if (isset($yt->page->playlist)) {
+            $spfResponse->data->swfcfg->args->is_listed = '1';
+            $spfResponse->data->swfcfg->args->list = $yt->playlistId;
+            $spfResponse->data->swfcfg->args->videoId = $yt->videoId;
+        }
     }
 
     echo json_encode($spfResponse);

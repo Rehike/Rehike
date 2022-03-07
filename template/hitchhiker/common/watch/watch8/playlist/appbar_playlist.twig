@@ -1,0 +1,20 @@
+{##
+  # Appbar playlist builder
+  #
+  # This builds the watch8/appbar player playlist.
+  #
+  # @author Nightlinbit (Daylin Cooper)
+  # @version 1.0
+  # @license CC0
+  #}
+{% import '/common/watch/watch8/playlist/macros.twig' as macros %}
+{% set playlist = yt.page.playlist %}
+<div id="watch-appbar-playlist" class="watch-playlist player-height">
+    <div class="main-content">
+        {% include '/common/watch/watch8/playlist/playlist_header.twig' %}
+        <div class="playlist-videos-container yt-scrollbar-dark yt-scrollbar">
+            {{ macros.list(playlist.contents) }}
+            <script>try {var r = document.getElementById('playlist-autoscroll-list');r.scrollTop = r.querySelector('.currently-playing').offsetTop;} catch (e) {}</script>
+        </div>
+    </div>
+</div>

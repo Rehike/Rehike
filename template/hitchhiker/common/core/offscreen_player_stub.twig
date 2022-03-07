@@ -15,6 +15,20 @@ ytplayer.config = {
          raw_watch_next_response: {{ yt.rawWatchNextResponse|raw }},
          {% endif %}
        {% endif %}
+       {%- if yt.page.playlist -%}
+         "swf_player_response": "1",
+         "videoId": "{{ yt.videoId }}",
+         "list": "{{ yt.playlistId }}",
+         "external_list": "1",
+         "idpj": "-1",
+         "no_get_video_log": "1",
+         "is_listed": "1",
+         "t": "1",
+         "plid": "AAVm9hRW-h1RWxWz",
+         "ldpj": "-31",
+         "ptk": "youtube_multi",
+         "pltype": "content",
+       {%- endif -%}
        disable_watch_next: true,
         "apiary_host_firstparty": "",
         "fexp": "23708904,23708906,23708910,23710476,23712544,23716256,23721698,23721898,23723588,23723618,23725949,23726564,23729690,23730642,23733473,23733751,23735154,23735395,23736169,23736484,23736955,23737659,23738006,23738944,23739239,23739533,23739764,9405975,9422596,9449243,9470249,9471235,9474241,9476619,9476652,9483924,9485000,9487182",
@@ -47,7 +61,7 @@ ytplayer.config = {
     },
     "html5": true,
     "url": "",
-    "sts": 17647,
+    "sts": {{ yt.playerCore.sts }},
     "attrs": {
         "id": "movie_player"
     }
@@ -138,7 +152,10 @@ ytplayer.load = function() {
             </div>
          </div>
       </div>
-      <div id="player-playlist" class="  hid  ">
+      <div id="player-playlist" class="  {{ yt.page.playlist ? 'content-alignment  watch-player-playlist' :  'hid' }}  ">
+         {%- if yt.page.playlist -%}
+            {% include '/common/watch/watch_playlist.twig' %}
+         {%- endif -%}
       </div>
    </div>
    <div class="clear"></div>

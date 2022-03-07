@@ -20,14 +20,22 @@ if(!isset($yt->spf) or $yt->spf == false) {
 
 // begin request
 $yt->videoId = $_GET['v'];
+$yt->playlistId = $_GET['list'] ?? null;
+$yt->playlistIndex = (string) ((int) ($_GET['index'] ?? '1') - 1);
+
 
 require_once('views/utils/extractUtils.php');
 
-Request::innertubeRequest("watch", "next", (object)[
-    "videoId" => $_GET["v"]
-]);
-Request::innertubeRequest("player", "player", (object)[
-    "videoId" => $_GET["v"],
+$watchRequestParams = [
+    'videoId' => $yt->videoId
+];
+if (!is_null($yt->playlistId)) {
+    $watchRequestParams['playlistId'] = $yt->playlistId;
+    $watchRequestParams['playlistIndex'] = $yt->playlistIndex;
+}
+
+Request::innertubeRequest("watch", "next", (object) $watchRequestParams);
+Request::innertubeRequest("player", "player", (object) ([
     "playbackContext" => [
         'contentPlaybackContext' => (object) [
             'autoCaptionsDefaultOn' => false,
@@ -40,7 +48,7 @@ Request::innertubeRequest("player", "player", (object)[
             'signatureTimestamp' => $yt->playerCore->sts
         ]
     ]
-]);
+] + $watchRequestParams));
 
 $responses = Request::getInnertubeResponses();
 
@@ -83,6 +91,7 @@ $yt->page->title = $_getText($yt->page->primaryInfo->title);
 $contents = $ytdata->contents ?? null;
 $results = $contents->twoColumnWatchNextResults->results->results ?? null;
 $secondaryResults = $contents->twoColumnWatchNextResults->secondaryResults->secondaryResults ?? null;
+$playlist = $contents->twoColumnWatchNextResults->playlist ?? null;
 $primaryInfo = findKey($results->contents, "videoPrimaryInfoRenderer") ?? null;
 $secondaryInfo = findKey($results->contents, "videoSecondaryInfoRenderer") ?? null;
 $commentSection = findKey($results->contents, 'itemSectionRenderer') ?? null;
@@ -130,7 +139,9 @@ $rw = (object) [
 */
 $rw = (object) [];
 
-// title, viewcount rw
+/**
+ * Title, viewcount RW
+ */
 if (!is_null($primaryInfo)) {
     $rw->results = (object) [];
     $rw->results->videoPrimaryInfoRenderer = (object) [];
@@ -170,7 +181,9 @@ if (!is_null($primaryInfo)) {
         // TODO: logged in rw
     }
 }
-// description rw
+/**
+ * Description RW
+ */
 if (!is_null($secondaryInfo)) {
     $rw->results->videoSecondaryInfoRenderer = (object) [];
 
@@ -185,18 +198,64 @@ if (!is_null($secondaryInfo)) {
     $rws_->showMoreText = $secondaryInfo->showMoreText ?? null;
     $rws_->showLessText = $secondaryInfo->showLessText ?? null;
 }
-// recommended rw
+/**
+ * Recommended RW
+ */
 if (!is_null($secondaryResults)) {
     $rw->secondaryResults = $secondaryResults;
-    // playlist (TODO: disable if playlist)
     
-    $autoplayVideo = WatchUtils::getRecomAutoplay($secondaryResults->results, $recomIndex);
-    
-    $rw->secondaryResults->autoplayRenderer = (object) [
-        'results' => [$autoplayVideo]
-    ];
-    array_splice($rw->secondaryResults->results, $recomIndex, 1);
+    // disable autoplay video if playlist
+    if (is_null($playlist)) {
+        $autoplayVideo = WatchUtils::getRecomAutoplay($secondaryResults->results, $recomIndex);
+        
+        $rw->secondaryResults->autoplayRenderer = (object) [
+            'results' => [$autoplayVideo]
+        ];
+        array_splice($rw->secondaryResults->results, $recomIndex, 1);
+    }
 }
+
+/**
+ * Playlist RW
+ */
+if (!is_null($playlist)) {
+    $playlist = $playlist->playlist;
+    $rw->playlist = $playlist;
+    
+    // count text needs a little work
+    $_oplr = $playlist->videoCountText->runs; // original playlist runs
+    $plCurIndex = $_oplr[0]->text;
+    $plVideoCount = $_oplr[2]->text;
+
+    if ($plVideoCount == '1') {
+        $plVideoCount = '1 video';
+    } else {
+        $plVideoCount .= ' videos';
+    }
+
+    $rw->playlist->videoCountText = (object) [
+        'currentIndex' => $plCurIndex,
+        'videoCount' => $plVideoCount
+    ];
+
+    // previous/next video ids also need a little work
+    // let's just catch two cases with one
+    $curIndInt = $playlist->localCurrentIndex;
+    $plPrevId = $playlist->contents[$curIndInt - 1]->playlistPanelVideoRenderer->videoId;
+    $plPrevUrl = '/watch?v=' . $plPrevId . '&index=' . (string) ($curIndInt - 1) . '&list=' . $yt->playlistId;
+    $plNextId = $playlist->contents[$curIndInt + 1]->playlistPanelVideoRenderer->videoId;
+    $plNextUrl = '/watch?v=' . $plNextId . '&index=' . (string) ($curIndInt + 1) . '&list=' . $yt->playlistId;
+
+    $rw->playlist->previousVideo = [
+        'id' => $plPrevId,
+        'url' => $plPrevUrl
+    ];
+    $rw->playlist->nextVideo = [
+        'id' => $plNextId,
+        'url' => $plNextUrl
+    ];
+}
+
 /**
  * Comments RW
  */
@@ -205,6 +264,10 @@ if (!is_null($commentSection) && isset($commentSection->contents[0]->continuatio
         ->continuationEndpoint->continuationCommand->token;
     $rw->results->videoDiscussionRenderer = (object) [
         'continuation' => $yt->commentsToken
+    ];
+} else if (!is_null($commentSection) && isset($commentSection->contents[0]->messageRenderer)) {
+    $rw->results->videoDiscussionNotice = (object) [
+        'message' => $commentSection->contents[0]->messageRenderer->text
     ];
 }
 

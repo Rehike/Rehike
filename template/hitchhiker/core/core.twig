@@ -65,7 +65,7 @@
          <div id="masthead-positioner-height-offset"></div>
          {% endblock masthead %}
          <div id="page-container">
-            <div id="page" class="{{ pageType }}  clearfix {% block page_class %}{% endblock %}">
+            <div id="page" class="{{ pageType }} {% block page_class %}{% endblock %}  clearfix ">
                {%- block guide_container -%}
                   {% include 'pageframe/guide.twig' %}
                {% endblock %}
