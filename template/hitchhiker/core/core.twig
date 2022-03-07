@@ -24,26 +24,6 @@
       {%- if yt.experiment.ringo -%}
         {% include 'experiment/ringo/ringo.twig' %}
       {% endif %}
-    <style>
-        html {
-            overflow-y: scroll
-        }
-        #watch-description-text {
-            padding-top: 4px;
-        }
-        .yt-comments-custom-emoji
-        {
-            width: 16px;
-            height: 16px;
-            vertical-align: middle;
-            cursor: text;
-        }
-        .yt-comments-custom-emoji.large
-        {
-            width: 24px;
-            height: 24px;
-        }
-    </style>
    </head>
    <body dir="ltr" id="body" class="{%- block body_class -%}  
       visibility-logging-enabled  
