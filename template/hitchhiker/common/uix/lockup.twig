@@ -1,26 +1,56 @@
 {%- macro thumbnail(info, type, width, height) -%}
-<div class="yt-lockup-thumbnail {{ type == "video" ? "contains-addto" }}">
-   <a aria-hidden="true"  href="{% if type == "channel" %}{{  info.navigationEndpoint.commandMetadata.webCommandMetadata.url }}{% elseif type == "video" %}/watch?v={{ info.videoId }}{% endif %}" class=" yt-uix-sessionlink      spf-link " data-sessionlink="itct=CHkQlDUYACITCOLXzPvf6toCFRA7fwodgP0KKSiOHjIKZy1oaWdoLXRydloPRkV3aGF0X3RvX3dhdGNo" >
-   <div class="yt-thumb video-thumb"><span class="yt-thumb-simple">
-       <img height="{{ height }}" onload=";window.__ytRIL &amp;&amp; __ytRIL(this)" alt="" width="{{ width }}" data-ytimg="1" data-thumb="{{ info.thumbnail.thumbnails.0.url }}" src="{{ PIXEL }}">
-       {% if info.lengthText %}
-       <span class="video-time" aria-hidden="true">{{ getText(info.lengthText) }}</span>
-       {% endif %}
-       </span>
-   </div>
+<div class="yt-lockup-thumbnail {{ type == "playlist" or type == "radio" ? "yt-pl-thumb" }} {{ type == "video" ? "contains-addto" }}">
+   {% if type == "playlist" or type == "radio" %}
+   <a href="{{ getUrl(info) }}" class="yt-uix-sessionlink yt-pl-thumb-link spf-link">
+      <div class="yt-thumb video-thumb"><span class="yt-thumb-simple">
+         <img height="{{ height }}" onload=";window.__ytRIL &amp;&amp; __ytRIL(this)" alt="" width="{{ width }}" data-ytimg="1" data-thumb="{% if type == "radio" %}{{ info.thumbnail.thumbnails[2].url }}{% else %}{{ info.thumbnails[0].thumbnails[2].url }}{% endif %}" src="{{ PIXEL }}">
+         </span>
+      </div>
+      <div class="sidebar">
+         <span class="yt-pl-sidebar-content yt-valign">
+            <span class="yt-valign-container">
+               <span class="formatted-video-count-label">
+                  <b>{% if type == "radio" %}50+{% else %}{{ info.videoCount }}{% endif %}</b> videos
+               </span>
+               <span class="yt-pl-icon yt-pl-icon-{{ type == "radio" ? "mix" : "reg" }} yt-sprite"></span>
+            </span>
+         </span>
+      </div>
+      <div class="yt-pl-thumb-overlay">
+         <span class="yt-pl-thumb-overlay-content">
+            <span class="play-icon yt-sprite"></span>
+            <span class="yt-pl-thumb-overlay-text">Play all</span>
+         </span>
+      </div>
    </a>
-   <span class="thumb-menu dark-overflow-action-menu video-actions">
-   {% if type == "video" %}
-   <button aria-expanded="false" onclick=";return false;" aria-haspopup="true" type="button" class="yt-uix-button-reverse flip addto-watch-queue-menu spf-nolink hide-until-delayloaded yt-uix-button yt-uix-button-dark-overflow-action-menu yt-uix-button-size-default yt-uix-button-has-icon no-icon-markup yt-uix-button-empty" >
-      <span class="yt-uix-button-arrow yt-sprite"></span>
-       <ul class="watch-queue-thumb-menu yt-uix-button-menu yt-uix-button-menu-dark-overflow-action-menu hid">
-           <li role="menuitem" class="overflow-menu-choice addto-watch-queue-menu-choice addto-watch-queue-play-next yt-uix-button-menu-item" data-action="play-next" onclick=";return false;"  data-video-ids="ZUSPD9zOyJs"><span class="addto-watch-queue-menu-text">Play next</span></li>
-           <li role="menuitem" class="overflow-menu-choice addto-watch-queue-menu-choice addto-watch-queue-play-now yt-uix-button-menu-item" data-action="play-now" onclick=";return false;"  data-video-ids="ZUSPD9zOyJs"><span class="addto-watch-queue-menu-text">Play now</span></li>
-       </ul>
-   </button>
-   </span>
-   <button class="yt-uix-button yt-uix-button-size-small yt-uix-button-default yt-uix-button-empty yt-uix-button-has-icon no-icon-markup addto-button video-actions spf-nolink hide-until-delayloaded addto-watch-later-button-sign-in yt-uix-tooltip" type="button" onclick=";return false;" title="Watch later" role="button" data-button-menu-id="shared-addto-watch-later-login" data-video-ids="{{info.videoId}}"><span class="yt-uix-button-arrow yt-sprite"></span></button>
-   <button class="yt-uix-button yt-uix-button-size-small yt-uix-button-default yt-uix-button-empty yt-uix-button-has-icon no-icon-markup addto-button addto-queue-button video-actions spf-nolink hide-until-delayloaded addto-tv-queue-button yt-uix-tooltip" type="button" onclick=";return false;" title="Queue" data-style="tv-queue" data-video-ids="{{info.videoId}}"></button>
+   {% else %}
+      <a aria-hidden="true"  href="{% if type == "channel" %}{{ getUrl(info) }}{% elseif type == "video" %}/watch?v={{ info.videoId }}{% endif %}" class=" yt-uix-sessionlink      spf-link " data-sessionlink="itct=CHkQlDUYACITCOLXzPvf6toCFRA7fwodgP0KKSiOHjIKZy1oaWdoLXRydloPRkV3aGF0X3RvX3dhdGNo" >
+      <div class="yt-thumb video-thumb"><span class="yt-thumb-simple">
+         <img height="{{ height }}" onload=";window.__ytRIL &amp;&amp; __ytRIL(this)" alt="" width="{{ width }}" data-ytimg="1" data-thumb="{{ info.thumbnail.thumbnails.0.url }}" src="{{ PIXEL }}">
+         {% if info.lengthText %}
+         <span class="video-time" aria-hidden="true">{{ getText(info.lengthText) }}</span>
+         {% endif %}
+         </span>
+      </div>
+      {% if type == "playlist" %}
+      <div class="sidebar">
+         <span class="yt-pl-sidebar-content yt-valign"></span>
+      </div>
+      {% endif %}
+      </a>
+      <span class="thumb-menu dark-overflow-action-menu video-actions">
+      {% if type == "video" %}
+      <button aria-expanded="false" onclick=";return false;" aria-haspopup="true" type="button" class="yt-uix-button-reverse flip addto-watch-queue-menu spf-nolink hide-until-delayloaded yt-uix-button yt-uix-button-dark-overflow-action-menu yt-uix-button-size-default yt-uix-button-has-icon no-icon-markup yt-uix-button-empty" >
+         <span class="yt-uix-button-arrow yt-sprite"></span>
+         <ul class="watch-queue-thumb-menu yt-uix-button-menu yt-uix-button-menu-dark-overflow-action-menu hid">
+            <li role="menuitem" class="overflow-menu-choice addto-watch-queue-menu-choice addto-watch-queue-play-next yt-uix-button-menu-item" data-action="play-next" onclick=";return false;"  data-video-ids="ZUSPD9zOyJs"><span class="addto-watch-queue-menu-text">Play next</span></li>
+            <li role="menuitem" class="overflow-menu-choice addto-watch-queue-menu-choice addto-watch-queue-play-now yt-uix-button-menu-item" data-action="play-now" onclick=";return false;"  data-video-ids="ZUSPD9zOyJs"><span class="addto-watch-queue-menu-text">Play now</span></li>
+         </ul>
+      </button>
+      </span>
+      <button class="yt-uix-button yt-uix-button-size-small yt-uix-button-default yt-uix-button-empty yt-uix-button-has-icon no-icon-markup addto-button video-actions spf-nolink hide-until-delayloaded addto-watch-later-button-sign-in yt-uix-tooltip" type="button" onclick=";return false;" title="Watch later" role="button" data-button-menu-id="shared-addto-watch-later-login" data-video-ids="{{info.videoId}}"><span class="yt-uix-button-arrow yt-sprite"></span></button>
+      <button class="yt-uix-button yt-uix-button-size-small yt-uix-button-default yt-uix-button-empty yt-uix-button-has-icon no-icon-markup addto-button addto-queue-button video-actions spf-nolink hide-until-delayloaded addto-tv-queue-button yt-uix-tooltip" type="button" onclick=";return false;" title="Queue" data-style="tv-queue" data-video-ids="{{info.videoId}}"></button>
+      {% endif %}
    {% endif %}
 </div>
 {% endmacro %}
@@ -30,13 +60,27 @@
 
 {%- macro tile(info, showByline = true, thumbWidth, thumbHeight) -%}
 
-{% set type = "video" %}
-{% if info.videoRenderer %}
+{% if info.gridVideoRenderer %}
+   {% set info = info.gridVideoRenderer %}
+   {% set type = "video" %}
+{% elseif info.videoRenderer %}
    {% set info = info.videoRenderer %}
+   {% set type = "video" %}
+{% elseif info.gridPlaylistRenderer %}
+   {% set info = info.gridPlaylistRenderer %}
+   {% set type = "playlist" %}
 {% elseif info.playlistRenderer %}
    {% set info = info.playlistRenderer %}
+   {% set type = "playlist" %}
+{% elseif info.gridRadioRenderer %}
+   {% set info = info.gridRadioRenderer %}
+   {% set type = "radio" %}
 {% elseif info.radioRenderer %}
    {% set info = info.radioRenderer %}
+   {% set type = "radio" %}
+{% elseif info.gridChannelRenderer %}
+   {% set info = info.gridChannelRenderer %}
+   {% set type = "channel" %}
 {% elseif info.channelRenderer %}
    {% set info = info.channelRenderer %}
    {% set type = "channel" %}
@@ -58,7 +102,9 @@
    {% endif %}
 {% endif %}
 
+{% if type %}
 {{ _self.main(info, "tile", type, showByline, thumbWidth, thumbHeight) }}
+{% endif %}
 
 {% endmacro %}
 
@@ -67,15 +113,29 @@
 
 {%- macro grid(info, showByline = true, thumbWidth, thumbHeight) -%}
 
-{% set type = "video" %}
 {% if info.gridVideoRenderer %}
    {% set info = info.gridVideoRenderer %}
+   {% set type = "video" %}
+{% elseif info.videoRenderer %}
+   {% set info = info.videoRenderer %}
+   {% set type = "video" %}
 {% elseif info.gridPlaylistRenderer %}
    {% set info = info.gridPlaylistRenderer %}
+   {% set type = "playlist" %}
+{% elseif info.playlistRenderer %}
+   {% set info = info.playlistRenderer %}
+   {% set type = "playlist" %}
 {% elseif info.gridRadioRenderer %}
    {% set info = info.gridRadioRenderer %}
+   {% set type = "radio" %}
+{% elseif info.radioRenderer %}
+   {% set info = info.radioRenderer %}
+   {% set type = "radio" %}
 {% elseif info.gridChannelRenderer %}
    {% set info = info.gridChannelRenderer %}
+   {% set type = "channel" %}
+{% elseif info.channelRenderer %}
+   {% set info = info.channelRenderer %}
    {% set type = "channel" %}
 {% endif %}
 
@@ -95,7 +155,9 @@
    {% endif %}
 {% endif %}
 
+{% if type %}
 {{ _self.main(info, "grid", type, showByline, thumbWidth, thumbHeight) }}
+{% endif %}
 
 {% endmacro %}
 
@@ -112,18 +174,36 @@
         {{ _self.thumbnail(info, type, thumbWidth, thumbHeight) }}
         <div class="yt-lockup-content">
             <h3 class="yt-lockup-title ">
-               <a href="{% if type == "channel" %}{% if type == "channel" %}{{  info.navigationEndpoint.commandMetadata.webCommandMetadata.url }}{% elseif type == "video" %}/watch?v={{ info.videoId }}{% endif %}{% elseif type == "video" %}/watch?v={{ info.videoId }}{% endif %}" class=" yt-ui-ellipsis yt-ui-ellipsis-2 yt-uix-sessionlink      spf-link " data-sessionlink="itct=CHkQlDUYACITCOLXzPvf6toCFRA7fwodgP0KKSiOHjIKZy1oaWdoLXRydloPRkV3aGF0X3RvX3dhdGNo"  title="{{ getText(info.title) }}" aria-describedby="description-id-956708" dir="ltr">
+               <a href="{% if type == "channel" %}{{ getUrl(info) }}{% elseif type == "video" %}/watch?v={{ info.videoId }}{% elseif type == "playlist" or type == "radio" %}{{ getUrl(info.videos[0].childVideoRenderer) }}{% endif %}" class=" yt-ui-ellipsis yt-ui-ellipsis-2 yt-uix-sessionlink      spf-link " data-sessionlink="itct=CHkQlDUYACITCOLXzPvf6toCFRA7fwodgP0KKSiOHjIKZy1oaWdoLXRydloPRkV3aGF0X3RvX3dhdGNo"  title="{{ getText(info.title) }}" aria-describedby="description-id-956708" dir="ltr">
                {{ getText(info.title) }}{% if info.ownerBadges and type == "channel" %}    <span title="Verified" class="yt-uix-tooltip yt-channel-title-icon-verified yt-sprite"></span>{% endif %}
                </a>
                {%- if info.lengthText -%}
                   {{ _self.accessibleDescription(info.lengthText.simpleText) }}
                {% endif %}
             </h3>
-            {% if showByline and type == "video" %}
+            {% if showByline and type != "channel" %}
             {{ _self.byline(info) }}
+            {% endif %}
+            {% if style == "tile" and type == "playlist" or type == "radio" %}
+            <ol class="yt-lockup-meta yt-lockup-playlist-items">
+               {% for video in info.videos %}
+               {% if video.childVideoRenderer %}
+               {% set this = video.childVideoRenderer %}
+               <li class="yt-lockup-playlist-item clearfix">
+                  <span class="yt-lockup-playlist-item-length">{{ getText(this.lengthText) }}</span>
+                  <a href="{{ getUrl(this) }}" class="yt-uix-sessionlink yt-lockup-playlist-item-title spf-link">{{ getText(this.title) }}</a>
+               </li>
+               {% endif %}
+               {% endfor %}
+            </ol>
             {% endif %}
             <div class="yt-lockup-meta ">
             <ul class="yt-lockup-meta-info">
+                {%- if type == "playlist" and style == "tile" -%}
+                <li>
+                   <a href="{{ getUrl(info.viewPlaylistText.runs[0]) }}" class="yt-uix-sessionlink spf-link">View full playlist ({{ info.videoCount }} videos)</a>
+                </li>
+                {% endif %}
                 {%- if info.subscriberCountText and style == "grid" -%}
                     <li>{{ getText(info.subscriberCountText) }}</li>
                 {% endif %}

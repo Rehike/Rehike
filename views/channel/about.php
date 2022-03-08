@@ -8,6 +8,6 @@ foreach ($ytdata->contents->twoColumnBrowseResultsRenderer->tabs as $tab) {
 $yt->page->subCount = @$yt->page->header->subscriptionButton->shortSubscriberCountText;
 $yt->page->viewCount = ExtractUtils::isolateViewCnt($_getText(@$aboutTabContent->viewCountText));
 $yt->page->joinDate = ExtractUtils::isolateViewCnt($_getText(@$aboutTabContent->joinedDateText));
-$yt->page->aboutDescription = ExtractUtils::isolateViewCnt($_getText(@$aboutTabContent->description));
+$yt->page->aboutDescription = @$aboutTabContent->description;
 $yt->page->aboutCountry = ExtractUtils::isolateViewCnt($_getText(@$aboutTabContent->country));
 $yt->page->primaryLinks = @$aboutTabContent->primaryLinks;

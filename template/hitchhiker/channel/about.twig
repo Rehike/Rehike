@@ -27,7 +27,9 @@
             <span>Description</span>
         </div>
         <div class="about-description branded-page-box-padding">
-            <pre>{{ yt.page.aboutDescription }}</pre>
+            <pre>
+                {{ getText(yt.page.aboutDescription) }}
+            </pre>
         </div>
         {% endif %}
         {% if yt.page.aboutCountry %}
