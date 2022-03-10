@@ -50,6 +50,16 @@ Request::innertubeRequest("player", "player", (object) ([
     ]
 ] + $watchRequestParams));
 
+$ch = curl_init("https://returnyoutubedislikeapi.com/votes?videoId=" . $yt->videoId);
+curl_setopt_array($ch, [
+    CURLOPT_HEADER => 0,
+    CURLOPT_RETURNTRANSFER => 1
+]);
+$rydResponse = curl_exec($ch);
+curl_close($ch);
+$dislikesData = json_decode($rydResponse);
+
+
 $responses = Request::getInnertubeResponses();
 
 $response = $responses["watch"];
@@ -154,6 +164,12 @@ if (!is_null($primaryInfo)) {
     $rwp_->actions->likeButton = (object) [];
     $rwp_->actions->likeButton->defaultText = ExtractUtils::isolateLikeCnt($primaryInfo->videoActions->menuRenderer
         ->topLevelButtons[0]->toggleButtonRenderer->accessibility->label) ?? null;
+    if (isset($rwp_->actions->likeButton->defaultText) and $rwp_->actions->likeButton->defaultText != '') {
+        $likeCount = (int) str_replace(",", "", $rwp_->actions->likeButton->defaultText);
+        $rwp_->dislikeCount = $dislikesData -> dislikes;
+        $rwp_->likePercent = ($likeCount / ($likeCount + $rwp_->dislikeCount)) * 100;
+        $rwp_->dislikePercent = 100 - $rwp_->likePercent;
+    }
     // owner info rw
     $mpo_ = $secondaryInfo->owner->videoOwnerRenderer ?? null;
 

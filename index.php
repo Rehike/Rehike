@@ -38,6 +38,8 @@ if (isset($_GET['spf'])) {
     $__spfUrl = preg_replace('/.spf='.$_GET['spf'].'/', '', $_SERVER['REQUEST_URI']);
 }
 
+$yt->url = $__spfUrl ?? $_SERVER['REQUEST_URI'];
+
 if (isset($_COOKIE['wide'])) {
     $yt -> theaterMode = $_COOKIE['wide'];
 } else {

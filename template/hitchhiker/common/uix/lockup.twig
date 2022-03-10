@@ -1,4 +1,4 @@
-{%- macro thumbnail(info, type, width, height) -%}
+{%- macro thumbnail(info, type, width = 196, height = 110) -%}
 <div class="yt-lockup-thumbnail {{ type == "playlist" or type == "radio" ? "yt-pl-thumb" }} {{ type == "video" ? "contains-addto" }}">
    {% if type == "playlist" or type == "radio" %}
    <a href="{{ getUrl(info) }}" class="yt-uix-sessionlink yt-pl-thumb-link spf-link">
@@ -169,7 +169,7 @@
    used for both grid and tile renderers
 #}
 {% import "common/uix/subscription_button.twig" as subBtn %}
-<div class="yt-lockup yt-lockup-{{ style }} yt-lockup-{{ type }} vve-check clearfix" data-context-item-id="{{info.videoId}}" data-visibility-tracking="CHkQlDUYACITCOLXzPvf6toCFRA7fwodgP0KKSiOHkCbkbvm_eGjomU=">
+<div class="yt-lockup yt-lockup-{{ style }} yt-lockup-{% if type == "radio" %}playlist{% else %}{{ type }}{% endif %} vve-check clearfix" data-context-item-id="{{info.videoId}}" data-visibility-tracking="CHkQlDUYACITCOLXzPvf6toCFRA7fwodgP0KKSiOHkCbkbvm_eGjomU=">
     <div class="yt-lockup-dismissable {{ style == 'tile' ? 'yt-uix-tile'}}">
         {{ _self.thumbnail(info, type, thumbWidth, thumbHeight) }}
         <div class="yt-lockup-content">

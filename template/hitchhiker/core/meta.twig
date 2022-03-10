@@ -1,4 +1,4 @@
-<link rel="canonical" href="https://www.youtube.com/">
+<link rel="canonical" href="https://www.youtube.com{{ yt.url }}">
 <link rel="alternate" media="handheld" href="https://m.youtube.com/">
 <link rel="alternate" media="only screen and (max-width: 640px)" href="https://m.youtube.com/">
 <meta name="description" content="Enjoy the videos and music you love, upload original content, and share it all with friends, family, and the world on YouTube.">
@@ -51,11 +51,8 @@
         text-decoration: underline;
     }
 
-    .video-list .video-list-item .title {
-        color: #333 !important;
-    }
-
-    .video-list .video-list-item:hover .title {
-        color: #167ac6 !important;
+    #watch7-sidebar .video-list-item:hover a:visited .title,
+    #watch7-sidebar .video-list-item:hover a:visited .title .yt-deemphasized-text {
+        color: #167ac6;
     }
 </style>
