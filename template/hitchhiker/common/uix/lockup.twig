@@ -240,14 +240,17 @@
                {% endif %}
             </div>
             {% endif %}
-            {% if info.badges or style == "tile" and type == "channel" %}
+            {% if info.badges %}
             <div class="yt-lockup-badges">
                <ul class="yt-badge-list">
-                  {% if info.badges[0].liveBadge %}
+                  {% for badge in info.badges %}
+                  {% if badge.metadataBadgeRenderer %}
+                  {% set this = badge.metadataBadgeRenderer %}
                   <li class="yt-badge-item">
-                     <span class="yt-badge yt-badge-live">{{ getText(info.badges[0].liveBadge.label) }}</span>
+                     <span class="yt-badge {{ this.style == "BADGE_STYLE_TYPE_LIVE_NOW" ? "yt-badge-live" }}">{{ this.label }}</span>
                   </li>
                   {% endif %}
+                  {% endfor %}
                   {% if style == "tile" and type == "channel" %}
                      <li class="yt-badge-item">
                         <span class="yt-badge">Channel</span>

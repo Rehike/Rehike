@@ -14,16 +14,17 @@ $_playerCore = PlayerCore::main();
 $yt->playerCore = $_playerCore;
 $yt->playerBasepos = $_playerCore->basepos;
 
-if (isset($_COOKIE["PREF"]->f5)) {
-   switch($_COOKIE["PREF"]->f5) {
-      case "30030":
-         $yt -> autoplay = false;
-         break;
-      default:
-      case "20030":
-         $yt -> autoplay = true;
-         break;
+if (isset($_COOKIE["PREF"])) {
+   $PREF = explode("&", $_COOKIE["PREF"]);
+   $yt->PREF = [];
+   for ($i = 0; $i < count($PREF); $i++) {
+      $option = explode("=", $PREF[$i]);
+      $yt->PREF[$option[0]] = $option[1];
    }
+} else {
+   $yt->PREF = [
+      "f5" => "20030"
+   ];
 }
 
 $twigLoader = new \Twig\Loader\FilesystemLoader(
