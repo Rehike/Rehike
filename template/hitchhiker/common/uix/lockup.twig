@@ -3,14 +3,14 @@
    {% if type == "playlist" or type == "radio" %}
    <a href="{{ getUrl(info) }}" class="yt-uix-sessionlink yt-pl-thumb-link spf-link">
       <div class="yt-thumb video-thumb"><span class="yt-thumb-simple">
-         <img height="{{ height }}" onload=";window.__ytRIL &amp;&amp; __ytRIL(this)" alt="" width="{{ width }}" data-ytimg="1" data-thumb="{% if type == "radio" %}{{ info.thumbnail.thumbnails[2].url }}{% else %}{{ info.thumbnails[0].thumbnails[2].url }}{% endif %}" src="{{ PIXEL }}">
+         <img height="{{ height }}" onload=";window.__ytRIL &amp;&amp; __ytRIL(this)" alt="" width="{{ width }}" data-ytimg="1" data-thumb="{{ info.thumbnail.thumbnails[0].url }}" src="{{ info.thumbnail.thumbnails[0].url }}">
          </span>
       </div>
       <div class="sidebar">
          <span class="yt-pl-sidebar-content yt-valign">
             <span class="yt-valign-container">
                <span class="formatted-video-count-label">
-                  <b>{% if type == "radio" %}50+{% else %}{{ info.videoCount }}{% endif %}</b> videos
+                  <b>{% if type == "radio" %}50+{% else %}{% if info.videoCount %}{{ info.videoCount }}{% else %}{{ info.videoCountText.runs[0].text }}{% endif %}{% endif %}</b> videos
                </span>
                <span class="yt-pl-icon yt-pl-icon-{{ type == "radio" ? "mix" : "reg" }} yt-sprite"></span>
             </span>
@@ -86,7 +86,7 @@
    {% set type = "channel" %}
 {% endif %}
 
-{% if type == "video" %}  
+{% if type == "video" or type == "playlist" or type == "radio" %}  
    {% if not thumbWidth %}
       {% set thumbWidth = 196 %}
    {% endif %}
@@ -139,7 +139,7 @@
    {% set type = "channel" %}
 {% endif %}
 
-{% if type == "video" %}  
+{% if type == "video" or type == "playlist" or type == "radio" %}  
    {% if not thumbWidth %}
       {% set thumbWidth = 196 %}
    {% endif %}
@@ -201,7 +201,7 @@
             <ul class="yt-lockup-meta-info">
                 {%- if type == "playlist" and style == "tile" -%}
                 <li>
-                   <a href="{{ getUrl(info.viewPlaylistText.runs[0]) }}" class="yt-uix-sessionlink spf-link">View full playlist ({{ info.videoCount }} videos)</a>
+                   <a href="{{ getUrl(info.viewPlaylistText.runs[0]) }}" class="yt-uix-sessionlink spf-link">View full playlist ({% if info.videoCount %}{{ info.videoCount }}{% else %}{{ info.videoCountText.runs[0].text }}{% endif %} videos)</a>
                 </li>
                 {% endif %}
                 {%- if info.subscriberCountText and style == "grid" -%}

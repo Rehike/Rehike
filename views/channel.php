@@ -18,6 +18,7 @@ if(!isset($yt->spf) or $yt->spf == false) {
 
 $tab = (isset($routerUrl->path[2]) and $routerUrl->path[2] != '')  ? $routerUrl->path[2] : 'featured';
 $yt->tab = $tab;
+$yt->baseUrl = "/" . $routerUrl->path[0] . "/" . $routerUrl->path[1];
 $tabParam = ChannelUtils::synthChannelTab($tab);
 
 Request::innertubeRequest("channel", "browse", (object)[

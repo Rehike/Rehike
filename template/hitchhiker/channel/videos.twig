@@ -4,28 +4,28 @@
        {% if yt.flow == "grid" %}
        <span class=yt-uix-button-content>Grid</span><span class="yt-sprite yt-uix-button-arrow"></span>
        <ul aria-haspopup=true class="hid yt-uix-button-menu yt-uix-button-menu-default"role=menu>
-          <li role=menuitem><span class="spf-link yt-uix-button-menu-item"href="/channel/{{ yt.ucid }}/videos?flow=list&view=0&live_view=500&sort=dd"onclick='return yt.window.navigate(this.getAttribute("href")),!1'>List</span>
+          <li role=menuitem><span class="spf-link yt-uix-button-menu-item"href="{{ yt.baseUrl }}/videos?flow=list&view=0&live_view=500&sort=dd"onclick='return yt.window.navigate(this.getAttribute("href")),!1'>List</span>
        </ul>
        {% elseif yt.flow == "list" %}
        <span class=yt-uix-button-content>List</span><span class="yt-sprite yt-uix-button-arrow"></span>
        <ul aria-haspopup=true class="hid yt-uix-button-menu yt-uix-button-menu-default"role=menu>
-          <li role=menuitem><span class="spf-link yt-uix-button-menu-item"href="/channel/{{ yt.ucid }}/videos?flow=grid&view=0&live_view=500&sort=dd"onclick='return yt.window.navigate(this.getAttribute("href")),!1'>Grid</span>
+          <li role=menuitem><span class="spf-link yt-uix-button-menu-item"href="{{ yt.baseUrl }}/videos?flow=grid&view=0&live_view=500&sort=dd"onclick='return yt.window.navigate(this.getAttribute("href")),!1'>Grid</span>
        </ul>
        {% endif %}
     </button>
     <button aria-expanded=false aria-haspopup=true class="yt-uix-button yt-uix-button-default yt-uix-button-size-default subnav-sort-menu" data-button-menu-indicate-selected=true onclick=return!1 type=button>
        <span class=yt-uix-button-content>Date added (newest)</span><span class="yt-sprite yt-uix-button-arrow"></span>
        <ul aria-haspopup=true class="hid yt-uix-button-menu yt-uix-button-menu-default"role=menu>
-          <li role=menuitem><span class="spf-link yt-uix-button-menu-item"href="/channel/{{ yt.ucid }}/videos?flow={{ yt.flow }}&view=0&sort=p"onclick='return yt.window.navigate(this.getAttribute("href")),!1'>Most popular</span>
-          <li role=menuitem><span class="spf-link yt-uix-button-menu-item"href="/channel/{{ yt.ucid }}/videos?flow={{ yt.flow }}&view=0&sort=da"onclick='return yt.window.navigate(this.getAttribute("href")),!1'>Date added (oldest)</span>
+          <li role=menuitem><span class="spf-link yt-uix-button-menu-item"href="{{ yt.baseUrl }}/videos?flow={{ yt.flow }}&view=0&sort=p"onclick='return yt.window.navigate(this.getAttribute("href")),!1'>Most popular</span>
+          <li role=menuitem><span class="spf-link yt-uix-button-menu-item"href="{{ yt.baseUrl }}/videos?flow={{ yt.flow }}&view=0&sort=da"onclick='return yt.window.navigate(this.getAttribute("href")),!1'>Date added (oldest)</span>
        </ul>
     </button>
-    <a aria-label=Back class="yt-uix-button yt-uix-button-default yt-uix-button-size-default sub-menu-back-button yt-uix-button-empty yt-uix-button-has-icon yt-uix-sessionlink spf-link" data-sessionlink="ei=kulLWoflCIn2-gPbnaCABA" href=/channel/{{ yt.ucid }}><span class=yt-uix-button-icon-wrapper><span class="yt-sprite yt-uix-button-icon yt-uix-button-icon-channel-back"></span></span></a> 
+    <a aria-label=Back class="yt-uix-button yt-uix-button-default yt-uix-button-size-default sub-menu-back-button yt-uix-button-empty yt-uix-button-has-icon yt-uix-sessionlink spf-link" data-sessionlink="ei=kulLWoflCIn2-gPbnaCABA" href={{ yt.baseUrl }}><span class=yt-uix-button-icon-wrapper><span class="yt-sprite yt-uix-button-icon yt-uix-button-icon-channel-back"></span></span></a> 
     <button aria-expanded=false aria-haspopup=true class="yt-uix-button yt-uix-button-default yt-uix-button-size-default subnav-view-menu" data-button-menu-indicate-selected=true onclick=return!1 type=button>
        <span class=yt-uix-button-content>Uploads</span><span class="yt-sprite yt-uix-button-arrow"></span>
        <ul aria-haspopup=true class="hid yt-uix-button-menu yt-uix-button-menu-default"role=menu>
-          <li role=menuitem><span class="spf-link yt-uix-button-menu-item"href="/channel/{{ yt.ucid }}/videos?flow={{ yt.flow }}&view=57"onclick='return yt.window.navigate(this.getAttribute("href")),!1'>All videos</span>
-          <li role=menuitem><span class="spf-link yt-uix-button-menu-item"href="/channel/{{ yt.ucid }}/videos?flow={{ yt.flow }}&view=2"onclick='return yt.window.navigate(this.getAttribute("href")),!1'>Live streams</span>
+          <li role=menuitem><span class="spf-link yt-uix-button-menu-item"href="{{ yt.baseUrl }}/videos?flow={{ yt.flow }}&view=57"onclick='return yt.window.navigate(this.getAttribute("href")),!1'>All videos</span>
+          <li role=menuitem><span class="spf-link yt-uix-button-menu-item"href="{{ yt.baseUrl }}/videos?flow={{ yt.flow }}&view=2"onclick='return yt.window.navigate(this.getAttribute("href")),!1'>Live streams</span>
        </ul>
     </button>
 </li>
