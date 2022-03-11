@@ -10,7 +10,7 @@
          <span class="yt-pl-sidebar-content yt-valign">
             <span class="yt-valign-container">
                <span class="formatted-video-count-label">
-                  <b>{% if type == "radio" %}50+{% else %}{% if info.videoCount %}{{ info.videoCount }}{% else %}{{ info.videoCountText.runs[0].text }}{% endif %}{% endif %}</b> videos
+                  <b>{% if type == "radio" %}50+{% else %}{% if info.videoCount %}{{ info.videoCount }}{% else %}{{ getText(info.videoCountShortText) }}{% endif %}{% endif %}</b> video{% if info.videoCount > 1 or info.videoCountShortText.simpleText > 1 %}s{% endif %}
                </span>
                <span class="yt-pl-icon yt-pl-icon-{{ type == "radio" ? "mix" : "reg" }} yt-sprite"></span>
             </span>
@@ -201,7 +201,7 @@
             <ul class="yt-lockup-meta-info">
                 {%- if type == "playlist" and style == "tile" -%}
                 <li>
-                   <a href="{{ getUrl(info.viewPlaylistText.runs[0]) }}" class="yt-uix-sessionlink spf-link">View full playlist ({% if info.videoCount %}{{ info.videoCount }}{% else %}{{ info.videoCountText.runs[0].text }}{% endif %} videos)</a>
+                   <a href="{{ getUrl(info.viewPlaylistText.runs[0]) }}" class="yt-uix-sessionlink spf-link">View full playlist ({% if info.videoCount %}{{ info.videoCount }}{% else %}{{ getText(info.videoCountShortText) }}{% endif %} videos)</a>
                 </li>
                 {% endif %}
                 {%- if info.subscriberCountText and style == "grid" -%}
