@@ -165,10 +165,16 @@ if (!is_null($primaryInfo)) {
     $rwp_->actions->likeButton->defaultText = ExtractUtils::isolateLikeCnt($primaryInfo->videoActions->menuRenderer
         ->topLevelButtons[0]->toggleButtonRenderer->accessibility->label) ?? null;
     if (isset($rwp_->actions->likeButton->defaultText) and $rwp_->actions->likeButton->defaultText != '') {
+        $yt->ratingsEnabled = true;
         $likeCount = (int) str_replace(",", "", $rwp_->actions->likeButton->defaultText);
         $rwp_->dislikeCount = $dislikesData -> dislikes;
-        $rwp_->likePercent = ($likeCount / ($likeCount + $rwp_->dislikeCount)) * 100;
-        $rwp_->dislikePercent = 100 - $rwp_->likePercent;
+        if ($likeCount + $rwp_->dislikeCount != 0) {
+            $rwp_->likePercent = ($likeCount / ($likeCount + $rwp_->dislikeCount)) * 100;
+            $rwp_->dislikePercent = 100 - $rwp_->likePercent;
+        } else {
+            $rwp_->likePercent = 50;
+            $rwp_->dislikePercent = 50;
+        }
     }
     // owner info rw
     $mpo_ = $secondaryInfo->owner->videoOwnerRenderer ?? null;

@@ -39,7 +39,7 @@
     <div id="watch8-sentiment-actions">
     <div id="watch7-views-info">
         <div class="watch-view-count">{{ getText(info.viewCount) }}</div>
-        {% if info.actions.likeButton.defaultText %}
+        {% if yt.ratingsEnabled %}
         <div class="video-extras-sparkbars">
             <div class="video-extras-sparkbar-likes" style="width: {{ info.likePercent }}%"></div>
             <div class="video-extras-sparkbar-dislikes" style="width: {{ info.dislikePercent }}%"></div>
