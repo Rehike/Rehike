@@ -105,19 +105,21 @@ video-{{ yt.videoId }} {{ (yt.theaterMode) ? 'watch-wide watch-stage-mode' }}
 
 </script>
 {# Hacky playlists fix #}
-<script>
-(function(g){
-   var a = _yt_www.Ci('player-api');
-   if (a) {
-      a.addEventListener('onReady', q);
-   }
-   function q() {
-      var vT = 0;
-      g.wf() ? (g.tf(vT), vT = g.sf(g.u(g.gf, 'watch-list-change'))) : g.E('watch-list-change');
-      a.removeEventListener('onReady', q);
-   }
-})(_yt_www);
-</script>
+{% if yt.page.playlist %}
+   <script>
+   (function(g){
+      var a = _yt_www.Ci('player-api');
+      if (a) {
+         a.addEventListener('onReady', q);
+      }
+      function q() {
+         var vT = 0;
+         g.wf() ? (g.tf(vT), vT = g.sf(g.u(g.gf, 'watch-list-change'))) : g.E('watch-list-change');
+         a.removeEventListener('onReady', q);
+      }
+   })(_yt_www);
+   </script>
+{% endif %}
 {% endblock %}
 
 {%- block content -%}
