@@ -3,7 +3,7 @@
    {% if type == "playlist" or type == "radio" %}
    <a href="{{ getUrl(info) }}" class="yt-uix-sessionlink yt-pl-thumb-link spf-link">
       <div class="yt-thumb video-thumb"><span class="yt-thumb-simple">
-         <img height="{{ height }}" onload=";window.__ytRIL &amp;&amp; __ytRIL(this)" alt="" width="{{ width }}" data-ytimg="1" data-thumb="{{ info.thumbnail.thumbnails[0].url }}" src="{{ info.thumbnail.thumbnails[0].url }}">
+         <img height="{{ height }}" onload=";window.__ytRIL &amp;&amp; __ytRIL(this)" alt="" width="{{ width }}" data-ytimg="1" data-thumb="{{ getThumb(info, height) }}" src="{{ getThumb(info, height) }}">
          </span>
       </div>
       <div class="sidebar">

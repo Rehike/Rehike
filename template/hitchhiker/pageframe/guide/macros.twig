@@ -2,7 +2,7 @@
 {% if item.guideEntryRenderer %}
 {% set this = item.guideEntryRenderer %}
 <li id="{{ this.navigationEndpoint.browseEndpoint.browseId }}-guide-item" class="guide-channel guide-notification-item overflowable-list-item" role="menuitem">
-    <a href="{{ this.navigationEndpoint.commandMetadata.webCommandMetadata.url }}" class="guide-item yt-uix-sessionlink yt-valign spf-link" title="{{ getText(this.formattedTitle) }}" data-external-id="{{ this.navigationEndpoint.browseEndpoint.browseId }}" data-serialized-endpoint="0qDduQEaEhh{{ this.navigationEndpoint.browseEndpoint.browseId|base64_encode() }}%3D">
+    <a href="{{ getUrl(this) }}" class="guide-item yt-uix-sessionlink yt-valign spf-link" title="{{ getText(this.formattedTitle) }}" data-external-id="{{ this.navigationEndpoint.browseEndpoint.browseId }}" data-serialized-endpoint="0qDduQEaEhh{{ this.navigationEndpoint.browseEndpoint.browseId|base64_encode() }}%3D">
         <span class="yt-valign-container">
             <span class="thumb">
                 <span class="video-thumb yt-thumb yt-thumb-20">
@@ -17,6 +17,21 @@
             <span class="display-name no-count">
                 <span>{{ getText(this.formattedTitle) }}</span>
             </span>
+        </span>
+    </a>
+</li>
+{% endif %}
+{% endmacro %}
+
+{% macro playlist(item) %}
+{% if item.guideEntryRenderer %}
+{% set this = item.guideEntryRenderer %}
+<li id="-guide-item" class="guide-channel guide-notification-item overflowable-list-item" role="menuitem">
+    <a href="{{ getUrl(this) }}" class="guide-item yt-uix-sessionlink spf-link">
+        <span class="yt-valign-container">
+            <span class="thumb guide-playlists-icon yt-sprite"></span>
+            <span class="display-name-no-count">
+                <span>{{ getText(this.formattedTitle) }}</span>
         </span>
     </a>
 </li>

@@ -32,6 +32,8 @@ $ytdata = json_decode($response);
 $shelvesList = $ytdata->contents->twoColumnBrowseResultsRenderer->
     tabs[0]->tabRenderer->content->sectionListRenderer->contents;
 
+$yt->page->continuation = $ytdata->contents->twoColumnBrowseResultsRenderer->tabs[0]->tabRenderer->content->sectionListRenderer->continuations[0]->nextContinuationData->continuation;
+
 
 /*
 $shelvesList = $ytdata->contents->singleColumnBrowseResultsRenderer->

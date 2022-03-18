@@ -63,6 +63,9 @@ switch ($routerUrl->path[0]) {
     case "share_ajax":
         include "views/ajax/share.php";
         break;
+    case "browse_ajax":
+        include "views/ajax/browse.php";
+        break;
     case 'internal': // forward to internal router
         include('internal/internalRouter.php');
         break;
