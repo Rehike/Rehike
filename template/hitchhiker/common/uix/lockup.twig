@@ -240,7 +240,7 @@
                {% endif %}
             </div>
             {% endif %}
-            {% if info.badges %}
+            {% if info.badges or type == "channel" %}
             <div class="yt-lockup-badges">
                <ul class="yt-badge-list">
                   {% for badge in info.badges %}
