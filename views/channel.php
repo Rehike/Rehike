@@ -26,6 +26,7 @@ Request::innertubeRequest("channel", "browse", (object)[
     "params" => $tabParam
 ]);
 $response = Request::getInnertubeResponses()["channel"];
+$yt->response = $response;
 
 $ytdata = json_decode($response);
 

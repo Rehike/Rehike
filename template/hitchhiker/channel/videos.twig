@@ -1,4 +1,5 @@
 {% import "common/uix/lockup.twig" as lockup %}
+{% import 'common/uix/load_more_button.twig' as load_more %}
 <li class="branded-page-gutter-padding branded-page-v2-subnav-container clearfix">
     <button aria-expanded=false aria-haspopup=true class="yt-uix-button yt-uix-button-default yt-uix-button-size-default subnav-flow-menu" data-button-menu-indicate-selected=true onclick=return!1 type=button>
        {% if yt.flow == "grid" %}
@@ -33,11 +34,11 @@
     {% if yt.flow == "grid" %}
     <ul id="channels-browse-content-grid" class="channels-browse-content-grid branded-page-gutter-padding grid-lockups-container">
         {% for item in yt.videoList %}
-        <li class="channels-content-item yt-shelf-grid-item">
             {% if item.gridVideoRenderer %}
+            <li class="channels-content-item yt-shelf-grid-item">
                 {{ lockup.grid(item, false) }}
+            </li>
             {% endif %}
-        </li>
         {% endfor %}
     </ul>
     {% elseif yt.flow == "list" %}
@@ -53,18 +54,8 @@
         </li>
         {% endfor %}
     {% endif %}
-        
-    <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-default load-more-button yt-uix-load-more browse-items-load-more-button yt-uix-load-more-error" type="button" onclick=";return false;" aria-label="Load more" data-uix-load-more-target-id="channels-browse-content-grid" data-uix-load-more-href="/browse_ajax?action_continuation=1&amp;direct_render=1&amp;continuation=4qmFsgJAEhhVQy1sSEpaUjNHcXhtMjRfVmRfQUo1WXcaJEVnWjJhV1JsYjNNZ0FEZ0JZQUZxQUhvQk1yZ0JBQSUzRCUzRA%253D%253D">
-        <span class="yt-uix-button-content">
-            <span class="load-more-loading hid" style="display: none;">
-                <span class="yt-spinner">
-                    <span class="yt-spinner-img  yt-sprite" title="Loading icon"></span>
-                    Loading...
-                </span>
-            </span>
-            <span class="load-more-text">
-                Load more
-            </span>
-        </span>
-    </button>
+    {% set lastItem = yt.videoList|last %}
+    {% if lastItem.continuationItemRenderer %}
+    {{ load_more.render(lastItem.continuationItemRenderer.continuationEndpoint.continuationCommand.token, "channels-browse-content-grid", true) }}
+    {% endif %}
 </li>

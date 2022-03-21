@@ -1,0 +1,23 @@
+{% import "common/uix/load_more_button.twig" as load_more %}
+{{ contentType("application/json") }}
+{
+    "load_more_widget_html": {{ load_more.render(yt.continuation, yt.target)|json_encode|raw }},
+    "content_html": {%- apply json_encode|raw -%}
+    {% if yt.page.shelfList %}
+        {% import "common/uix/shelf.twig" as shelf %}
+        {% for shelf in yt.page.shelfList %}
+            {{ shelf.compact(shelf) }}
+        {% endfor %}
+    {% elseif yt.page.lockupList %}
+        {% import "common/uix/lockup.twig" as lockup %}
+        {% for item in yt.page.lockupList %}
+            {% if item.gridVideoRenderer or item.gridPlaylistRenderer %}
+                <li class="channels-content-item yt-shelf-grid-item">
+                    {{ lockup.grid(item, false) }}
+                </li>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+    {% endapply %},
+    "rh_debug_innertube": {{ yt.response ? yt.response|raw : "\"\"" }}
+}

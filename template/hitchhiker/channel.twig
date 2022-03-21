@@ -58,7 +58,9 @@ not-fixed-width-tab-widescreen
 {% endblock %}
 
 {% block content %}
-<div class="yt-card" id="debug" style="display:none!important;">{{ yt.page|json_encode() }}{{ yt.appbarNav|json_encode() }}</div>
+<div id="debug" class="hid">
+    {{ yt.response }}
+</div>
 {% embed '/common/channels4/branded_page_v2.twig' %}
     {% set brandedPageConfig = {
         'baseBoldTitles': true,
