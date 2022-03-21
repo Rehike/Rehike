@@ -1,0 +1,6 @@
+{% import "common/watch/watch7/sidebar/macros.twig" as sidebar %}
+<div id="watch-more-related">
+    {%- for item in yt.page.items -%}
+        {{ sidebar.video_item(item) }}
+    {% endfor %}
+</div>
