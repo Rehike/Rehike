@@ -27,7 +27,7 @@
       <a aria-hidden="true"  href="{% if type == "channel" %}{{ getUrl(info) }}{% elseif type == "video" %}/watch?v={{ info.videoId }}{% endif %}" class=" yt-uix-sessionlink      spf-link " data-sessionlink="itct=CHkQlDUYACITCOLXzPvf6toCFRA7fwodgP0KKSiOHjIKZy1oaWdoLXRydloPRkV3aGF0X3RvX3dhdGNo" >
       <div class="yt-thumb video-thumb"><span class="yt-thumb-simple">
          <img height="{{ height }}" onload=";window.__ytRIL &amp;&amp; __ytRIL(this)" alt="" width="{{ width }}" data-ytimg="1" data-thumb="{{ info.thumbnail.thumbnails.0.url }}" src="{{ PIXEL }}">
-         {% if info.lengthText or info.thumbnailOverlays %}
+         {% if info.lengthText or info.thumbnailOverlays[0].thumbnailOverlayTimeStatusRenderer %}
          <span class="video-time">{{ getVideoTime(info) }}</span>
          {% endif %}
          </span>
@@ -248,6 +248,16 @@
                   {% set this = badge.metadataBadgeRenderer %}
                   <li class="yt-badge-item">
                      <span class="yt-badge {{ this.style == "BADGE_STYLE_TYPE_LIVE_NOW" ? "yt-badge-live" }}">{{ this.label }}</span>
+                  </li>
+                  {% elseif badge.liveBadge %}
+                  {% set this = badge.liveBadge %}
+                  <li class="yt-badge-item">
+                     <span class="yt-badge yt-badge-live">{{ getText(this.label) }}</span>
+                  </li>
+                  {% elseif badge.badge %}
+                  {% set this = badge.badge %}
+                  <li class="yt-badge-item">
+                     <span class="yt-badge">{{ getText(this.label) }}</span>
                   </li>
                   {% endif %}
                   {% endfor %}
