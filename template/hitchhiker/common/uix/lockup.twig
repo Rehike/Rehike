@@ -27,8 +27,13 @@
       <a aria-hidden="true"  href="{% if type == "channel" %}{{ getUrl(info) }}{% elseif type == "video" %}/watch?v={{ info.videoId }}{% endif %}" class=" yt-uix-sessionlink      spf-link " data-sessionlink="itct=CHkQlDUYACITCOLXzPvf6toCFRA7fwodgP0KKSiOHjIKZy1oaWdoLXRydloPRkV3aGF0X3RvX3dhdGNo" >
       <div class="yt-thumb video-thumb"><span class="yt-thumb-simple">
          <img height="{{ height }}" onload=";window.__ytRIL &amp;&amp; __ytRIL(this)" alt="" width="{{ width }}" data-ytimg="1" data-thumb="{{ info.thumbnail.thumbnails.0.url }}" src="{{ PIXEL }}">
-         {% if info.lengthText %}
+         {# {% if info.lengthText %}
          <span class="video-time" aria-hidden="true">{{ getText(info.lengthText) }}</span>
+         {% elseif info.thumbnailOverlays[0].thumbnailOverlayTimeStatusRenderer %}
+         <span class="video-time" aria-hidden="true">{{ getText(info.thumbnailOverlays[0].thumbnailOverlayTimeStatusRenderer.text) }}</span>
+         {% endif %} #}
+         {% if getVideoTime(info) %}
+         <span class="video-time">{{ getVideoTime(info) }}</span>
          {% endif %}
          </span>
       </div>
