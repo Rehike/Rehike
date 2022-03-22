@@ -173,6 +173,17 @@ if (!is_null($primaryInfo)) {
 
     $rwp_ = $rw->results->videoPrimaryInfoRenderer;
     $rwp_->title = $primaryInfo->title ?? null;
+    $rwp_->hashtags = [];
+    for ($i = 0; $i < count($rwp_->title->runs); $i++) {
+        if (isset($rwp_->title->runs[$i]->navigationEndpoint->browseEndpoint->browseId) and $rwp_->title->runs[$i]->navigationEndpoint->browseEndpoint->browseId == "FEhashtag") {
+            $rwp_->hashtags[] = preg_replace("/#/", "", $rwp_->title->runs[$i]->text);
+        } 
+    }
+    $rwp_->superTitle = isset($primaryInfo->superTitleLink) ? (object) [] : null;
+    if (isset($rwp_->superTitle)) {
+        $rwp_->superTitle->text = preg_replace("/For/", "for", preg_replace("/On/", "on", ucwords(strtolower($_getText($primaryInfo->superTitleLink)))));
+        $rwp_->superTitle->url = $_getUrl($primaryInfo->superTitleLink->runs[0]);
+    }
     $rwp_->viewCount = $primaryInfo->viewCount->videoViewCountRenderer->viewCount ?? null;
     $rwp_->badges = $primaryInfo->badges ?? null;
     $rwp_->actions = (object) [];
