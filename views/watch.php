@@ -34,6 +34,20 @@ if (!is_null($yt->playlistId)) {
     $watchRequestParams['playlistIndex'] = $yt->playlistIndex;
 }
 
+if(isset($_GET["t"])) {
+    preg_match_all("/\d{1,6}/", $_GET["t"], $times);
+    $times = $times[0];
+    if (count($times) == 1) { // before you whine "waaahh use case" I CAN'T IT BREAKS IT FOR NO FUCKING REASON, if you wanna make this better, go ahead
+        $startTime = (int) $times[0];
+    } else if (count($times) == 2) {
+        $startTime = ((int) $times[0] * 60) + (int) $times[0];
+    } else if (count($times) == 3) {
+        $startTime = ((int) $times[0] * 3600) + ((int) $times[1] * 60) + (int) $times[2];
+    } else {
+        $startTime = 0;
+    }
+}
+
 Request::innertubeRequest("watch", "next", (object) $watchRequestParams);
 Request::innertubeRequest("player", "player", (object) ([
     "playbackContext" => [
@@ -46,8 +60,9 @@ Request::innertubeRequest("player", "player", (object) ([
             'playerHeightPixels' => 1080,
             'playerWidthPixels' => 1920,
             'signatureTimestamp' => $yt->playerCore->sts
-        ]
-    ]
+        ]   
+    ],
+    "startTimeSecs" => $startTime ?? 0
 ] + $watchRequestParams));
 
 $ch = curl_init("https://returnyoutubedislikeapi.com/votes?videoId=" . $yt->videoId);
