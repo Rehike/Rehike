@@ -25,6 +25,9 @@ include ('resourceConstants.php');
 // Post boot events
 Rehike\ContextManager::$visitorData = $visitor;
 
+// * Set signin state
+Rehike\Signin\AuthManager::use($yt);
+
 // differentiates pages
 require ('router.php');
 

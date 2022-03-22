@@ -2,6 +2,7 @@
 namespace Rehike;
 
 use YukisCoffee\CoffeeRequest\CoffeeRequest;
+use Rehike\Signin\AuthManager;
 
 class Request
 {
@@ -22,7 +23,17 @@ class Request
         self::$RequestManager->requestsMaxAttempts = 1;
     }
 
-    public static $innertubeRequests = [];
+    public static function useAuth()
+    {
+        if (AuthManager::shouldAuth())
+        {
+            self::$RequestManager->defaultHeaders += [
+                "Authorization" => AuthManager::getAuthHeader(),
+                "Origin" => "https://www.youtube.com",
+                "Host" => "www.youtube.com"
+            ];
+        }
+    }
 
     public static function urlRequest($id, $url, $namespace = self::NS_URL)
     {

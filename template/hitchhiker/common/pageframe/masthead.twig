@@ -10,7 +10,7 @@ Skip navigation
       <span id="yt-masthead-logo-fragment"><a href="/" class="masthead-logo-renderer yt-uix-sessionlink      spf-link " data-sessionlink="itct=CAUQsV4iEwji18z73-raAhUQO38KHYD9Cikojh4"  id="logo-container" title="YouTube Home">  <span title="YouTube Home" class="logo masthead-logo-renderer-logo yt-sprite"></span>
       </a></span>
    </div>
-   <div id="yt-masthead-signin">
+   <div id="yt-masthead-{{ yt.signin.isSignedIn ? 'user' : 'signin' }}">
       {% if yt.debugger %}
       <button class="yt-uix-button yt-uix-button-opacity yt-uix-button-size-default yt-uix-button-has-icon yt-uix-tooltip yt-uix-button-empty" title="Debugger">
          <span class="yt-uix-button-icon-wrapper">
@@ -27,7 +27,64 @@ Skip navigation
       <a href="//www.youtube.com/upload" class="yt-uix-button   yt-uix-sessionlink yt-uix-button-opacity yt-uix-button-size-default yt-uix-button-has-icon yt-uix-tooltip yt-uix-button-empty" data-sessionlink="ei=_iZIWtz_LZa0-wP4l5qwCw&amp;feature=mhsb" id="upload-btn" title="Upload" data-tooltip-text="Upload" aria-labelledby="yt-uix-tooltip567-arialabel"><span class="yt-uix-button-icon-wrapper"><span class="yt-uix-button-icon yt-uix-button-icon-material-upload yt-sprite"></span></span></a>
       {% endif %}
       {% endif %}
-      <div class="signin-container "><button class="yt-uix-button yt-uix-button-size-default yt-uix-button-primary" type="button" onclick=";window.location.href=this.getAttribute(&#39;href&#39;);return false;" href="https://accounts.google.com/ServiceLogin?service=youtube&amp;uilel=3&amp;hl=en&amp;continue=https%3A%2F%2Fwww.youtube.com%2Fsignin%3Fapp%3Ddesktop%26action_handle_signin%3Dtrue%26hl%3Den%26next%3D%252F%26feature%3Dsign_in_button&amp;passive=true" role="link"><span class="yt-uix-button-content">Sign in</span></button></div>
+      {#
+       # Display the sign in button or user menu.
+       #}
+      {%- if yt.signin.isSignedIn -%}
+            <span id="yt-masthead-notifications" class="yt-uix-clickcard "data-card-action="yt.www.notifications.inbox.handleNotificationsClick"data-card-class="yt-scrollbar yt-notification-inbox-clickcard">
+               <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-default yt-uix-button-has-icon yt-uix-clickcard-target sb-notif-off" type="button" onclick=";return false;" aria-haspopup="true" id="yt-masthead-notifications-button" aria-label="Notifications" data-position="bottomleft" data-force-position="true" data-position-fixed="true" data-orientation="vertical"><span class="yt-uix-button-icon-wrapper"><span class="yt-uix-button-icon yt-uix-button-icon-bell yt-sprite"></span></span><span class="yt-uix-button-content">&zwnj;</span></button>
+               <div id="yt-masthead-notifications-clickcard" class="yt-uix-clickcard-content">
+                  <div id="yt-masthead-high-priority-notification-content"></div>
+                  <div id="yt-masthead-notifications-header"><span id="yt-masthead-notifications-title" role="heading">Notifications</span><a  href="/account_notifications" class="yt-uix-button   yt-uix-sessionlink yt-uix-button-opacity yt-uix-button-size-default yt-uix-button-has-icon yt-uix-button-empty" data-sessionlink="ei=RRN3XJ-gN9K2kwbF9q3oAQ" id="yt-masthead-notifications-settings" aria-label="Settings"><span class="yt-uix-button-icon-wrapper"><span class="yt-uix-button-icon yt-uix-button-icon-icon-account-settings yt-sprite"></span></span></a></div>
+                  <div id="yt-masthead-notifications-content" class="yt-uix-scroller"></div>
+               </div>
+            </span>
+            <span id="yt-masthead-account-picker" class="yt-uix-clickcard" data-card-action="yt.www.masthead.handleAccountPickerClick" data-card-class="yt-masthead-account-picker-card">
+               <button class="yt-uix-button yt-uix-button-size-default yt-masthead-user-icon yt-uix-clickcard-target" type="button" onclick=";return false;" aria-label="Account profile photo that opens list of alternate accounts" aria-haspopup="true" data-position="bottomleft" data-force-position="true" data-position-fixed="true" data-orientation="vertical"><span class="yt-uix-button-content">  <span class="video-thumb  yt-thumb yt-thumb-27"
+                  >
+               <span class="yt-thumb-square">
+               <span class="yt-thumb-clip">
+               <img src="{{ yt.signin.activeChannel.photo }}" aria-hidden="true" width="27" data-ytimg="1" alt="" onload=";window.__ytRIL &amp;&amp; __ytRIL(this)" height="27" >
+               <span class="vertical-align"></span>
+               </span>
+               </span>
+               </span>
+               </span></button>
+               <div class="yt-masthead-account-picker yt-uix-clickcard-content">
+                  <a class="yt-masthead-picker-header yt-masthead-picker-active-account" href="https://www.google.com/settings/u/0/personalinfo">
+                  {{ yt.signin.googleAccount.email }}
+                  </a>
+                  <div id="yt-unlimited-member"></div>
+                  <div class="yt-masthead-picker-body">
+                     <a class="yt-masthead-picker-photo-wrapper" href="https://aboutme.google.com/u/0?pageId=103334211686205332477#profile_photo">  <span class="video-thumb  yt-thumb yt-thumb-64"
+                        >
+                     <span class="yt-thumb-square">
+                     <span class="yt-thumb-clip">
+                     <img src="//lh5.googleusercontent.com/-xl9hAPtxZ2U/AAAAAAAAAAI/AAAAAAAAAAA/ACevoQPKXYMDcUJby3T9eFXQ7YF9cvY1_A/mo/photo.jpg" aria-hidden="true" width="64" data-ytimg="1" alt="" onload=";window.__ytRIL &amp;&amp; __ytRIL(this)" height="64" >
+                     <span class="vertical-align"></span>
+                     </span>
+                     </span>
+                     </span>
+                     <span class="yt-masthead-picker-photo-change">Change</span></a>
+                     <div class="yt-masthead-picker-info">
+                        <div class="yt-masthead-picker-name" dir="ltr">crabycowman123</div>
+                        <div class="yt-masthead-picker-account-subtitle" id="yt-subscriber-count">&#8203;</div>
+                        <a  href="/dashboard?o=U" class="yt-uix-button  yt-masthead-picker-button yt-masthead-picker-button-primary yt-uix-sessionlink yt-uix-button-default yt-uix-button-size-default" data-sessionlink="ei=RRN3XJ-gN9K2kwbF9q3oAQ"><span class="yt-uix-button-content">Creator Studio</span></a><a  href="/account" class="yt-uix-button  yt-masthead-picker-button yt-masthead-picker-settings-button yt-uix-tooltip yt-uix-sessionlink yt-uix-button-default yt-uix-button-size-default yt-uix-button-has-icon yt-uix-tooltip yt-uix-button-empty" data-sessionlink="ei=RRN3XJ-gN9K2kwbF9q3oAQ" title="YouTube settings"><span class="yt-uix-button-icon-wrapper"><span class="yt-uix-button-icon yt-uix-button-icon-icon-account-settings yt-sprite"></span></span></a>
+                     </div>
+                  </div>
+                  <div id="yt-masthead-multilogin" class="yt-masthead-multilogin-users">
+                     <div id="yt-delegate-accounts"></div>
+                  </div>
+                  <div id="yt-channel-switcher-link" class="clearfix"></div>
+                  <div class="yt-masthead-picker-footer clearfix">
+                     <a  href="https://accounts.google.com/AddSession?uilel=0&amp;continue=http%3A%2F%2Fwww.youtube.com%2Fsignin%3Faction_handle_signin%3Dtrue%26next%3D%252Ffeed%252Fsubscriptions%253Fdisable_polymer%253D1%26app%3Ddesktop%26hl%3Den&amp;passive=false&amp;service=youtube&amp;hl=en" class="yt-uix-button  yt-masthead-picker-button yt-uix-sessionlink yt-uix-button-default yt-uix-button-size-default" data-sessionlink="ei=RRN3XJ-gN9K2kwbF9q3oAQ"><span class="yt-uix-button-content">Add account</span></a>
+                     <a  href="/logout" class="yt-uix-button  yt-masthead-picker-button yt-uix-sessionlink yt-uix-button-default yt-uix-button-size-default" data-sessionlink="ei=RRN3XJ-gN9K2kwbF9q3oAQ"><span class="yt-uix-button-content">Sign out</span></a>
+                  </div>
+               </div>
+            </span>
+      {%- else -%}
+         <div class="signin-container "><button class="yt-uix-button yt-uix-button-size-default yt-uix-button-primary" type="button" onclick=";window.location.href=this.getAttribute(&#39;href&#39;);return false;" href="https://accounts.google.com/ServiceLogin?service=youtube&amp;uilel=3&amp;hl=en&amp;continue=https%3A%2F%2Fwww.youtube.com%2Fsignin%3Fapp%3Ddesktop%26action_handle_signin%3Dtrue%26hl%3Den%26next%3D%252F%26feature%3Dsign_in_button&amp;passive=true" role="link"><span class="yt-uix-button-content">Sign in</span></button></div>
+      {%- endif -%}
    </div>
    <div id="yt-masthead-content">
       <form id="masthead-search" class="  search-form consolidated-form  vve-check" action="/results" onsubmit="if (document.getElementById(&#39;masthead-search-term&#39;).value == &#39;&#39;) return false;" data-clicktracking="CAIQ7VAiEwji18z73-raAhUQO38KHYD9Cikojh4" data-visibility-tracking="CAIQ7VAiEwji18z73-raAhUQO38KHYD9Cikojh4">
