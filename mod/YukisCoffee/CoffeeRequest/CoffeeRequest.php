@@ -3,25 +3,50 @@ namespace YukisCoffee\CoffeeRequest;
 
 class CoffeeRequest
 {
-    public static $requestsMaxAttempts = 50;
-    public static $defaultOptions =
+    // Version 2.0 change:
+    // allow instantiation!
+    // "Static method" calls now redirect to
+    // a static variable set to myself.
+    public static $_self;
+
+    public static function __callStatic($name, $args)
+    {
+        return self::$_self->{$name}(...$args);
+    }
+
+    public static function _resetStatic()
+    {
+        self::$_self = new static();
+    }
+
+    public function __call($name, $args)
+    {
+        // Workaround since methods must be invisible
+        // statically (protected or private) for the
+        // hack to work.
+        return $this->{$name}(...$args);
+    }
+
+
+    public $requestsMaxAttempts = 50;
+    public $defaultOptions =
         [
             "post" => false,
             "returnTransfer" => true,
             "encoding" => "gzip",
             "headers" => [] // ** Set by $defaultHeaders
         ];
-    public static $defaultHeaders = [];
-    public static $requestQueue = [];
+    public $defaultHeaders = [];
+    public $requestQueue = [];
 
-    public static function _init()
+    public function __construct()
     {
-        self::$defaultHeaders += ["Cookie" => self::genCookieHeader()];
+        $this->defaultHeaders += ["Cookie" => self::genCookieHeader()];
     }
 
-    public static function request($url, $options = [])
+    protected function request($url, $options = [])
     {
-        self::addDefaultOptions($options);
+        $this->addDefaultOptions($options);
         
         // Init curl
         $ch = curl_init($url);
@@ -34,7 +59,7 @@ class CoffeeRequest
             $response = curl_exec($ch);
             $attempts++;
         }
-        while (200 !== curl_getinfo($ch, \CURLINFO_HTTP_CODE) && $attempts < self::$requestsMaxAttempts);
+        while (200 !== curl_getinfo($ch, \CURLINFO_HTTP_CODE) && $attempts < $this->requestsMaxAttempts);
 
         curl_close($ch);
 
@@ -44,25 +69,25 @@ class CoffeeRequest
         }
     }
 
-    public static function queueRequest($url, $options = [], $id = null)
+    protected function queueRequest($url, $options = [], $id = null)
     {
-        self::addDefaultOptions($options);
+        $this->addDefaultOptions($options);
 
         // Init curl
         $ch = curl_init($url);
         curl_setopt_array($ch, self::reqOpts2Curl($options));
 
         // Add to request queue
-        if (is_null($id)) $id = count(self::$requestQueue) - 1;
-        self::$requestQueue += [$id => $ch];
+        if (is_null($id)) $id = count($this->requestQueue) - 1;
+        $this->requestQueue += [$id => $ch];
     }
 
-    public static function runQueue()
+    protected function runQueue()
     {
         $mh = curl_multi_init();
 
         // Register all queued requests
-        foreach (self::$requestQueue as $id => $handle)
+        foreach ($this->requestQueue as $id => $handle)
         {
             curl_multi_add_handle($mh, $handle);
         }
@@ -78,7 +103,7 @@ class CoffeeRequest
         // Form response assocarray by id and close handle
         $responses = [];
 
-        foreach (self::$requestQueue as $id => $handle)
+        foreach ($this->requestQueue as $id => $handle)
         {
             $responses += [$id => curl_multi_getcontent($handle)];
             curl_multi_remove_handle($mh, $handle);
@@ -87,24 +112,24 @@ class CoffeeRequest
         // Close curl and return
         curl_multi_close($mh);
 
-        self::clearRequestQueue();
+        $this->clearRequestQueue();
 
         return $responses;
     }
 
-    public static function clearRequestQueue()
+    protected function clearRequestQueue()
     {
-        self::$requestQueue = [];
+        $this->requestQueue = [];
     }
 
-    public static function addDefaultOptions(&$options)
+    protected function addDefaultOptions(&$options)
     {
         // PHP array addition for assocarrays ignores
         // value, meaning only unset keys are added.
         // So it's just one line:
 
-        $options += self::$defaultOptions;
-        if (isset($options["headers"])) $options["headers"] += self::$defaultHeaders;
+        $options += $this->defaultOptions;
+        if (isset($options["headers"])) $options["headers"] += $this->defaultHeaders;
     }
 
     public static function reqOpts2Curl($options)
@@ -173,10 +198,4 @@ class CoffeeRequest
     }
 }
 
-// To work around PHP limitations,
-// immediately call init method to set some
-// dynamic defaults. This is because default
-// value of a static variable is compile time
-// so static.
-
-CoffeeRequest::_init();
+CoffeeRequest::$_self = new CoffeeRequest();

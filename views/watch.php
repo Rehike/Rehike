@@ -50,24 +50,17 @@ Request::innertubeRequest("player", "player", (object) ([
     ]
 ] + $watchRequestParams));
 
-$ch = curl_init("https://returnyoutubedislikeapi.com/votes?videoId=" . $yt->videoId);
-curl_setopt_array($ch, [
-    CURLOPT_HEADER => 0,
-    CURLOPT_RETURNTRANSFER => 1
-]);
-$rydResponse = curl_exec($ch);
-curl_close($ch);
-$dislikesData = json_decode($rydResponse);
-
-
-$responses = Request::getInnertubeResponses();
+Request::urlRequest("rydResponse", "https://returnyoutubedislikeapi.com/votes?videoId={$yt->videoId}");
+$responses = Request::getResponses();
 
 $response = $responses["watch"];
 $presponse = $responses["player"];
+$rydResponse = $responses["rydResponse"];
 $yt->response = $response;
 
 $ytdata = json_decode($response);
 $playerResponse = json_decode($presponse);
+$dislikesData = json_decode($rydResponse);
 $yt->playerResponse = $playerResponse;
 // remove ads lol
 if (isset($yt->playerResponse->playerAds)) unset($yt->playerResponse->playerAds);

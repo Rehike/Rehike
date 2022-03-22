@@ -22,7 +22,7 @@ Request::innertubeRequest(
     "2.20220303.06.01"
 );
 
-$response = Request::getInnertubeResponses()["feed"];
+$response = Request::getResponses()["feed"];
 
 $ytdata = json_decode($response);
 $yt -> response = $response;

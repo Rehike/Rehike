@@ -21,7 +21,7 @@ Request::innertubeRequest(
     "WEB",
     "1.20220303.06.01"
 );
-$response = Request::getInnertubeResponses()["feed"];
+$response = Request::getResponses()["feed"];
 $yt -> response = $response;
 
 $timeb = round(microtime(true) * 1000);
