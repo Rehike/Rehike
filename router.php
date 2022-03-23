@@ -49,7 +49,6 @@ switch ($routerUrl->path[0]) {
     case 'youtubei':
     case 's':
     case 'embed':
-    case '404':
     case 'yts':
         include('simplefunnel.php');
         die();
