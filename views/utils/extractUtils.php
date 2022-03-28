@@ -54,4 +54,8 @@ class ExtractUtils {
         }
         return '';
     }
+
+    public static function changeThumbSize($url, $newSize): string {
+        return preg_replace('/=s(.*)-c-k/', '=s' . $newSize . '-c-k', $url);
+    }
 }

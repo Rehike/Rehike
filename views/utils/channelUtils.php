@@ -33,11 +33,6 @@ class ChannelUtils {
         }
     }
 
-    public static function synthesiseChannelAvatarSize100Url($url): string {
-        // aubrey crying forever
-        return str_replace('s48', 's100', $url);
-    }
-
     const SCT_PROTOBUF_TAB_FIELD = 18; // 0x12 from 2 << 3 | 2
     public static function synthChannelTab(string $tab = 'featured'): string {
         // protobuf, but we can quickly, lazily synthesise it

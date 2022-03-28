@@ -1,5 +1,8 @@
 {% import "common/core/spinner.twig" as spinner %}
 {% import "pageframe/guide/macros.twig" as guide %}
+<div id="debug" class="hid">
+   {{ yt.guide|json_encode }}
+</div>
 <div id="guide" class="yt-scrollbar">
    <div id="appbar-guide-menu" class="appbar-menu appbar-guide-menu-layout appbar-guide-clickable-ancestor yt-uix-scroller yt-uix-tdl" role="navigation">
       <div id="guide-container">
@@ -27,6 +30,22 @@
                            </span>
                            </a>
                         </li>
+                        {% if yt.signin.isSignedIn %}
+                        <li class="guide-channel guide-notification-item overflowable-list-item" id="placeholder-guide-item" data-visibility-tracking="CDkQtSwYASITCOOPucPDkOkCFQu-xAod080CMg==" role="menuitem">
+      
+                           <a class="guide-item yt-uix-sessionlink yt-valign spf-link    " href="/channel/placeholder" title="My channel" data-sessionlink="ei=EPeqXo6MNtHIkgaFnbHACg&amp;feature=g-personal&amp;ved=CAoQtSwYASITCI7UtcPDkOkCFVGkxAodhU4MqCiOHg" data-external-id="UCR6u4Dkl2B6STiMmcw6C2GA" data-serialized-endpoint="0qDduQEaEhhVQ1I2dTREa2wyQjZTVGlNbWN3NkMyR0E%3D" data-visibility-tracking="CDkQtSwYASITCOOPucPDkOkCFQu-xAod080CMg==">
+                             <span class="yt-valign-container">
+                                 <span class="thumb guide-my-channel-icon yt-sprite"></span>
+                                 <span class="display-name  no-count">
+                                   <span>
+                                     My channel
+                                   </span>
+                                 </span>
+                             </span>
+                           </a>
+                         
+                           </li>
+                        {% endif %}
                         <li class="vve-check guide-channel guide-notification-item overflowable-list-item " id="trending-guide-item" 
                            data-visibility-tracking="" role="menuitem">
                            <a class="guide-item yt-uix-sessionlink yt-valign spf-link    "
@@ -44,6 +63,22 @@
                            </span>
                            </a>
                         </li>
+                        {% if yt.signin.isSignedIn %}
+                        <li class="guide-channel guide-notification-item overflowable-list-item" id="subscriptions-guide-item" data-visibility-tracking="CDcQtSwYAyITCOOPucPDkOkCFQu-xAod080CMg==" role="menuitem">
+      
+                           <a class="guide-item yt-uix-sessionlink yt-valign spf-link    " href="/feed/subscriptions" title="Subscriptions" data-sessionlink="ei=EPeqXo6MNtHIkgaFnbHACg&amp;feature=g-personal&amp;ved=CAwQtSwYAyITCI7UtcPDkOkCFVGkxAodhU4MqCiOHg" data-external-id="subscriptions" data-serialized-endpoint="0qDduQEREg9GRXN1YnNjcmlwdGlvbnM%3D" data-visibility-tracking="CDcQtSwYAyITCOOPucPDkOkCFQu-xAod080CMg==">
+                             <span class="yt-valign-container">
+                                 <span class="thumb guide-my-subscriptions-icon yt-sprite"></span>
+                                 <span class="display-name  no-count">
+                                   <span>
+                                     Subscriptions
+                                   </span>
+                                 </span>
+                             </span>
+                           </a>
+                         
+                           </li>
+                        {% else %}
                         <li class="vve-check guide-channel guide-notification-item overflowable-list-item " id="history-guide-item" 
                            data-visibility-tracking="" role="menuitem">
                            <a class="guide-item yt-uix-sessionlink yt-valign spf-link    "
@@ -61,10 +96,76 @@
                            </span>
                            </a>
                         </li>
+                        {% endif %}
                      </ul>
                   </div>
                   <hr class="guide-section-separator">
                </li>
+               {% if yt.signin.isSignedIn %}
+               <li class="guide-section" data-visibility-tracking="CCUQ5isYASITCOOPucPDkOkCFQu-xAod080CMg==">
+                  <div class="guide-item-container personal-item">
+                        <h3>
+                    <a href="/channel/UCR6u4Dkl2B6STiMmcw6C2GA/playlists" class=" yt-uix-sessionlink      spf-link " data-sessionlink="ei=EPeqXo6MNtHIkgaFnbHACg&amp;feature=g-personal">Library</a>
+                  </h3>
+              
+                    <ul class="guide-user-links yt-uix-tdl yt-box" role="menu">
+                           {% set librarySection = yt.guide.items[0].guideSectionRenderer.items|last %}
+                          {% for item in librarySection.guideCollapsibleSectionEntryRenderer.sectionItems %}
+                           {{ guide.libraryItem(item) }}
+                          {% endfor %}
+              
+                            <div class="guide-collapsible-item yt-uix-expander yt-uix-expander-collapsed">
+                  <div class="yt-uix-expander-body">
+                     {% set libraryExpandedContents = librarySection.guideCollapsibleSectionEntryRenderer.sectionItems|last %}
+                     {% for item in libraryExpandedContents.guideCollapsibleEntryRenderer.expandableItems %}
+                        {{ guide.libraryItem(item) }}
+                     {% endfor %}
+                    <button class="yt-uix-expander-head guide-view-more yt-valign" data-visibility-tracking="CCYQtSwiEwjjj7nDw5DpAhULvsQKHdPNAjI=">
+                      <span class="yt-valign-container">
+                        Show less
+                      </span>
+                    </button>
+                  </div>
+                  <div class="yt-uix-expander-collapsed-body">
+                    <button class="yt-uix-expander-head guide-view-more yt-valign" data-visibility-tracking="CC8QtSwiEwjjj7nDw5DpAhULvsQKHdPNAjI=">
+                      <span class="yt-valign-container">
+                        Show more
+                      </span>
+                    </button>
+                  </div>
+                </div>
+              
+                    </ul>
+                  </div>
+                    <hr class="guide-section-separator">
+                </li>
+                <li id="guide-subscriptions-section" class="guide-section hover-action-menu-trigger" data-visibility-tracking="">
+                  <span class="guide-sort-container yt-uix-button-group"><button aria-expanded="false" type="button" class="guide-sort-button flip yt-uix-button yt-uix-button-hover-action-menu yt-uix-button-size-small yt-uix-button-has-icon yt-uix-button-empty" aria-label="Subscriptions sorting mode" aria-haspopup="true" onclick=";return false;" data-button-has-sibling-menu="true" data-guide-sort="2"><span class="yt-uix-button-icon-wrapper"><span class="yt-uix-button-icon yt-uix-button-icon-hover-action-menu yt-sprite"></span></span><span class="yt-uix-button-arrow yt-sprite"></span><ul class=" yt-uix-button-menu yt-uix-button-menu-hover-action-menu hid" role="menu" aria-haspopup="true"><li role="menuitem"><span class="guide-sort-choice yt-uix-button-menu-item" onclick=";return false;" checked="False" data-guide-sort="0">Most relevant</span></li><li role="menuitem"><span class="guide-sort-choice yt-uix-button-menu-item" onclick=";return false;" checked="False" data-guide-sort="1">New activity</span></li><li role="menuitem"><span class="yt-uix-button-icon-wrapper yt-uix-button-icon-checkbox"><span class="yt-uix-button-icon-dropdown-checked yt-sprite"></span></span><span class="guide-sort-choice yt-uix-button-menu-item" onclick=";return false;" checked="True" data-guide-sort="2">A-Z</span></li></ul></button></span>
+                    <h3>
+                  <a href="/subscription_manager" class=" yt-uix-sessionlink " data-sessionlink="ei=4yp_V7naAsvG-gOWjZmYDw&amp;feature=g-channel">Subscriptions</a>
+                </h3>
+            
+                <div id="guide-subs-footer-container">
+                    <div id="guide-subscriptions-container">
+                        <div class="guide-channels-content yt-scrollbar">
+                <ul id="guide-channels" class="guide-channels-list guide-item-container parent-list guide-infinite-list yt-uix-scroller filter-has-matches yt-uix-tdl" role="menu" data-scroller-mousewheel-listener="" data-scroller-scroll-listener="">
+                  {% for item in yt.guide.items[1].guideSubscriptionsSectionRenderer.items %}
+                  {% if item.guideEntryRenderer %}
+                     {{ guide.channel(item) }}
+                  {% elseif item.guideCollapsibleEntryRenderer %}
+                     {% for expandableItem in item.guideCollapsibleEntryRenderer.expandableItems %}
+                     {{ guide.channel(expandableItem) }}
+                     {% endfor %}
+                  {% endif %}
+               {% endfor %}
+                </ul>
+              </div>
+            
+                    </div>
+                </div>
+                  <hr class="guide-section-separator">
+              </li>
+               {% else %}
                <li class="guide-section vve-check"
                   data-visibility-tracking="">
                   <div class="guide-item-container personal-item">
@@ -73,12 +174,13 @@
                      </h3>
                      <ul class="guide-user-links yt-uix-tdl yt-box" role="menu">
                         {% for item in yt.guide.items[3].guideSectionRenderer.items %}
-                        {{ guide.channel(item) }}
+                           {{ guide.chanel(item) }}
                         {% endfor %}
                      </ul>
                   </div>
                   <hr class="guide-section-separator">
                </li>
+               {% endif %}
                <li class="guide-section vve-check"
                   data-visibility-tracking="">
                   <div class="guide-item-container personal-item">
@@ -100,10 +202,27 @@
                            </span>
                            </a>
                         </li>
+                        {% if yt.signin.isSignedIn %}
+                        <li class="guide-channel guide-notification-item overflowable-list-item" id="subscription_manager-guide-item" data-visibility-tracking="" role="menuitem">
+      
+                           <a class="guide-item yt-uix-sessionlink yt-valign spf-nolink   " href="/subscription_manager" title="Manage subscriptions" data-external-id="subscription_manager" data-serialized-endpoint="oqjduQECCAE%3D" data-visibility-tracking="" data-sessionlink="ei=4yp_V7naAsvG-gOWjZmYDw&amp;feature=g-manage&amp;ved=CIYCELUsGAEiEwj515vhguPNAhVLo34KHZZGBvMojh4">
+                             <span class="yt-valign-container">
+                                 <span class="thumb guide-subscription-manager-icon yt-sprite"></span>
+                                 <span class="display-name  no-count">
+                                   <span>
+                                     Manage subscriptions
+                                   </span>
+                                 </span>
+                             </span>
+                           </a>
+                         
+                           </li>
+                        {% endif %}
                      </ul>
                   </div>
                   <hr class="guide-section-separator">
                </li>
+               {% if not yt.signin.isSignedIn %}
                <li class="guide-section guide-header signup-promo">
                   <p>
                      Sign in now to see your channels and recommendations!
@@ -112,6 +231,7 @@
                      <a  href="https://accounts.google.com/ServiceLogin?service=youtube&amp;uilel=3&amp;hl=en&amp;continue=https%3A%2F%2Fwww.youtube.com%2Fsignin%3Fapp%3Ddesktop%26action_handle_signin%3Dtrue%26hl%3Den%26next%3D%252F%26feature%3Dsign_in_promo&amp;passive=true" class="yt-uix-button   yt-uix-sessionlink yt-uix-button-primary yt-uix-button-size-default" data-sessionlink="ei=caLrWqLbKZD2_AOA-6vIAg"><span class="yt-uix-button-content">Sign in</span></a>
                   </div>
                </li>
+               {% endif %}
             </ul>
          </div>
          {% else %}
