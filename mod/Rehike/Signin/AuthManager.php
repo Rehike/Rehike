@@ -33,7 +33,7 @@ class AuthManager
             if (self::$isSignedIn)
             {
                 Request::useAuth();
-                $yt->signin = (object) (["isSignedIn" => true] + $data);
+                $yt->signin = ["isSignedIn" => true] + $data;
                 return;
             }
         }

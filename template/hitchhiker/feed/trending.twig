@@ -49,25 +49,6 @@ yt.setConfig('DISMISS_THROUGH_IT', true);
 {% endblock %}
 
 {%- block appbarContent -%}
-   {% if yt.signin.isSignedIn %}
-   {% set appbarContents = {
-      'items': {
-        0: {
-            'title': 'Home',
-            'href': '/',
-        },
-        1: {
-            'title': 'Trending',
-            'href': '/feed/trending',
-            'selected': true
-        },
-        2: {
-          'title': 'Subscriptions',
-          'href': '/feed/subscriptions'
-        }
-      }
-   } %}
-   {% else %}
    {% set appbarContents = {
       'items': {
         0: {
@@ -81,7 +62,6 @@ yt.setConfig('DISMISS_THROUGH_IT', true);
         }
       }
    } %}
-   {% endif %}
    {{ appbar_nav.render(appbarContents) }}
 {% endblock %}
 

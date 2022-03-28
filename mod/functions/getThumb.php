@@ -10,9 +10,7 @@ registerFunction('getThumb', function($obj, $height = 110) {
     }
 
     for ($i = 0; $i < count($thumbs); $i++) {
-        if (isset($thumbs[$i] ->  height) and $thumbs[$i] -> height >= $height) {
-            return $thumbs[$i] -> url;
-        } else if (!isset($thumbs[$i] -> height)) {
+        if ($thumbs[$i] -> height >= $height) {
             return $thumbs[$i] -> url;
         }
     }

@@ -8,60 +8,12 @@
                 <span class="video-thumb yt-thumb yt-thumb-20">
                     <span class="yt-thumb-square">
                         <span class="yt-thumb-clip">
-                            <img src="{{ PIXEL }}" data-thumb="{{ changeThumbSize(getThumb(this, 20), 20) }}" alt="" onload=";window.__ytRIL && __ytRIL(this)" data-ytimg="1" width="20" height="20">
+                            <img src="{{ this.thumbnail.thumbnails[0].url }}" alt="" onload=";window.__ytRIL && __ytRIL(this)" data-ytimg="1" width="20" height="20">
                             <span class="vertical-align"></span>
                         </span>
                     </span>
                 </span>
             </span>
-            <span class="display-name {{ not this.presentationStyle == "GUIDE_ENTRY_PRESENTATION_STYLE_NEW_CONTENT" ? "no-count" }}">
-                <span>{{ getText(this.formattedTitle) }}</span>
-            </span>
-            {% if this.presentationStyle == "GUIDE_ENTRY_PRESENTATION_STYLE_NEW_CONTENT" %}
-            <span class="guide-count yt-uix-tooltip yt-valign">
-                <span class="yt-valign-container guide-count-value">1</span>
-            </span>
-            {% endif %}
-        </span>
-        {% if badges.liveBroadcasting %}
-        <span class="guide-badge-live yt-uix-tooltip yt-valign" data-tooltip-text="LIVE">
-            <span class="yt-valign-container"></span>
-        </span>
-        {% endif %}
-    </a>
-</li>
-{% endif %}
-{% endmacro %}
-
-{% macro libraryItem(item) %}
-{% if item.guideEntryRenderer %}
-{% set this = item.guideEntryRenderer %}
-{% set icon = this.icon.iconType ? this.icon.iconType : null %}
-{% if icon == "VIDEO_LIBARY_WHITE" or icon == "CONTENT_CUT" %}
-    {% set iconType = "KILL_ITEM" %}
-{% elseif icon == "PLAYLISTS" %}
-    {% set iconType = "playlists" %}
-{% elseif icon == "LIKES_PLAYLIST" %}
-    {% set iconType = "likes-playlist" %}
-    {% set id = "LL" %}
-{% elseif icon == "WATCH_HISTORY" %}
-    {% set iconType = "history" %}
-    {% set id = "history" %}
-{% elseif icon == "WATCH_LATER" %}
-    {% set iconType = "watch-later" %}
-    {% set id = "VLWL" %}
-{% elseif icon == "MY_VIDEOS" %}
-    {% set iconType = "my-channel" %}
-    {% set id = "my_videos" %}
-    {% set overrideHref = "/my_videos" %}
-{% endif %}
-{% if iconType != "KILL_ITEM" %}
-<li id="{{ id }}-guide-item" class="guide-channel guide-notification-item overflowable-list-item" role="menuitem">
-    <a href="{{ overrideHref ? overrideHref : getUrl(this) }}" class="guide-item yt-valign yt-uix-sessionlink spf-link">
-        <span class="yt-valign-container">
-            {% if iconType %}
-            <span class="thumb guide-{{ iconType }}-icon yt-sprite"></span>
-            {% endif %}
             <span class="display-name no-count">
                 <span>{{ getText(this.formattedTitle) }}</span>
             </span>
@@ -69,5 +21,19 @@
     </a>
 </li>
 {% endif %}
+{% endmacro %}
+
+{% macro playlist(item) %}
+{% if item.guideEntryRenderer %}
+{% set this = item.guideEntryRenderer %}
+<li id="-guide-item" class="guide-channel guide-notification-item overflowable-list-item" role="menuitem">
+    <a href="{{ getUrl(this) }}" class="guide-item yt-uix-sessionlink spf-link">
+        <span class="yt-valign-container">
+            <span class="thumb guide-playlists-icon yt-sprite"></span>
+            <span class="display-name-no-count">
+                <span>{{ getText(this.formattedTitle) }}</span>
+        </span>
+    </a>
+</li>
 {% endif %}
 {% endmacro %}

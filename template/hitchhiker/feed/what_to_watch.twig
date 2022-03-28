@@ -39,7 +39,6 @@
 {% endblock %}
 
 {%- block appbarContent -%}
-   {% if yt.signin.isSignedIn %}
    {% set appbarContents = {
       'items': {
         0: {
@@ -50,28 +49,9 @@
         1: {
             'title': 'Trending',
             'href': '/feed/trending'
-        },
-        2: {
-            'title': 'Subscriptions',
-            'href': '/feed/subscriptions'
         }
       }
    } %}
-   {% else %}
-    {% set appbarContents = {
-      'items': {
-        0: {
-            'title': 'Home',
-            'href': '/',
-            'selected': true
-        },
-        1: {
-            'title': 'Trending',
-            'href': '/feed/trending'
-        }
-      }
-   } %}
-   {% endif %}
    {{ appbar_nav.render(appbarContents) }}
 {% endblock %}
 

@@ -160,7 +160,7 @@ if (!is_null($primaryInfo)) {
     if (isset($rwp_->actions->likeButton->defaultText) and $rwp_->actions->likeButton->defaultText != '') {
         $yt->ratingsEnabled = true;
         $likeCount = (int) str_replace(",", "", $rwp_->actions->likeButton->defaultText);
-        $rwp_->dislikeCount = $dislikesData -> dislikes ?? 0;
+        $rwp_->dislikeCount = $dislikesData -> dislikes;
         if ($likeCount + $rwp_->dislikeCount != 0) {
             $rwp_->likePercent = ($likeCount / ($likeCount + $rwp_->dislikeCount)) * 100;
             $rwp_->dislikePercent = 100 - $rwp_->likePercent;
@@ -221,18 +221,12 @@ if (!is_null($secondaryResults)) {
     
     // disable autoplay video if playlist
     if (is_null($playlist)) {
-        if (!is_null($yt->signin->isSignedIn) and $yt->signin->isSignedIn == true) {
-            $videoList = $secondaryResults->results[1]->itemSectionRenderer->contents;
-        } else {
-            $videoList = $secondaryResults->results;
-        }
-
-        $autoplayVideo = WatchUtils::getRecomAutoplay($videoList, $recomIndex);
+        $autoplayVideo = WatchUtils::getRecomAutoplay($secondaryResults->results, $recomIndex);
         
         $rw->secondaryResults->autoplayRenderer = (object) [
             'results' => [$autoplayVideo]
         ];
-        array_splice($videoList, $recomIndex, 1);
+        array_splice($rw->secondaryResults->results, $recomIndex, 1);
     }
 }
 

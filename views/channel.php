@@ -61,7 +61,7 @@ if (isset($ytdata->header->c4TabbedHeaderRenderer)) {
     // header.thumbnail:
     $_h->thumbnail = $_oh->avatar ?? null;
     if (isset($_h->thumbnail->thumbnails[0]->url)) {
-        $_h->thumbnail->thumbnails[0]->url = ExtractUtils::changeThumbSize($_h->thumbnail->thumbnails[0]->url, 100);
+        $_h->thumbnail->thumbnails[0]->url = ChannelUtils::synthesiseChannelAvatarSize100Url($_h->thumbnail->thumbnails[0]->url);
     }
     // header.banner:
     if (isset($_oh->banner)) {
