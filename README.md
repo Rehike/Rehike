@@ -23,7 +23,7 @@ The easiest way to redirect `www.youtube.com` to Rehike (without causing any con
 
 ### Fiddler Classic Configuration
 
-<sub><sub>Don't use Fiddler Everywhere. It sucks.</sub></sub>
+<sub>Don't use Fiddler Everywhere. It sucks.</sub>
 
 Enable decryption of HTTPS traffic (from browsers only), then set up an AutoResponder rule that redirects `REGEX:https://www.youtube.com/(.*)` to `http://127.0.0.1/$1` and tick the box that allows unmatched request passthrough. If you then want to hide Fiddler from view, then press `CTRL`+`M`. Fiddler will be accessible in the system tray.
 
