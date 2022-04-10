@@ -12,9 +12,11 @@ See [CONTRIBUTORS.md](CONTRIBUTORS.md);
 
 ## Installation
 
-You need PHP 7+ and a webserver. I recommend [XAMPP](https://www.apachefriends.org/download.html). Composer packages are currently bundled with the project, however I suggest you [install that](https://getcomposer.org/download/) as well.
+Rehike requires PHP 7.4+. **Installation is completely manual at the moment.** In the future, a packaged installer is planned to be released to aid with installation and setup.
 
-Finally, getting it onto `www.youtube.com`: it may be possible to get it working with OS-native hosts file, however at the moment, you need external software that proxies it back to the domain:
+Developer-tested configuration uses [XAMPP](https://www.apachefriends.org/download.html) as a web server. All three 
+
+The easiest way to redirect `www.youtube.com` to Rehike (without causing any conflictions) is to use a proxy program. All three of these are tested by the developers and known to work, however, Fiddler is the most user-friendly solution and thus it is recommended to be used.
 - [Fiddler Classic (**recommended**)](https://www.telerik.com/download/fiddler/fiddler4)
 - [Charles (download trial)](https://www.charlesproxy.com/download/)
 - [mitmproxy](https://mitmproxy.org/)
