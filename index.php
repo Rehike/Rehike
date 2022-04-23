@@ -19,7 +19,7 @@ $yt = (object) [];
 $template = '';
 
 include ('boot.php');
-include ('defaultExperiments.php');
+
 // Load configuration
 $rehikeConfig = Rehike\RehikeConfigManager::loadConfig();
 $yt->config = $rehikeConfig;
