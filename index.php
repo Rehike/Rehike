@@ -20,6 +20,10 @@ $template = '';
 
 include ('boot.php');
 include ('defaultExperiments.php');
+// Load configuration
+$rehikeConfig = Rehike\RehikeConfigManager::loadConfig();
+$yt->config = $rehikeConfig;
+
 include ('resourceConstants.php');
 
 // Post boot events
