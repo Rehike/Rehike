@@ -16,4 +16,33 @@ A PHP project that aims to faithfully restore the old YouTube layout, known as H
 
 ## Contributors
 
-See [CONTRIBUTORS.md](CONTRIBUTORS.md);
+See [CONTRIBUTORS.md](CONTRIBUTORS.md).
+
+## Installation
+
+***Rehike is early in development. You should not expect a perfect user experience, should you choose to use it.***
+
+At the moment, Rehike must be manually installed. In the future, a simplified installer application will be released to streamline installation. As it stands, you will require some knowledge to get through its installation.
+
+Our main development operating system is Windows. As such, these instructions may differ if you are attempting to install Rehike on another operating system.
+
+### Prerequisites
+- PHP 7.4+
+   - We recommend using [XAMPP 8+](https://www.apachefriends.org/index.html)
+- A proxy (to map it to `www.youtube.com`)
+   - See [YukisCoffee/hitchhiker's instructions](https://github.com/YukisCoffee/hitchhiker#installation) on this.
+   - A proxy is required for video playback, unless you have a CORS bypass extension installed on your browser.
+
+## Acknowledgements
+
+Rehike makes use of the following open source software:
+
+- Composer
+- Twig
+- paquettg/php-html-parser
+
+and much of their prerequisites.
+
+## Thank you!
+
+Whether or not you choose to contribute to Rehike, we appreciate you checking out our project!
