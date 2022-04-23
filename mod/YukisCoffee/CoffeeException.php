@@ -88,7 +88,7 @@ abstract class CoffeeException extends \Exception implements ICoffeeException
         echo 
             "<div class=\"yukiscoffee-uncaught-error-container\">" .
                 "<h1>Fatal error</h1>" .
-                "Uncaught <b>GetPropertyAtPathException</b>: {$this->message}<br><br>" .
+                "Uncaught <b>{$this->exceptionName}</b>: {$this->message}<br><br>" .
                 "<h1>Technical info</h1>" .
                 "<pre>" .
                     "File: {$this->file}:{$this->line}\n\n" .
