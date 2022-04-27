@@ -9,7 +9,7 @@ set_include_path($root);
 if (isset($_COOKIE['VISITOR_INFO1_LIVE'])) {
     $visitor = $_COOKIE['VISITOR_INFO1_LIVE'];
 } else {
-    $visitor = 'QRe0LmmEJyY'; // DEBUG
+    $visitor = '';
     setcookie("VISITOR_INFO1_LIVE", $visitor);
 }
 
