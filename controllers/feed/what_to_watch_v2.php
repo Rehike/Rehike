@@ -8,9 +8,7 @@ $yt->modularCoreModules = ['www/feed'];
 $yt->page = (object) [];
 $yt->enableFooterCopyright = true;
 
-if(!isset($yt->spf) or $yt->spf == false) {
-    require "mod/getGuide.php";
-}
+include "controllers/mixins/guideNotSpfMixin.php";
 
 Request::innertubeRequest(
     "feed", 

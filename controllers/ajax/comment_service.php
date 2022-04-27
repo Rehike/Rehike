@@ -1,8 +1,8 @@
 <?php
 // content_html => section.comment-thread-renderer|div.comment-renderer
-require "rewriters/CommentThread.php";
+require "models/Comments/CommentThread.php";
 
-use Rewriter\CommentThread;
+use Rehike\Model\Comments\CommentThread;
 use \Rehike\Request;
 use function YukisCoffee\getPropertyAtPath as getProp;
 

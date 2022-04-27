@@ -1,7 +1,7 @@
 <?php
 use \Rehike\Request;
 //error_reporting(0);
-require "views/utils/watchUtils.php";
+require "controllers/utils/watchUtils.php";
 $yt->spfEnabled = true;
 $yt->useModularCore = true;
 $template = 'watch';
@@ -14,9 +14,7 @@ if (!isset($_GET['v'])) {
     die();
 }
 
-if(!isset($yt->spf) or $yt->spf == false) {
-    require "mod/getGuide.php";
-}
+include "controllers/mixins/guideNotSpfMixin.php";
 
 // begin request
 $yt->videoId = $_GET['v'];

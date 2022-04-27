@@ -1,15 +1,11 @@
 <?php
 require_once($root . '/vendor/autoload.php');
 
-//require($root . '/signin/signincore2.php');
-//require($root . '/signin/sc2stub.php');
-//$sc2 = new YtSigninCore();
+include "modules/YukisCoffee/CoffeeException.php";
+include "modules/YukisCoffee/GetPropertyAtPath.php";
 
-include "mod/YukisCoffee/CoffeeException.php";
-include "mod/YukisCoffee/GetPropertyAtPath.php";
-
-require('mod/spfPhp.php');
-require('mod/playerCore.php');
+require('modules/spfPhp.php');
+require('modules/playerCore.php');
 $_playerCore = PlayerCore::main();
 $yt->playerCore = $_playerCore;
 $yt->playerBasepos = $_playerCore->basepos;
@@ -41,9 +37,10 @@ $twig -> addFilter (
 
 function YcRehikeAutoloader($class)
 {
-    if (file_exists("mod/{$class}.php")) {
-        require "mod/{$class}.php";
-    }
+   if (file_exists("modules/{$class}.php"))
+   {
+      require "modules/{$class}.php";
+   }
 }
 spl_autoload_register('YcRehikeAutoloader');
 
@@ -58,7 +55,7 @@ function registerFunction($name, $cb): void {
    $twig->addFunction(new \Twig\TwigFunction($name, $cb));
 }
 
-foreach (glob('mod/functions/*.php') as $file) include $file;
+foreach (glob('modules/functions/*.php') as $file) include $file;
 
 function findKey($array, string $key) {
    for ($i = 0, $j = count($array); $i < $j; $i++) {

@@ -1,5 +1,5 @@
 <?php
-namespace Rewriter;
+namespace Rehike\Model\Comments;
 
 use function YukisCoffee\getPropertyAtPath as getProp;
 

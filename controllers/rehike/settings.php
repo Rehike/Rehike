@@ -2,7 +2,7 @@
     if (isset($routerUrl->path[1])) {
         switch($routerUrl->path[1]) {
             case 'general':
-                include('views/rehike/settings/general.php');
+                include('controllers/rehike/settings/general.php');
                 break;
             case '':
             default:
