@@ -119,7 +119,15 @@ $secondaryResults = $contents->twoColumnWatchNextResults->secondaryResults->seco
 $playlist = $contents->twoColumnWatchNextResults->playlist ?? null;
 $primaryInfo = findKey($results->contents, "videoPrimaryInfoRenderer") ?? null;
 $secondaryInfo = findKey($results->contents, "videoSecondaryInfoRenderer") ?? null;
-$commentSection = findKey($results->contents, 'itemSectionRenderer') ?? null;
+
+/**
+ * PATCH (yukiscoffee): Move comment section model to custom function
+ * for unique detection mechanism.
+ * 
+ * Previous mechanism failed to select the right property if more
+ * than one itemSectionRenderer was present in the contents model.
+ */
+$commentSection = WatchUtils::findCommentsSection($results->contents) ?? null;
 
 /*
 $rw = (object) [
