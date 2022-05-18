@@ -46,6 +46,33 @@
                     </ul>
                     </li>
                     #}
+                    <li class="watch-meta-item yt-uix-expander-body">
+                        <h4 class="title">Category</h4>
+                        <ul class="content watch-info-tag-list">
+                            <li>{{ yt.playerResponse.microformat.playerMicroformatRenderer.category }}</li>
+                        </ul>
+                    </li>
+                    {% for item in secondaryInfo.metaItems %}
+                    {% if item.metadataRowRenderer %}
+                    {% set this = item.metadataRowRenderer %}
+                    <li class="watch-meta-item yt-uix-expander-body">
+                        <h4 class="title">{{ getText(this.title) }}</h4>
+                        <ul class="content watch-info-tag-list">
+                            <li>
+                                {% for runs in this.contents[0].runs %}
+                                    {% if runs.navigationEndpoint %}
+                                    <a{{ (href|first == "/") ? " class=\"spf-link\"" }} href="{{ runs.navigationEndpoint.urlEndpoint.url }}">
+                                    {% endif %}
+                                    {{ runs.text }}
+                                    {% if runs.navigationEndpoint %}
+                                    </a>
+                                    {% endif %}
+                                {% endfor %}
+                            </li>
+                        </ul>
+                    </li>
+                    {% endif %}
+                    {% endfor %}
                 </ul>
             </div>
         </div>
