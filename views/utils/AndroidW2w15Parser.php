@@ -98,6 +98,8 @@ class AndroidW2w15Parser
     {
         // Skip abnormal input
         if (!isset($videoRenderer->thumbnail->thumbnails)) return;
+        if (!isset($videoRenderer->videoId)) return;
+        
         $videoId = $videoRenderer->videoId;
         $sourceThumbs = $videoRenderer->thumbnail->thumbnails;
 
