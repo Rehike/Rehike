@@ -1,6 +1,5 @@
 <?php
-require "rewriters/CommentThread.php";
-use Rewriter\CommentThread;
+use \Rehike\Model\Comments\CommentThread;
 use \Rehike\Request;
 
 $template = 'common/watch/watch_fragments2/comments';
