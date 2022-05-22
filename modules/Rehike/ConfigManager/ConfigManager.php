@@ -87,6 +87,27 @@ class ConfigManager
     }
 
     /**
+     * Get a configuration option
+     * 
+     * This handles checking if an option is set in the
+     * config. If it isn't, this returns null.
+     * 
+     * @param string $name of the configuration property
+     * @return mixed
+     */
+    public static function getConfigProp($name)
+    {
+        $cfg = static::getConfig();
+
+        if (isset($cfg->{$name}))
+        {
+            return $cfg->{$name};
+        }
+
+        return null;
+    }
+
+    /**
      * Set the config to be an object parsed
      * from the provided file name.
      * 
