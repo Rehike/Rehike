@@ -1,7 +1,7 @@
 <?php
 use \Rehike\Request;
 
-require "views/utils/AndroidW2w15Parser.php";
+require "controllers/utils/AndroidW2w15Parser.php";
 
 $yt->spfEnabled = true;
 $yt->useModularCore = true;
