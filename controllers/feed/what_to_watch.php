@@ -1,6 +1,8 @@
 <?php
 use \Rehike\Request;
 
+require "views/utils/AndroidW2w15Parser.php";
+
 $yt->spfEnabled = true;
 $yt->useModularCore = true;
 $template = 'feed/what_to_watch';
@@ -10,14 +12,20 @@ $yt->enableFooterCopyright = true;
 
 include "controllers/mixins/guideNotSpfMixin.php";
 
+/**
+ * BUG (yukiscoffee): WEB what_to_watch shelves API is
+ * down (permanently?). However, ANDROID shelves have
+ * a similar markup and are still up.
+ */
+
 Request::innertubeRequest(
     "feed", 
     "browse", 
     (object)[
         "browseId" => "FEwhat_to_watch"
     ],
-    "WEB",
-    "1.20220303.06.01"
+    "ANDROID",
+    "15.14.33"
 );
 $response = Request::getInnertubeResponses()["feed"];
 $yt -> response = $response;
@@ -27,11 +35,14 @@ $timeb = round(microtime(true) * 1000);
 $ytdata = json_decode($response);
 //var_dump( $ytdata);
 
-$shelvesList = $ytdata->contents->twoColumnBrowseResultsRenderer->
+$shelvesList = $ytdata->contents->singleColumnBrowseResultsRenderer->
     tabs[0]->tabRenderer->content->sectionListRenderer->contents;
 
-$yt->page->continuation = $ytdata->contents->twoColumnBrowseResultsRenderer->tabs[0]->tabRenderer->content->sectionListRenderer->continuations[0]->nextContinuationData->continuation;
 
+/** Continuations are still buggy */
+$yt->page->continuation = $ytdata->contents->singleColumnBrowseResultsRenderer->tabs[0]->tabRenderer->content->sectionListRenderer->continuations[0]->nextContinuationData->continuation;
+
+$shelvesList = AndroidW2w15Parser::parse($shelvesList);
 
 /*
 $shelvesList = $ytdata->contents->singleColumnBrowseResultsRenderer->

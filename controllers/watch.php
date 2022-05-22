@@ -117,7 +117,15 @@ $secondaryResults = $contents->twoColumnWatchNextResults->secondaryResults->seco
 $playlist = $contents->twoColumnWatchNextResults->playlist ?? null;
 $primaryInfo = findKey($results->contents, "videoPrimaryInfoRenderer") ?? null;
 $secondaryInfo = findKey($results->contents, "videoSecondaryInfoRenderer") ?? null;
-$commentSection = findKey($results->contents, 'itemSectionRenderer') ?? null;
+
+/**
+ * PATCH (yukiscoffee): Move comment section model to custom function
+ * for unique detection mechanism.
+ * 
+ * Previous mechanism failed to select the right property if more
+ * than one itemSectionRenderer was present in the contents model.
+ */
+$commentSection = WatchUtils::findCommentsSection($results->contents) ?? null;
 
 /*
 $rw = (object) [
@@ -200,6 +208,8 @@ if (!is_null($primaryInfo)) {
             $rwp_->dislikePercent = 50;
         }
     }
+
+
     // owner info rw
     $mpo_ = $secondaryInfo->owner->videoOwnerRenderer ?? null;
 
@@ -243,6 +253,7 @@ if (!is_null($secondaryInfo)) {
         ->metadataRowContainerRenderer->rows ?? null;
     $rws_->showMoreText = $secondaryInfo->showMoreText ?? null;
     $rws_->showLessText = $secondaryInfo->showLessText ?? null;
+    $rws_->metaItems = $secondaryInfo->metadataRowContainer->metadataRowContainerRenderer->rows ?? null;
 }
 /**
  * Recommended RW

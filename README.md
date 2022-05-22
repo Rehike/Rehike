@@ -40,6 +40,7 @@ Rehike makes use of the following open source software:
 - Composer
 - Twig
 - paquettg/php-html-parser
+- [Return YouTube Dislike API](https://www.returnyoutubedislike.com/)
 
 and much of their prerequisites.
 
