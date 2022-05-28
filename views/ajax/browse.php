@@ -2,6 +2,8 @@
 $template = "ajax/browse";
 $yt->page = (object) [];
 
+require "views/utils/AndroidW2w15Parser.php";
+
 header("Content-Type: application/json");
 
 if (!isset($_GET["continuation"])) {
@@ -12,12 +14,6 @@ if (!isset($_GET["continuation"])) {
 $yt->continuation = $_GET["continuation"];
 $yt->target = $_GET["target_id"];
 
-if ($yt->target == "section-list-874807") {
-    $yt->reqVer = "1.20220303.06.01";
-} else {
-    $yt->reqVer = "2.20220303.01.01";
-}
-
 use \Rehike\Request;
 
 if ($yt->target == "section-list-874807") {
@@ -27,9 +23,11 @@ if ($yt->target == "section-list-874807") {
         (object) [
             "continuation" => $yt->continuation
         ],
-        "WEB",
-        "1.20220303.06.01"
+        "ANDROID",
+        "15.14.33"
     );
+
+    $response = Request::getInnertubeResponses()["browse"];
 } else {
     Request::innertubeRequest(
         "browse",
@@ -38,14 +36,16 @@ if ($yt->target == "section-list-874807") {
             "continuation" => $yt->continuation
         ]
     );
+
+    $response = Request::getInnertubeResponses()["browse"];
 }
 
-$response = Request::getInnertubeResponses()["browse"];
+
 $yt->response = $response;
 $ytdata = json_decode($response);
 
 if (isset($ytdata->continuationContents->sectionListContinuation)) {
-    $yt->page->shelfList = $ytdata->continuationContents->sectionListContinuation->contents;
+    $yt->page->shelfList = AndroidW2W15Parser::parse($ytdata->continuationContents->sectionListContinuation->contents);
 } else if (isset($ytdata->onResponseReceivedActions[0]->appendContinuationItemsAction->continuationItems)) {
     $yt->page->lockupList = $ytdata->onResponseReceivedActions[0]->appendContinuationItemsAction->continuationItems;
 }
