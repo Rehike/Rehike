@@ -7,6 +7,7 @@ $template = 'feed/what_to_watch_v2';
 $yt->modularCoreModules = ['www/feed'];
 $yt->page = (object) [];
 $yt->enableFooterCopyright = true;
+$yt->flow = (isset($_GET["flow"]) and $_GET["flow"] == "2") ? "list" : "grid";
 
 if(!isset($yt->spf) or $yt->spf == false) {
     require "mod/getGuide.php";
@@ -17,9 +18,7 @@ Request::innertubeRequest(
     "browse", 
     (object)[
         "browseId" => "FEwhat_to_watch"
-    ],
-    "WEB",
-    "2.20220303.06.01"
+    ]
 );
 
 $response = Request::getInnertubeResponses()["feed"];
@@ -27,3 +26,4 @@ $response = Request::getInnertubeResponses()["feed"];
 $ytdata = json_decode($response);
 $yt -> response = $response;
 $yt -> videoList = $ytdata -> contents -> twoColumnBrowseResultsRenderer -> tabs[0] -> tabRenderer -> content -> richGridRenderer -> contents;
+$yt -> page -> continuation = end($yt -> videoList) -> continuationItemRenderer -> continuationEndpoint -> continuationCommand -> token ?? null;

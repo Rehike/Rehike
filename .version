@@ -1,10 +1,10 @@
 {
-	"previousHash": "d7a6ae90c544bd00265802cf9f7cd64bb7eb15d8",
-	"currentRevisionId": 158,
-	"subject": "fix w2w browse_ajax",
-	"body": "fix w2w browse_ajax",
+	"previousHash": "da86b8dbc7b0a721dbd2ab82b94b8d285abb1043",
+	"currentRevisionId": 159,
+	"subject": "web v2 home, no load more support",
+	"body": "web v2 home, no load more support",
 	"branch": "master",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1653764661
+	"time": 1653770373
 }

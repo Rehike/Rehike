@@ -8,7 +8,11 @@ if (isset($_GET["enable_polymer"]) && $_GET["enable_polymer"] == "1") {
 
 switch ($routerUrl->path[0]) {
     case '':
-        include('views/feed/what_to_watch.php');
+        if ($yt->config->useWebV2HomeEndpoint) {
+            include('views/feed/what_to_watch_v2.php');
+        } else {
+            include('views/feed/what_to_watch.php');
+        }
         break;
     case 'watch':
         include('views/watch.php');
