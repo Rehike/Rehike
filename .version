@@ -1,10 +1,10 @@
 {
-	"previousHash": "da86b8dbc7b0a721dbd2ab82b94b8d285abb1043",
-	"currentRevisionId": 159,
-	"subject": "web v2 home, no load more support",
-	"body": "web v2 home, no load more support",
+	"previousHash": "160355198ba405a2ea277a1a4b15e93208d1efb3",
+	"currentRevisionId": 160,
+	"subject": "SPF-ify grid/list view on w2w v2",
+	"body": "SPF-ify grid/list view on w2w v2",
 	"branch": "master",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1653770373
+	"time": 1653794663
 }
