@@ -208,8 +208,19 @@ video-{{ yt.videoId }} {{ (yt.theaterMode) ? 'watch-wide watch-stage-mode' }}
                {% set owner = info.owner %}
                <div id="watch-header" class="yt-card yt-card-has-padding">
                   <div id="watch7-headline" class="clearfix">
+                     {% if info.hashtags or info.superTitle %}
+                        <span class="standalone-collection-badge-renderer-text">
+                           {% if info.superTitle %}
+                              <a href="{{ info.superTitle.url }}">{{ info.superTitle.text }}</a>
+                           {% endif %}
+                           {% if info.hashtags %}
+                              {% for hashtag in info.hashtags %}
+                                 <a href="/results?search_query={{ hashtag }}">#{{ hashtag }}</a>
+                              {% endfor %}
+                           {% endif %}
+                        </span>
+                     {% endif %}
                      <div id="watch-headline-title">
-
                         <h1 class="watch-title-container">
                            {% if info.badges[0].metadataBadgeRenderer.icon.iconType == "PRIVACY_UNLISTED" %}
                            <span id="watch-privacy-icon" class="yt-uix-tooltip yt-uix-tooltip-reverse unlisted" title="This video is unlisted. Only those with the link can see it." tabindex="0" data-tooltip-text="This video is unlisted. Only those with the link can see it." aria-labelledby="yt-uix-tooltip41-arialabel">

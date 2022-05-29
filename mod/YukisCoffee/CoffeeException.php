@@ -44,13 +44,51 @@ abstract class CoffeeException extends \Exception implements ICoffeeException
         parent::__construct($message, $code);
     }
 
+    /**
+     * Create a new exception from a previously thrown
+     * one.
+     * 
+     * Useful for renaming exceptions.
+     * 
+     * @param Throwable $exception
+     * @return CoffeeException
+     */
+    public static function from($exception)
+    {
+        $ceInstance = new static(
+            $exception -> getMessage(),
+            $exception -> getCode()
+        );
+
+        $ceInstance -> _setFile( $exception -> getFile() );
+        $ceInstance -> _setLine( $exception -> getLine() );
+        $ceInstance -> _setTrace( $exception -> getTrace() );
+
+        return $ceInstance;
+    }
+
+    public function _setFile($a)
+    {
+        $this->file = $a;
+    }
+
+    public function _setLine($a)
+    {
+        $this->line = $a;
+    }
+
+    public function _setTrace($a)
+    {
+        $this->trace = $a;
+    }
+
     public function __toString()
     {
         // More readable crash screen if uncaught.
         echo 
             "<div class=\"yukiscoffee-uncaught-error-container\">" .
                 "<h1>Fatal error</h1>" .
-                "Uncaught <b>GetPropertyAtPathException</b>: {$this->message}<br><br>" .
+                "Uncaught <b>{$this->exceptionName}</b>: {$this->message}<br><br>" .
                 "<h1>Technical info</h1>" .
                 "<pre>" .
                     "File: {$this->file}:{$this->line}\n\n" .

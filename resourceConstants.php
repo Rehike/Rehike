@@ -17,13 +17,16 @@ $ytConstants = (object) [
         'www-attribution' => '//' . YTS_HOST . '/yts/cssbin/www-attribution-vflhQnyPy.css',
         'www-results' => '//' . YTS_HOST . '/yts/cssbin/www-results-vfl67U2zJ.css',
         'www-account-settings'=> '//' .  YTS_HOST . '/yts/cssbin/www-account-settings-vfl9mNWIu.css',
-        'www-creatorpage' => '//' . YTS_HOST . '/yts/cssbin/www-creatorpage-vflfgomxn.css'
+        'www-creatorpage' => '//' . YTS_HOST . '/yts/cssbin/www-creatorpage-vflfgomxn.css',
+        'www-error' => '//' . YTS_HOST . '/yts/cssbin/www-error-vflvD9R0Z.css'
     ],
     'jsModulesPath' => '//' . YTS_HOST . '/yts/jsbin/' . MODULAR_JS_PATH . '/',
     'js' => (object) [
         'scheduler/scheduler' => '//' . YTS_HOST . '/yts/jsbin/scheduler-vflyNP9EQ/scheduler.js',
         'spf/spf' => '//' . YTS_HOST . '/yts/jsbin/spf-vflRfjT3b/spf.js',
         'www-core/www-core' => '//' . YTS_HOST . '/yts/jsbin/www-core-vflWuPqdk/www-core.js',
+        'www-searchbox/www-searchbox' => '//' . YTS_HOST . '/yts/jsbin/www-searchbox-vflV_B8yT/www-searchbox.js',
+        'www-notfound/www-notfound' => '//' . YTS_HOST . '/yts/jsbin/www-notfound-vflsu8ylX/www-notfound.js',
         'www/base' => jsModuleUrl('base'),
         'www/common' => jsModuleUrl('common'),
         'www/angular_base' => jsModuleUrl('angular_base'),

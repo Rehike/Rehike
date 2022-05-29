@@ -11,4 +11,27 @@ class WatchUtils
             return $results[$i];
         }
     }
+    
+    /**
+     * Temporary method for finding the comment section
+     * index.
+     * 
+     * @author YukisCoffee <kirasicecreamm@gmail.com>
+     * @param object[] $items array
+     * @return void
+     */
+    public static function findCommentsSection($items)
+    {
+        for ($i = 0, $j = count($items); $i < $j; $i++)
+        {
+            if (isset(
+                $items[$i]->itemSectionRenderer->sectionIdentifier
+            ) &&
+                "comment-item-section" == $items[$i]->itemSectionRenderer->sectionIdentifier
+            )
+            {
+                return $items[$i]->itemSectionRenderer;
+            }
+        }
+    }
 }
