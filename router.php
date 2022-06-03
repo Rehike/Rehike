@@ -68,9 +68,6 @@ switch ($routerUrl->path[0]) {
     case "related_ajax":
         include "views/ajax/related.php";
         break;
-    case 'internal': // forward to internal router
-        include('internal/internalRouter.php');
-        break;
     case 'settings':
         include('views/rehike/settings.php');
         break;

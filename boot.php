@@ -48,6 +48,10 @@ function YcRehikeAutoloader($class)
 spl_autoload_register('YcRehikeAutoloader');
 
 
+/**
+ * TODO (kirasicecreamm): Clean up Template Functions system to have
+ * a more clear name. This will probably done on new-mvc branch.
+ */
 function registerFunction($name, $cb): void {
    global $twig;
    
