@@ -2,7 +2,7 @@
 
 {%- macro jsPath(name) -%}{{ _self.getPath('js', name) }}{% endmacro %}
 
-{%- macro cssPath(name) -%}{{ _self.getPath('css', name) }}{% endmacro %}
+{%- macro cssPath(name) -%}{{ _self.getPath((yt.PREF.f4 == "4000000") ? "css2x" : "css", name) }}{% endmacro %}
 
 {%- macro js(name) -%}
 <script src="{{ _self.jsPath(name) }}" type="text/javascript" name="{{ name }}"></script>
