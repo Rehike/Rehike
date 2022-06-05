@@ -86,7 +86,7 @@ if (isset($yt->spf) && $yt->spf && http_response_code() == 200) { // isset to pr
     $_htmlBuffer = ob_get_clean();
     header('Content-Type: application/json');
 
-    $spfResponse = @SpfPhp::build(
+    $spfResponse = @SpfPhp::parse(
         $_htmlBuffer,
         $yt->spfIdListeners,
         (object) [

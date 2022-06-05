@@ -1,10 +1,10 @@
 {
-	"previousHash": "e56ff76277b06a6f2cb0541e4d88ac76bd77fe75",
-	"currentRevisionId": 164,
-	"subject": "More composer changes",
-	"body": "More composer changes",
+	"previousHash": "b26f87428b0402c997c454038e010ab3164fa493",
+	"currentRevisionId": 165,
+	"subject": "Migrate SpfPhp to its own project",
+	"body": "Migrate SpfPhp to its own project",
 	"branch": "master",
 	"committerName": "Coffee",
 	"committerEmail": "99076687+YukisCoffee@users.noreply.github.com",
-	"time": 1654395336
+	"time": 1654395440
 }

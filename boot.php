@@ -8,7 +8,6 @@ require_once($root . '/vendor/autoload.php');
 include "mod/YukisCoffee/CoffeeException.php";
 include "mod/YukisCoffee/GetPropertyAtPath.php";
 
-require('mod/spfPhp.php');
 require('mod/playerCore.php');
 $_playerCore = PlayerCore::main();
 $yt->playerCore = $_playerCore;
