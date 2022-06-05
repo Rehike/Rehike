@@ -1,10 +1,10 @@
 {
-	"previousHash": "b26f87428b0402c997c454038e010ab3164fa493",
-	"currentRevisionId": 165,
-	"subject": "Migrate SpfPhp to its own project",
-	"body": "Migrate SpfPhp to its own project",
+	"previousHash": "95c7ea01bbdf6107214366d720cdae4d2aafb416",
+	"currentRevisionId": 166,
+	"subject": "fix attribution being a little shithead",
+	"body": "fix attribution being a little shithead",
 	"branch": "master",
-	"committerName": "Coffee",
-	"committerEmail": "99076687+YukisCoffee@users.noreply.github.com",
-	"time": 1654395440
+	"committerName": "aubymori",
+	"committerEmail": "aubyomori@gmail.com",
+	"time": 1654418989
 }

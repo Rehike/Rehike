@@ -12,6 +12,6 @@ Request::innertubeRequest("page", "next", (object)[
 $response = Request::getInnertubeResponses()["page"];
 
 $ytdata = json_decode($response);
-$yt->page->title = $ytdata->contents->twoColumnWatchNextResults->
-   results->results->contents[0]->videoPrimaryInfoRenderer->title->
-   runs[0]->text;
+$primaryInfo = findKey($ytdata->contents->twoColumnWatchNextResults->results->results->contents, "videoPrimaryInfoRenderer") ?? null;
+
+$yt->page->title = $primaryInfo->title ?? null;
