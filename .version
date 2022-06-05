@@ -1,10 +1,10 @@
 {
-	"previousHash": "95c7ea01bbdf6107214366d720cdae4d2aafb416",
-	"currentRevisionId": 166,
-	"subject": "fix attribution being a little shithead",
-	"body": "fix attribution being a little shithead",
+	"previousHash": "85a69bdcbe6a676f33a32f04e54dec5ff76a5652",
+	"currentRevisionId": 167,
+	"subject": "stfu nicksay",
+	"body": "stfu nicksay",
 	"branch": "master",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1654418989
+	"time": 1654419236
 }
