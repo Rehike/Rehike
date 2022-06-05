@@ -26,6 +26,8 @@ if (isset($_COOKIE["PREF"])) {
    ];
 }
 
+$yt -> version = json_decode(file_get_contents($root . "/.version"));
+
 $twigLoader = new \Twig\Loader\FilesystemLoader(
    $root . $templateRoot
 );
