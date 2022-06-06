@@ -43,6 +43,8 @@ $twig -> addFilter (
 
 function YcRehikeAutoloader($class)
 {
+   $class = str_replace("\\", "/", $class);
+
     if (file_exists("mod/{$class}.php")) {
         require "mod/{$class}.php";
     }
