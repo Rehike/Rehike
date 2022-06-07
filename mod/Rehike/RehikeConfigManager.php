@@ -13,7 +13,8 @@ class RehikeConfigManager extends ConfigManager
             "useOldRoboto" => false,
             "showUploadDateOnWatchRecommended" => false,
             "useWebV2HomeEndpoint" => false,
-            "useOldUploadButton" => false
+            "useOldUploadButton" => false,
+            "versionInFooter" => true
         ];
     
     /**

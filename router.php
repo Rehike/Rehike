@@ -68,8 +68,36 @@ switch ($routerUrl->path[0]) {
     case "related_ajax":
         include "views/ajax/related.php";
         break;
-    case 'settings':
-        include('views/rehike/settings.php');
+    case "rehike":
+        switch ($routerUrl->path[1])
+        {
+            case 'settings':
+                include('views/rehike/settings.php');
+                break;
+            case "version":
+                (include "views/rehike/version.php")::get($yt, $template);
+                break;
+			case "static":
+				switch ($routerUrl->path[2])
+				{
+					case "logo.png":
+						header("Content-Type: image/png");
+						echo file_get_contents("static/version/logo.png");
+						exit();
+						break;
+					case "logo_small_grey.png":
+						header("Content-Type: image/png");
+						echo file_get_contents("static/version/logo_small_grey.png");
+						exit();
+						break;
+                    case "branch_icon.png":
+                        header("Content-Type: image/png");
+                        echo file_get_contents("static/version/branch_icon.png");
+                        exit();
+                        break;
+				}
+				break;
+        }
         break;
     case 'feed':
         if(isset($routerUrl->path[1])) {

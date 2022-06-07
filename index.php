@@ -26,6 +26,12 @@ include ('resourceConstants.php');
 // Post boot events
 Rehike\ContextManager::$visitorData = $visitor;
 
+// Load version information from the version service
+// and push it to the global yt variable
+\Rehike\Version\VersionController::init();
+$yt->rehikeVersion = (object)\Rehike\Version\VersionController::$versionInfo;
+$yt->rehikeVersion->semanticVersion = \Rehike\Version\VersionController::getVersion();
+
 // differentiates pages
 require ('router.php');
 

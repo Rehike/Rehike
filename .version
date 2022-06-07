@@ -1,10 +1,10 @@
 {
-	"previousHash": "fede504adddd87b499cc3f53edc3539e3856e2c1",
-	"currentRevisionId": 174,
-	"subject": "Config improvements",
-	"body": "Config improvements",
+	"previousHash": "82f2e8b0733c0a081c607c4e5ae2f8045825c978",
+	"currentRevisionId": 175,
+	"subject": "New versioning system (and page!)",
+	"body": "New versioning system (and page!)",
 	"branch": "master",
 	"committerName": "Coffee",
 	"committerEmail": "99076687+YukisCoffee@users.noreply.github.com",
-	"time": 1654595335
+	"time": 1654595400
 }
