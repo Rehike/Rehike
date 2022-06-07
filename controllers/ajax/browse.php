@@ -7,7 +7,7 @@
 $template = "ajax/browse";
 $yt->page = (object) [];
 
-require "views/utils/AndroidW2w15Parser.php";
+require "controllers/utils/AndroidW2w15Parser.php";
 
 header("Content-Type: application/json");
 

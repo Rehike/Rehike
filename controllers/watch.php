@@ -22,7 +22,7 @@ $yt->playlistId = $_GET['list'] ?? null;
 $yt->playlistIndex = (string) ((int) ($_GET['index'] ?? '1') - 1);
 
 
-require_once('views/utils/extractUtils.php');
+require_once('controllers/utils/extractUtils.php');
 
 $watchRequestParams = [
     'videoId' => $yt->videoId

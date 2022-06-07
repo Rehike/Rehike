@@ -41,9 +41,9 @@ function YcRehikeAutoloader($class)
 {
    $class = str_replace("\\", "/", $class);
 
-    if (file_exists("mod/{$class}.php")) {
-        require "modules/{$class}.php";
-    }
+   if (file_exists("modules/{$class}.php")) {
+      require "modules/{$class}.php";
+   }
 }
 spl_autoload_register('YcRehikeAutoloader');
 

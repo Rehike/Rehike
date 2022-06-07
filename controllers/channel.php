@@ -7,14 +7,12 @@ $template = 'channel';
 $yt->modularCoreModules = ['www/channels'];
 $yt->page = (object) [];
 
-require_once('views/utils/extractUtils.php');
-require_once('views/utils/channelUtils.php');
+require_once('controllers/utils/extractUtils.php');
+require_once('controllers/utils/channelUtils.php');
 $ucid = ChannelUtils::getUcid($routerUrl);
 $yt->ucid = $ucid;
 
-if(!isset($yt->spf) or $yt->spf == false) {
-    require "mod/getGuide.php";
-}
+include "controllers/mixins/guideNotSpfMixin.php";
 
 $tab = (isset($routerUrl->path[2]) and $routerUrl->path[2] != '')  ? $routerUrl->path[2] : 'featured';
 $yt->tab = $tab;
@@ -126,22 +124,22 @@ if (isset($ytdata->header->c4TabbedHeaderRenderer)) {
 
 switch ($tab) { // for extracting info for certain tabs
     case 'featured':
-        include('views/channel/featured.php');
+        include('controllers/channel/featured.php');
         break;
     case 'videos':
-        include('views/channel/videos.php');
+        include('controllers/channel/videos.php');
         break;
     case 'playlists':
-        include('views/channel/playlists.php');
+        include('controllers/channel/playlists.php');
         break;
     case 'community':
-        include('views/channel/community.php');
+        include('controllers/channel/community.php');
         break;
     case 'channels':
-        include('views/channel/channels.php');
+        include('controllers/channel/channels.php');
         break;
     case 'about':
-        include('views/channel/about.php');
+        include('controllers/channel/about.php');
         break;
     default:
         break;

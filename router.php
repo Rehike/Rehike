@@ -11,7 +11,11 @@ switch ($routerUrl->path[0]) {
      * General page definitions
      */
         case '':
-            include('controllers/feed/what_to_watch.php');
+            if ($yt->config->useWebV2HomeEndpoint) {
+                include('controllers/feed/what_to_watch_v2.php');
+            } else {
+                include('controllers/feed/what_to_watch.php');
+            }
             break;
         case 'watch':
             include('controllers/watch.php');
@@ -34,13 +38,13 @@ switch ($routerUrl->path[0]) {
                         header('Location: /');
                         break;
                     case 'trending':
-                        include('views/feed/trending.php');
+                        include('controllers/feed/trending.php');
                         break;
                     case 'history':
-                        include('views/feed/history.php');
+                        include('controllers/feed/history.php');
                         break;
                     case 'guide_builder':
-                        include('views/feed/guide_builder.php');
+                        include('controllers/feed/guide_builder.php');
                         break;
                     default:
                         $template = 'error/404';
@@ -82,11 +86,36 @@ switch ($routerUrl->path[0]) {
     /**
      * Rehike special page definitions
      */
-        case 'internal': // forward to internal router
-            include('internal/internalRouter.php');
-            break;
-        case 'settings':
-            include('views/rehike/settings.php');
+        case "rehike":
+            switch ($routerUrl->path[1])
+            {
+                case 'settings':
+                    include('controllers/rehike/settings.php');
+                    break;
+                case "version":
+                    (include "controllers/rehike/version.php")::get($yt, $template);
+                    break;
+                case "static":
+                    switch ($routerUrl->path[2])
+                    {
+                        case "logo.png":
+                            header("Content-Type: image/png");
+                            echo file_get_contents("static/version/logo.png");
+                            exit();
+                            break;
+                        case "logo_small_grey.png":
+                            header("Content-Type: image/png");
+                            echo file_get_contents("static/version/logo_small_grey.png");
+                            exit();
+                            break;
+                        case "branch_icon.png":
+                            header("Content-Type: image/png");
+                            echo file_get_contents("static/version/branch_icon.png");
+                            exit();
+                            break;
+                    }
+                    break;
+            }
             break;
     /**
      * Test definitions
