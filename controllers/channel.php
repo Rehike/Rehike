@@ -69,9 +69,9 @@ if (isset($ytdata->header->c4TabbedHeaderRenderer)) {
     } else {
         $_h->banner = (object) [
             'thumbnails' => [(object) [
-                'url' => $_resourcePath($ytConstants, 'img', 'channels/c4/default_banner')
+                'url' => \Rehike\TemplateFunctions::resourcePath($ytConstants, 'img', 'channels/c4/default_banner')
             ], null, null, (object) [
-                'url' => $_resourcePath($ytConstants, 'img', 'channels/c4/default_banner_hq')
+                'url' => \Rehike\TemplateFunctions::resourcePath($ytConstants, 'img', 'channels/c4/default_banner_hq')
             ]]
         ];
         $yt->page->hasCustomBanner = false;
@@ -116,7 +116,7 @@ if (isset($ytdata->header->c4TabbedHeaderRenderer)) {
         $_h->subscriptionButton = (object) [];
         $_hs = $_h->subscriptionButton; // shorthand
         if (isset($_oh->subscriberCountText)) {
-            $_hs->subscriberCountText = ExtractUtils::isolateSubCnt($_getText($_oh->subscriberCountText));
+            $_hs->subscriberCountText = ExtractUtils::isolateSubCnt(\Rehike\TemplateFunctions::getText($_oh->subscriberCountText));
             $_hs->shortSubscriberCountText = $_hs->subscriberCountText;
         }
     }

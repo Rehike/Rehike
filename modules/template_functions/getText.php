@@ -1,6 +1,6 @@
 <?php
 
-registerFunction('getText', function ($obj) {
+\Rehike\TemplateFunctions::register('getText', function ($obj) {
    if (isset($obj->runs)) {
       //return '';
       $runs = $obj->runs;

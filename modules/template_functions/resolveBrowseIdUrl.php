@@ -1,6 +1,6 @@
 <?php
 
-registerFunction('resolveBrowseIdUrl', function ($id) {
+\Rehike\TemplateFunctions::register('resolveBrowseIdUrl', function ($id) {
    if (!isset($id)) {
       return "";
    }

@@ -1,10 +1,10 @@
 {
-	"previousHash": "2b6edb06a23a556c691c9d616f01165ac45f17ce",
-	"currentRevisionId": 183,
-	"subject": "Finish master merge (for real this time)",
-	"body": "Finish master merge (for real this time)",
+	"previousHash": "8113351f92ad8196bb9889b5f6226b88c3ae69e5",
+	"currentRevisionId": 184,
+	"subject": "Migrate templater functions to a new home",
+	"body": "Migrate templater functions to a new home",
 	"branch": "new-mvc",
 	"committerName": "Coffee",
 	"committerEmail": "99076687+YukisCoffee@users.noreply.github.com",
-	"time": 1654596398
+	"time": 1654610974
 }

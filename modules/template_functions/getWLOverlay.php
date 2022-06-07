@@ -15,7 +15,7 @@
  * 
  * @return ?object
  */
-registerFunction("getWLOverlay", function($array)
+\Rehike\TemplateFunctions::register("getWLOverlay", function($array)
 {
     if (!isset($array -> thumbnailOverlays )) return null;
 

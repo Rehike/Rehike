@@ -15,7 +15,7 @@
  * 
  * @return ?object
  */
-registerFunction("getThumbnailOverlay", function($array, $name)
+\Rehike\TemplateFunctions::register("getThumbnailOverlay", function($array, $name)
 {
     // Iterate the array and figure out the thumbnail overlay
     foreach ($array as $index => $contents)

@@ -90,7 +90,7 @@ if ($a = ($_och->createRenderer->commentSimpleboxRenderer ?? false)) {
     $_ch->simpleBoxRenderer = (object) [];
     $_sbr = $_ch->simpleBoxRenderer; // shorthand
     $_sbr->authorThumbnail = $a->authorThumbnail;
-    $_sbr->placeholderText = $_getText($a->placeholderText);
+    $_sbr->placeholderText = \Rehike\TemplateFunctions::getText($a->placeholderText);
 }
 /**
  * Comments Threads Rewrite

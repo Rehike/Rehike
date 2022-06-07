@@ -1,6 +1,6 @@
 <?php
 
-registerFunction('getVideoTime', function($obj) {
+\Rehike\TemplateFunctions::register('getVideoTime', function($obj) {
     if (isset($obj->lengthText)) {
         return $obj->lengthText->simpleText;
     } else if ($obj->thumbnailOverlays) {

@@ -44,25 +44,19 @@ function YcRehikeAutoloader($class)
    if (file_exists("modules/{$class}.php")) {
       require "modules/{$class}.php";
    }
+   else if ("Rehike/Model/" == substr($class, 0, 13))
+   {
+      $file = str_replace("\\", "/", substr($class, 13, strlen($class)));
+
+      require "models/${file}.php";
+   }
 }
 spl_autoload_register('YcRehikeAutoloader');
 
+// temporary? move twig when?
+\Rehike\TemplateFunctions::$boundTwigInstance = &$twig;
 
-/**
- * TODO (kirasicecreamm): Clean up Template Functions system to have
- * a more clear name. This will probably done on new-mvc branch.
- */
-function registerFunction($name, $cb): void {
-   global $twig;
-   
-   $Jim = '_' . $name;
-   global ${$Jim};
-   ${$Jim} = $cb;
-   
-   $twig->addFunction(new \Twig\TwigFunction($name, $cb));
-}
-
-foreach (glob('modules/functions/*.php') as $file) include $file;
+foreach (glob('modules/template_functions/*.php') as $file) include $file;
 
 function findKey($array, string $key) {
    for ($i = 0, $j = count($array); $i < $j; $i++) {
