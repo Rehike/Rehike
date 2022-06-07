@@ -100,14 +100,10 @@
                                             <ul id="channels-browse-content-grid" class="channels-browse-content-grid branded-page-gutter-padding grid-lockups-container">
                                                 {% apply spaceless %}
                                                 {% for item in yt.videoList %}
-                                                    {% if item.richItemRenderer.content.videoRenderer %}
-                                                        {% if yt.flow == "grid" %}
+                                                    {% if item.gridVideoRenderer or item.gridPlaylistRenderer %}
                                                         <li class="channels-content-item yt-shelf-grid-item">
-                                                            {{ lockup.grid(item.richItemRenderer.content) }}
+                                                            {{ lockup.grid(item) }}
                                                         </li>
-                                                        {% elseif yt.flow == "list" %}
-                                                        
-                                                        {% endif %}
                                                     {% endif %}
                                                 {% endfor %}
                                                 {% endapply %}
@@ -116,10 +112,10 @@
                                             <ul id="home-video-list" class="expanded-shelf-content-list">
                                                 {% apply spaceless %}
                                                 {% for item in yt.videoList %}
-                                                    {% if item.richItemRenderer.content.videoRenderer %}
+                                                    {% if item.videoRenderer or item.playlistRenderer %}
                                                         <li class="expanded-shelf-content-item-wrapper">
                                                             <div class="expanded-shelf-content-item">
-                                                                {{ lockup.tile(item.richItemRenderer.content) }}
+                                                                {{ lockup.tile(item) }}
                                                             </div>
                                                         </li>
                                                     {% endif %}

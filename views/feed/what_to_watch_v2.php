@@ -24,6 +24,36 @@ Request::innertubeRequest(
 $response = Request::getInnertubeResponses()["feed"];
 
 $ytdata = json_decode($response);
+$items = $ytdata -> contents -> twoColumnBrowseResultsRenderer -> tabs[0] -> tabRenderer -> content -> richGridRenderer -> contents;
+
 $yt -> response = $response;
-$yt -> videoList = $ytdata -> contents -> twoColumnBrowseResultsRenderer -> tabs[0] -> tabRenderer -> content -> richGridRenderer -> contents;
+$yt -> videoList = [];
+
+for ($i = 0; $i < count($items); $i++)
+{
+    if ($content = @$items[$i]->richItemRenderer->content)
+    {
+        if ("grid" == $yt->flow)
+        {
+            foreach ($content as $name => $value)
+            {
+                // Convert name formatting
+                // videoRenderer => gridVideoRenderer
+                $name = "grid" . ucfirst($name);
+
+                $yt->videoList[] = (object)[$name => $value];
+                break;
+            }
+        }
+        else
+        {
+            $yt->videoList[] = $content;
+        }
+    }
+    else
+    {
+        $yt->videoList[] = $items[$i];
+    }
+}
+
 $yt -> page -> continuation = end($yt -> videoList) -> continuationItemRenderer -> continuationEndpoint -> continuationCommand -> token ?? null;

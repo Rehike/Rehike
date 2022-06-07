@@ -1,7 +1,9 @@
 {% import "common/uix/load_more_button.twig" as load_more %}
 {{ contentType("application/json") }}
 {
-    "load_more_widget_html": {{ load_more.render(yt.continuation, yt.target)|json_encode|raw }},
+    {% if yt.nextContinuation %}
+    "load_more_widget_html": {{ load_more.render(yt.nextContinuation, yt.target)|json_encode|raw }},
+    {% endif %}
     "content_html": {%- apply json_encode|raw -%}
     {% if yt.page.shelfList %}
         {% import "common/uix/shelf.twig" as shelf %}
@@ -13,7 +15,13 @@
         {% for item in yt.page.lockupList %}
             {% if item.gridVideoRenderer or item.gridPlaylistRenderer %}
                 <li class="channels-content-item yt-shelf-grid-item">
-                    {{ lockup.grid(item, false) }}
+                    {{ lockup.grid(item, yt.continuationPage starts with "UC" ? false : true) }}
+                </li>
+            {% elseif item.videoRenderer or item.playlistRenderer %}
+                <li class="expanded-shelf-content-item-wrapper">
+                    <div class="expanded-shelf-content-item">
+                        {{ lockup.tile(item, yt.continuationPage starts with "UC" ? false : true) }}
+                    </div>
                 </li>
             {% endif %}
         {% endfor %}
