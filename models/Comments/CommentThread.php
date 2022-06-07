@@ -17,11 +17,11 @@ class CommentThread
         // Top-level function
         // $context = continuation command
 
-        $context = $context->continuationItems;
+        $context = @$context->continuationItems;
         
         $out = ["commentsThreads" => []];
         
-        for ($i = 0, $count = count($context); $i < $count; $i++) {
+        if ($context) for ($i = 0, $count = count($context); $i < $count; $i++) {
             if (isset($context[$i]->commentThreadRenderer))
             {
                 $out["commentThreads"][] = self::commentThreadRenderer($context[$i]->commentThreadRenderer);
@@ -40,11 +40,11 @@ class CommentThread
         // Top level function
         // $context = (Array containing all commentRenderer items)
 
-        $items = $context->continuationItems;
+        $items = @$context->continuationItems;
 
         $out = ["comments" => [], "repliesTargetId" => str_replace("comment-replies-item-", "", $context->targetId)];
 
-        for ($i = 0, $count = count($items); $i < $count; $i++)
+		if ($items) for ($i = 0, $count = count($items); $i < $count; $i++)
         {
             if (isset($items[$i]->commentRenderer))
             {
@@ -134,6 +134,9 @@ class CommentThread
             ];
     }
 
+    /**
+     * TODO (kirasicecreamm): i18n
+     */
     public static function getLikeCountFromLabel($label)
     {
         return preg_replace("/(Like this )|(comment)|(reply)|( along with )|(,)|( other person)|(other people)/", "", $label);

@@ -2,6 +2,7 @@
 {% import 'core/macros.twig' as core %}
 {% import 'common/appbar/appbar_nav.twig' as appbar_nav %}
 {% import 'common/uix/lockup.twig' as lockup %}
+{% import 'common/uix/load_more_button.twig' as load_more %}
 
 {% set pageType = 'home' %}
 {% set pageName = 'index' %}
@@ -55,40 +56,80 @@
 
 {%- block content -%}
 <div id="debug" class="hid">
-    {{ yt.videoList|json_encode() }}
+    {{ yt.response|json_encode|raw }}
 </div>
 <div class="branded-page-v2-container branded-page-base-bold-titles branded-page-v2-container-flex-width branded-page-v2-has-top-row branded-page-v2-secondary-column-hidden">
     <div class="branded-page-v2-col-container">
         <div class="branded-page-v2-col-container-inner">
             <div class="branded-page-v2-primary-col">
                 <div class="yt-card clearfix">
-                    <div id="" class="branded-page-v2-body branded-page-v2-primary-column-content">
-                        <ul id="browse-items-primary">
+                    <div id="browse-items-primary">
+                        <ol id="section-list-69420" class="item-section">
                             <li>
-                                <ul id="channels-browse-content-grid" class="channels-browse-content-grid branded-page-gutter-padding grid-lockups-container">
-                                    {% for item in yt.videoList %}
-                                    {% if item.richItemRenderer.content.videoRenderer %}
-                                    <li class="channels-content-item yt-shelf-grid-item">
-                                        {{ lockup.grid(item.richItemRenderer.content) }}
-                                    </li>
-                                    {% endif %}
-                                    {% endfor %}
-                                </ul>
+                                <div class="feed-item-container browse-list-item-container yt-section-hover-container compact-shelf shelf-item branded-page-box clearfix">
+                                    <div class="feed-item-dismissable">
+                                        <div class="shelf-title-table">
+                                            <div class="shelf-title-row">
+                                                <h2 class="branded-page-module-title shelf-title-cell">
+                                                    <span class="branded-page-module-title-text">Home</span>
+                                                </h2>
+                                                <div class="menu-container shelf-title-cell">
+                                                    <div class="yt-uix-menu-container feed-item-action-menu">
+                                                        <ul class="yt-uix-menu-top-level-button-container">
+                                                            <li class="yt-uix-menu-top-level-button yt-uix-menu-top-level-flow-button">
+                                                                <a href="/?flow=1" class="spf-link yt-uix-button {{ yt.flow == "grid" ? "yt-uix-button-blue-text" }} {{ yt.flow != "grid" ? "yt-uix-button-opacity" }} yt-uix-button-size-default yt-uix-button-has-icon yt-uix-tooltip yt-uix-button-empty">
+                                                                    <span class="yt-uix-button-icon-wrapper">
+                                                                        <span class="yt-uix-button-icon yt-uix-button-icon-view-module yt-sprite"></span>
+                                                                    </span>
+                                                                </a>
+                                                            </li>
+                                                            <li class="yt-uix-menu-top-level-button yt-uix-menu-top-level-flow-button">
+                                                                <a href="/?flow=2" class="spf-link yt-uix-button {{ yt.flow == "list" ? "yt-uix-button-blue-text" }} {{ yt.flow != "list" ? "yt-uix-button-opacity" }} yt-uix-button-size-default yt-uix-button-has-icon yt-uix-tooltip yt-uix-button-empty">
+                                                                    <span class="yt-uix-button-icon-wrapper">
+                                                                        <span class="yt-uix-button-icon yt-uix-button-icon-view-list yt-sprite"></span>
+                                                                    </span>
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="expanded-shelf">
+                                            {% if yt.flow == "grid" %}
+                                            <ul id="channels-browse-content-grid" class="channels-browse-content-grid branded-page-gutter-padding grid-lockups-container">
+                                                {% apply spaceless %}
+                                                {% for item in yt.videoList %}
+                                                    {% if item.gridVideoRenderer or item.gridPlaylistRenderer %}
+                                                        <li class="channels-content-item yt-shelf-grid-item">
+                                                            {{ lockup.grid(item) }}
+                                                        </li>
+                                                    {% endif %}
+                                                {% endfor %}
+                                                {% endapply %}
+                                            </ul>
+                                            {% elseif yt.flow == "list" %}
+                                            <ul id="home-video-list" class="expanded-shelf-content-list">
+                                                {% apply spaceless %}
+                                                {% for item in yt.videoList %}
+                                                    {% if item.videoRenderer or item.playlistRenderer %}
+                                                        <li class="expanded-shelf-content-item-wrapper">
+                                                            <div class="expanded-shelf-content-item">
+                                                                {{ lockup.tile(item) }}
+                                                            </div>
+                                                        </li>
+                                                    {% endif %}
+                                                {% endfor %}
+                                                {% endapply %}
+                                            </ul>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
                             </li>
-                            <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-default load-more-button yt-uix-load-more browse-items-load-more-button yt-uix-load-more-error" type="button" onclick=";return false;" aria-label="Load more" data-uix-load-more-target-id="channels-browse-content-grid" data-uix-load-more-href="/browse_ajax?action_continuation=1&amp;direct_render=1&amp;continuation=4qmFsgJAEhhVQy1sSEpaUjNHcXhtMjRfVmRfQUo1WXcaJEVnWjJhV1JsYjNNZ0FEZ0JZQUZxQUhvQk1yZ0JBQSUzRCUzRA%253D%253D">
-                                <span class="yt-uix-button-content">
-                                    <span class="load-more-loading hid" style="display: none;">
-                                        <span class="yt-spinner">
-                                            <span class="yt-spinner-img  yt-sprite" title="Loading icon"></span>
-                                            Loading...
-                                        </span>
-                                    </span>
-                                    <span class="load-more-text">
-                                        Load more
-                                    </span>
-                                </span>
-                            </button>
-                        </ul>
+                        </ol>
+                        {% set target = yt.flow == "grid" ? "channels-browse-content-grid" : "home-video-list" %}
+                        {{ load_more.render(yt.page.continuation, target, true) }}
                     </div>
                 </div>
             </div>

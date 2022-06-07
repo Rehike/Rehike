@@ -1,6 +1,13 @@
 <?php
+/**
+ * TODO (kirasicecreamm): This entire system is incredibly hacky
+ * and should be replaced in the future (how?)
+ */
+
 $template = "ajax/browse";
 $yt->page = (object) [];
+
+require "views/utils/AndroidW2w15Parser.php";
 
 header("Content-Type: application/json");
 
@@ -12,14 +19,9 @@ if (!isset($_GET["continuation"])) {
 $yt->continuation = $_GET["continuation"];
 $yt->target = $_GET["target_id"];
 
-if ($yt->target == "section-list-874807") {
-    $yt->reqVer = "1.20220303.06.01";
-} else {
-    $yt->reqVer = "2.20220303.01.01";
-}
-
 use \Rehike\Request;
 
+// WTW hack
 if ($yt->target == "section-list-874807") {
     Request::innertubeRequest(
         "browse",
@@ -27,9 +29,11 @@ if ($yt->target == "section-list-874807") {
         (object) [
             "continuation" => $yt->continuation
         ],
-        "WEB",
-        "1.20220303.06.01"
+        "ANDROID",
+        "15.14.33"
     );
+
+    $response = Request::getInnertubeResponses()["browse"];
 } else {
     Request::innertubeRequest(
         "browse",
@@ -38,14 +42,72 @@ if ($yt->target == "section-list-874807") {
             "continuation" => $yt->continuation
         ]
     );
+
+    $response = Request::getInnertubeResponses()["browse"];
 }
 
-$response = Request::getInnertubeResponses()["browse"];
+
 $yt->response = $response;
 $ytdata = json_decode($response);
 
+// Search for next continuation
+if ($array = @$ytdata->onResponseReceivedActions[0]->appendContinuationItemsAction->continuationItems)
+{
+    // Get the last item of the array, then get the name and check if there is a
+    // continuationItemRenderer
+    if (is_array($array) && ($item = $array[count($array) - 1]))
+    foreach ($item as $name => $contents) if ("continuationItemRenderer" == $name)
+    {
+        $yt->nextContinuation = $contents->continuationEndpoint->continuationCommand->token ?? null;
+    }
+}
+// Android response moment
+else if ($item = @$ytdata->continuationContents->sectionListContinuation->continuations[0])
+{
+    foreach ($item as $name => $contents) if ("nextContinuationData" == $name)
+    {
+        $yt->nextContinuation = $contents->continuation ?? null;
+    }
+}
+
 if (isset($ytdata->continuationContents->sectionListContinuation)) {
-    $yt->page->shelfList = $ytdata->continuationContents->sectionListContinuation->contents;
+    $yt->page->shelfList = AndroidW2W15Parser::parse($ytdata->continuationContents->sectionListContinuation->contents);
 } else if (isset($ytdata->onResponseReceivedActions[0]->appendContinuationItemsAction->continuationItems)) {
-    $yt->page->lockupList = $ytdata->onResponseReceivedActions[0]->appendContinuationItemsAction->continuationItems;
+    $head = $ytdata->onResponseReceivedActions[0]->appendContinuationItemsAction;
+
+    // Store the page type
+    $yt->continuationPage = $head->targetId ?? "";
+    
+    $items = $head->continuationItems;
+
+    $videoList = $ytdata->onResponseReceivedActions[0]->appendContinuationItemsAction->continuationItems;
+
+    for ($i = 0; $i < count($items); $i++)
+    {
+        if ($content = @$items[$i]->richItemRenderer->content)
+        {
+            if ("channels-browse-content-grid" == $yt->target)
+            {
+                foreach ($content as $name => $value)
+                {
+                    // Convert name formatting
+                    // videoRenderer => gridVideoRenderer
+                    $name = "grid" . ucfirst($name);
+
+                    $videoList[] = (object)[$name => $value];
+                    break;
+                }
+            }
+            else
+            {
+                $videoList[] = $content;
+            }
+        }
+        else
+        {
+            $videoList[] = $items[$i];
+        }
+    }
+
+    $yt->page->lockupList = &$videoList;
 }

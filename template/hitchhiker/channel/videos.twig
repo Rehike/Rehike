@@ -56,6 +56,6 @@
     {% endif %}
     {% set lastItem = yt.videoList|last %}
     {% if lastItem.continuationItemRenderer %}
-    {{ load_more.render(lastItem.continuationItemRenderer.continuationEndpoint.continuationCommand.token, "channels-browse-content-grid", true) }}
+    {{ load_more.render(lastItem.continuationItemRenderer.continuationEndpoint.continuationCommand.token, "channels-browse-content-grid") }}
     {% endif %}
 </li>

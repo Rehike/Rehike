@@ -6,14 +6,15 @@ use Rehike\ConfigManager\ConfigManager;
 
 class RehikeConfigManager extends ConfigManager
 {
-    protected static $defaultConfig =
+    public static $defaultConfig =
         [
             "useRingoBranding" => true,
             "enableCreationMenu" => true,
             "useOldRoboto" => false,
             "showUploadDateOnWatchRecommended" => false,
             "useWebV2HomeEndpoint" => false,
-            "useOldUploadButton" => false
+            "useOldUploadButton" => false,
+            "versionInFooter" => true
         ];
     
     /**
@@ -29,6 +30,23 @@ class RehikeConfigManager extends ConfigManager
             static::dumpDefaultConfig();
         }
 
-        return parent::loadConfig();
+        parent::loadConfig();
+
+        $redump = false;
+        
+        // Make sure new defaults get added to the config file.
+        foreach (self::$defaultConfig as $key => $value)
+        {
+            if (!isset(self::$config->{$key}))
+            {
+                self::$config->{$key} = $value;
+                
+                $redump = true;
+            }
+        }
+
+        if ($redump) self::dumpConfig();
+
+        return self::$config;
     }
 }

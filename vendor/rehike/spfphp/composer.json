@@ -1,0 +1,39 @@
+{
+    "name": "rehike/spfphp",
+    "description": "A PHP library for generating SPF.js-compatible page fragments.",
+    "keywords": [
+        "spf",
+        "spf.js",
+        "php spf",
+        "php spf.js",
+        "spf parser",
+        "page fragments",
+        "dynamic loading"
+    ],
+    "homepage": "https://github.com/Rehike/spfphp",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Daylin Cooper",
+            "email": "dcoop2004@gmail.com",
+            "homepage": "https://github.com/Nightlinbit",
+            "role": "Developer"
+        },
+        {
+            "name": "Taniko Yamamoto",
+            "email": "kirasicecreamm@gmail.com",
+            "homepage": "https://github.com/YukisCoffee",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=7.0.0",
+        "yukiscoffee/simple_html_dom": "4.8.6"
+    },
+    "autoload": {
+        "psr-4": {
+            "SpfPhp\\": "src"
+        }
+    }
+}
