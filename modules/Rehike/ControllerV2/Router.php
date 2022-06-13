@@ -50,7 +50,7 @@ class Router
         $bestMatch = null;
 
         // Iterate the array and look for a match.
-        foreach ($definitions as $def => $handler)
+        foreach ($definitions as $def => $_val)
         if (\fnmatch($def, explode("?", $_SERVER["REQUEST_URI"])[0]))
         {
             $bestMatch = $def;
@@ -59,7 +59,7 @@ class Router
         // If the best match exists (is callable), return it.
         // The variable is called best match, but this does
         // include only one match as well.
-        if (is_callable($bestMatch))
+        if (null != $definitions[$bestMatch])
         {
             return self::pointerHandler($definitions[$bestMatch], $method);
         }
