@@ -4,6 +4,36 @@ require_once($root . '/vendor/autoload.php');
 include "modules/YukisCoffee/CoffeeException.php";
 include "modules/YukisCoffee/GetPropertyAtPath.php";
 
+function YcRehikeAutoloader($class)
+{
+   $class = str_replace("\\", "/", $class);
+
+   if (file_exists("modules/{$class}.php")) {
+      require "modules/{$class}.php";
+   }
+   else if ("Rehike/Model/" == substr($class, 0, 13))
+   {
+      $file = substr($class, 13, strlen($class));
+
+      require "models/${file}.php";
+   }
+   else if ("Rehike/Controller" == substr($class, 0, 17))
+   {
+      $file = substr($class, 17, strlen($class));
+
+      require "controllers/${file}.php";
+   }
+}
+spl_autoload_register('YcRehikeAutoloader');
+
+// Controller V2 init
+
+use Rehike\ControllerV2\Core as ControllerV2;
+
+ControllerV2::registerStateVariable($yt);
+ControllerV2::registerTemplateVariable($template);
+
+
 require('modules/playerCore.php');
 $_playerCore = PlayerCore::main();
 $yt->playerCore = $_playerCore;
@@ -36,22 +66,6 @@ $twig = new \Twig\Environment($twigLoader, [
 $twig -> addFilter (
    new \Twig\TwigFilter("base64_encode", function($a){return base64_encode($a);})
 );
-
-function YcRehikeAutoloader($class)
-{
-   $class = str_replace("\\", "/", $class);
-
-   if (file_exists("modules/{$class}.php")) {
-      require "modules/{$class}.php";
-   }
-   else if ("Rehike/Model/" == substr($class, 0, 13))
-   {
-      $file = str_replace("\\", "/", substr($class, 13, strlen($class)));
-
-      require "models/${file}.php";
-   }
-}
-spl_autoload_register('YcRehikeAutoloader');
 
 // temporary? move twig when?
 \Rehike\TemplateFunctions::$boundTwigInstance = &$twig;
