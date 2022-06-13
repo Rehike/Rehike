@@ -1,10 +1,10 @@
 {
-	"previousHash": "c9adc2f412f5eae2c9b7f797438868c3f4a0873e",
-	"currentRevisionId": 191,
-	"subject": "Init controller v2 on boot",
-	"body": "Init controller v2 on boot",
+	"previousHash": "f95b8fbda7669a4c9d1fcdf0e0d0814aed897c32",
+	"currentRevisionId": 192,
+	"subject": "Prepare for controller v2 migration finally",
+	"body": "Prepare for controller v2 migration finally",
 	"branch": "new-mvc",
 	"committerName": "Coffee",
 	"committerEmail": "99076687+YukisCoffee@users.noreply.github.com",
-	"time": 1655136812
+	"time": 1655136851
 }

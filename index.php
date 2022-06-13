@@ -32,7 +32,11 @@ Rehike\ContextManager::$visitorData = $visitor;
 $yt->rehikeVersion = (object)\Rehike\Version\VersionController::$versionInfo;
 $yt->rehikeVersion->semanticVersion = \Rehike\Version\VersionController::getVersion();
 
+// ROUTER v2
+require "router_v2.php";
+
 // differentiates pages
+if (!Rehike\ControllerV2\Core::$cv2HasBeenUsed)
 require ('router.php');
 
 // initialises twig
