@@ -59,7 +59,7 @@ class Router
         // If the best match exists (is callable), return it.
         // The variable is called best match, but this does
         // include only one match as well.
-        if (null != $definitions[$bestMatch])
+        if (!is_null($bestMatch) && !is_null($definitions[$bestMatch]))
         {
             return self::pointerHandler($definitions[$bestMatch], $method);
         }
@@ -69,10 +69,6 @@ class Router
         if (isset($definitions["default"]))
         {
             return self::pointerHandler($definitions["default"], $method);
-        }
-        else
-        {
-            trigger_error("You probably wanted this to call a method. Are the router definitions right?", E_USER_WARNING);
         }
     }
 
