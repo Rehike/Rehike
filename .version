@@ -1,10 +1,10 @@
 {
-	"previousHash": "dec65b21ef52f1b7bf8d9193e6cd59a6a4427304",
-	"currentRevisionId": 186,
-	"subject": "impl: fnmatch polyfill for Controller v2",
-	"body": "impl: fnmatch polyfill for Controller v2",
+	"previousHash": "dd4ef58542479931da96a6be81c4d9f26901b14a",
+	"currentRevisionId": 187,
+	"subject": "Remove the empty router stub",
+	"body": "Remove the empty router stub",
 	"branch": "new-mvc",
 	"committerName": "Coffee",
 	"committerEmail": "99076687+YukisCoffee@users.noreply.github.com",
-	"time": 1655131882
+	"time": 1655133259
 }
