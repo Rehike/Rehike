@@ -103,7 +103,7 @@ class PlayerCore {
         {
             // Throw an error if the maximum number of retries
             // has been exceeded.
-            case $recurse > self::MAX_CACHE_SAVE_RETRIES:
+            case ($recurse > self::MAX_CACHE_SAVE_RETRIES):
                 throw new \Exception(
                     "Maximum number of retries exceeded. Is directory writable?"
                 );
@@ -132,9 +132,10 @@ class PlayerCore {
         ];');
 
         // Validate that the file write was successful, or retry.
-        if (false == $status)
+        if (false === $status)
         {
-            return self::writeCacheFile($time, $basepos, $sts, ++$recurse);
+            fclose($newCacheFile);
+            return self::writeCacheFile($time, $basepos, $sts, $recurse + 1);
         }
 
         fclose($newCacheFile);
