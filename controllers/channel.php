@@ -1,5 +1,6 @@
 <?php
 use \Rehike\Request;
+use \Com\YouTube\Innertube\Request\BrowseRequestParams;
 
 $yt->spfEnabled = true;
 $yt->useModularCore = true;
@@ -17,12 +18,15 @@ include "controllers/mixins/guideNotSpfMixin.php";
 $tab = (isset($routerUrl->path[2]) and $routerUrl->path[2] != '')  ? $routerUrl->path[2] : 'featured';
 $yt->tab = $tab;
 $yt->baseUrl = "/" . $routerUrl->path[0] . "/" . $routerUrl->path[1];
-$tabParam = ChannelUtils::synthChannelTab($tab);
+
+$params = new BrowseRequestParams();
+$params->setTab($tab);
 
 Request::innertubeRequest("channel", "browse", (object)[
     "browseId" => $ucid,
-    "params" => $tabParam
+    "params" => base64_encode($params->serializeToString())
 ]);
+
 $response = Request::getInnertubeResponses()["channel"];
 $yt->response = $response;
 
