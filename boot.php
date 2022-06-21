@@ -11,6 +11,10 @@ function YcRehikeAutoloader($class)
    if (file_exists("modules/{$class}.php")) {
       require "modules/{$class}.php";
    }
+   else if (file_exists("modules/generated/{$class}.php"))
+   {
+      require "modules/generated/{$class}.php";
+   }
    else if ("Rehike/Model/" == substr($class, 0, 13))
    {
       $file = substr($class, 13, strlen($class));

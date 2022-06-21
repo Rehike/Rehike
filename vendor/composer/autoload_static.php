@@ -27,6 +27,11 @@ class ComposerStaticInit14befcaebdd16793d803391aa69e5f63
             'Symfony\\Component\\CssSelector\\' => 30,
             'SpfPhp\\' => 7,
         ),
+        'G' => 
+        array (
+            'Google\\Protobuf\\' => 16,
+            'GPBMetadata\\Google\\Protobuf\\' => 28,
+        ),
     );
 
     public static $prefixDirsPsr4 = array (
@@ -53,6 +58,14 @@ class ComposerStaticInit14befcaebdd16793d803391aa69e5f63
         'SpfPhp\\' => 
         array (
             0 => __DIR__ . '/..' . '/rehike/spfphp/src',
+        ),
+        'Google\\Protobuf\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/google/protobuf/src/Google/Protobuf',
+        ),
+        'GPBMetadata\\Google\\Protobuf\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/google/protobuf/src/GPBMetadata/Google/Protobuf',
         ),
     );
 
