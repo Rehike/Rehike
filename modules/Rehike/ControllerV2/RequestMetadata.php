@@ -1,6 +1,8 @@
 <?php
 namespace Rehike\ControllerV2;
 
+use Rehike\DataArray;
+
 /**
  * Return accessible information from a request.
  * 
@@ -33,7 +35,7 @@ class RequestMetadata
         $this->method = $_SERVER['REQUEST_METHOD'];
         $this->path = self::getPath();
         $this->headers = self::getHeaders();
-        $this->params = $_GET;
+        $this->params = new DataArray($_GET);
 
         // Body will only be available for POST requests
         if ("POST" == $this->method)
@@ -76,7 +78,28 @@ class RequestMetadata
         // function:
         if (function_exists("\apache_request_headers"))
         {
-            return \apache_request_headers();
+            $headers = [];
+
+            // Convert all elements to lowercase
+            foreach (\apache_request_headers() as $key => $value)
+            {
+                $headers += [strtolower($key) => $value];
+            }
+
+
+            /**
+             * Friendly API for accessing HTTP headers.
+             * 
+             * This converts header names to camelCase at
+             * access time, allowing them to be accessed with
+             * simple variable names. It can also be accessed like an
+             * array.
+             * 
+             * For example:
+             * 
+             *      Content-Type == contentType
+             */
+            return new DataArray($headers);
         }
         else
         {
@@ -89,13 +112,14 @@ class RequestMetadata
             {
                 if ("HTTP_" != substr($key, 0, 5)) continue;
 
-                // HELL
-                $newKey = str_replace(' ', '-', ucwords(str_replace('_', ' ', strtolower(substr($key, 5)))));
+                // Not so hellish anymore now that I've stopped caring about
+                // the case.
+                $newKey = str_replace('_', '-', strtolower(substr($key, 5)));
 
                 $headers += [$newKey => $value];
             }
 
-            return $headers;
+            return new DataArray($headers);
         }
     }
 
