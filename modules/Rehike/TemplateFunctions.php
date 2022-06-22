@@ -21,9 +21,6 @@ class TemplateFunctions
      */
     protected static $registry = [];
 
-    // temporary?
-    public static $boundTwigInstance;
-
     public static function __callStatic($name, $args)
     {
         if ($function = @self::$registry[$name])
@@ -46,8 +43,6 @@ class TemplateFunctions
     {
         self::$registry += [$name => $function];
 
-        self::$boundTwigInstance->addFunction(new \Twig\TwigFunction(
-            $name, $function
-        ));
+        TemplateManager::addFunction($name, $function);
     }
 }

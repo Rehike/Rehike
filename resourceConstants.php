@@ -1,4 +1,6 @@
 <?php
+namespace Rehike\ResourceConstants;
+
 const YTS_HOST = 's.ytimg.com';
 const MODULAR_JS_PATH = 'www-en_US-vflkPQDpM';
 
@@ -73,6 +75,3 @@ $ytConstants = (object) [
         'channels/c4/default_banner_hq' => '//' . YTS_HOST . '/yts/img/channels/c4/default_banner_hq-vfl4dpY8T.png'
     ]
 ];
-
-$twig->addGlobal('ytConstants', $ytConstants);
-$twig->addGlobal('PIXEL', $ytConstants->pixelGif);

@@ -1,48 +1,70 @@
 <?php
-require_once($root . '/vendor/autoload.php');
+require "modules/Rehike/Constants.php";
+require "vendor/autoload.php";
 
-include "modules/YukisCoffee/CoffeeException.php";
-include "modules/YukisCoffee/GetPropertyAtPath.php";
-
+// Declare and install the Rehike autoloader.
 function YcRehikeAutoloader($class)
 {
-   $class = str_replace("\\", "/", $class);
+   $filename = str_replace("\\", "/", $class);
 
-   if (file_exists("modules/{$class}.php")) {
-      require "modules/{$class}.php";
+   if (file_exists("modules/{$filename}.php")) {
+      require "modules/{$filename}.php";
    }
-   else if (file_exists("modules/generated/{$class}.php"))
+   else if (file_exists("modules/generated/{$filename}.php"))
    {
-      require "modules/generated/{$class}.php";
+      require "modules/generated/{$filename}.php";
    }
-   else if ("Rehike/Model/" == substr($class, 0, 13))
+   else if ("Rehike/Model/" == substr($filename, 0, 13))
    {
-      $file = substr($class, 13, strlen($class));
+      $file = substr($filename, 13, strlen($filename));
 
       require "models/${file}.php";
    }
-   else if ("Rehike/Controller" == substr($class, 0, 17))
+   else if ("Rehike/Controller" == substr($filename, 0, 17))
    {
-      $file = substr($class, 17, strlen($class));
+      $file = substr($filename, 17, strlen($filename));
 
       require "controllers/${file}.php";
+   }
+
+   // Implement the fake magic method __initStatic
+   // for automatically initialising static classses.
+   if (method_exists($class, "__initStatic"))
+   {
+      $class::__initStatic();
    }
 }
 spl_autoload_register('YcRehikeAutoloader');
 
-// Controller V2 init
+// Does not properly autoload (this should be fixed)
+include "modules/YukisCoffee/GetPropertyAtPath.php";
 
 use Rehike\ControllerV2\Core as ControllerV2;
+use Rehike\TemplateManager;
+
+TemplateManager::registerGlobalState($yt);
+
+// Pass resource constants to the templater
+TemplateManager::addGlobal('ytConstants', $ytConstants);
+TemplateManager::addGlobal('PIXEL', $ytConstants->pixelGif);
+
+////////////////////////////////////////////////
+// Temporary Controller V1 compatibility code //
+$twig = &TemplateManager::exposeTwig();
+$template = &TemplateManager::exposeTemplate();
+////////////////////////////////////////////////
+
+// Controller V2 init
 
 ControllerV2::registerStateVariable($yt);
-ControllerV2::registerTemplateVariable($template);
 
-
-require('modules/playerCore.php');
+// Player init
+require "modules/playerCore.php";
 $_playerCore = PlayerCore::main();
 $yt->playerCore = $_playerCore;
 $yt->playerBasepos = $_playerCore->basepos;
 
+// Parse user preferences as stored by the YouTube application.
 if (isset($_COOKIE["PREF"])) {
    $PREF = explode("&", $_COOKIE["PREF"]);
    $yt->PREF = (object) [];
@@ -57,25 +79,25 @@ if (isset($_COOKIE["PREF"])) {
    ];
 }
 
+// Aubrey added this to include timestamp in ytGlobalJsConfig.twig,
+// should be moved
 $yt -> version = json_decode(file_get_contents($root . "/.version"));
 
-$twigLoader = new \Twig\Loader\FilesystemLoader(
-   $root . $templateRoot
-);
-
-$twig = new \Twig\Environment($twigLoader, [
-   'debug' => true
-]);
-
-$twig -> addFilter (
-   new \Twig\TwigFilter("base64_encode", function($a){return base64_encode($a);})
-);
-
-// temporary? move twig when?
-\Rehike\TemplateFunctions::$boundTwigInstance = &$twig;
-
+// Import all template functions
 foreach (glob('modules/template_functions/*.php') as $file) include $file;
 
+// should be moved
+TemplateManager::addFunction('http_response_code', function($code) {
+   http_response_code($code);
+});
+// should be moved
+TemplateManager::addFilter("base64_encode", function($a){
+   return base64_encode($a);
+});
+
+
+// Still referenced by some legacy code, otherwise this should
+// be removed asap
 function findKey($array, string $key) {
    for ($i = 0, $j = count($array); $i < $j; $i++) {
       if (isset($array[$i]->{$key})) {
@@ -83,11 +105,3 @@ function findKey($array, string $key) {
       }
    }
 }
-
-$response = null;
-
-$twig->addGlobal('yt', $yt);
-$twig->addGlobal('response', $response);
-$twig->addFunction(new \Twig\TwigFunction('http_response_code', function($code) {
-   http_response_code($code);
-}));

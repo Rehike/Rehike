@@ -56,7 +56,7 @@ class VersionController
      */
     public static function getVersion()
     {
-        $semanticVersion = "0.0"; // No semantic versioning system at the moment.
+        $semanticVersion = \Rehike\Constants\VERSION;
 
         $initStatus = self::init();
 

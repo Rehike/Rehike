@@ -155,3 +155,5 @@ switch ($routerUrl->path[0]) {
         $template = 'error/404';
         break;
 }
+
+require "temp_cv1_end.php";
