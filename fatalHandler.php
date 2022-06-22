@@ -1,4 +1,9 @@
 <?php
+/**
+ * This should be completely redone
+ * 
+ * love taniko
+ */
 
 register_shutdown_function("fatalHandler");
 
@@ -12,10 +17,10 @@ function fatalHandler() {
       
       try {
          $buildFatalPage($e);
-      } catch (Error $err) {
+      } catch (Throwable $err) {
          try {
             $buildFatalPage($e, true);
-         } catch (Error $err) {
+         } catch (Throwable $err) {
             echo 'Fatal error trying to catch fatal error trying to catch fatal error. Fuck.';
          }
       }
@@ -24,17 +29,7 @@ function fatalHandler() {
    }
 }
 
-$buildFatalPage = function ($e, $simple = false) use (&$twig, $yt) {
-   /*
-   if (!$simple) {
-      $twig = new \Twig\Environment(
-         new \Twig\Loader\FilesystemLoader(
-            $_SERVER['DOCUMENT_ROOT'] . '/template/hitchhiker'
-         )
-      );
-   }
-   // */
-   
+$buildFatalPage = function ($e, $simple = false) use ($yt) {
    $errInfo = (object) [];
    $errInfo->type = $e['type'] ?? E_CORE_ERROR;
    $errInfo->file = $e['file'] ?? '(unknown file)';
@@ -45,11 +40,16 @@ $buildFatalPage = function ($e, $simple = false) use (&$twig, $yt) {
    if (!$simple) {
       //$twig->addGlobal('errInfo', $errInfo);
       $yt->errInfo = $errInfo;
-      $twig->addGlobal('yt', $yt);
-      echo $twig->render('fatal.twig', [$yt]);
+      echo Rehike\TemplateManager::render([], 'fatal');
    } else {
-      header('Content-Type: application/json');
-      echo json_encode($errInfo);
+      header('Content-Type: text/html');
+      echo "<h1>Rehike pre-init error occurred</h1>";
+      echo "<h2>Here are the details:</h2>";
+      echo "<p>$errInfo->message</p>";
+      echo "<h2>Technical details</h2>";
+      echo "<pre>";
+      echo json_encode($errInfo, JSON_PRETTY_PRINT);
+      echo "</pre>";
    }
 };
 
@@ -59,8 +59,9 @@ function fatalPreviewify($msg) {
       return simplifyTwigError($msg);
    } else {
       $msg = 'Fatal error: ' . $msg;
-      if (strlen($msg) > 40) {
-         return substr($msg, 0, 37) . '...';
+      $msg = explode("Stack trace", $msg)[0];
+      if (strlen($msg) > 90) {
+         return substr($msg, 0, 87) . '...';
       } else {
          return $msg;
       }

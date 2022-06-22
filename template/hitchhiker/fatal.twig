@@ -36,7 +36,7 @@
                         <h1>Error log</h1>
                      </div>
                      <div style="margin-top: 20px;width: 600px;height: 300px;border: 1px solid #ccc;padding: 6px;overflow: scroll;overflow-x: auto;">
-                        {{ yt.errInfo.message }}
+                        <pre style="white-space: pre-wrap;">{{ yt.errInfo.message }}</pre>
                      </div>
                      <div class="yt-uix-overlay-actions">
                         <button id="gterr-log-close" class="yt-uix-button yt-uix-button-size-default yt-uix-button-default yt-uix-overlay-close" type="button" onclick=";return false;"><span class="yt-uix-button-content">Close</span></button>
@@ -53,7 +53,39 @@
 (
 function() {
 
+// I speedran this at 3 am forgive me
+(function(){
 
+function create()
+{
+   document.body.setAttribute("class", 
+      document.body.getAttribute("class") + " hide-players yt-dialog-active"
+   );
+
+   var bgdiv = document.createElement("DIV");
+   bgdiv.setAttribute("id", "yt-dialog-bg");
+   bgdiv.setAttribute("class", "yt-dialog-bg");
+   bgdiv.setAttribute("style", "height: 100%; width: 100%; position: fixed;");
+   document.body.insertBefore(bgdiv, 
+      document.getElementById("footer-container").nextSibling
+   );
+   document.getElementById("gterr-dialog-template").setAttribute("class", "");
+}
+
+function kill()
+{
+   document.body.setAttribute("class", 
+      document.body.getAttribute("class").replace(" hide-players yt-dialog-active", "")
+   );
+
+   document.getElementById("yt-dialog-bg").outerHTML = ""; // ie < 9 no remove
+   document.getElementById("gterr-dialog-template").setAttribute("class", "hid");
+}
+
+document.getElementById("gterr-more").onclick = create;
+document.getElementById("gterr-log-close").onclick = kill;
+
+})();
 
 }
 )();

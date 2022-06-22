@@ -1,10 +1,10 @@
 {
-	"previousHash": "eda087e5325a4aec58c6b1c3ef4dbf29f3f90378",
-	"currentRevisionId": 180,
-	"subject": "Overhaul Rehike\Request",
-	"body": "Overhaul Rehike\Request",
+	"previousHash": "a834ac72be9d37c9c8b09ccb1dd74b82e1de71ef",
+	"currentRevisionId": 181,
+	"subject": "Fix fatal handler",
+	"body": "Fix fatal handler",
 	"branch": "master",
 	"committerName": "Coffee",
 	"committerEmail": "99076687+YukisCoffee@users.noreply.github.com",
-	"time": 1656115501
+	"time": 1656131229
 }
