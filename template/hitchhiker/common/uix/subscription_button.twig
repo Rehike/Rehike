@@ -3,7 +3,7 @@
     {%- if cfg.showUnsubConfirmDialog -%}
         <span class="unsubscribe-confirmation-overlay-container">
             <div class="yt-uix-overlay "  data-overlay-style="primary" data-overlay-shape="tiny">
-                {% embed '/common/component/dialog.twig' %}
+                {% embed '/common/uix/dialog.twig' %}
                 {% block dialog_content %}
                 <div class="unsubscribe-confirmation-overlay-content-container">
                     <div class="unsubscribe-confirmation-overlay-content">
@@ -58,8 +58,8 @@
     {%- if cfg.showSubscriptionPreferences -%}
         <span class="subscription-preferences-overlay-container">
             <div class="yt-uix-overlay "  data-overlay-style="primary" data-overlay-shape="tiny">
-                {% embed '/common/component/dialog.twig' %}
-                {% import '/common/core/spinner.twig' as spinner %}
+                {% embed '/common/uix/dialog.twig' %}
+                {% import '/core/spinner.twig' as spinner %}
                 {% block dialog_content %}
                 <div class="subscription-preferences-overlay-content-container">
                     <div class="subscription-preferences-overlay-loading ">

@@ -1,5 +1,5 @@
 <?php
-$template = "pageframe/guide";
+$template = "common/pageframe/guide";
 
 require "controllers/mixins/guideMixin.php";
 

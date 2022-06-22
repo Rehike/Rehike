@@ -1,10 +1,10 @@
 {
-	"previousHash": "ab7350a6a33635e071b74365e25569b1504a2e37",
-	"currentRevisionId": 195,
-	"subject": "Clean up RequestMetadata, add useful array wrapper",
-	"body": "Clean up RequestMetadata, add useful array wrapper",
+	"previousHash": "3cb9ae57a01e826cfa6a5c02fce0fb6bedaff196",
+	"currentRevisionId": 196,
+	"subject": "Clean up all templates",
+	"body": "Clean up all templates",
 	"branch": "new-mvc",
 	"committerName": "Coffee",
 	"committerEmail": "99076687+YukisCoffee@users.noreply.github.com",
-	"time": 1655909075
+	"time": 1655910506
 }

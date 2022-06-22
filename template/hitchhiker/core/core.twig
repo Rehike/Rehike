@@ -9,10 +9,10 @@
       <style name="www-roboto" >@font-face{font-family:'Roboto';font-style:normal;font-weight:500;src:local('Roboto Medium'),local('Roboto-Medium'),url(//fonts.gstatic.com/s/roboto/v18/KFOlCnqEu92Fr1MmEU9fBBc9.ttf)format('truetype');}@font-face{font-family:'Roboto';font-style:normal;font-weight:400;src:local('Roboto Regular'),local('Roboto-Regular'),url(//fonts.gstatic.com/s/roboto/v18/KFOmCnqEu92Fr1Mu4mxP.ttf)format('truetype');}@font-face{font-family:'Roboto';font-style:italic;font-weight:500;src:local('Roboto Medium Italic'),local('Roboto-MediumItalic'),url(//fonts.gstatic.com/s/roboto/v18/KFOjCnqEu92Fr1Mu51S7ACc6CsE.ttf)format('truetype');}@font-face{font-family:'Roboto';font-style:italic;font-weight:400;src:local('Roboto Italic'),local('Roboto-Italic'),url(//fonts.gstatic.com/s/roboto/v18/KFOkCnqEu92Fr1Mu51xIIzc.ttf)format('truetype');}</style>
       {% endif %}
       <script name="www-roboto" >if (document.fonts && document.fonts.load) {document.fonts.load("400 10pt Roboto", "E");document.fonts.load("500 10pt Roboto", "E");}</script>
-      <script>{{ include('/common/core/www-ytcsi.js') }}</script>
+      <script>{{ include('/core/www-ytcsi.js') }}</script>
       <script >var ytcfg = {d: function() {return (window.yt && yt.config_) || ytcfg.data_ || (ytcfg.data_ = {});},get: function(k, o) {return (k in ytcfg.d()) ? ytcfg.d()[k] : o;},set: function() {var a = arguments;if (a.length > 1) {ytcfg.d()[a[0]] = a[1];} else {for (var k in a[0]) {ytcfg.d()[k] = a[0][k];}}}};</script>  
       <script>ytcfg.set("ROOT_VE_TYPE", 3854);ytcfg.set("EVENT_ID", "caLrWqLbKZD2_AOA-6vIAg");</script>
-      <script>{{ include('/common/core/www-pageframesizing.js.twig') }}</script>
+      <script>{{ include('/core/www-pageframesizing.js.twig') }}</script>
       {{ core.js('scheduler/scheduler') }}
       {{ core.css('www-core') }}
       {%- block head_css  -%}{% endblock %}
@@ -67,7 +67,7 @@
          <div id="page-container">
             <div id="page" class="{{ pageType }} {% block page_class %}{% endblock %}  clearfix ">
                {%- block guide_container -%}
-                  {% include 'pageframe/guide.twig' %}
+                  {% include 'common/pageframe/guide.twig' %}
                {% endblock %}
                <div class="alerts-wrapper">
                   <div id="alerts" class="content-alignment">{% block alerts %}{% endblock %}</div>
@@ -75,7 +75,7 @@
                <div id="header">
                {% block header %}{% endblock %}
                </div>
-               {% include 'common/core/offscreen_player_stub.twig' %}
+               {% include 'core/offscreen_player_stub.twig' %}
                <div id="content" class="  content-alignment" role="main">
                   {% block content %}{% endblock %}
                </div>
@@ -85,11 +85,11 @@
       <div id="footer-container" class="yt-base-gutter force-layer">
          {% include 'common/pageframe/footer.twig' %}
       </div>
-      {% include 'common/component/lightbox/template_feed-privacy.twig' %}
-      {% include 'common/component/hidden_component_template_wrapper.twig' %}
-      {% include 'common/core/spf_module.twig' %}
+      {% include 'common/uix/lightbox/template_feed-privacy.twig' %}
+      {% include 'common/uix/hidden_component_template_wrapper.twig' %}
+      {% include 'core/spf_module.twig' %}
       {%- if yt.useModularCore -%}
-         {% include 'common/core/modular_js_v2.twig' %}
+         {% include 'core/modular_js_v2.twig' %}
       {% else %}
          {{ core.js('www-core/www-core') }}
       {% endif %}
