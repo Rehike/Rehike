@@ -1,13 +1,45 @@
 <?php
 namespace Rehike;
 
+/**
+ * Generates a valid InnerTube client context required
+ * for requesting the API.
+ * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
+ * @author The Rehike Maintainers
+ */
 class InnertubeContext
 {
+    /**
+     * Encode a string in base64 url format.
+     * 
+     * This doesn't have = padding and replaces the
+     *      + /
+     * characters with
+     *      - _
+     * to be transmissable through a URL.
+     * 
+     * 
+     * This should be ideally be moved to a trait later for use across
+     * multiple different classes.
+     * 
+     * @param string $data
+     * @return string url-friendly base64
+     */
     public static function base64url_encode($data) 
     {
         return str_replace("=", "%3D", strtr(base64_encode($data), '+/', '-_'));
     } 
 
+    /**
+     * Convert an integer to a ULEB128 binary for use in
+     * synthesising protobuf.
+     * 
+     * This should be deprecated in the future.
+     * 
+     * @param int $int to convert
+     * @return string uleb128 binary
+     */
     public static function int2uleb128($int)
     {
         // this is awful
@@ -52,6 +84,12 @@ class InnertubeContext
         return $out2;
     }
 
+    /**
+     * Generate an encoded YouTube visitor data string.
+     * 
+     * @param string $visitor
+     * @return string encoded visitor data
+     */
     public static function genVisitorData($visitor)
     {
         // Generate visitorData string
@@ -63,6 +101,17 @@ class InnertubeContext
         );
     }
 
+    /**
+     * Generate an InnerTube context template.
+     * 
+     * @param string|int $cname (client name) enum or index
+     * @param string $cver (client version) number
+     * @param string|null $visitorData
+     * @param string $hl (host language)
+     * @param string $gl (global location)
+     * 
+     * @return object InnerTube context
+     */
     public static function generate($cname, $cver, $visitorData = null, $hl = 'en', $gl = 'US')
     {
         if (is_null($visitorData)) $visitorData = ContextManager::$visitorData;

@@ -3,6 +3,9 @@ namespace Rehike\Version;
 
 /**
  * Control the retrival of version information.
+ * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
+ * @author The Rehike Maintainers
  */
 class VersionController
 {
@@ -16,6 +19,11 @@ class VersionController
      */
     public static $versionInfo = [];
 
+    /**
+     * Initialise the Version subsystem.
+     * 
+     * @return void
+     */
     public static function init()
     {
         static $hasRun = false;
@@ -41,6 +49,11 @@ class VersionController
         return false;
     }
 
+    /**
+     * Attempt to get all relevant information about the current version.
+     * 
+     * @return void
+     */
     public static function getVersion()
     {
         $semanticVersion = "0.0"; // No semantic versioning system at the moment.

@@ -3,8 +3,22 @@ namespace Rehike;
 
 use ArrayAccess, ArrayIterator, IteratorAggregate;
 
+/**
+ * Implements a general data array object that can be
+ * accessed both an array and an object.
+ * 
+ * This is currently implemented as read-only.
+ * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
+ * @author The Rehike Maintainers
+ */
 class DataArray implements ArrayAccess, IteratorAggregate
 {
+    /**
+     * Bound array that stores definitions.
+     * 
+     * @var array
+     */
     private $boundArray = [];
 
     public function __construct(&$baseArray)

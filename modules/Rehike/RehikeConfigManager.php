@@ -4,6 +4,13 @@ namespace Rehike;
 
 use Rehike\ConfigManager\ConfigManager;
 
+/**
+ * Implements the Rehike-specific portions of the
+ * config manager system.
+ * 
+ * @author Taniko Yamamoto <kiraicecreamm@gmail.com>
+ * @author The Rehike Maintainers
+ */
 class RehikeConfigManager extends ConfigManager
 {
     public static $defaultConfig =

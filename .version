@@ -1,10 +1,10 @@
 {
-	"previousHash": "3cb9ae57a01e826cfa6a5c02fce0fb6bedaff196",
-	"currentRevisionId": 196,
-	"subject": "Clean up all templates",
-	"body": "Clean up all templates",
+	"previousHash": "6b2618dbde04fe6192689d3ab12232e2cc081a3c",
+	"currentRevisionId": 197,
+	"subject": "Clarify and clean up many comments",
+	"body": "Clarify and clean up many comments",
 	"branch": "new-mvc",
 	"committerName": "Coffee",
 	"committerEmail": "99076687+YukisCoffee@users.noreply.github.com",
-	"time": 1655910506
+	"time": 1655919894
 }
