@@ -1,4 +1,11 @@
 <?php
+/**
+ * TODO (aubymori): Fix broken thumbnails, missing sub count
+ * on channels.
+ * 
+ * Will most likely be fixed in new-mvc.
+ */
+
 use \Rehike\Request;
 
 $yt->spfEnabled = true;

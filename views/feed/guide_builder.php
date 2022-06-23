@@ -1,4 +1,11 @@
 <?php
+/**
+ * TODO (aubymori): Fix broken channel icons, double subscribe
+ * button, lack of count on subscribe button
+ * 
+ * Will most likely be fixed in new-mvc.
+ */
+
 use \Rehike\Request;
 
 $yt->spfEnabled = true;
