@@ -18,7 +18,7 @@ namespace Rehike\Constants;
  * 
  * @var string
  */
-const VERSION = "0.0";
+const VERSION = "0.1";
 
 /** 
  * The location of views (templates) relative to the root. 

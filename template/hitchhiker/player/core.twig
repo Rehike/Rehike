@@ -1,7 +1,10 @@
 <div id="player" class="  {{ playerType ? playerType : 'off-screen' }} " role="complementary">
    <div id="theater-background" class="player-height"></div>
    <div id="player-mole-container">
-      <div id="player-unavailable" class="  hid  ">
+      <div id="player-unavailable" class="{{ yt.playerUnavailable ? "  player-width player-height player-unavailable " : "hid"  }}">
+         {% if yt.playerUnavailable %}
+            {% include "player/player_unavailable.twig" %}
+         {% endif %}
       </div>
       <div id="player-api" class="player-width player-height off-screen-target player-api" tabIndex="-1"></div>
       <script >if (window.ytcsi) {window.ytcsi.tick("cfg", null, '');}</script>

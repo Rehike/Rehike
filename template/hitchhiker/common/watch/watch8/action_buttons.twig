@@ -1,18 +1,32 @@
 <div id="watch8-action-buttons" class="watch-action-buttons clearfix">
     <div id="watch8-secondary-actions" class="watch-secondary-actions yt-uix-button-group" data-button-toggle-group="optional">
-    <span class="yt-uix-clickcard">
-        <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-opacity yt-uix-button-has-icon no-icon-markup yt-uix-clickcard-target addto-button pause-resume-autoplay yt-uix-tooltip" type="button" onclick=";return false;" title="Add to" data-orientation="vertical" data-position="bottomleft"><span class="yt-uix-button-content">Add to</span></button>
-        <div class="signin-clickcard yt-uix-clickcard-content">
-            <h3 class="signin-clickcard-header">Want to watch this again later?</h3>
-            <div class="signin-clickcard-message">
-                Sign in to add this video to a playlist.
-            </div>
-            <a  href="https://accounts.google.com/ServiceLogin?hl=en&amp;service=youtube&amp;uilel=3&amp;continue=https%3A%2F%2Fwww.youtube.com%2Fsignin%3Fnext%3D%252Fwatch%253Fv%253DdQw4w9WgXcQ%26hl%3Den%26feature%3D__FEATURE__%26app%3Ddesktop%26action_handle_signin%3Dtrue&amp;passive=true" class="yt-uix-button  signin-button yt-uix-sessionlink yt-uix-button-primary yt-uix-button-size-default" data-sessionlink="ei=23PrWrDCHMvF-gPPu7LAAQ"><span class="yt-uix-button-content">Sign in</span></a>
-        </div>
-    </span>
-    <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-opacity yt-uix-button-has-icon no-icon-markup pause-resume-autoplay action-panel-trigger action-panel-trigger-share   yt-uix-tooltip" type="button" onclick=";return false;" title="Share" data-trigger-for="action-panel-share" data-button-toggle="true">
-        <span class="yt-uix-button-content">Share</span>
-    </button>
+    {% from "/common/uix/button.twig" import render as button %}
+    {%- for actionButton in info.actionButtons -%}
+        {{ button(actionButton) }}
+    {%- endfor -%}
+    {#
+    {{ button({
+        size: "default",
+        style: "opacity",
+        hasIcon: true,
+        noIconMarkup: true,
+        class: [
+            "pause-resume-autoplay",
+            "action-panel-trigger",
+            "action-panel-trigger-share"
+        ],
+        tooltip: "Share",
+        attributes: {
+            "trigger-for": "action-panel-share",
+            "button-toggle": "true"
+        },
+        content: {
+            runs: [{
+                text: "Share"
+            }]
+        }
+    }) }}
+    #}
     <div class="yt-uix-menu ">
         <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-opacity yt-uix-button-has-icon no-icon-markup pause-resume-autoplay yt-uix-menu-trigger yt-uix-tooltip" type="button" onclick=";return false;" title="More actions" aria-haspopup="true" aria-pressed="false" id="action-panel-overflow-button" role="button" aria-label="Action menu."><span class="yt-uix-button-content">More</span></button>
         <div class="yt-uix-menu-content yt-ui-menu-content yt-uix-menu-content-hidden" role="menu">
@@ -38,42 +52,23 @@
     </div>
     <div id="watch8-sentiment-actions">
     <div id="watch7-views-info">
-        <div class="watch-view-count">{{ getText(info.viewCount) }}</div>
-        {% if yt.ratingsEnabled %}
+        <div class="watch-view-count{{ yt.page.isLive ? " metadata-updateable-viewership" }}">{{ getText(info.viewCount) }}</div>
+        {% if info.likeButtonRenderer.sparkbars %}
         <div class="video-extras-sparkbars">
-            <div class="video-extras-sparkbar-likes" style="width: {{ info.likePercent }}%"></div>
-            <div class="video-extras-sparkbar-dislikes" style="width: {{ info.dislikePercent }}%"></div>
+            <div class="video-extras-sparkbar-likes" style="width: {{ info.likeButtonRenderer.sparkbars.likePercent }}%"></div>
+            <div class="video-extras-sparkbar-dislikes" style="width: {{ info.likeButtonRenderer.sparkbars.dislikePercent }}%"></div>
         </div>
         {% endif %}
     </div>
-    {% set likeButton = info.videoActions.menuRenderer.topLevelButtons.0.toggleButtonRenderer.toggleButtonRenderer %}
+    {% set likeButton = info.sentimentActions.likeButton %}
+    {% set dislikeButton = info.sentimentActions.dislikeButton %}
+    {# TODO: refined clickcards #}
     <span class="like-button-renderer " data-button-toggle-group="optional" >
-        <span class="yt-uix-clickcard">
-            <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-opacity yt-uix-button-has-icon no-icon-markup like-button-renderer-like-button like-button-renderer-like-button-unclicked yt-uix-clickcard-target   yt-uix-tooltip" type="button" onclick=";return false;" title="I like this" aria-label="{{ likeButton.accessibility.label }}" data-orientation="vertical" data-position="bottomright" data-force-position="true"><span class="yt-uix-button-content">{{ info.actions.likeButton.defaultText }}</span></button>
-            <div class="signin-clickcard yt-uix-clickcard-content">
-                <h3 class="signin-clickcard-header">Like this video?</h3>
-                <div class="signin-clickcard-message">
-                Sign in to make your opinion count.
-                </div>
-                <a  href="https://accounts.google.com/ServiceLogin?hl=en&amp;service=youtube&amp;uilel=3&amp;continue=https%3A%2F%2Fwww.youtube.com%2Fsignin%3Fnext%3D%252Fwatch%253Fv%253DdQw4w9WgXcQ%26hl%3Den%26feature%3D__FEATURE__%26app%3Ddesktop%26action_handle_signin%3Dtrue&amp;passive=true" class="yt-uix-button  signin-button yt-uix-sessionlink yt-uix-button-primary yt-uix-button-size-default" data-sessionlink="ei=23PrWrDCHMvF-gPPu7LAAQ"><span class="yt-uix-button-content">Sign in</span></a>
-            </div>
-        </span>
-        <span class="yt-uix-clickcard">
-        <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-opacity yt-uix-button-has-icon no-icon-markup like-button-renderer-like-button like-button-renderer-like-button-clicked yt-uix-button-toggled  hid yt-uix-tooltip" type="button" onclick=";return false;" title="Unlike" aria-label="like this video along with 2,818,832 other people" data-orientation="vertical" data-position="bottomright" data-force-position="true"><span class="yt-uix-button-content">{{ info.actions.likeButton.defaultText }}</span></button>
-        </span>
-        <span class="yt-uix-clickcard">
-            <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-opacity yt-uix-button-has-icon no-icon-markup like-button-renderer-dislike-button like-button-renderer-dislike-button-unclicked yt-uix-clickcard-target   yt-uix-tooltip" type="button" onclick=";return false;" title="I dislike this" aria-label="Dislike this video" data-orientation="vertical" data-position="bottomright" data-force-position="true"><span class="yt-uix-button-content">{% if yt.ratingsEnabled %}{{ info.dislikeCount|number_format() }}{% endif %}</span></button>
-            <div class="signin-clickcard yt-uix-clickcard-content">
-                <h3 class="signin-clickcard-header">Don't like this video?</h3>
-                <div class="signin-clickcard-message">
-                Sign in to make your opinion count.
-                </div>
-                <a href="https://accounts.google.com/ServiceLogin?hl=en&amp;service=youtube&amp;uilel=3&amp;continue=https%3A%2F%2Fwww.youtube.com%2Fsignin%3Fnext%3D%252Fwatch%253Fv%253DdQw4w9WgXcQ%26hl%3Den%26feature%3D__FEATURE__%26app%3Ddesktop%26action_handle_signin%3Dtrue&amp;passive=true" class="yt-uix-button  signin-button yt-uix-sessionlink yt-uix-button-primary yt-uix-button-size-default" data-sessionlink="ei=23PrWrDCHMvF-gPPu7LAAQ"><span class="yt-uix-button-content">Sign in</span></a>
-            </div>
-        </span>
-        <span class="yt-uix-clickcard">
-        <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-opacity yt-uix-button-has-icon no-icon-markup like-button-renderer-dislike-button like-button-renderer-dislike-button-clicked yt-uix-button-toggled  hid yt-uix-tooltip" type="button" onclick=";return false;" title="I dislike this" aria-label="Dislike this video" data-orientation="vertical" data-position="bottomright" data-force-position="true"><span class="yt-uix-button-content"></span></button>
-        </span>
+        {# This isn't iterable oops #}
+        {{ button(info.likeButtonRenderer.likeButton) }}
+        {{ button(info.likeButtonRenderer.activeLikeButton) }}
+        {{ button(info.likeButtonRenderer.dislikeButton) }}
+        {{ button(info.likeButtonRenderer.activeDislikeButton) }}
     </span>
     </div>
 </div>

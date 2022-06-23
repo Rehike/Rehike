@@ -89,7 +89,18 @@ video-{{ yt.videoId }} {{ (yt.theaterMode) ? 'watch-wide watch-stage-mode' }}
       yt.setMsg('SPEEDYG_INFO', "Experiencing interruptions?");
 
     
-
+   {% if yt.page.isLive %}
+      yt.setConfig({
+         'LIVESTREAMING_NO_SHARE_TIME': true
+      });
+      yt.setConfig({
+         'LIVESTREAMING_CARDIO_ENABLED': true,
+         'LIVESTREAMING_CARDIO_POLLING_INTERVAL': 30000,
+         'LIVESTREAMING_CARDIO_CONCURRENTS_METRIC': "viewership" });
+      yt.setMsg({
+         'LIVE_WATCHING_NOW': {"case1": "1 watching now", "case0": "0 watching now", "other": "# watching now"}
+      });
+   {% endif %}
 
 
 
@@ -203,55 +214,37 @@ video-{{ yt.videoId }} {{ (yt.theaterMode) ? 'watch-wide watch-stage-mode' }}
                   <div class="yt-alert-buttons"><a  href="https://www.google.com/get/videoqualityreport/?v={{ yt.videoId }}" class="yt-uix-button   yt-uix-sessionlink yt-uix-button-alert-info yt-uix-button-size-small" data-sessionlink="ei=23PrWrDCHMvF-gPPu7LAAQ" id="speedyg-link" target="_blank"><span class="yt-uix-button-content">Find out why</span></a><button class="yt-uix-button yt-uix-button-size-default yt-uix-button-close close yt-uix-close" type="button" onclick=";return false;" aria-label="Close" data-close-parent-class="yt-alert"><span class="yt-uix-button-content">Close</span></button></div>
                </div>
             </div>
-            {%- if yt.page.results.videoPrimaryInfoRenderer -%}
-               {% set info = yt.page.results.videoPrimaryInfoRenderer %}
-               {% set owner = info.owner %}
-               <div id="watch-header" class="yt-card yt-card-has-padding">
-                  <div id="watch7-headline" class="clearfix">
-                     {% if info.hashtags or info.superTitle %}
-                        <span class="standalone-collection-badge-renderer-text">
-                           {% if info.superTitle %}
-                              <a href="{{ info.superTitle.url }}">{{ info.superTitle.text }}</a>
-                           {% endif %}
-                           {% if info.hashtags %}
-                              {% for hashtag in info.hashtags %}
-                                 <a href="/results?search_query={{ hashtag }}">#{{ hashtag }}</a>
-                              {% endfor %}
-                           {% endif %}
-                        </span>
-                     {% endif %}
-                     <div id="watch-headline-title">
-                        <h1 class="watch-title-container">
-                           {% if info.badges[0].metadataBadgeRenderer.icon.iconType == "PRIVACY_UNLISTED" %}
-                           <span id="watch-privacy-icon" class="yt-uix-tooltip yt-uix-tooltip-reverse unlisted" title="This video is unlisted. Only those with the link can see it." tabindex="0" data-tooltip-text="This video is unlisted. Only those with the link can see it." aria-labelledby="yt-uix-tooltip41-arialabel">
-                              <span class="privacy-icon yt-sprite"></span>
-                            </span>
-                           {% endif %}
-                           <span id="eow-title" class="watch-title" dir="ltr" title="{{ getText(info.title) }}">
-                           {{ getText(info.title) }}
-                           </span>
-                        </h1>
-                     </div>
-                  </div>
-                  {% include '/common/watch/watch7/user_header.twig' %}
-                  {% include '/common/watch/watch8/action_buttons.twig' %}
-               </div>
-               {% include '/common/watch/watch8/action_panels_module.twig' %}
-            {% endif %}
-            <div id="promotion-shelf" class="promotion-shelf-slot yt-card yt-card-has-padding hid"></div>
-            {%- if yt.page.results.videoSecondaryInfoRenderer -%}
-               {% set secondaryInfo = yt.page.results.videoSecondaryInfoRenderer %}
-               {% include '/common/watch/watch7/action_panel/details.twig' %}
-            {%- endif -%}
-            {%- if yt.page.results.videoDiscussionRenderer -%}
-               {% include '/common/watch/watch_discussion_module.twig' %}
-            {%- endif -%}
-            {%- if yt.page.results.videoDiscussionNotice -%}
-               {% include '/common/watch/watch_discussion_disabled.twig' %}
-            {%- endif -%}
+            {# 
+               Watch model rewrite makes results an array instead of
+               an object, so this has been updated to iterate.   
+            #}
+            {%- for result in yt.page.results -%}
+               {%- if result.videoPrimaryInfoRenderer -%}
+                  {% set info = result.videoPrimaryInfoRenderer %}
+                  {% set owner = info.owner %}
+                  {% include '/common/watch/watch8/primary_info_renderer.twig' %}
+               {% endif %}
+               <div id="promotion-shelf" class="promotion-shelf-slot yt-card yt-card-has-padding hid"></div>
+               {%- if result.videoSecondaryInfoRenderer -%}
+                  {% set secondaryInfo = result.videoSecondaryInfoRenderer %}
+                  {% include '/common/watch/watch7/action_panel/details.twig' %}
+               {%- endif -%}
+               {%- if result.videoDiscussionRenderer -%}
+                  {% include '/common/watch/watch_discussion_module.twig' %}
+               {%- endif -%}
+               {%- if result.videoDiscussionNotice -%}
+                  {% from '/common/watch/watch_discussion_disabled.twig' import watch_discussion_disabled %}
+                  {{ watch_discussion_disabled(result.videoDiscussionNotice.message) }}
+               {%- endif -%}
+            {%- endfor -%}
          </div>
          {% set secondaryResults = yt.page.secondaryResults %}
-         {% include '/common/watch/watch7/sidebar/watch_sidebar.twig' %}
+         {# Secondary results should show, unless it is not available 
+            AND primary results aren't either. #}
+         {%- if yt.page.results or yt.page.secondaryResults -%}
+            {% include '/common/watch/watch7/sidebar/watch_sidebar.twig' %}
+         {%- endif -%}
+      </div>
    </div>
 </div>
 {% endblock %}

@@ -36,7 +36,7 @@
                         <h1>Error log</h1>
                      </div>
                      <div style="margin-top: 20px;width: 600px;height: 300px;border: 1px solid #ccc;padding: 6px;overflow: scroll;overflow-x: auto;">
-                        {{ yt.errInfo.message }}
+                        <pre style="white-space: pre-wrap;">{{ yt.errInfo.message }}</pre>
                      </div>
                      <div class="yt-uix-overlay-actions">
                         <button id="gterr-log-close" class="yt-uix-button yt-uix-button-size-default yt-uix-button-default yt-uix-overlay-close" type="button" onclick=";return false;"><span class="yt-uix-button-content">Close</span></button>

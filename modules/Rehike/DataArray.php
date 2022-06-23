@@ -60,6 +60,11 @@ class DataArray implements ArrayAccess, IteratorAggregate
         }
     }
 
+    public function __isset($var)
+    {
+        return null != $this->__get($var);
+    }
+
     public function __set($a, $b)
     {
         $this->offsetSet(null, null); // inherit warning

@@ -2,6 +2,10 @@
 
 <div id="watch7-sidebar" class="watch-sidebar">
     <div id="placeholder-playlist" class="watch-playlist player-height {{ not yt.page.playlist ? ' hid' }}"></div>
+    {%- if yt.page.liveChat -%}
+        {% from "common/watch/live_chat/base.twig" import render as live_chat %}
+        {{ live_chat(yt.page.liveChat) }}
+    {%- endif -%}
     <div id="watch7-sidebar-contents" class="watch-sidebar-gutter   yt-card yt-card-has-padding    yt-uix-expander yt-uix-expander-collapsed">
         <div id="watch7-sidebar-offer">
         </div>
@@ -27,6 +31,5 @@
                 </div>
             </div>
         </div>
-    </div>
     </div>
 </div>

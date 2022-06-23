@@ -1,0 +1,11 @@
+{%- macro render(data, target) -%}
+    <span class="yt-uix-clickcard">
+        {{ target }}
+        <div {% if data.id %}id="{{ data.id }}" {% endif %}class="{{ data.class }} yt-uix-clickcard-content">
+            {% 
+               include "/common/clickcard/" ~ data.template ~ ".twig"
+               ignore missing with {data: data.content}
+            %}
+        </div>
+    </span>
+{%- endmacro -%}

@@ -72,6 +72,7 @@ $ytConstants = (object) [
     ],
     'img' => (object) [
         'channels/c4/default_banner' => '//' . YTS_HOST . '/yts/img/channels/c4/default_banner-vfl7DRgTn.png',
-        'channels/c4/default_banner_hq' => '//' . YTS_HOST . '/yts/img/channels/c4/default_banner_hq-vfl4dpY8T.png'
+        'channels/c4/default_banner_hq' => '//' . YTS_HOST . '/yts/img/channels/c4/default_banner_hq-vfl4dpY8T.png',
+        "meh7" => "//" . YTS_HOST . "/yts/img/meh7-vflGevej7.png"
     ]
 ];

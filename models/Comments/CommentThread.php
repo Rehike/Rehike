@@ -89,6 +89,53 @@ class CommentThread
 
     public static function commentRepliesRenderer($context)
     {
+        /*
+         * YouTube has been updating desktop comments (as of 2022/06/23)
+         * to use mobile style all caps text and author thumbnail.
+         * 
+         * This is to correct that style for English (update as needed when
+         * i18n update).
+         */
+        if (
+            isset($context->viewReplies) &&
+            !preg_match("/View/", $context->viewReplies->buttonRenderer->text->runs[0]->text)
+        )
+        {
+            $text = &$context->viewReplies->buttonRenderer->text->runs[0]->text;
+            $hideText = &$context->hideReplies->buttonRenderer->text->runs[0]->text;
+
+            $replyCount = (int)str_replace([" REPLY", " REPLIES", ","], "", $text);
+            
+            if ($replyCount > 1)
+            {
+                $text = "View $replyCount replies";
+                $hideText = "Hide $replyCount replies";
+            }
+            else
+            {
+                $text = "View reply";
+                $hideText = "Hide reply";
+            }
+
+            // Include author attribution if available
+            if (isset($context->viewRepliesCreatorThumbnail))
+            {
+                $name = $context->viewRepliesCreatorThumbnail->accessibility
+                    ->accessibilityData->label
+                ;
+
+                $text .= " from $name";
+                $hideText .= " from $name";
+
+                // "and others" if > 1
+                if ($replyCount > 1)
+                {
+                    $text .= " and others";
+                    $hideText .= " and others";
+                }
+            }
+        }
+
         return $context;
     }
 

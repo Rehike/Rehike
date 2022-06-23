@@ -1,0 +1,11 @@
+{% macro render(data) %}
+<div id="watch-sidebar-live-chat" class="  yt-card yt-card-has-padding yt-uix-expander ">
+    <div class="yt-uix-expander live-chat-expander">
+       <iframe id="live-chat-iframe" class="live-chat-iframe yt-uix-expander-body" src="/live_chat?continuation={{ data.continuations.0.reloadContinuationData.continuation }}" data-host-origin="https://www.youtube.com/"></iframe>
+       <div id="hide-live-comments">
+          <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-expander yt-uix-expander-head yt-uix-expander-body" type="button" onclick=";return false;" id="hide-live-chat-button"><span class="yt-uix-button-content">{{ getText(data.showHideButton.toggleButtonRenderer.defaultText) }}</span></button>
+          <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-expander yt-uix-expander-head yt-uix-expander-collapsed-body" type="button" onclick=";return false;" id="show-live-chat-button"><span class="yt-uix-button-content">{{ getText(data.showHideButton.toggleButtonRenderer.toggledText) }}</span></button>
+       </div>
+    </div>
+</div>
+{% endmacro %}
