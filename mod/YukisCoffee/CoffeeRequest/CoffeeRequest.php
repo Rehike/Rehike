@@ -1,182 +1,78 @@
 <?php
 namespace YukisCoffee\CoffeeRequest;
 
+/**
+ * Static wrapper for CoffeeRequestInstance (the new main code as of version 2.0).
+ * 
+ * This only exists to maintain compatibility with legacy v1.0 code. Please use that.
+ * 
+ * Slowly, this will probably be deprecated. When the time comes, CoffeeRequestInstance
+ * may be removed. As such, do not directly construct CoffeeRequestInstance.
+ * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
+ */
 class CoffeeRequest
 {
-    public static $requestsMaxAttempts = 50;
-    public static $defaultOptions =
-        [
-            "post" => false,
-            "returnTransfer" => true,
-            "encoding" => "gzip",
-            "headers" => [] // ** Set by $defaultHeaders
-        ];
-    public static $defaultHeaders = [];
-    public static $requestQueue = [];
+    protected static $staticWrapper;
+    protected $instanceWrapper;
 
-    public static function _init()
+    // Behaviour for all method calls
+    protected static function _methodCallWrapper(&$actor, $name, $args)
     {
-        self::$defaultHeaders += ["Cookie" => self::genCookieHeader()];
-    }
+        $reflection = new \ReflectionClass($actor);
 
-    public static function request($url, $options = [])
-    {
-        self::addDefaultOptions($options);
-        
-        // Init curl
-        $ch = curl_init($url);
-        curl_setopt_array($ch, self::reqOpts2Curl($options));
-
-        // Do request
-        $attempts = 0;
-        do
+        if ($reflection->hasMethod($name) && $reflection->getMethod($name)->isPublic())
         {
-            $response = curl_exec($ch);
-            $attempts++;
+            return $actor->{$name}(...$args);
         }
-        while (200 !== curl_getinfo($ch, \CURLINFO_HTTP_CODE) && $attempts < self::$requestsMaxAttempts);
-
-        curl_close($ch);
-
-        if (isset($response) && false !== $response)
+        else
         {
-            return $response;
+            trigger_error("Method does not exist or is invisible.", E_USER_ERROR);
         }
     }
 
-    public static function queueRequest($url, $options = [], $id = null)
+    // These act as static links to all properties of the instance class.
+    public static $requestsMaxAttempts;
+    public static $defaultOptions;
+    public static $defaultHeaders;
+    public static $requestQueue;
+
+    public static function _staticWrapperInit()
     {
-        self::addDefaultOptions($options);
+        self::$staticWrapper = new CoffeeRequestInstance("do not access this directly!");
 
-        // Init curl
-        $ch = curl_init($url);
-        curl_setopt_array($ch, self::reqOpts2Curl($options));
-
-        // Add to request queue
-        if (is_null($id)) $id = count(self::$requestQueue) - 1;
-        self::$requestQueue += [$id => $ch];
+        self::$requestsMaxAttempts = &self::$staticWrapper->requestsMaxAttempts;
+        self::$defaultOptions = &self::$staticWrapper->defaultOptions;
+        self::$defaultHeaders = &self::$staticWrapper->defaultHeaders;
+        self::$requestQueue = &self::$staticWrapper->requestQueue;
     }
 
-    public static function runQueue()
+    public static function __callStatic($name, $args)
     {
-        $mh = curl_multi_init();
-
-        // Register all queued requests
-        foreach (self::$requestQueue as $id => $handle)
-        {
-            curl_multi_add_handle($mh, $handle);
-        }
-
-        // Do requests
-        do
-        {
-            $status = curl_multi_exec($mh, $active);
-            if ($active) curl_multi_select($mh);
-        }
-        while ($active && \CURLM_OK == $status);
-
-        // Form response assocarray by id and close handle
-        $responses = [];
-
-        foreach (self::$requestQueue as $id => $handle)
-        {
-            $responses += [$id => curl_multi_getcontent($handle)];
-            curl_multi_remove_handle($mh, $handle);
-        }
-
-        // Close curl and return
-        curl_multi_close($mh);
-
-        self::clearRequestQueue();
-
-        return $responses;
+        return self::_methodCallWrapper(self::$staticWrapper, $name, $args);
     }
 
-    public static function clearRequestQueue()
+    // Also allow this to be used as a "link" for CoffeeRequestInstance
+    public function __construct()
     {
-        self::$requestQueue = [];
+        $this->instanceWrapper = new CoffeeRequestInstance("do not access this directly!");
     }
 
-    public static function addDefaultOptions(&$options)
+    public function __call($name, $args)
     {
-        // PHP array addition for assocarrays ignores
-        // value, meaning only unset keys are added.
-        // So it's just one line:
-
-        $options += self::$defaultOptions;
-        if (isset($options["headers"])) $options["headers"] += self::$defaultHeaders;
+        return self::_methodCallWrapper($this->instanceWrapper, $name, $args);
     }
 
-    public static function reqOpts2Curl($options)
+    public function &__get($variable)
     {
-        $curlArr = [];
-
-        foreach ($options as $option => $value)
-        {
-            switch ($option)
-            {
-                // Map option names to CURLOPT names
-                case "post": 
-                    $curlOpt = \CURLOPT_POST; 
-                    break;
-                case "returnTransfer": 
-                    $curlOpt = \CURLOPT_RETURNTRANSFER; 
-                    break;
-                case "encoding":
-                    $curlOpt = \CURLOPT_ENCODING;
-                    break;
-                case "body":
-                    $curlOpt = \CURLOPT_POSTFIELDS;
-                    break;
-                case "headers":
-                    $curlOpt = \CURLOPT_HTTPHEADER;
-                    $value = self::reqHeaders2Curl($value);
-                    break;
-                case "overrideResolve":
-                    $curlOpt = \CURLOPT_RESOLVE;
-                    break;
-                default: continue 2;
-            }
-            
-            $curlArr[$curlOpt] = $value;
-        }
-        
-        return $curlArr;
+        return $this->instanceWrapper->{$variable};
     }
 
-    public static function reqHeaders2Curl($headers)
+    public function __set($variable, $value)
     {
-        $curlHeaders = [];
-        
-        foreach ($headers as $header => $value)
-        {
-            $curlHeaders[] = $header . ': '.  $value;
-        }
-        
-        return $curlHeaders;
-    }
-
-    public static function genCookieHeader()
-    {
-        if (empty($_COOKIE)) return "";
-        
-        $cookies = "";
-        
-        // Stringify cookies into HTTP format.
-
-        foreach ($_COOKIE as $cookie => $value)
-        {
-            $cookies .= $cookie . '=' . $value . '; ';
-        }
-        
-        return $cookies;
+        $this->instanceWrapper->{$variable} = $value;
     }
 }
 
-// To work around PHP limitations,
-// immediately call init method to set some
-// dynamic defaults. This is because default
-// value of a static variable is compile time
-// so static.
-
-CoffeeRequest::_init();
+// This can be moved to __initStatic on new-mvc
+CoffeeRequest::_staticWrapperInit();

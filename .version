@@ -1,10 +1,10 @@
 {
-	"previousHash": "b89e3ed8f813934d36fddc258a0f987782e9274d",
-	"currentRevisionId": 178,
-	"subject": "Make large search thumbs default config",
-	"body": "Make large search thumbs default config",
+	"previousHash": "631db0387a299376e30f2df681fcd3355006bf5c",
+	"currentRevisionId": 179,
+	"subject": "CoffeeRequest version 2.0 update",
+	"body": "CoffeeRequest version 2.0 update",
 	"branch": "master",
 	"committerName": "Coffee",
 	"committerEmail": "99076687+YukisCoffee@users.noreply.github.com",
-	"time": 1656109937
+	"time": 1656110296
 }
