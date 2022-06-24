@@ -8,7 +8,11 @@ if (isset($_GET["enable_polymer"]) && $_GET["enable_polymer"] == "1") {
 
 switch ($routerUrl->path[0]) {
     case '':
-        include('views/feed/what_to_watch.php');
+        if ($yt->config->useWebV2HomeEndpoint) {
+            include('views/feed/what_to_watch_v2.php');
+        } else {
+            include('views/feed/what_to_watch.php');
+        }
         break;
     case 'watch':
         include('views/watch.php');
@@ -64,11 +68,36 @@ switch ($routerUrl->path[0]) {
     case "related_ajax":
         include "views/ajax/related.php";
         break;
-    case 'internal': // forward to internal router
-        include('internal/internalRouter.php');
-        break;
-    case 'settings':
-        include('views/rehike/settings.php');
+    case "rehike":
+        switch ($routerUrl->path[1])
+        {
+            case 'settings':
+                include('views/rehike/settings.php');
+                break;
+            case "version":
+                (include "views/rehike/version.php")::get($yt, $template);
+                break;
+			case "static":
+				switch ($routerUrl->path[2])
+				{
+					case "logo.png":
+						header("Content-Type: image/png");
+						echo file_get_contents("static/version/logo.png");
+						exit();
+						break;
+					case "logo_small_grey.png":
+						header("Content-Type: image/png");
+						echo file_get_contents("static/version/logo_small_grey.png");
+						exit();
+						break;
+                    case "branch_icon.png":
+                        header("Content-Type: image/png");
+                        echo file_get_contents("static/version/branch_icon.png");
+                        exit();
+                        break;
+				}
+				break;
+        }
         break;
     case 'feed':
         if(isset($routerUrl->path[1])) {

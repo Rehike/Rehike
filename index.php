@@ -1,7 +1,4 @@
 <?php
-// why rehike when you already have hitchhiker?
-// hahahahaahahhhahaha :))))
-
 ob_start();
 $root = $_SERVER['DOCUMENT_ROOT'];
 set_include_path($root);
@@ -31,6 +28,12 @@ Rehike\ContextManager::$visitorData = $visitor;
 
 // * Set signin state
 Rehike\Signin\AuthManager::use($yt);
+
+// Load version information from the version service
+// and push it to the global yt variable
+\Rehike\Version\VersionController::init();
+$yt->rehikeVersion = (object)\Rehike\Version\VersionController::$versionInfo;
+$yt->rehikeVersion->semanticVersion = \Rehike\Version\VersionController::getVersion();
 
 // differentiates pages
 require ('router.php');
@@ -89,7 +92,7 @@ if (isset($yt->spf) && $yt->spf && http_response_code() == 200) { // isset to pr
     $_htmlBuffer = ob_get_clean();
     header('Content-Type: application/json');
 
-    $spfResponse = @SpfPhp::build(
+    $spfResponse = @SpfPhp::parse(
         $_htmlBuffer,
         $yt->spfIdListeners,
         (object) [

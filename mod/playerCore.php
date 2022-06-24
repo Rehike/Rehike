@@ -8,6 +8,7 @@ class PlayerCore {
     const CACHE_PATH = self::CACHE_DIR . '/' . self::PLAYER_CACHE_FILE;
     const CACHE_MAX_TIME = 18000; // 5 hours
     const STS_REGEX = '/signatureTimestamp:?\s*([0-9]*)/';
+    const MAX_CACHE_SAVE_RETRIES = 5;
 
     /**
      * Extract the signatureTimestamp embedded within YouTube
@@ -58,7 +59,7 @@ class PlayerCore {
         return $baseposExtract[0];
     }
 
-    public static function generatePlayerCache(bool $cacheExists): object {
+    public static function generatePlayerCache(): object {
         // TODO: migrate to general cache utils
         
         // Patch: Major errors without "cache" folder
@@ -66,25 +67,77 @@ class PlayerCore {
         
         $basepos = self::getPlayerBasePosition();
         $time = time();
-        
-        if (!is_dir(self::CACHE_DIR))
+        $sts = self::getSignatureTimestamp($basepos);
+
+        try
         {
-            mkdir(self::CACHE_DIR);
+            self::writeCacheFile($time, $basepos, $sts);
+        }
+        catch (\Throwable $e)
+        {
+            // Elevate exception
+            throw $e;
         }
 
-        if ($cacheExists) {
-            unlink(self::CACHE_PATH);
+        return self::main();
+    }
+
+    /**
+     * PATCH (kirasicecreamm): Occasionally the stream will fail
+     * to open. Without catching, this often results in a fatal
+     * error being thrown without any proper indicator as to why.
+     * 
+     * As such, this behaviour was moved from generatePlayerCache()
+     * to this new function to allow reattempts in case of odd FS
+     * errors.
+     * 
+     * In addition: crash seems to be caused by unlink (deleting the file)
+     * before fopen, probably a time period where the file is "protected"
+     * between then and there. fwrite "w" clears the file anyways, so this is 
+     * not needed. (https://stackoverflow.com/q/47621347)
+     */
+    protected static function writeCacheFile(&$time, &$basepos, &$sts, $recurse = 0)
+    {
+        // Validate the request
+        switch (true)
+        {
+            // Throw an error if the maximum number of retries
+            // has been exceeded.
+            case $recurse > self::MAX_CACHE_SAVE_RETRIES:
+                throw new \Exception(
+                    "Maximum number of retries exceeded. Is directory writable?"
+                );
+                break;
+        }
+
+        // Create the cache folder if it doesn't exist.
+        if (!is_dir(self::CACHE_DIR))
+        {
+            $status = mkdir(self::CACHE_DIR);
+
+            // Make sure the directory was able to be created, otherwise throw
+            // an exception.
+            if (false == $status)
+            {
+                throw new \Exception("Permission denied.");
+            }
         }
         
         $newCacheFile = fopen(self::CACHE_PATH, 'w');
-        fwrite($newCacheFile, '<?php return (object) [
+
+        $status = fwrite($newCacheFile, '<?php return (object) [
             \'time\' => ' . $time . ',
             \'basepos\' => \'' . $basepos . '\',
             \'sts\' => ' . self::getSignatureTimestamp($basepos) . '
         ];');
-        fclose($newCacheFile);
 
-        return self::main();
+        // Validate that the file write was successful, or retry.
+        if (false == $status)
+        {
+            return self::writeCacheFile($time, $basepos, $sts, ++$recurse);
+        }
+
+        fclose($newCacheFile);
     }
 
     public static function main(): object {
@@ -96,9 +149,9 @@ class PlayerCore {
 
             return (time() < $maxTime) 
                 ? $playerCache 
-                : self::generatePlayerCache(true);
+                : self::generatePlayerCache();
         } else {
-            return self::generatePlayerCache(false);
+            return self::generatePlayerCache();
         }
     }
 }

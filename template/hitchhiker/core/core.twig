@@ -31,7 +31,7 @@
       {{ yt.config.useRingoBranding ? 'exp-invert-logo' }}
       exp-mouseover-img 
       exp-responsive 
-      exp-search-big-thumbs   
+      {{ yt.config.largeSearchThumbs ? "exp-search-big-thumbs" }}   
       site-center-aligned 
       site-as-giant-card 
       {{ (appbarEnabled and defaultGuideVisibility) ? 'guide-pinning-enabled' }}   

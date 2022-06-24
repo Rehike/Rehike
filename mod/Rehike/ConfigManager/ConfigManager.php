@@ -7,7 +7,7 @@ namespace Rehike\ConfigManager;
 class ConfigManager
 {
     /** @var array (because PHP limitations) */
-    protected static $defaultConfig = [];
+    public static $defaultConfig = [];
 
     /** @var string */
     protected static $file = 'config.json';
@@ -58,7 +58,7 @@ class ConfigManager
     public static function dumpDefaultConfig()
     {
         return static::dump(
-            self::$file, 
+            static::$file, 
             json_encode((object) static::$defaultConfig, JSON_PRETTY_PRINT)
         );
     }

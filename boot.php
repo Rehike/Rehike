@@ -8,7 +8,6 @@ require_once($root . '/vendor/autoload.php');
 include "mod/YukisCoffee/CoffeeException.php";
 include "mod/YukisCoffee/GetPropertyAtPath.php";
 
-require('mod/spfPhp.php');
 require('mod/playerCore.php');
 $_playerCore = PlayerCore::main();
 $yt->playerCore = $_playerCore;
@@ -16,16 +15,19 @@ $yt->playerBasepos = $_playerCore->basepos;
 
 if (isset($_COOKIE["PREF"])) {
    $PREF = explode("&", $_COOKIE["PREF"]);
-   $yt->PREF = [];
+   $yt->PREF = (object) [];
    for ($i = 0; $i < count($PREF); $i++) {
       $option = explode("=", $PREF[$i]);
-      $yt->PREF[$option[0]] = $option[1];
+      $title = $option[0];
+      $yt->PREF->$title = $option[1];
    }
 } else {
-   $yt->PREF = [
+   $yt->PREF = (object) [
       "f5" => "20030"
    ];
 }
+
+$yt -> version = json_decode(file_get_contents($root . "/.version"));
 
 $twigLoader = new \Twig\Loader\FilesystemLoader(
    $root . $templateRoot
@@ -41,6 +43,8 @@ $twig -> addFilter (
 
 function YcRehikeAutoloader($class)
 {
+   $class = str_replace("\\", "/", $class);
+
     if (file_exists("mod/{$class}.php")) {
         require "mod/{$class}.php";
     }
@@ -48,6 +52,10 @@ function YcRehikeAutoloader($class)
 spl_autoload_register('YcRehikeAutoloader');
 
 
+/**
+ * TODO (kirasicecreamm): Clean up Template Functions system to have
+ * a more clear name. This will probably done on new-mvc branch.
+ */
 function registerFunction($name, $cb): void {
    global $twig;
    

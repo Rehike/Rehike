@@ -59,6 +59,9 @@
          <li><a href="//www.youtube.com/yt/creators/">Creators</a></li>
          <li><a href="//www.youtube.com/yt/advertise/">Advertise</a></li>
          <li><a href="//www.youtube.com/yt/dev/">Developers</a></li>
+         {%- if yt.config.versionInFooter -%}
+            <li><a href="/rehike/version" target="_blank">Rehike v{{ yt.rehikeVersion.semanticVersion }}{% if yt.rehikeVersion.branch %} [{{ yt.rehikeVersion.branch }}]{% endif %}</a></li>
+         {%- endif -%}
       </ul>
       <ul id="footer-links-secondary">
          <li><a href="/t/terms">Terms</a></li>

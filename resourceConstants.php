@@ -20,6 +20,13 @@ $ytConstants = (object) [
         'www-creatorpage' => '//' . YTS_HOST . '/yts/cssbin/www-creatorpage-vflfgomxn.css',
         'www-error' => '//' . YTS_HOST . '/yts/cssbin/www-error-vflvD9R0Z.css'
     ],
+    'css2x' => (object) [
+        'www-core' => '//' . YTS_HOST . '/yts/cssbin/www-core-2x-vflNAXaGB.css',
+        'www-pageframe' => '//' . YTS_HOST . '/yts/cssbin/www-pageframe-2x-vfl7zB5iD.css',
+        'www-guide' => '//' . YTS_HOST . '/yts/cssbin/www-guide-2x-vflnLcFfr.css',
+        'www-home-c4' => '//' . YTS_HOST . '/yts/cssbin/www-home-c4-2x-vflBmvDSR.css',
+        'www-results' => '//' . YTS_HOST . '/yts/cssbin/www-results-2x-vflilAG3t.css'
+    ],
     'jsModulesPath' => '//' . YTS_HOST . '/yts/jsbin/' . MODULAR_JS_PATH . '/',
     'js' => (object) [
         'scheduler/scheduler' => '//' . YTS_HOST . '/yts/jsbin/scheduler-vflyNP9EQ/scheduler.js',
