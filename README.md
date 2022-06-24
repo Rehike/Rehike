@@ -44,6 +44,11 @@ Rehike makes use of the following open source software:
 
 and much of their prerequisites.
 
+## Player
+
+YouTube has made some changes to the player which have had their experiment flags removed.
+If you wish to revert the player back to the older design, use [this](https://github.com/YukisCoffee/yt-player-classicifier)!
+
 ## Thank you!
 
 Whether or not you choose to contribute to Rehike, we appreciate you checking out our project!
