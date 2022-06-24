@@ -1,10 +1,10 @@
 {
-	"previousHash": "e6780d925c9abf69e5f079774f830b2dd613f1ae",
-	"currentRevisionId": 176,
-	"subject": "small search thumbs, notes in broken pages",
-	"body": "small search thumbs, notes in broken pages",
+	"previousHash": "b89e3ed8f813934d36fddc258a0f987782e9274d",
+	"currentRevisionId": 178,
+	"subject": "Make large search thumbs default config",
+	"body": "Make large search thumbs default config",
 	"branch": "master",
-	"committerName": "aubymori",
-	"committerEmail": "aubyomori@gmail.com",
-	"time": 1655957818
+	"committerName": "Coffee",
+	"committerEmail": "99076687+YukisCoffee@users.noreply.github.com",
+	"time": 1656109937
 }
