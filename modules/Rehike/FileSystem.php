@@ -28,7 +28,7 @@ class FileSystem
         $ext = explode(".", $filename);
 
         // Remove the first item (everything before the first .)
-        $ext = array_splice($ext, 0, 1);
+        array_splice($ext, 0, 1);
 
         // Rejoin the extension by "."
         $ext = implode(".", $ext);
@@ -51,7 +51,7 @@ class FileSystem
         $root = explode("/", $path);
 
         // Remove the last item (the filename)
-        $root = array_splice($root, count($root) - 1, 1);
+        array_splice($root, count($root) - 1, 1);
 
         // Rejoin
         $root = implode("/", $root);
