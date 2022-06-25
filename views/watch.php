@@ -48,8 +48,8 @@ if(isset($_GET["t"])) {
     }
 }
 
-Request::innertubeRequest("watch", "next", (object) $watchRequestParams);
-Request::innertubeRequest("player", "player", (object) ([
+Request::queueInnertubeRequest("watch", "next", (object) $watchRequestParams);
+Request::queueInnertubeRequest("player", "player", (object) ([
     "playbackContext" => [
         'contentPlaybackContext' => (object) [
             'autoCaptionsDefaultOn' => false,
@@ -65,7 +65,7 @@ Request::innertubeRequest("player", "player", (object) ([
     "startTimeSecs" => $startTime ?? 0
 ] + $watchRequestParams));
 
-Request::urlRequest("rydResponse", "https://returnyoutubedislikeapi.com/votes?videoId={$yt->videoId}");
+Request::queueUrlRequest("rydResponse", "https://returnyoutubedislikeapi.com/votes?videoId={$yt->videoId}");
 $responses = Request::getResponses();
 
 $response = $responses["watch"];

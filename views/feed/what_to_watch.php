@@ -20,8 +20,7 @@ if(!isset($yt->spf) or $yt->spf == false) {
  * a similar markup and are still up.
  */
 
-Request::innertubeRequest(
-    "feed", 
+$response = Request::innertubeRequest(
     "browse", 
     (object)[
         "browseId" => "FEwhat_to_watch"
@@ -29,7 +28,6 @@ Request::innertubeRequest(
     "ANDROID",
     "15.14.33"
 );
-$response = Request::getResponses()["feed"];
 $yt -> response = $response;
 
 $timeb = round(microtime(true) * 1000);

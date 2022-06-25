@@ -19,10 +19,9 @@ if(!isset($yt->spf) or $yt->spf == false) {
     require "mod/getGuide.php";
 }
 
-Request::innertubeRequest("feed", "browse", (object)[
+$response = Request::innertubeRequest("browse", (object)[
     "browseId" => "FEguide_builder"
 ]);
-$response = Request::getResponses()["feed"];
 
 $timeb = round(microtime(true) * 1000);
 $ytdata = json_decode($response);

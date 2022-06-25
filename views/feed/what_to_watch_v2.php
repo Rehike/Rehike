@@ -13,15 +13,12 @@ if(!isset($yt->spf) or $yt->spf == false) {
     require "mod/getGuide.php";
 }
 
-Request::innertubeRequest(
-    "feed", 
+$response = Request::innertubeRequest(
     "browse", 
     (object)[
         "browseId" => "FEwhat_to_watch"
     ]
 );
-
-$response = Request::getResponses()["feed"];
 
 $ytdata = json_decode($response);
 $items = $ytdata -> contents -> twoColumnBrowseResultsRenderer -> tabs[0] -> tabRenderer -> content -> richGridRenderer -> contents;
