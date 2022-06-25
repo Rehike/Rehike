@@ -23,8 +23,7 @@ use \Rehike\Request;
 
 // WTW hack
 if ($yt->target == "section-list-874807") {
-    Request::innertubeRequest(
-        "browse",
+    $response = Request::innertubeRequest(
         "browse",
         (object) [
             "continuation" => $yt->continuation
@@ -32,18 +31,13 @@ if ($yt->target == "section-list-874807") {
         "ANDROID",
         "15.14.33"
     );
-
-    $response = Request::getInnertubeResponses()["browse"];
 } else {
-    Request::innertubeRequest(
-        "browse",
+    $response = Request::innertubeRequest(
         "browse",
         (object) [
             "continuation" => $yt->continuation
         ]
     );
-
-    $response = Request::getInnertubeResponses()["browse"];
 }
 
 

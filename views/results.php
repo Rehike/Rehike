@@ -26,10 +26,9 @@ if(!isset($yt->spf) or $yt->spf == false) {
 
 $yt->searchQuery = $_GET['search_query'];
 
-Request::innertubeRequest("page", "search", (object)[
+$response = Request::innertubeRequest("search", (object)[
     "query" => $_GET['search_query']
 ]);
-$response = Request::getInnertubeResponses()["page"];
 
 $ytdata = json_decode($response);
 $resultsList = $ytdata->contents->twoColumnSearchResultsRenderer->primaryContents->sectionListRenderer->contents[0]->itemSectionRenderer->contents;

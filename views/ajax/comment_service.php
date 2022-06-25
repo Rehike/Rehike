@@ -29,10 +29,9 @@ if (isset($action))
     $yt->page = (object) [];
     $yt->comments = (object) [];
 
-    Request::innertubeRequest("page", "next", (object)[
+    $response = Request::innertubeRequest("next", (object)[
         "continuation" => $_POST['page_token']
     ]);
-    $response = Request::getInnertubeResponses()["page"];
 
     $ytdata = json_decode($response);
 }

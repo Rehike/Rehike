@@ -21,11 +21,10 @@ $yt->tab = $tab;
 $yt->baseUrl = "/" . $routerUrl->path[0] . "/" . $routerUrl->path[1];
 $tabParam = ChannelUtils::synthChannelTab($tab);
 
-Request::innertubeRequest("channel", "browse", (object)[
+$response = Request::innertubeRequest("browse", (object)[
     "browseId" => $ucid,
     "params" => $tabParam
 ]);
-$response = Request::getInnertubeResponses()["channel"];
 $yt->response = $response;
 
 $ytdata = json_decode($response);

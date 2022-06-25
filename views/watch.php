@@ -48,8 +48,8 @@ if(isset($_GET["t"])) {
     }
 }
 
-Request::innertubeRequest("watch", "next", (object) $watchRequestParams);
-Request::innertubeRequest("player", "player", (object) ([
+Request::queueInnertubeRequest("watch", "next", (object) $watchRequestParams);
+Request::queueInnertubeRequest("player", "player", (object) ([
     "playbackContext" => [
         'contentPlaybackContext' => (object) [
             'autoCaptionsDefaultOn' => false,
@@ -75,7 +75,7 @@ curl_close($ch);
 $dislikesData = json_decode($rydResponse);
 
 
-$responses = Request::getInnertubeResponses();
+$responses = Request::getResponses();
 
 $response = $responses["watch"];
 $presponse = $responses["player"];
