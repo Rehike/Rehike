@@ -1,10 +1,10 @@
 {
-	"previousHash": "7ea449cf84efdda629a8d4c33c52fb233d7e0b6e",
-	"currentRevisionId": 213,
-	"subject": "New general i18n system",
-	"body": "New general i18n system",
+	"previousHash": "6348f64ca801be2b2625f0120c1f9a690800ef97",
+	"currentRevisionId": 214,
+	"subject": "CoffeeException improvements",
+	"body": "CoffeeException improvements",
 	"branch": "new-mvc",
 	"committerName": "Coffee",
 	"committerEmail": "99076687+YukisCoffee@users.noreply.github.com",
-	"time": 1656190428
+	"time": 1656191103
 }

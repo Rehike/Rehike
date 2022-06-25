@@ -32,6 +32,8 @@ abstract class CoffeeException extends \Exception implements ICoffeeException
     private $trace;
     public $exceptionName;
 
+    protected static $beautifulError = true;
+
     public function __construct($message = null, $code = 0)
     {
         $this->exceptionName = get_class($this);
@@ -84,20 +86,37 @@ abstract class CoffeeException extends \Exception implements ICoffeeException
 
     public function __toString()
     {
-        // More readable crash screen if uncaught.
-        echo 
-            "<div class=\"yukiscoffee-uncaught-error-container\">" .
-                "<h1>Fatal error</h1>" .
-                "Uncaught <b>{$this->exceptionName}</b>: {$this->message}<br><br>" .
-                "<h1>Technical info</h1>" .
-                "<pre>" .
-                    "File: {$this->file}:{$this->line}\n\n" .
-                    "Stack trace:<div class=\"yc-stack-trace\">{$this->getTraceAsString()}</div>" .
-                "</pre>" .
-            "</div>" .
-            "<style>.yukiscoffee-uncaught-error-container{padding:12px;color:#000;border:4px solid #d31010;background:#fff;font-family:arial,sans-serif}" .
-            ".yc-stack-trace{margin-left:12px;padding-left:12px;border-left:2px solid #ccc}" .
-            "</style>";
-        exit();
+        if (self::$beautifulError)
+        {
+            // More readable crash screen if uncaught.
+            echo 
+                "<div class=\"yukiscoffee-uncaught-error-container\">" .
+                    "<h1>Fatal error</h1>" .
+                    "Uncaught <b>{$this->exceptionName}</b>: {$this->message}<br><br>" .
+                    "<h1>Technical info</h1>" .
+                    "<pre>" .
+                        "File: {$this->file}:{$this->line}\n\n" .
+                        "Stack trace:<div class=\"yc-stack-trace\">{$this->getTraceAsString()}</div>" .
+                    "</pre>" .
+                "</div>" .
+                "<style>.yukiscoffee-uncaught-error-container{padding:12px;color:#000;border:4px solid #d31010;background:#fff;font-family:arial,sans-serif}" .
+                ".yc-stack-trace{margin-left:12px;padding-left:12px;border-left:2px solid #ccc}" .
+                "</style>";
+            exit();
+        }
+        else
+        {
+            return parent::__toString();
+        }
+    }
+
+    public static function enableBeautifulError($status = true)
+    {
+        self::$beautifulError = $status;
+    }
+
+    public static function disableBeautifulError()
+    {
+        return self::enableBeautifulError(false);
     }
 }
