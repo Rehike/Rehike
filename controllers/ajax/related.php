@@ -13,15 +13,12 @@ if (!isset($_GET["continuation"])) {
 
 use \Rehike\Request;
 
-Request::innertubeRequest(
-    "related",
+$response = Request::innertubeRequest(
     "next",
     (object) [
         "continuation" => $_GET["continuation"]
     ]
 );
-
-$response = Request::getInnertubeResponses()["related"];
 $ytdata = json_decode($response);
 
 $yt->page->items = $ytdata->onResponseReceivedEndpoints[0]->appendContinuationItemsAction->continuationItems;

@@ -1,4 +1,11 @@
 <?php
+/**
+ * TODO (aubymori): Fix broken thumbnails, missing sub count
+ * on channels.
+ * 
+ * Will most likely be fixed in new-mvc.
+ */
+
 use \Rehike\Request;
 
 $yt->spfEnabled = true;
@@ -17,10 +24,9 @@ include "controllers/mixins/guideNotSpfMixin.php";
 
 $yt->searchQuery = $_GET['search_query'];
 
-Request::innertubeRequest("page", "search", (object)[
+$response = Request::innertubeRequest("search", (object)[
     "query" => $_GET['search_query']
 ]);
-$response = Request::getInnertubeResponses()["page"];
 
 $ytdata = json_decode($response);
 $resultsList = $ytdata->contents->twoColumnSearchResultsRenderer->primaryContents->sectionListRenderer->contents[0]->itemSectionRenderer->contents;

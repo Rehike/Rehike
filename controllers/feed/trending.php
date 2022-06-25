@@ -10,10 +10,9 @@ $yt->enableFooterCopyright = true;
 
 include "controllers/mixins/guideNotSpfMixin.php";
 
-Request::innertubeRequest("feed", "browse", (object)[
+$response = Request::innertubeRequest("browse", (object)[
     "browseId" => "FEtrending"
 ]);
-$response = Request::getInnertubeResponses()["feed"];
 
 $timeb = round(microtime(true) * 1000);
 //echo $timeb - $timea; die();

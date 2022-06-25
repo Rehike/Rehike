@@ -25,12 +25,10 @@ $yt->baseUrl = "/" . $routerUrl->path[0] . "/" . $routerUrl->path[1];
 $params = new BrowseRequestParams();
 $params->setTab($tab);
 
-Request::innertubeRequest("channel", "browse", (object)[
+$response = Request::innertubeRequest("browse", (object)[
     "browseId" => $ucid,
     "params" => Base64Url::base64UrlEncode($params->serializeToString())
 ]);
-
-$response = Request::getInnertubeResponses()["channel"];
 $yt->response = $response;
 
 $ytdata = json_decode($response);

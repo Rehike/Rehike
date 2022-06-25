@@ -79,27 +79,29 @@ return new class extends NirvanaController {
             }
         }
 
-        Request::innertubeRequest(
+        Request::queueInnertubeRequest(
             "watch", "next", (object)(
                 $watchRequestParams + $nextOnlyParams
             )
         );
 
-        Request::innertubeRequest("player", "player", (object) ([
-            "playbackContext" => [
-                'contentPlaybackContext' => (object) [
-                    'autoCaptionsDefaultOn' => false,
-                    'autonavState' => 'STATE_OFF',
-                    'html5Preference' => 'HTML5_PREF_WANTS',
-                    'lactMilliseconds' => '13407',
-                    'mdxContext' => (object) [],
-                    'playerHeightPixels' => 1080,
-                    'playerWidthPixels' => 1920,
-                    'signatureTimestamp' => $yt->playerCore->sts
-                ]   
-            ],
-            "startTimeSecs" => $startTime ?? 0
-        ] + $watchRequestParams));
+        Request::queueInnertubeRequest(
+            "player", "player", (object) ([
+                "playbackContext" => [
+                    'contentPlaybackContext' => (object) [
+                        'autoCaptionsDefaultOn' => false,
+                        'autonavState' => 'STATE_OFF',
+                        'html5Preference' => 'HTML5_PREF_WANTS',
+                        'lactMilliseconds' => '13407',
+                        'mdxContext' => (object) [],
+                        'playerHeightPixels' => 1080,
+                        'playerWidthPixels' => 1920,
+                        'signatureTimestamp' => $yt->playerCore->sts
+                    ]   
+                ],
+                "startTimeSecs" => $startTime ?? 0
+            ] + $watchRequestParams)
+        );
 
         $dislikesData = null;
 
@@ -120,7 +122,7 @@ return new class extends NirvanaController {
             $dislikesData = json_decode($rydResponse);
         }
 
-        $responses = Request::getInnertubeResponses();
+        $responses = Request::getResponses();
 
         $response = $responses["watch"];
         $presponse = $responses["player"];

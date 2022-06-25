@@ -1,4 +1,11 @@
 <?php
+/**
+ * TODO (aubymori): Fix broken channel icons, double subscribe
+ * button, lack of count on subscribe button
+ * 
+ * Will most likely be fixed in new-mvc.
+ */
+
 use \Rehike\Request;
 
 $yt->spfEnabled = true;
@@ -10,10 +17,9 @@ $yt->enableFooterCopyright = true;
 
 include "controllers/mixins/guideNotSpfMixin.php";
 
-Request::innertubeRequest("feed", "browse", (object)[
+$response = Request::innertubeRequest("browse", (object)[
     "browseId" => "FEguide_builder"
-]);
-$response = Request::getInnertubeResponses()["feed"];
+]);;
 
 $timeb = round(microtime(true) * 1000);
 $ytdata = json_decode($response);

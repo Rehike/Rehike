@@ -11,15 +11,12 @@ $yt->flow = (isset($_GET["flow"]) and $_GET["flow"] == "2") ? "list" : "grid";
 
 include "controllers/mixins/guideNotSpfMixin.php";
 
-Request::innertubeRequest(
-    "feed", 
+$response = Request::innertubeRequest(
     "browse", 
     (object)[
         "browseId" => "FEwhat_to_watch"
     ]
 );
-
-$response = Request::getInnertubeResponses()["feed"];
 
 $ytdata = json_decode($response);
 $items = $ytdata -> contents -> twoColumnBrowseResultsRenderer -> tabs[0] -> tabRenderer -> content -> richGridRenderer -> contents;

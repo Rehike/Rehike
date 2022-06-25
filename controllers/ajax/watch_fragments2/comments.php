@@ -13,10 +13,9 @@ $yt->spfIdListeners = [
 ];
 $yt->spfName = 'other';
 
-Request::innertubeRequest("page", "next", (object)[
+$response = Request::innertubeRequest("next", (object)[
     "continuation" => $_GET['ctoken']
 ]);
-$response = Request::getInnertubeResponses()["page"];
 
 $ytdata = json_decode($response);
 

@@ -4,68 +4,193 @@ namespace Rehike;
 use YukisCoffee\CoffeeRequest\CoffeeRequest;
 
 /**
- * Implement the Request manager.
- * 
- * This adds onto CoffeeRequest behaviour and manages all
- * general requests.
+ * Implements the Rehike request manager.
  * 
  * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class Request
 {
-    /**
-     * Array of current InnerTube requests.
+    use \Rehike\RequestTypes\InnertubeRequest;
+    use \Rehike\RequestTypes\UrlRequest;
+    use \Rehike\RequestTypes\InitialDataRequest;
+
+    // Constant namespace identifiers
+    // These are used for on response callbacks
+    // for different request types.
+    const NS_INNERTUBE = "NS_INNERTUBE";
+    const NS_URL = "NS_URL";
+    const NS_INITIALDATA = "NS_INITIALDATA";
+
+    /** 
+     * A namespace map for remembering the types of a queued request.
      * 
-     * @var array
+     * @var array[]
      */
-    public static $innertubeRequests = [];
+    protected static $namespacedRequestMap = [];
 
     /**
-     * Perform an InnerTube request.
+     * A associative array of RequestManagers by namespace.
      * 
-     * @param string $id to assign the request
-     * @param string $action to take (after v1 in the URL)
-     * @param string|null $body to pass
-     * @param string|int $cname (client name) enum or index
-     * @param string $cver (client version) number
-     * 
-     * @return void
+     * @var CoffeeRequest[]
      */
-    public static function innertubeRequest($id, $action, $body = null, $cname = "WEB", $cver = "2.20220303.01.01")
+    protected static $requestManagers = [];
+
+    /**
+     * Stores the current namespace.
+     * 
+     * @var string
+     */
+    protected static $requestNamespace;
+
+    public static function __staticInit()
     {
-        $host = "https://www.youtube.com";
-        $key = "AIzaSyAO_FJ2SlqU8Q4STEHLGCilw_Y9_11qcW8";
-        // Fucking cursed
-        $body = (object)((array)$body + (array)InnertubeContext::generate($cname, $cver));
+        Request::init();
+    }
 
-        CoffeeRequest::queueRequest(
-            "{$host}/youtubei/v1/{$action}?key={$key}",
-            [
-                "headers" => [
-                    "Content-Type" => "application/json",
-                    "x-goog-visitor-id" => InnertubeContext::genVisitorData(ContextManager::$visitorData)
-                ],
-                "post" => true,
-                "body" => json_encode($body)
-            ],
-            $id
-        );
-        
-        self::$innertubeRequests = CoffeeRequest::$requestQueue;
+    public static function init()
+    {
+        self::setNamespace("default");
     }
 
     /**
-     * Get all relevant InnerTube responses.
+     * Get the current namespace that requests will be wrote to.
      * 
+     * @return string
+     */
+    public static function getNamespace()
+    {
+        return self::$requestNamespace;
+    }
+
+    /**
+     * Set the namespace.
+     * 
+     * @param string $namespace
+     * @return void
+     */
+    public static function setNamespace($namespace)
+    {
+        self::$requestNamespace = $namespace;
+
+        if (!isset(self::$namespacedRequestMap[$namespace]))
+        {
+            self::$namespacedRequestMap[$namespace] = [];
+            self::$requestManagers[$namespace] = new CoffeeRequest();
+            self::$requestManagers[$namespace]->requestMaxAttempts = 1;
+        }
+    }
+
+    /**
+     * Clear the namespace back to the default.
+     * 
+     * @return void
+     */
+    public static function clearNamespace()
+    {
+        self::setNamespace("default");
+    }
+
+    /**
+     * Get the namespace's RequestManager.
+     * 
+     * @return CoffeeRequest
+     */
+    protected static function getRequestManager()
+    {
+        return self::$requestManagers[self::getNamespace()];
+    }
+
+    /**
+     * Add a request to the queue.
+     * 
+     * @param mixed[] $requestArray
+     * @return void
+     */
+    public static function queueRequest($url, $options, $namespace, $id)
+    {
+        $namespacedId = "{$namespace}_{$id}";
+
+        self::getRequestManager()->queueRequest($url, $options, $namespacedId);
+
+        self::$namespacedRequestMap[self::$requestNamespace] += [$id => $namespace];
+    }
+
+    /**
+     * A useful wrapper for generating single request functions.
+     * 
+     * @param callback $cb (adds the request to queue)
      * @return mixed
+     */
+    public static function singleRequestWrapper($cb)
+    {
+        // Switch namespace for a single request
+        $previousNS = self::getNamespace();
+        self::setNamespace("_singleRequest");
+
+        $cb();
+
+        $response = self::getResponses()["singleRequest"];
+
+        self::setNamespace($previousNS);
+
+        return $response;
+    }
+    
+    /**
+     * Handle initial data responses.
+     * 
+     * @param string $response
+     * @return string
+     */
+    protected static function handleInitialDataResponse($response)
+    {
+        preg_match("/var ytInitialData = ({.*)?;</", $response, $matches);
+        if ($matches[1])
+        {
+            return $matches[1];
+        }
+    }
+
+    /**
+     * Execute all queued requests and get the responses.
+     * 
+     * @return mixed[]
+     */
+    public static function getResponses()
+    {
+        $responses = self::getRequestManager()->runQueue();
+        $final = [];
+
+        // Find namespace for handling
+        foreach (self::$namespacedRequestMap[self::getNamespace()] as $id => $namespace)
+        {
+            $me = @$responses["{$namespace}_{$id}"];
+            if (!isset($me)) continue; // assume errored
+
+            switch ($namespace)
+            {
+                case self::NS_INITIALDATA:
+                    $final += [$id => self::handleInitialDataResponse($me)];
+                    break;
+                case self::NS_INNERTUBE:
+                case self::NS_URL:
+                default:
+                    $final += [$id => $me];
+                    break;
+            }
+        }
+
+        return $final;
+    }
+
+    /**
+     * Symlink for getResponses()
+     * 
+     * @deprecated
      */
     public static function getInnertubeResponses()
     {
-        $store = CoffeeRequest::$requestQueue;
-        CoffeeRequest::$requestQueue = self::$innertubeRequests;
-        $response = CoffeeRequest::runQueue();
-        CoffeeRequest::$requestQueue = $store;
-        return $response;
+        return self::getResponses();
     }
 }
