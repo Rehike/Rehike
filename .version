@@ -1,10 +1,10 @@
 {
-	"previousHash": "ffb2ceb51eb9692207899931763b86e3e4fd4295",
-	"currentRevisionId": 207,
-	"subject": "Merge branch 'master' into new-mvc",
-	"body": "Merge branch 'master' into new-mvc",
+	"previousHash": "485157a6945f980dfafba59f9f36ad028ecfcb32",
+	"currentRevisionId": 208,
+	"subject": "Add a BUG notice in PlayerCore.",
+	"body": "Add a BUG notice in PlayerCore.",
 	"branch": "new-mvc",
 	"committerName": "Coffee",
 	"committerEmail": "99076687+YukisCoffee@users.noreply.github.com",
-	"time": 1656182242
+	"time": 1656187657
 }

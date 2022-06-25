@@ -110,7 +110,14 @@ class PlayerCore {
                 break;
         }
 
-        // Create the cache folder if it doesn't exist.
+        /*
+         * Create the cache folder if it doesn't exist.
+         *
+         * BUG (kirasicecreamm): May cause issues on non-Windows OSes without +x attribute
+         * on the folder or one of its roots.
+         * 
+         * See: https://www.php.net/manual/en/function.is-dir.php#118314
+         */
         if (!is_dir(self::CACHE_DIR))
         {
             $status = mkdir(self::CACHE_DIR);
