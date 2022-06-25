@@ -24,6 +24,12 @@ class FileSystem
      */
     public static function getExtension($filename)
     {
+        // Ignore the first . (i.e. in ./)
+        if ("." == $filename[0])
+        {
+            $filename = substr($filename, 1);
+        }
+
         // Split the filename by "."
         $ext = explode(".", $filename);
 
