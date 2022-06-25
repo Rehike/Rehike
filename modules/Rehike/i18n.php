@@ -40,7 +40,10 @@ class i18n
      */
     protected $language = "";
 
-    public function __construct() {}
+    public function __construct()
+    {
+        $this->setLanguage(self::$globalLanguage);
+    }
 
     /**
      * Alias for __construct.
