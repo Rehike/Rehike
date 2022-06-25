@@ -35,7 +35,7 @@ trait InnertubeRequest
                 "headers" => [
                     "Content-Type" => "application/json",
                     "x-goog-visitor-id" => InnertubeContext::genVisitorData(ContextManager::$visitorData)
-                ],
+                ] + Request::$innertubeHeaders,
                 "post" => true,
                 "body" => json_encode($body)
             ],

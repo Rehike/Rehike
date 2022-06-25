@@ -44,6 +44,8 @@ class Request
      */
     protected static $requestNamespace;
 
+    public static $innertubeHeaders = [];
+
     public static function init()
     {
         self::setNamespace("default");
@@ -95,6 +97,23 @@ class Request
     protected static function getRequestManager()
     {
         return self::$requestManagers[self::getNamespace()];
+    }
+
+    /**
+     * Enable authentication from the signin service.
+     * 
+     * @return void
+     */
+    public static function useAuth()
+    {
+        if (AuthManager::shouldAuth())
+        {
+            self::$innertubeHeaders += [
+                "Authorization" => AuthManager::getAuthHeader(),
+                "Origin" => "https://www.youtube.com",
+                "Host" => "www.youtube.com"
+            ];
+        }
     }
 
     /**
