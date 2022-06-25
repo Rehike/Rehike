@@ -1,10 +1,10 @@
 {
-	"previousHash": "485157a6945f980dfafba59f9f36ad028ecfcb32",
-	"currentRevisionId": 208,
-	"subject": "Add a BUG notice in PlayerCore.",
-	"body": "Add a BUG notice in PlayerCore.",
+	"previousHash": "d70bfff748232cc2bd370debf6effdf97c8410d4",
+	"currentRevisionId": 209,
+	"subject": "Prepare new Exceptions path",
+	"body": "Prepare new Exceptions path",
 	"branch": "new-mvc",
 	"committerName": "Coffee",
 	"committerEmail": "99076687+YukisCoffee@users.noreply.github.com",
-	"time": 1656187657
+	"time": 1656188498
 }
