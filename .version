@@ -1,10 +1,10 @@
 {
-	"previousHash": "d70bfff748232cc2bd370debf6effdf97c8410d4",
-	"currentRevisionId": 209,
-	"subject": "Prepare new Exceptions path",
-	"body": "Prepare new Exceptions path",
+	"previousHash": "04df46816491c3e2c33230c05177d718ff2f4b85",
+	"currentRevisionId": 210,
+	"subject": "Implement a common FileSystem helper",
+	"body": "Implement a common FileSystem helper",
 	"branch": "new-mvc",
 	"committerName": "Coffee",
 	"committerEmail": "99076687+YukisCoffee@users.noreply.github.com",
-	"time": 1656188498
+	"time": 1656188672
 }
