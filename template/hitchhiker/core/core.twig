@@ -85,6 +85,9 @@
       <div id="footer-container" class="yt-base-gutter force-layer">
          {% include 'common/pageframe/footer.twig' %}
       </div>
+      {%- if yt.config.enableRehikeDebugger -%}
+         {% include "rehike/debugger/main.twig" %}
+      {%- endif -%}
       {% include 'common/uix/lightbox/template_feed-privacy.twig' %}
       {% include 'common/uix/hidden_component_template_wrapper.twig' %}
       {% include 'core/spf_module.twig' %}

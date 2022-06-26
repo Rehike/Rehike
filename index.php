@@ -25,6 +25,8 @@ include "boot.php";
 $rehikeConfig = Rehike\RehikeConfigManager::loadConfig();
 $yt->config = $rehikeConfig;
 
+Rehike\Debugger\Debugger::init($yt);
+
 // Post boot events
 Rehike\ContextManager::$visitorData = $visitor;
 

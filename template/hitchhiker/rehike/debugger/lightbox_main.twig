@@ -1,0 +1,114 @@
+{# 
+    Implements the core lightbox (dialog) macros for the Rehike
+    debugger.
+    
+    @author Taniko Yamamoto <kirasicecreamm@gmail.com>
+    @author The Rehike Maintainers
+#}
+
+{%- macro dialog(data) -%}
+    <div class="yt-dialog preserve-players">
+        <div class="yt-dialog-base">
+            <span class="yt-dialog-align"></span>
+            <div role="dialog" tabindex="0" class="yt-dialog-fg yt-uix-overlay-primary yt-uix-overlay">
+                <div class="yt-dialog-fg-content yt-dialog-show-content">
+                    <div class="yt-dialog-content">
+                    <div class="yt-dialog-overlay-content-container">
+                        {{ _self.dialog_header(data.header) }}
+                        {{ _self.dialog_tabs_switcher(data.tabs) }}
+                        {{ _self.dialog_tabs_container(data.tabs) }}
+                    </div>
+                    </div>
+                </div>
+                <div class="yt-dialog-focus-trap" tabindex="0"></div>
+            </div>
+        </div>
+    </div>
+{%- endmacro -%}
+
+{%- macro dialog_header(data) -%}
+    <div class="yt-dialog-header">
+        {%- if data.title -%}
+            <h2 class="yt-dialog-title">{{ data.title }}</h2>
+        {%- endif -%}
+        {%- if data.closeButton -%}
+            {% from "/common/uix/button.twig" import render as button %}
+            <div class="rebug-close-button-wrapper">
+                {{ button(data.closeButton) }}
+            </div>
+        {%- endif -%}
+    </div>
+{%- endmacro -%}
+
+{%- macro dialog_tabs_switcher(tabs) -%}
+    <div id="rebug-tabs-switcher">
+        {%- for tab in tabs -%}
+            <div class="rebug-tab {{ tab.selected ? "rebug-tab-selected" }}" data-tab-target="{{ tab.id }}">
+                {{ tab.title }}
+            </div>
+        {%- endfor -%}
+    </div>
+{%- endmacro -%}
+
+{%- macro dialog_tabs_container(tabs) -%}
+    <div id="rebug-tabbed-content-wrapper">
+        {%- for tab in tabs -%}
+            {{ _self.dialog_tab_content(tab) }}
+        {%- endfor -%}
+    </div>
+{%- endmacro -%}
+
+{%- macro dialog_tab_content(data) -%}
+    <div id="rebug-tab-content-{{ data.id }}" class="rebug-tab-content {{ data.selected ? "rebug-tab-selected" }}" data-tab-id="{{ data.id }}">
+        {{ _self.rich_content_renderer(data.content.richDebuggerRenderer) }}
+    </div>
+{%- endmacro -%}
+
+{%- macro error_renderer(data) -%}
+    <div class="rebug-error-renderer error-{{ data.type }} rebug-expander rebug-expander-collapsed">
+        <span class="icon error-icon-{{ data.type }} yt-sprite"></span>
+        <span class="rebug-error-renderer-content">
+            <b>{{ data.errorTypeText }}</b><span class="colon">:</span>
+            <span class="collapsed-display">
+                {#
+                    File has to come first for the CSS to display
+                    properly.    
+                #}
+                <span class="file">
+                    {{ data.shortFile }}:{{ data.line }}
+                </span>
+                <span class="message">
+                    {{ data.message }}
+                </span>
+            </span>
+            <span class="expanded-display">
+                <div class="message">
+                    {{ data.message }}
+                </div>
+                <div class="file">
+                    {{ data.file }}:{{ data.line }}
+                </div>
+            </span>
+        </span>
+    </div>
+{%- endmacro -%}
+
+{%- macro rich_content_renderer(data) -%}
+    {%- for item in data -%}
+        {%- if item.heading -%}
+            <h1>{{ item.heading.text }}</h1>
+        {%- elseif item.subheading -%}
+            <h2>{{ item.subheading.text }}</h2>
+        {%- elseif item.simpleText -%}
+            {{ item.simpleText.text }}
+        {%- elseif item.code -%}
+            <code style="white-space:pre">{{ item.code.text }}</code>
+        {%- elseif item.errorRenderer -%}
+            {{ _self.error_renderer(item.errorRenderer) }}
+        {%- endif -%}
+    {%- endfor -%}
+{%- endmacro -%}
+
+<div id="rebug-lightbox">
+    {{ _self.dialog(rehikeDebugger.dialog) }}
+</div>

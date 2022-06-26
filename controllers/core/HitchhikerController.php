@@ -46,6 +46,8 @@ abstract class HitchhikerController
 
     public function doGeneralRender()
     {
+        \Rehike\Debugger\Debugger::expose();
+
         $capturedRender = TemplateManager::render();
 
         if (SpfPhp::isSpfRequested() && $this->yt->spfEnabled)

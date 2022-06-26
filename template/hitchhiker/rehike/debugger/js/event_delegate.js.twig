@@ -1,0 +1,71 @@
+/**
+ * Implements the event manager of the Rehike debugger.
+ * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
+ * @author The Rehike Maintainers
+ */
+
+rebug.eventDelegate = {};
+
+(function(exports) {
+    var handlers = [];
+
+    var activeEvents = [];
+
+    function isActiveEventName(name)
+    {
+        return activeEvents.includes(name);
+    }
+
+    function getDelegateHandler(eventName)
+    {
+        return function(e) {
+            var activeElement = e.target;
+            var classNameList = handlers[eventName];
+            
+            while (null != activeElement)
+            {
+                if (activeElement.className)
+                {
+                    var classes;
+                    if (activeElement.classList)
+                    {
+                        classes = activeElement.classList;
+                    }
+                    else
+                    {
+                        classes = activeElement.className.split(" ");
+                    }
+
+                    for (var i = 0, j = classes.length; i < j; i++)
+                    {
+                        if (classes[i] in classNameList)
+                        {
+                            return classNameList[classes[i]](activeElement, e);
+                        }
+                    }
+                }
+
+                activeElement = activeElement.parentElement;
+            }
+        };
+    }
+
+    function addHandler(eventName, className, cb)
+    {
+        if (!(eventName in handlers)) handlers[eventName] = {};
+
+        handlers[eventName][className] = cb;
+    }
+
+    exports.add = function(eventName, className, cb) {
+        if (!isActiveEventName(eventName))
+        {
+            document.addEventListener(eventName, getDelegateHandler(eventName));
+
+            activeEvents.push(eventName);
+        }
+
+        addHandler(eventName, className, cb);
+    };
+})(rebug.eventDelegate)

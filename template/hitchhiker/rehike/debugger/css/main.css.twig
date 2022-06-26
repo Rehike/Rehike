@@ -1,0 +1,225 @@
+/**
+ * Implements the core CSS for the Rehike debugger.
+ *
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
+ * @author The Rehike Maintainers
+ */
+
+#rebug-open-button-container {
+    position: fixed;
+    bottom: 3px;
+    right: 6px;
+    z-index: 1000000002;
+}
+
+.rebug-open-button-has-error {
+    color: #a01312;
+    opacity: 1;
+}
+
+.rebug-open-button-has-error .yt-uix-button-arrow {
+    border-bottom-color: #a01312;
+}
+
+.rebug-open-button-has-error:hover {
+    color: #c00;
+    opacity: 1;
+}
+
+#rebug-lightbox-container {
+    display: none;
+}
+
+#rebug-lightbox-container.open {
+    display: block;
+}
+
+.rebug-close-button-wrapper {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+#rebug-tabs-switcher {
+    float: left;
+}
+
+#rebug-tabbed-content-wrapper {
+    margin-left: 15px;
+    float: right;
+}
+
+.rebug-tab {
+    min-width: 160px;
+    padding: 4px 8px;
+    cursor: pointer;
+}
+
+.rebug-tab:hover {
+    background: #444;
+    color: #fff;
+}
+
+.rebug-tab.rebug-tab-selected {
+    background: #cc181e;
+    color: #fff;
+    font-weight: 500;
+    text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.25);
+}
+
+.exp-invert-logo .rebug-tab.rebug-tab-selected {
+    background: #f00;
+}
+
+.rebug-tab-content {
+    width: 367px;
+    height: 329px;
+    overflow-y: scroll;
+    background: #fbfbfb;
+    border: 1px solid #ededed;
+    padding: 3px;
+    display: none;
+}
+
+.rebug-tab-content.rebug-tab-selected {
+    display: block;
+}
+
+#rebug-lightbox .yt-dialog-content {
+    height: 380px;
+}
+
+.rebug-expander
+{
+  cursor: pointer;
+}
+
+/* Errors */
+#rebug-tab-content-error
+{
+    width: 373px;
+    height: 335px;
+    padding: 0;
+}
+
+.rebug-error-renderer .error-icon-warning, .rebug-error-renderer .error-icon-deprecated
+{
+    background:no-repeat url(//s.ytimg.com/yts/imgbin/www-hitchhiker-vfllYIUv0.png) -67px -190px;
+    background-size:auto;
+    width:20px;
+    height:21px
+}
+
+.rebug-error-renderer .error-icon-error
+{
+    background:no-repeat url(//s.ytimg.com/yts/imgbin/www-hitchhiker-vfllYIUv0.png) -195px -725px;
+    background-size:auto;
+    width:20px;
+    height:21px
+}
+
+.rebug-error-renderer .error-icon-notice
+{
+    background:no-repeat url(//s.ytimg.com/yts/imgbin/www-hitchhiker-vfllYIUv0.png) -243px -799px;
+    background-size:auto;
+    width:20px;
+    height:21px
+}
+
+.rebug-error-renderer
+{
+    vertical-align: middle;
+    padding: 5px;
+    max-height: 30px;
+    overflow: hidden;
+}
+
+.rebug-error-renderer .icon
+{
+    display: block;
+    position: relative;
+    float: left;
+}
+
+.rebug-error-renderer-content
+{
+  display: block;
+  margin-left: 24px;
+  margin-top: 3px;
+  max-height: 17px;
+  white-space:nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.rebug-error-renderer.rebug-expander-expanded
+{
+  overflow: visible;
+  max-height: unset;
+}
+
+.rebug-error-renderer.rebug-expander-expanded .rebug-error-renderer-content
+{
+  overflow: visible;
+  text-overflow: none;
+  white-space: initial;
+  max-height: unset;
+}
+
+.rebug-error-renderer.rebug-expander-expanded .collapsed-display
+{
+    display: none;
+}
+
+.rebug-error-renderer.rebug-expander-expanded .expanded-display
+{
+    display: block;
+}
+
+.rebug-error-renderer.rebug-expander-collapsed .collapsed-display
+{
+    display: inline;
+}
+
+.rebug-error-renderer.rebug-expander-collapsed .expanded-display
+{
+    display: none;
+}
+
+.rebug-error-renderer .file
+{
+    opacity: 0.75;
+}
+
+.rebug-error-renderer .collapsed-display .file
+{
+    float: right;
+}
+
+.rebug-error-renderer
+{
+  border:1px solid rgba(0,0,0,.075);
+}
+
+.rebug-error-renderer.rebug-expander-expanded
+{
+  box-shadow:0 0 0 #000,0 0 1px rgba(255,255,255,.25),inset 0 1px 3px rgba(0,0,0,.25);
+}
+
+.rebug-error-renderer.error-warning, .rebug-error-renderer.error-deprecated
+{
+  background-color: #f5d562;
+  color: #333;
+}
+
+.rebug-error-renderer.error-warning.rebug-expander-collapsed:hover, 
+.rebug-error-renderer.error-deprecated.rebug-expander-collapsed:hover
+{
+  background-color: #f4d87a;
+}
+
+.rebug-error-renderer.error-notice
+{
+  background-color: #167ac6;
+  color: #fff;
+}

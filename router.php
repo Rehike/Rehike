@@ -6,6 +6,8 @@ if (isset($_GET["enable_polymer"]) && $_GET["enable_polymer"] == "1") {
     die();
 }
 
+\Rehike\Debugger\Debugger::expose();
+
 switch ($routerUrl->path[0]) {
     /**
      * General page definitions
