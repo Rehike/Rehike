@@ -26,6 +26,13 @@ class i18n
      */
     protected static $globalLanguage = "en";
 
+    /**
+     * Store all namespaces (instances) so that they may be accessed globally.
+     * 
+     * @var i18n[]
+     */
+    protected static $namespaces = [];
+
     /** 
      * Declare an array that will contain all language strings.
      * 
@@ -46,13 +53,41 @@ class i18n
     }
 
     /**
-     * Alias for __construct.
+     * Create an instance and store it so that it may be accessed
+     * globally. This is convenient for most of Rehike's structure.
+     * 
+     * As this returns a reference, you must use:
+     * 
+     *     $variable = &getNamespace($name)
+     * 
+     * or you will encounter much confusion.
      * 
      * @see __construct
      */
-    public static function newNamespace()
+    public static function &newNamespace($name)
     {
-        return new static();
+        $i = new static();
+
+        self::$namespaces[$name] = &$i;
+
+        return $i;
+    }
+
+    /**
+     * Return a reference to the requested namespace.
+     * 
+     * As this returns a reference, you must use:
+     * 
+     *     $variable = &getNamespace($name)
+     * 
+     * or you will encounter much confusion.
+     * 
+     * @param string $name
+     * @return i18n
+     */
+    public static function &getNamespace($name)
+    {
+        return self::$namespaces[$name];
     }
 
     /**
