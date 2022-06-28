@@ -2,8 +2,7 @@
 use \Rehike\Request;
 use \Com\YouTube\Innertube\Request\BrowseRequestParams;
 
-// Wrapper class for cv1 trait use
-class Base64Url { use Rehike\Traits\Base64Url; }
+use \Rehike\Util\Base64Url;
 
 $yt->spfEnabled = true;
 $yt->useModularCore = true;
@@ -27,7 +26,7 @@ $params->setTab($tab);
 
 $response = Request::innertubeRequest("browse", (object)[
     "browseId" => $ucid,
-    "params" => Base64Url::base64UrlEncode($params->serializeToString())
+    "params" => Base64Url::encode($params->serializeToString())
 ]);
 $yt->response = $response;
 

@@ -5,7 +5,7 @@ use Com\Youtube\Innertube\Request\NextRequestParams;
 use Com\Youtube\Innertube\Request\NextRequestParams\UnknownThing;
 
 use Rehike\Request;
-use Rehike\Traits\Base64Url;
+use Rehike\Util\Base64Url;
 use Rehike\ConfigManager\ConfigManager;
 
 require "controllers/utils/watchUtils.php";
@@ -15,8 +15,6 @@ require_once('controllers/utils/extractUtils.php');
 // export
 //
 return new class extends NirvanaController {
-    use Base64Url;
-
     public $template = 'watch';
 
     public function onGet(&$yt, $request)
@@ -55,7 +53,7 @@ return new class extends NirvanaController {
             $param->setLinkedCommentId($request->params->lc);
 
             $nextOnlyParams += [
-                "params" => self::base64UrlEncode($param->serializeToString())
+                "params" => Base64Url::encode($param->serializeToString())
             ];
         }
 

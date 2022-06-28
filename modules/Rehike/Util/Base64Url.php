@@ -1,5 +1,5 @@
 <?php
-namespace Rehike\Traits;
+namespace Rehike\Util;
 
 /**
  * Trait for generating URL format base64.
@@ -7,14 +7,14 @@ namespace Rehike\Traits;
  * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
-trait Base64Url
+class Base64Url
 {
-    public static function base64UrlEncode($data)
+    public static function encode($data)
     {
         return rtrim(strtr(base64_encode($data), '+/', '-_'), '='); 
     }
 
-    public static function base64UrlDecode($data)
+    public static function decode($data)
     {
         return base64_decode(str_pad(strtr($data, '-_', '+/'), strlen($data) % 4, '=', STR_PAD_RIGHT)); 
     }
