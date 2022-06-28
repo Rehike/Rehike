@@ -95,13 +95,14 @@ class Router
         else if (is_string($pointer))
         {
             foreach ([
-                $pointer, 
+                "controllers/$pointer.php",
+                "controllers/$pointer",
                 "$pointer.php",
-                "controllers/$pointer", 
-                "controllers/$pointer.php"
-            ] as $path) if (file_exists($path))
+                $pointer
+            ] as $path) if (file_exists($path) && is_file($path))
             {
                 $import = Core::import($path, false);
+                break;
             }
         }
         else
