@@ -1,53 +1,31 @@
 <?php
+use \Rehike\ControllerV2\Util\GlobToRegexp;
 
 /**
  * An fnmatch polyfill for certain PHP configurations, most
  * notably old PHP on Windows.
  * 
+ * This is based on the GlobToRegexp behaviour of ControllerV2. With
+ * that said, I got lazy writing this. If you're moving CV2 at all,
+ * make sure to accomodate those changes here.
+ * Love, Taniko.
+ * 
  * @see https://www.php.net/manual/en/function.fnmatch.php#100207
  */
 if (!function_exists("fnmatch"))
 {
-    define("FNM_PATHNAME", 1);
-    define("FNM_NOESCAPE", 2);
-    define("FNM_PERIOD", 4);
-    define("FNM_CASEFOLD", 16);
+    define("FNM_PATHNAME", GlobToRegexp::PATHNAME);
+    define("FNM_NOESCAPE", GlobToRegexp::NOESCAPE);
+    define("FNM_PERIOD", GlobToRegexp::PERIOD);
+    define("FNM_CASEFOLD", GlobToRegexp::CASEFOLD);
 
     /**
      * @param string $pattern
      * @param string $filename
      * @param int $flags
      */
-    function fnmatch($pattern, $filename, $flags)
+    function fnmatch($pattern, $filename, $flags = 0)
     {
-        $regexFlags = "";
-
-        // Declare all possible transformations from
-        // glob syntax to regexp syntax
-        $transforms = [
-            "\*" => ".*",
-            "\?" => ".",
-            "\[\!" => "[^",
-            "\[" => "[",
-            "\]" => "]",
-            "\." => "\.",
-            "\\" => "\\\\"
-        ];
-
-        // Handle flags behaviours
-        if ($flags & FNM_PATHNAME) $transforms["\*"] = "[^/]*";
-        if ($flags & FNM_NOESCAPE) unset($transforms["\\"]);
-        if ($flags & FNM_PERIOD && 0 === strpos($filename, ".") && 0 !== strpos($pattern, "."))
-            return false;
-        if ($flags & FNM_CASEFOLD) $regexFlags .= "i";
-
-        // Declare regexp pattern
-        $regexPattern = "#^"
-            . strtr( preg_quote($pattern, "#"), $transforms )
-            . "$#"
-            . $regexFlags
-        ;
-
-        return (bool)preg_match($regexPattern, $filename);
+        return GlobToRegexp::doMatch($pattern, $filename, $flags);
     }
 }
