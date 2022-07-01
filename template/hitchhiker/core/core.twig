@@ -28,7 +28,10 @@
       exp-mouseover-img 
       exp-responsive 
       {{ yt.config.largeSearchThumbs ? "exp-search-big-thumbs" }}  
-      {{ yt.config.smallWatchSidebarItems ? "exp-watch-small-thumbs" }} 
+      {{ yt.config.smallWatchSidebarItems ? "exp-watch-small-thumbs" }}
+      {{ yt.config.largeWatchTitle ? "exp-watch-large-title" }}
+      {{ yt.config.oldShareIcon ? "exp-old-share-icon" }}
+      {{ yt.config.oldGuideButton ? "exp-old-guide-button" }}
       site-center-aligned 
       site-as-giant-card 
       {{ (appbarEnabled and defaultGuideVisibility) ? 'guide-pinning-enabled' }}   

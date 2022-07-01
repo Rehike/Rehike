@@ -293,7 +293,7 @@
 {%- macro byline(info) -%}
 <div class="yt-lockup-byline yt-ui-ellipsis yt-ui-ellipsis-2">
    {% if info.longBylineText.runs.0.navigationEndpoint.browseEndpoint.canonicalBaseUrl %}
-   <a href="{{ info.longBylineText.runs.0.navigationEndpoint.browseEndpoint.canonicalBaseUrl }}" class="yt-uix-sessionlink       spf-link " data-sessionlink="itct=CHkQlDUYACITCOLXzPvf6toCFRA7fwodgP0KKSiOHg" >
+   {{ yt.config.byTextOnByline ? "by " }}<a href="{{ info.longBylineText.runs.0.navigationEndpoint.browseEndpoint.canonicalBaseUrl }}" class="yt-uix-sessionlink       spf-link " data-sessionlink="itct=CHkQlDUYACITCOLXzPvf6toCFRA7fwodgP0KKSiOHg" >
    {% endif %}
    {{ getText(info.longBylineText) }}
    {% if info.longBylineText.runs.0.navigationEndpoint.browseEndpoint.canonicalBaseUrl %}

@@ -24,7 +24,11 @@ class RehikeConfigManager extends ConfigManager
             "enableRehikeDebugger" => false,
             "largeSearchThumbs" => true,
             "smallWatchSidebarItems" => false,
-            "oldLockupStyle" => false
+            "oldLockupStyle" => false,
+            "largeWatchTitle" => false,
+            "oldShareIcon" => false,
+            "byTextOnByline" => true,
+            "oldGuideButton" => false
         ];
     
     /**
