@@ -38,7 +38,8 @@ $yt->rehikeVersion = (object)\Rehike\Version\VersionController::$versionInfo;
 $yt->rehikeVersion->semanticVersion = \Rehike\Version\VersionController::getVersion();
 
 // Include the router for Controller v2 pages.
-require "router_v2.php";
+if (!@$_GET["disable_cv2"] || in_array($_GET["disable_cv2"], ["false", "0"])) // debug
+    require "router_v2.php";
 
 /*
  * TEMPORARY BEHAVIOUR: Controller v1 router.
