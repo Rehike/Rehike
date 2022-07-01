@@ -19,9 +19,6 @@ switch ($routerUrl->path[0]) {
                 include('controllers/feed/what_to_watch.php');
             }
             break;
-        case 'watch':
-            include('controllers/watch.php');
-            break;
         case 'user':
         case 'channel':
         case 'c':
@@ -36,9 +33,6 @@ switch ($routerUrl->path[0]) {
         case 'feed':
             if(isset($routerUrl->path[1])) {
                 switch ($routerUrl->path[1]) {
-                    case 'what_to_watch':
-                        header('Location: /');
-                        break;
                     case 'trending':
                         include('controllers/feed/trending.php');
                         break;
@@ -55,17 +49,6 @@ switch ($routerUrl->path[0]) {
             } else {
                 $template = 'error/404';
             }
-            break;
-    /**
-     * "Business" definitions (typically API/static resources)
-     */
-        case 'api':
-        case 'youtubei':
-        case 's':
-        case 'embed':
-        case 'yts':
-            include('simplefunnel.php');
-            die();
             break;
     /**
      * AJAX definitions
@@ -128,30 +111,6 @@ switch ($routerUrl->path[0]) {
             break;
         case 'forcefatal':
             $template = 'sdsadasds';
-            break;
-    /**
-     * Redirect definitions
-     */
-        case 'shorts': // redirect to watch
-            ob_end_clean();
-            header ('Location: /watch?v=' . $routerUrl->path[1]);
-            exit();
-            break;
-        case 'hashtag':
-            if (isset($routerUrl->path[1])) {
-                header("Location: /results?search_query=" . $routerUrl->path[1]);
-            } else {
-                $template = 'error/404';
-            }
-            break;
-        case 'redirect':
-            // temporary logic?
-            // youtube has a redirect confirmation page in some cases
-            // TODO: research
-            ob_end_clean();
-            $newLocation = urldecode(($_GET['q'] ?? ''));
-            header('Location: ' . $newLocation);
-            exit();
             break;
     default:
         $template = 'error/404';
