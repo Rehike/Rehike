@@ -21,6 +21,9 @@ class RequestMetadata
     /** @var string[] */
     public $path;
 
+    /** @var string */
+    public $rawPath;
+
     /** @var string[] */
     public $headers;
 
@@ -34,6 +37,7 @@ class RequestMetadata
     {
         $this->method = $_SERVER['REQUEST_METHOD'];
         $this->path = self::getPath();
+        $this->rawPath = $_SERVER["REQUEST_URI"];
         $this->headers = self::getHeaders();
         $this->params = new DataArray($_GET);
 
