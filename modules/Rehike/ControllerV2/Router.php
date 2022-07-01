@@ -1,6 +1,8 @@
 <?php
 namespace Rehike\ControllerV2;
 
+use Rehike\ControllerV2\Util\GlobToRegexp;
+
 include_once "modules/polyfill/fnmatch.php";
 
 /**
@@ -33,6 +35,88 @@ class Router
     {
         if ("POST" == $_SERVER['REQUEST_METHOD'])
         return self::baseRequestMethod($defs, "post");
+    }
+
+    /**
+     * Configure router definitions for redirections.
+     * 
+     * @param string[]|callback[] $defs
+     * @return void
+     */
+    public static function redirect($defs)
+    {
+        // Iteration the definitions tree and check the contents.
+        foreach ($defs as $def => $redir)
+        {
+            // Convert the current definition to a regex for
+            // comparison
+            $regexp = GlobToRegexp::convert($def, $_SERVER["REQUEST_URI"], 0);
+            
+            if (preg_match($regexp, $_SERVER["REQUEST_URI"]))
+            {
+                // If there's a match, check if it should callback a function
+                // use simple behaviour using a string.
+                /** @var string $endpoint */
+                $endpoint;
+                if (is_callable($redir))
+                {
+                    $endpoint =  $redir(new RequestMetadata());
+
+                    // Prevent undefined behaviour
+                    // Also allow for some programmer freedom I guess
+                    if (!is_string($endpoint)) return;
+                }
+                else
+                {
+                    // Otherwise perform the redirection using internal behaviour.
+                    $endpoint = preg_replace($regexp, $redir, $_SERVER["REQUEST_URI"]);
+                }
+
+                header("Location: $endpoint");
+                die();
+            }
+        }
+    }
+
+    /**
+     * Configure router definitions for request funnelling.
+     * 
+     * These essentially bypass Rehike.
+     * 
+     * They request the same request URI on www.youtube.com and return
+     * the same response as given. This is useful for some things, such
+     * as static resources and API access.
+     * 
+     * @param string[] $defs
+     * @return void
+     */
+    public static function funnel($defs)
+    {
+        foreach ($defs as $index => $value)
+        {
+            // This behaviour will be expanded on later, if ever
+            // multiple domain support is added.
+            // Currently the simplefunnel script comes from a very
+            // outdated project and should probably be rewrote as it
+            // stands.
+            /** @var string $name */
+            $name;
+            if (is_int($index))
+            {
+                $name = $value;
+            }
+            else
+            {
+                $name = $value;
+            }
+
+            if (\fnmatch($name, $_SERVER["REQUEST_URI"]))
+            {
+                // Gross :(
+                require "simplefunnel.php";
+                die();
+            }
+        }
     }
 
     /**
@@ -87,6 +171,8 @@ class Router
         // Set temporary state variable for cv1 coexistence
         Core::$cv2HasBeenUsed = true;
 
+        /** @var GetControllerInstance $import */
+        $import;
         if (is_callable($pointer))
         {
             // Premature return since this is a unique case
