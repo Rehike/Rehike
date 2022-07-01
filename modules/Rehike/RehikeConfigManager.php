@@ -16,13 +16,14 @@ class RehikeConfigManager extends ConfigManager
     public static $defaultConfig =
         [
             "useRingoBranding" => true,
-            "enableCreationMenu" => true,
-            "useOldRoboto" => false,
-            "showUploadDateOnWatchRecommended" => false,
+            "uploadMenuType" => "MENU",
+            "dateOnWatchSidebarItems" => false,
             "useWebV2HomeEndpoint" => false,
-            "useOldUploadButton" => false,
             "versionInFooter" => true,
-            "largeSearchThumbs" => true
+            "useReturnYouTubeDislike" => true,
+            "enableRehikeDebugger" => false,
+            "largeSearchThumbs" => true,
+            "smallWatchSidebarItems" => false
         ];
     
     /**
