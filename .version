@@ -1,10 +1,10 @@
 {
-	"previousHash": "f7d2be93e5283a26bb06a1fff7aeab1403cf367a",
-	"currentRevisionId": 224,
-	"subject": "Move redirects and funnels to RouterV2",
-	"body": "Move redirects and funnels to RouterV2",
+	"previousHash": "214c7bb581f48994fd747ace91b258f96b276f56",
+	"currentRevisionId": 225,
+	"subject": "RequestMetadata getPath() patch",
+	"body": "RequestMetadata getPath() patch",
 	"branch": "new-mvc",
 	"committerName": "Coffee",
 	"committerEmail": "99076687+YukisCoffee@users.noreply.github.com",
-	"time": 1656638114
+	"time": 1656644082
 }

@@ -60,7 +60,11 @@ class RequestMetadata
      */
     protected static function getPath()
     {
-        $path = explode("/", $_SERVER["REQUEST_URI"]);
+        // Split the path first by "?" to remove params
+        $path = explode("?", $_SERVER["REQUEST_URI"])[0];
+
+        // Then split it by "/"
+        $path = explode("/", $path);
 
         // If the first item is empty, remove it
         if ("" == $path[0])
