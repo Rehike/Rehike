@@ -211,7 +211,7 @@
                     <li>{{ getText(info.viewCountText) }}</li>
                 {% endif %}
                 {%- if info.publishedTimeText -%}
-                    <li>{{ getText(info.publishedTimeText) }}</li>
+                    <li{{ yt.config.oldLockupStyle ? " class=\"yt-lockup-deemphasized-text\"" }}>{{ getText(info.publishedTimeText) }}</li>
                 {% endif %}
             </ul>
             </div>
