@@ -22,25 +22,7 @@
       {% endif %}
    </head>
    <body dir="ltr" id="body" class="{%- block body_class -%}  
-      visibility-logging-enabled  
-      ltr    
-      {{ yt.config.useRingoBranding ? 'exp-invert-logo' }}
-      exp-mouseover-img 
-      exp-responsive 
-      {{ yt.config.largeSearchThumbs ? "exp-search-big-thumbs" }}  
-      {{ yt.config.smallWatchSidebarItems ? "exp-watch-small-thumbs" }}
-      {{ yt.config.largeWatchTitle ? "exp-watch-large-title" }}
-      {{ yt.config.oldShareIcon ? "exp-old-share-icon" }}
-      {{ yt.config.oldGuideButton ? "exp-old-guide-button" }}
-      {{ yt.config.oldSearchbox ? "exp-old-searchbox" }}
-      site-center-aligned 
-      site-as-giant-card 
-      {{ (appbarEnabled and defaultGuideVisibility) ? 'guide-pinning-enabled' }}   
-      {{ (appbarEnabled and not defaultAppbarVisibility) ? 'appbar-hidden' }}
-      not-nirvana-dogfood    
-      flex-width-enabled      
-      flex-width-enabled-snap    
-      {{ yt.spf ? '' : 'delayed-frame-styles-not-in' }}  
+      {% include "core/body_class.twig" %}
       {% endblock %}" data-spf-name="other">
       <div id="early-body"></div>
       <div id="body-container">
