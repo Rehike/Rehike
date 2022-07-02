@@ -1,10 +1,10 @@
 {
-	"previousHash": "214c7bb581f48994fd747ace91b258f96b276f56",
-	"currentRevisionId": 225,
-	"subject": "RequestMetadata getPath() patch",
-	"body": "RequestMetadata getPath() patch",
+	"previousHash": "b990d2cfd35a9ce80c73c8bfa797f5eb7c1b0993",
+	"currentRevisionId": 226,
+	"subject": "Move autoloader",
+	"body": "Move autoloader",
 	"branch": "new-mvc",
 	"committerName": "Coffee",
 	"committerEmail": "99076687+YukisCoffee@users.noreply.github.com",
-	"time": 1656644082
+	"time": 1656739267
 }
