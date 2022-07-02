@@ -58,7 +58,7 @@ class i18n
      * 
      * As this returns a reference, you must use:
      * 
-     *     $variable = &getNamespace($name)
+     *     $variable = &newNamespace($name)
      * 
      * or you will encounter much confusion.
      * 
@@ -87,6 +87,9 @@ class i18n
      */
     public static function &getNamespace($name)
     {
+        if (!isset(self::$namespaces[$name]))
+            trigger_error("Namespace $name does not exist", E_USER_WARNING);
+
         return self::$namespaces[$name];
     }
 

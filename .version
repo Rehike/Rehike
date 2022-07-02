@@ -1,10 +1,10 @@
 {
-	"previousHash": "b990d2cfd35a9ce80c73c8bfa797f5eb7c1b0993",
-	"currentRevisionId": 226,
-	"subject": "Move autoloader",
-	"body": "Move autoloader",
+	"previousHash": "ecdaec48e4ad6fe1e774b227486563e8350eb963",
+	"currentRevisionId": 227,
+	"subject": "Correct comments in i18n subsystem",
+	"body": "Correct comments in i18n subsystem",
 	"branch": "new-mvc",
 	"committerName": "Coffee",
 	"committerEmail": "99076687+YukisCoffee@users.noreply.github.com",
-	"time": 1656739267
+	"time": 1656739450
 }
