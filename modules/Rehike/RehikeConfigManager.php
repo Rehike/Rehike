@@ -28,7 +28,8 @@ class RehikeConfigManager extends ConfigManager
             "largeWatchTitle" => false,
             "oldShareIcon" => false,
             "byTextOnByline" => true,
-            "oldGuideButton" => false
+            "oldGuideButton" => false,
+            "noViewsText" => false
         ];
     
     /**

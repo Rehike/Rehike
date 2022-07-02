@@ -6,6 +6,7 @@ use Rehike\Model\Common\Subscription\MSubscriptionActions;
 use Rehike\Model\Common\MButton;
 use Rehike\Model\Common\MToggleButton;
 use Rehike\Model\Clickcard\MSigninClickcard;
+use Rehike\ConfigManager\ConfigManager;
 
 include_once "controllers/utils/extractUtils.php";
 
@@ -55,7 +56,7 @@ class MVideoPrimaryInfoRenderer
             // Also set title of the whole page from this property
             $dataHost::$title = TemplateFunctions::getText($this->title);
 
-            $this->viewCount = $info->viewCount->videoViewCountRenderer->viewCount ?? null;
+            $this->viewCount = (true === ConfigManager::getConfigProp("noViewsText")) ? ExtractUtils::isolateViewCnt(TemplateFunctions::getText($info->viewCount->videoViewCountRenderer->viewCount)) : TemplateFunctions::getText($info->viewCount->videoViewCountRenderer->viewCount) ?? null;
             $this->badges = $info->badges ?? null;
             $this->superTitle = isset($info->superTitleLink) ? new MSuperTitle($info->superTitleLink) : null;
             $this->likeButtonRenderer = new MLikeButtonRenderer($dataHost, $info->videoActions->menuRenderer);

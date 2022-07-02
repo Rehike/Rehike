@@ -52,7 +52,7 @@
     </div>
     <div id="watch8-sentiment-actions">
     <div id="watch7-views-info">
-        <div class="watch-view-count{{ yt.page.isLive ? " metadata-updateable-viewership" }}">{{ getText(info.viewCount) }}</div>
+        <div class="watch-view-count{{ yt.page.isLive ? " metadata-updateable-viewership" }}">{{ info.viewCount }}</div>
         {% if info.likeButtonRenderer.sparkbars %}
         <div class="video-extras-sparkbars">
             <div class="video-extras-sparkbar-likes" style="width: {{ info.likeButtonRenderer.sparkbars.likePercent }}%"></div>
