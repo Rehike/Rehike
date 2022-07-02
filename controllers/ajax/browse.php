@@ -76,6 +76,8 @@ if (isset($ytdata->continuationContents->sectionListContinuation)) {
 
     $videoList = $ytdata->onResponseReceivedActions[0]->appendContinuationItemsAction->continuationItems;
 
+    $newVideoList = [];
+    
     for ($i = 0; $i < count($items); $i++)
     {
         if ($content = @$items[$i]->richItemRenderer->content)
@@ -88,20 +90,20 @@ if (isset($ytdata->continuationContents->sectionListContinuation)) {
                     // videoRenderer => gridVideoRenderer
                     $name = "grid" . ucfirst($name);
 
-                    $videoList[] = (object)[$name => $value];
+                    $newVideoList[] = (object)[$name => $value];
                     break;
                 }
             }
             else
             {
-                $videoList[] = $content;
+                $newVideoList[] = $content;
             }
         }
         else
         {
-            $videoList[] = $items[$i];
+            $newVideoList[] = $items[$i];
         }
     }
 
-    $yt->page->lockupList = &$videoList;
+    $yt->page->lockupList = &$newVideoList;
 }

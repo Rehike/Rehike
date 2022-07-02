@@ -1,10 +1,10 @@
 {
-	"previousHash": "ecdaec48e4ad6fe1e774b227486563e8350eb963",
-	"currentRevisionId": 227,
-	"subject": "Correct comments in i18n subsystem",
-	"body": "Correct comments in i18n subsystem",
+	"previousHash": "f0019c9c195cc212f4a607c66c79b8518e2f98da",
+	"currentRevisionId": 228,
+	"subject": "Fix double items on channel video continuations",
+	"body": "Fix double items on channel video continuations",
 	"branch": "new-mvc",
 	"committerName": "Coffee",
 	"committerEmail": "99076687+YukisCoffee@users.noreply.github.com",
-	"time": 1656739450
+	"time": 1656759956
 }
