@@ -22,6 +22,8 @@ function fatalHandler() {
             $buildFatalPage($e, true);
          } catch (Throwable $err) {
             echo 'Fatal error trying to catch fatal error trying to catch fatal error. Fuck.';
+            echo "<br><br>";
+            echo $e["message"] . " in " . $e["file"] . ":" . $e["line"] . " <b><". $e["type"] ."></b>";
          }
       }
       

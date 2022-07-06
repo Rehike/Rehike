@@ -1,10 +1,10 @@
 {
-	"previousHash": "800277cbec3d41d6239d98dd88b6bb5e63610413",
-	"currentRevisionId": 231,
-	"subject": "Optimise Rebug over SPF",
-	"body": "Optimise Rebug over SPF",
+	"previousHash": "bc03e9c699efe074dbbee18b82beb2e450f45202",
+	"currentRevisionId": 232,
+	"subject": "Fatal handler improvements",
+	"body": "Fatal handler improvements",
 	"branch": "new-mvc",
 	"committerName": "Coffee",
 	"committerEmail": "99076687+YukisCoffee@users.noreply.github.com",
-	"time": 1657068721
+	"time": 1657093773
 }
