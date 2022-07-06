@@ -4,6 +4,7 @@
     @author Taniko Yamamoto <kirasicecreamm@gmail.com>
     @author The Rehike Maintainers
 #}
+{% if not yt.spf %}
 <div id="rebug-main">
     <style>
         {% include "rehike/debugger/css/main.css.twig" %}
@@ -16,3 +17,4 @@
         {% include "rehike/debugger/js/main.js.twig" %}
     </script>
 </div>
+{% endif %}
