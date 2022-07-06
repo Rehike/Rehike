@@ -16,7 +16,7 @@ class VokuParserAdapter implements IAdapter
     public static function register(&$html)
     {
         self::$dom = new Dom();
-        self::$dom->loadHtml($html);
+        self::$dom->loadHtml($html, LIBXML_PARSEHUGE);
     }
 
     public static function getElementById($id)

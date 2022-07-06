@@ -50,24 +50,24 @@
         },
         {
             "name": "rehike/spfphp",
-            "version": "1.0.1",
-            "version_normalized": "1.0.1.0",
+            "version": "1.0.3",
+            "version_normalized": "1.0.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Rehike/SpfPhp.git",
-                "reference": "0ce1c370f2d3d9a0817ab5f30efac4a8cfd5db2e"
+                "reference": "d3f72bcaaeb17ac5954c04b07c39177d33f315bf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Rehike/SpfPhp/zipball/0ce1c370f2d3d9a0817ab5f30efac4a8cfd5db2e",
-                "reference": "0ce1c370f2d3d9a0817ab5f30efac4a8cfd5db2e",
+                "url": "https://api.github.com/repos/Rehike/SpfPhp/zipball/d3f72bcaaeb17ac5954c04b07c39177d33f315bf",
+                "reference": "d3f72bcaaeb17ac5954c04b07c39177d33f315bf",
                 "shasum": ""
             },
             "require": {
                 "php": ">=7.0.0",
                 "yukiscoffee/simple_html_dom": "4.8.6"
             },
-            "time": "2022-06-24T21:07:55+00:00",
+            "time": "2022-07-06T00:45:43+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -106,7 +106,7 @@
             ],
             "support": {
                 "issues": "https://github.com/Rehike/SpfPhp/issues",
-                "source": "https://github.com/Rehike/SpfPhp/tree/1.0.1"
+                "source": "https://github.com/Rehike/SpfPhp/tree/1.0.3"
             },
             "install-path": "../rehike/spfphp"
         },

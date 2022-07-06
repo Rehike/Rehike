@@ -26,7 +26,7 @@ To use this with any templating engine, or just PHP alone, simply wrap all outpu
 
 ```php
 <?php
-ob_start();
+SpfPhp::beginCapture();
 
 ?>
 <html>
@@ -34,25 +34,18 @@ ob_start();
         <title>Example</title>
     </head>
     <body>
-        <div id="content">Hello world!</div>
+        <div id="content" x-spfphp-capture>Hello world!</div>
     </body>
 </html>
 <?php
 
-$pageOutput = ob_get_clean();
-
-// Then pass this into SpfPhp as needed
-if (SpfPhp::isSpfRequest())
-{
-    SpfPhp::display($pageOutput, "content", $spfPhpCfg);
-}
-else
-{
-    echo $pageOutput;
-}
+// Then tell SpfPhp we need it
+SpfPhp::autoRender();
 ```
 
 ### [Click here for further documentation](//github.com/Rehike/SpfPhp/wiki)
+
+### [See an example project](//github.com/YukisCoffee/spfphp-example)
 
 # Acknowledgements
 
