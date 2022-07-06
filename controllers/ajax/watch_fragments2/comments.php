@@ -4,8 +4,10 @@ use \Rehike\Request;
 
 $template = 'common/watch/watch_fragments2/comments';
 $yt->page = (object) [];
-$yt->comments = (object) [];
-$yt->commentsHeader = (object) [];
+$yt->commentsRenderer = (object) [
+    "headerRenderer" => (object)[],
+    "comments" => (object)[]
+];
 
 $yt->spfIdListeners = [
     '@masthead_search<data-is-crosswalk>',
@@ -45,7 +47,7 @@ const CI = 'continuationItems'; // shorthand
 
 // comments header shorthand
 $_och = $ytdata->{ORRE}[0]->{RLC}->{CI}[0]->commentsHeaderRenderer; // original comments header
-$_ch = $yt->commentsHeader; // comments header shorthand
+$_ch = $yt->commentsRenderer->headerRenderer; // comments header shorthand
 
 // commentsHeader.title:
 // commentsHeader.commentsCountText:
@@ -96,7 +98,7 @@ if ($a = ($_och->createRenderer->commentSimpleboxRenderer ?? false)) {
  * TODO: further rewrite may be necessary
  */
 $_oct = $ytdata->{ORRE}[1]->{RLC}; // original comment threads
-$yt->comments = CommentThread::bakeComments($_oct);
+$yt->commentsRenderer->comments = CommentThread::bakeComments($_oct);
 
 /*
 $yt->comments = $_oct;

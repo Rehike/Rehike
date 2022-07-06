@@ -1,10 +1,10 @@
 {
-	"previousHash": "bc03e9c699efe074dbbee18b82beb2e450f45202",
-	"currentRevisionId": 232,
-	"subject": "Fatal handler improvements",
-	"body": "Fatal handler improvements",
+	"previousHash": "fbeed16d7e03296c45c1484b16923fd731dd9181",
+	"currentRevisionId": 233,
+	"subject": "Macroise comments",
+	"body": "Macroise comments",
 	"branch": "new-mvc",
 	"committerName": "Coffee",
 	"committerEmail": "99076687+YukisCoffee@users.noreply.github.com",
-	"time": 1657093773
+	"time": 1657094183
 }
