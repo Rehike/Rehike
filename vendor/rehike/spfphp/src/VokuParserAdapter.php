@@ -71,7 +71,7 @@ class VokuParserAdapter implements IAdapter
         $response = [];
 
         // Get all elements with the capture x-tag
-        $caps = $html->find("[" . XTAG_PREFIX . "capture]");
+        $caps = $html->find("[" . XTag::XTAG_PREFIX . "capture]");
         
         // Add the new elements to the array
         if (is_array($caps) || $caps instanceof \voku\helper\SimpleHtmlDomNode)

@@ -1,8 +1,6 @@
 <?php
 namespace SpfPhp;
 
-const XTAG_PREFIX = "x-spfphp-";
-
 /**
  * A PHP library for generating SPF.js-compatible output.
  *
@@ -166,7 +164,7 @@ class SpfPhp
                 continue;
 
             // Contents to add to the ID.
-            $content = $element->innerHTML;
+            $content = Xtag::erradicate($element->innerHTML);
 
             // Use a direct render callback (if it is set)
             if (null != ($cbName = $element->getXtag("direct-render-callback")))

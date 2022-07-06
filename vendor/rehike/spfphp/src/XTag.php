@@ -13,6 +13,8 @@ namespace SpfPhp;
  */
 class XTag
 {
+    const XTAG_PREFIX = "x-spfphp-";
+
     /**
      * Split an array of attributes (a string array), putting the x-tags
      * in a separate array.
@@ -27,7 +29,7 @@ class XTag
         
         if (null != $attributes) foreach ($attributes as $name => $value)
         {
-            if (($x = XTAG_PREFIX) == substr($name, 0, strlen($x)))
+            if (($x = self::XTAG_PREFIX) == substr($name, 0, strlen($x)))
             {
                 // Remove the prefix from the name
                 $newName = substr($name, strlen($x));
@@ -49,7 +51,7 @@ class XTag
      */
     public static function erradicate($payload)
     {
-        $xtag = XTAG_PREFIX;
+        $xtag = self::XTAG_PREFIX;
 
         // What is this mess?
         // Well, it's none other than the classics of PHP Heredoc.

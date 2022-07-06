@@ -5,7 +5,7 @@
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => 'a461d8670c006b62c6af6a35902c44bfc180d822',
+        'reference' => '63d3b1daf5499dc50ca4f7d2d2b991ddfbc716fe',
         'name' => '__root__',
         'dev' => true,
     ),
@@ -16,7 +16,7 @@
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => 'a461d8670c006b62c6af6a35902c44bfc180d822',
+            'reference' => '63d3b1daf5499dc50ca4f7d2d2b991ddfbc716fe',
             'dev_requirement' => false,
         ),
         'google/protobuf' => array(
@@ -29,12 +29,12 @@
             'dev_requirement' => false,
         ),
         'rehike/spfphp' => array(
-            'pretty_version' => '1.0.0',
-            'version' => '1.0.0.0',
+            'pretty_version' => '1.0.1',
+            'version' => '1.0.1.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../rehike/spfphp',
             'aliases' => array(),
-            'reference' => '1e8ef8de009b674723cd54f42cc2af5a50ab5f55',
+            'reference' => '0ce1c370f2d3d9a0817ab5f30efac4a8cfd5db2e',
             'dev_requirement' => false,
         ),
         'symfony/css-selector' => array(
