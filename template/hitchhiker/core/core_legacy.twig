@@ -26,22 +26,7 @@
       {% endif %}
    </head>
    <body id="" class="{%- block body_class -%}  
-      date-20220105
-      en_US
-      visibility-logging-enabled  
-      ltr    
-      {{ yt.config.useRingoBranding ? 'exp-invert-logo' }}
-      exp-mouseover-img 
-      exp-responsive 
-      exp-search-big-thumbs   
-      site-center-aligned 
-      site-as-giant-card 
-      {{ (appbarEnabled and defaultGuideVisibility) ? 'guide-pinning-enabled' }}   
-      {{ (appbarEnabled and not defaultAppbarVisibility) ? 'appbar-hidden' }}
-      not-nirvana-dogfood    
-      flex-width-enabled      
-      flex-width-enabled-snap    
-      delayed-frame-styles-not-in  
+   {% include "core/body_class.twig" %}
       {% endblock %}" dir="ltr">
       <div id="body-container">
          <form name="logoutForm" method="POST" action="/logout"><input type="hidden" name="action_logout" value="1"></form>

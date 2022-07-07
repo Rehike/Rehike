@@ -204,7 +204,7 @@
                     <li>{{ getText(info.viewCountText) }}</li>
                 {% endif %}
                 {%- if info.publishedTimeText -%}
-                    <li>{{ getText(info.publishedTimeText) }}</li>
+                    <li{{ yt.config.oldLockupStyle ? " class=\"yt-lockup-deemphasized-text\"" }}>{{ getText(info.publishedTimeText) }}</li>
                 {% endif %}
             </ul>
             </div>
@@ -286,7 +286,7 @@
 {%- macro byline(info) -%}
 <div class="yt-lockup-byline yt-ui-ellipsis yt-ui-ellipsis-2">
    {% if info.longBylineText.runs.0.navigationEndpoint.browseEndpoint.canonicalBaseUrl %}
-   <a href="{{ info.longBylineText.runs.0.navigationEndpoint.browseEndpoint.canonicalBaseUrl }}" class="yt-uix-sessionlink       spf-link " data-sessionlink="itct=CHkQlDUYACITCOLXzPvf6toCFRA7fwodgP0KKSiOHg" >
+   {{ yt.config.byTextOnByline ? "by " }}<a href="{{ info.longBylineText.runs.0.navigationEndpoint.browseEndpoint.canonicalBaseUrl }}" class="yt-uix-sessionlink       spf-link " data-sessionlink="itct=CHkQlDUYACITCOLXzPvf6toCFRA7fwodgP0KKSiOHg" >
    {% endif %}
    {{ getText(info.longBylineText) }}
    {% if info.longBylineText.runs.0.navigationEndpoint.browseEndpoint.canonicalBaseUrl %}
