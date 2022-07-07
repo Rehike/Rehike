@@ -16,6 +16,11 @@ class CoffeeRequest
     protected static $staticWrapper;
     protected $instanceWrapper;
 
+    public static function __initStatic()
+    {
+        CoffeeRequest::_staticWrapperInit();
+    }
+
     // Behaviour for all method calls
     protected static function _methodCallWrapper(&$actor, $name, $args)
     {
@@ -73,6 +78,3 @@ class CoffeeRequest
         $this->instanceWrapper->{$variable} = $value;
     }
 }
-
-// This can be moved to __initStatic on new-mvc
-CoffeeRequest::_staticWrapperInit();

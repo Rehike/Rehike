@@ -1,10 +1,10 @@
 {
-	"previousHash": "b851d95a9f2495d689d1df91e1f04ee622462441",
-	"currentRevisionId": 262,
-	"subject": "This should not be by default",
-	"body": "This should not be by default",
+	"previousHash": "424b9712df801900dd2cf1b3e1bf9ef409e7905c",
+	"currentRevisionId": 263,
+	"subject": "Fulfill my wishes (staticInit on CoffeeRequest)",
+	"body": "Fulfill my wishes (staticInit on CoffeeRequest)",
 	"branch": "exp-signin-rework",
 	"committerName": "Coffee",
 	"committerEmail": "99076687+YukisCoffee@users.noreply.github.com",
-	"time": 1657198342
+	"time": 1657198579
 }
