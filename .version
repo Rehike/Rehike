@@ -1,10 +1,10 @@
 {
-	"previousHash": "6ab1c5d8b922ac32d163a14e4a2942e071366231",
-	"currentRevisionId": 259,
-	"subject": "Aubrey broke masthead too bad",
-	"body": "Aubrey broke masthead too bad",
+	"previousHash": "f01e698686622f3a650f29c2a69cdd28ef407e1b",
+	"currentRevisionId": 260,
+	"subject": "Reimplement Aubrey's masthead changes",
+	"body": "Reimplement Aubrey's masthead changes",
 	"branch": "exp-signin-rework",
 	"committerName": "Coffee",
 	"committerEmail": "99076687+YukisCoffee@users.noreply.github.com",
-	"time": 1657197732
+	"time": 1657198200
 }
