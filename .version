@@ -1,10 +1,10 @@
 {
-	"previousHash": "217ea691b1fede2b5a429907c8b7bbbacf3b2b38",
-	"currentRevisionId": 257,
-	"subject": "Merge branch 'new-mvc' into exp-signin-rework",
-	"body": "Merge branch 'new-mvc' into exp-signin-rework",
+	"previousHash": "4ac7adcb184720496446c478332419a5ee77423c",
+	"currentRevisionId": 258,
+	"subject": "Correct new-mvc merge",
+	"body": "Correct new-mvc merge",
 	"branch": "exp-signin-rework",
 	"committerName": "Coffee",
 	"committerEmail": "99076687+YukisCoffee@users.noreply.github.com",
-	"time": 1657197268
+	"time": 1657197326
 }
