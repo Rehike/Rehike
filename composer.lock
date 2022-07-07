@@ -4,20 +4,65 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fa8b8c13a133f06d8f55b6d93163fff8",
+    "content-hash": "8f07d889076c664c7a3a90fac06d36ce",
     "packages": [
         {
-            "name": "rehike/spfphp",
-            "version": "1.0.0",
+            "name": "google/protobuf",
+            "version": "v3.21.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/Rehike/SpfPhp.git",
-                "reference": "1e8ef8de009b674723cd54f42cc2af5a50ab5f55"
+                "url": "https://github.com/protocolbuffers/protobuf-php.git",
+                "reference": "68f71264d8816f001177d68ce99d25b28e212d4c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Rehike/SpfPhp/zipball/1e8ef8de009b674723cd54f42cc2af5a50ab5f55",
-                "reference": "1e8ef8de009b674723cd54f42cc2af5a50ab5f55",
+                "url": "https://api.github.com/repos/protocolbuffers/protobuf-php/zipball/68f71264d8816f001177d68ce99d25b28e212d4c",
+                "reference": "68f71264d8816f001177d68ce99d25b28e212d4c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.0.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": ">=5.0.0"
+            },
+            "suggest": {
+                "ext-bcmath": "Need to support JSON deserialization"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Google\\Protobuf\\": "src/Google/Protobuf",
+                    "GPBMetadata\\Google\\Protobuf\\": "src/GPBMetadata/Google/Protobuf"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "proto library for PHP",
+            "homepage": "https://developers.google.com/protocol-buffers/",
+            "keywords": [
+                "proto"
+            ],
+            "support": {
+                "issues": "https://github.com/protocolbuffers/protobuf-php/issues",
+                "source": "https://github.com/protocolbuffers/protobuf-php/tree/v3.21.1"
+            },
+            "time": "2022-05-27T22:57:31+00:00"
+        },
+        {
+            "name": "rehike/spfphp",
+            "version": "1.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Rehike/SpfPhp.git",
+                "reference": "d3f72bcaaeb17ac5954c04b07c39177d33f315bf"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Rehike/SpfPhp/zipball/d3f72bcaaeb17ac5954c04b07c39177d33f315bf",
+                "reference": "d3f72bcaaeb17ac5954c04b07c39177d33f315bf",
                 "shasum": ""
             },
             "require": {
@@ -61,9 +106,9 @@
             ],
             "support": {
                 "issues": "https://github.com/Rehike/SpfPhp/issues",
-                "source": "https://github.com/Rehike/SpfPhp/tree/1.0.0"
+                "source": "https://github.com/Rehike/SpfPhp/tree/1.0.3"
             },
-            "time": "2022-06-04T11:49:49+00:00"
+            "time": "2022-07-06T00:45:43+00:00"
         },
         {
             "name": "symfony/css-selector",

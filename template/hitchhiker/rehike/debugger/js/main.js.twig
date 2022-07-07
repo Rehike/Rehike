@@ -1,0 +1,187 @@
+/**
+ * Implements the base JS for the Rehike debugger.
+ * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
+ * @author The Rehike Maintainers
+ */
+
+var _rebug = _rebug || {};
+
+(function(rebug) {
+
+{% include "rehike/debugger/js/polyfill_Array_includes.js.twig" %}
+{% include "rehike/debugger/js/event_delegate.js.twig" %}
+
+var ytBodyContainer = document.getElementById("body-container");
+var ytFooterContainer = document.getElementById("footer-container");
+var openButton = document.getElementById("rebug-open-button");
+var lightboxContainer = document.getElementById("rebug-lightbox-container");
+var initialTab;
+
+function addClass(element, className)
+{
+    if (element.classList)
+    {
+        element.classList.add(className);
+    }
+    else
+    {
+        element.setAttribute("class", element.getAttribute("class") + " " + className);
+    }
+}
+
+function removeClass(element, className)
+{
+    if (element.classList)
+    {
+        element.classList.remove(className);
+    }
+    else
+    {
+        element.setAttribute("class", element.getAttribute("class").replace("className", ""));
+    }
+}
+
+var dialogScrollOffset = 0;
+
+function createDialogBackground()
+{
+    // Preserve scroll offset upon exit
+    dialogScrollOffset = document.documentElement.scrollTop;
+
+    // Preserve scroll offset visually
+    var scrollCssHack = "position:relative;top:-" + dialogScrollOffset + "px";
+
+    ytBodyContainer.setAttribute("style", scrollCssHack);
+    ytFooterContainer.setAttribute("style", scrollCssHack);
+
+    // Add the classes to body
+    // Those previous scroll offset operations are required because yt-dialog-active
+    // sets the overflow to hidden, which scrolls the page up.
+    addClass(document.body, "hide-players");
+    addClass(document.body, "yt-dialog-active");
+
+    // Create the dialog
+    var bgdiv = document.createElement("DIV");
+    bgdiv.setAttribute("id", "yt-dialog-bg");
+    bgdiv.setAttribute("class", "yt-dialog-bg");
+    bgdiv.setAttribute("style", "height: 100%; width: 100%; position: fixed;");
+    document.body.insertBefore(bgdiv, 
+        document.getElementById("footer-container").nextSibling
+    );
+}
+
+function removeDialogBackground()
+{
+    // Remove visual scroll hacks
+    ytBodyContainer.removeAttribute("style");
+    ytFooterContainer.removeAttribute("style");
+
+    // Remove the dialog and body classes
+    removeClass(document.body, "hide-players");
+    removeClass(document.body, "yt-dialog-active");
+
+    document.getElementById("yt-dialog-bg").remove();
+
+    // Restore scroll position
+    document.documentElement.scrollTop = dialogScrollOffset;
+}
+
+function openLightbox()
+{
+    // Create YT dialog background HTML
+    createDialogBackground();
+
+    // Unhide the lightbox
+    addClass(lightboxContainer, "open");
+}
+
+function closeLightbox()
+{
+    // Remove the dialog background
+    removeDialogBackground();
+
+    // Hide the lightbox
+    removeClass(lightboxContainer, "open");
+}
+
+function onClickCloseButton()
+{
+    closeLightbox();
+
+    // Reset the tab
+    switchTab(initialTab);
+}
+
+function onClickOpenButton()
+{
+    openLightbox();
+}
+
+// TAB SWITCHER
+
+function clearSelectedTab()
+{
+    var tab = document.querySelector("#rebug-tabs-switcher .rebug-tab-selected");
+    var content = document.querySelector("#rebug-tabbed-content-wrapper .rebug-tab-selected");
+
+    if (tab) removeClass(tab, "rebug-tab-selected");
+    if (content) removeClass(content, "rebug-tab-selected");
+}
+
+function switchTab(tabId)
+{
+    clearSelectedTab();
+
+    var tab = document.querySelector("#rebug-tabs-switcher [data-tab-target='" + tabId + "']");
+    var content = document.querySelector("#rebug-tabbed-content-wrapper [data-tab-id='" + tabId + "']");
+
+    if (tab) addClass(tab, "rebug-tab-selected");
+    if (content) addClass(content, "rebug-tab-selected");
+}
+
+function onClickTab(elm)
+{
+    if (elm.dataset.tabTarget)
+    {
+        switchTab(elm.dataset.tabTarget);
+    }
+}
+
+function getInitialTab()
+{
+    var elm = document.querySelector("#rebug-tabs-switcher .rebug-tab-selected");
+    initialTab = elm.dataset.tabTarget;
+    return initialTab;
+}
+
+// END TAB SWITCHER
+
+function onClickExpander(elm)
+{
+    if (elm.classList.contains("rebug-expander-collapsed"))
+    {
+        removeClass(elm, "rebug-expander-collapsed");
+        addClass(elm, "rebug-expander-expanded");
+    }
+    else
+    {
+        removeClass(elm, "rebug-expander-expanded");
+        addClass(elm, "rebug-expander-collapsed");
+    }
+}
+
+function init()
+{
+    // Register events for clicking the open button.
+    rebug.eventDelegate.add("click", "rebug-open-button", onClickOpenButton);   
+    rebug.eventDelegate.add("click", "rebug-close-button", onClickCloseButton);
+    rebug.eventDelegate.add("click", "rebug-tab", onClickTab);
+    rebug.eventDelegate.add("click", "rebug-expander", onClickExpander);
+    
+    getInitialTab();
+}
+
+init();
+
+})(_rebug)

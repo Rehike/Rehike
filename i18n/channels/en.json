@@ -1,0 +1,10 @@
+{
+    "flowGrid": "Grid",
+    "flowList": "List",
+    "viewUploads": "Uploads",
+    "viewAllVideos": "All videos",
+    "viewLiveStreams": "Live streams",
+    "seeAll": "See all",
+    "backstageViewAllCommentsSingular": "View 1 comment",
+    "backstageViewAllCommentsPlural": "View all %s comments"
+}

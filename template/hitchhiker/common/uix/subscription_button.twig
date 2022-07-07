@@ -1,9 +1,10 @@
-{% macro render(info, cfg, class) %}
-<span class="{{ class }} yt-uix-button-subscription-container {{ cfg.withPreferences ? 'with-preferences' }}">
-    {%- if cfg.showUnsubConfirmDialog -%}
+{% macro render(data, class) %}
+{% from "/common/uix/button.twig" import render as button %}
+<span class="{{ class }} yt-uix-button-subscription-container {{ data.showSubscriptionPreferences ? 'with-preferences' }}">
+    {%- if data.showUnsubConfirmDialog -%}
         <span class="unsubscribe-confirmation-overlay-container">
             <div class="yt-uix-overlay "  data-overlay-style="primary" data-overlay-shape="tiny">
-                {% embed '/common/component/dialog.twig' %}
+                {% embed '/common/uix/dialog.twig' %}
                 {% block dialog_content %}
                 <div class="unsubscribe-confirmation-overlay-content-container">
                     <div class="unsubscribe-confirmation-overlay-content">
@@ -22,44 +23,19 @@
         </span>
     {% endif %}
     {% apply spaceless %}
-    <button class="
-    yt-uix-button 
-    yt-uix-button-size-default 
-    yt-uix-button-{{ info.subscribed ? 'subscribed' : 'subscribe' }}-{{ cfg.unbranded ? 'unbranded' : 'branded' }}
-    yt-uix-button-has-icon
-    no-icon-markup 
-    yt-uix-subscription-button 
-    yt-can-buffer 
-    yt-uix-servicelink 
-    vve-check
-    " type="button" onclick=";return false;" aria-live="polite" aria-busy="false" 
-    data-subscribed-timestamp="0"
-    data-href="https://accounts.google.com/ServiceLogin?hl=en&amp;service=youtube&amp;uilel=3&amp;continue=http%3A%2F%2Fwww.youtube.com%2Fsignin%3Fcontinue_action%3DQUFFLUhqbm5YUkxYSGRlWHphMjAwczlsLTBlcUFzTmpnQXxBQ3Jtc0trV2hlS1FyeWExa3hJQWtuRTB5TXEyckFwVGNuajAwZU5UWXZzM0ZRR0F5X1hISm8ybmczbUdqQkp6VGExTEhrRXdLOG94NmRlbWhYQ3FQcjRiSHFNbkhWV0dBZHdyNzJ3LW9PRFcwd21sQ0dWY05OemRFZV9hZUo2TGFlY0pjaXAyMEp2aEFPcEVBSHktU3d0dEdhdy1JaWhFUU1SWVVKcm9OUGNjSHc2Sm4yZ2t2Rmx4V2NOTm1MT1NQX1lLaEZ2RjZCMGk%253D%26feature%3Dsubscribe%26action_handle_signin%3Dtrue%26next%3D%252Fchannel%252FUCuAXFkgsw1L7xaCfnd5JJOw%26hl%3Den%26app%3Ddesktop&amp;passive=true" 
-    data-style-type="{{ cfg.unbranded ? 'unbranded' : 'branded' }}" 
-    data-clicktracking="itct={{ info.clickTrackingParams }}" 
-    data-servicelink="{{ info.clickTrackingParams }}" 
-    data-show-unsub-confirm-dialog="{{ cfg.showUnsubConfirmDialog ? 'true' : 'false' }}" 
-    data-visibility-tracking="{{ info.clickTrackingParams }}" 
-    data-show-unsub-confirm-time-frame="always" 
-    data-channel-external-id="{{ info.channelId }}">
-        <span class="yt-uix-button-content">
-            <span class="subscribe-label" aria-label="Subscribe">Subscribe</span>
-            <span class="subscribed-label" aria-label="Unsubscribe">Subscribed</span>
-            <span class="unsubscribe-label" aria-label="Unsubscribe">Unsubscribe</span>
-        </span>
-    </button>
-    {%- if cfg.showSubscriptionPreferences -%}
+    {{ button(data.subscriptionButton) }}
+    {%- if data.showSubscriptionPreferences -%}
         <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-default yt-uix-button-empty yt-uix-button-has-icon yt-uix-subscription-preferences-button" type="button" onclick=";return false;" aria-live="polite" aria-busy="false" aria-role="button" aria-label="Subscription preferences" data-channel-external-id="UCuAXFkgsw1L7xaCfnd5JJOw"><span class="yt-uix-button-icon-wrapper"><span class="yt-uix-button-icon yt-uix-button-icon-subscription-preferences yt-sprite"></span></span></button>
     {% endif %}
-    {%- if cfg.showCount and info.subscriberCountText -%}
-        <span class="yt-subscription-button-subscriber-count-branded-horizontal yt-subscriber-count" title="{{ info.subscriberCountText }}" aria-label="{{ info.subscriberCountText }}" tabindex="0">{{ info.subscriberCountText }}</span>  
+    {%- if data.subscriberCountRenderer -%}
+        {{ _self.subscriber_count(data.subscriberCountRenderer) }}
     {% endif %} 
     {% endapply %}
-    {%- if cfg.showSubscriptionPreferences -%}
+    {%- if data.showSubscriptionPreferences -%}
         <span class="subscription-preferences-overlay-container">
             <div class="yt-uix-overlay "  data-overlay-style="primary" data-overlay-shape="tiny">
-                {% embed '/common/component/dialog.twig' %}
-                {% import '/common/core/spinner.twig' as spinner %}
+                {% embed '/common/uix/dialog.twig' %}
+                {% import '/core/spinner.twig' as spinner %}
                 {% block dialog_content %}
                 <div class="subscription-preferences-overlay-content-container">
                     <div class="subscription-preferences-overlay-loading ">
@@ -74,3 +50,13 @@
     {% endif %}
 </span>
 {% endmacro %}
+
+{%- macro subscriber_count(data) -%}
+    <span class="yt-subscription-button-subscriber-count-{{ data.branded ? "branded" : "unbranded" }}-{{ data.direction }} yt-subscriber-count"
+        title="{{ data.simpleText }}"
+        aria-label="{{ data.simpleText }}"
+        tabindex="0"
+    >
+        {{ data.simpleText }}
+    </span>
+{%- endmacro -%}

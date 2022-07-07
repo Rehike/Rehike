@@ -1,9 +1,23 @@
 <?php
+namespace Rehike\ResourceConstants;
+
 const YTS_HOST = 's.ytimg.com';
 const MODULAR_JS_PATH = 'www-en_US-vflkPQDpM';
 
 function jsModuleUrl($name) {
     return '//' . YTS_HOST . '/yts/jsbin/' . MODULAR_JS_PATH . '/' . $name . '.js';
+}
+
+/**
+ * Hack.
+ * 
+ * Also gross.
+ * 
+ * @author The Rehike Maintainers
+ */
+class ResourceContentsStore
+{
+    public static $resourceConstants;
 }
 
 $ytConstants = (object) [
@@ -70,9 +84,9 @@ $ytConstants = (object) [
     ],
     'img' => (object) [
         'channels/c4/default_banner' => '//' . YTS_HOST . '/yts/img/channels/c4/default_banner-vfl7DRgTn.png',
-        'channels/c4/default_banner_hq' => '//' . YTS_HOST . '/yts/img/channels/c4/default_banner_hq-vfl4dpY8T.png'
+        'channels/c4/default_banner_hq' => '//' . YTS_HOST . '/yts/img/channels/c4/default_banner_hq-vfl4dpY8T.png',
+        "meh7" => "//" . YTS_HOST . "/yts/img/meh7-vflGevej7.png"
     ]
 ];
 
-$twig->addGlobal('ytConstants', $ytConstants);
-$twig->addGlobal('PIXEL', $ytConstants->pixelGif);
+ResourceContentsStore::$resourceConstants = &$ytConstants;

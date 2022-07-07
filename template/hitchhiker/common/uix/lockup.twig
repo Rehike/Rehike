@@ -173,15 +173,8 @@
     <div class="yt-lockup-dismissable {{ style == 'tile' ? 'yt-uix-tile'}}">
         {{ _self.thumbnail(info, type, thumbWidth, thumbHeight) }}
         <div class="yt-lockup-content">
-            <h3 class="yt-lockup-title ">
-               <a href="{% if type == "channel" %}{{ getUrl(info) }}{% elseif type == "video" %}/watch?v={{ info.videoId }}{% elseif type == "playlist" or type == "radio" %}{{ getUrl(info.videos[0].childVideoRenderer) }}{% endif %}" class=" yt-ui-ellipsis yt-ui-ellipsis-2 yt-uix-sessionlink      spf-link " data-sessionlink="itct=CHkQlDUYACITCOLXzPvf6toCFRA7fwodgP0KKSiOHjIKZy1oaWdoLXRydloPRkV3aGF0X3RvX3dhdGNo"  title="{{ getText(info.title) }}" aria-describedby="description-id-956708" dir="ltr">
-               {{ getText(info.title) }}{% if info.ownerBadges and type == "channel" %}    <span title="Verified" class="yt-uix-tooltip yt-channel-title-icon-verified yt-sprite"></span>{% endif %}
-               </a>
-               {%- if info.lengthText -%}
-                  {{ _self.accessibleDescription(info.lengthText.simpleText) }}
-               {% endif %}
-            </h3>
-            {% if showByline and type != "channel" %}
+            {{ _self.title(info, type) }}
+            {% if info.longBylineText %}
             {{ _self.byline(info) }}
             {% endif %}
             {% if style == "tile" and type == "playlist" or type == "radio" %}
@@ -211,7 +204,7 @@
                     <li>{{ getText(info.viewCountText) }}</li>
                 {% endif %}
                 {%- if info.publishedTimeText -%}
-                    <li>{{ getText(info.publishedTimeText) }}</li>
+                    <li{{ yt.config.oldLockupStyle ? " class=\"yt-lockup-deemphasized-text\"" }}>{{ getText(info.publishedTimeText) }}</li>
                 {% endif %}
             </ul>
             </div>
@@ -240,7 +233,7 @@
                {% endif %}
             </div>
             {% endif %}
-            {% if info.badges or type == "channel" %}
+            {% if info.badges or type == "channel" and style == "tile" %}
             <div class="yt-lockup-badges">
                <ul class="yt-badge-list">
                   {% for badge in info.badges %}
@@ -267,7 +260,7 @@
                      </li>
                   {% endif %}
                </ul>
-               {% if info.subscribeButton %}
+               {% if info.subscribeButton and style == "tile" %}
                <span class="yt-uix-button-subscription-container">
                   {{ subBtn.render(info.subscribeButton, {
                      'showCount': true,
@@ -293,7 +286,7 @@
 {%- macro byline(info) -%}
 <div class="yt-lockup-byline yt-ui-ellipsis yt-ui-ellipsis-2">
    {% if info.longBylineText.runs.0.navigationEndpoint.browseEndpoint.canonicalBaseUrl %}
-   <a href="{{ info.longBylineText.runs.0.navigationEndpoint.browseEndpoint.canonicalBaseUrl }}" class="yt-uix-sessionlink       spf-link " data-sessionlink="itct=CHkQlDUYACITCOLXzPvf6toCFRA7fwodgP0KKSiOHg" >
+   {{ yt.config.byTextOnByline ? "by " }}<a href="{{ info.longBylineText.runs.0.navigationEndpoint.browseEndpoint.canonicalBaseUrl }}" class="yt-uix-sessionlink       spf-link " data-sessionlink="itct=CHkQlDUYACITCOLXzPvf6toCFRA7fwodgP0KKSiOHg" >
    {% endif %}
    {{ getText(info.longBylineText) }}
    {% if info.longBylineText.runs.0.navigationEndpoint.browseEndpoint.canonicalBaseUrl %}
@@ -301,7 +294,16 @@
 </div>
 {% endmacro %}
 
-
+{%- macro title(info, type, overflow = true, class) -%}
+<h3 class="yt-lockup-title ">
+   <a href="{% if type == "channel" %}{{ getUrl(info) }}{% elseif type == "video" %}/watch?v={{ info.videoId }}{% elseif type == "playlist" or type == "radio" %}{{ getUrl(info.videos[0].childVideoRenderer) }}{% endif %}" class=" {% if overflow %}yt-ui-ellipsis yt-ui-ellipsis-2{% endif %} yt-uix-sessionlink  {{ class ?: "" }}    spf-link " data-sessionlink="itct=CHkQlDUYACITCOLXzPvf6toCFRA7fwodgP0KKSiOHjIKZy1oaWdoLXRydloPRkV3aGF0X3RvX3dhdGNo"  title="{{ getText(info.title) }}" aria-describedby="description-id-956708" dir="ltr">
+   {{ getText(info.title) }}{% if info.ownerBadges and type == "channel" %}    <span title="Verified" class="yt-uix-tooltip yt-channel-title-icon-verified yt-sprite"></span>{% endif %}
+   </a>
+   {%- if info.lengthText -%}
+      {{ _self.accessibleDescription(info.lengthText.simpleText) }}
+   {% endif %}
+</h3>
+{%- endmacro -%}
 
 
 {%- macro accessibleDescription(lengthText) -%}

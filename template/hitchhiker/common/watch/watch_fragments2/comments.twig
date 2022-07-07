@@ -8,6 +8,7 @@
 <body>
     <div id="masthead_search" data-is-crosswalk="0"></div>
     <div id="watch-discussion">
-        {% include '/common/discussion_v2/comment_section_renderer.twig' %}
+        {% from "/common/discussion_v2/comment_section_renderer.twig" import render as comment_section_renderer %}
+        {{ comment_section_renderer(yt.commentsRenderer)}}
     </div>
 </body>

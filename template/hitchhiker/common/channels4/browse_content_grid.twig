@@ -1,0 +1,29 @@
+{%- macro render(data, id) -%}
+    {% import "common/uix/lockup.twig" as lockup %}
+    {% from 'common/uix/load_more_button.twig' import render as load_more_button %}
+    {# ID is always needed for continuations, so create an anonymous ID
+       for anonymous use. #}
+    {% if not id %}
+        {% set id = "channels-browse-content-grid" %}
+    {% endif %}
+    <ul id="{{ id }}" class="channels-browse-content-grid branded-page-gutter-padding grid-lockups-container">
+        {%- for item in data.items -%}
+            {%- 
+                if item.gridVideoRenderer 
+                or item.videoRenderer
+                or item.gridPlaylistRenderer
+                or item.playlistRenderer
+                or item.gridRadioRenderer
+                or item.radioRenderer
+                or item.gridChannelRenderer
+                or item.channelRenderer
+            -%}
+            <li class="channels-content-item yt-shelf-grid-item">{{ lockup.grid(item, false) }}</li>
+            {%- endif -%}
+        {%- endfor -%}
+    </ul>
+    {% set lastItem = data.items|last %}
+    {%- if lastItem.continuationItemRenderer -%}
+        {{ load_more_button(lastItem.continuationItemRenderer.continuationEndpoint.continuationCommand.token, id) }}
+    {%- endif -%}
+{%- endmacro -%}

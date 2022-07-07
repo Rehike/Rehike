@@ -1,10 +1,10 @@
 {
-	"previousHash": "17d99a2ddaf29538e3043cbda1a0af880d30363b",
-	"currentRevisionId": 193,
-	"subject": "Signin functionally restored to Request service",
-	"body": "Signin functionally restored to Request service",
+	"previousHash": "217ea691b1fede2b5a429907c8b7bbbacf3b2b38",
+	"currentRevisionId": 257,
+	"subject": "Merge branch 'new-mvc' into exp-signin-rework",
+	"body": "Merge branch 'new-mvc' into exp-signin-rework",
 	"branch": "exp-signin-rework",
 	"committerName": "Coffee",
 	"committerEmail": "99076687+YukisCoffee@users.noreply.github.com",
-	"time": 1656116485
+	"time": 1657197268
 }

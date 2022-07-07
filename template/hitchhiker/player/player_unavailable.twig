@@ -1,0 +1,20 @@
+<img class="icon meh" src="{{ ytConstants.img.meh7 }}" alt="">
+<div class="content">
+    <h1 id="unavailable-message" class="message">
+        {{ getText(yt.playerUnavailable.reason) }}
+    </h1>
+    {% if yt.playerUnavailable.subreason %}
+    <div id="unavailable-submessage" class="submessage">
+        {{ getText(yt.playerUnavailable.subreason) }}
+        {%- if yt.playerUnavailable.subreason.watch7PlayerAgeGateContent -%}
+            {% set agegate = yt.playerUnavailable.subreason.watch7PlayerAgeGateContent %}
+            <div id="watch7-player-age-gate-content">
+                <p>{{ agegate.message }}</p>
+                <p></p>
+                {% from "common/uix/button.twig" import render as button %}
+                {{ button(agegate.button) }}
+            </div>
+        {%- endif -%}
+    </div>
+    {% endif %}
+</div>

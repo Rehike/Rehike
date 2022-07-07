@@ -1,0 +1,25 @@
+{%- macro render(data) -%}
+    {% from "common/uix/shelf.twig" import render as shelf %}
+    {% set rid = generateRid() %}
+    <ol id="item-section-{{ rid }}" class="item-section">
+        {%- for item in data.contents -%}
+            {%- if item.shelfRenderer -%}
+                <li>{{ shelf(item.shelfRenderer) }}</li>
+            {%- elseif item.messageRenderer -%}
+                <p class="display-message">
+                    {%- if item.messageRenderer.text.runs -%}
+                        {%- for run in item.messageRenderer.text.runs -%}
+                            {%- if run.navigationEndpoint -%}
+                                <a href="{{ getEndpoint(run) }}">{{ run.text }}</a>
+                            {%- else -%}
+                                {{ run.text }}
+                            {%- endif -%}
+                        {%- endfor -%}
+                    {%- elseif item.messageRenderer.text.simpleText -%}
+                        {{ item.messageRenderer.text.simpleText }}
+                    {%- endif -%}
+                </p>
+            {%- endif -%}
+        {%- endfor -%}
+    </ol>
+{%- endmacro -%}

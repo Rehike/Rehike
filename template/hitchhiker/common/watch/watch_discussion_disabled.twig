@@ -1,3 +1,4 @@
+{% macro watch_discussion_disabled(message) %}
 <div id="watch-discussion" class="branded-page-box yt-card">
 <div id="comment-section-renderer"
     class="comment-section-renderer vve-check"
@@ -8,7 +9,7 @@
         <span class="yt-spinner-img comment-section-items-loading yt-sprite" title="Loading icon"></span>
 
         <div class="display-message vve-check" data-visibility-tracking="CCgQljsYACITCJfKhonKnukCFdmhxAodcRcP4Q">
-            {%- for run in yt.page.results.videoDiscussionNotice.message.runs -%}
+            {%- for run in message.runs -%}
                 {%- if run.navigationEndpoint -%}
                     {%- set href = run.navigationEndpoint.commandMetadata.webCommandMetadata.url -%}
                     {%- set spf = (href|first == "/") -%}
@@ -28,3 +29,4 @@
     </div>
 </div>
 </div>
+{% endmacro %}

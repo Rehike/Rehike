@@ -24,7 +24,7 @@
     yt.setConfig('CHANNEL_ID', "{{ yt.ucid }}");
 
 
-    yt.setConfig('CHANNEL_TAB', "feed");
+    yt.setConfig('CHANNEL_TAB', "{{ yt.tab }}");
 
 
     yt.setConfig('DISMISS_THROUGH_IT', true);
@@ -50,7 +50,7 @@
 {% endblock %}
 
 {%- block appbarContent -%}
-   {{ appbar_nav.render(yt.appbarNav) }}
+   {{ appbar_nav.render(yt.appbar.nav) }}
 {% endblock %}
 
 {%- block page_class -%}
@@ -58,39 +58,50 @@ not-fixed-width-tab-widescreen
 {% endblock %}
 
 {% block content %}
-<div id="debug" class="hid">
-    {{ yt.response }}
-</div>
 {% embed '/common/channels4/branded_page_v2.twig' %}
     {% set brandedPageConfig = {
         'baseBoldTitles': true,
         'containerFlexWidth': true,
         'hasTopRow': true,
-        'secondaryColumnHidden': true
+        'secondaryColumnHidden': yt.page.secondaryContent ? false : true
     } %}
 
     {%- block branded_page_top_row -%}
-        {% include '/common/channels4/channel_header.twig' %}
+        {% from "/common/channels4/channel_header.twig" import render as channel_header %}
+        {% if yt.page.header %}
+        {{ channel_header(yt.page.header) }}
+        {% endif %}
     {% endblock %}
 
     {%- block branded_page_primary_column_content -%}
-    <ul id="browse-items-primary">
-        {% if yt.tab == "featured" %}
-            {% include "channel/featured.twig" %}
-        {% elseif yt.tab == "videos" %}
-            {% include "channel/videos.twig" %}
-        {% elseif yt.tab == "playlists" %}
-            {% include "channel/playlists.twig" %}
-        {% elseif yt.tab == "community" %}
-            {% include "channel/community.twig" %}
-        {% elseif yt.tab == "channels" %}
-            {% include "channel/channels.twig" %}
-        {% elseif yt.tab == "about" %}
-            {% include "channel/about.twig" %}
-        {% else %}
-            <p class="display-message">Channel tab "{{ yt.tab }}" not found. If you believe this is a mistake, please <a href="//github.com/Rehike/Rehike/issues/new">file an issue on our GitHub</a>.</p>
-        {% endif %}
-    </ul>
+        {% from "/common/browse/main.twig" import render as browse %}
+        {{ browse(yt.page.content) }}
+        {#<ul id="browse-items-primary">
+            {% if yt.tab == "featured" %}
+                {% include "common/channels4/pages/featured.twig" %}
+            {% elseif yt.tab == "videos" %}
+                {% include "common/channels4/pages/videos.twig" %}
+            {% elseif yt.tab == "playlists" %}
+                {% include "common/channels4/pages/playlists.twig" %}
+            {% elseif yt.tab == "community" %}
+                {% include "common/channels4/pages/community.twig" %}
+            {% elseif yt.tab == "channels" %}
+                {% include "common/channels4/pages/channels.twig" %}
+            {% elseif yt.tab == "about" %}
+                {% include "common/channels4/pages/about.twig" %}
+            {% else %}
+                <p class="display-message">Channel tab "{{ yt.tab }}" not found. If you believe this is a mistake, please <a href="//github.com/Rehike/Rehike/issues/new">file an issue on our GitHub</a>.</p>
+            {% endif %}
+        </ul>#}
+    {%- endblock -%}
+
+    {%- block branded_page_secondary_column_content -%}
+        {% from "common/channels4/sidebar/related_channels.twig" import render as related_channels %}
+        {%- for item in yt.page.secondaryContent.items -%}
+            {%- if item.relatedChannelsRenderer -%}
+                {{ related_channels(item.relatedChannelsRenderer) }}
+            {%- endif -%}
+        {%- endfor -%}
     {%- endblock -%}
 {% endembed %}
 {% endblock %}

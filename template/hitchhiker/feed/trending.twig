@@ -75,7 +75,7 @@ yt.setConfig('DISMISS_THROUGH_IT', true);
 </div>
     {% embed 'common/channels4/branded_page_v2.twig' %}
     {% import 'common/uix/lockup.twig' as lockup %}
-    {% import 'common/core/spinner.twig' as spinner %}
+    {% import 'core/spinner.twig' as spinner %}
     {% set brandedPageConfig = {
         'baseBoldTitles': true,
         'containerFlexWidth': true,
@@ -85,7 +85,7 @@ yt.setConfig('DISMISS_THROUGH_IT', true);
     {% block branded_page_primary_column_content %}
         <div id="browse-items-primary">
             <ol id="section-list-874807" class="section-list">
-            {% import "common/uix/shelf.twig" as shelf %}
+            {% import "common/uix/shelf_old.twig" as shelf %}
             {%- for shelfSlider in yt.page.shelvesList -%}
               {#{{ shelf|json_encode }}#}
               {% set shelfSliderContent = shelfSlider.itemSectionRenderer.contents.0.shelfRenderer %}

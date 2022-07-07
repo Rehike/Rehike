@@ -1,0 +1,13 @@
+{
+    "openButtonLabel": "Debugger",
+    "openButtonErrorCountSingular": "(1 error)",
+    "openButtonErrorCountPlural": "(%s errors)",
+    "debuggerTitle": "Debugger",
+    "debuggerClose": "Close",
+    "errorWarning": "Warning",
+    "errorError": "Error",
+    "errorNotice": "Notice",
+    "errorDeprecated": "Deprecated",
+    "tabErrorTitle": "Errors (%s)",
+    "tabYtWalkerTitle": "$yt walker"
+}

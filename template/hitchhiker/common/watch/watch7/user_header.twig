@@ -17,10 +17,6 @@
     </div>
     <span id="watch7-subscription-container">
     {% import 'common/uix/subscription_button.twig' as subscription_button %}
-    {{ subscription_button.render(owner.subscriptionButton, {
-        'showCount': true,
-        'showUnsubConfirmDialog': true,
-        'showSubscriptionPreferences': true
-    }) }}
+    {{ subscription_button.render(owner.subscriptionButtonRenderer) }}
     </span>
 </div>

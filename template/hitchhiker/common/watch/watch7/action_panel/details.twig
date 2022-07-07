@@ -1,4 +1,5 @@
-<div id="action-panel-details" class="action-panel-content yt-uix-expander yt-card yt-card-has-padding yt-uix-expander-collapsed">
+{% set shouldCollapse = not secondaryInfo.description.runs is empty and not secondaryInfo.defaultExpanded %}
+<div id="action-panel-details" class="action-panel-content yt-uix-expander yt-card yt-card-has-padding {{ shouldCollapse ? "yt-uix-expander-collapsed" }}">
     <div id="watch-description" class="yt-uix-button-panel">
         <div id="watch-description-content">
         <div id="watch-description-clip">
@@ -20,64 +21,34 @@
             </div>
             <div id="watch-description-extras">
                 <ul class="watch-extras-section">
-                    {#
-                    <li class="watch-meta-item yt-uix-expander-body">
-                    <h4 class="title">
-                        Category
-                    </h4>
-                    <ul class="content watch-info-tag-list">
-                        <li><a href="/channel/UC-9-kyTW8ZkZNDHQJ6FgpwQ" class=" yt-uix-sessionlink      spf-link " data-sessionlink="ei=23PrWrDCHMvF-gPPu7LAAQ" >Music</a></li>
-                    </ul>
-                    </li>
-                    <li class="watch-meta-item yt-uix-expander-body">
-                    <h4 class="title">
-                        License
-                    </h4>
-                    <ul class="content watch-info-tag-list">
-                        <li>Standard YouTube License</li>
-                    </ul>
-                    </li>
-                    <li class="watch-meta-item yt-uix-expander-body">
-                    <h4 class="title">
-                        Music
-                    </h4>
-                    <ul class="content watch-info-tag-list">
-                        <li>&quot;Never Gonna Give You Up (7&#39;&#39; Mix)&quot; by Rick Astley <a href="/red" class=" yt-uix-sessionlink      spf-link " data-sessionlink="ei=23PrWrDCHMvF-gPPu7LAAQ&amp;feature=c2bytred" >Listen ad-free with </a><a href="/red" class=" yt-uix-sessionlink      spf-link " data-sessionlink="ei=23PrWrDCHMvF-gPPu7LAAQ&amp;feature=c2bytred" >YouTube Red</a></li>
-                    </ul>
-                    </li>
-                    #}
-                    <li class="watch-meta-item yt-uix-expander-body">
-                        <h4 class="title">Category</h4>
-                        <ul class="content watch-info-tag-list">
-                            <li>{{ yt.playerResponse.microformat.playerMicroformatRenderer.category }}</li>
-                        </ul>
-                    </li>
-                    {% for item in secondaryInfo.metaItems %}
-                    {% if item.metadataRowRenderer %}
-                    {% set this = item.metadataRowRenderer %}
-                    <li class="watch-meta-item yt-uix-expander-body">
-                        <h4 class="title">{{ getText(this.title) }}</h4>
-                        <ul class="content watch-info-tag-list">
-                            <li>
-                                {% for runs in this.contents[0].runs %}
-                                    {% if runs.navigationEndpoint %}
-                                    <a{{ (href|first == "/") ? " class=\"spf-link\"" }} href="{{ runs.navigationEndpoint.urlEndpoint.url }}">
-                                    {% endif %}
-                                    {{ runs.text }}
-                                    {% if runs.navigationEndpoint %}
-                                    </a>
-                                    {% endif %}
-                                {% endfor %}
-                            </li>
-                        </ul>
-                    </li>
-                    {% endif %}
+                    {% for item in secondaryInfo.metadataRowContainer.items %}
+                    {%- if item.metadataRowRenderer -%}
+                    {% set item = item.metadataRowRenderer %}
+                        <li class="watch-meta-item yt-uix-expander-body">
+                            <h4 class="title">{{ getText(item.title) }}</h4>
+                            <ul class="content watch-info-tag-list">
+                                <li>
+                                    {% for runs in item.contents[0].runs %}
+                                        {% if runs.navigationEndpoint %}
+                                        <a{{ (href|first == "/") ? " class=\"spf-link\"" }} href="{{ runs.navigationEndpoint.urlEndpoint.url }}">
+                                        {% endif %}
+                                        {{ runs.text }}
+                                        {% if runs.navigationEndpoint %}
+                                        </a>
+                                        {% endif %}
+                                    {% endfor %}
+                                </li>
+                            </ul>
+                        </li>
+                    {%- endif -%}
                     {% endfor %}
                 </ul>
             </div>
         </div>
         </div>
     </div>
+    {% if shouldCollapse or not secondaryInfo.description.runs is empty %}
     <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-expander yt-uix-expander-head yt-uix-expander-collapsed-body yt-uix-gen204" type="button" onclick=";return false;" data-gen204="feature=watch-show-more-metadata"><span class="yt-uix-button-content">Show more</span></button>
     <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-expander yt-uix-expander-head yt-uix-expander-body" type="button" onclick=";return false;"><span class="yt-uix-button-content">Show less</span></button>
+    {% endif %}
 </div>

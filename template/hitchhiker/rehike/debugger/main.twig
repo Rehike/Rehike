@@ -1,0 +1,20 @@
+{# 
+    Implements the base HTML insertion for the Rehike debugger.
+    
+    @author Taniko Yamamoto <kirasicecreamm@gmail.com>
+    @author The Rehike Maintainers
+#}
+{% if not yt.spf %}
+<div id="rebug-main">
+    <style>
+        {% include "rehike/debugger/css/main.css.twig" %}
+    </style>
+    {% include "rehike/debugger/openButton.twig" %}
+    <div id="rebug-lightbox-container">
+        {% include "rehike/debugger/lightbox_main.twig" %}
+    </div>
+    <script>
+        {% include "rehike/debugger/js/main.js.twig" %}
+    </script>
+</div>
+{% endif %}
