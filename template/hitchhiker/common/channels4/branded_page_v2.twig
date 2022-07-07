@@ -21,6 +21,12 @@
                     </div>
                 </div>
             </div>
+            {%- if not brandedPageConfig.secondaryColumnHidden -%}
+                <div class="branded-page-v2-secondary-col">
+                    {%- block branded_page_secondary_column_content -%}
+                    {%- endblock -%}
+                </div>
+            {%- endif -%}
         </div>
     </div>
 </div>

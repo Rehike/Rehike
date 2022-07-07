@@ -153,6 +153,29 @@ class i18n
     }
 
     /**
+     * Register language definitions, per language, from a folder.
+     * 
+     * As this relies on the above function, it inherits the same
+     * general functionality from it.
+     * 
+     * @param string $folderName
+     * @return void
+     */
+    public function registerFromFolder($folderName)
+    {
+        foreach (glob("$folderName/*") as $file)
+        {
+            // Isolate the file name itself.
+            $languageName = explode("/", $file);
+            $languageName = $languageName[count($languageName) - 1];
+            $languageName = explode(".", $languageName)[0];
+
+            // Register from a file this path.
+            self::registerFromFile($languageName, $file);
+        }
+    }
+
+    /**
      * Register a language array
      * 
      * @param string $name

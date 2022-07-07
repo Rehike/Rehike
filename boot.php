@@ -17,6 +17,12 @@ TemplateManager::registerGlobalState($yt);
 TemplateManager::addGlobal('ytConstants', $ytConstants);
 TemplateManager::addGlobal('PIXEL', $ytConstants->pixelGif);
 
+// Load general i18n files
+use Rehike\i18n;
+i18n::setDefaultLanguage("en");
+i18n::newNamespace("main/regex")->registerFromFolder("i18n/regex");
+i18n::newNamespace("main/misc")->registerFromFolder("i18n/misc");
+
 ////////////////////////////////////////////////
 // Temporary Controller V1 compatibility code //
 $twig = &TemplateManager::exposeTwig();

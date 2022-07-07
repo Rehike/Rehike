@@ -22,7 +22,7 @@ switch ($routerUrl->path[0]) {
         case 'user':
         case 'channel':
         case 'c':
-            include('controllers/channel.php');
+            include('controllers/channel_old.php');
             break;
         case 'results':
             include('controllers/results.php');

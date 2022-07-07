@@ -1,0 +1,71 @@
+{% macro render(data) %}
+<li>
+    <div class="about-metadata-container">
+        <div class="about-metadata-stats branded-page-box-padding">
+            <div class="about-stats">
+                {% if data.subscriberCountText %}
+                <span class="about-stat">
+                    {{ _self.formatStat(data.subscriberCountText.runs) }}
+                </span>
+                {% endif %}
+                <span class="about-stat">
+                   {{ data.subscriberCountText ? " • " }}{{ _self.formatStat(data.viewCountText.runs) }}
+                </span>
+                <br>
+                <span class="about-stat">{{ data.joinedDateText }}</span>
+            </div>
+        </div>
+        {% if data.description %}
+        <div class="about-metadata-label branded-page-box-padding">
+            <span>{{ data.descriptionLabel }}</span>
+        </div>
+        <div class="about-description branded-page-box-padding">
+            <pre>
+                {{ getText(data.description) }}
+            </pre>
+        </div>
+        {% endif %}
+        {% if data.country %}
+        <div class="about-metadata-label about-metadata-label-border-top branded-page-box-padding">
+            <span>{{ data.detailsLabel }}</span>
+        </div>
+        <div class="country-container branded-page-box-padding">
+            <span class="country-label">{{ data.countryLabel }}</span>
+            <span class="country-inline">{{ data.country }}</span>
+        </div>
+        {% endif %}
+        {% if data.primaryLinks %}
+        <div class="about-metadata-label about-metadata-label-border-top branded-page-box-padding">
+            <span>{{ data.linksLabel }}</span>
+        </div>
+        <div class="about-metadata branded-page-box-padding clearfix">
+            <ul class="about-custom-links">
+                {% for link in data.primaryLinks %}
+                {{ _self.aboutLink(link) }}
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+    </div>
+</li>
+{% endmacro %}
+
+{% macro formatStat(runs) %}
+{% for run in runs %}
+{% if run.bold %}
+<b>{{ run.text }}</b> 
+{% else %}
+{{ run.text }}
+{% endif %}
+{% endfor %}
+{% endmacro %}
+
+{# @private #}
+{% macro aboutLink(info) %}
+<li class="channel-links-item">
+    <a href="{{ info.navigationEndpoint.commandMetadata.webCommandMetadata.url }}" class="about-channel-link">
+        <img src="{{ info.icon.thumbnails[0].url }}" alt="" class="about-channel-link-icon" width="16" height="16" alt="{{ this.commandMetadata.webCommandMetadata.url }}">
+        <span class="about-channel-link-text">{{ getText(info.title) }}</span>
+    </a>
+</li>
+{% endmacro %}

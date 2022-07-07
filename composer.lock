@@ -53,16 +53,16 @@
         },
         {
             "name": "rehike/spfphp",
-            "version": "1.0.0",
+            "version": "1.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Rehike/SpfPhp.git",
-                "reference": "1e8ef8de009b674723cd54f42cc2af5a50ab5f55"
+                "reference": "d3f72bcaaeb17ac5954c04b07c39177d33f315bf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Rehike/SpfPhp/zipball/1e8ef8de009b674723cd54f42cc2af5a50ab5f55",
-                "reference": "1e8ef8de009b674723cd54f42cc2af5a50ab5f55",
+                "url": "https://api.github.com/repos/Rehike/SpfPhp/zipball/d3f72bcaaeb17ac5954c04b07c39177d33f315bf",
+                "reference": "d3f72bcaaeb17ac5954c04b07c39177d33f315bf",
                 "shasum": ""
             },
             "require": {
@@ -106,9 +106,9 @@
             ],
             "support": {
                 "issues": "https://github.com/Rehike/SpfPhp/issues",
-                "source": "https://github.com/Rehike/SpfPhp/tree/1.0.0"
+                "source": "https://github.com/Rehike/SpfPhp/tree/1.0.3"
             },
-            "time": "2022-06-04T11:49:49+00:00"
+            "time": "2022-07-06T00:45:43+00:00"
         },
         {
             "name": "symfony/css-selector",

@@ -1,6 +1,5 @@
 {% extends "core.twig" %}
 {% import 'core/macros.twig' as core %}
-{% import 'common/appbar/appbar_nav.twig' as appbar_nav %}
 
 {% set pageType = 'feed' %}
 {% set pageName = 'feed' %}
@@ -9,14 +8,6 @@
 {% set defaultGuideVisibility = true %}
 {% set defaultAppbarVisibility = true %}
 {% set enableSnapScaling = true %}
-
-{%- block title -%}
-Trending - {{ parent() }}
-{% endblock %}
-
-{%- block page_class -%}
-not-fixed-width-tab-widescreen
-{% endblock %}
 
 {% block foot_scripts %}
 <script>
@@ -35,11 +26,6 @@ yt.setMsg('UNSAVED_CHANGES_WARNING', "Some of the changes you have made to chann
 
 yt.setConfig('DISMISS_THROUGH_IT', true);
 
-
-    yt.setConfig({
-      'GUIDE_SELECTED_ITEM': "0qDduQEMEgpGRXRyZW5kaW5n"
-    });
-
     yt.setConfig({
   'GUIDED_HELP_LOCALE': "en_US",
   'GUIDED_HELP_ENVIRONMENT': "prod"
@@ -48,31 +34,11 @@ yt.setConfig('DISMISS_THROUGH_IT', true);
 </script>
 {% endblock %}
 
-{%- block appbarContent -%}
-   {% set appbarContents = {
-      'items': {
-        0: {
-            'title': 'Home',
-            'href': '/',
-        },
-        1: {
-            'title': 'Trending',
-            'href': '/feed/trending',
-            'selected': true
-        }
-      }
-   } %}
-   {{ appbar_nav.render(appbarContents) }}
-{% endblock %}
-
 {%- block head_css  -%}
     {{ core.css('www-home-c4') }}
 {% endblock %}
 
 {% block content %}
-<div id="debug" style="display:none">
-{{ yt.page.shelvesList|json_encode }}
-</div>
     {% embed 'common/channels4/branded_page_v2.twig' %}
     {% import 'common/uix/lockup.twig' as lockup %}
     {% import 'core/spinner.twig' as spinner %}
@@ -83,20 +49,8 @@ yt.setConfig('DISMISS_THROUGH_IT', true);
         'secondaryColumnHidden': true
     } %}
     {% block branded_page_primary_column_content %}
-        <div id="browse-items-primary">
-            <ol id="section-list-874807" class="section-list">
-            {% import "common/uix/shelf_old.twig" as shelf %}
-            {%- for shelfSlider in yt.page.shelvesList -%}
-              {#{{ shelf|json_encode }}#}
-              {% set shelfSliderContent = shelfSlider.itemSectionRenderer.contents.0.shelfRenderer %}
-              {% if shelfSliderContent.content.expandedShelfContentsRenderer %}
-                {{ shelf.expanded(shelfSlider) }}
-              {% elseif shelfSliderContent.content.horizontalListRenderer.items %}
-                {{ shelf.compact(shelfSlider) }}
-              {% endif %}
-            {% endfor %}
-            </ol>
-        </div>
+        {% from "common/browse/main.twig" import render as browse %}
+        {{ browse(yt.page.contents.twoColumnBrowseResultsRenderer.tabs.0.tabRenderer.content) }}
     {% endblock %}
     {% endembed %}
 {% endblock %}

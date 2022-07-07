@@ -1,150 +1,112 @@
 <?php
-use \Rehike\Request;
+namespace Rehike\Controller;
+
+use Rehike\Controller\core\NirvanaController;
+
 use \Com\YouTube\Innertube\Request\BrowseRequestParams;
 
-use \Rehike\Util\Base64Url;
+use Rehike\Request;
+use Rehike\Util\Base64Url;
+use Rehike\i18n;
 
-$yt->spfEnabled = true;
-$yt->useModularCore = true;
-$template = 'channel';
-$yt->modularCoreModules = ['www/channels'];
-$yt->page = (object) [];
+require_once "controllers/utils/extractUtils.php";
+require_once "controllers/utils/channelUtils.php";
 
-require_once('controllers/utils/extractUtils.php');
-require_once('controllers/utils/channelUtils.php');
-$ucid = ChannelUtils::getUcid($routerUrl);
-$yt->ucid = $ucid;
+use \ExtractUtils;
+use \ChannelUtils;
 
-include "controllers/mixins/guideNotSpfMixin.php";
+use \Rehike\Model\Channels\Channels4Model as Channels4;
 
-$tab = (isset($routerUrl->path[2]) and $routerUrl->path[2] != '')  ? $routerUrl->path[2] : 'featured';
-$yt->tab = $tab;
-$yt->baseUrl = "/" . $routerUrl->path[0] . "/" . $routerUrl->path[1];
+class ChannelController extends NirvanaController {
+    public $template = "channel";
 
-$params = new BrowseRequestParams();
-$params->setTab($tab);
+    public static $requestedTab = "";
+    
+    public const SECONDARY_RESULTS_ENABLED_TAB_IDS = [
+        "featured",
+        "discussion",
+        "community",
+        "about"
+    ];
 
-$response = Request::innertubeRequest("browse", (object)[
-    "browseId" => $ucid,
-    "params" => Base64Url::encode($params->serializeToString())
-]);
-$yt->response = $response;
+    public function onGet(&$yt, $request)
+    {
+        $this->useJsModule("www/channels");
 
-$ytdata = json_decode($response);
+        // Remove when guide implemented into NirvanaController base.
+        include "controllers/mixins/guideNotSpfMixin.php";
 
-// RESTRUCTING DATA TIME!!
+        // Init i18n
+        $i18n = &i18n::newNamespace("channels");
+        $i18n->registerFromFolder("i18n/channels");
 
-/**
- * Header Reconstruct
- * 
- * This process is skipped if the header data is inaccessible,
- * i.e. in the event of an invalid response. On the off chance that
- * a channel is successfully returned without a header, this does not
- * halt the builder completely.
- */
-if (isset($ytdata->header->c4TabbedHeaderRenderer)) {
-    /**
-     *  header: {
-     *      "title": Channel title,
-     *      "badges": Verification badges,
-     *      "thumbnail": Thumbnails array containing channel thumbnail links,
-     *      "banner": Channels4 banners array (if unspecified, the default will be used),
-     *      "headerLinks": Channels4 banner links
-     *      "tabs": Array of the channel's available tabs (appbar nav is also declared here),
-     *      "subscriptionButton": Generic subscription button renderer,
-     *  }
-    */
-    $yt->page->header = (object) [];
-    $_h = $yt->page->header; // shorthand declaration
-    $_oh = $ytdata->header->c4TabbedHeaderRenderer; // shorthand declaration
-    // header.title:
-    // ..title:
-    $_h->title = $_oh->title ?? null;
-    $yt->page->title = $_oh->title ?? null;
-    // header.thumbnail:
-    $_h->thumbnail = $_oh->avatar ?? null;
-    if (isset($_h->thumbnail->thumbnails[0]->url)) {
-        $_h->thumbnail->thumbnails[0]->url = ChannelUtils::synthesiseChannelAvatarSize100Url($_h->thumbnail->thumbnails[0]->url);
-    }
-    // header.banner:
-    if (isset($_oh->banner)) {
-        $_h->banner = $_oh->banner;
-        $yt->page->hasCustomBanner = true;
-    } else {
-        $_h->banner = (object) [
-            'thumbnails' => [(object) [
-                'url' => \Rehike\TemplateFunctions::resourcePath($ytConstants, 'img', 'channels/c4/default_banner')
-            ], null, null, (object) [
-                'url' => \Rehike\TemplateFunctions::resourcePath($ytConstants, 'img', 'channels/c4/default_banner_hq')
-            ]]
-        ];
-        $yt->page->hasCustomBanner = false;
-    }
-    // header.headerLinks:
-    if (isset($_oh->headerLinks->channelHeaderLinksRenderer)) {
-        $_h->headerLinks = $_oh->headerLinks->channelHeaderLinksRenderer;
-        if (isset($_h->headerLinks->primaryLinks)) {
-            $_h->headerLinks->primaryLinks[0]->href = 
-                $_h->headerLinks->primaryLinks[0]->navigationEndpoint->urlEndpoint->url;
+        // Get the channel ID of the requested channel.
+        // TODO (kirasicecreamm): This could be improved by using
+        // the InnerTube navigation/resolve_url endpoint.
+        // ALSO
+        // BUG (kirasicecreamm): ChannelUtils::getUcid is hardcoded
+        // to look at the path property of the input object.
+        // This is bad design.
+        $ucid = ChannelUtils::getUcid($request);
+        $yt->ucid = $ucid;
+
+        // Get the requested tab
+        $tab = "featured";
+        if (isset($request->path[2]) && "" != @$request->path[2])
+        {
+            $tab = strtolower($request->path[2]);
         }
-        if (isset($_h->headerLinks->secondaryLinks)) {
-            for ($i = 0, $j = count($_h->headerLinks->secondaryLinks); $i < $j; $i++) {
-                $_h->headerLinks->secondaryLinks[$i]->href = 
-                    $_h->headerLinks->secondaryLinks[$i]->navigationEndpoint->urlEndpoint->url;
-            }
+
+        self::$requestedTab = $tab;
+
+        // Expose tab to configure frontend JS
+        $yt->tab = $tab;
+
+        $baseUrl = "/" . $request->path[0] . "/" . $request->path[1];
+
+        // Configure request params
+        $params = new BrowseRequestParams();
+        $params->setTab($tab);
+
+        // Perform InnerTube request
+        Request::queueInnertubeRequest("main", "browse", (object)[
+            "browseId" => $ucid,
+            "params" => Base64Url::encode($params->serializeToString())
+        ]);
+
+        if (
+            in_array($tab, self::SECONDARY_RESULTS_ENABLED_TAB_IDS) &&
+            "featured" != $tab
+        )
+        {
+            Request::queueInnertubeRequest("sidebar", "browse", (object)[
+                "browseId" => $ucid
+            ]);
         }
-    }
-    // header.badges:
-    if (isset($_oh->badges)) $_h->badges = $_oh->badges;
-    // header.tabs:
-    // ....appbarNav:
-    if (isset($ytdata->contents->twoColumnBrowseResultsRenderer->tabs)) {
-        $_ot = $ytdata->contents->twoColumnBrowseResultsRenderer->tabs;
-        $_h->tabs = $_ot;
-        $yt->appbarNav = (object) [];
-        $yt->appbarNav->items = [];
-        for ($i = 0, $j = count($_ot) - 1; $i < $j; $i++) {
-            $yt->appbarNav->items[$i] = (object) [
-                'title' => $_ot[$i]->tabRenderer->title,
-                'selected' => $_ot[$i]->tabRenderer->selected,
-                'href' => $_ot[$i]->tabRenderer->endpoint->commandMetadata->webCommandMetadata->url
-            ];
+
+        $responses = Request::getResponses();
+
+        $yt->response = $responses["main"]; // Maybe remove?
+
+        $page = json_decode($responses["main"]);
+
+        Channels4::registerBaseUrl($baseUrl);
+
+        // Handle the sidebar
+        $sidebar = null;
+
+        if (isset($responses["sidebar"]))
+        {
+            $sidebar = json_decode($responses["sidebar"]);
         }
-        $yt->appbarNav->owner = (object) [];
-        $yt->appbarNav->items[0]->title = $_h->title ?? null;
-        $yt->appbarNav->owner->title = $_h->title ?? null;
-        $yt->appbarNav->owner->thumbnail = $_h->thumbnail ?? null;
-    }
-    // header.subscriptionButton:
-    if (isset($_oh->subscribeButton)) {
-        $_h->subscriptionButton = (object) [];
-        $_hs = $_h->subscriptionButton; // shorthand
-        if (isset($_oh->subscriberCountText)) {
-            $_hs->subscriberCountText = ExtractUtils::isolateSubCnt(\Rehike\TemplateFunctions::getText($_oh->subscriberCountText));
-            $_hs->shortSubscriberCountText = $_hs->subscriberCountText;
+        else if ("featured" == $tab)
+        {
+            $sidebar = $page;
         }
+
+        $yt->page = Channels4::bake($yt, $page, $sidebar);
     }
 }
 
-switch ($tab) { // for extracting info for certain tabs
-    case 'featured':
-        include('controllers/channel/featured.php');
-        break;
-    case 'videos':
-        include('controllers/channel/videos.php');
-        break;
-    case 'playlists':
-        include('controllers/channel/playlists.php');
-        break;
-    case 'community':
-        include('controllers/channel/community.php');
-        break;
-    case 'channels':
-        include('controllers/channel/channels.php');
-        break;
-    case 'about':
-        include('controllers/channel/about.php');
-        break;
-    default:
-        break;
-}
+// Export
+return new ChannelController();

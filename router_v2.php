@@ -22,6 +22,7 @@ Router::redirect([
 ]);
 
 Router::get([
+    "/debug_browse" => "debug_browse",
     "/watch" => "watch",
     "/user/**" => "channel",
     "/channel/**" => "channel",

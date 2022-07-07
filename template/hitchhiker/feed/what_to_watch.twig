@@ -73,7 +73,7 @@
         <div id="feed" class="">
             <div id="feed-main-what_to_watch" class="individual-feed" data-feed-name="what_to_watch" data-feed-type="main">
                 <ol id="section-list-874807" class="section-list">
-                {% import "common/uix/shelf.twig" as shelf %}
+                {% import "common/uix/shelf_old.twig" as shelf %}
                 {% import 'common/uix/load_more_button.twig' as load_more %}
                 {%- for compactShelf in yt.page.shelvesList -%}
                 {% if compactShelf.itemSectionRenderer.contents.0.shelfRenderer %}

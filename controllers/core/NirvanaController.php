@@ -1,6 +1,8 @@
 <?php
 namespace Rehike\Controller\core;
 
+use Rehike\Model\Appbar\MAppbar as Appbar;
+
 abstract class NirvanaController extends HitchhikerController
 {
     protected $spfIdListeners = [
@@ -23,6 +25,7 @@ abstract class NirvanaController extends HitchhikerController
         $yt->spfEnabled = true;
         $yt->useModularCore = true;
         $yt->modularCoreModules = [];
+        $yt->appbar = new Appbar();
         $yt->page = (object)[];
 
         // TODO: Guide fragments should be requested here ideally.

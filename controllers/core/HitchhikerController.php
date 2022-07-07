@@ -3,6 +3,7 @@ namespace Rehike\Controller\core;
 
 use Rehike\TemplateManager;
 use SpfPhp\SpfPhp;
+use Rehike\ControllerV2\RequestMetadata;
 
 abstract class HitchhikerController
 {
@@ -30,6 +31,10 @@ abstract class HitchhikerController
         $this->doGeneralRender();
     }
 
+    /**
+     * @param object $yt
+     * @param RequestMetadata $request
+     */
     abstract public function onGet(&$yt, $request);
 
     protected function init(&$yt, &$template)

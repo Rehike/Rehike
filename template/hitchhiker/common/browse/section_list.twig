@@ -1,0 +1,11 @@
+{%- macro render(data) -%}
+    {% from "common/browse/item_section.twig" import render as item_section %}
+    {% set rid = generateRid() %}
+    <ol id="section-list-{{ rid }}" class="section-list">
+        {%- for item in data.contents -%}
+            {%- if item.itemSectionRenderer -%}
+                <li>{{ item_section(item.itemSectionRenderer) }}</li>
+            {%- endif -%}
+        {%- endfor -%}
+    </ol>
+{%- endmacro -%}

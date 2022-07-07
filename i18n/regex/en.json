@@ -1,0 +1,4 @@
+{
+    "subscriberCountIsolater": "/( subscribers)|( subscriber)/g",
+    "viewCountIsolater": "/( views)|( view)/g"
+}

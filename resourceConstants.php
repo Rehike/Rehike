@@ -8,6 +8,18 @@ function jsModuleUrl($name) {
     return '//' . YTS_HOST . '/yts/jsbin/' . MODULAR_JS_PATH . '/' . $name . '.js';
 }
 
+/**
+ * Hack.
+ * 
+ * Also gross.
+ * 
+ * @author The Rehike Maintainers
+ */
+class ResourceContentsStore
+{
+    public static $resourceConstants;
+}
+
 $ytConstants = (object) [
     'pixelGif' => '//' . YTS_HOST . '/yts/img/pixel-vfl3z5WfW.gif',
     'css' => (object) [
@@ -76,3 +88,5 @@ $ytConstants = (object) [
         "meh7" => "//" . YTS_HOST . "/yts/img/meh7-vflGevej7.png"
     ]
 ];
+
+ResourceContentsStore::$resourceConstants = &$ytConstants;

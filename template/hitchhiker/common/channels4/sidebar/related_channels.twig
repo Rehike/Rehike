@@ -1,0 +1,51 @@
+{% macro render(data) %}
+<div class="branded-page-related-channels branded-page-box yt-card">
+    <h2 class="branded-page-module-title">
+        {{ getText(data.title) }}
+    </h2>
+    <ul class="branded-page-related-channels-list">
+        {% for item in data.items %}
+        {{ _self.channel_item(item) }}
+        {% endfor %}
+    </ul>
+    {%- if data.seeMoreButton -%}
+        {{ _self.see_more(data.seeMoreButton) }}
+    {%- endif -%}
+</div>
+{% endmacro %}
+
+{% macro channel_item(data) %}
+{% from "common/uix/subscription_button.twig" import render as subscription_button %}
+{% import "common/uix/lockup.twig" as lockup %}
+<li class="branded-page-related-channels-item  spf-link  clearfix" data-external-id="{{ data.channelId }}">
+    <span class="yt-lockup clearfix  yt-lockup-channel yt-lockup-mini">
+        {# Lol the style attribute was in YouTube's original source code #}
+        <div class="yt-lockup-thumbnail" style="width: 34px;">
+            <a href="{{ getUrl(data) }}" class="ux-thumb-wrap yt-uix-sessionlink  spf-link " data-sessionlink="ei=RP-0WbyBHqmO_AOs67vwDA&amp;feature=rc-rel&amp;ved=CIQBEPQcGAAiEwi8s8vgoJrWAhUpB38KHaz1Ds4omxw" aria-hidden="true">  
+                <span class="video-thumb  yt-thumb yt-thumb-34 g-hovercard" data-ytid="{{ data.channelId }}">
+                    <span class="yt-thumb-square">
+                        <span class="yt-thumb-clip">
+                            <img alt="" onload=";window.__ytRIL &amp;&amp; __ytRIL(this)" aria-hidden="true" src="{{ getThumb(data, 34) }}" data-ytimg="1" width="34" height="34">
+                            <span class="vertical-align"></span>
+                        </span>
+                    </span>
+                </span>
+            </a>
+        </div>
+        <div class="yt-lockup-content">
+            {{ lockup.title(data, "channel", false, "yt-uix-tile-link") }}
+            <div class="yt-lockup-meta spf-nolink">
+                {{ subscription_button(data.subscribeButton) }}
+            </div>
+        </div>
+    </span>
+</li>
+{% endmacro %}
+
+{% macro see_more(data) %}
+<p class="branded-page-related-channels-see-more">
+    <a href="{{ data.href }}">
+        {{ data.title }}
+    </a>
+</p>
+{% endmacro %}
