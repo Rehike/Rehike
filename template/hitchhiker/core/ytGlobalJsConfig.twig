@@ -67,7 +67,7 @@
     });
     yt.setConfig({
         'PAGE_NAME': "{{ pageName ?? pageType }}", {# page type usually works, but some pages (index) differ #}
-        'LOGGED_IN': false,
+        'LOGGED_IN': {{ yt.signin.isSignedIn ? "true" : "false" }},
         'SESSION_INDEX': null,
         'VALID_SESSION_TEMPDATA_DOMAINS': ["www.youtube.com", "gaming.youtube.com"],
         'PARENT_TRACKING_PARAMS': "",

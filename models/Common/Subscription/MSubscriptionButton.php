@@ -78,10 +78,13 @@ class MSubscriptionButton extends MButton
         $this->type = $opts["type"];
         $this->attributes["channel-external-id"] = $opts["channelExternalId"];
 
-        if ($this->subscribed)
+        if ($this->subscribed) {
             $this->style .= "subscribed";
-        else
+            $this->class[] = "hover-enabled";
+            $this->attributes += ["subscribed" => "1"];
+        } else {
             $this->style .= "subscribe";
+        }
         
         if ($this->branded)
         {

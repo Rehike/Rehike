@@ -55,7 +55,8 @@ class MSubscriptionActions
         return new self([
             "branded" => $branded,
             "longText" => $count,
-            "shortText" => $count
+            "shortText" => $count,
+            "isSubscribed" => $data -> subscribed ?? false
         ]);
     }
 

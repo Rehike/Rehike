@@ -29,9 +29,16 @@ if (isset($action))
     $yt->page = (object) [];
     $yt->comments = (object) [];
 
-    $response = Request::innertubeRequest("next", (object)[
-        "continuation" => $_POST['page_token']
-    ]);
+    if ($action = "action_create_comment") {
+        $response = Request::innertubeRequest("comment/create_comment", (object) [
+            "commentText" => $_POST["content"],
+            "createCommentParams" => $_POST["params"]
+        ]);
+    } else {
+        $response = Request::innertubeRequest("next", (object)[
+            "continuation" => $_POST['page_token']
+        ]);
+    }
 
     $ytdata = json_decode($response);
 }
@@ -40,6 +47,8 @@ if (isset($action))
 const COMMENTS_CONTINUATION_PATH = "onResponseReceivedEndpoints[0].appendContinuationItemsAction";
 // Comments header renderer is item 0 in reload response
 const COMMENTS_RELOAD_PATH = "onResponseReceivedEndpoints[1].reloadContinuationItemsCommand";
+// tracking bullshit is item 0 in create response
+const COMMENTS_CREATE_PATH = "actions[1].createCommentAction";
 try 
 {
     $data = getProp($ytdata, COMMENTS_CONTINUATION_PATH);
@@ -52,12 +61,19 @@ catch (\YukisCoffee\GetPropertyAtPathException $e)
     }
     catch (\YukisCoffee\GetPropertyAtPathException $e)
     {
-        echo json_encode(
-            (object)[
-                "error" => "Failed to get property at path " . COMMENTS_CONTINUATION_PATH
-            ]
-        );
-        exit();
+        try
+        {
+            $data = getProp($ytdata, COMMENTS_CREATE_PATH);
+        }
+        catch(\YukisCoffee\GetPropertyAtPathException $e)
+        {
+            echo json_encode(
+                (object)[
+                    "error" => "Failed to get property at path " . COMMENTS_CONTINUATION_PATH
+                ]
+            );
+            exit();
+        }
     }
 }
 
@@ -68,4 +84,8 @@ if ("action_get_comment_replies" == $action)
 else if ("action_get_comments" == $action)
 {
     $yt->comments = CommentThread::bakeComments($data);
+}
+else if ("action_create_comment" == $action)
+{
+    $yt->comments = $data->contents;
 }

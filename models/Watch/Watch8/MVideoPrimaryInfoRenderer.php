@@ -127,7 +127,7 @@ class MOwner
             ;
 
             $this->subscriptionButtonRenderer = MSubscriptionActions::fromData(
-                (object)[], $subscribeCount
+                $info -> subscriptionButton, $subscribeCount
             );
         }
     }

@@ -57,6 +57,10 @@ if ($a = $_och->countText) {
     $_ch->commentsCountText = $a[0]->text;
 }
 
+if ($a = $_och->createRenderer) {
+    $_ch->createParams = $a->commentSimpleboxRenderer->submitButton->buttonRenderer->serviceEndpoint->createCommentEndpoint->createCommentParams;
+}
+
 // commentsHeader.sortRenderer:
 if ($a = $_och->sortMenu) {
     $a = $a->sortFilterSubMenuRenderer->subMenuItems; // everything we need in here...
