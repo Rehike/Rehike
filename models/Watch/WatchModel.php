@@ -10,6 +10,8 @@ use Rehike\ConfigManager\ConfigManager;
  * This is fed into the templater just as a raw response would.
  * Please perform any processing within this scope.
  * 
+ * For most implementation, you should look at Watch8\Watch8Subcontroller.php
+ * 
  * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
