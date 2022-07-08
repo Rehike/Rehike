@@ -6,7 +6,8 @@ Router::funnel([
     "/youtubei/*",
     "/s/*",
     "/embed/*",
-    "/yts/*"
+    "/yts/*",
+    "/favicon.ico"
 ]);
 
 Router::redirect([
