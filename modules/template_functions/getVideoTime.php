@@ -28,9 +28,13 @@
                         return "0:" . $lengthText;
                     }
                 }
+            } else if ($lengthText == "LIVE") { // some endpoints have LIVE timestamp instead of badge
+                return null;
             } else {
                 return $lengthText;
             }
         }
     }
+
+    return null;
 }); 

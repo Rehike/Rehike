@@ -23,13 +23,7 @@ class RehikeConfigManager extends ConfigManager
             "useReturnYouTubeDislike" => true,
             "enableRehikeDebugger" => false,
             "largeSearchThumbs" => true,
-            "smallWatchSidebarItems" => false,
-            "oldLockupStyle" => false,
-            "largeWatchTitle" => false,
-            "oldShareIcon" => false,
             "byTextOnByline" => false,
-            "oldGuideButton" => false,
-            "oldSearchbox" => false,
             "noViewsText" => false
         ];
     

@@ -23,10 +23,7 @@
         // InnerTube API formats thumbnail overlays as
         // keys within an object. Fortunately, this is pretty
         // easy to check within PHP.
-        if (isset($contents -> $name))
-        {
-            return $contents -> name;
-        }
+        if (isset($contents -> $name)) return $contents -> $name;
     }
     
     // Return null if the index doesn't exist.

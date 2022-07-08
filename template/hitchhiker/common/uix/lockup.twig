@@ -1,4 +1,7 @@
+{# TODO (aubymori): REWRITE THIS ABSOLUTE HUNK OF FUCKING GARBAGE #}
+
 {%- macro thumbnail(info, type, width = 196, height = 110) -%}
+{% import "common/uix/watch_later_button.twig" as wlBtn %}
 <div class="yt-lockup-thumbnail {{ type == "playlist" or type == "radio" ? "yt-pl-thumb" }} {{ type == "video" ? "contains-addto" }}">
    {% if type == "playlist" or type == "radio" %}
    <a href="{{ getUrl(info) }}" class="yt-uix-sessionlink yt-pl-thumb-link spf-link">
@@ -27,8 +30,13 @@
       <a aria-hidden="true"  href="{% if type == "channel" %}{{ getUrl(info) }}{% elseif type == "video" %}/watch?v={{ info.videoId }}{% endif %}" class=" yt-uix-sessionlink      spf-link " data-sessionlink="itct=CHkQlDUYACITCOLXzPvf6toCFRA7fwodgP0KKSiOHjIKZy1oaWdoLXRydloPRkV3aGF0X3RvX3dhdGNo" >
       <div class="yt-thumb video-thumb"><span class="yt-thumb-simple">
          <img height="{{ height }}" onload=";window.__ytRIL &amp;&amp; __ytRIL(this)" alt="" width="{{ width }}" data-ytimg="1" data-thumb="{{ info.thumbnail.thumbnails.0.url }}" src="{{ PIXEL }}">
-         {% if info.lengthText or info.thumbnailOverlays[0].thumbnailOverlayTimeStatusRenderer %}
+         {% if getVideoTime(info) != null %}
          <span class="video-time">{{ getVideoTime(info) }}</span>
+         {% endif %}
+         {% if getThumbnailOverlay(info.thumbnailOverlays, "thumbnailOverlayResumePlaybackRenderer") != null %}
+         {% set timeOverlay = getThumbnailOverlay(info.thumbnailOverlays, "thumbnailOverlayResumePlaybackRenderer") %}
+         <span class="resume-playback-background"></span>
+         <span class="resume-playback-progress-bar" style="width:{{ timeOverlay.percentDurationWatched }}%"></span>
          {% endif %}
          </span>
       </div>
@@ -48,8 +56,8 @@
          </ul>
       </button>
       </span>
-      <button class="yt-uix-button yt-uix-button-size-small yt-uix-button-default yt-uix-button-empty yt-uix-button-has-icon no-icon-markup addto-button video-actions spf-nolink hide-until-delayloaded addto-watch-later-button-sign-in yt-uix-tooltip" type="button" onclick=";return false;" title="Watch later" role="button" data-button-menu-id="shared-addto-watch-later-login" data-video-ids="{{info.videoId}}"><span class="yt-uix-button-arrow yt-sprite"></span></button>
-      <button class="yt-uix-button yt-uix-button-size-small yt-uix-button-default yt-uix-button-empty yt-uix-button-has-icon no-icon-markup addto-button addto-queue-button video-actions spf-nolink hide-until-delayloaded addto-tv-queue-button yt-uix-tooltip" type="button" onclick=";return false;" title="Queue" data-style="tv-queue" data-video-ids="{{info.videoId}}"></button>
+      {{ wlBtn.render(getWLOverlay(info), info.videoId) }}
+      {# <button class="yt-uix-button yt-uix-button-size-small yt-uix-button-default yt-uix-button-empty yt-uix-button-has-icon no-icon-markup addto-button video-actions spf-nolink hide-until-delayloaded addto-watch-later-button-sign-in yt-uix-tooltip" type="button" onclick=";return false;" title="Watch later" role="button" data-button-menu-id="shared-addto-watch-later-login" data-video-ids="{{info.videoId}}"><span class="yt-uix-button-arrow yt-sprite"></span></button> #}
       {% endif %}
    {% endif %}
 </div>
