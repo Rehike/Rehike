@@ -31,11 +31,29 @@ abstract class HitchhikerController
         $this->doGeneralRender();
     }
 
+    public function post(&$yt, &$template, $request)
+    {
+        $this->yt = &$yt;
+        $this->init($yt, $template);
+
+        $this->onPost($yt, $request);
+
+        $this->postInit($yt, $template);
+
+        $this->doGeneralRender();
+    }
+
     /**
      * @param object $yt
      * @param RequestMetadata $request
      */
-    abstract public function onGet(&$yt, $request);
+    public function onGet(&$yt, $request) {}
+
+    /**
+     * @param object $yt
+     * @param RequestMetadata $request
+     */
+    public function onPost(&$yt, $request) {}
 
     protected function init(&$yt, &$template)
     {

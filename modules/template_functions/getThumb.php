@@ -1,12 +1,10 @@
 <?php
 
-\Rehike\TemplateFunctions::register('getThumb', function($obj, $height = 110) {
-    if (isset($obj -> thumbnail)) {
-        $thumbs = $obj -> thumbnail -> thumbnails;
+\Rehike\TemplateFunctions::register('getThumb', function($obj, $height = 110, $thumbList = "thumbnail") {
+    if (isset($obj -> $thumbList -> thumbnails)) {
+        $thumbs = $obj -> $thumbList -> thumbnails;
     } else if (isset($obj -> thumbnails)) {
-        $thumbs = $obj -> thumbnails[0] -> thumbnails;
-    } else {
-        return;
+        $thumbs = $obj -> thumbnails;
     }
 
     for ($i = 0; $i < count($thumbs); $i++) {
@@ -14,4 +12,7 @@
             return $thumbs[$i] -> url;
         }
     }
+
+    // fallback if it does not find any thumbnail bigger or equal to size specified
+    return $thumbs[count($thumbs)];
 });

@@ -24,7 +24,7 @@
         </a>
     </div>
     <div class="thumb-wrapper">
-        <a href="/watch?v={{ data.videoId }}" class=" vve-check thumb-link spf-link  yt-uix-sessionlink      spf-link " data-sessionlink="itct=CCwQpDAYAyITCPCb3sSz6toCFcuifgodz50MGCj4HTIHcmVsYXRlZEjEu4GtvZiOhnU"  tabindex="-1" rel=" spf-prefetch nofollow" data-visibility-tracking="CCwQpDAYAyITCPCb3sSz6toCFcuifgodz50MGCj4HUC59MSzzMLW5XA=" aria-hidden="true"><span class="yt-uix-simple-thumb-wrap yt-uix-simple-thumb-related" tabindex="0" data-vid="{{ data.videoId }}"><img aria-hidden="true" style="top: 0px" {{ yt.config.smallWatchSidebarItems ? "width=\"120\" height=\"68\"" : "width=\"168\" height=\"94\"" }} data-thumb="{{ data.thumbnail.thumbnails.0.url }}" alt="" src="{{ PIXEL }}" ><span class="video-time">{{ getText(data.thumbnailOverlays.0.thumbnailOverlayTimeStatusRenderer.text) }}</span></span></a>
+        <a href="/watch?v={{ data.videoId }}" class=" vve-check thumb-link spf-link  yt-uix-sessionlink      spf-link " data-sessionlink="itct=CCwQpDAYAyITCPCb3sSz6toCFcuifgodz50MGCj4HTIHcmVsYXRlZEjEu4GtvZiOhnU"  tabindex="-1" rel=" spf-prefetch nofollow" data-visibility-tracking="CCwQpDAYAyITCPCb3sSz6toCFcuifgodz50MGCj4HUC59MSzzMLW5XA=" aria-hidden="true"><span class="yt-uix-simple-thumb-wrap yt-uix-simple-thumb-related" tabindex="0" data-vid="{{ data.videoId }}"><img aria-hidden="true" style="top: 0px" {{ yt.config.smallWatchSidebarItems ? "width=\"120\" height=\"68\"" : "width=\"168\" height=\"94\"" }} data-thumb="{{ data.thumbnail.thumbnails.0.url }}" alt="" src="{{ PIXEL }}" ><span class="video-time">{{ getVideoTime(data) }}</span></span></a>
     </div>
 </li>
 {% elseif data.continuationItemRenderer %}

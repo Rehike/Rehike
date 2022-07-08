@@ -272,6 +272,7 @@ class SpfPhp
                 case "navigate":
                 case "navigate-back":
                 case "navigate-forward":
+                case "load":
                     return $_GET["spf"];
             }
         }
