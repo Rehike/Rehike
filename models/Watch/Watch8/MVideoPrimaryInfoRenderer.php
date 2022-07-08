@@ -72,6 +72,7 @@ class MVideoPrimaryInfoRenderer
                 $orderedButtonQueue[] = MActionButton::buildShareButton();
             }
 
+            // wtf
             if (!$dataHost::$isKidsVideo)
             foreach (@$info->videoActions->menuRenderer->topLevelButtons as $b)
             if (isset($b->buttonRenderer) && ($button = @$b->buttonRenderer))
@@ -92,6 +93,10 @@ class MVideoPrimaryInfoRenderer
     }
 }
 
+/**
+ * Defines the video owner information, which appears in the bottom
+ * left corner of the primary info renderer.
+ */
 class MOwner
 {
     /** @var string */
@@ -106,7 +111,14 @@ class MOwner
     /** @var object */
     public $navigationEndpoint;
 
-    /** @var MSubscriptionButton */
+    /**
+     * Defines the subscription actions.
+     * 
+     * These include the subscribe button, the notifications button,
+     * and the count at the end.
+     *  
+     * @var MSubscriptionActions 
+     */
     public $subscriptionButtonRenderer;
 
     public function __construct($dataHost)
@@ -126,6 +138,7 @@ class MOwner
                 : null
             ;
 
+            // Build the subscription button from the InnerTube data.
             $this->subscriptionButtonRenderer = MSubscriptionActions::fromData(
                 (object)[], $subscribeCount
             );
@@ -133,8 +146,17 @@ class MOwner
     }
 }
 
+/**
+ * Defines an abstract watch action button.
+ * 
+ * These are the buttons for watch interaction, such
+ * as add to and share.
+ * 
+ * TODO(dcooper): more action button
+ */
 class MActionButton extends MButton
 {
+    // Define default button properties.
     public $style = "opacity";
     public $hasIcon = true;
     public $noIconMarkup = true;
@@ -146,9 +168,11 @@ class MActionButton extends MButton
     {
         parent::__construct([]);
 
+        // Set the button data as provided.
         $this->setText($data["label"] ?? "");
         $this->tooltip = $data["tooltip"] ?? $data["label"];
 
+        // Push provided attributes if they exist.
         if (@$data["attributes"])
         foreach ($data["attributes"] as $key => $value)
         {
@@ -183,6 +207,12 @@ class MActionButton extends MButton
         }
     }
 
+    /**
+     * Build a watch8 add to playlists button, or its signed out
+     * stub.
+     * 
+     * @return void
+     */
     public static function buildW8AddtoButton()
     {
         /*
@@ -206,6 +236,11 @@ class MActionButton extends MButton
         ]);
     }
 
+    /**
+     * Build a watch7 or watch8 share button.
+     * 
+     * @return void
+     */
     public static function buildShareButton()
     {
         return new self([
@@ -214,6 +249,14 @@ class MActionButton extends MButton
         ]);
     }
 
+    /**
+     * Build a watch8 report button, which is used on livestreams.
+     * 
+     * If the video is not a livestream, then the report button appears in
+     * the more button's menu instead.
+     * 
+     * @return void
+     */
     public static function buildReportButton()
     {
         return new self([
@@ -232,6 +275,13 @@ class MActionButton extends MButton
     }
 }
 
+/**
+ * Defines the like button (and dislike button) container.
+ * 
+ * This stores two copies of both the like and dislike buttons, which are
+ * used for their individual activation states. This is how hitchhiker
+ * handled this.
+ */
 class MLikeButtonRenderer
 {
     /** @var MLikeButton */
@@ -284,6 +334,9 @@ class MLikeButtonRenderer
     }
 }
 
+/**
+ * Define an abstract actual "like button" button (also used for dislikes).
+ */
 class MLikeButtonRendererButton extends MToggleButton
 {
     protected $hideNotToggled = true;
@@ -312,6 +365,9 @@ class MLikeButtonRendererButton extends MToggleButton
     }
 }
 
+/**
+ * Define the like button.
+ */
 class MLikeButton extends MLikeButtonRendererButton
 {
     public function __construct($likeCount, $a11y, $isLiked, $active = false)
@@ -330,6 +386,7 @@ class MLikeButton extends MLikeButtonRendererButton
         $signinMessage = "Like this video?";
         $signinDetail = "Sign in to make your opinion count.";
 
+        // Store a reference to the current sign in state.
         $signedIn = false; // TODO
 
         if (!$signedIn && !$active)
@@ -341,6 +398,9 @@ class MLikeButton extends MLikeButtonRendererButton
     }
 }
 
+/**
+ * Define the dislike button.
+ */
 class MDislikeButton extends MLikeButtonRendererButton
 {
     public function __construct($dislikeCount, $a11y, $isDisliked, $active = false)
@@ -356,6 +416,7 @@ class MDislikeButton extends MLikeButtonRendererButton
         $signinMessage = "Don't like this video?";
         $signinDetail = "Sign in to make your opinion count.";
 
+        // Store a reference to the current sign in state.
         $signedIn = false; // TODO
 
         if (!$signedIn && !$active)
@@ -367,6 +428,9 @@ class MDislikeButton extends MLikeButtonRendererButton
     }
 }
 
+/**
+ * Define the sparkbars (sentiment bars; like to dislike ratio bar).
+ */
 class MSparkbars
 {
     /** @var float */
@@ -385,6 +449,9 @@ class MSparkbars
     }
 }
 
+/**
+ * Define the super title (links that appear above the title, such as hashtags).
+ */
 class MSuperTitle
 {
     public $items = [];
