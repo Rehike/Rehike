@@ -88,8 +88,10 @@ class Watch8Subcontroller
      */
     public static function bakeSecondaryResults(&$data)
     {
+        $yt = &self::MASTER::$yt;
         // Get data from the reference in the datahost
         $origResults = &self::MASTER::$secondaryResults;
+        $response = [];
 
         if (isset($origResults->results))
         {
@@ -97,19 +99,23 @@ class Watch8Subcontroller
 
             if (self::shouldUseAutoplay($data))
             {
-                $autoplayIndex = self::getRecomAutoplay($secondaryResults->results);
+                $recomsList = (@$yt->signin["isSignedIn"] == true) ? $secondaryResults->results[1]->itemSectionRenderer->contents : $secondaryResults->results;
+
+                $autoplayIndex = self::getRecomAutoplay($recomsList);
 
                 // Move autoplay video to its own object
-                $secondaryResults->autoplayRenderer = (object)[
-                    "results" => [ $secondaryResults->results[$autoplayIndex] ]
+                $autoplayRenderer = (object)[
+                    "results" => [ $recomsList[$autoplayIndex] ]
                 ];
+                $response += ["autoplayRenderer" => $autoplayRenderer];
 
                 // Remove the original reference to prevent it from 
                 // rendering twice
-                array_splice($secondaryResults->results, $autoplayIndex, 1);
+                array_splice($recomsList, $autoplayIndex, 1);
             }
 
-            return $secondaryResults;
+            $response += ["results" => $recomsList];
+            return (object)$response;
         }
 
         return null;
