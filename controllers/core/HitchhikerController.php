@@ -59,7 +59,7 @@ abstract class HitchhikerController
     ];
 
     /**
-     * Implements the base functionality that is ran on every request.
+     * Implements the base functionality that is ran on every GET request.
      * 
      * This function should not be overridden for page-specific
      * functionality. Use the controller's API (onGet()) for that.
@@ -86,6 +86,22 @@ abstract class HitchhikerController
         $this->doGeneralRender();
     }
 
+    /**
+     * Implements the base functionality that is ran on every POST request.
+     * 
+     * This function should not be overridden for page-specific
+     * functionality. Use the controller's API (onGet()) for that.
+     * 
+     * @param object $yt                 Template data.
+     * 
+     * @param string $template           Passes a template in and out of the function.
+     *                                   For API usage, you can safely ignore this. It only
+     *                                   matters on the technical end.
+     * 
+     * @param RequestMetadata $request   Reports request metadata.
+     * 
+     * @return void
+     */
     public function post(&$yt, &$template, $request)
     {
         $this->yt = &$yt;
@@ -98,15 +114,21 @@ abstract class HitchhikerController
         $this->doGeneralRender();
     }
 
+
     /**
-     * @param object $yt
-     * @param RequestMetadata $request
+     * Defines the API for handling GET requests. Pages should always use this;
+     * only subcontrollers may override onGet() directly.
+     * 
+     * @param object $yt                Template data.
+     * @param RequestMetadata $request  Reports request metadata.
+     * 
+     * @return void
      */
     public function onGet(&$yt, $request) {}
 
     /**
-     * Defines the API for handling GET requests. Pages should always use this;
-     * only subcontrollers may override get() directly.
+     * Defines the API for handling POST requests. Pages should always use this;
+     * only subcontrollers may override onPost() directly.
      * 
      * @param object $yt                Template data.
      * @param RequestMetadata $request  Reports request metadata.
