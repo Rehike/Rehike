@@ -29,6 +29,7 @@ class RehikeConfigManager extends ConfigManager
             "oldShareIcon" => false,
             "byTextOnByline" => false,
             "oldGuideButton" => false,
+            "oldSearchbox" => false,
             "noViewsText" => false
         ];
     
