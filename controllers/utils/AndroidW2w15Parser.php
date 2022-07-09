@@ -61,6 +61,14 @@ class AndroidW2w15Parser
                     "simpleText" => $renderer->lengthText->runs[0]->text
                 ];
             }
+
+            $renderer->navigationEndpoint = (object) [ // make the renderer parseable by getUrl
+                "commandMetadata" => (object) [
+                    "webCommandMetadata" => (object) [
+                        "url" => "/watch?v=" . $renderer->videoId
+                    ]
+                ]
+            ];
         }
 
         return $shelfRenderer;
