@@ -134,9 +134,6 @@ video-{{ yt.videoId }} {{ (yt.theaterMode) ? 'watch-wide watch-stage-mode' }}
 {% endblock %}
 
 {%- block content -%}
-<div id="debug" class="hid">
-   {{ yt.response }}
-</div>
 <div id="placeholder-player">
    <div class="player-api player-width player-height"></div>
 </div>

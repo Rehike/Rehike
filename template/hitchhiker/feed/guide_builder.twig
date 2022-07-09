@@ -19,9 +19,6 @@ Browse channels - {{ parent() }}
 {% endblock %}
 
 {% block content %}
-<div id="debug" style="display:none">
-{{ yt.page.shelvesList|json_encode }}
-</div>
     {% embed 'common/channels4/branded_page_v2.twig' %}
     {% import 'common/uix/lockup.twig' as lockup %}
     {% import 'core/spinner.twig' as spinner %}

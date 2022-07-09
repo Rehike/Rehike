@@ -11,13 +11,6 @@ Skip navigation
       </a></span>
    </div>
    <div id="yt-masthead-{{ yt.signin.isSignedIn ? 'user' : 'signin' }}">
-      {% if yt.debugger %}
-      <button class="yt-uix-button yt-uix-button-opacity yt-uix-button-size-default yt-uix-button-has-icon yt-uix-tooltip yt-uix-button-empty" title="Debugger">
-         <span class="yt-uix-button-icon-wrapper">
-            <span class="yt-uix-button-icon yt-uix-button-icon-settings-material yt-sprite"></span>
-         </span>
-      </button>
-      {% endif %}
       {% if yt.config.uploadMenuType == "BUTTON" %}
       <a href="//www.youtube.com/upload" class="yt-uix-button   yt-uix-sessionlink yt-uix-button-default yt-uix-button-size-default" data-sessionlink="ei=wftKWMX2DuWguQLozZmICg&amp;feature=mhsb" id="upload-btn"><span class="yt-uix-button-content">Upload</span></a>
       {% elseif yt.config.uploadMenuType == "ICON" %}

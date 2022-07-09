@@ -23,6 +23,11 @@
     {% if getWLOverlay(info) != null %}
     {{ wlBtn.render(getWLOverlay(info), info.videoId) }}
     {% endif %}
+    {% if getThumbnailOverlay(info.thumbnailOverlays, "thumbnailOverlayResumePlaybackRenderer") != null %}
+    {% set timeOverlay = getThumbnailOverlay(info.thumbnailOverlays, "thumbnailOverlayResumePlaybackRenderer") %}
+    <span class="resume-playback-background"></span>
+    <span class="resume-playback-progress-bar" style="width:{{ timeOverlay.percentDurationWatched }}%"></span>
+    {% endif %}
 </div>
 {% endmacro %}
 
