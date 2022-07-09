@@ -3,8 +3,19 @@ namespace Rehike\Controller\core;
 
 use Rehike\Model\Appbar\MAppbar as Appbar;
 
+/**
+ * Defines a general YouTube Nirvana controller.
+ * 
+ * This implements the base API and data used to render a Nirvana (Appbar)
+ * page.
+ * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
+ * @author Aubrey Pankow <aubyomori@gmail.com>
+ * @author Daylin Cooper <dcoop2004@gmail.com>
+ */
 abstract class NirvanaController extends HitchhikerController
 {
+    /** @inheritdoc */
     protected $spfIdListeners = [
         '@body<class>',
         'player-unavailable<class>',
@@ -20,6 +31,7 @@ abstract class NirvanaController extends HitchhikerController
         '@player<class>'
     ];
 
+    /** @inheritdoc */
     protected function init(&$yt, &$template)
     {
         $yt->spfEnabled = true;
@@ -33,6 +45,13 @@ abstract class NirvanaController extends HitchhikerController
         // implemented.
     }
 
+    /**
+     * Define the page to use a JS page module.
+     * 
+     * @param string $module  Name of the module (not URL)
+     * 
+     * @return void
+     */
     protected function useJsModule($module)
     {
         $this->yt->modularCoreModules[] = $module;
