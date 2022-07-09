@@ -269,17 +269,9 @@ branded-page-v2-secondary-column-wide no-flex
                                         {%- for result in yt.page.resultsList -%}
                                             <li>
                                                 {% if yt.config.largeSearchThumbs %}
-                                                    {% if result.channelRenderer %}
-                                                        {{ lockup.tile(result, true, 138, 138) }}
-                                                    {% else %}
-                                                        {{ lockup.tile(result, true, 246, 138) }}
-                                                    {% endif %}
+                                                    {{ lockup.tile(result, 246, 138) }}
                                                 {% else %}
-                                                    {% if result.channelRenderer %}
-                                                        {{ lockup.tile(result, true, 110, 110) }}
-                                                    {% else %}
-                                                        {{ lockup.tile(result, true, 196, 110) }}
-                                                    {% endif %}
+                                                    {{ lockup.tile(result, 196, 110) }}
                                                 {% endif %}
                                             </li>
                                         {% endfor %}

@@ -1,0 +1,31 @@
+{% macro render(data, x, y) %}
+{% set info = data.info %}
+{% import "common/uix/watch_later_button.twig" as wlBtn %}
+{% from "core/html/img.twig" import img %}
+<div class="yt-lockup-thumbnail {{ getWLOverlay(info) != null ? "contains-addto" }}">
+    <a href="{{ getUrl(info) }}" class="yt-uix-sessionlink spf-link" aria-hidden="true" data-sessionlink="{{ info.trackingParams }}">
+        <div class="yt-thumb video-thumb yt-uix-mouseover-img-wrap">
+            <span class="yt-thumb-simple">
+                {{ img({
+                    src: getThumb(info.thumbnail),
+                    width: x,
+                    height: y,
+                    ytImg: 1,
+                    delayLoad: true,
+                    onload: ";window.__ytRIL && __ytRIL(this)"
+                }) }}
+            </span>
+        </div>
+    </a>
+    {% if getVideoTime(info) != null %}
+    <span class="video-time">{{ getVideoTime(info) }}</span>
+    {% endif %}
+    {% if getWLOverlay(info) != null %}
+    {{ wlBtn.render(getWLOverlay(info), info.videoId) }}
+    {% endif %}
+</div>
+{% endmacro %}
+
+{% macro playlist(data) %}
+
+{% endmacro %}

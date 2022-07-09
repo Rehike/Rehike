@@ -7,6 +7,8 @@
         $thumbs = $obj -> thumbnails;
     }
 
+    if (is_null($thumbs)) return "//i.ytimg.com/invalid_thumb";
+
     for ($i = 0; $i < count($thumbs); $i++) {
         if ($thumbs[$i] -> height >= $height) {
             return $thumbs[$i] -> url;
