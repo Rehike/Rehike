@@ -100,7 +100,7 @@
                                             </span>
                                             {%- elseif thisF.status == "FILTER_STATUS_DISABLED" -%}
                                             <span class="filter filter-disabled" title="{{ thisF.tooltip }}">
-                                                <span class="filter-text" aria-label="{{ thisF.tooltip }}"></span>
+                                                <span class="filter-text" aria-label="{{ thisF.tooltip }}">{{ getText(thisF.label) }}</span>
                                             </span>
                                             {%- else -%}
                                             <a href="{{ getUrl(thisF) }}" aria-label="{{ thisF.tooltip }}" class="filter {{ thisF.status == "FILTER_STATUS_SELECTED" ? "filter-selected" }} spf-link">
