@@ -24,6 +24,9 @@
         {%- if data.ytImg -%}
             data-ytimg="1"
         {%- endif -%}
+        {%- for name, value in data.customAttributes -%}
+            {{ name }}="{{ value }}" 
+        {%- endfor -%}
         {%- if data.onload -%}
             onload="{{ data.onload }}"
         {%- endif -%}

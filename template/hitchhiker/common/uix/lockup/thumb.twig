@@ -2,20 +2,26 @@
 {% set info = data.info %}
 {% import "common/uix/watch_later_button.twig" as wlBtn %}
 {% from "core/html/img.twig" import img %}
-<div class="yt-lockup-thumbnail {{ getWLOverlay(info) != null ? "contains-addto" }}">
-    <a href="{{ getUrl(info) }}" class="yt-uix-sessionlink spf-link" aria-hidden="true" data-sessionlink="{{ info.trackingParams }}">
-        <div class="yt-thumb video-thumb yt-uix-mouseover-img-wrap">
+<div class="yt-lockup-thumbnail {{ data.type == "playlist" or data.type == "radio" ? "yt-pl-thumb" }} {{ getWLOverlay(info) != null ? "contains-addto" }}">
+    <a href="{{ getUrl(info) }}" class="yt-uix-sessionlink spf-link {{ data.type == "playlist" or data.type == "radio" ? "yt-pl-thumb-link" }}" aria-hidden="true" data-sessionlink="{{ info.trackingParams }}">
+        <div class="yt-thumb video-thumb {{data.type == "video" and yt.config.movingThumbnails ? "yt-uix-mouseover-img-wrap" }}">
             <span class="yt-thumb-simple">
                 {{ img({
-                    src: getThumb(info.thumbnail),
+                    src: getThumb(data.thumbArray),
                     width: x,
                     height: y,
                     ytImg: 1,
                     delayLoad: true,
-                    onload: ";window.__ytRIL && __ytRIL(this)"
+                    onload: ";window.__ytRIL && __ytRIL(this)",
+                    customAttributes: {
+                        "data-mouseover-src": getThumb(info.richThumbnail.movingThumbnailRenderer.movingThumbnailDetails)
+                    }
                 }) }}
             </span>
         </div>
+        {% if data.type == "playlist" or data.type == "radio" %}
+        {{ _self.playlistOverlay(data) }}
+        {% endif %}
     </a>
     {% if getVideoTime(info) != null %}
     <span class="video-time">{{ getVideoTime(info) }}</span>
@@ -31,6 +37,35 @@
 </div>
 {% endmacro %}
 
-{% macro playlist(data) %}
-
+{% macro playlistOverlay(data) %}
+{% set info = data.info %}
+<div class="sidebar">
+    <span class="yt-pl-sidebar-content yt-valign">
+        <span class="yt-valign-container">
+            <span class="formatted-video-count-label">
+                {% if data.type == "radio" %}
+                    <b>50+</b> videos
+                {% else %}
+                    {% for run in info.thumbnailText.runs %}
+                        {% if run.bold == true %}
+                        <b>
+                        {% endif %}
+                        {{ run.text }}
+                        {% if run.bold == true %}
+                        </b>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            </span>
+            <span class="yt-pl-icon {{ data.type == "radio" ? "yt-pl-icon-mix" }} yt-pl-icon-reg yt-sprite"></span>
+        </span>
+    </span>
+</div>
+<div class="yt-pl-thumb-overlay">
+    <span class="yt-pl-thumb-overlay-content">
+        {% set overlay = getThumbnailOverlay(info.thumbnailOverlays, "thumbnailOverlayHoverTextRenderer") %}
+        <span class="play-icon yt-sprite"></span>
+        <span class="yt-pl-thumb-overlay-text">{{ getText(overlay.text) }}</span>
+    </span>
+</div>
 {% endmacro %}

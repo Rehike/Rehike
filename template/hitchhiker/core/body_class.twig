@@ -1,14 +1,9 @@
 visibility-logging-enabled  
 ltr    
 {{ yt.config.useRingoBranding ? 'exp-invert-logo' }}
-exp-mouseover-img 
+{{ yt.config.movingThumbnails ? "exp-mouseover-img" }}
 exp-responsive 
-{{ yt.config.largeSearchThumbs ? "exp-search-big-thumbs" }}  
-{{ yt.config.smallWatchSidebarItems ? "exp-watch-small-thumbs" }}
-{{ yt.config.largeWatchTitle ? "exp-watch-large-title" }}
-{{ yt.config.oldShareIcon ? "exp-old-share-icon" }}
-{{ yt.config.oldGuideButton ? "exp-old-guide-button" }}
-{{ yt.config.oldSearchbox ? "exp-old-searchbox" }}
+{{ yt.config.largeSearchThumbs ? "exp-search-big-thumbs" }} 
 site-center-aligned 
 site-as-giant-card 
 {{ (appbarEnabled and defaultGuideVisibility) ? 'guide-pinning-enabled' }}   

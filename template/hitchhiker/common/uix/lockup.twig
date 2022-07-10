@@ -31,7 +31,9 @@
                         {% endif %}
                     </div>
                     {% endif %}
-                    {% if getMeta(info) != false %}
+                    {% if data.type == "playlist" or data.type == "radio" %}
+                    {{ _self.playlistMeta(data) }}
+                    {% elseif getMeta(info) != false %}
                     <div class="yt-lockup-meta">
                         <ul class="yt-lockup-meta-info">
                             {% for meta in getMeta(info) %}
@@ -58,6 +60,28 @@
             </div>
         </div>
     {% endif %}
+{% endmacro %}
+
+{% macro playlistMeta(data) %}
+{% set info = data.info %}
+<ol class="yt-lockup-meta yt-lockup-playlist-items">
+    {% for video in info.videos %}
+        {% if video.childVideoRenderer %}
+            {% set this = video.childVideoRenderer %}
+            <li class="yt-lockup-playlist-item clearfix">
+                <span class="yt-lockup-playlist-item-length">{{ getVideoTime(this) }}</span>
+                <a href="{{ getUrl(this) }}" class="yt-lockup-playlist-item-title spf-link">{{ getText(this.title) }}</a>
+            </li>
+        {% endif %}
+    {% endfor %}
+</ol>
+<div class="yt-lockup-meta">
+    <ul class="yt-lockup-meta-info">
+        <li>
+            <a href="{{ getUrl(info.viewPlaylistText.runs[0]) }}" class="spf-link">{{ getText(info.viewPlaylistText) }}{% if data.type == "playlist" %} ({{ getText(info.videoCountText) }}){% endif %}</a>
+        </li>
+    </ul>
+</div>
 {% endmacro %}
 
 {% macro grid(data, thumbX = 196, thumbY = 110) %}

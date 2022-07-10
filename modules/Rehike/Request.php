@@ -116,7 +116,8 @@ class Request
             self::$innertubeHeaders += [
                 "Authorization" => AuthManager::getAuthHeader(),
                 "Origin" => "https://www.youtube.com",
-                "Host" => "www.youtube.com"
+                "Host" => "www.youtube.com",
+                "User-Agent" => $_SERVER['HTTP_USER_AGENT']  ?? ""
             ];
         }
     }

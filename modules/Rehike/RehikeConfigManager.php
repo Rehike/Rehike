@@ -24,7 +24,8 @@ class RehikeConfigManager extends ConfigManager
             "enableRehikeDebugger" => false,
             "largeSearchThumbs" => true,
             "byTextOnByline" => false,
-            "noViewsText" => false
+            "noViewsText" => false,
+            "movingThumbnails" => true
         ];
     
     /**
