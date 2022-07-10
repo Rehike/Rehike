@@ -19,16 +19,8 @@ switch ($routerUrl->path[0]) {
                 include('controllers/feed/what_to_watch.php');
             }
             break;
-        case 'user':
-        case 'channel':
-        case 'c':
-            include('controllers/channel_old.php');
-            break;
         case 'results':
             include('controllers/results.php');
-            break;
-        case 'attribution':
-            include('controllers/attribution.php');
             break;
         case 'feed':
             if(isset($routerUrl->path[1])) {
