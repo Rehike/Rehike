@@ -32,7 +32,7 @@
 
 {% block content %}
     <div id="debug" class="hid">
-        {{ yt.page.data|json_encode() }}
+        {{ yt.page.header|json_encode() }}
     </div>
     {% embed 'common/channels4/branded_page_v2.twig' %}
 

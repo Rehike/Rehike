@@ -27,21 +27,20 @@ class MFiltersHeader {
         $tempFilters = [];
 
         for ($i = 0; $i < count($header); $i++) {
-            $tempFilters[] = $header[$i];
             // sort behaves differently
             // this is not denoted in innertube
             // probably handled by polymer js
-            if ($i == count($header)) $tempFilters[$i] -> searchFilterGroupRenderer -> isSort = true;
+            if ($i == count($header)) $header[$i] -> searchFilterGroupRenderer -> isSort = true;
 
-            if ($i != count($header)) {
-                for ($k = 0; $k < count($header[$i] -> searchFilterGroupRenderer -> filters); $k++) {
-                    $status = $header[$i] -> searchFilterGroupRenderer -> filters[$k] -> searchFilterRenderer -> status ?? null;
-                    if ($status == "STATUS_FILTER_SELECTED") {
-                        $this -> headerFilters[] = $header -> searchFilterGroupRenderer -> filters[$k] -> searchFilterRenderer;
-                        $this -> hasSelectedFilter = true;
-                    }
+            for ($k = 0; $k < count($header[$i] -> searchFilterGroupRenderer -> filters); $k++) {
+                $status = $header[$i] -> searchFilterGroupRenderer -> filters[$k] -> searchFilterRenderer -> status ?? null;
+                if ($status == "STATUS_FILTER_SELECTED") {
+                    $this -> headerFilters[] = $header -> searchFilterGroupRenderer -> filters[$k] -> searchFilterRenderer;
+                    $this -> hasSelectedFilter = true;
                 }
             }
+
+            $tempFilters[] = $header[$i];
         }
 
         $this -> filters = $tempFilters;
