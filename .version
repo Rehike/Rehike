@@ -1,10 +1,10 @@
 {
-	"previousHash": "3dd663b38ed87aa0fec75a97859f34fe63807c71",
-	"currentRevisionId": 277,
-	"subject": "Pedantic i18n change",
-	"body": "Pedantic i18n change",
+	"previousHash": "6ebc0ec74f5181fd89363ac3db8a935d494c6640",
+	"currentRevisionId": 278,
+	"subject": "Clean up signin backend",
+	"body": "Clean up signin backend",
 	"branch": "exp-signin-rework",
 	"committerName": "Coffee",
 	"committerEmail": "99076687+YukisCoffee@users.noreply.github.com",
-	"time": 1657409646
+	"time": 1657411538
 }

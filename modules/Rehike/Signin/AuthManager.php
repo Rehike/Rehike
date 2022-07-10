@@ -3,9 +3,21 @@ namespace Rehike\Signin;
 
 use \YukisCoffee\CoffeeRequest\CoffeeRequest;
 use \Rehike\Request;
+use Rehike\FileSystem as FS;
 
+/**
+ * Treat this as private. Use the API please.
+ * 
+ * This handles most of the internal behaviour. I'm too lazy
+ * to clean it up.
+ * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
+ * @author The Rehike Maintainers
+ */
 class AuthManager
 {
+    const CACHE_FILE = "cache/signin_cache.json";
+
     public static $shouldAuth = false;
     private static $sapisid;
 
@@ -14,6 +26,13 @@ class AuthManager
     // If an error occurs during this process,
     // this will remain false.
     public static $isSignedIn = false;
+
+    public static $info = null;
+
+    public static function __initStatic()
+    {
+        self::init();
+    }
 
     public static function init()
     {
@@ -28,11 +47,12 @@ class AuthManager
 
         if (self::shouldAuth())
         {
+            Request::useAuth();
+
             $data = self::getSigninData();
 
             if (self::$isSignedIn)
             {
-                Request::useAuth();
                 $yt->signin = ["isSignedIn" => true] + $data;
                 return;
             }
@@ -67,22 +87,60 @@ class AuthManager
 
     public static function getSigninData()
     {
-        // Todo: caching!
-        // At the moment, this is repeated per every new
-        // session, so it adds a little bit of overhead.
-        // It's not too bad, but best to eliminate it altogether.
+        if (null != self::$info)
+        {
+            return self::$info;
+        }
+        else if ($cache = self::getCache())
+        {
+            $sessionId = self::getUniqueSessionCookie();
 
-        return self::requestSigninData();
+            if ($data = @$cache->responseCache->{$sessionId})
+            {
+                self::$info = self::processSigninData(
+                    $data->switcher,
+                    $data->menu
+                );
+
+                return self::$info;
+            }
+        }
+
+        // This is the fallback in all other cases.
+        self::$info = self::requestSigninData();
+        return self::$info;
     }
 
     public static function requestSigninData()
     {
-        $requester = new CoffeeRequest();
+        // Temporarily switch the request namespace
+        $previousNamespace = Request::getNamespace();
 
-        $requester->queueRequest("https://www.youtube.com/getAccountSwitcherEndpoint", [], "switcher");
-        $responses = $requester->runQueue();
+        // Perform the necessary request
+        Request::setNamespace("rehike.signin_temp_ns");
 
-        $info = Switcher::parseResponse($responses["switcher"]);
+        Request::queueUrlRequest("switcher", "https://www.youtube.com/getAccountSwitcherEndpoint");
+        Request::queueInnertubeRequest("menu", "account/account_menu", (object)[
+            "deviceTheme" => "DEVICE_THEME_SUPPORTED",
+            "userInterfaceTheme" => "USER_INTERFACE_THEME_DARK"
+        ]);
+
+        $responses = Request::getResponses();
+
+        // Reset the request namespace now that I'm done!
+        Request::setNamespace($previousNamespace);
+
+        $info = self::processSigninData($responses["switcher"], $responses["menu"]);
+
+        self::writeCache($responses);
+
+        return $info;
+    }
+
+    public static function processSigninData($switcher, $menu)
+    {
+        $info = Switcher::parseResponse($switcher);
+        $info["ucid"] = self::getUcid(json_decode($menu));
 
         // Since no errors were thrown, assume everything
         // works.
@@ -90,5 +148,124 @@ class AuthManager
 
         return $info;
     }
+
+    /**
+     * Get the UCID of the active channel.
+     * 
+     * @param object $menu
+     * @return string
+     */
+    public static function getUcid($menu)
+    {
+        if ($items = @$menu->actions[0]->openPopupAction->popup
+            ->multiPageMenuRenderer->sections[0]->multiPageMenuSectionRenderer
+            ->items
+        )
+        {
+            foreach ($items as $item)
+            {
+                $item = @$item->compactLinkRenderer;
+
+                if ("ACCOUNT_BOX" == @$item->icon->iconType)
+                {
+                    return $item->navigationEndpoint->browseEndpoint->browseId;
+                }
+            }
+        }
+        
+        return "";
+    }
+
+    /**
+     * Get the unique session cookie (if it exists)
+     * 
+     * @return string (even "null" as a string)
+     */
+    public static function getUniqueSessionCookie()
+    {
+        if (isset($_COOKIE["LOGIN_INFO"]))
+        {
+            return $_COOKIE["LOGIN_INFO"];
+        }
+        else
+        {
+            return "null";
+        }
+    }
+
+    /**
+     * Get the cache if it exists.
+     * 
+     * @return object|false
+     */
+    protected static function getCache()
+    {
+        if (FS::fileExists(self::CACHE_FILE))
+        {
+            try
+            {
+                $json = FS::getFileContents(self::CACHE_FILE);
+                
+                $object = json_decode($json);
+
+                if (null != $object)
+                    return $object;
+                else
+                    return false;
+            }
+            catch (\Throwable $e)
+            {
+                return false;
+            }
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    /**
+     * Attempt to write the cache to a file.
+     * 
+     * @return void
+     */
+    protected static function writeCache($responses, $noCheck = false)
+    {
+        if (!FS::fileExists(self::CACHE_FILE) && !$noCheck)
+        {
+            $data = (object)[
+                "expire" => time() + 10080, // 1 week
+                "responseCache" => (object)[
+                    self::getUniqueSessionCookie()
+                        => (object)$responses
+                ]
+            ];
+            
+            FS::writeFile(self::CACHE_FILE, json_encode($data));
+        }
+        else
+        {
+            return self::updateCache($responses);
+        }
+    }
+
+    /**
+     * Update a pre-existing cache file.
+     * 
+     * @return void
+     */
+    protected static function updateCache($responses)
+    {
+        $data = json_decode(FS::getFileContents(self::CACHE_FILE));
+
+        // Skip if invalid
+        if (false == $data) return self::writeCache($responses, true);
+
+        $sessionId = self::getUniqueSessionCookie();
+
+        @$data->expire += 1440; // 1 day
+        @$data->responseCache->{$sessionId} = $responses;
+
+        FS::writeFile(self::CACHE_FILE, json_encode($data));
+    }
 }
-AuthManager::init();
