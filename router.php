@@ -20,7 +20,7 @@ switch ($routerUrl->path[0]) {
             }
             break;
         case 'results':
-            include('controllers/results.php');
+            include('controllers/results_old.php');
             break;
         case 'feed':
             if(isset($routerUrl->path[1])) {
@@ -66,9 +66,6 @@ switch ($routerUrl->path[0]) {
         case "rehike":
             switch ($routerUrl->path[1])
             {
-                case 'settings':
-                    include('controllers/rehike/settings.php');
-                    break;
                 case "version":
                     (include "controllers/rehike/version.php")::get($yt, $template);
                     break;
@@ -97,10 +94,6 @@ switch ($routerUrl->path[0]) {
     /**
      * Test definitions
      */
-        case 'pb':
-            include('pbtest.php');
-            die();
-            break;
         case 'forcefatal':
             $template = 'sdsadasds';
             break;
