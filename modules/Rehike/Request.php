@@ -46,7 +46,7 @@ class Request
 
     public static $innertubeHeaders = [];
     
-    public static function __staticInit()
+    public static function __initStatic()
     {
         Request::init();
     }
