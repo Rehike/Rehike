@@ -40,10 +40,6 @@ class ChannelController extends NirvanaController {
         $i18n = &i18n::newNamespace("channels");
         $i18n->registerFromFolder("i18n/channels");
 
-        // Get the channel ID of the requested channel.
-        // TODO (kirasicecreamm): This could be improved by using
-        // the InnerTube navigation/resolve_url endpoint.
-        // ALSO
         // BUG (kirasicecreamm): ChannelUtils::getUcid is hardcoded
         // to look at the path property of the input object.
         // This is bad design.
