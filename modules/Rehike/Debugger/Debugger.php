@@ -77,10 +77,10 @@ class Debugger
      */
     public static function expose()
     {
-        $i18n = &i18n::getNamespace("rebug");
-
         if (self::$enabled)
         {
+            $i18n = &i18n::getNamespace("rebug");
+
             $context = &self::$context;
 
             $context->openButton = new OpenButton(self::getErrorCount());

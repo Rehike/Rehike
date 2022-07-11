@@ -13,6 +13,9 @@ use \Rehike\Model\Watch\Watch7\MVideoDiscussionNotice;
  */
 class Watch8Subcontroller
 {
+    /**
+     * A static reference to the main model controller.
+     */
     const MASTER = "Rehike\Model\Watch\WatchModel";
 
     /**

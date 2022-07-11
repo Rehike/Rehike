@@ -1,10 +1,10 @@
 {
-	"previousHash": "7a67d1af9ba44e527d3e3574fe064a12ea5bf184",
-	"currentRevisionId": 244,
-	"subject": "This should not be by default.",
-	"body": "This should not be by default.",
+	"previousHash": "e4d20fa2cd596f826803a566c15af4ac719d1977",
+	"currentRevisionId": 256,
+	"subject": "Merge branch 'new-mvc' of https://github.com/Rehike/Rehike into new-mvc",
+	"body": "Merge branch 'new-mvc' of https://github.com/Rehike/Rehike into new-mvc",
 	"branch": "new-mvc",
 	"committerName": "Coffee",
 	"committerEmail": "99076687+YukisCoffee@users.noreply.github.com",
-	"time": 1657198289
+	"time": 1657524029
 }
