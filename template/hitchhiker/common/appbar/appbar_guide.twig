@@ -1,0 +1,146 @@
+{#
+   Implements the appbar guide wrapper.
+   
+   This automatically builds a guide with the constant index yt.appbar.guide.
+   Since yt is unrestricted, don't be an idiot. You can easily break everything
+   if you're not careful. This is applicable to far much more than the guide.
+
+   @author Taniko Yamamoto (kirasicecreamm@gmail.com)
+   @author The Rehike Maintainers
+#}
+{% from "common/guide/main.twig" import render as guide %}
+<div id="guide" class="yt-scrollbar">
+   {# Implements the actual appbar guide menu #}
+   <div id="appbar-guide-menu" class="appbar-menu appbar-guide-menu-layout appbar-guide-clickable-ancestor yt-uix-scroller yt-uix-tdl" role="navigation">
+      {{ guide(yt.appbar.guide) }}
+   </div>
+   {# Implements the appbar guide notifications wrapper.
+      This is currently only managed on a templater level. #}
+   <div id="appbar-guide-notifications" class="hid">
+      {% set strings = yt.appbar.guideNotificationStrings %}
+      {{ _self.appbar_guide_notification_template(
+         "watch-later-video-added",
+         strings.watchLaterVideoAdded
+      ) }}
+      {{ _self.appbar_guide_notification_template(
+         "watch-later-video-removed",
+         strings.watchLaterVideoRemoved
+      ) }}
+      {{ _self.appbar_guide_notification_template(
+         "subscription",
+         strings.subscription
+      ) }}
+      {{ _self.appbar_guide_notification_template(
+         "unsubscription",
+         strings.unsubscription
+      ) }}
+      {{ _self.appbar_guide_notification_template(
+         "playlist-like",
+         strings.playlistLike
+      ) }}
+      {{ _self.appbar_guide_notification_template(
+         "playlist-unlike",
+         strings.playlistUnlike
+      ) }}
+      {{ _self.appbar_guide_notification_template(
+         "playlist-video-added",
+         strings.playlistVideoAdded
+      ) }}
+      {{ _self.appbar_guide_notification_template(
+         "playlist-video-removed",
+         strings.playlistVideoRemoved
+      ) }}
+      {{ _self.appbar_guide_notification_template(
+         "video-like",
+         strings.videoLike
+      ) }}
+      {{ _self.appbar_guide_notification_template(
+         "video-unlike",
+         strings.videoUnlike
+      ) }}
+      {{ _self.appbar_guide_notification_template(
+         "event-reminder-set",
+         strings.eventReminderSet
+      ) }}
+      {{ _self.appbar_guide_notification_template(
+         "event-reminder-removed",
+         strings.eventReminderRemoved
+      ) }}
+   </div>
+   {# 
+      Implements appbar guide item templates 
+      
+      Ignore some of the markup here like the hrefOverride property,
+      as these are specific only to this implementation. They
+      should be avoided elsewhere.
+   #}
+   <div id="appbar-guide-item-templates" class="hid">
+      {{ _self.appbar_guide_item_template("playlist", {
+            "idOverride": "__ID__",
+            "titleOverride": "__TITLE__",
+            "icon": {"iconType": "PLAYLISTS"},
+            "hrefOverride": "__URL__",
+            "appbarGuideNotification": {
+               "label": strings.playlistLike,
+               "template": "__NOTIFICATION_OVERLAY_MESSAGE__"
+            }
+      }) }}
+      {{ _self.appbar_guide_item_template("mix", {
+            "idOverride": "__ID__",
+            "titleOverride": "__TITLE__",
+            "icon": {"iconType": "MIX"},
+            "hrefOverride": "__URL__",
+            "appbarGuideNotification": {
+               "label": strings.playlistLike,
+               "template": "__NOTIFICATION_OVERLAY_MESSAGE__"
+            }
+      }) }}
+      {{ _self.appbar_guide_item_template("channel", {
+            "idOverride": "__ID__",
+            "titleOverride": "__TITLE__",
+            "thumbnail": {
+               "thumbnails": [
+                  {
+                     url: "__THUMBNAIL_URL__"
+                  }
+               ]
+            },
+            "hrefOverride": "__URL__",
+            "appbarGuideNotification": {
+               "label": strings.subscription,
+               "template": "__NOTIFICATION_OVERLAY_MESSAGE__"
+            }
+      }) }}
+   </div>
+</div>
+
+{# Generates a notification with the given text. #}
+{% macro appbar_guide_notification(text) %}
+<div class="appbar-guide-notification " role="alert"><span class="appbar-guide-notification-content-wrapper yt-valign"><span class="appbar-guide-notification-icon yt-sprite"></span><span class="appbar-guide-notification-text-content" >{{ text }}</span></span></div>
+{% endmacro %}
+
+{# Creates an inline template wrapper with the given content. #}
+{% macro inline_template_wrapper(id, content) %}
+<div id="{{ id }}">
+   <!--
+      {{ content }}
+      -->
+</div>
+{% endmacro %}
+
+{# Creates an inline notification template. #}
+{% macro appbar_guide_notification_template(type, text) %}
+{{ _self.inline_template_wrapper(
+      "appbar-guide-notification-" ~ type,
+      _self.appbar_guide_notification(text)
+) }}
+{% endmacro %}
+
+{# Creates an inline guide item template. #}
+{% macro appbar_guide_item_template(type, data) %}
+{% from "common/guide/guide_entry.twig" import render as guide_entry %}
+{{ _self.inline_template_wrapper(
+      "appbar-guide-item-template-" ~ type,
+      guide_entry(data)
+) }}
+{% endmacro %}

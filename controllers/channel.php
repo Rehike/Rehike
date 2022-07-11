@@ -33,9 +33,6 @@ class ChannelController extends NirvanaController {
     {
         $this->useJsModule("www/channels");
 
-        // Remove when guide implemented into NirvanaController base.
-        include "controllers/mixins/guideNotSpfMixin.php";
-
         // Init i18n
         $i18n = &i18n::newNamespace("channels");
         $i18n->registerFromFolder("i18n/channels");
@@ -45,6 +42,9 @@ class ChannelController extends NirvanaController {
         // This is bad design.
         $ucid = ChannelUtils::getUcid($request);
         $yt->ucid = $ucid;
+
+        // Register the endpoint in the request
+        $this->setEndpoint("browse", $ucid);
 
         // Get the requested tab
         $tab = "featured";

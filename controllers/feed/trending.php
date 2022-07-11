@@ -10,6 +10,11 @@ $yt->enableFooterCopyright = true;
 
 include "controllers/mixins/guideNotSpfMixin.php";
 
+if (function_exists("legacySetEndpoint"))
+{
+    $yt->currentEndpoint = legacySetEndpoint("browse", "FEtrending");
+}
+
 $response = Request::innertubeRequest("browse", (object)[
     "browseId" => "FEtrending"
 ]);

@@ -12,6 +12,11 @@ $yt->enableFooterCopyright = true;
 
 include "controllers/mixins/guideNotSpfMixin.php";
 
+if (function_exists("legacySetEndpoint"))
+{
+    $yt->currentEndpoint = legacySetEndpoint("browse", "FEwhat_to_watch");
+}
+
 /**
  * BUG (yukiscoffee): WEB what_to_watch shelves API is
  * down (permanently?). However, ANDROID shelves have
