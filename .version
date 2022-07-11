@@ -1,10 +1,10 @@
 {
-	"previousHash": "8aad03760a6bdb3aee3ad84589127d293e3a41ca",
-	"currentRevisionId": 296,
-	"subject": "Remove masthead debug",
-	"body": "Remove masthead debug",
+	"previousHash": "66ebda49d429f5a711518f525be57af4d41c9b4d",
+	"currentRevisionId": 303,
+	"subject": "Merge branch 'new-mvc' into exp-signin-rework",
+	"body": "Merge branch 'new-mvc' into exp-signin-rework",
 	"branch": "exp-signin-rework",
 	"committerName": "Coffee",
 	"committerEmail": "99076687+YukisCoffee@users.noreply.github.com",
-	"time": 1657523110
+	"time": 1657524287
 }

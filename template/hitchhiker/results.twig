@@ -1,6 +1,5 @@
-{% import 'core/macros.twig' as core %}
-{% import 'common/uix/lockup.twig' as lockup %}
 {% extends "core.twig" %}
+{% import "core/macros.twig" as core %}
 
 {% set pageType = 'search' %}
 
@@ -10,429 +9,140 @@
 {% set enableSnapScaling = false %}
 
 {%- block title -%}
-{{ yt.searchQuery ? yt.searchQuery ~ ' - ' }}{{ parent() }}
-{% endblock %}
+{{ yt.query }} - {{ parent() }}
+{%- endblock -%}
 
-{%- block page_class -%}
-branded-page-v2-secondary-column-wide no-flex
+{%- block alerts -%}
+<div class="yt-alert yt-alert-actionable yt-alert-warn">  
+   <div class="yt-alert-icon">
+      <img src="//s.ytimg.com/yt/img/pixel-vfl3z5WfW.gif" class="icon master-sprite" alt="Alert icon">
+   </div>
+   <div class="yt-alert-content" role="alert">    
+      <span class="yt-alert-vertical-trick"></span>
+      <div class="yt-alert-message">
+         This page is a work in progress, meaning that not all features are in-tact or are fully working.
+      </div>
+   </div>
+</div>
 {% endblock %}
 
 {%- block head_css -%}
 {{ core.css('www-results') }}
 {% endblock %}
 
-{%- block content -%}
-<div class="branded-page-v2-container branded-page-base-bold-titles branded-page-v2-container-flex-width">
-
-    <div class="branded-page-v2-col-container">
-        <div class="branded-page-v2-col-container-inner">
-            <div class="branded-page-v2-primary-col">
-                <div class="   yt-card  clearfix">
-                    <div class="branded-page-v2-primary-col-header-container branded-page-v2-primary-column-content">
-
-                    </div>
-                    <div class="branded-page-v2-body branded-page-v2-primary-column-content" id="">
-
-                        <noscript>
-                            <div class="yt-alert yt-alert-default yt-alert-error  ">
-                                <div class="yt-alert-icon">
-                                    <span class="icon master-sprite yt-sprite"></span>
-                                </div>
-                                <div class="yt-alert-content" role="alert">
-                                    <div class="yt-alert-message" tabindex="0">
-                                        Hello, you seem to have JavaScript turned off. Please enable it to see search
-                                        results properly.
-                                    </div>
-                                </div>
-                                <div class="yt-alert-buttons"><button
-                                        class="yt-uix-button yt-uix-button-size-default yt-uix-button-close close yt-uix-close"
-                                        type="button" onclick=";return false;" aria-label="Close"
-                                        data-close-parent-class="yt-alert"><span
-                                            class="yt-uix-button-content">Close</span></button></div>
-                            </div>
-
-                        </noscript>
-
-
-                        <div id="results">
-
-
-
-
-                            <ol id="section-list-336604" class="section-list">
-                                <li class="branded-page-v2-subnav-container branded-page-gutter-padding">
-                                    <div class="search-header yt-uix-expander yt-uix-expander-collapsed">
-                                        <div class="filter-top">
-                                            <div class="filter-bar-container">
-                                                <div class="filter-button-container"><button
-                                                        class="yt-uix-button yt-uix-button-size-small yt-uix-button-default filter-button yt-uix-expander-head"
-                                                        type="button" onclick=";return false;"
-                                                        aria-label="Search filters" data-button-action=""
-                                                        data-button-menu-id="some-nonexistent-menu"
-                                                        data-button-toggle="true"><span
-                                                            class="yt-uix-button-content">Filters</span><span
-                                                            class="yt-uix-button-arrow yt-sprite"></span></button></div>
-                                                <div class="filter-crumb-spacer"></div>
-                                                <p class="num-results first-focus" tabindex="0">About {{ yt.resultCount|number_format }} results</p>
-                                            </div>
-                                        </div>
-                                        <div id="filter-dropdown" class="yt-uix-expander-body">
-                                            <div class="filter-col">
-                                                <h4 class="filter-col-title">Upload date</h4>
-                                                <ul>
-                                                    <li><a href="/results?search_query=youtube&amp;sp=EgIIAQ%253D%253D"
-                                                            class="filter yt-uix-sessionlink      spf-link "
-                                                            data-sessionlink="itct=CC8Qk3UYACITCNCZyZDBiNoCFYm6fgodKBMPpCj0JA"
-                                                            title="Search for Last hour"
-                                                            aria-label="Search for Last hour"><span
-                                                                class="filter-text filter-ghost">Last hour</span></a>
-                                                    </li>
-                                                    <li><a href="/results?search_query=youtube&amp;sp=EgIIAg%253D%253D"
-                                                            class="filter yt-uix-sessionlink      spf-link "
-                                                            data-sessionlink="itct=CC4Qk3UYASITCNCZyZDBiNoCFYm6fgodKBMPpCj0JA"
-                                                            title="Search for Today" aria-label="Search for Today"><span
-                                                                class="filter-text filter-ghost">Today</span></a></li>
-                                                    <li><a href="/results?search_query=youtube&amp;sp=EgIIAw%253D%253D"
-                                                            class="filter yt-uix-sessionlink      spf-link "
-                                                            data-sessionlink="itct=CC0Qk3UYAiITCNCZyZDBiNoCFYm6fgodKBMPpCj0JA"
-                                                            title="Search for This week"
-                                                            aria-label="Search for This week"><span
-                                                                class="filter-text filter-ghost">This week</span></a>
-                                                    </li>
-                                                    <li><a href="/results?search_query=youtube&amp;sp=EgIIBA%253D%253D"
-                                                            class="filter yt-uix-sessionlink      spf-link "
-                                                            data-sessionlink="itct=CCwQk3UYAyITCNCZyZDBiNoCFYm6fgodKBMPpCj0JA"
-                                                            title="Search for This month"
-                                                            aria-label="Search for This month"><span
-                                                                class="filter-text filter-ghost">This month</span></a>
-                                                    </li>
-                                                    <li><a href="/results?search_query=youtube&amp;sp=EgIIBQ%253D%253D"
-                                                            class="filter yt-uix-sessionlink      spf-link "
-                                                            data-sessionlink="itct=CCsQk3UYBCITCNCZyZDBiNoCFYm6fgodKBMPpCj0JA"
-                                                            title="Search for This year"
-                                                            aria-label="Search for This year"><span
-                                                                class="filter-text filter-ghost">This year</span></a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <div class="filter-col">
-                                                <h4 class="filter-col-title">Type</h4>
-                                                <ul>
-                                                    <li><a href="/results?search_query=youtube&amp;sp=EgIQAQ%253D%253D"
-                                                            class="filter yt-uix-sessionlink      spf-link "
-                                                            data-sessionlink="itct=CCkQk3UYACITCNCZyZDBiNoCFYm6fgodKBMPpCj0JA"
-                                                            title="Search for Video" aria-label="Search for Video"><span
-                                                                class="filter-text filter-ghost">Video</span></a></li>
-                                                    <li><a href="/results?search_query=youtube&amp;sp=EgIQAg%253D%253D"
-                                                            class="filter yt-uix-sessionlink      spf-link "
-                                                            data-sessionlink="itct=CCgQk3UYASITCNCZyZDBiNoCFYm6fgodKBMPpCj0JA"
-                                                            title="Search for Channel"
-                                                            aria-label="Search for Channel"><span
-                                                                class="filter-text filter-ghost">Channel</span></a></li>
-                                                    <li><a href="/results?search_query=youtube&amp;sp=EgIQAw%253D%253D"
-                                                            class="filter yt-uix-sessionlink      spf-link "
-                                                            data-sessionlink="itct=CCcQk3UYAiITCNCZyZDBiNoCFYm6fgodKBMPpCj0JA"
-                                                            title="Search for Playlist"
-                                                            aria-label="Search for Playlist"><span
-                                                                class="filter-text filter-ghost">Playlist</span></a>
-                                                    </li>
-                                                    <li><a href="/results?search_query=youtube&amp;sp=EgIQBA%253D%253D"
-                                                            class="filter yt-uix-sessionlink      spf-link "
-                                                            data-sessionlink="itct=CCYQk3UYAyITCNCZyZDBiNoCFYm6fgodKBMPpCj0JA"
-                                                            title="Search for Movie" aria-label="Search for Movie"><span
-                                                                class="filter-text filter-ghost">Movie</span></a></li>
-                                                    <li><a href="/results?search_query=youtube&amp;sp=EgIQBQ%253D%253D"
-                                                            class="filter yt-uix-sessionlink      spf-link "
-                                                            data-sessionlink="itct=CCUQk3UYBCITCNCZyZDBiNoCFYm6fgodKBMPpCj0JA"
-                                                            title="Search for Show" aria-label="Search for Show"><span
-                                                                class="filter-text filter-ghost">Show</span></a></li>
-                                                </ul>
-                                            </div>
-                                            <div class="filter-col">
-                                                <h4 class="filter-col-title">Duration</h4>
-                                                <ul>
-                                                    <li><a href="/results?search_query=youtube&amp;sp=EgIYAQ%253D%253D"
-                                                            class="filter yt-uix-sessionlink      spf-link "
-                                                            data-sessionlink="itct=CCMQk3UYACITCNCZyZDBiNoCFYm6fgodKBMPpCj0JA"
-                                                            title="Search for Short (< 4 minutes)"
-                                                            aria-label="Search for Short (< 4 minutes)"><span
-                                                                class="filter-text filter-ghost">Short (&lt; 4
-                                                                minutes)</span></a></li>
-                                                    <li><a href="/results?search_query=youtube&amp;sp=EgIYAg%253D%253D"
-                                                            class="filter yt-uix-sessionlink      spf-link "
-                                                            data-sessionlink="itct=CCIQk3UYASITCNCZyZDBiNoCFYm6fgodKBMPpCj0JA"
-                                                            title="Search for Long (> 20 minutes)"
-                                                            aria-label="Search for Long (> 20 minutes)"><span
-                                                                class="filter-text filter-ghost">Long (&gt; 20
-                                                                minutes)</span></a></li>
-                                                </ul>
-                                            </div>
-                                            <div class="filter-col">
-                                                <h4 class="filter-col-title">Features</h4>
-                                                <ul>
-                                                    <li><a href="/results?search_query=youtube&amp;sp=EgJwAQ%253D%253D"
-                                                            class="filter yt-uix-sessionlink      spf-link "
-                                                            data-sessionlink="itct=CCAQk3UYACITCNCZyZDBiNoCFYm6fgodKBMPpCj0JA"
-                                                            title="Search for 4K" aria-label="Search for 4K"><span
-                                                                class="filter-text filter-ghost">4K</span></a></li>
-                                                    <li><a href="/results?search_query=youtube&amp;sp=EgIgAQ%253D%253D"
-                                                            class="filter yt-uix-sessionlink      spf-link "
-                                                            data-sessionlink="itct=CB8Qk3UYASITCNCZyZDBiNoCFYm6fgodKBMPpCj0JA"
-                                                            title="Search for HD" aria-label="Search for HD"><span
-                                                                class="filter-text filter-ghost">HD</span></a></li>
-                                                    <li><a href="/results?search_query=youtube&amp;sp=EgPIAQE%253D"
-                                                            class="filter yt-uix-sessionlink      spf-link "
-                                                            data-sessionlink="itct=CB4Qk3UYAiITCNCZyZDBiNoCFYm6fgodKBMPpCj0JA"
-                                                            title="Search for HDR" aria-label="Search for HDR"><span
-                                                                class="filter-text filter-ghost">HDR</span></a></li>
-                                                    <li><a href="/results?search_query=youtube&amp;sp=EgIoAQ%253D%253D"
-                                                            class="filter yt-uix-sessionlink      spf-link "
-                                                            data-sessionlink="itct=CB0Qk3UYAyITCNCZyZDBiNoCFYm6fgodKBMPpCj0JA"
-                                                            title="Search for Subtitles/CC"
-                                                            aria-label="Search for Subtitles/CC"><span
-                                                                class="filter-text filter-ghost">Subtitles/CC</span></a>
-                                                    </li>
-                                                    <li><a href="/results?search_query=youtube&amp;sp=EgIwAQ%253D%253D"
-                                                            class="filter yt-uix-sessionlink      spf-link "
-                                                            data-sessionlink="itct=CBwQk3UYBCITCNCZyZDBiNoCFYm6fgodKBMPpCj0JA"
-                                                            title="Search for Creative Commons"
-                                                            aria-label="Search for Creative Commons"><span
-                                                                class="filter-text filter-ghost">Creative
-                                                                Commons</span></a></li>
-                                                    <li><a href="/results?search_query=youtube&amp;sp=EgI4AQ%253D%253D"
-                                                            class="filter yt-uix-sessionlink      spf-link "
-                                                            data-sessionlink="itct=CBsQk3UYBSITCNCZyZDBiNoCFYm6fgodKBMPpCj0JA"
-                                                            title="Search for 3D" aria-label="Search for 3D"><span
-                                                                class="filter-text filter-ghost">3D</span></a></li>
-                                                    <li><a href="/results?search_query=youtube&amp;sp=EgJAAQ%253D%253D"
-                                                            class="filter yt-uix-sessionlink      spf-link "
-                                                            data-sessionlink="itct=CBoQk3UYBiITCNCZyZDBiNoCFYm6fgodKBMPpCj0JA"
-                                                            title="Search for Live" aria-label="Search for Live"><span
-                                                                class="filter-text filter-ghost">Live</span></a></li>
-                                                    <li><a href="/results?search_query=youtube&amp;sp=EgJIAQ%253D%253D"
-                                                            class="filter yt-uix-sessionlink      spf-link "
-                                                            data-sessionlink="itct=CBkQk3UYByITCNCZyZDBiNoCFYm6fgodKBMPpCj0JA"
-                                                            title="Search for Purchased"
-                                                            aria-label="Search for Purchased"><span
-                                                                class="filter-text filter-ghost">Purchased</span></a>
-                                                    </li>
-                                                    <li><a href="/results?search_query=youtube&amp;sp=EgJ4AQ%253D%253D"
-                                                            class="filter yt-uix-sessionlink      spf-link "
-                                                            data-sessionlink="itct=CBgQk3UYCCITCNCZyZDBiNoCFYm6fgodKBMPpCj0JA"
-                                                            title="Search for 360°" aria-label="Search for 360°"><span
-                                                                class="filter-text filter-ghost">360°</span></a></li>
-                                                    <li><a href="/results?search_query=youtube&amp;sp=EgO4AQE%253D"
-                                                            class="filter yt-uix-sessionlink      spf-link "
-                                                            data-sessionlink="itct=CBcQk3UYCSITCNCZyZDBiNoCFYm6fgodKBMPpCj0JA"
-                                                            title="Search for Location"
-                                                            aria-label="Search for Location"><span
-                                                                class="filter-text filter-ghost">Location</span></a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <div class="filter-col">
-                                                <h4 class="filter-col-title">Sort by</h4>
-                                                <ul>
-                                                    <li><span class="filter filter-selected filter-sort"
-                                                            title="Sort by relevance"><span class="filter-text"
-                                                                aria-label="Sort by relevance">Relevance</span></span>
-                                                    </li>
-                                                    <li><a href="/results?search_query=youtube&amp;sp=CAI%253D"
-                                                            class="filter yt-uix-sessionlink      spf-link "
-                                                            data-sessionlink="itct=CBQQk3UYASITCNCZyZDBiNoCFYm6fgodKBMPpCj0JA"
-                                                            title="Sort by upload date"
-                                                            aria-label="Sort by upload date"><span
-                                                                class="filter-text filter-ghost">Upload date</span></a>
-                                                    </li>
-                                                    <li><a href="/results?search_query=youtube&amp;sp=CAM%253D"
-                                                            class="filter yt-uix-sessionlink      spf-link "
-                                                            data-sessionlink="itct=CBMQk3UYAiITCNCZyZDBiNoCFYm6fgodKBMPpCj0JA"
-                                                            title="Sort by view count"
-                                                            aria-label="Sort by view count"><span
-                                                                class="filter-text filter-ghost">View count</span></a>
-                                                    </li>
-                                                    <li><a href="/results?search_query=youtube&amp;sp=CAE%253D"
-                                                            class="filter yt-uix-sessionlink      spf-link "
-                                                            data-sessionlink="itct=CBIQk3UYAyITCNCZyZDBiNoCFYm6fgodKBMPpCj0JA"
-                                                            title="Sort by rating" aria-label="Sort by rating"><span
-                                                                class="filter-text filter-ghost">Rating</span></a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <ol id="item-section-009175" class="item-section">
-                                        {%- for result in yt.page.resultsList -%}
-                                            <li>
-                                                {% if yt.config.largeSearchThumbs %}
-                                                    {{ lockup.tile(result, 246, 138) }}
-                                                {% else %}
-                                                    {{ lockup.tile(result, 196, 110) }}
-                                                {% endif %}
-                                            </li>
-                                        {% endfor %}
-                                    </ol>
-                                </li>
-                            </ol>
-
-
-                        </div>
-
-
-                        <div class="branded-page-box search-pager  spf-link ">
-
-
-
-
-
-
-
-
-
-
-
-
-                            <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-default  vve-check"
-                                type="button" onclick=";return false;" disabled="True" aria-label="Go to page 1"
-                                data-visibility-tracking="CA4QnKQBGAAiEwjQmcmQwYjaAhWJun4KHSgTD6Qo9CQ"
-                                data-sessionlink="itct=CA4QnKQBGAAiEwjQmcmQwYjaAhWJun4KHSgTD6Qo9CQ"
-                                data-redirect-url="/results?search_query=youtube&amp;amp;sp=SADqAwA%253D"><span
-                                    class="yt-uix-button-content">1</span></button>
-
-
-
-
-
-
-
-
-
-
-
-
-                            <a href="/results?search_query=youtube&amp;sp=SBTqAwA%253D"
-                                class="yt-uix-button   vve-check yt-uix-sessionlink yt-uix-button-default yt-uix-button-size-default"
-                                data-visibility-tracking="CA0QnKQBGAEiEwjQmcmQwYjaAhWJun4KHSgTD6Qo9CQ"
-                                data-sessionlink="itct=CA0QnKQBGAEiEwjQmcmQwYjaAhWJun4KHSgTD6Qo9CQ"
-                                aria-label="Go to page 2"><span class="yt-uix-button-content">2</span></a>
-
-
-
-
-
-
-
-
-
-
-
-
-                            <a href="/results?search_query=youtube&amp;sp=SCjqAwA%253D"
-                                class="yt-uix-button   vve-check yt-uix-sessionlink yt-uix-button-default yt-uix-button-size-default"
-                                data-visibility-tracking="CAwQnKQBGAIiEwjQmcmQwYjaAhWJun4KHSgTD6Qo9CQ"
-                                data-sessionlink="itct=CAwQnKQBGAIiEwjQmcmQwYjaAhWJun4KHSgTD6Qo9CQ"
-                                aria-label="Go to page 3"><span class="yt-uix-button-content">3</span></a>
-
-
-
-
-
-
-
-
-
-
-
-
-                            <a href="/results?search_query=youtube&amp;sp=SDzqAwA%253D"
-                                class="yt-uix-button   vve-check yt-uix-sessionlink yt-uix-button-default yt-uix-button-size-default"
-                                data-visibility-tracking="CAsQnKQBGAMiEwjQmcmQwYjaAhWJun4KHSgTD6Qo9CQ"
-                                data-sessionlink="itct=CAsQnKQBGAMiEwjQmcmQwYjaAhWJun4KHSgTD6Qo9CQ"
-                                aria-label="Go to page 4"><span class="yt-uix-button-content">4</span></a>
-
-
-
-
-
-
-
-
-
-
-
-
-                            <a href="/results?search_query=youtube&amp;sp=SFDqAwA%253D"
-                                class="yt-uix-button   vve-check yt-uix-sessionlink yt-uix-button-default yt-uix-button-size-default"
-                                data-visibility-tracking="CAoQnKQBGAQiEwjQmcmQwYjaAhWJun4KHSgTD6Qo9CQ"
-                                data-sessionlink="itct=CAoQnKQBGAQiEwjQmcmQwYjaAhWJun4KHSgTD6Qo9CQ"
-                                aria-label="Go to page 5"><span class="yt-uix-button-content">5</span></a>
-
-
-
-
-
-
-
-
-
-
-
-
-                            <a href="/results?search_query=youtube&amp;sp=SGTqAwA%253D"
-                                class="yt-uix-button   vve-check yt-uix-sessionlink yt-uix-button-default yt-uix-button-size-default"
-                                data-visibility-tracking="CAkQnKQBGAUiEwjQmcmQwYjaAhWJun4KHSgTD6Qo9CQ"
-                                data-sessionlink="itct=CAkQnKQBGAUiEwjQmcmQwYjaAhWJun4KHSgTD6Qo9CQ"
-                                aria-label="Go to page 6"><span class="yt-uix-button-content">6</span></a>
-
-
-
-
-
-
-
-
-
-
-
-
-                            <a href="/results?search_query=youtube&amp;sp=SHjqAwA%253D"
-                                class="yt-uix-button   vve-check yt-uix-sessionlink yt-uix-button-default yt-uix-button-size-default"
-                                data-visibility-tracking="CAgQnKQBGAYiEwjQmcmQwYjaAhWJun4KHSgTD6Qo9CQ"
-                                data-sessionlink="itct=CAgQnKQBGAYiEwjQmcmQwYjaAhWJun4KHSgTD6Qo9CQ"
-                                aria-label="Go to page 7"><span class="yt-uix-button-content">7</span></a>
-
-
-
-
-
-
-
-
-
-
-
-
-                            <a href="/results?search_query=youtube&amp;sp=SBTqAwA%253D"
-                                class="yt-uix-button   vve-check yt-uix-sessionlink yt-uix-button-default yt-uix-button-size-default"
-                                data-visibility-tracking="CAcQnKQBGAciEwjQmcmQwYjaAhWJun4KHSgTD6Qo9CQ"
-                                data-sessionlink="itct=CAcQnKQBGAciEwjQmcmQwYjaAhWJun4KHSgTD6Qo9CQ"
-                                aria-label="Go to page 2"><span class="yt-uix-button-content">Next »</span></a>
-                        </div>
-
-
-                    </div>
-
-                </div>
-            </div>
-
-            <div class="branded-page-v2-secondary-col">
-                <div id="search-secondary-col-contents">
-
-                </div>
-
-            </div>
-        </div>
+{% block content %}
+    <div id="debug" class="hid">
+        {{ yt.page.header|json_encode() }}
     </div>
-</div>
+    {% embed 'common/channels4/branded_page_v2.twig' %}
+
+    {% set brandedPageConfig = {
+        baseBoldTitles: true,
+        containerFlexWidth: true
+    } %}
+
+    {% block branded_page_primary_column_content %}
+    {% import "common/uix/lockup.twig" as lockup %}
+    {% import "common/uix/button.twig" as button %}
+    <div id="results">
+        <ol id="section-list-{{ generateRid() }}" class="section-list">
+            {% if yt.page.header %}
+            <li class="branded-page-v2-subnav-container branded-page-gutter-padding">
+                <div class="search-header yt-uix-expander yt-uix-expander-collapsed">
+                    <div class="filter-top">
+                        <div class="filter-bar-container">
+                            {%- if yt.page.header.filters -%}
+                            <div class="filter-button-container">
+                                {{ button.render({
+                                    content: {
+                                        runs: [
+                                            {
+                                                text: "Filters"
+                                            }
+                                        ],
+                                        arrow: true
+                                    },
+                                    size: "small",
+                                    style: "default",
+                                    accessibilityLabel: "Search filters",
+                                    customAttributes: {
+                                        "data-button-action": "",
+                                        "data-button-menu-id": "some-nonexistent-menu",
+                                        "data-button-toggle": "true",
+                                    },
+                                    class: [
+                                        "filter-button",
+                                        "yt-uix-expander-head"
+                                    ]
+                                }) }}
+                            </div>
+                            {%- endif -%}
+                            <div class="filter-crumb-spacer"></div>
+                            {%- if yt.page.header.resultCount -%}
+                            <p class="num-results first-focus" tabindex="0">{{ yt.page.header.resultCount }}</p>
+                            {%- endif -%}
+                        </div>
+                    </div>
+                    {%- if yt.page.header.filters -%}
+                    <div id="filter-dropdown" class="yt-uix-expander-body">
+                        {%- for group in yt.page.header.filters -%}
+                            {%- if group.searchFilterGroupRenderer -%}
+                                {% set this = group.searchFilterGroupRenderer %}
+                                <div class="filter-col">
+                                    <h4 class="filter-col-title">{{ getText(this.title) }}</h4>
+                                    <ul>
+                                        {%- for item in this.filters -%}
+                                        {%- set thisF = item.searchFilterRenderer -%}
+                                        <li>
+                                            {%- if thisF.status == "FILTER_STATUS_SELECTED" and group.searchFilterGroupRenderer.isSort -%}
+                                            <span class="filter filter-selected filter-sort" title="{{ thisF.tooltip }}">
+                                                <span class="filter-text" aria-label="{{ thisF.tooltip }}">{{ getText(thisF.label) }}</span>
+                                            </span>
+                                            {%- elseif thisF.status == "FILTER_STATUS_DISABLED" -%}
+                                            <span class="filter filter-disabled" title="{{ thisF.tooltip }}">
+                                                <span class="filter-text" aria-label="{{ thisF.tooltip }}">{{ getText(thisF.label) }}</span>
+                                            </span>
+                                            {%- else -%}
+                                            <a href="{{ getUrl(thisF) }}" aria-label="{{ thisF.tooltip }}" class="filter {{ thisF.status == "FILTER_STATUS_SELECTED" ? "filter-selected" }} spf-link">
+                                                <span class="filter-text {{ not thisF.status == "FILTER_STATUS_SELECTED" ? "filter-ghost" }}">{{ getText(thisF.label) }}</span>
+                                                {%- if thisF.status == "FILTER_STATUS_SELECTED" -%}
+                                                <span class="yt-close">×</span>
+                                                {%- endif -%}
+                                            </a>
+                                            {%- endif -%}
+                                        </li>
+                                        {%- endfor -%}
+                                    </ul>
+                                </div>
+                            {%- endif -%}
+                        {%- endfor -%}
+                        {%- if yt.page.header.hasSelectedFilter -%}
+                        <div class="clear-filters">
+                            <a href="/results?search_query={{ yt.query }}" class="filter spf-link">Clear all filters</a>
+                        </div>
+                        {%- endif -%}
+                    </div>
+                    {%- endif -%}
+                </div>
+            </li>
+            {% endif %}
+            {% if yt.page.results %}
+            <li>
+                <ol id="item-section-{{ generateRid() }}" class="item-section">
+                    {% for result in yt.page.results %}
+                    <li>
+                        {% if result.videoRenderer or result.channelRenderer or result.playlistRenderer or result.radioRenderer %}
+                            {{ lockup.tile(result) }}
+                        {% elseif result.backgroundPromoRenderer %}
+                            <p class="display-message">{{ getText(result.backgroundPromoRenderer.title) }}</p>
+                        {% endif %}
+                    </li>
+                    {% endfor %}
+                </ol>
+            </li>
+            {% endif %}
+        </ol>
+    </div>
+    {% endblock %}
+    {% endembed %}
 {% endblock %}

@@ -29,7 +29,8 @@ Router::get([
     "/channel/**" => "channel",
     "/c/**" => "channel",
     "/live_chat" => "special/get_live_chat",
-    "/feed_ajax" => "ajax/feed"
+    "/feed_ajax" => "ajax/feed",
+    "/results" => "results"
 ]);
 
 Router::post([
