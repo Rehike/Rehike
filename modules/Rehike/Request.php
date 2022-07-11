@@ -123,6 +123,25 @@ class Request
     }
 
     /**
+     * Use the account's gaia ID for authenticating
+     * InnerTube requests.
+     * 
+     * @return void
+     */
+    public static function authUseGaiaId()
+    {
+        $gaiaId = AuthManager::getGaiaId();
+            
+        if ("" != $gaiaId)
+        {
+            self::$innertubeHeaders += [
+                "X-Goog-AuthUser" => "0",
+                "X-Goog-PageId" => $gaiaId
+            ];
+        }
+    }
+
+    /**
      * Add a request to the queue.
      * 
      * @param mixed[] $requestArray
@@ -201,6 +220,8 @@ class Request
                     break;
             }
         }
+
+        self::$namespacedRequestMap[self::$requestNamespace] = [];
 
         return $final;
     }

@@ -1,10 +1,10 @@
 {
-	"previousHash": "a59cb1164ce7931ef84da0a79efb85d753bea96b",
-	"currentRevisionId": 281,
-	"subject": "i18n patch: allow multi-level JSON",
-	"body": "i18n patch: allow multi-level JSON",
+	"previousHash": "88ebd26a8a2c201881e921602dae08f452df8cbd",
+	"currentRevisionId": 282,
+	"subject": "Allow GAIA ID (brand accounts) to be used",
+	"body": "Allow GAIA ID (brand accounts) to be used",
 	"branch": "exp-signin-rework",
 	"committerName": "Coffee",
 	"committerEmail": "99076687+YukisCoffee@users.noreply.github.com",
-	"time": 1657501129
+	"time": 1657506104
 }

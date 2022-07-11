@@ -20,6 +20,7 @@ class AuthManager
 
     public static $shouldAuth = false;
     private static $sapisid;
+    private static $currentGaiaId = "";
 
     // Just because it should be the case doesn't
     // mean that it will always be.
@@ -85,6 +86,11 @@ class AuthManager
         return "SAPISIDHASH {$time}_{$sha1}";
     }
 
+    public static function getGaiaId()
+    {
+        return self::$currentGaiaId;
+    }
+
     public static function getSigninData()
     {
         if (null != self::$info)
@@ -97,10 +103,13 @@ class AuthManager
 
             if ($data = @$cache->responseCache->{$sessionId})
             {
-                self::$info = self::processSigninData(
-                    $data->switcher,
-                    $data->menu
+                self::$info = self::processSwitcherData(
+                    $data->switcher
                 );
+
+                Request::authUseGaiaId();
+
+                self::processMenuData($info, $data->menu);
 
                 return self::$info;
             }
@@ -119,34 +128,54 @@ class AuthManager
         // Perform the necessary request
         Request::setNamespace("rehike.signin_temp_ns");
 
+        // These must be separate in order to account for GAIA id.
         Request::queueUrlRequest("switcher", "https://www.youtube.com/getAccountSwitcherEndpoint");
+        $switcher = Request::getResponses()["switcher"];
+        
+        $info = self::processSwitcherData($switcher);
+        
+        Request::authUseGaiaId();
+        
+        // Then the account menu request can work
+        // also hack i can't be fucked to fix the other code
         Request::queueInnertubeRequest("menu", "account/account_menu", (object)[
             "deviceTheme" => "DEVICE_THEME_SUPPORTED",
             "userInterfaceTheme" => "USER_INTERFACE_THEME_DARK"
         ]);
-
-        $responses = Request::getResponses();
+        $menu = Request::getResponses()["menu"];
 
         // Reset the request namespace now that I'm done!
         Request::setNamespace($previousNamespace);
 
-        $info = self::processSigninData($responses["switcher"], $responses["menu"]);
+        self::processMenuData($info, $menu);
+
+        $responses = [
+            "switcher" => &$switcher,
+            "menu" => &$menu
+        ];
 
         self::writeCache($responses);
 
         return $info;
     }
 
-    public static function processSigninData($switcher, $menu)
+    public static function processSwitcherData($switcher)
     {
         $info = Switcher::parseResponse($switcher);
-        $info["ucid"] = self::getUcid(json_decode($menu));
+
+        self::$currentGaiaId = &$info["activeChannel"]["gaiaId"];
 
         // Since no errors were thrown, assume everything
         // works.
         self::$isSignedIn = true;
 
         return $info;
+    }
+
+    public static function processMenuData(&$info, $menu)
+    {
+        // UCID must be retrieved here to work with GAIA id
+        $info["ucid"] = self::getUcid(json_decode($menu));
     }
 
     /**
@@ -207,6 +236,9 @@ class AuthManager
                 $json = FS::getFileContents(self::CACHE_FILE);
                 
                 $object = json_decode($json);
+
+                if (time() > @$object->expire)
+                    return false;
 
                 if (null != $object)
                     return $object;
