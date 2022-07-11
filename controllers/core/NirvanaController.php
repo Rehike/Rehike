@@ -2,6 +2,7 @@
 namespace Rehike\Controller\core;
 
 use Rehike\Model\Appbar\MAppbar as Appbar;
+use SpfPhp\SpfPhp;
 
 /**
  * Defines a general YouTube Nirvana controller.
@@ -15,6 +16,16 @@ use Rehike\Model\Appbar\MAppbar as Appbar;
  */
 abstract class NirvanaController extends HitchhikerController
 {
+    /**
+     * Don't request the guide on initial visit.
+     * 
+     * This should be true on pages like watch, where the guide
+     * isn't open by default.
+     * 
+     * @var bool
+     */
+    protected $delayLoadGuide = false;
+
     /** @inheritdoc */
     protected $spfIdListeners = [
         '@body<class>',
@@ -40,9 +51,13 @@ abstract class NirvanaController extends HitchhikerController
         $yt->appbar = new Appbar();
         $yt->page = (object)[];
 
-        // TODO: Guide fragments should be requested here ideally.
-        // As guide gets restructured, this behaviour should be
-        // implemented.
+        // Request appbar guide fragments if the page has the
+        // guide enabled, the request is not SPF, and the guide
+        // is open by default.
+        if (SpfPhp::isSpfRequested() || !$this->delayLoadGuide)
+        {
+            $yt->appbar->addGuide($this->getPageGuide());
+        }
     }
 
     /**

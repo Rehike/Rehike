@@ -1,0 +1,22 @@
+{
+    "trending": "Trending",
+    "myChannel": "My channel",
+    "showMore": "Show more",
+    "showFewer": "Show fewer",
+    "guideBuilderLabel": "Browse channels",
+    "manageSubscriptionsLabel": "Manage subscriptions",
+    "notifications": {
+        "watchLaterVideoAdded": "Added to Watch Later",
+        "watchLaterVideoRemoved": "Removed from Watch Later",
+        "subscription": "Subscription added",
+        "unsubscription": "Subscription removed",
+        "playlistLike": "Saved to Playlists",
+        "playlistUnlike": "Removed from Playlists",
+        "playlistVideoAdded": "Added to playlist",
+        "playlistVideoRemoved": "Removed from playlist",
+        "videoLike": "Added to Liked videos",
+        "videoUnlike": "Removed from Liked videos",
+        "eventReminderSet": "You'll be reminded about this event",
+        "eventReminderRemoved": "Event reminder removed"
+    }
+}

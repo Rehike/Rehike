@@ -1,0 +1,20 @@
+{# 
+    Implements the main insertion point for the
+    guide.
+
+    @author Taniko Yamamoto (kirasicecreamm@gmail.com)
+    @author The Rehike Maintainers
+#}
+{% macro render(guide) %}
+{% import "core/spinner.twig" as spinner %}
+{% from "common/guide/guide_module_content.twig" import render as guide_module_content %}
+<div id="guide-container">
+    {% if yt.appbar.guide or yt.spf %}
+        {{ guide_module_content(guide) }}
+    {% else %}
+        <div class="guide-module-content guide-module-loading">
+            {{ spinner.render("Loading...") }}
+        </div>
+    {% endif %}
+</div>
+{% endmacro %}

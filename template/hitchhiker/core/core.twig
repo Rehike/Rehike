@@ -49,7 +49,7 @@
          <div id="page-container">
             <div id="page" class="{{ pageType }} {% block page_class %}{% endblock %}  clearfix ">
                {%- block guide_container -%}
-                  {% include 'common/pageframe/guide.twig' %}
+                  {% include 'common/appbar/appbar_guide.twig' %}
                {% endblock %}
                <div class="alerts-wrapper">
                   <div id="alerts" class="content-alignment">{% block alerts %}{% endblock %}</div>

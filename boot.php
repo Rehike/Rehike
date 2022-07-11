@@ -22,6 +22,7 @@ use Rehike\i18n;
 i18n::setDefaultLanguage("en");
 i18n::newNamespace("main/regex")->registerFromFolder("i18n/regex");
 i18n::newNamespace("main/misc")->registerFromFolder("i18n/misc");
+i18n::newNamespace("main/guide")->registerFromFolder("i18n/guide");
 
 ////////////////////////////////////////////////
 // Temporary Controller V1 compatibility code //

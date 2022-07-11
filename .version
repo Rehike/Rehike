@@ -1,10 +1,10 @@
 {
-	"previousHash": "88ebd26a8a2c201881e921602dae08f452df8cbd",
-	"currentRevisionId": 282,
-	"subject": "Allow GAIA ID (brand accounts) to be used",
-	"body": "Allow GAIA ID (brand accounts) to be used",
+	"previousHash": "376968a11dc112f7e8033cd640362c638ac50202",
+	"currentRevisionId": 292,
+	"subject": "God guide update",
+	"body": "God guide update",
 	"branch": "exp-signin-rework",
 	"committerName": "Coffee",
 	"committerEmail": "99076687+YukisCoffee@users.noreply.github.com",
-	"time": 1657506104
+	"time": 1657508017
 }

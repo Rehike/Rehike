@@ -1,0 +1,20 @@
+{# Implements the main content module of the guide #}
+{% macro render(guide) %}
+{% from "common/guide/guide_section.twig" import render as guide_section %}
+{% from "common/guide/guide_subscriptions_section.twig" import render as guide_subscriptions_section %}
+{% from "common/guide/guide_signin_promo.twig" import render as guide_signin_promo %}
+<div class="guide-module-content yt-scrollbar">
+    <ul class="guide-toplevel">
+        {% for item in guide.items %}
+            {% set addSeparator = not loop.last %}
+            {% if item.guideSectionRenderer %}
+                {{ guide_section(item.guideSectionRenderer, addSeparator) }}
+            {% elseif item.guideSubscriptionsSectionRenderer %}
+                {{ guide_subscriptions_section(item.guideSubscriptionsSectionRenderer, addSeparator) }}
+            {% elseif item.guideSigninPromoRenderer %}
+                {{ guide_signin_promo(item.guideSigninPromoRenderer, addSeparator) }}
+            {% endif %}
+        {% endfor %}
+    </ul>
+</div>
+{% endmacro %}

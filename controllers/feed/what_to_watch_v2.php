@@ -11,6 +11,11 @@ $yt->flow = (isset($_GET["flow"]) and $_GET["flow"] == "2") ? "list" : "grid";
 
 include "controllers/mixins/guideNotSpfMixin.php";
 
+if (function_exists("legacySetEndpoint"))
+{
+    $yt->currentEndpoint = legacySetEndpoint("browse", "FEwhat_to_watch");
+}
+
 $response = Request::innertubeRequest(
     "browse", 
     (object)[

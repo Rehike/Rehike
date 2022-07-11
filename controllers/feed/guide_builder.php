@@ -16,6 +16,10 @@ $yt->page = (object) [];
 $yt->enableFooterCopyright = true;
 
 include "controllers/mixins/guideNotSpfMixin.php";
+if (function_exists("legacySetEndpoint"))
+{
+    $yt->currentEndpoint = legacySetEndpoint("browse", "FEguide_builder");
+}
 
 $response = Request::innertubeRequest("browse", (object)[
     "browseId" => "FEguide_builder"

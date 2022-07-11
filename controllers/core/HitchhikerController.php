@@ -2,8 +2,10 @@
 namespace Rehike\Controller\core;
 
 use Rehike\TemplateManager;
+use Rehike\Request;
 use SpfPhp\SpfPhp;
 use Rehike\ControllerV2\RequestMetadata;
+use Rehike\Model\Guide\MGuide as Guide;
 
 /**
  * Defines a general YouTube Hitchhiker controller.
@@ -17,6 +19,13 @@ use Rehike\ControllerV2\RequestMetadata;
  */
 abstract class HitchhikerController
 {
+    /**
+     * Stores information about the current page endpoint.
+     * 
+     * @var object
+     */
+    protected static $currentEndpoint;
+
     /**
      * Stores all information that is sent to Twig for rendering the page.
      * 
@@ -90,7 +99,7 @@ abstract class HitchhikerController
      * Implements the base functionality that is ran on every POST request.
      * 
      * This function should not be overridden for page-specific
-     * functionality. Use the controller's API (onGet()) for that.
+     * functionality. Use the controller's API (onPost()) for that.
      * 
      * @param object $yt                 Template data.
      * 
@@ -114,6 +123,59 @@ abstract class HitchhikerController
         $this->doGeneralRender();
     }
 
+    /**
+     * Request the guide and return the processed result.
+     * 
+     * As Rehike implements a Nirvana frontend primarily, this behaviour
+     * is unused by the base Hitchhiker controller. This function
+     * is used by NirvanaController.
+     * 
+     * @return object
+     */
+    public function getPageGuide()
+    {
+        $response = Request::innertubeRequest("guide", (object)[]);
+
+        $guide = json_decode($response);
+
+        return Guide::fromData($guide);
+    }
+
+    /**
+     * Set the current page endpoint.
+     * 
+     * This is only used internally for coordinating the pages. More
+     * specifically, it is used by the guide service to know which item
+     * to select.
+     * 
+     * @param string $type of the endpoint
+     * @param string $a (whatever the endpoint offers)
+     */
+    public function setEndpoint($type, $a)
+    {
+        $type = strtolower($type);
+
+        // Will be casted to an object
+        $data = [];
+
+        switch ($type)
+        {
+            case "browse":
+                $data["browseEndpoint"] = (object)[
+                    "browseId" => $a
+                ];
+                break;
+            case "url":
+                $data["urlEndpoint"] = (object)[
+                    "url" => $a
+                ];
+                break;
+        }
+
+        $data = (object)$data;
+
+        self::$currentEndpoint = $data;
+    }
 
     /**
      * Defines the API for handling GET requests. Pages should always use this;
@@ -165,6 +227,8 @@ abstract class HitchhikerController
     public function postInit(&$yt, &$template)
     {
         $template = $this->template;
+        
+        $yt->currentEndpoint = self::$currentEndpoint;
     }
 
     /**

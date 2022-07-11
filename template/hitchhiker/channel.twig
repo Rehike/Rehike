@@ -31,7 +31,7 @@
 
 
         yt.setConfig({
-        'GUIDE_SELECTED_ITEM': "0qDduQEaEhh{{ yt.ucid|base64_encode() }}%3D"
+        'GUIDE_SELECTED_ITEM': "{{ serialiseEndpoint(yt.currentEndpoint) }}"
         });
 
         yt.setConfig({
