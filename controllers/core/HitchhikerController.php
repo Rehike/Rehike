@@ -51,6 +51,16 @@ abstract class HitchhikerController
     public $template = "";
 
     /**
+     * Whether or not we should use a Twig template to render.
+     * 
+     * Some AJAX responses are so simple, that using a template
+     * makes no sense.
+     * 
+     * @var boolean
+     */
+    public $useTemplate = true;
+
+    /**
      * Defines the default element IDs that are listened to by
      * YouTube's SPF library.
      * 
@@ -66,6 +76,13 @@ abstract class HitchhikerController
         'player-playlist<class>',
         '@player<class>'
     ];
+
+    /**
+     * What the Content-Type header should be in the response
+     * 
+     * @var string
+     */
+    public $contentType = "text/html";
 
     /**
      * Implements the base functionality that is ran on every GET request.
@@ -85,6 +102,7 @@ abstract class HitchhikerController
      */
     public function get(&$yt, &$template, $request)
     {
+        header("Content-Type: " .  $this -> contentType);
         $this->yt = &$yt;
         $this->init($yt, $template);
 
@@ -92,7 +110,7 @@ abstract class HitchhikerController
 
         $this->postInit($yt, $template);
 
-        $this->doGeneralRender();
+        if ($this->useTemplate) $this->doGeneralRender();
     }
 
     /**
@@ -113,6 +131,7 @@ abstract class HitchhikerController
      */
     public function post(&$yt, &$template, $request)
     {
+        header("Content-Type: " .  $this -> contentType);
         $this->yt = &$yt;
         $this->init($yt, $template);
 
@@ -120,7 +139,7 @@ abstract class HitchhikerController
 
         $this->postInit($yt, $template);
 
-        $this->doGeneralRender();
+        if ($this->useTemplate) $this->doGeneralRender();
     }
 
     /**

@@ -10,6 +10,8 @@ use \Rehike\Controller\core\NirvanaController;
  * @author The Rehike Maintainers
  */
 abstract class AjaxController extends NirvanaController {
+    public $contentType = "application/json";
+
     // Find action
     // Not used for watch_fragments or watch_fragments2 (electric boogaloo)
     protected function findAction() {
