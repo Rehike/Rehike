@@ -6,8 +6,6 @@ return new class extends AjaxController {
     public $template = "ajax/feed/get_notifications";
 
     public function onGet(&$yt, $request) {
-        header("Content-Type: application/json");
-
         if (!@$yt->signin["isSignedIn"]) { // feed_ajax is ONLY used signed in
             echo json_encode((object)["errors"=>[]]);
             die();
