@@ -225,7 +225,7 @@ class i18n
     {
         $string = self::getStringId($id);
 
-        if (!is_callable($string))
+        if (is_string($string))
         {
             return sprintf($string, ...$params);
         }

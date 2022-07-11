@@ -1,10 +1,10 @@
 {
-	"previousHash": "222e56cb5bd30fee16d91cfaf658c667c78b7d9c",
-	"currentRevisionId": 280,
-	"subject": "Update protos",
-	"body": "Update protos",
+	"previousHash": "a59cb1164ce7931ef84da0a79efb85d753bea96b",
+	"currentRevisionId": 281,
+	"subject": "i18n patch: allow multi-level JSON",
+	"body": "i18n patch: allow multi-level JSON",
 	"branch": "exp-signin-rework",
 	"committerName": "Coffee",
 	"committerEmail": "99076687+YukisCoffee@users.noreply.github.com",
-	"time": 1657457157
+	"time": 1657501129
 }
