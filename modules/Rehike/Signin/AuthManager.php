@@ -109,7 +109,7 @@ class AuthManager
 
                 Request::authUseGaiaId();
 
-                self::processMenuData($info, $data->menu);
+                self::processMenuData(self::$info, $data->menu);
 
                 return self::$info;
             }
