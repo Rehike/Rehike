@@ -29,6 +29,7 @@ Our main development operating system is Windows. As such, these instructions ma
 ### Prerequisites
 - PHP 7.4+
    - We recommend using [XAMPP 8+](https://www.apachefriends.org/index.html)
+   - Linux users may need to manually install the [DOMDocument extension](https://www.php.net/manual/en/dom.setup.php).
 - A proxy (to map it to `www.youtube.com`)
    - See [YukisCoffee/hitchhiker's instructions](https://github.com/YukisCoffee/hitchhiker#installation) on this.
    - A proxy is required for video playback, unless you have a CORS bypass extension installed on your browser.
