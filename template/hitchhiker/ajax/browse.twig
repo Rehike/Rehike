@@ -6,7 +6,7 @@
     {% endif %}
     "content_html": {%- apply json_encode|raw -%}
     {% if yt.page.shelfList %}
-        {% import "common/uix/shelf.twig" as shelf %}
+        {% import "common/uix/shelf_old.twig" as shelf %}
         {% for shelf in yt.page.shelfList %}
             {{ shelf.compact(shelf) }}
         {% endfor %}

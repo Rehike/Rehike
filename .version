@@ -1,10 +1,10 @@
 {
-	"previousHash": "376968a11dc112f7e8033cd640362c638ac50202",
-	"currentRevisionId": 292,
-	"subject": "God guide update",
-	"body": "God guide update",
+	"previousHash": "362a408151948ffa4d97f910689b300dd96a231f",
+	"currentRevisionId": 306,
+	"subject": "Clarify DOMDocument necessity",
+	"body": "Clarify DOMDocument necessity",
 	"branch": "exp-signin-rework",
 	"committerName": "Coffee",
 	"committerEmail": "99076687+YukisCoffee@users.noreply.github.com",
-	"time": 1657508008
+	"time": 1657525004
 }

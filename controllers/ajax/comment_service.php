@@ -29,7 +29,9 @@ if (isset($action))
     $yt->page = (object) [];
     $yt->comments = (object) [];
 
-    if ($action = "action_create_comment") {
+    // Stupid ass typo
+    // This is why I type them in reverse order
+    if ($action == "action_create_comment") {
         $response = Request::innertubeRequest("comment/create_comment", (object) [
             "commentText" => $_POST["content"],
             "createCommentParams" => $_POST["params"]
@@ -49,23 +51,19 @@ const COMMENTS_CONTINUATION_PATH = "onResponseReceivedEndpoints[0].appendContinu
 const COMMENTS_RELOAD_PATH = "onResponseReceivedEndpoints[1].reloadContinuationItemsCommand";
 // tracking bullshit is item 0 in create response
 const COMMENTS_CREATE_PATH = "actions[1].createCommentAction";
-try 
+if (in_array($action, ["action_get_comments", "action_get_comment_replies"]))
 {
-    $data = getProp($ytdata, COMMENTS_CONTINUATION_PATH);
-}
-catch (\YukisCoffee\GetPropertyAtPathException $e)
-{
-    try
+    try 
     {
-        $data = getProp($ytdata, COMMENTS_RELOAD_PATH);
+        $data = getProp($ytdata, COMMENTS_CONTINUATION_PATH);
     }
     catch (\YukisCoffee\GetPropertyAtPathException $e)
     {
         try
         {
-            $data = getProp($ytdata, COMMENTS_CREATE_PATH);
+            $data = getProp($ytdata, COMMENTS_RELOAD_PATH);
         }
-        catch(\YukisCoffee\GetPropertyAtPathException $e)
+        catch (\YukisCoffee\GetPropertyAtPathException $e)
         {
             echo json_encode(
                 (object)[
@@ -74,6 +72,22 @@ catch (\YukisCoffee\GetPropertyAtPathException $e)
             );
             exit();
         }
+    }
+}
+else if ("action_create_comment" == $action)
+{
+    try
+    {
+        $data = getProp($ytdata, COMMENTS_CREATE_PATH);
+    }
+    catch(\YukisCoffee\GetPropertyAtPathException $e)
+    {
+        echo json_encode(
+            (object)[
+                "error" => "Failed to get property at path " . COMMENTS_CREATE_PATH
+            ]
+        );
+        exit();
     }
 }
 
