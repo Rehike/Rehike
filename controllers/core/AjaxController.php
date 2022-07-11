@@ -3,6 +3,12 @@ namespace Rehike\Controller\core;
 
 use \Rehike\Controller\core\NirvanaController;
 
+/**
+ * Defines a general AJAX endpoint controller.
+ * 
+ * @author Aubrey Pankow <aubyomori@gmail.com>
+ * @author The Rehike Maintainers
+ */
 abstract class AjaxController extends NirvanaController {
     // Find action
     // Not used for watch_fragments or watch_fragments2 (electric boogaloo)
