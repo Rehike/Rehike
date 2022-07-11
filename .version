@@ -1,10 +1,10 @@
 {
-	"previousHash": "376968a11dc112f7e8033cd640362c638ac50202",
-	"currentRevisionId": 292,
-	"subject": "God guide update",
-	"body": "God guide update",
+	"previousHash": "8aad03760a6bdb3aee3ad84589127d293e3a41ca",
+	"currentRevisionId": 296,
+	"subject": "Remove masthead debug",
+	"body": "Remove masthead debug",
 	"branch": "exp-signin-rework",
 	"committerName": "Coffee",
 	"committerEmail": "99076687+YukisCoffee@users.noreply.github.com",
-	"time": 1657508017
+	"time": 1657523110
 }
