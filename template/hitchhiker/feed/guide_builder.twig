@@ -34,7 +34,7 @@ Browse channels - {{ parent() }}
     {% block branded_page_primary_column_content %}
         <div id="browse-items-primary">
             <ol id="section-list-874807" class="section-list">
-            {% import "common/uix/shelf.twig" as shelf %}
+            {% import "common/uix/shelf_old.twig" as shelf %}
                 {%- for shelfSlider in yt.page.shelvesList -%}
                 {#{{ shelf|json_encode }}#}
                 {% set shelfSliderContent = shelfSlider.itemSectionRenderer.contents.0.shelfRenderer %}
