@@ -91,12 +91,6 @@ switch ($routerUrl->path[0]) {
                     break;
             }
             break;
-    /**
-     * Test definitions
-     */
-        case 'forcefatal':
-            $template = 'sdsadasds';
-            break;
     default:
         $template = 'error/404';
         break;

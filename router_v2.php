@@ -33,7 +33,8 @@ Router::get([
     "/feed_ajax" => "ajax/feed",
     "/results" => "results",
     "/playlist" => "playlist",
-    "/oops" => "oops"
+    "/oops" => "oops",
+    "/forcefatal" => "forcefatal"
 ]);
 
 Router::post([
