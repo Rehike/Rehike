@@ -6,9 +6,9 @@ class MAppbarNav
     public $items;
     public $owner = null;
 
-    public function addItem($title, $href, $selected)
+    public function addItem($title, $href, $status)
     {
-        $this->items[] = new MAppbarNavItem($title, $href, $selected);
+        $this->items[] = new MAppbarNavItem($title, $href, $status);
     }
 
     public function addOwner($title, $href, $thumbnail)

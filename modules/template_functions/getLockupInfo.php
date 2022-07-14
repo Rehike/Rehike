@@ -9,7 +9,7 @@
     $response -> style = (strpos($rendName, "grid") > -1) ? "grid" : "tile";
     $response -> type = strtolower(str_replace("grid", "", str_replace("Renderer", "", $rendName)));
 
-    if ($response -> type == "playlist") {
+    if ($response -> type == "playlist" and $response -> style == "tile") {
         $response -> thumbArray = $response -> info -> thumbnails[0];
     } else {
         $response -> thumbArray = $response -> info -> thumbnail;

@@ -23,7 +23,7 @@
                     {% set author = playlist.shortBylineText.runs.0 %}
                     {% set href = author.navigationEndpoint.commandMetadata.webCommandMetadata.url %}
                     <li class="author-attribution">
-                        <a href="{{ href }}" class=" yt-uix-sessionlink      spf-link " data-sessionlink="ei=VD2iWpnYHbi--AP_h6ngCQ" >{{ author.text }}</a>
+                        {{ yt.config.byTextOnByline ? "by " }}<a href="{{ href }}" class=" yt-uix-sessionlink      spf-link " data-sessionlink="ei=VD2iWpnYHbi--AP_h6ngCQ" >{{ author.text }}</a>
                     </li>
                 {% endif %}
                 {% if playlist.videoCountText %}

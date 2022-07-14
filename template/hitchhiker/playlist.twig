@@ -1,0 +1,143 @@
+{% extends "core.twig" %} 
+{% import "core/macros.twig" as core %}
+
+{% set appbarEnabled = true %}
+{% set defaultGuideVisibility = true %}
+{# TEMPORARY VALUE: SET TO TRUE WHEN CHANNEL HEADER IS ADDED #}
+{% set defaultAppbarVisibility = false %}
+{% set enableSnapScaling = true %}
+
+{% block foot_scripts %}
+<script>
+    yt.setConfig('ANGULAR_JS', "\/\/s.ytimg.com\/yts\/jslib\/angular.min-vfl8oYsy-.js");
+    yt.setConfig('TRANSLATIONEDITOR_JS', "\/\/s.ytimg.com\/yts\/jsbin\/www-translationeditor-vfl6AQtCI\/www-translationeditor.js");
+    yt.setMsg('UNSAVED_CHANGES_WARNING', "Some of the changes you have made to channel settings have not been saved and will be lost if you navigate away from this page.");
+
+
+    yt.setConfig('JS_PAGE_MODULES', ["www\/channels","www\/ypc_bootstrap"]);
+
+
+
+
+    yt.setConfig('CHANNEL_ID', null);
+
+
+    yt.setConfig('CHANNEL_TAB', "playlist");
+
+
+    yt.setConfig('DISMISS_THROUGH_IT', true);
+
+
+        yt.setConfig({
+        'GUIDE_SELECTED_ITEM': "{{ serialiseEndpoint(yt.currentEndpoint) }}"
+        });
+
+        yt.setConfig({
+    'GUIDED_HELP_LOCALE': "en_US",
+    'GUIDED_HELP_ENVIRONMENT': "prod"
+    });
+</script>
+{% endblock %}
+
+{%- block head_css -%}
+{{ core.css('www-home-c4') }}
+{% endblock %}
+
+{%- block content -%}
+    <div id="debug" class="hid">
+        {{ yt.page|json_encode() }}
+    </div>
+    {%- embed "common/channels4/branded_page_v2.twig" -%}
+        {%- set brandedPageConfig = {
+            'baseBoldTitles': true,
+            'containerFlexWidth': true,
+            'hasTopRow': true,
+            'secondaryColumnHidden': yt.page.secondaryContent ? false : true
+        } -%}
+
+        {%- block branded_page_primary_column_content -%}
+            {%- from "core/html/img.twig" import img as img -%}
+            {%- import "common/uix/button.twig" as button -%}
+            {%- if yt.page.plHeader -%}
+            {%- set plh = yt.page.plHeader -%}
+            <div id="pl-header" class="branded-page-box clearfix" data-all-playlists-url="{{ getUrl(plh.owner) }}/playlists">
+                <div class="pl-header-thumb" style="height: 126px;">
+                    <img src="{{ getThumb(plh, 126) }}" height="126px">
+                    <a href="{{ getUrl(plh) }}" class="pl-header-play-all-overlay yt-valign spf-link">► Play all</a>
+                </div>
+                <div class="pl-header-content">
+                    <h1 class="pl-header-title" tabindex="0">{{ getText(plh.title) }}</h1>
+                    <ul class="pl-header-details">
+                        <li><a href="{{ getUrl(plh.owner) }}" class="spf-link">{{ getText(plh.owner.title) }}</a></li>
+                        {%- for meta in plh.metas -%}
+                        <li>{{ getText(meta) }}</li>
+                        {%- endfor -%}
+                    </ul>
+                    <div class="playlist-actions">
+                        {%- for button in plh.actions -%}
+                        {{ button.render(button) }}
+                        {%- endfor -%}
+                    </div>
+                </div>
+            </div>
+            {%- endif -%}
+            {%- if yt.page.videoList -%}
+                {%- import "common/uix/watch_later_button.twig" as wlBtn -%}
+                <ul id="browse-items-primary">
+                    <li>
+                        <div id="pl-video-list" class="pl-video-list">
+                            <table id="pl-video-table" class="pl-video-table">
+                                <tbody id="pl-load-more-destination">
+                                    {%- for video in yt.page.videoList -%}
+                                        {%- if video.playlistVideoRenderer -%}
+                                            {%- set this = video.playlistVideoRenderer -%}
+                                            <tr class="pl-video yt-uix-tile" data-video-id="{{ this.videoId }}" data-set-video-id="" data-title="{{ getText(this.title) }}">
+                                                <td class="pl-video-handle"></td>
+                                                <td class="pl-video-index"></td> {# this is handled by css for some reason #}
+                                                <td class="pl-video-thumbnail">
+                                                    <span class="pl-video-thumb ux-thumb-wrap contains-addto">
+                                                        <a href="{{ getUrl(this) }}" class="spf-link" aria-hidden="true">
+                                                            <span class="video-thumb yt-thumb yt-thumb-72">
+                                                                <span class="yt-thumb-default">
+                                                                    <span class="yt-thumb-clip">
+                                                                        {{ img({
+                                                                            src: getThumb(this, 72),
+                                                                            ytImg: true,
+                                                                            onload: ";window.__ytRIL && __ytRIL(this)",
+                                                                            delayLoad: true,
+                                                                            width: 72
+                                                                        }) }}
+                                                                        <span class="vertical-align"></span>
+                                                                    </span>
+                                                                </span>
+                                                            </span>
+                                                        </a>
+                                                        {{ wlBtn.render(getWLOverlay(this), this.videoId) }}
+                                                    </span>
+                                                </td>
+                                                <td class="pl-video-title">
+                                                    <a href="{{ getUrl(this) }}" class="pl-video-title-link yt-uix-tile-link spf-link">{{ getText(this.title) }}</a>
+                                                    <div class="pl-video-bottom-standalone-badge"></div>
+                                                </td>
+                                                <td class="pl-video-badges"></td>
+                                                <td class="pl-video-added-by"></td>
+                                                <td class="pl-video-time">
+                                                    <div class="more-menu-wrapper">
+                                                        <div class="timestamp">
+                                                            <span aria-label="{{ this.lengthText.accessibility.accessibilityData.label }}">{{ getText(this.lengthText) }}</span>
+                                                        </div>
+                                                        <div class="pl-video-edit-options"></div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        {%- endif -%}
+                                    {%- endfor -%}
+                                </tbody>
+                            </table>
+                        </div>
+                    </li>
+                </ul>
+            {%- endif -%}
+        {%- endblock -%}
+    {%- endembed -%}
+{%- endblock -%}

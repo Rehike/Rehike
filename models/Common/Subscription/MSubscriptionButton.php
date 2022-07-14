@@ -40,7 +40,6 @@ class MSubscriptionButton extends MButton
         "style-type" => "", // branded/unbranded
         "clicktracking" => "",
         "servicelink" => "",
-        "show-unsub-confirm-dialog" => "true",
         "visibility-tracking" => "",
         "show-unsub-confirm-time-frame" => "always",
         "channel-external-id" => ""
@@ -74,6 +73,7 @@ class MSubscriptionButton extends MButton
         $this->disabled = $opts["isDisabled"];
         $this->branded = $opts["branded"];
         $this->subscribed = $opts["isSubscribed"];
+        $this->unsubText = $opts["unsubText"];
         
         $this->type = $opts["type"];
         $this->attributes["channel-external-id"] = $opts["channelExternalId"];
@@ -81,7 +81,7 @@ class MSubscriptionButton extends MButton
         if ($this->subscribed) {
             $this->style .= "subscribed";
             $this->class[] = "hover-enabled";
-            $this->attributes += ["subscribed" => "1"];
+            $this->attributes += ["is-subscribed" => "True"];
         } else {
             $this->style .= "subscribe";
         }
@@ -98,7 +98,7 @@ class MSubscriptionButton extends MButton
         }
 
         // TODO (kirasicecreamm): if logged out here
-        $this->attributes["href"] = "https://accounts.google.com/ServiceLogin?hl=en&service=youtube&uilel=3&continue=http%3A%2F%2Fwww.youtube.com%2Fsignin%3Fcontinue_action%3DQUFFLUhqbm5YUkxYSGRlWHphMjAwczlsLTBlcUFzTmpnQXxBQ3Jtc0trV2hlS1FyeWExa3hJQWtuRTB5TXEyckFwVGNuajAwZU5UWXZzM0ZRR0F5X1hISm8ybmczbUdqQkp6VGExTEhrRXdLOG94NmRlbWhYQ3FQcjRiSHFNbkhWV0dBZHdyNzJ3LW9PRFcwd21sQ0dWY05OemRFZV9hZUo2TGFlY0pjaXAyMEp2aEFPcEVBSHktU3d0dEdhdy1JaWhFUU1SWVVKcm9OUGNjSHc2Sm4yZ2t2Rmx4V2NOTm1MT1NQX1lLaEZ2RjZCMGk%253D%26feature%3Dsubscribe%26action_handle_signin%3Dtrue%26next%3D%252Fchannel%252FUCuAXFkgsw1L7xaCfnd5JJOw%26hl%3Den%26app%3Ddesktop&passive=true";
+        // $this->attributes["href"] = "https://accounts.google.com/ServiceLogin?hl=en&service=youtube&uilel=3&continue=http%3A%2F%2Fwww.youtube.com%2Fsignin%3Fcontinue_action%3DQUFFLUhqbm5YUkxYSGRlWHphMjAwczlsLTBlcUFzTmpnQXxBQ3Jtc0trV2hlS1FyeWExa3hJQWtuRTB5TXEyckFwVGNuajAwZU5UWXZzM0ZRR0F5X1hISm8ybmczbUdqQkp6VGExTEhrRXdLOG94NmRlbWhYQ3FQcjRiSHFNbkhWV0dBZHdyNzJ3LW9PRFcwd21sQ0dWY05OemRFZV9hZUo2TGFlY0pjaXAyMEp2aEFPcEVBSHktU3d0dEdhdy1JaWhFUU1SWVVKcm9OUGNjSHc2Sm4yZ2t2Rmx4V2NOTm1MT1NQX1lLaEZ2RjZCMGk%253D%26feature%3Dsubscribe%26action_handle_signin%3Dtrue%26next%3D%252Fchannel%252FUCuAXFkgsw1L7xaCfnd5JJOw%26hl%3Den%26app%3Ddesktop&passive=true";
 
         // i18n:
         $this->content = (object)["runs" => [

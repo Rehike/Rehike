@@ -25,7 +25,8 @@ class MSubscriptionActions
             "isSubscribed" => false,
             "type" => "FREE",
             "branded" => "true",
-            "channelExternalId" => ""
+            "channelExternalId" => "",
+            "unsubText" => "Unsubscribe?"
         ];
 
         if ($opts["showCount"])
@@ -56,7 +57,8 @@ class MSubscriptionActions
             "branded" => $branded,
             "longText" => $count,
             "shortText" => $count,
-            "isSubscribed" => $data -> subscribed ?? false
+            "isSubscribed" => $data -> subscribed ?? false,
+            "channelExternalId" => $data -> channelId ?? false
         ]);
     }
 

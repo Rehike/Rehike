@@ -60,7 +60,7 @@ class MHeader
             $this->badges = $a;
 
         // Add the subscription button
-        if ($a = @$header->subscribeButton)
+        if ($a = @$header->subscribeButton->subscribeButtonRenderer)
         {
             $count = "";
 

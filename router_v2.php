@@ -7,7 +7,8 @@ Router::funnel([
     "/s/*",
     "/embed/*",
     "/yts/*",
-    "/favicon.ico"
+    "/favicon.ico",
+    "/subscribe_embed"
 ]);
 
 Router::redirect([
@@ -30,10 +31,13 @@ Router::get([
     "/c/**" => "channel",
     "/live_chat" => "special/get_live_chat",
     "/feed_ajax" => "ajax/feed",
-    "/results" => "results"
+    "/results" => "results",
+    "/playlist" => "playlist",
+    "/oops" => "oops"
 ]);
 
 Router::post([
     "/feed_ajax" => "ajax/feed",
-    "/playlist_video_ajax" => "ajax/playlist_video"
+    "/playlist_video_ajax" => "ajax/playlist_video",
+    "/subscription_ajax" => "ajax/subscription"
 ]);

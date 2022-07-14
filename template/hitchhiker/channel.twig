@@ -26,6 +26,33 @@
 
     yt.setConfig('CHANNEL_TAB', "{{ yt.tab }}");
 
+    (function() {
+        var channelHeaderEl = document.querySelector('.channel-header');
+        if (!channelHeaderEl) {
+          return;
+        }
+  
+        if (!/channel-header-auto-hide/.test(channelHeaderEl.className)) {
+          return;
+        }
+  
+        var brandedPageContainer = document.querySelector('.branded-page-v2-container');
+        var originalHeight = brandedPageContainer.clientHeight;
+        channelHeaderEl.className = channelHeaderEl.className.replace(/\bhid\b/);
+        var height = brandedPageContainer.clientHeight;
+        var scrollDistance = height - originalHeight;
+  
+        document.body.style.minHeight = 0;
+  
+        var bodyScrollHeight = document.body.scrollHeight;
+        var bodyClientHeight = document.body.clientHeight;
+        var heightToIncrease = scrollDistance - (bodyScrollHeight - bodyClientHeight);
+        if (heightToIncrease > 0) {
+          document.body.style.minHeight = bodyScrollHeight + heightToIncrease + 'px';
+        }
+  
+        document.body.scrollTop = document.documentElement.scrollTop = scrollDistance;
+      }());
 
     yt.setConfig('DISMISS_THROUGH_IT', true);
 

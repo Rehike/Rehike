@@ -27,12 +27,12 @@
                         {% if yt.config.byTextOnByline %}by{% endif %}
                         <a href="{{ getUrl(byline.runs[0]) }}" class="spf-link">{{ getText(byline) }}</a>
                         {% if info.ownerBadges != null and getBadge(info.ownerBadges, "BADGE_STYLE_TYPE_VERIFIED") %}
-                        <span title="Verified" class="yt-uix-tooltip yt-channel-title-icon-verified yt-sprite"></span>
+                            <span title="Verified" class="yt-uix-tooltip yt-channel-title-icon-verified yt-sprite"></span>
                         {% endif %}
                     </div>
                     {% endif %}
                     {% if data.type == "playlist" or data.type == "radio" %}
-                    {{ _self.playlistMeta(data) }}
+                    {{ _self.playlistMeta(data, style) }}
                     {% elseif getMeta(info) != false %}
                     <div class="yt-lockup-meta">
                         <ul class="yt-lockup-meta-info">
@@ -62,8 +62,9 @@
     {% endif %}
 {% endmacro %}
 
-{% macro playlistMeta(data) %}
+{% macro playlistMeta(data, style) %}
 {% set info = data.info %}
+{%- if style == "tile" -%}
 <ol class="yt-lockup-meta yt-lockup-playlist-items">
     {% for video in info.videos %}
         {% if video.childVideoRenderer %}
@@ -75,6 +76,7 @@
         {% endif %}
     {% endfor %}
 </ol>
+{%- endif -%}
 <div class="yt-lockup-meta">
     <ul class="yt-lockup-meta-info">
         <li>

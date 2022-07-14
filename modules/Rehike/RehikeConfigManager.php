@@ -25,7 +25,8 @@ class RehikeConfigManager extends ConfigManager
             "largeSearchThumbs" => true,
             "byTextOnByline" => false,
             "noViewsText" => false,
-            "movingThumbnails" => true
+            "movingThumbnails" => true,
+            "guideOnWatchPage" => false
         ];
     
     /**
