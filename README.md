@@ -22,17 +22,7 @@ See [CONTRIBUTORS.md](CONTRIBUTORS.md).
 
 ***Rehike is early in development. You should not expect a perfect user experience, should you choose to use it.***
 
-At the moment, Rehike must be manually installed. In the future, a simplified installer application will be released to streamline installation. As it stands, you will require some knowledge to get through its installation.
-
-Our main development operating system is Windows. As such, these instructions may differ if you are attempting to install Rehike on another operating system.
-
-### Prerequisites
-- PHP 7.4+
-   - We recommend using [XAMPP 8+](https://www.apachefriends.org/index.html)
-   - Linux users may need to manually install the [DOMDocument extension](https://www.php.net/manual/en/dom.setup.php).
-- A proxy (to map it to `www.youtube.com`)
-   - See [YukisCoffee/hitchhiker's instructions](https://github.com/YukisCoffee/hitchhiker#installation) on this.
-   - A proxy is required for video playback, unless you have a CORS bypass extension installed on your browser.
+[See this page for installation instructions.](https://github.com/Rehike/Rehike/blob/misc-install-guide/README.md)
 
 ## Acknowledgements
 
