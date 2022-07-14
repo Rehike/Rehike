@@ -131,7 +131,15 @@
                 <ol id="item-section-{{ generateRid() }}" class="item-section">
                     {% for result in yt.page.results %}
                     <li>
-                        {% if result.videoRenderer or result.channelRenderer or result.playlistRenderer or result.radioRenderer %}
+                        {% if yt.config.largeSearchThumbs %}
+                            {% if result.channelRenderer %}
+                            {{ lockup.tile(result, 138, 138) }}
+                            {% elseif result.videoRenderer  or result.playlistRenderer or result.radioRenderer %}
+                            {{ lockup.tile(result, 246, 138) }}
+                            {% elseif result.backgroundPromoRenderer %}
+                                <p class="display-message">{{ getText(result.backgroundPromoRenderer.title) }}</p>
+                            {% endif %}
+                        {% elseif result.videoRenderer or result.channelRenderer or result.playlistRenderer or result.radioRenderer %}
                             {{ lockup.tile(result) }}
                         {% elseif result.backgroundPromoRenderer %}
                             <p class="display-message">{{ getText(result.backgroundPromoRenderer.title) }}</p>

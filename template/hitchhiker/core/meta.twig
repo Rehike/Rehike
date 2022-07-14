@@ -25,6 +25,7 @@
 <link rel="publisher" href="https://plus.google.com/115229808208707341778">
 <link rel="alternate" href="android-app://com.google.android.youtube/http/www.youtube.com/">
 <link rel="alternate" href="ios-app://544007664/vnd.youtube/www.youtube.com/">
+{%- if yt.config.hhCSSFixes -%}
 <style id="rehike-fix">
     html {
         overflow-y: scroll
@@ -60,32 +61,11 @@
         padding: 0;
         border: 0; /* prevents button from shrinking */
     }
-
-    .expanded-shelf .channels-content-item {
-        margin-bottom: 20px;
-    }
-
-    #browse-items-primary .item-section > li > .yt-lockup-tile, #browse-items-primary .item-section > li > .multirow-shelf, .browse-list-item-container.feed-item-container.branded-page-box, .compact-shelf.branded-page-box {
-        padding-left: 15px;
-        padding-right: 15px;
-    }
-
+</style>
+{%- endif -%}
+<style id="w2w-v2-fix">
     .expanded-shelf #channels-browse-content-grid {
         padding: 0;
-    }
-
-    a.filter:hover,
-    a.filter:focus {
-        text-decoration: none;
-    }
-
-    .yt-lockup-deemphasized-text {
-        color: #999;
-        margin-left: 5px;
-    }
-
-    .yt-lockup-deemphasized-text::before {
-        content: unset !important;
     }
 
     #c4-header-bg-container .hd-banner-image {
@@ -94,5 +74,14 @@
 
     #item-section-69420 #channels-browse-content-grid.grid-lockups-container {
         padding-top: 0;
+    }
+
+    .expanded-shelf .channels-content-item {
+        margin-bottom: 20px;
+    }
+
+    #browse-items-primary .item-section > li > .yt-lockup-tile, #browse-items-primary .item-section > li > .multirow-shelf, .browse-list-item-container.feed-item-container.branded-page-box, .compact-shelf.branded-page-box {
+        padding-left: 15px;
+        padding-right: 15px;
     }
 </style>

@@ -26,7 +26,8 @@ class RehikeConfigManager extends ConfigManager
             "byTextOnByline" => false,
             "noViewsText" => false,
             "movingThumbnails" => true,
-            "guideOnWatchPage" => false
+            "guideOnWatchPage" => false,
+            "hhCSSFixes" => true
         ];
     
     /**
