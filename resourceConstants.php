@@ -2,7 +2,7 @@
 namespace Rehike\ResourceConstants;
 
 const YTS_HOST = 's.ytimg.com';
-const MODULAR_JS_PATH = 'www-en_US-vflkPQDpM';
+const MODULAR_JS_PATH = 'www-en_US-vfl2g6bso';
 
 function jsModuleUrl($name) {
     return '//' . YTS_HOST . '/yts/jsbin/' . MODULAR_JS_PATH . '/' . $name . '.js';
