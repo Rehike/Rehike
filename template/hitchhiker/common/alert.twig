@@ -1,6 +1,6 @@
 {%- macro render(data) -%}
 {% import "common/uix/button.twig" as button %}
-<div class="yt-alert yt-alert-default yt-alert-{{ data.type }}">
+<div class="yt-alert yt-alert-{{ data.buttons or data.hasCloseButton ? "actionable" : "default" }} yt-alert-{{ data.type }}">
     <div class="yt-alert-icon">
         <span class="icon master-sprite yt-sprite"></span>
     </div>

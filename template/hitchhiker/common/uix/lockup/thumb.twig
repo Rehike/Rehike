@@ -26,7 +26,7 @@
     {% if getVideoTime(info) != null %}
     <span class="video-time">{{ getVideoTime(info) }}</span>
     {% endif %}
-    {%- if data.type == "video" -%}
+    {%- if getWLOverlay(info) != null -%}
     {{ wlBtn.render(getWLOverlay(info), info.videoId) }}
     {%- endif -%}
     {% if getThumbnailOverlay(info.thumbnailOverlays, "thumbnailOverlayResumePlaybackRenderer") != null %}
