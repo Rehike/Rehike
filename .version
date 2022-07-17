@@ -1,10 +1,10 @@
 {
-	"previousHash": "e84eb54edbb95a6bca26f1d38dd9da7c28c67ff7",
-	"currentRevisionId": 321,
-	"subject": "Fix signin caching major crash",
-	"body": "Fix signin caching major crash",
+	"previousHash": "07a0c07d714eb54ebb4ff0d9c4f0425016dbd9b2",
+	"currentRevisionId": 322,
+	"subject": "Correct MButton to add SPF default to prevent warnings",
+	"body": "Correct MButton to add SPF default to prevent warnings",
 	"branch": "exp-signin-rework",
 	"committerName": "Coffee",
 	"committerEmail": "99076687+YukisCoffee@users.noreply.github.com",
-	"time": 1658057376
+	"time": 1658057667
 }
