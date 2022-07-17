@@ -1,10 +1,10 @@
 {
-	"previousHash": "92f4655168dea5f74461c5560d89d7a2b539955e",
-	"currentRevisionId": 319,
-	"subject": "Update SpfPhp to prevent Composer crashes on PHP <8.1",
-	"body": "Update SpfPhp to prevent Composer crashes on PHP <8.1",
+	"previousHash": "426467c0ff95ded602872c1b88bcb16174271e1f",
+	"currentRevisionId": 320,
+	"subject": "Lazy fix the warning dumps in Android 15 w2w",
+	"body": "Lazy fix the warning dumps in Android 15 w2w",
 	"branch": "exp-signin-rework",
 	"committerName": "Coffee",
 	"committerEmail": "99076687+YukisCoffee@users.noreply.github.com",
-	"time": 1658052188
+	"time": 1658052307
 }

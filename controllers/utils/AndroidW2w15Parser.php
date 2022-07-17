@@ -65,7 +65,7 @@ class AndroidW2w15Parser
             $renderer->navigationEndpoint = (object) [ // make the renderer parseable by getUrl
                 "commandMetadata" => (object) [
                     "webCommandMetadata" => (object) [
-                        "url" => "/watch?v=" . $renderer->videoId
+                        "url" => @$renderer->videoId ? ("/watch?v=" . $renderer->videoId) : ("/playlist?list=" . $renderer->playlistId)
                     ]
                 ]
             ];
