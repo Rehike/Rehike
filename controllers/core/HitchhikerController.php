@@ -264,11 +264,14 @@ abstract class HitchhikerController
         */
         \Rehike\Debugger\Debugger::expose();
 
-        // Capture the render so that we may send it through SpfPhp.
-        $capturedRender = TemplateManager::render();
-
         if (SpfPhp::isSpfRequested() && $this->yt->spfEnabled)
         {
+            // Report SPF status to the templater
+            $this->yt->spf = true;
+
+            // Capture the render so that we may send it through SpfPhp.
+            $capturedRender = TemplateManager::render();
+
             // Skip serialisation so that the output may be modified. (also 
             // suppress warnings; idk why (buggy library lol))
             $spf = @SpfPhp::parse($capturedRender, $this->spfIdListeners, [
@@ -284,6 +287,8 @@ abstract class HitchhikerController
         }
         else
         {
+            $capturedRender = TemplateManager::render();
+
             // In the case this is not an SPF request, we don't have to do anything.
             echo $capturedRender;
         }
