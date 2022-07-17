@@ -24,6 +24,7 @@ class MPlaylistHeader {
         $this -> actions = [];
         $this -> actions[] = new MButton((object) [
             "anchor" => true,
+            "spf" => true,
             "style" => "default",
             "size" => "default",
             "content" => (object) [

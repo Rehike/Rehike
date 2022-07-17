@@ -32,6 +32,9 @@
         {% elseif data.clickcard %}
             yt-uix-clickcard-target
         {% endif %}
+        {% if data.spf %}
+            spf-link
+        {% endif %}
         {# Render custom classes #}
         {% for class in data.class %}
             {{ class ~ " " }}
