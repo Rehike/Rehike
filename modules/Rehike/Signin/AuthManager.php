@@ -16,8 +16,6 @@ use Rehike\FileSystem as FS;
  */
 class AuthManager
 {
-    const CACHE_FILE = "cache/signin_cache.json";
-
     public static $shouldAuth = false;
     private static $sapisid;
     private static $currentGaiaId = "";
@@ -97,7 +95,7 @@ class AuthManager
         {
             return self::$info;
         }
-        else if ($cache = self::getCache())
+        else if ($cache = Cacher::getCache())
         {
             $sessionId = self::getUniqueSessionCookie();
 
@@ -154,7 +152,7 @@ class AuthManager
             "menu" => &$menu
         ];
 
-        self::writeCache($responses);
+        Cacher::writeCache($responses);
 
         return $info;
     }
@@ -220,84 +218,5 @@ class AuthManager
         {
             return "null";
         }
-    }
-
-    /**
-     * Get the cache if it exists.
-     * 
-     * @return object|false
-     */
-    protected static function getCache()
-    {
-        if (FS::fileExists(self::CACHE_FILE))
-        {
-            try
-            {
-                $json = FS::getFileContents(self::CACHE_FILE);
-                
-                $object = json_decode($json);
-
-                if (time() > @$object->expire)
-                    return false;
-
-                if (null != $object)
-                    return $object;
-                else
-                    return false;
-            }
-            catch (\Throwable $e)
-            {
-                return false;
-            }
-        }
-        else
-        {
-            return false;
-        }
-    }
-
-    /**
-     * Attempt to write the cache to a file.
-     * 
-     * @return void
-     */
-    protected static function writeCache($responses, $noCheck = false)
-    {
-        if (!FS::fileExists(self::CACHE_FILE) && !$noCheck)
-        {
-            $data = (object)[
-                "expire" => time() + 10080, // 1 week
-                "responseCache" => (object)[
-                    self::getUniqueSessionCookie()
-                        => (object)$responses
-                ]
-            ];
-            
-            FS::writeFile(self::CACHE_FILE, json_encode($data));
-        }
-        else
-        {
-            return self::updateCache($responses);
-        }
-    }
-
-    /**
-     * Update a pre-existing cache file.
-     * 
-     * @return void
-     */
-    protected static function updateCache($responses)
-    {
-        $data = json_decode(FS::getFileContents(self::CACHE_FILE));
-
-        // Skip if invalid
-        if (false == $data) return self::writeCache($responses, true);
-
-        $sessionId = self::getUniqueSessionCookie();
-
-        @$data->expire += 1440; // 1 day
-        @$data->responseCache->{$sessionId} = $responses;
-
-        FS::writeFile(self::CACHE_FILE, json_encode($data));
     }
 }
