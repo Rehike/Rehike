@@ -63,7 +63,7 @@
     {% set likeButton = info.sentimentActions.likeButton %}
     {% set dislikeButton = info.sentimentActions.dislikeButton %}
     {# TODO: refined clickcards #}
-    <span class="like-button-renderer " data-button-toggle-group="optional" >
+    <span class="like-button-renderer {{ yt.signin.isSignedIn ? "actionable" }}" data-button-toggle-group="optional" >
         {# This isn't iterable oops #}
         {{ button(info.likeButtonRenderer.likeButton) }}
         {{ button(info.likeButtonRenderer.activeLikeButton) }}
