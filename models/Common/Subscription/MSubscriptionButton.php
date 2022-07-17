@@ -73,7 +73,6 @@ class MSubscriptionButton extends MButton
         $this->disabled = $opts["isDisabled"];
         $this->branded = $opts["branded"];
         $this->subscribed = $opts["isSubscribed"];
-        $this->unsubText = $opts["unsubText"];
         
         $this->type = $opts["type"];
         $this->attributes["channel-external-id"] = $opts["channelExternalId"];
