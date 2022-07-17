@@ -1,10 +1,10 @@
 {
-	"previousHash": "62335fa9a1a1c39c41a875ca60eea2b352aa0998",
-	"currentRevisionId": 258,
-	"subject": "Merge branch 'master' into new-mvc",
-	"body": "Merge branch 'master' into new-mvc",
+	"previousHash": "1be35b6dae2b585ccf9e93c794fa2d0f63ebbe97",
+	"currentRevisionId": 260,
+	"subject": "Update SpfPhp to prevent Composer crashes on PHP <8.1",
+	"body": "Update SpfPhp to prevent Composer crashes on PHP <8.1",
 	"branch": "new-mvc",
 	"committerName": "Coffee",
 	"committerEmail": "99076687+YukisCoffee@users.noreply.github.com",
-	"time": 1657524942
+	"time": 1658052018
 }

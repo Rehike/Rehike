@@ -9,7 +9,7 @@
 
 # What is this?
 
-This is a fork of [voku/simple_html_dom](/voku/simple_html_dom) that simply removes LibXML autoformatting. This is designed mainly for [Rehike](/Rehike/Rehike) use, but it may be used for other purposes as well.
+This is a fork of [voku/simple_html_dom](//github.com/voku/simple_html_dom) that simply removes LibXML autoformatting. This is designed mainly for [Rehike](//github.com/Rehike/Rehike) use, but it may be used for other purposes as well.
 
 It is simply a one line change to correct erroneous whitespace placement.
 
@@ -31,29 +31,15 @@ This is a fork of [PHP Simple HTML DOM Parser project](http://simplehtmldom.sour
 
 ### Install via "composer require"
 
-Prior to installation, the following item must be added to `composer.json` to use this fork:
-```json
-{
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/YukisCoffee/simple_html_dom"
-        }
-    ]
-}
-```
-
-Then it may be installed just like the main repository:
-
 ```shell
-composer require voku/simple_html_dom
+composer require yukiscoffee/simple_html_dom
 composer require voku/portable-utf8 # if you need e.g. UTF-8 fixed output
 ```
 
 ### Quick Start
 
 ```php
-use voku\helper\HtmlDomParser;
+use voku\helper\HtmlDomParser; // This is not a mistake, this uses the same namespaces as the original.
 
 require_once 'composer/autoload.php';
 

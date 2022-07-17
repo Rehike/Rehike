@@ -29,7 +29,7 @@
     ],
     "require": {
         "php": ">=7.0.0",
-        "yukiscoffee/simple_html_dom": "4.8.6"
+        "yukiscoffee/simple_html_dom": "4.8.9"
     },
     "autoload": {
         "psr-4": {
