@@ -24,7 +24,7 @@
                     {% if getByline(info) != null and data.type != "channel" %}
                     {% set byline = getByline(info) %}
                     <div class="yt-lockup-byline">
-                        {% if yt.config.byTextOnByline %}by{% endif %}
+                        {{ yt.config.byTextOnByline ? "by" }}
                         <a href="{{ getUrl(byline.runs[0]) }}" class="spf-link">{{ getText(byline) }}</a>
                         {% if info.ownerBadges != null and getBadge(info.ownerBadges, "BADGE_STYLE_TYPE_VERIFIED") %}
                             <span title="Verified" class="yt-uix-tooltip yt-channel-title-icon-verified yt-sprite"></span>
