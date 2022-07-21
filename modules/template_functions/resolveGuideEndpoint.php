@@ -17,7 +17,15 @@
     }
     else if (isset($guideItem->navigationEndpoint->browseEndpoint->browseId))
     {
-        return $guideItem->navigationEndpoint->browseEndpoint->browseId;
+        $id = $guideItem->navigationEndpoint->browseEndpoint->browseId;
+        
+        // Remove FE substring if present
+        if ("FE" == substr($id, 0, 2))
+        {
+            $id = substr($id, 2);
+        }
+
+        return $id;
     }
     else
     {
