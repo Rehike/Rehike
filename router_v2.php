@@ -34,7 +34,8 @@ Router::get([
     "/results" => "results",
     "/playlist" => "playlist",
     "/oops" => "oops",
-    "/forcefatal" => "forcefatal"
+    "/forcefatal" => "forcefatal",
+    "/all_comments" => "all_comments"
 ]);
 
 Router::post([
