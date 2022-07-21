@@ -102,19 +102,22 @@ class Watch8Subcontroller
 
             if (self::shouldUseAutoplay($data))
             {
-                $recomsList = (@$yt->signin["isSignedIn"] == true) ? $secondaryResults->results[1]->itemSectionRenderer->contents : $secondaryResults->results;
+                $recomsList = (@$yt->signin["isSignedIn"] == true) ? @$secondaryResults->results[1]->itemSectionRenderer->contents : @$secondaryResults->results;
 
-                $autoplayIndex = self::getRecomAutoplay($recomsList);
+                if (is_countable($recomsList) && count($recomsList) > 0)
+                {
+                    $autoplayIndex = self::getRecomAutoplay($recomsList);
 
-                // Move autoplay video to its own object
-                $autoplayRenderer = (object)[
-                    "results" => [ $recomsList[$autoplayIndex] ]
-                ];
-                $response += ["autoplayRenderer" => $autoplayRenderer];
+                    // Move autoplay video to its own object
+                    $autoplayRenderer = (object)[
+                        "results" => [ $recomsList[$autoplayIndex] ]
+                    ];
+                    $response += ["autoplayRenderer" => $autoplayRenderer];
 
-                // Remove the original reference to prevent it from 
-                // rendering twice
-                array_splice($recomsList, $autoplayIndex, 1);
+                    // Remove the original reference to prevent it from 
+                    // rendering twice
+                    array_splice($recomsList, $autoplayIndex, 1);
+                }
             }
 
             $response += ["results" => $recomsList];
