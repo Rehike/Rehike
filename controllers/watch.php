@@ -33,6 +33,7 @@ return new class extends NirvanaController {
         $yt->videoId = $request->params->v;
         $yt->playlistId = $request->params->list ?? null;
         $yt->playlistIndex = (string) ((int) ($request->params->index ?? '1') - 1);
+        $yt->playerParams = $request->params->pp ?? null;
 
         $watchRequestParams = [
             'videoId' => $yt->videoId
@@ -97,7 +98,8 @@ return new class extends NirvanaController {
                         'signatureTimestamp' => $yt->playerCore->sts
                     ]   
                 ],
-                "startTimeSecs" => $startTime ?? 0
+                "startTimeSecs" => $startTime ?? 0,
+                "params" => $yt->playerParams
             ] + $watchRequestParams)
         );
 
