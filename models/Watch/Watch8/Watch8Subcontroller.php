@@ -198,14 +198,28 @@ class Watch8Subcontroller
             $curIndexInt = &$list->localCurrentIndex;
             $prevIndexInt = $curIndexInt - 1;
             $nextIndexInt = $curIndexInt + 1;
-            $prevId = $playlist->contents[$prevIndexInt]
+
+            if ($prevIndexInt < 0)
+            {
+                $prevIndexInt = count($list->contents ?? [0]) - 1;
+            }
+
+            if ($nextIndexInt > count($list->contents ?? [0]) - 1)
+            {
+                $nextIndexInt = 0;
+            }
+
+            $prevIndexIntPlus = $prevIndexInt + 1;
+            $nextIndexIntPlus = $nextIndexInt + 1;
+
+            $prevId = $list->contents[$prevIndexInt]
                 ->playlistPanelVideoRenderer->videoId ?? null
             ;
-            $prevUrl = "/watch?v={$prevId}&index={$prevIndexInt}&list={$playlistId}";
-            $nextId = $playlist->contents[$nextIndexInt]
+            $prevUrl = "/watch?v={$prevId}&index={$prevIndexIntPlus}&list={$playlistId}";
+            $nextId = $list->contents[$nextIndexInt]
                 ->playlistPanelVideoRenderer->videoId ?? null
             ;
-            $nextUrl = "/watch?v={$nextId}&index={$nextIndexInt}&list={$playlistId}";
+            $nextUrl = "/watch?v={$nextId}&index={$nextIndexIntPlus}&list={$playlistId}";
 
             // Push those to output
             $out->previousVideo = [
@@ -213,7 +227,12 @@ class Watch8Subcontroller
                 "url" => $prevUrl
             ];
 
-            $out->previousVideo = [
+            /*
+             * FIX (kirasicecreamm): Taniko, you're a fucking idiot.
+             * 
+             * (rename the variable next time lol)
+             */
+            $out->nextVideo = [
                 "id" => $nextId,
                 "url" => $nextUrl
             ];

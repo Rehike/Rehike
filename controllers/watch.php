@@ -32,7 +32,10 @@ return new class extends NirvanaController {
         // begin request
         $yt->videoId = $request->params->v;
         $yt->playlistId = $request->params->list ?? null;
-        $yt->playlistIndex = (string) ((int) ($request->params->index ?? '1') - 1);
+        $yt->playlistIndex = (string) ((int) ($request->params->index ?? '1'));
+
+        if (0 == $yt->playlistIndex) $yt->playlistIndex = 1;
+
         $yt->playerParams = $request->params->pp ?? null;
 
         $watchRequestParams = [
@@ -147,10 +150,15 @@ return new class extends NirvanaController {
         $yt = &$this->yt;
 
         if (isset($yt->playerResponse)) {
-            $data->data = (object) ['swfcfg' => (object) ['args' => (object) [
-                'raw_player_response' => null,
-                'raw_watch_next_response' => null
-            ]]];
+            $data->data = (object) [
+                'swfcfg' => (object) [
+                    'args' => (object) [
+                        'raw_player_response' => null,
+                        'raw_watch_next_response' => null
+                    ]
+                ]
+            ];
+
             $data->data->swfcfg->args->raw_player_response = $yt->playerResponse;
             $data->data->swfcfg->args->raw_watch_next_response = json_decode($yt->rawWatchNextResponse);
     
