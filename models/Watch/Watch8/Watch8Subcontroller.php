@@ -100,10 +100,30 @@ class Watch8Subcontroller
         {
             $secondaryResults = $origResults;
 
+            /*
+             * FIX (kirasicecreamm): Detection cannot rely purely upon assumption that the renderer
+             * exists based on login status. It's required to perform a more sophisticated approach
+             * when an item section renderer is not used to render the recommendations.
+             * 
+             * Other than that, I made a silly mistake here and put this inside of the
+             * autoplay condition below, which prevented it from displaying on playlists, as they
+             * lack the autoplay condition.
+             */
+            if (isset($secondaryResults->results[1]->itemSectionRenderer->contents))
+            {
+                $recomsList = $secondaryResults->results[1]->itemSectionRenderer->contents;
+            }
+            else if (isset($secondaryResults->results))
+            {
+                $recomsList = $secondaryResults->results;
+            }
+            else
+            {
+                return null;
+            }
+
             if (self::shouldUseAutoplay($data))
             {
-                $recomsList = (@$yt->signin["isSignedIn"] == true) ? @$secondaryResults->results[1]->itemSectionRenderer->contents : @$secondaryResults->results;
-
                 if (is_countable($recomsList) && count($recomsList) > 0)
                 {
                     $autoplayIndex = self::getRecomAutoplay($recomsList);
