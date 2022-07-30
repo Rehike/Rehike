@@ -1,7 +1,7 @@
 {# Used by comment service ajax
    should still be cleaned up but I'm keeping it relatively in tact
    until then. #}
-{% import '/common/discussion_v2/main.twig' as main %}
+{% import '/common/comments/main.twig' as main %}
 {% for item in yt.comments.comments %}
    {{ main.comment(item) }}
 {% endfor %}
