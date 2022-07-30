@@ -1,6 +1,8 @@
 /**
  * Implements the core CSS for the Rehike debugger.
  *
+ * TODO: Port this to SCSS for easier management.
+ *
  * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
@@ -14,6 +16,7 @@
 
 .rebug-open-button-has-error {
     color: #a01312;
+    text-shadow: 1px 1px rgba(0, 0, 0, 10%);
     opacity: 1;
 }
 
@@ -72,6 +75,11 @@
 }
 
 .rebug-tab-content {
+    /* Width is equal to
+       (width of container - padding on both sides [20px * 2] - (width of tabs + padding [176px]) 
+       - left padding of parent [15px] - border width both sides [1px * 2])
+       
+       Height is equal to (height of lightbox content - height of header [51px]) */
     width: 367px;
     height: 329px;
     overflow-y: scroll;
@@ -86,6 +94,7 @@
 }
 
 #rebug-lightbox .yt-dialog-content {
+    /* Height of lightbox container - 20px */
     height: 380px;
 }
 
@@ -94,12 +103,105 @@
   cursor: pointer;
 }
 
+@media screen and (min-width: 850px)
+{
+    .rebug-tab-content
+    {
+        width: 567px;
+    }
+}
+
+@media screen and (min-height: 650px)
+{
+    .rebug-tab-content
+    {
+        height: 529px;
+    }
+
+    #rebug-lightbox .yt-dialog-content
+    {
+        height: 580px;
+    }
+}
+
+@media screen and (min-width: 1050px)
+{
+    .rebug-tab-content
+    {
+        width: 767px;
+    }
+}
+
+@media screen and (min-height: 850px)
+{
+    .rebug-tab-content
+    {
+        height: 729px;
+    }
+
+    #rebug-lightbox .yt-dialog-content
+    {
+        height: 780px;
+    }
+}
+
+.nothing-to-see-renderer
+{
+    font-size: 18px;
+    color: #666;
+    display: table;
+    height: 100%;
+    margin: 0 auto;
+}
+
+.nothing-to-see-renderer .text
+{
+    max-width: 200px;
+    vertical-align: middle;
+    display: table-cell;
+}
+
 /* Errors */
 #rebug-tab-content-error
 {
+    /* In order to set the padding to 0 here (it's 3px normally),
+       3px from both sides (6px total) need to be added to the final
+       width/height. */
     width: 373px;
     height: 335px;
     padding: 0;
+}
+
+@media screen and (min-width: 850px)
+{
+    #rebug-tab-content-error
+    {
+        width: 573px;
+    }
+}
+
+@media screen and (min-height: 650px)
+{
+    #rebug-tab-content-error
+    {
+        height: 535px;
+    }
+}
+
+@media screen and (min-width: 1050px)
+{
+    #rebug-tab-content-error
+    {
+        width: 773px;
+    }
+}
+
+@media screen and (min-height: 850px)
+{
+    #rebug-tab-content-error
+    {
+        height: 735px;
+    }
 }
 
 .rebug-error-renderer .error-icon-warning, .rebug-error-renderer .error-icon-deprecated
@@ -223,3 +325,8 @@
   background-color: #167ac6;
   color: #fff;
 }
+
+/*
+ * IMPORTS
+ */
+{% include "rehike/debugger/css/global_walker.css.twig" %}

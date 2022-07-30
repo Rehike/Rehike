@@ -13,8 +13,10 @@ class MYtWalker extends MTabContent
 
     public function addYt($yt)
     {
-        $this->addCode(
-            json_encode($yt, JSON_PRETTY_PRINT)
-        );
+        $this->richDebuggerRenderer[] = (object)[
+            "globalWalkerContainer" => (object)[
+                "items" => $yt
+            ]
+        ];
     }
 }

@@ -1,0 +1,107 @@
+{%- macro container(data) -%}
+<div class="global-walker-container">
+    <div class="items">
+        {{ _self.itemScene(data.items) }}
+    </div>
+</div>
+{%- endmacro -%}
+
+{% macro itemScene(items) %}
+    {# hack #}
+    {% set itemsAsArray = obj2arr(items) %}
+    {% for name, value in itemsAsArray %}
+        {{ _self.item(name, value) }}
+    {% endfor %}
+{% endmacro %}
+
+{%- macro item(name, data) -%}
+    {% set dataType = getType(data) %}
+    {% if dataType == "object" %}
+        {{ _self._abstractItem(name, _self._itemObjectHandler(data), "object", true) }}
+    {% elseif dataType == "array" %}
+        {% set length = data|length %}
+        {% if length == 0 %}
+            {{ _self._abstractItem(name, _self._itemEmptyArrayHandler(), "array") }}
+        {% else %}
+            {{ _self._abstractItem(name, _self._itemArrayHandler(data, length), "array", true) }}
+        {% endif %}
+    {% elseif dataType == "string" %}
+        {{ _self._abstractItem(name, _self._itemStringHandler(data), "string") }}
+    {% elseif 
+        dataType == "integer"  
+        or dataType == "double"
+    %}
+        {{ _self._abstractItem(name, _self._itemNumberHandler(data), "number") }}
+    {% elseif (dataType == "boolean") %}
+        {{ _self._abstractItem(name, _self._itemBoolHandler(data), "bool") }}
+    {% else %}
+        {{ _self._abstractItem(name, _self._itemUnknownHandler(dataType), "other") }}
+    {% endif %}
+{%- endmacro -%}
+
+{%- macro _abstractItem(name, data, type, hasExpander) -%}
+<div class="global-walker-item{{ hasExpander ? ' rebug-expander rebug-expander-has-target rebug-expander-collapsed' }}"{{ name ? ' data-name=' ~ name ~ '' }} data-type="{{ type }}">
+    {% if hasExpander %}
+        <span class="toggle-icon{{ hasExpander ? ' rebug-expander-target'}}"></span>
+    {% endif %}
+    {% if name or name is same as "0" %}
+        <span class="variable-name{{ hasExpander ? ' rebug-expander-target'}}">{{ name }}</span><span class="colon{{ hasExpander ? ' rebug-expander-target'}}">: </span>
+    {% endif %}
+    {{ data }}
+</div>
+{%- endmacro -%}
+
+{%- macro _itemObjectHandler(data) -%}
+<span class="rebug-expander-target">
+    <span class="brace">{</span>
+    <span class="collapsed-display">
+        ... <span class="brace">}</span>
+    </span>
+</span>
+<div class="expanded-display">
+    <div class="children">
+        {{ _self.itemScene(data) }}
+    </div>
+    <div class="brace">}</div>
+</div>
+{%- endmacro -%}
+
+{%- macro _itemArrayHandler(data, length) -%}
+<span class="rebug-expander-target">
+    <span class="brace">[</span>
+    <span class="collapsed-display">
+        <span class="array-length-display">{{ length }}</span> <span class="brace">]</span>
+    </span>
+</span>
+<div class="expanded-display">
+    <div class="children">
+        {% for index, item in data %}
+            <div class="array-item" data-index="{{ loop.index0 }}">
+                {{ _self.item(index ?: "0", item) }}
+            </div>
+        {% endfor %}
+    </div>
+    <div class="brace">]</div>
+</div>
+{%- endmacro -%}
+
+{%- macro _itemEmptyArrayHandler() -%}
+<span class="brace">[</span> <span class="array-length-display">empty</span> <span class="brace">]</span>
+<div class="children"></div>
+{%- endmacro -%}
+
+{%- macro _itemStringHandler(data) -%}
+<span class="type-string">{{ data }}</span>
+{%- endmacro -%}
+
+{%- macro _itemNumberHandler(data) -%}
+<span class="type-number">{{ data ?? "0" }}</span>
+{%- endmacro -%}
+
+{%- macro _itemBoolHandler(data) -%}
+<span class="type-bool">{{ data ? "true" : "false" }}</span>
+{%- endmacro -%}
+
+{%- macro _itemUnknownHandler(type) -%}
+<span class="type-other">{{ type|lower }}</span>
+{%- endmacro -%}
