@@ -1,0 +1,11 @@
+{% import "common/feed/macros.twig" as feed %}
+{% import "common/uix/load_more_button.twig" as load_more %}
+{
+    "content_html": {%- apply json_encode|raw -%}
+    {%- for item in yt.notifList -%}
+    {{ feed.notification_item(item) }}
+    {%- endfor -%}
+    {%- endapply -%}{%- if yt.nextContinuation -%},
+    "load_more_widget_html": {{ load_more.render(yt.nextContinuation, "item-section-327280", false, "feed_ajax")|json_encode|raw }}
+    {%- endif -%}
+}

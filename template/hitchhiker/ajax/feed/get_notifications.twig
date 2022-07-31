@@ -1,6 +1,7 @@
 {% from "core/html/img.twig" import img %}
 {% import "common/thumb/thumb_types.twig" as thumb %}
 {% import "common/uix/button.twig" as button %}
+{% import "common/uix/load_more_button.twig" as load_more %}
 <body>
     <div id="yt-masthead-notifications-content" class="yt-uix-scroller" data-loaded="true" data-scroller-mousewheel-listener="" data-scroller-scroll-listener="">
         <ol id="item-section-327280" class="item-section">
@@ -26,7 +27,7 @@
                                 </div>
                                 <div class="yt-lockup-content">
                                     <h3 class="yt-lockup-title">
-                                        <a class="yt-uix-tile-link yt-ui-ellipsis yt-ui-ellipsis-6 yt-uix-sessionlink spf-link " href="{{ getUrl(this) }}" title="{{ getText(this.shortMessage) }}">{{ getText(this.shortMessage) }}</a>
+                                        <a class="yt-uix-tile-link yt-ui-ellipsis yt-ui-ellipsis-6 yt-uix-sessionlink spf-link " href="{{ this.navigationEndpoint.getCommentsFromInboxCommand ? "/watch?v=" ~ this.navigationEndpoint.getCommentsFromInboxCommand.videoId ~ "&lc=" ~ this.navigationEndpoint.getCommentsFromInboxCommand.linkedCommentId : getUrl(this) }}" title="{{ getText(this.shortMessage) }}">{{ getText(this.shortMessage) }}</a>
                                         <span class="accessible-description" id="description-id-{{ random(10000, 99999) }}"> - Notification</span>
                                     </h3>
                                     <ul class="yt-lockup-byline">
@@ -83,5 +84,10 @@
                 {% endif %}
             {% endfor %}
         </ol>
+        {% set lastItem = yt.notifList|last %}
+        {% if lastItem.continuationItemRenderer %}
+            {% set this = lastItem.continuationItemRenderer %}
+            {{ load_more.render(this.continuationEndpoint.getNotificationMenuEndpoint.ctoken, "item-section-327280", false, "feed_ajax") }}
+        {% endif %}
     </div>
 </body>
