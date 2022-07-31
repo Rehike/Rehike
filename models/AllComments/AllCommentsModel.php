@@ -1,7 +1,7 @@
 <?php
 namespace Rehike\Model\AllComments;
 
-use \Rehike\Model\WatchModel;
+use \Rehike\Model\Watch\WatchModel;
 use \Rehike\Model\AllComments\MLockupFromWatchModel;
 
 class AllCommentsModel {
