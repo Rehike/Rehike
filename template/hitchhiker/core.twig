@@ -1,2 +1,8 @@
-{% extends appbarEnabled ? '/core/core.twig' : '/core/core_legacy.twig' %}
-{# hack to switch between nirvana/appbar core and legacy hitchhiker core #}
+{% if appbarEnabled %}
+    {% set core = "core/core.twig" %}
+{% elseif isLite %}
+    {% set core = "core/core_lite.twig" %}
+{% else %}
+    {% set core = "core/core_legacy.twig" %}
+{% endif %}
+{% extends core %}

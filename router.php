@@ -1,4 +1,10 @@
 <?php
+/**
+ * ! DO NOT ADD ANYTHING HERE !
+ * 
+ * Instead, add any pages you want to add in router_v2.php
+ */
+
 require($root . '/modules/routerBase.php');
 
 if (isset($_GET["enable_polymer"]) && $_GET["enable_polymer"] == "1") {
