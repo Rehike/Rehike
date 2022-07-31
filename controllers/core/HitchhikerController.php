@@ -278,6 +278,8 @@ abstract class HitchhikerController
                 "skipSerialization" => true
             ]);
 
+            if ($this -> urlOverride) $response -> url = $this -> urlOverride;
+
             // Post-data generation callback for custom handling
             $this->handleSpfData($spf);
 

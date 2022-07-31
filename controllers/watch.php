@@ -7,6 +7,7 @@ use Com\Youtube\Innertube\Request\NextRequestParams\UnknownThing;
 use Rehike\Request;
 use Rehike\Util\Base64Url;
 use Rehike\ConfigManager\ConfigManager;
+use SpfPhp\SpfPhp;
 
 require "controllers/utils/watchUtils.php";
 require_once('controllers/utils/extractUtils.php');
@@ -20,19 +21,33 @@ return new class extends NirvanaController {
     public function onGet(&$yt, $request)
     {
         $this->useJsModule("www/watch");
+        if ($request -> path[0] == "shorts") {
+            $fromShortsUrl = true;
+        } else {
+            $fromShortsUrl = false;
+        }
 
         // invalid request redirect
-        if (!isset($_GET['v'])) {
+        if (!isset($_GET['v']) and !$fromShortsUrl) {
             header('Location: /');
             die();
+        } elseif ($fromShortsUrl and !@$request -> path[1]) {
+            header('Location: /');
+            die();
+        }
+
+        if ($fromShortsUrl and !@$request -> params -> spf) {
+            header("Location: /watch?v=" . $request -> path[1]);
         }
 
         include "controllers/mixins/guideNotSpfMixin.php";
 
         // begin request
-        $yt->videoId = $request->params->v;
+        $yt->videoId = $fromShortsUrl ? $request -> path[1] : $request->params->v;
         $yt->playlistId = $request->params->list ?? null;
         $yt->playlistIndex = (string) ((int) ($request->params->index ?? '1'));
+
+        $this -> urlOverride = "/watch?v=" . $yt -> videoId;
 
         if (0 == $yt->playlistIndex) $yt->playlistIndex = 1;
 
