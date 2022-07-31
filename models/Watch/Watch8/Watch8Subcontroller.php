@@ -100,10 +100,30 @@ class Watch8Subcontroller
         {
             $secondaryResults = $origResults;
 
+            /*
+             * FIX (kirasicecreamm): Detection cannot rely purely upon assumption that the renderer
+             * exists based on login status. It's required to perform a more sophisticated approach
+             * when an item section renderer is not used to render the recommendations.
+             * 
+             * Other than that, I made a silly mistake here and put this inside of the
+             * autoplay condition below, which prevented it from displaying on playlists, as they
+             * lack the autoplay condition.
+             */
+            if (isset($secondaryResults->results[1]->itemSectionRenderer->contents))
+            {
+                $recomsList = $secondaryResults->results[1]->itemSectionRenderer->contents;
+            }
+            else if (isset($secondaryResults->results))
+            {
+                $recomsList = $secondaryResults->results;
+            }
+            else
+            {
+                return null;
+            }
+
             if (self::shouldUseAutoplay($data))
             {
-                $recomsList = (@$yt->signin["isSignedIn"] == true) ? @$secondaryResults->results[1]->itemSectionRenderer->contents : @$secondaryResults->results;
-
                 if (is_countable($recomsList) && count($recomsList) > 0)
                 {
                     $autoplayIndex = self::getRecomAutoplay($recomsList);
@@ -178,14 +198,28 @@ class Watch8Subcontroller
             $curIndexInt = &$list->localCurrentIndex;
             $prevIndexInt = $curIndexInt - 1;
             $nextIndexInt = $curIndexInt + 1;
-            $prevId = $playlist->contents[$prevIndexInt]
+
+            if ($prevIndexInt < 0)
+            {
+                $prevIndexInt = count($list->contents ?? [0]) - 1;
+            }
+
+            if ($nextIndexInt > count($list->contents ?? [0]) - 1)
+            {
+                $nextIndexInt = 0;
+            }
+
+            $prevIndexIntPlus = $prevIndexInt + 1;
+            $nextIndexIntPlus = $nextIndexInt + 1;
+
+            $prevId = $list->contents[$prevIndexInt]
                 ->playlistPanelVideoRenderer->videoId ?? null
             ;
-            $prevUrl = "/watch?v={$prevId}&index={$prevIndexInt}&list={$playlistId}";
-            $nextId = $playlist->contents[$nextIndexInt]
+            $prevUrl = "/watch?v={$prevId}&index={$prevIndexIntPlus}&list={$playlistId}";
+            $nextId = $list->contents[$nextIndexInt]
                 ->playlistPanelVideoRenderer->videoId ?? null
             ;
-            $nextUrl = "/watch?v={$nextId}&index={$nextIndexInt}&list={$playlistId}";
+            $nextUrl = "/watch?v={$nextId}&index={$nextIndexIntPlus}&list={$playlistId}";
 
             // Push those to output
             $out->previousVideo = [
@@ -193,7 +227,12 @@ class Watch8Subcontroller
                 "url" => $prevUrl
             ];
 
-            $out->previousVideo = [
+            /*
+             * FIX (kirasicecreamm): Taniko, you're a fucking idiot.
+             * 
+             * (rename the variable next time lol)
+             */
+            $out->nextVideo = [
                 "id" => $nextId,
                 "url" => $nextUrl
             ];

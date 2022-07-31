@@ -71,7 +71,7 @@
          </div>
          {% if comment.backstageAttachment.backstageImageRenderer %}
             {{ _self.backstage_image(comment.backstageAttachment.backstageImageRenderer) }}
-            {% from "common/discussion_v2/backstage/image_attachment_viewer.twig" import render as image_attachment_viewer %}
+            {% from "common/comments/backstage/image_attachment_viewer.twig" import render as image_attachment_viewer %}
             {{ image_attachment_viewer(comment) }}
          {% endif %}
       </div>

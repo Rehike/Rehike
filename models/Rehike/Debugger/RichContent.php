@@ -98,4 +98,11 @@ trait RichContent
             ]
         ];
     }
+
+    public function addNothingToSee()
+    {
+        $this->richDebuggerRenderer[] = (object)[
+            "nothingToSeeRenderer" => new MNothingToSee()
+        ];
+    }
 }

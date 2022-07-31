@@ -21,7 +21,7 @@ rebug.eventDelegate = {};
     {
         return function(e) {
             var activeElement = e.target;
-            var classNameList = handlers[eventName];
+            var handlerClassNameList = handlers[eventName];
             
             while (null != activeElement)
             {
@@ -39,9 +39,13 @@ rebug.eventDelegate = {};
 
                     for (var i = 0, j = classes.length; i < j; i++)
                     {
-                        if (classes[i] in classNameList)
+                        if (classes[i] in handlerClassNameList)
                         {
-                            return classNameList[classes[i]](activeElement, e);
+                            return handlerClassNameList[classes[i]](activeElement, e);
+                        }
+                        else if ("rebug-no-propagate" == classes[i])
+                        {
+                            return;
                         }
                     }
                 }

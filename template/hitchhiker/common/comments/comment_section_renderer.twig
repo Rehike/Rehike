@@ -1,11 +1,11 @@
 {% macro render(data) %}
-{% import '/common/discussion_v2/main.twig' as main %}
+{% import '/common/comments/main.twig' as main %}
 <div id="comment-section-renderer"
    class="comment-section-renderer vve-check"
    data-visibility-tracking="CAEQuy8iEwj8hczq9ovhAhWBksQKHcGjAPw"
    data-child-tracking="CAAQg2ciEwj8hczq9ovhAhWBksQKHcGjAPw">
    {% if data.headerRenderer %}
-      {% from "common/discussion_v2/header.twig" import render as header %}
+      {% from "common/comments/header.twig" import render as header %}
       {{ header(data.headerRenderer) }}
    {% endif %}
    <div class="comment-section-renderer-items" id="comment-section-renderer-items">
@@ -18,7 +18,7 @@
    {% if data.comments.commentContinuationRenderer %}
       {{ main.loadMoreWidget(data.comments.commentContinuationRenderer.token) }}
    {% endif %}
-   {% include '/common/discussion_v2/simplebox.twig' %}
+   {% include '/common/comments/simplebox.twig' %}
    <div class="feedback-banner hid" aria-live="polite"></div>
    <span class="yt-spinner-img comment-renderer-loading yt-sprite" title="Loading icon"></span>
    <div class="hid" id="comment-renderer-abuse">
