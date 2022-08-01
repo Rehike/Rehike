@@ -7,6 +7,7 @@
  * 
  * Until then, this ugly file's gotta remain in the root. Sorry :(
  */
+use Rehike\Model\Footer\MFooter as Footer;
 
 // lazy spf check
 if (isset($_GET['spf'])) {
@@ -23,6 +24,9 @@ if (isset($_COOKIE['wide'])) {
     $yt -> theaterMode = "0";
     $_COOKIE['wide'] = "0";
 }
+
+// i can't fucking believe i STILL have to modify this file
+$yt -> footer = new Footer();
 
 //$yt->spfEnabled = false; // DEBUG
 echo $twig->render($template . '.twig', [$yt]);

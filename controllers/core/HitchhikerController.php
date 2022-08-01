@@ -6,6 +6,7 @@ use Rehike\Request;
 use SpfPhp\SpfPhp;
 use Rehike\ControllerV2\RequestMetadata;
 use Rehike\Model\Guide\MGuide as Guide;
+use Rehike\Model\Footer\MFooter as Footer;
 
 /**
  * Defines a general YouTube Hitchhiker controller.
@@ -231,6 +232,8 @@ abstract class HitchhikerController
         $yt->spfEnabled = false;
         $yt->useModularCore = false;
         $yt->page = (object)[];
+
+        $yt -> footer = new Footer();
     }
 
     /**

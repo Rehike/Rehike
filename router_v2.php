@@ -8,7 +8,8 @@ Router::funnel([
     "/embed/*",
     "/yts/*",
     "/favicon.ico",
-    "/subscribe_embed"
+    "/subscribe_embed",
+    "/feed/footer" // used to grab footer data from html
 ]);
 
 Router::redirect([

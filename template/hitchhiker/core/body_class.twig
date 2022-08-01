@@ -1,4 +1,5 @@
-{{ not appbarEnabled ? "date-{{ yt.version.time|date('Ymd') }} en_US" }}
+{{ not appbarEnabled ? "date-" ~ yt.version.time|date('Ymd') }}
+{{ not appbarEnabled ? "en_US" }}
 visibility-logging-enabled  
 ltr    
 {{ yt.config.useRingoBranding ? 'exp-invert-logo' }}
