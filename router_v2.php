@@ -13,7 +13,7 @@ Router::funnel([
 
 Router::redirect([
     "/watch/(*)" => "/watch?v=$1",
-    //"/shorts/(*)" => "/watch?v=$1",
+    "/shorts/(*)" => "/watch?v=$1",
     "/hashtag/(*)" => "/results?search_query=$1",
     "/feed/what_to_watch/**" => "/",
     // TODO: Redirect confirmation page?
@@ -26,7 +26,6 @@ Router::redirect([
 Router::get([
     "/debug_browse" => "debug_browse",
     "/watch" => "watch",
-    "/shorts/**" => "watch",
     "/user/**" => "channel",
     "/channel/**" => "channel",
     "/c/**" => "channel",
