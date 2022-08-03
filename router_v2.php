@@ -42,5 +42,6 @@ Router::get([
 Router::post([
     "/feed_ajax" => "ajax/feed",
     "/playlist_video_ajax" => "ajax/playlist_video",
-    "/subscription_ajax" => "ajax/subscription"
+    "/subscription_ajax" => "ajax/subscription",
+    "/service_ajax" => "ajax/service"
 ]);

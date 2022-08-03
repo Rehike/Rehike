@@ -24,7 +24,7 @@ class Watch8Subcontroller
      * @param object $data
      * @return object[]
      */
-    public static function bakeResults(&$data)
+    public static function bakeResults(&$data, $videoId)
     {
         // Create references
         $primaryInfo = &self::MASTER::$primaryInfo;
@@ -35,7 +35,7 @@ class Watch8Subcontroller
 
         // Push primary info (if it exists)
         if (!is_null($primaryInfo)) $results[] = (object)[
-            "videoPrimaryInfoRenderer" => new MVideoPrimaryInfoRenderer(self::MASTER)
+            "videoPrimaryInfoRenderer" => new MVideoPrimaryInfoRenderer(self::MASTER, $videoId)
         ];
 
         // Push secondary info (if it exists)

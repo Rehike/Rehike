@@ -53,28 +53,35 @@
    </div>
    <div id="footer-links">
       <ul id="footer-links-primary">
+         {% if yt.footer.primaryLinks %}
          {% for link in yt.footer.primaryLinks %}
          <li>
             <a href="{{ link.href }}">{{ link.text }}</a>
          </li>
          {% endfor %}
-         {# <li><a href="//www.youtube.com/yt/about/">About</a></li>
+         {% else %}
+         {# fallback to hardcoded english links #}
+         <li><a href="//www.youtube.com/yt/about/">About</a></li>
          <li><a href="//www.youtube.com/yt/press/">Press</a></li>
          <li><a href="//www.youtube.com/yt/copyright/">Copyright</a></li>
          <li><a href="//www.youtube.com/yt/creators/">Creators</a></li>
          <li><a href="//www.youtube.com/yt/advertise/">Advertise</a></li>
-         <li><a href="//www.youtube.com/yt/dev/">Developers</a></li> #}
+         <li><a href="//www.youtube.com/yt/dev/">Developers</a></li>
+         {% endif %}
          {%- if yt.config.versionInFooter -%}
             <li><a href="/rehike/version" target="_blank">Rehike v{{ yt.rehikeVersion.semanticVersion }}{% if yt.rehikeVersion.branch %} [{{ yt.rehikeVersion.branch }}]{% endif %}</a></li>
          {%- endif -%}
       </ul>
       <ul id="footer-links-secondary">
+         {% if yt.footer %}
          {% for link in yt.footer.secondaryLinks %}
          <li>
             <a href="{{ link.href }}">{{ link.text }}</a>
          </li>
          {% endfor %}
-         {# <li><a href="/t/terms">Terms</a></li>
+         {% else %}
+         {# fallback to hardcoded english links #}
+         <li><a href="/t/terms">Terms</a></li>
          <li><a href="https://www.google.com/intl/en/policies/privacy/">Privacy</a></li>
          <li><a href="//www.youtube.com/yt/policyandsafety/">
             Policy &amp; Safety
@@ -84,7 +91,8 @@
          <li>
             <a href="/testtube">Test new features</a>
          </li>
-         <li> #}
+         <li>
+         {% endif %}
          {% if yt.enableFooterCopyright %}
             <span class="copyright" dir="ltr">&copy; {{ "now"|date("Y") }} Google LLC</span></li>
          {% endif %}

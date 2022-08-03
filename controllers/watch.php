@@ -141,7 +141,7 @@ return new class extends NirvanaController {
 
         // end request
 
-        $yt->page = \Rehike\Model\Watch\WatchModel::bake($yt, $ytdata, $dislikesData);
+        $yt->page = \Rehike\Model\Watch\WatchModel::bake($yt, $ytdata, $yt -> videoId, $dislikesData);
 
         $yt->rawWatchNextResponse = $response;
     }

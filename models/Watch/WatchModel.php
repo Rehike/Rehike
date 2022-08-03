@@ -49,7 +49,7 @@ class WatchModel
      * @param object $rydData from RYD API response
      * @return object
      */
-    public static function bake(&$yt, $data, $rydData = null)
+    public static function bake(&$yt, $data, $videoId, $rydData = null)
     {
         // Initial logic
         self::$yt = &$yt;
@@ -84,7 +84,7 @@ class WatchModel
         // Model baking logic
         return (object) [
             "isLive" => self::$isLive,
-            "results" => self::bakeResults($data),
+            "results" => self::bakeResults($data, $videoId),
             "secondaryResults" => self::bakeSecondaryResults($data),
             "title" => self::$title,
             "playlist" => self::bakePlaylist($data),
@@ -173,9 +173,9 @@ class WatchModel
      * @param object $data from watch results response
      * @return object
      */
-    public static function bakeResults(&$data)
+    public static function bakeResults(&$data, &$videoId)
     {
-        return self::$subController::bakeResults($data);
+        return self::$subController::bakeResults($data, $videoId);
     }
 
     /**
