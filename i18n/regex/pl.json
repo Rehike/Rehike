@@ -1,0 +1,4 @@
+{
+    "subscriberCountIsolater": "/( subskrybentów)|( subskrybent)/g",
+    "viewCountIsolater": "/( wyświentleń)|( wyświetlenie)/g"
+}
