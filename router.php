@@ -55,7 +55,7 @@ switch ($routerUrl->path[0]) {
             include('controllers/ajax/watch_fragments2.php');
             break;
         case "comment_service_ajax":
-            include "controllers/ajax/comment_service.php";
+            include "controllers/ajax/comment_service_old.php";
             break;
         case "share_ajax":
             include "controllers/ajax/share.php";
@@ -98,6 +98,7 @@ switch ($routerUrl->path[0]) {
             }
             break;
     default:
+        http_response_code(404);
         $template = 'error/404';
         break;
 }

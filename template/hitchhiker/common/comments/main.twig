@@ -78,7 +78,7 @@
       <div class="comment-renderer-footer" data-vote-status="INDIFFERENT">
          <div class="comment-action-buttons-toolbar">
             {% if comment.actionButtons.commentActionButtonsRenderer.replyButton %}
-            <button class="yt-uix-button yt-uix-button-size-small yt-uix-button-link comment-renderer-reply comment-simplebox-trigger" type="button" onclick=";return false;" data-placeholder="Add a public reply..." data-simplebox-event="replycreated" data-simplebox-id="comment-simplebox-reply-UgyQ8iceYjqMY000mJ54AaABAg" data-simplebox-label="Reply" data-simplebox-params="EgtteTJoX19sNDFxYyIaVWd5UThpY2VZanFNWTAwMG1KNTRBYUFCQWcqAggAUAc%3D" data-simplebox-sessionlink="itct=CMgBEPBbIhMI6bL2yIzE7QIVN8jBCh0WXA-s" data-simplebox-target="/comment_service_ajax?action_create_comment_reply=1"><span class="yt-uix-button-content">Reply</span></button>
+            <button class="yt-uix-button yt-uix-button-size-small yt-uix-button-link comment-renderer-reply comment-simplebox-trigger" type="button" onclick=";return false;" data-placeholder="Add a public reply..." data-simplebox-event="replycreated" data-simplebox-id="comment-simplebox-reply-{{ comment.commentId }}" data-simplebox-label="Reply" data-simplebox-params="{{ comment.actionButtons.commentActionButtonsRenderer.replyButton.buttonRenderer.navigationEndpoint.createCommentReplyDialogEndpoint.dialog.commentReplyDialogRenderer.replyButton.buttonRenderer.serviceEndpoint.createCommentReplyEndpoint.createReplyParams }}" data-simplebox-sessionlink="itct=CMgBEPBbIhMI6bL2yIzE7QIVN8jBCh0WXA-s" data-simplebox-target="/comment_service_ajax?action_create_comment_reply=1"><span class="yt-uix-button-content">Reply</span></button>
             {% endif %}
             {% if comment.voteCount and not comment.voteCount.indifferentText == "0" %}
             <span class="comment-renderer-like-count off">{{ comment.voteCount.indifferentText }}</span>
@@ -101,7 +101,7 @@
                </div>
             </button>
             {% endif %}
-            {# uncomment when login
+            {% if yt.signin.isSignedIn %}
             <div class="yt-uix-menu-container comment-renderer-action-menu yt-section-hover-container">
                <div class="yt-uix-menu yt-uix-menu-flipped hide-until-delayloaded">
                   <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-action-menu yt-uix-button-empty yt-uix-button-has-icon no-icon-markup  yt-uix-menu-trigger" type="button" onclick=";return false;" aria-haspopup="true" aria-label="Action menu." aria-pressed="false" role="button"><span class="yt-uix-button-arrow yt-sprite"></span></button>
@@ -110,7 +110,7 @@
                         <li role="menuitem">
                            <div class="service-endpoint-action-container hid">
                            </div>
-                           <button type="button" class="yt-ui-menu-item yt-uix-menu-close-on-select  report-form-modal-renderer" data-innertube-clicktracking="CMMBELZ1IhMI6bL2yIzE7QIVN8jBCh0WXA-s" data-params="GhpVZ3lROGljZVlqcU1ZMDAwbUo1NEFhQUJBZygCMgFGOmkIARACGhpVZ3lROGljZVlqcU1ZMDAwbUo1NEFhQUJBZyoLbXkyaF9fbDQxcWMwAEoVMTEyOTM1MjAzMzA1OTEyODQ0ODg1UACoAQy6ARhVQ202eUQyNkhsYWZ6cU5sWWFLN3VFYUHgAQA%3D" data-url="/flag_service_ajax?action_get_report_form=1">
+                           <button type="button" class="yt-ui-menu-item yt-uix-menu-close-on-select  report-form-modal-renderer" data-params="GhpVZ3lROGljZVlqcU1ZMDAwbUo1NEFhQUJBZygCMgFGOmkIARACGhpVZ3lROGljZVlqcU1ZMDAwbUo1NEFhQUJBZyoLbXkyaF9fbDQxcWMwAEoVMTEyOTM1MjAzMzA1OTEyODQ0ODg1UACoAQy6ARhVQ202eUQyNkhsYWZ6cU5sWWFLN3VFYUHgAQA%3D" data-url="/flag_service_ajax?action_get_report_form=1">
                            <span class="yt-ui-menu-item-label">Report</span>
                            </button>
                         </li>
@@ -118,19 +118,18 @@
                   </div>
                </div>
             </div>
-         #}
-         </div>{#
-         <div class="comment-renderer-replybox" id="comment-simplebox-reply-UgyQ8iceYjqMY000mJ54AaABAg">
+         </div>
+         <div class="comment-renderer-replybox" id="comment-simplebox-reply-{{ comment.commentId }}">
             <span class="video-thumb comment-author-thumbnail yt-thumb yt-thumb-32">
-            <span class="yt-thumb-square">
-            <span class="yt-thumb-clip">
-            <img alt="F" data-ytimg="1" height="32" onload=";window.__ytRIL &amp;&amp; __ytRIL(this)" role="img" src="./and old youtube page maybe_ - YouTube_files/unnamed(3).png" tabindex="0" width="32">
-            <span class="vertical-align"></span>
-            </span>
-            </span>
+               <span class="yt-thumb-square">
+                  <span class="yt-thumb-clip">
+                     <img alt="{{ yt.signin.activeChannel.name }}" data-ytimg="1" height="32" onload=";window.__ytRIL &amp;&amp; __ytRIL(this)" role="img" src="{{ yt.signin.activeChannel.photo }}" tabindex="0" width="32">
+                     <span class="vertical-align"></span>
+                  </span>
+               </span>
             </span>
          </div>
-         #}
+         {% endif %}
       </div>
    </div>
 </div>

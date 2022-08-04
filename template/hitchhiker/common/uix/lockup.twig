@@ -14,9 +14,12 @@
             {% set thumbX = thumbY %}
         {% endif %}
         <div class="yt-lockup yt-lockup-{{ style }} yt-lockup-{{ data.type }} clearfix">
-            <div class="yt-lockup-debug-data hid">{{ data|json_encode() }}</div>
             <div class="yt-lockup-dismissible {{ style == "tile" ? "yt-uix-tile" }}">
+                {%- if data.type == "channel" -%}
+                {{ thumb.render(data, thumbY, thumbY) }}
+                {%- else -%}
                 {{ thumb.render(data, thumbX, thumbY) }}
+                {%- endif -%}
                 <div class="yt-lockup-content">
                     <h3 class="yt-lockup-title {{ info.menu ? "contains-action-menu" }}">
                         <a href="{{ getUrl(info) }}" class="spf-link yt-uix-tile-link yt-ui-ellipsis yt-ui-ellipsis-2" title="{{ getText(info.title) }}">{{ getText(info.title) }}</a>
