@@ -9,7 +9,9 @@ Router::funnel([
     "/yts/*",
     "/favicon.ico",
     "/subscribe_embed",
-    "/feed/footer" // used to grab footer data from html
+    "/login",
+    "/signin",
+    "/upload"
 ]);
 
 Router::redirect([

@@ -27,7 +27,8 @@ class RehikeConfigManager extends ConfigManager
             "noViewsText" => false,
             "movingThumbnails" => true,
             "guideOnWatchPage" => false,
-            "hhCSSFixes" => true
+            "hhCSSFixes" => true,
+            "accountPickerYtStudio" => true
         ];
     
     /**
