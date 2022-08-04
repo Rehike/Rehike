@@ -118,7 +118,9 @@
                   </div>
                </div>
             </div>
+         {% endif %}
          </div>
+         {% if yt.signin.isSignedIn %}
          <div class="comment-renderer-replybox" id="comment-simplebox-reply-{{ comment.commentId }}">
             <span class="video-thumb comment-author-thumbnail yt-thumb yt-thumb-32">
                <span class="yt-thumb-square">
