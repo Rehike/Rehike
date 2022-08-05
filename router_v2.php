@@ -49,10 +49,12 @@ Router::get([
     "/forcefatal" => "forcefatal",
     "/all_comments" => "all_comments",
     "/related_ajax" => "ajax/related",
+    "/browse_ajax" => "ajax/browse"
 ]);
 
 Router::post([
     "/feed_ajax" => "ajax/feed",
+    "/browse_ajax" => "ajax/browse",
     "/watch_fragments2_ajax" => "ajax/watch_fragments2",
     "/related_ajax" => "ajax/related",
     "/playlist_video_ajax" => "ajax/playlist_video",
