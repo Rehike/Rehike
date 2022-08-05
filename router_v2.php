@@ -33,6 +33,7 @@ Router::redirect([
 
 Router::get([
     "/" => "feed/what_to_watch",
+    "/feed/trending" => "feed/trending",
     "/debug_browse" => "debug_browse",
     "/watch" => "watch",
     "/user/**" => "channel",
