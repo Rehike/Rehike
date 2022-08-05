@@ -47,12 +47,14 @@ Router::get([
     "/playlist" => "playlist",
     "/oops" => "oops",
     "/forcefatal" => "forcefatal",
-    "/all_comments" => "all_comments"
+    "/all_comments" => "all_comments",
+    "/related_ajax" => "ajax/related",
 ]);
 
 Router::post([
     "/feed_ajax" => "ajax/feed",
     "/watch_fragments2_ajax" => "ajax/watch_fragments2",
+    "/related_ajax" => "ajax/related",
     "/playlist_video_ajax" => "ajax/playlist_video",
     "/subscription_ajax" => "ajax/subscription",
     "/service_ajax" => "ajax/service",
