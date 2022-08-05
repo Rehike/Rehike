@@ -16,39 +16,6 @@ if (isset($_GET["enable_polymer"]) && $_GET["enable_polymer"] == "1") {
 
 switch ($routerUrl->path[0]) {
     /**
-     * General page definitions
-     */
-        case '':
-            if ($yt->config->useWebV2HomeEndpoint) {
-                include('controllers/feed/what_to_watch_v2.php');
-            } else {
-                include('controllers/feed/what_to_watch.php');
-            }
-            break;
-        case 'results':
-            include('controllers/results_old.php');
-            break;
-        case 'feed':
-            if(isset($routerUrl->path[1])) {
-                switch ($routerUrl->path[1]) {
-                    case 'trending':
-                        include('controllers/feed/trending.php');
-                        break;
-                    case 'history':
-                        include('controllers/feed/history.php');
-                        break;
-                    case 'guide_builder':
-                        include('controllers/feed/guide_builder.php');
-                        break;
-                    default:
-                        $template = 'error/404';
-                        break;
-                }
-            } else {
-                $template = 'error/404';
-            }
-            break;
-    /**
      * AJAX definitions
      */
         case 'watch_fragments2_ajax':
