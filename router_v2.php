@@ -1,6 +1,11 @@
 <?php
 use Rehike\ControllerV2\Router;
 
+if (isset($_GET["enable_polymer"]) && $_GET["enable_polymer"] == "1") {
+    include("simplefunnel.php");
+    die();
+}
+
 Router::funnel([
     "/api/*",
     "/youtubei/*",
