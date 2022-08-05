@@ -8,7 +8,7 @@ use Rehike\Model\Appbar\MAppbar as Appbar;
 use Rehike\Request;
 
 /**
- * Trending feed controller
+ * Watch fragments ajax controller
  * 
  * @author Aubrey Pankow <aubyomori@gmail.com>
  * @author Daylin Cooper <dcoop2004@gmail.com>
