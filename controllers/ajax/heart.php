@@ -8,7 +8,6 @@ return new class extends AjaxController {
     public $useTemplate = false;
 
     public function onPost(&$yt, $request) {
-        return true;
         $request = Request::innertubeRequest("comment/perform_comment_action", (object) [
             "actions" => [
                 $_POST["action"]
