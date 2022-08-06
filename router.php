@@ -1,73 +1,67 @@
 <?php
-/**
- * ! DO NOT ADD ANYTHING HERE !
- * 
- * Instead, add any pages you want to add in router_v2.php
- */
-
-require($root . '/modules/routerBase.php');
+use Rehike\ControllerV2\Router;
 
 if (isset($_GET["enable_polymer"]) && $_GET["enable_polymer"] == "1") {
-    include($root . "/simplefunnel.php");
+    include("simplefunnel.php");
     die();
 }
 
-\Rehike\Debugger\Debugger::expose();
+Router::funnel([
+    "/api/*",
+    "/youtubei/*",
+    "/s/*",
+    "/embed/*",
+    "/yts/*",
+    "/favicon.ico",
+    "/subscribe_embed",
+    "/login",
+    "/signin",
+    "/upload"
+]);
 
-switch ($routerUrl->path[0]) {
-    /**
-     * AJAX definitions
-     */
-        case 'watch_fragments2_ajax':
-            include('controllers/ajax/watch_fragments2.php');
-            break;
-        case "comment_service_ajax":
-            include "controllers/ajax/comment_service_old.php";
-            break;
-        case "share_ajax":
-            include "controllers/ajax/share.php";
-            break;
-        case "browse_ajax":
-            include "controllers/ajax/browse.php";
-            break;
-        case "related_ajax":
-            include "controllers/ajax/related.php";
-            break;
-    /**
-     * Rehike special page definitions
-     */
-        case "rehike":
-            switch ($routerUrl->path[1])
-            {
-                case "version":
-                    (include "controllers/rehike/version.php")::get($yt, $template);
-                    break;
-                case "static":
-                    switch ($routerUrl->path[2])
-                    {
-                        case "logo.png":
-                            header("Content-Type: image/png");
-                            echo file_get_contents("static/version/logo.png");
-                            exit();
-                            break;
-                        case "logo_small_grey.png":
-                            header("Content-Type: image/png");
-                            echo file_get_contents("static/version/logo_small_grey.png");
-                            exit();
-                            break;
-                        case "branch_icon.png":
-                            header("Content-Type: image/png");
-                            echo file_get_contents("static/version/branch_icon.png");
-                            exit();
-                            break;
-                    }
-                    break;
-            }
-            break;
-    default:
-        http_response_code(404);
-        $template = 'error/404';
-        break;
-}
+Router::redirect([
+    "/watch/(*)" => "/watch?v=$1",
+    "/shorts/(*)" => "/watch?v=$1",
+    "/hashtag/(*)" => "/results?search_query=$1",
+    "/feed/what_to_watch/**" => "/",
+    // TODO: Redirect confirmation page?
+    "/redirect(/|?)*" => function($request) {
+        if (isset($request->params->q))
+            return urldecode($request->params->q);
+    }
+]);
 
-require "temp_cv1_end.php";
+Router::get([
+    "/" => "feed/what_to_watch",
+    "/feed/trending" => "feed/trending",
+    "/feed/history**" => "feed/history",
+    "/feed/guide_builder" => "feed/guide_builder",
+    "/debug_browse" => "debug_browse",
+    "/watch" => "watch",
+    "/user/**" => "channel",
+    "/channel/**" => "channel",
+    "/c/**" => "channel",
+    "/live_chat" => "live_chat", //"special/get_live_chat",
+    "/feed_ajax" => "ajax/feed",
+    "/results" => "results",
+    "/playlist" => "playlist",
+    "/oops" => "oops",
+    "/forcefatal" => "forcefatal",
+    "/all_comments" => "all_comments",
+    "/related_ajax" => "ajax/related",
+    "/browse_ajax" => "ajax/browse",
+    "/rehike/version" => "rehike/version",
+    "/rehike/static/**" => "rehike/static_router",
+    "default" => "404"
+]);
+
+Router::post([
+    "/feed_ajax" => "ajax/feed",
+    "/browse_ajax" => "ajax/browse",
+    "/watch_fragments2_ajax" => "ajax/watch_fragments2",
+    "/related_ajax" => "ajax/related",
+    "/playlist_video_ajax" => "ajax/playlist_video",
+    "/subscription_ajax" => "ajax/subscription",
+    "/service_ajax" => "ajax/service",
+    "/comment_service_ajax" => "ajax/comment_service"
+]);

@@ -41,23 +41,4 @@ $yt->rehikeVersion = (object)\Rehike\Version\VersionController::$versionInfo;
 $yt->rehikeVersion->semanticVersion = \Rehike\Version\VersionController::getVersion();
 
 // Include the router for Controller v2 pages.
-if (!@$_GET["disable_cv2"] || in_array($_GET["disable_cv2"], ["false", "0"])) // debug
-    require "router_v2.php";
-
-/*
- * TEMPORARY BEHAVIOUR: Controller v1 router.
- * 
- * This should be removed once CV1 is fully deprecated. Until then, it's
- * okay to stay.
- * 
- * This will only be included if no matches were found in the CV2 router, 
- * and as such, no default case is included in there. Upon CV1 deprecation, 
- * unknown page behaviour should also be migrated to the default case of the
- * CV2 router.
- * 
- * Since many pages currently rely on this, it is not okay to remove.
- * 
- * love taniko
- */
-if (!Rehike\ControllerV2\Core::$cv2HasBeenUsed)
-    require "router.php";
+require "router.php";
