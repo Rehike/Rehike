@@ -142,9 +142,28 @@ class MOwner
             ;
 
             // Build the subscription button from the InnerTube data.
-            if (isset($secInfo -> subscribeButton -> subscribeButtonRenderer)) $this->subscriptionButtonRenderer = MSubscriptionActions::fromData(
-                $secInfo -> subscribeButton -> subscribeButtonRenderer, $subscribeCount
-            );
+            if (isset($secInfo -> subscribeButton -> subscribeButtonRenderer)) {
+                $this->subscriptionButtonRenderer = MSubscriptionActions::fromData($secInfo -> subscribeButton -> subscribeButtonRenderer, $subscribeCount);
+            } elseif (isset($secInfo -> subscribeButton -> buttonRenderer)) { // channel settings button
+                $this->channelSettingsButtonRenderer = new MButton((object) [
+                    "style" => "default",
+                    "size" => "default",
+                    "content" => (object) [
+                        "runs" => [
+                            (object) [
+                                "text" => "Channel settings" // TODO: i18n
+                            ]
+                        ]
+                    ],
+                    "hasIcon" => true,
+                    "noIconMarkup" => true,
+                    "anchor" => true,
+                    "href" => "/advanced_settings",
+                    "class" => [
+                        "channel-settings-link"
+                    ]
+                ]);
+            }
         }
     }
 }
