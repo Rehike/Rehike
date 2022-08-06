@@ -142,7 +142,7 @@ class MOwner
             ;
 
             // Build the subscription button from the InnerTube data.
-            $this->subscriptionButtonRenderer = MSubscriptionActions::fromData(
+            if (isset($secInfo -> subscribeButton -> subscribeButtonRenderer)) $this->subscriptionButtonRenderer = MSubscriptionActions::fromData(
                 $secInfo -> subscribeButton -> subscribeButtonRenderer, $subscribeCount
             );
         }
