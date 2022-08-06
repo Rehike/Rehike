@@ -51,7 +51,8 @@ Router::get([
     "/related_ajax" => "ajax/related",
     "/browse_ajax" => "ajax/browse",
     "/rehike/version" => "rehike/version",
-    "/rehike/static/**" => "rehike/static_router"
+    "/rehike/static/**" => "rehike/static_router",
+    "default" => "404"
 ]);
 
 Router::post([
