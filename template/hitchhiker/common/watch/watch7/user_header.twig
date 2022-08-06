@@ -16,7 +16,12 @@
     {% endif %}
     </div>
     <span id="watch7-subscription-container">
+    {%- if owner.subscriptionButtonRenderer -%}
     {% import 'common/uix/subscription_button.twig' as subscription_button %}
     {{ subscription_button.render(owner.subscriptionButtonRenderer) }}
+    {%- elseif owner.channelSettingsButtonRenderer -%}
+    {% from "common/uix/button.twig" import render as button %}
+    {{ button(owner.channelSettingsButtonRenderer) }}
+    {%- endif -%}
     </span>
 </div>

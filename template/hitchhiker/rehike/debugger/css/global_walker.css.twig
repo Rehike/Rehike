@@ -1,0 +1,85 @@
+#rebug-lightbox .global-walker-container
+{
+  font-family: monospace;
+  white-space: nowrap;
+}
+
+#rebug-lightbox .global-walker-item .toggle-icon
+{
+  vertical-align:middle;
+  margin: 0 5px 0 1px;
+  float: left;
+  background:no-repeat url(//s.ytimg.com/yts/imgbin/www-hitchhiker-vfllYIUv0.png) -133px -474px;
+  background-size:auto;
+  width:16px;
+  height:16px
+}
+
+#rebug-lightbox .global-walker-item.rebug-expander-expanded > .toggle-icon
+{
+  background:no-repeat url(//s.ytimg.com/yts/imgbin/www-hitchhiker-vfllYIUv0.png) -178px -838px;
+  background-size:auto;
+  width:16px;
+  height:16px
+}
+
+#rebug-lightbox .global-walker-container .rebug-expander
+{
+  cursor: revert;
+}
+
+#rebug-lightbox .global-walker-container .rebug-expander-target
+{
+  cursor: pointer;
+}
+
+#rebug-lightbox .global-walker-item, #rebug-lightbox .global-walker-item .expanded-display
+{
+  margin-left: 22px;
+}
+
+#rebug-lightbox .global-walker-item.rebug-expander
+{
+  margin-left: 0;
+}
+
+#rebug-lightbox .global-walker-item.rebug-expander-collapsed > .expanded-display
+{
+  display: none;
+}
+
+#rebug-lightbox .global-walker-item.rebug-expander-expanded > .collapsed-display,
+#rebug-lightbox .global-walker-item.rebug-expander-expanded > .rebug-expander-target > .collapsed-display
+{
+  display: none;
+}
+
+#rebug-lightbox .global-walker-container .variable-name
+{
+  color: #003699;
+  font-weight: 700;
+}
+
+#rebug-lightbox .global-walker-container .type-string
+{
+  color: #0a860a;
+}
+
+#rebug-lightbox .global-walker-container .type-string::before,
+#rebug-lightbox .global-walker-container .type-string::after
+{
+  content: "\"";
+}
+
+#rebug-lightbox .global-walker-container .type-number,
+#rebug-lightbox .global-walker-container .type-bool
+{
+  color: #9e4aec;
+}
+
+#rebug-lightbox .global-walker-container .array-length-display,
+#rebug-lightbox .global-walker-container .type-other
+{
+  color: #666;
+  font-style: italic;
+}

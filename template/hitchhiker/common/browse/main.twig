@@ -17,7 +17,7 @@
             {% endif %}
             {{ browse_content_grid(data.browseContentGridRenderer) }}
         {%- elseif data.backstageRenderer -%}
-            {% from "common/discussion_v2/comment_section_renderer.twig" import render as comment_section_renderer %}
+            {% from "common/comments/comment_section_renderer.twig" import render as comment_section_renderer %}
             <li><div class="branded-page-box-padding">{{ comment_section_renderer(data.backstageRenderer)  }}</div></li>
         {%- endif -%}
     </ul>

@@ -2,6 +2,7 @@
 namespace Rehike\Model\Comments;
 
 use function YukisCoffee\getPropertyAtPath as getProp;
+use \Rehike\Model\Comments\MCommentVoteButton as VoteButton;
 
 class CommentThread
 {
@@ -10,6 +11,7 @@ class CommentThread
     const ACTIONS_PATH = "actionButtons.commentActionButtonsRenderer";
     const LIKE_BUTTON_PATH = self::ACTIONS_PATH . ".likeButton.toggleButtonRenderer";
     const DISLIKE_BUTTON_PATH = self::ACTIONS_PATH . ".dislikeButton.toggleButtonRenderer";
+    const HEART_BUTTON_PATH = self::ACTIONS_PATH . ".creatorHeart.creatorHeartRenderer";
     const COMMON_A11Y_LABEL = "accessibilityData.label";
 
     public static function bakeComments($context)
@@ -83,6 +85,15 @@ class CommentThread
 
         $context->isReply = $isReply;
         if (isset($context->voteCount)) self::addLikeCount($context);
+
+        $context->likeButton = VoteButton::fromData(getProp($context, self::LIKE_BUTTON_PATH));
+        $context->dislikeButton = VoteButton::fromData(getProp($context, self::DISLIKE_BUTTON_PATH));
+        try {
+            $context->creatorHeart = getProp($context, self::HEART_BUTTON_PATH);
+        } catch (\YukisCoffee\GetPropertyAtPathException $e) {
+            $context->creatorHeart = null;
+        } 
+        
 
         return $context;
     }
@@ -174,11 +185,17 @@ class CommentThread
         
         $count = (int)self::getLikeCountFromLabel($likeAriaLabel);
 
-        $context->voteCount =
-            [
+        if (@$context -> isLiked) {
+            $context -> voteCount = [
+                "indifferentText" => (string)--$count,
+                "likedText" => (string)$count
+            ];
+        } else {
+            $context -> voteCount = [
                 "indifferentText" => (string)$count,
                 "likedText" => (string)++$count
             ];
+        }
     }
 
     /**

@@ -25,7 +25,8 @@ class MSubscriptionActions
             "isSubscribed" => false,
             "type" => "FREE",
             "branded" => "true",
-            "channelExternalId" => ""
+            "channelExternalId" => "",
+            "params" => ""
         ];
 
         if ($opts["showCount"])
@@ -39,7 +40,8 @@ class MSubscriptionActions
             "isSubscribed" => $opts["isSubscribed"],
             "type" => $opts["type"],
             "branded" => $opts["branded"],
-            "channelExternalId" => $opts["channelExternalId"]
+            "channelExternalId" => $opts["channelExternalId"],
+            "params" => $opts["params"]
         ]);
 
         if ($opts["longText"])
@@ -55,7 +57,10 @@ class MSubscriptionActions
         return new self([
             "branded" => $branded,
             "longText" => $count,
-            "shortText" => $count
+            "shortText" => $count,
+            "isSubscribed" => $data -> subscribed ?? false,
+            "channelExternalId" => $data -> channelId ?? "",
+            "params" => $data -> onSubscribeEndpoints[0] -> subscribeEndpoint -> params ?? null
         ]);
     }
 

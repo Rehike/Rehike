@@ -13,11 +13,11 @@
             <div role="dialog" tabindex="0" class="yt-dialog-fg yt-uix-overlay-primary yt-uix-overlay">
                 <div class="yt-dialog-fg-content yt-dialog-show-content">
                     <div class="yt-dialog-content">
-                    <div class="yt-dialog-overlay-content-container">
-                        {{ _self.dialog_header(data.header) }}
-                        {{ _self.dialog_tabs_switcher(data.tabs) }}
-                        {{ _self.dialog_tabs_container(data.tabs) }}
-                    </div>
+                        <div class="yt-dialog-overlay-content-container">
+                            {{ _self.dialog_header(data.header) }}
+                            {{ _self.dialog_tabs_switcher(data.tabs) }}
+                            {{ _self.dialog_tabs_container(data.tabs) }}
+                        </div>
                     </div>
                 </div>
                 <div class="yt-dialog-focus-trap" tabindex="0"></div>
@@ -93,6 +93,12 @@
     </div>
 {%- endmacro -%}
 
+{%- macro nothing_to_see_renderer(data) -%}
+    <div class="nothing-to-see-renderer">
+        <div class="text">{{ data.text }}</div>
+    </div>
+{%- endmacro -%}
+
 {%- macro rich_content_renderer(data) -%}
     {%- for item in data -%}
         {%- if item.heading -%}
@@ -105,6 +111,11 @@
             <code style="white-space:pre">{{ item.code.text }}</code>
         {%- elseif item.errorRenderer -%}
             {{ _self.error_renderer(item.errorRenderer) }}
+        {%- elseif item.nothingToSeeRenderer -%}
+            {{ _self.nothing_to_see_renderer(item.nothingToSeeRenderer) }}
+        {%- elseif item.globalWalkerContainer -%}
+            {% import "rehike/debugger/global_walker.twig" as global_walker %}
+            {{ global_walker.container(item.globalWalkerContainer) }}
         {%- endif -%}
     {%- endfor -%}
 {%- endmacro -%}

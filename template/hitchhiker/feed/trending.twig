@@ -37,7 +37,7 @@ yt.setConfig('DISMISS_THROUGH_IT', true);
 
 
     yt.setConfig({
-      'GUIDE_SELECTED_ITEM': "0qDduQEMEgpGRXRyZW5kaW5n"
+      'GUIDE_SELECTED_ITEM': "{{ serialiseEndpoint(yt.currentEndpoint) }}"
     });
 
     yt.setConfig({
@@ -70,9 +70,6 @@ yt.setConfig('DISMISS_THROUGH_IT', true);
 {% endblock %}
 
 {% block content %}
-<div id="debug" style="display:none">
-{{ yt.page.shelvesList|json_encode }}
-</div>
     {% embed 'common/channels4/branded_page_v2.twig' %}
     {% import 'common/uix/lockup.twig' as lockup %}
     {% import 'core/spinner.twig' as spinner %}

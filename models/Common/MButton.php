@@ -17,6 +17,7 @@ class MButton
     public $class = [];
     public $attributes = [];
     public $accessibilityAttributes = [];
+    public $spf = false;
     public $disabled = false;
     public $content;
 

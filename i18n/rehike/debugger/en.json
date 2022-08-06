@@ -9,5 +9,6 @@
     "errorNotice": "Notice",
     "errorDeprecated": "Deprecated",
     "tabErrorTitle": "Errors (%s)",
-    "tabYtWalkerTitle": "$yt walker"
+    "tabYtWalkerTitle": "Variable walker",
+    "nothingToSee": "Nothing to see here!"
 }

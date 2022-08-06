@@ -1,4 +1,5 @@
 {% import 'core/macros.twig' as core %}
+{% import "common/alert.twig" as alert %}
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
    <head>
@@ -30,12 +31,22 @@
       <div id="body-container">
          <form name="logoutForm" method="POST" action="/logout"><input type="hidden" name="action_logout" value="1"></form>
          <!--begin page-->
+         <div id="ticker-content">
+            {%- if yt.page.ticker -%}
+            {{ alert.render(yt.page.ticker) }}
+            {%- endif -%}
+         </div>
          {% block masthead %}
          <div id="yt-masthead-container" class="clearfix yt-base-gutter">
             {% include 'common/pageframe/masthead.twig' %}     
          </div>
          {% endblock %}
-         <div id="alerts" class="content-alignment">{% block alerts %}{% endblock %}</div>
+         <div id="alerts" class="content-alignment">
+            {% block alerts %}{% endblock %}
+            {%- for item in yt.page.alerts -%}
+            {{ alert.render(item) }}
+            {%- endfor -%}
+         </div>
          {% block header %}{% endblock %}
          <div id="page-container">
             <div id="page" class="{{ pageType }} {% block page_class %}{% endblock %}">

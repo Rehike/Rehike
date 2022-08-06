@@ -157,8 +157,13 @@ function getInitialTab()
 
 // END TAB SWITCHER
 
-function onClickExpander(elm)
+function onClickExpander(elm, targetElement, noTargetCheck = false)
 {
+    if (elm.classList.contains("rebug-expander-has-target") && !noTargetCheck)
+    {
+        return;
+    }
+
     if (elm.classList.contains("rebug-expander-collapsed"))
     {
         removeClass(elm, "rebug-expander-collapsed");
@@ -171,6 +176,21 @@ function onClickExpander(elm)
     }
 }
 
+function onClickExpanderTarget(elm, targetElement)
+{
+    // Find parent and trigger its expander
+    for (var parent = elm; null != parent; parent = parent.parentElement)
+    {
+        if (parent.classList && parent.classList.contains("rebug-expander"))
+        {
+            onClickExpander(parent, targetElement, true);
+            return;
+        }
+    }
+
+    throw new Error("Failed to find parent of expander target of " + elm);
+}
+
 function init()
 {
     // Register events for clicking the open button.
@@ -178,6 +198,7 @@ function init()
     rebug.eventDelegate.add("click", "rebug-close-button", onClickCloseButton);
     rebug.eventDelegate.add("click", "rebug-tab", onClickTab);
     rebug.eventDelegate.add("click", "rebug-expander", onClickExpander);
+    rebug.eventDelegate.add("click", "rebug-expander-target", onClickExpanderTarget);
     
     getInitialTab();
 }

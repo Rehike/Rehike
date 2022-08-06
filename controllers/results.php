@@ -18,8 +18,6 @@ return new class extends NirvanaController {
         }
         
         $this -> useJsModule("www/results");
-        // Remove when guide implemented into NirvanaController base.
-        include "controllers/mixins/guideNotSpfMixin.php";
 
         $i18n = &i18n::newNamespace("results");
         $i18n->registerFromFolder("i18n/results");

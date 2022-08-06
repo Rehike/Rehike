@@ -3,7 +3,7 @@
 \Rehike\TemplateFunctions::register('getVideoTime', function($obj) {
     if (isset($obj->lengthText)) {
         return $obj->lengthText->simpleText;
-    } else if ($obj->thumbnailOverlays) {
+    } else if (isset($obj->thumbnailOverlays)) {
         for ($i = 0; $i < count($obj->thumbnailOverlays); $i++) {
             if (isset($obj->thumbnailOverlays[$i]->thumbnailOverlayTimeStatusRenderer)) {
                 $lengthText = $obj->thumbnailOverlays[$i]->thumbnailOverlayTimeStatusRenderer->text->simpleText;
@@ -28,9 +28,13 @@
                         return "0:" . $lengthText;
                     }
                 }
+            } else if ($lengthText == "LIVE") { // some endpoints have LIVE timestamp instead of badge
+                return null;
             } else {
                 return $lengthText;
             }
         }
     }
+
+    return null;
 }); 

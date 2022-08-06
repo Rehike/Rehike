@@ -12,8 +12,6 @@ return new class extends NirvanaController {
     {
         $this->useJsModule("www/feed");
 
-        include "controllers/mixins/guideNotSpfMixin.php";
-
         // Get the requested tab
         $tab = "featured";
         if (isset($request->path[2]) && "" != @$request->path[2])

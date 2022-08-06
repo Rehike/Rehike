@@ -25,6 +25,7 @@
 <link rel="publisher" href="https://plus.google.com/115229808208707341778">
 <link rel="alternate" href="android-app://com.google.android.youtube/http/www.youtube.com/">
 <link rel="alternate" href="ios-app://544007664/vnd.youtube/www.youtube.com/">
+{%- if yt.config.hhCSSFixes -%}
 <style id="rehike-fix">
     html {
         overflow-y: scroll
@@ -60,6 +61,20 @@
         padding: 0;
         border: 0; /* prevents button from shrinking */
     }
+</style>
+{%- endif -%}
+<style id="w2w-v2-fix">
+    .expanded-shelf #channels-browse-content-grid {
+        padding: 0;
+    }
+
+    #c4-header-bg-container .hd-banner-image {
+        background-size: 1262px auto;
+    }
+
+    #item-section-69420 #channels-browse-content-grid.grid-lockups-container {
+        padding-top: 0;
+    }
 
     .expanded-shelf .channels-content-item {
         margin-bottom: 20px;
@@ -68,125 +83,5 @@
     #browse-items-primary .item-section > li > .yt-lockup-tile, #browse-items-primary .item-section > li > .multirow-shelf, .browse-list-item-container.feed-item-container.branded-page-box, .compact-shelf.branded-page-box {
         padding-left: 15px;
         padding-right: 15px;
-    }
-
-    .expanded-shelf #channels-browse-content-grid {
-        padding: 0;
-    }
-
-    a.filter:hover,
-    a.filter:focus {
-        text-decoration: none;
-    }
-
-    .yt-lockup-deemphasized-text {
-        color: #999;
-        margin-left: 5px;
-    }
-
-    .yt-lockup-deemphasized-text::before {
-        content: unset !important;
-    }
-
-    .exp-watch-large-title .watch-title-container {
-        font-size: 24px;
-    }
-
-    .exp-old-share-icon .action-panel-trigger-share::before {
-        background: no-repeat url(//s.ytimg.com/yts/imgbin/www-hitchhiker-vfl3T2Agh.png) -261px -13px;
-    }
-</style>
-<style id="exp-watch-small-thumbs">
-    .exp-watch-small-thumbs .related-list-item .thumb-wrapper {
-        width: 120px;
-        height: 68px;
-    }
-    
-    .exp-watch-small-thumbs .related-list-item .content-wrapper {
-        margin-left: 133px;
-    }
-    
-    .exp-watch-small-thumbs .related-list-item .content-link {
-        min-height: 68px;
-        height: 68px;
-    }
-    
-    .exp-watch-small-thumbs .video-list .video-list-item .title {
-        font-size: 13px;
-        max-height: 2.4em;
-    }
-    
-    .exp-watch-small-thumbs .yt-uix-simple-thumb-related {
-        height: 68px;
-    }
-</style>
-<style id="exp-old-guide-button">
-    .exp-old-guide-button .yt-masthead-logo-container {
-        position: relative;
-    }
-    
-    .exp-old-guide-button .yt-masthead-logo-container #yt-masthead-logo-fragment {
-        position: absolute;
-        top: -1px;
-        left: 0;
-    }
-    
-    .exp-old-guide-button .yt-masthead-logo-container #appbar-guide-button {
-        position: absolute;
-        top: 1px;
-        left: 83px;
-        height: 28px;
-    }
-    
-    .exp-invert-logo.exp-old-guide-button .yt-masthead-logo-container #appbar-guide-button {
-        left: 115px;
-    }
-    
-    .exp-old-guide-button #appbar-guide-button::after {
-        content: "";
-        margin-top: -0px;
-        margin-left: 2px;
-        border: 1px solid transparent;
-        border-top-color: #e63127;
-        border-width: 3px 3px 0;
-        width: 0;
-        height: 0;
-        display: inline-block;
-        vertical-align: middle;
-    }
-    
-    html:not(.show-guide) .exp-old-guide-button #appbar-guide-button::after {
-        border-top-color: #b8b8b8;
-    }
-    
-    html:not(.show-guide) .exp-old-guide-button #masthead-positioner:hover #appbar-guide-button::after {
-        border-top-color: #666;
-    }
-    
-    .exp-old-guide-button #masthead-positioner:hover #appbar-guide-button {
-        border-color: #d3d3d3;
-        background: #f8f8f8;
-        box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05);
-    }
-    
-    .show-guide .exp-old-guide-button .yt-uix-button-icon-appbar-guide,
-    .show-guide .exp-old-guide-button #masthead-positioner:hover .yt-uix-button-icon-appbar-guide {
-        background: no-repeat url(//s.ytimg.com/yts/imgbin/www-hitchhiker-vflKml5Tv.png) -44px -613px;
-        background-size: auto;
-        width: 16px;
-        height: 16px;
-    }
-    
-    .exp-old-guide-button .yt-uix-button-icon-appbar-guide {
-        background: no-repeat url(//s.ytimg.com/yts/imgbin/www-hitchhiker-vflKml5Tv.png) -24px -512px;
-        background-size: auto;
-        width: 16px;
-        height: 16px;
-    }
-    
-    .exp-old-searchbox #masthead-search .search-btn-component .yt-uix-button-content {
-        width: 14px;
-        height: 14px;
-        background: no-repeat url(//s.ytimg.com/yts/imgbin/www-hitchhiker-vflqZgjUU.png) 0 -1893px;
     }
 </style>

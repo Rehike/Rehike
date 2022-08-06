@@ -1,0 +1,45 @@
+{% macro render(item) %}
+{% set externalId = item.idOverride ?? resolveGuideEndpoint(item) %}
+{% set serialisedEndpoint = serialiseEndpoint(item.navigationEndpoint) %}
+{% set selected = (serialisedEndpoint == serialiseEndpoint(yt.currentEndpoint)) %}
+<li id="{{ externalId }}-guide-item" class="guide-channel guide-notification-item overflowable-list-item" role="menuitem">
+    <a href="{{ item.hrefOverride ?? getUrl(item) }}" class="guide-item {{ selected ? "guide-item-selected" }} yt-uix-sessionlink yt-valign spf-link" title="{{ item.titleOverride ?? getText(item.formattedTitle) }}" 
+    data-external-id="{{ externalId }}" 
+    data-serialized-endpoint="{{ serialisedEndpoint }}"
+    >
+        <span class="yt-valign-container">
+            {% if item.thumbnail %}
+            <span class="thumb">
+                <span class="video-thumb yt-thumb yt-thumb-20">
+                    <span class="yt-thumb-square">
+                        <span class="yt-thumb-clip">
+                            <img data-thumb="{{ item.thumbnail.thumbnails[0].url }}" alt="" onload=";window.__ytRIL && __ytRIL(this)" data-ytimg="1" width="20" height="20" src="{{ PIXEL }}">
+                            <span class="vertical-align"></span>
+                        </span>
+                    </span>
+                </span>
+            </span>
+            {% elseif item.icon %}
+            <span class="thumb guide-{{ const2class(item.icon.iconType) }}-icon yt-sprite"></span>
+            {% endif %}
+            {% set hasCount = item.badges.liveBroadcasting or item.badges.count %}
+            <span class="display-name {{ not hasCount ? "no-count" }}">
+                <span>{{ item.titleOverride ?? getText(item.formattedTitle) }}</span>
+            </span>
+        </span>
+        {% if item.badges.liveBroadcasting %}
+        <span class="guide-badge-live yt-uix-tooltip yt-valign" data-tooltip-text="LIVE">
+            <span class="yt-valign-container"></span>
+        </span>
+        {% elseif item.badges.count %}
+        <span class="guide-count yt-uix-tooltip yt-valign">
+            <span class="yt-valign-container guide-count-value">{{ item.badges.count }}</span>
+        </span>
+        {% endif %}
+        {# Used by appbar guide templates #}
+        {% if item.appbarGuideNotification %}
+            <div class="appbar-guide-notification guide-item-insertion-notification" role="alert"><span class="appbar-guide-notification-content-wrapper yt-valign"><span class="appbar-guide-notification-icon yt-sprite"></span><span class="appbar-guide-notification-text-content" aria-label="{{ item.appbarGuideNotification.label }}">{{ item.appbarGuideNotification.template }}</span></span></div>
+        {% endif %}
+    </a>
+</li>
+{% endmacro %}

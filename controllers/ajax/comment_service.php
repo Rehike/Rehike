@@ -1,71 +1,183 @@
 <?php
-// content_html => section.comment-thread-renderer|div.comment-renderer
-require "models/Comments/CommentThread.php";
-
-use Rehike\Model\Comments\CommentThread;
+use \Rehike\Controller\core\AjaxController;
+use \Rehike\Model\Comments\CommentThread;
 use \Rehike\Request;
 use function YukisCoffee\getPropertyAtPath as getProp;
 
-header("Content-Type: application/json");
-
-// Find action
-function findAction()
-{
-    foreach($_GET as $key => $value)
-    {
-        if (strpos($key, "action_") > -1)
-        {
-            return $key;
+return new class extends AjaxController {
+    public function onPost(&$yt, $request) {
+        $action = self::findAction();
+        if (!@$action) {
+            http_response_code(400);
+            echo json_encode((object) [
+                "errors" => []
+            ]);
+            die();
+        }
+        $yt -> page = (object) [];
+        
+        switch ($action) {
+            case "create_comment":
+                self::createComment($yt);
+                break;
+            case "create_comment_reply":
+                self::createCommentReply($yt);
+                break;
+            case "get_comments":
+                self::getComments($yt);
+                break;
+            case "get_comment_replies":
+                self::getCommentReplies($yt);
+                break;
+            case "perform_comment_action":
+                self::performCommentAction();
+                break;       
         }
     }
-    // error?
-}
 
-$action = findAction();
+    /**
+     * Create a comment.
+     * 
+     * @param $yt Template data.
+     */
+    private function createComment(&$yt) {
+        $this -> template = "ajax/comment_service/create_comment";
+        $content = $_POST["content"] ?? null;
+        $params = $_POST["params"] ?? null;
+        if((@$content == null) | (@$params == null)) {
+            http_response_code(400);
+            echo json_encode((object) [
+                "errors" => []
+            ]);
+            die();
+        }
 
-if (isset($action))
-{
-    $template = 'ajax/comment_service/' . $action;
-    $yt->page = (object) [];
-    $yt->comments = (object) [];
-
-    $response = Request::innertubeRequest("next", (object)[
-        "continuation" => $_POST['page_token']
-    ]);
-
-    $ytdata = json_decode($response);
-}
-
-// Rewrite
-const COMMENTS_CONTINUATION_PATH = "onResponseReceivedEndpoints[0].appendContinuationItemsAction";
-// Comments header renderer is item 0 in reload response
-const COMMENTS_RELOAD_PATH = "onResponseReceivedEndpoints[1].reloadContinuationItemsCommand";
-try 
-{
-    $data = getProp($ytdata, COMMENTS_CONTINUATION_PATH);
-}
-catch (\YukisCoffee\GetPropertyAtPathException $e)
-{
-    try
-    {
-        $data = getProp($ytdata, COMMENTS_RELOAD_PATH);
+        $response = Request::innertubeRequest("comment/create_comment", (object) [
+            "commentText" => $_POST["content"],
+            "createCommentParams" => $_POST["params"]
+        ]);
+        $ytdata = json_decode($response);
+        $data = $ytdata -> actions[1] -> createCommentAction -> contents -> commentThreadRenderer ?? null;
+        $yt -> page = CommentThread::commentThreadRenderer($data);
     }
-    catch (\YukisCoffee\GetPropertyAtPathException $e)
-    {
-        echo json_encode(
-            (object)[
-                "error" => "Failed to get property at path " . COMMENTS_CONTINUATION_PATH
+
+    /**
+     * Create a reply to a comment.
+     * 
+     * @param $yt Template data.
+     */
+    private function createCommentReply(&$yt) {
+        $this -> template = "ajax/comment_service/create_comment_reply";
+        $content = $_POST["content"] ?? null;
+        $params = $_POST["params"] ?? null;
+        if((@$content == null) | (@$params == null)) {
+            http_response_code(400);
+            echo json_encode((object) [
+                "errors" => []
+            ]);
+            die();
+        }
+
+        $response = Request::innertubeRequest("comment/create_comment_reply", (object) [
+            "commentText" => $_POST["content"],
+            "createReplyParams" => $_POST["params"]
+        ]);
+        $ytdata = json_decode($response);
+        $data = $ytdata -> actions[1] -> createCommentReplyAction -> contents -> commentRenderer ?? null;
+        $yt -> page = CommentThread::commentRenderer($data, true);
+    }
+
+    /**
+     * Get comments for continuation or
+     * reload (for changing sort).
+     * 
+     * @param $yt Template data.
+     */
+    private function getComments(&$yt) {
+        $this -> template = "ajax/comment_service/get_comments";
+        $ctoken = $_POST["page_token"] ?? null;
+        if(!@$ctoken) {
+            http_response_code(400);
+            echo json_encode((object) [
+                "errors" => []
+            ]);
+            die();
+        }
+
+        $response = Request::innertubeRequest("next", (object) [
+            "continuation" => $_POST["page_token"]
+        ]);
+        $ytdata = json_decode($response);
+        try {
+            $data = getProp($ytdata, "onResponseReceivedEndpoints[0].appendContinuationItemsAction");
+        } catch (\YukisCoffee\GetPropertyAtPathException $e) {
+            try {
+                $data = getProp($ytdata, "onResponseReceivedEndpoints[1].reloadContinuationItemsCommand");
+            } catch(\YukisCoffee\GetPropertyAtPathException $e) {
+                echo json_encode((object) [
+                    "error" => "Failed to get comment continuation/sort"
+                ]);
+                exit();
+            }
+        }
+
+        $yt -> page = CommentThread::bakeComments($data);
+    }
+
+    /**
+     * Get comment replies.
+     * 
+     * @param $yt Template data.
+     */
+    private function getCommentReplies(&$yt) {
+        $this -> template = "ajax/comment_service/get_comment_replies";
+        $ctoken = $_POST["page_token"] ?? null;
+        if(!@$ctoken) {
+            http_response_code(400);
+            echo json_encode((object) [
+                "errors" => []
+            ]);
+            die();
+        }
+        
+        $response = Request::innertubeRequest("next", (object) [
+            "continuation" => $_POST["page_token"]
+        ]);
+        $ytdata = json_decode($response);
+        try {
+            $data = getProp($ytdata, "onResponseReceivedEndpoints[0].appendContinuationItemsAction");
+        } catch(\YukisCoffee\GetPropertyAtPathException $e) {
+            echo json_encode((object) [
+                "error" => "Failed to get comment replies"
+            ]);
+            exit();
+        }
+        $yt -> page = CommentThread::bakeReplies($data);
+    }
+
+    /**
+     * Perform a comment action
+     * (Like, dislike, heart, etc.)
+     */
+    private function performCommentAction() {
+        $this -> useTemplate = false;
+
+        $response = Request::innertubeRequest("comment/perform_comment_action", (object) [
+            "actions" => [
+                $_POST["action"]
             ]
-        );
-        exit();
-    }
-}
+        ]);
+        $ytdata = json_decode($response);
 
-if ("action_get_comment_replies" == $action)
-{
-    $yt->comments = CommentThread::bakeReplies($data);
-}
-else if ("action_get_comments" == $action)
-{
-    $yt->comments = CommentThread::bakeComments($data);
-}
+        if (@$ytdata -> actionResults[0] -> status == "STATUS_SUCCEEDED") {
+            echo json_encode((object) [
+                "response" => "SUCCESS"
+            ]);
+        } else {
+            http_response_code(400);
+            echo json_encode((object) [
+                "errors" => []
+            ]);
+        }
+    }
+};

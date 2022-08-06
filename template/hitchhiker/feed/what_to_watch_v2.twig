@@ -23,7 +23,7 @@
     yt.setConfig('DISMISS_THROUGH_IT', true);
 
     yt.setConfig({
-        'GUIDE_SELECTED_ITEM': "0qDduQEREg9GRXdoYXRfdG9fd2F0Y2g%3D"
+        'GUIDE_SELECTED_ITEM': "{{ serialiseEndpoint(yt.currentEndpoint) }}"
     });
 
     yt.setConfig({
@@ -55,9 +55,6 @@
 {% endblock %}
 
 {%- block content -%}
-<div id="debug" class="hid">
-    {{ yt.response|json_encode|raw }}
-</div>
 <div class="branded-page-v2-container branded-page-base-bold-titles branded-page-v2-container-flex-width branded-page-v2-has-top-row branded-page-v2-secondary-column-hidden">
     <div class="branded-page-v2-col-container">
         <div class="branded-page-v2-col-container-inner">
@@ -98,7 +95,6 @@
                                         <div class="expanded-shelf">
                                             {% if yt.flow == "grid" %}
                                             <ul id="channels-browse-content-grid" class="channels-browse-content-grid branded-page-gutter-padding grid-lockups-container">
-                                                {% apply spaceless %}
                                                 {% for item in yt.videoList %}
                                                     {% if item.gridVideoRenderer or item.gridPlaylistRenderer %}
                                                         <li class="channels-content-item yt-shelf-grid-item">
@@ -106,11 +102,9 @@
                                                         </li>
                                                     {% endif %}
                                                 {% endfor %}
-                                                {% endapply %}
                                             </ul>
                                             {% elseif yt.flow == "list" %}
                                             <ul id="home-video-list" class="expanded-shelf-content-list">
-                                                {% apply spaceless %}
                                                 {% for item in yt.videoList %}
                                                     {% if item.videoRenderer or item.playlistRenderer %}
                                                         <li class="expanded-shelf-content-item-wrapper">
@@ -120,7 +114,6 @@
                                                         </li>
                                                     {% endif %}
                                                 {% endfor %}
-                                                {% endapply %}
                                             </ul>
                                             {% endif %}
                                         </div>

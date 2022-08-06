@@ -11,7 +11,10 @@
 {%- endmacro -%}
 
 {%- macro _buttonWrapper(data, id) -%}
-    <button 
+    <{{ data.anchor ? "a" : "button" }} 
+        {% if data.href %}
+        href="{{ data.href }}"
+        {% endif %}
         class="yt-uix-button 
         yt-uix-button-size-{{ data.size }} 
         yt-uix-button-{{ data.style }} 
@@ -29,6 +32,9 @@
         {% elseif data.clickcard %}
             yt-uix-clickcard-target
         {% endif %}
+        {% if data.spf %}
+            spf-link
+        {% endif %}
         {# Render custom classes #}
         {% for class in data.class %}
             {{ class ~ " " }}
@@ -37,7 +43,12 @@
             yt-uix-tooltip 
         {% endif %}" 
         type="button" 
+        {% if data.anchor %}
+        {% elseif data.href %}
+        onclick=";window.location.href=this.getAttribute('href');return false;"
+        {% else %}
         onclick=";return false;"
+        {% endif %}
         {% if data.tooltip %} 
             title="{{ data.tooltip }}" 
         {% endif %}
@@ -69,11 +80,13 @@
             </span>
         {%- endif -%}
         {{ _self._buttonContent(data) }}
-    </button>
+    </{{ data.anchor ? "a" : "button" }}>
 {%- endmacro -%}
 
 {%- macro _buttonContent(data) -%}
+    {%- apply spaceless -%}
     <span class="yt-uix-button-content">
+    {%- endapply -%}
         {%- for run in data.content.runs -%}
             {%- if not run.class and not run.accessibilityLabel -%}
                 {{ run.text }}
@@ -86,5 +99,7 @@
         {%- if data.content.arrow -%}
                 <span class="yt-uix-button-arrow yt-sprite"></span>
         {%- endif -%}
+    {%- apply spaceless -%}
     </span>
+    {%- endapply -%}
 {%- endmacro -%}

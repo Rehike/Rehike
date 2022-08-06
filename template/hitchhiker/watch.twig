@@ -3,7 +3,7 @@
 {% set pageType = 'watch' %}
 
 {% set appbarEnabled = true %}
-{% set defaultGuideVisibility = false %}
+{% set defaultGuideVisibility = yt.config.guideOnWatchPage %}
 {% set defaultAppbarVisibility = false %}
 {% set enableSnapScaling = true %}
 
@@ -76,7 +76,7 @@ video-{{ yt.videoId }} {{ (yt.theaterMode) ? 'watch-wide watch-stage-mode' }}
       'IS_DISTILLER': true,
       'SHARE_CAPTION': null,
       'SHARE_REFERER': "",
-      'PLAYLIST_INDEX': {{ yt.playlistIndex ?? 'null' }}
+      'PLAYLIST_INDEX': {{ yt.playlistIndex ? yt.playlistIndex : 'null' }}
     });
 
       yt.pushConfigArray('TIMING_WAIT', 'parn');
@@ -115,28 +115,60 @@ video-{{ yt.videoId }} {{ (yt.theaterMode) ? 'watch-wide watch-stage-mode' }}
   });
 
 </script>
-{# Hacky playlists fix #}
+{# 
+   Hacky playlists fix
+   
+   This exists to eliminate a timing issue with YouTube's JS itself, if the
+   player loads too slowly, then it won't get updated according to a watch list change.
+#}
 {% if yt.page.playlist %}
    <script>
-   (function(g){
-      var a = _yt_www.Ci('player-api');
-      if (a) {
-         a.addEventListener('onReady', q);
+   (function(yt){
+      var playerApi = yt.www.getAPI('player-api');
+
+      if (playerApi)
+      {
+         playerApi.addEventListener('onReady', handlePlayerReady);
       }
-      function q() {
-         var vT = 0;
-         g.wf() ? (g.tf(vT), vT = g.sf(g.u(g.gf, 'watch-list-change'))) : g.E('watch-list-change');
-         a.removeEventListener('onReady', q);
+
+      function handlePlayerReady()
+      {
+         var fakeSchedulerTime = 0;
+
+         if (yt.www.schedulerAvailable)
+         {
+            yt.www.logSchedulerTime(fakeSchedulerTime);
+            yt.www.runScheduler(
+               yt.www.bindArgument(yt.www.getSchedulerEvent, "watch-list-change")
+            );
+         }
+         else
+         {
+            yt.www.fireEvent("watch-list-change");
+         }
+
+         playerApi.removeEventListener('onReady', handlePlayerReady);
       }
-   })(_yt_www);
+   })((function(){
+      // Create a _yt_www API:
+      var a = _yt_www;
+      return {
+         www: {
+            getAPI: a.yn, // Formerly Ci
+            schedulerAvailable: a.fi,
+            logSchedulerTime: a.ci,
+            fireEvent: a.H,
+            getSchedulerEvent: a.ri,
+            bindArgument: a.Ua,
+            runScheduler: a.bi
+         }
+      };
+   })());
    </script>
 {% endif %}
 {% endblock %}
 
 {%- block content -%}
-<div id="debug" class="hid">
-   {{ yt.response }}
-</div>
 <div id="placeholder-player">
    <div class="player-api player-width player-height"></div>
 </div>

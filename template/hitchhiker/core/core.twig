@@ -1,4 +1,5 @@
 {% import 'core/macros.twig' as core %}
+{% import "common/alert.twig" as alert %}
 <!DOCTYPE html>
 <html lang="en" data-cast-api-enabled="true">
    <head>
@@ -33,6 +34,9 @@
          <div id="ticker-content">
          </div>
          <div id="masthead-positioner">
+         {%- if yt.page.ticker -%}
+         {{ alert.render(yt.page.ticker) }}
+         {%- endif -%}
          <div id="yt-masthead-container" class="clearfix yt-base-gutter">
             {% include 'common/pageframe/masthead.twig' %}     
          </div>
@@ -49,10 +53,15 @@
          <div id="page-container">
             <div id="page" class="{{ pageType }} {% block page_class %}{% endblock %}  clearfix ">
                {%- block guide_container -%}
-                  {% include 'common/pageframe/guide.twig' %}
+                  {% include 'common/appbar/appbar_guide.twig' %}
                {% endblock %}
                <div class="alerts-wrapper">
-                  <div id="alerts" class="content-alignment">{% block alerts %}{% endblock %}</div>
+                  <div id="alerts" class="content-alignment">
+                     {% block alerts %}{% endblock %}
+                     {%- for item in yt.page.alerts -%}
+                     {{ alert.render(item) }}
+                     {%- endfor -%}
+                  </div>
                </div>
                <div id="header">
                {% block header %}{% endblock %}

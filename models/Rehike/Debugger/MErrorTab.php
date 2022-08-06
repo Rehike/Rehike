@@ -13,9 +13,18 @@ class MErrorTab extends MTabContent
 
     public function pushErrors($errors)
     {
-        foreach ($errors as $error)
+        $errorCount = count($errors);
+
+        if ($errorCount != 0)
         {
-            $this->addError($error);
+            foreach ($errors as $error)
+            {
+                $this->addError($error);
+            }
+        }
+        else
+        {
+            $this->addNothingToSee();
         }
     }
 }

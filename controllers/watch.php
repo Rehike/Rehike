@@ -7,6 +7,7 @@ use Com\Youtube\Innertube\Request\NextRequestParams\UnknownThing;
 use Rehike\Request;
 use Rehike\Util\Base64Url;
 use Rehike\ConfigManager\ConfigManager;
+use SpfPhp\SpfPhp;
 
 require "controllers/utils/watchUtils.php";
 require_once('controllers/utils/extractUtils.php');
@@ -27,12 +28,14 @@ return new class extends NirvanaController {
             die();
         }
 
-        include "controllers/mixins/guideNotSpfMixin.php";
-
         // begin request
         $yt->videoId = $request->params->v;
         $yt->playlistId = $request->params->list ?? null;
-        $yt->playlistIndex = (string) ((int) ($request->params->index ?? '1') - 1);
+        $yt->playlistIndex = (string) ((int) ($request->params->index ?? '1'));
+
+        if (0 == $yt->playlistIndex) $yt->playlistIndex = 1;
+
+        $yt->playerParams = $request->params->pp ?? null;
 
         $watchRequestParams = [
             'videoId' => $yt->videoId
@@ -97,7 +100,8 @@ return new class extends NirvanaController {
                         'signatureTimestamp' => $yt->playerCore->sts
                     ]   
                 ],
-                "startTimeSecs" => $startTime ?? 0
+                "startTimeSecs" => $startTime ?? 0,
+                "params" => $yt->playerParams
             ] + $watchRequestParams)
         );
 
@@ -135,7 +139,7 @@ return new class extends NirvanaController {
 
         // end request
 
-        $yt->page = \Rehike\Model\Watch\WatchModel::bake($yt, $ytdata, $dislikesData);
+        $yt->page = \Rehike\Model\Watch\WatchModel::bake($yt, $ytdata, $yt -> videoId, $dislikesData);
 
         $yt->rawWatchNextResponse = $response;
     }
@@ -145,10 +149,15 @@ return new class extends NirvanaController {
         $yt = &$this->yt;
 
         if (isset($yt->playerResponse)) {
-            $data->data = (object) ['swfcfg' => (object) ['args' => (object) [
-                'raw_player_response' => null,
-                'raw_watch_next_response' => null
-            ]]];
+            $data->data = (object) [
+                'swfcfg' => (object) [
+                    'args' => (object) [
+                        'raw_player_response' => null,
+                        'raw_watch_next_response' => null
+                    ]
+                ]
+            ];
+
             $data->data->swfcfg->args->raw_player_response = $yt->playerResponse;
             $data->data->swfcfg->args->raw_watch_next_response = json_decode($yt->rawWatchNextResponse);
     

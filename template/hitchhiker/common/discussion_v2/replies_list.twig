@@ -1,9 +1,0 @@
-{# Used by comment service ajax
-   should still be cleaned up but I'm keeping it relatively in tact
-   until then. #}
-{% import '/common/discussion_v2/main.twig' as main %}
-{{ include("/common/discussion_v2/comments_list.twig") }}
-{% if yt.comments.repliesContinuationRenderer %}
-   {% set continuation = yt.comments.repliesContinuationRenderer %}
-   {{ main.loadMoreLink('action_get_comment_replies', yt.comments.repliesTargetId, continuation.token, getText(continuation.text)) }}
-{% endif %}

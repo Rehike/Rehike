@@ -1,0 +1,26 @@
+{% macro render(comment) %}
+{% import "common/comments/main.twig" as comments %}
+<div class="image-attachment-viewer hid" tabindex="0">
+    <img class="i-a-v-image" src="{{ comment.backstageAttachment.backstageImageRenderer.image.thumbnails.0.url }}">
+    <div class="i-a-v-comment-chrome">
+        <div class="i-a-v-top-gradient"></div>
+        <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-empty yt-uix-button-has-icon no-icon-markup i-a-v-close" type="button" onclick=";return false;"></button>
+        <div class="i-a-v-comment-background">
+            <div class="i-a-v-comment-header">
+                <a href="{{ comment.authorEndpoint.commandMetadata.webCommandMetadata.url }}" class="i-a-v-comment-author-text yt-uix-sessionlink      spf-link " data-sessionlink="itct=CCoQtnUiEwjjoNi6jv3cAhWWhMQKHQyjBdMomxw">
+                    {{ getText(comment.authorText) }}
+                </a>
+                <span class="i-a-v-comment-renderer-time">
+                    <a href="{{ comment.publishedTimeText.runs.0.navigationEndpoint.commandMetadata.webCommandMetadata.url }}" class="yt-uix-sessionlink       spf-link " data-sessionlink="itct=CCoQtnUiEwjjoNi6jv3cAhWWhMQKHQyjBdMomxw">
+                        {{ comment.publishedTimeText.runs.0.text }}
+                    </a>
+                </span>
+                <span class="i-a-v-like-count off">{{ comment.voteCount.indifferentText }}</span>
+                <span class="i-a-v-like-count on">{{ comment.voteCount.likedText }}</span>
+                {{ comments.like_button_group(comment) }}
+            </div>
+            <div class="i-a-v-comment-text-content" tabindex="0">{{ comments.textContent(comment.contentText) }}</div>
+        </div>
+    </div>
+</div>
+{% endmacro %}

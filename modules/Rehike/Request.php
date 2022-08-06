@@ -2,6 +2,7 @@
 namespace Rehike;
 
 use YukisCoffee\CoffeeRequest\CoffeeRequest;
+use Rehike\Signin\AuthManager;
 
 /**
  * Implements the Rehike request manager.
@@ -43,7 +44,9 @@ class Request
      */
     protected static $requestNamespace;
 
-    public static function __staticInit()
+    public static $innertubeHeaders = [];
+    
+    public static function __initStatic()
     {
         Request::init();
     }
@@ -99,6 +102,43 @@ class Request
     protected static function getRequestManager()
     {
         return self::$requestManagers[self::getNamespace()];
+    }
+
+    /**
+     * Enable authentication from the signin service.
+     * 
+     * @return void
+     */
+    public static function useAuth()
+    {
+        if (AuthManager::shouldAuth())
+        {
+            self::$innertubeHeaders += [
+                "Authorization" => AuthManager::getAuthHeader(),
+                "Origin" => "https://www.youtube.com",
+                "Host" => "www.youtube.com",
+                "User-Agent" => $_SERVER['HTTP_USER_AGENT']  ?? ""
+            ];
+        }
+    }
+
+    /**
+     * Use the account's gaia ID for authenticating
+     * InnerTube requests.
+     * 
+     * @return void
+     */
+    public static function authUseGaiaId()
+    {
+        $gaiaId = AuthManager::getGaiaId();
+            
+        if ("" != $gaiaId)
+        {
+            self::$innertubeHeaders += [
+                "X-Goog-AuthUser" => "0",
+                "X-Goog-PageId" => $gaiaId
+            ];
+        }
     }
 
     /**
@@ -180,6 +220,8 @@ class Request
                     break;
             }
         }
+
+        self::$namespacedRequestMap[self::$requestNamespace] = [];
 
         return $final;
     }

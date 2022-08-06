@@ -4,7 +4,7 @@
           <span class="standalone-collection-badge-renderer-text">
              {% if info.superTitle %}
                 {% for link in info.superTitle.items %}
-                   <a href="{{ link.url }}">{{ link.text }}</a>
+                   <a class="spf-link" href="{{ link.url }}">{{ link.text }}</a>
                 {% endfor %}
              {% endif %}
              {% if info.hashtags %}

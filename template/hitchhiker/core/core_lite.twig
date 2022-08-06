@@ -1,0 +1,115 @@
+{% import "core/macros.twig" as core %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <link rel="icon" href="https://s.ytimg.com/yts/favicon-vflz7uhzw.ico" type="image/x-icon">
+        <link rel="shortcut icon" href="https://s.ytimg.com/yts/favicon-vflz7uhzw.ico" type="image/x-icon"> 
+        <title>{% block title %}YouTube{% endblock %}</title>
+        <meta name="description" content="Share your videos with friends, family, and the world">
+        <meta name="keywords" content="video, sharing, camera phone, video phone, free, upload">
+        <script>
+            var ytcsi = {
+                gt: function(n) {
+                    n = (n || '') + 'data_';
+                    return ytcsi[n] || (ytcsi[n] = {
+                        tick: {},
+                        info: {}
+                    });
+                },
+                now: window.performance && window.performance.timing && window.performance.now ? function() {
+                    return window.performance.timing.navigationStart + window.performance.now();
+                } : function() {
+                    return (new Date()).getTime();
+                },
+                tick: function(l, t, n) {
+                    ticks = ytcsi.gt(n).tick;
+                    var v = t || ytcsi.now();
+                    if (ticks[l]) {
+                        ticks['_' + l] = (ticks['_' + l] || [ticks[l]]);
+                        ticks['_' + l].push(v);
+                    }
+                    ticks[l] = v;
+                },
+                info: function(k, v, n) {
+                    ytcsi.gt(n).info[k] = v;
+                },
+                setStart: function(s, t, n) {
+                    ytcsi.info('yt_sts', s, n);
+                    ytcsi.tick('_start', t, n);
+                }
+            };
+            (function(w, d) {
+                ytcsi.setStart('dhs', w.performance ? w.performance.timing.responseStart : null);
+                var isPrerender = (d.visibilityState || d.webkitVisibilityState) == 'prerender';
+                var vName = d.webkitVisibilityState ? 'webkitvisibilitychange' : 'visibilitychange';
+                if (isPrerender) {
+                    ytcsi.info('prerender', 1);
+                    var startTick = function() {
+                        ytcsi.setStart('dhs');
+                        d.removeEventListener(vName, startTick);
+                    };
+                    d.addEventListener(vName, startTick, false);
+                }
+                if (d.addEventListener) {
+                    d.addEventListener(vName, function() {
+                        ytcsi.tick('vc');
+                    }, false);
+                }
+                w.__ytRIL = function(el) {
+                    if (!el.getAttribute('data-thumb')) {
+                        el.loadTime = ytcsi.now();
+                    }
+                };
+            })(window, document);
+        </script>
+        <style name="www-roboto">
+            @font-face {
+                font-family: 'Roboto';
+                font-style: italic;
+                font-weight: 400;
+                src: local('Roboto Italic'), local('Roboto-Italic'), url(//fonts.gstatic.com/s/roboto/v15/1pO9eUAp8pSF8VnRTP3xnnYhjbSpvc47ee6xR_80Hnw.woff)format('woff');
+            }
+            
+            @font-face {
+                font-family: 'Roboto';
+                font-style: italic;
+                font-weight: 500;
+                src: local('Roboto Medium Italic'), local('Roboto-MediumItalic'), url(//fonts.gstatic.com/s/roboto/v15/OLffGBTaF0XFOW1gnuHF0brIa-7acMAeDBVuclsi6Gc.woff)format('woff');
+            }
+            
+            @font-face {
+                font-family: 'Roboto';
+                font-style: normal;
+                font-weight: 400;
+                src: local('Roboto Regular'), local('Roboto-Regular'), url(//fonts.gstatic.com/s/roboto/v15/CrYjSnGjrRCn0pd9VQsnFOvvDin1pK8aKteLpeZ5c0A.woff)format('woff');
+            }
+            
+            @font-face {
+                font-family: 'Roboto';
+                font-style: normal;
+                font-weight: 500;
+                src: local('Roboto Medium'), local('Roboto-Medium'), url(//fonts.gstatic.com/s/roboto/v15/RxZJdnzeo3R5zSexge8UUbO3LdcAZYWl9Si6vvxL-qU.woff)format('woff');
+            }
+        </style>
+        <script name="www-roboto">
+            if (document.fonts && document.fonts.load) {
+                document.fonts.load("400 10pt Roboto", "");
+                document.fonts.load("500 10pt Roboto", "");
+            }
+        </script>
+        {{ core.css("www-core") }}
+        {%- block head_css -%}{%- endblock -%}
+        <!-- Smart CSS Insertion -->
+    </head>
+    <body class="date-{{ yt.version.time|date("Ymd") }} en_US ltr lite exp-responsive exp-scrollable-guide site-center-aligned site-as-giant-card not-yt-legacy-css">
+        {% if liteUseSpf %}{% include 'core/spf_module.twig' %}{% endif %}
+        {%- if yt.useModularCore -%}
+           {% include 'core/modular_js_v2.twig' %}
+        {% else %}
+           {{ core.js('www-core/www-core') }}
+        {% endif %}
+        <script>if (window.ytcsi) {window.ytcsi.tick("je", null, '');}</script>  
+        {%- block foot_scripts -%}{% endblock %}
+        {% include 'core/ytGlobalJsConfig.twig' %}
+    </body>
+</html>

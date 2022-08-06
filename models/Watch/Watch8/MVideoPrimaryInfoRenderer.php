@@ -7,6 +7,7 @@ use Rehike\Model\Common\MButton;
 use Rehike\Model\Common\MToggleButton;
 use Rehike\Model\Clickcard\MSigninClickcard;
 use Rehike\ConfigManager\ConfigManager;
+use Rehike\Signin\API as SignIn;
 
 include_once "controllers/utils/extractUtils.php";
 
@@ -45,7 +46,7 @@ class MVideoPrimaryInfoRenderer
     public $likeButtonRenderer = [];
 
     // dataHost == get_called_class of caller
-    public function __construct($dataHost)
+    public function __construct($dataHost, $videoId)
     {
         $info = &$dataHost::$primaryInfo ?? null;
 
@@ -59,7 +60,7 @@ class MVideoPrimaryInfoRenderer
             $this->viewCount = (true === ConfigManager::getConfigProp("noViewsText")) ? ExtractUtils::isolateViewCnt(TemplateFunctions::getText($info->viewCount->videoViewCountRenderer->viewCount)) : TemplateFunctions::getText($info->viewCount->videoViewCountRenderer->viewCount) ?? null;
             $this->badges = $info->badges ?? null;
             $this->superTitle = isset($info->superTitleLink) ? new MSuperTitle($info->superTitleLink) : null;
-            $this->likeButtonRenderer = new MLikeButtonRenderer($dataHost, $info->videoActions->menuRenderer);
+            $this->likeButtonRenderer = new MLikeButtonRenderer($dataHost, $info->videoActions->menuRenderer, $videoId);
             $this->owner = new MOwner($dataHost);
 
             // Create action butttons
@@ -123,7 +124,9 @@ class MOwner
 
     public function __construct($dataHost)
     {
-        $info = &$dataHost::$secondaryInfo->owner->videoOwnerRenderer;
+        $secInfo = &$dataHost::$secondaryInfo;
+        $info = $secInfo->owner->videoOwnerRenderer;
+        
 
         if (isset($info))
         {
@@ -139,9 +142,28 @@ class MOwner
             ;
 
             // Build the subscription button from the InnerTube data.
-            $this->subscriptionButtonRenderer = MSubscriptionActions::fromData(
-                (object)[], $subscribeCount
-            );
+            if (isset($secInfo -> subscribeButton -> subscribeButtonRenderer)) {
+                $this->subscriptionButtonRenderer = MSubscriptionActions::fromData($secInfo -> subscribeButton -> subscribeButtonRenderer, $subscribeCount);
+            } elseif (isset($secInfo -> subscribeButton -> buttonRenderer)) { // channel settings button
+                $this->channelSettingsButtonRenderer = new MButton((object) [
+                    "style" => "default",
+                    "size" => "default",
+                    "content" => (object) [
+                        "runs" => [
+                            (object) [
+                                "text" => "Channel settings" // TODO: i18n
+                            ]
+                        ]
+                    ],
+                    "hasIcon" => true,
+                    "noIconMarkup" => true,
+                    "anchor" => true,
+                    "href" => "/advanced_settings",
+                    "class" => [
+                        "channel-settings-link"
+                    ]
+                ]);
+            }
         }
     }
 }
@@ -295,7 +317,7 @@ class MLikeButtonRenderer
     /** @var MSparkbars */
     public $sparkbars;
 
-    public function __construct($dataHost, &$info)
+    public function __construct($dataHost, &$info, &$videoId)
     {
         $origLikeButton = &$info->topLevelButtons[0]->toggleButtonRenderer;
         $origDislikeButton = &$info->topLevelButtons[1]->toggleButtonRenderer;
@@ -327,10 +349,10 @@ class MLikeButtonRenderer
             $this->sparkbars = new MSparkbars($likeCountInt, $dislikeCountInt);
         }
 
-        $this->likeButton = new MLikeButton(@$likeCountInt, $likeA11y, !$isLiked);
-        $this->activeLikeButton = new MLikeButton(@$likeCountInt, $likeA11y, $isLiked, true);
-        $this->dislikeButton = new MDislikeButton(@$dislikeCountInt, $dislikeA11y, !$isDisliked);
-        $this->activeDislikeButton = new MDislikeButton(@$dislikeCountInt, $dislikeA11y, $isDisliked, true);
+        $this->likeButton = new MLikeButton(@$likeCountInt, $likeA11y, !$isLiked, $videoId);
+        $this->activeLikeButton = new MLikeButton(@$likeCountInt, $likeA11y, $isLiked, $videoId, true);
+        $this->dislikeButton = new MDislikeButton(@$dislikeCountInt, $dislikeA11y, !$isDisliked, $videoId);
+        $this->activeDislikeButton = new MDislikeButton(@$dislikeCountInt, $dislikeA11y, $isDisliked, $videoId, true);
     }
 }
 
@@ -370,7 +392,7 @@ class MLikeButtonRendererButton extends MToggleButton
  */
 class MLikeButton extends MLikeButtonRendererButton
 {
-    public function __construct($likeCount, $a11y, $isLiked, $active = false)
+    public function __construct($likeCount, $a11y, $isLiked, $videoId, $active = false)
     {
         if ($active) $likeCount++;
 
@@ -387,11 +409,19 @@ class MLikeButton extends MLikeButtonRendererButton
         $signinDetail = "Sign in to make your opinion count.";
 
         // Store a reference to the current sign in state.
-        $signedIn = false; // TODO
+        $signedIn = SignIn::isSignedIn();
 
-        if (!$signedIn && !$active)
-        {
+        if ($signedIn) {
+            $this -> attributes["post-action"] = "/service_ajax?name=likeEndpoint";
+            $this -> class[] = "yt-uix-post-anchor";
+        }
+
+        if (!$signedIn && !$active) {
             $this->clickcard = new MSigninClickcard($signinMessage, $signinDetail);
+        } elseif ($signedIn && !$active) {
+            $this -> attributes["post-data"] = "action=like&id=" . $videoId;
+        } elseif ($signedIn && $active) {
+            $this -> attributes["post-data"] = "action=removelike&id=" . $videoId;
         }
 
         parent::__construct("like-button", $active, $likeCount, $isLiked);
@@ -403,7 +433,7 @@ class MLikeButton extends MLikeButtonRendererButton
  */
 class MDislikeButton extends MLikeButtonRendererButton
 {
-    public function __construct($dislikeCount, $a11y, $isDisliked, $active = false)
+    public function __construct($dislikeCount, $a11y, $isDisliked, $videoId, $active = false)
     {
         if ($active) $dislikeCount++;
 
@@ -417,11 +447,19 @@ class MDislikeButton extends MLikeButtonRendererButton
         $signinDetail = "Sign in to make your opinion count.";
 
         // Store a reference to the current sign in state.
-        $signedIn = false; // TODO
+        $signedIn = SignIn::isSignedIn();
 
-        if (!$signedIn && !$active)
-        {
+        if ($signedIn) {
+            $this -> attributes["post-action"] = "/service_ajax?name=likeEndpoint";
+            $this -> class[] = "yt-uix-post-anchor";
+        }
+
+        if (!$signedIn && !$active) {
             $this->clickcard = new MSigninClickcard($signinMessage, $signinDetail);
+        } elseif ($signedIn && !$active) {
+            $this -> attributes["post-data"] = "action=dislike&id=" . $videoId;
+        } elseif ($signedIn && $active) {
+            $this -> attributes["post-data"] = "action=removedislike&id=" . $videoId;
         }
 
         parent::__construct("dislike-button", $active, $dislikeCount, $isDisliked);

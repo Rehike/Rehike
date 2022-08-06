@@ -4,6 +4,7 @@ namespace Rehike\Model\Channels;
 use Rehike\Model\Channels\Channels4\MChannelAboutMetadata;
 use Rehike\Model\Channels\Channels4\BrandedPageV2\MSubnav;
 use Rehike\Model\Channels\Channels4\Sidebar\MRelatedChannels;
+use Rehike\Model\Appbar\MAppbarNavItemStatus;
 use Rehike\TemplateFunctions as TF;
 
 class Channels4Model
@@ -53,7 +54,7 @@ class Channels4Model
                     $yt->appbar->nav->addItem(
                         $tab->tabRenderer->title,
                         $tabEndpoint,
-                        $tab->tabRenderer->selected ?? false
+                        $tab->tabRenderer->selected ? MAppbarNavItemStatus::Selected : MAppbarNavItemStatus::Unselected
                     );
 
                     if ($tab->tabRenderer->selected)

@@ -1,0 +1,93 @@
+{% from "core/html/img.twig" import img %}
+{% import "common/thumb/thumb_types.twig" as thumb %}
+{% import "common/uix/button.twig" as button %}
+{% import "common/uix/load_more_button.twig" as load_more %}
+<body>
+    <div id="yt-masthead-notifications-content" class="yt-uix-scroller" data-loaded="true" data-scroller-mousewheel-listener="" data-scroller-scroll-listener="">
+        <ol id="item-section-327280" class="item-section">
+            {% for item in yt.notifList %}
+                {% if item.notificationRenderer %}
+                    {% set this = item.notificationRenderer %}
+                    <li>
+                        <div class="feed-item-container yt-lockup yt-lockup-tile yt-lockup-notification yt-uix-tile vve-check clearfix yt-uix-post-anchor yt-uix-post-anchor" data-post-action="/service_ajax?name=recordNotificationInteractionsEndpoint" data-post-data="{{ this.recordClickEndpoint.recordNotificationInteractionsEndpoint.serializedInteractionsRequest }}">
+                            <div class="feed-item-dismissible">
+                                <div class="notification-avatar">
+                                    {% if not this.read %}<div class="unread-dot"></div>{% endif %}
+                                    <div class="yt-thumb video-thumb">
+                                        <span class="yt-thumb-simple">
+                                            {{ img({
+                                                src: getThumb(this, 40),
+                                                width: 40,
+                                                height: 40,
+                                                onload: ";window.__ytRIL && __ytRIL(this)",
+                                                ytImg: 1
+                                            }) }}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="yt-lockup-content">
+                                    <h3 class="yt-lockup-title">
+                                        <a class="yt-uix-tile-link yt-ui-ellipsis yt-ui-ellipsis-6 yt-uix-sessionlink spf-link " href="{{ this.navigationEndpoint.getCommentsFromInboxCommand ? "/watch?v=" ~ this.navigationEndpoint.getCommentsFromInboxCommand.videoId ~ "&lc=" ~ this.navigationEndpoint.getCommentsFromInboxCommand.linkedCommentId : getUrl(this) }}" title="{{ getText(this.shortMessage) }}">{{ getText(this.shortMessage) }}</a>
+                                        <span class="accessible-description" id="description-id-{{ random(10000, 99999) }}"> - Notification</span>
+                                    </h3>
+                                    <ul class="yt-lockup-byline">
+                                        <li>{{ getText(this.sentTimeText) }}</li>
+                                    </ul>
+                                </div>
+                                {% if this.videoThumbnail %}
+                                <div class="notification-thumb">
+                                    <div class="yt-thumb video-thumb">
+                                        <span class="yt-thumb-simple">
+                                            {{ img({
+                                                src: getThumb(this, 54, "videoThumbnail"),
+                                                width: 72,
+                                                height: 54,
+                                                onload: ";window.__ytRIL && __ytRIL(this)",
+                                                ytImg: 1
+                                            }) }}
+                                        </span>
+                                    </div>
+                                </div>
+                                {% endif %}
+                                <div class="yt-uix-menu-container yt-lockup-action-menu">
+                                    <div class="yt-uix-menu yt-uix-menu-flipped hide-until-delayloaded">
+                                        {{ button.render({
+                                            size: "default",
+                                            style: "lockup-action-menu",
+                                            hasIcon: true,
+                                            noIconMarkup: true,
+                                            menu: true,
+                                            manualMenuWrapper: true
+                                        }) }}
+                                        <div class="yt-uix-menu-content yt-ui-menu-content yt-uix-menu-content-hidden" role="menu">
+                                            <ul>
+                                                {% for item in this.contextualMenu.menuRenderer.items %}
+                                                {% set mitem = item.menuServiceItemRenderer %}
+                                                <li role="menuitem">
+                                                    <div class="service-endpoint-action-container hid">
+                                                        <div class="service-endpoint-replace-enclosing-action-notification hid">
+                                                            <div class="replace-enclosing-action-message">Notification preference updated.</div>
+                                                        </div>
+                                                    </div>
+                                                    <button class="yt-ui-menu-item yt-uix-menu-close-on-select notification-opt-out-choice">
+                                                        <span class="yt-ui-menu-item-label">{{ getText(mitem.text) }}</span>
+                                                    </button>
+                                                </li>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                {% endif %}
+            {% endfor %}
+        </ol>
+        {% set lastItem = yt.notifList|last %}
+        {% if lastItem.continuationItemRenderer %}
+            {% set this = lastItem.continuationItemRenderer %}
+            {{ load_more.render(this.continuationEndpoint.getNotificationMenuEndpoint.ctoken, "item-section-327280", false, "feed_ajax") }}
+        {% endif %}
+    </div>
+</body>

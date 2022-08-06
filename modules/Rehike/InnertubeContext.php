@@ -123,6 +123,7 @@ class InnertubeContext
                     'visitorData' => self::genVisitorData($visitorData),
                     'clientName' => $cname,
                     'clientVersion' => $cver,
+                    'userAgent' => $_SERVER['HTTP_USER_AGENT']  ?? ""
                 ],
                 'user' => (object) [
                     'lockedSafetyMode' => false

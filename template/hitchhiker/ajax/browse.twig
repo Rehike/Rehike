@@ -15,17 +15,16 @@
         {% for item in yt.page.lockupList %}
             {% if item.gridVideoRenderer or item.gridPlaylistRenderer %}
                 <li class="channels-content-item yt-shelf-grid-item">
-                    {{ lockup.grid(item, yt.continuationPage starts with "UC" ? false : true) }}
+                    {{ lockup.grid(item) }}
                 </li>
             {% elseif item.videoRenderer or item.playlistRenderer %}
                 <li class="expanded-shelf-content-item-wrapper">
                     <div class="expanded-shelf-content-item">
-                        {{ lockup.tile(item, yt.continuationPage starts with "UC" ? false : true) }}
+                        {{ lockup.tile(item) }}
                     </div>
                 </li>
             {% endif %}
         {% endfor %}
     {% endif %}
-    {% endapply %},
-    "rh_debug_innertube": {{ yt.response ? yt.response|raw : "\"\"" }}
+    {% endapply %}
 }

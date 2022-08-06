@@ -8,6 +8,7 @@
 
 {# TODO: cleanup and generalise #}
 {% macro video_item(data) %}
+{% import "common/uix/watch_later_button.twig" as wlBtn %}
 {% if data.compactVideoRenderer %}
 {% set data = data.compactVideoRenderer %}
 <li class="video-list-item related-list-item  show-video-time related-list-item-compact-video">
@@ -17,14 +18,27 @@
         {{ getText(data.title) }}
         </span>
         <span class="accessible-description" id="description-id-920876">
-        - Duration: {{ getText(data.thumbnailOverlays.0.thumbnailOverlayTimeStatusRenderer.text) }}.
+        - Duration: {{ getVideoTime(data) }}.
         </span>
-        <span class="stat attribution"><span class="" >{{ yt.config.byTextOnByline ? "by " }}{{ getText(data.shortBylineText) }}</span></span>
+        <span class="stat attribution">{{ yt.config.byTextOnByline ? "<span>by </span>" }}<span class="" >{{ getText(data.shortBylineText) }}</span></span>
         <span class="stat view-count">{{ getText(data.viewCountText) }}{% if yt.config.dateOnWatchSidebarItems %} • {{ getText(data.publishedTimeText) }}{% endif %}</span>
         </a>
     </div>
-    <div class="thumb-wrapper">
-        <a href="/watch?v={{ data.videoId }}" class=" vve-check thumb-link spf-link  yt-uix-sessionlink      spf-link " data-sessionlink="itct=CCwQpDAYAyITCPCb3sSz6toCFcuifgodz50MGCj4HTIHcmVsYXRlZEjEu4GtvZiOhnU"  tabindex="-1" rel=" spf-prefetch nofollow" data-visibility-tracking="CCwQpDAYAyITCPCb3sSz6toCFcuifgodz50MGCj4HUC59MSzzMLW5XA=" aria-hidden="true"><span class="yt-uix-simple-thumb-wrap yt-uix-simple-thumb-related" tabindex="0" data-vid="{{ data.videoId }}"><img aria-hidden="true" style="top: 0px" {{ yt.config.smallWatchSidebarItems ? "width=\"120\" height=\"68\"" : "width=\"168\" height=\"94\"" }} data-thumb="{{ data.thumbnail.thumbnails.0.url }}" alt="" src="{{ PIXEL }}" ><span class="video-time">{{ getText(data.thumbnailOverlays.0.thumbnailOverlayTimeStatusRenderer.text) }}</span></span></a>
+    {% set timeOverlay = getThumbnailOverlay(data, "thumbnailOverlayResumePlaybackRenderer") %}
+    <div class="thumb-wrapper{{ timeOverlay ? " contains-percent-duration-watched" }}">
+        <a href="/watch?v={{ data.videoId }}" class=" vve-check thumb-link spf-link  yt-uix-sessionlink      spf-link " data-sessionlink="itct=CCwQpDAYAyITCPCb3sSz6toCFcuifgodz50MGCj4HTIHcmVsYXRlZEjEu4GtvZiOhnU"  tabindex="-1" rel=" spf-prefetch nofollow" data-visibility-tracking="CCwQpDAYAyITCPCb3sSz6toCFcuifgodz50MGCj4HUC59MSzzMLW5XA=" aria-hidden="true">
+            <span class="yt-uix-simple-thumb-wrap yt-uix-simple-thumb-related" tabindex="0" data-vid="{{ data.videoId }}">
+            <img aria-hidden="true" style="top: 0px" width="168" height="94" data-thumb="{{ getThumb(data) }}" alt="" src="{{ PIXEL }}">
+            <span class="video-time">{{ getVideoTime(data) }}</span></span>
+        </a>
+        {% if timeOverlay != null %}
+        <span class="resume-playback-background"></span>
+        <span class="resume-playback-progress-bar" style="width:{{ timeOverlay.percentDurationWatched }}%"></span>
+        {% endif %}
+        {% set wlButton = getWLOverlay(data) %}
+        {% if wlButton != null %}
+            {{ wlBtn.render(wlButton, info.videoId) }}
+        {% endif %}
     </div>
 </li>
 {% elseif data.continuationItemRenderer %}

@@ -1,0 +1,4 @@
+{% import "common/comments/main.twig" as dv2 %}
+{
+    "html_content": {{ dv2.comment_thread(yt.page)|json_encode|raw }}
+}

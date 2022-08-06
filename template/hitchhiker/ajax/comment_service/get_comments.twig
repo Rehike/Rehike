@@ -1,0 +1,5 @@
+{% import '/common/comments/main.twig' as main %}
+{
+   "content_html": {{ include("/common/comments/comments_thread_list.twig")|json_encode|raw }}{% if yt.page.commentContinuationRenderer %},
+   "load_more_widget_html": {{ main.loadMoreWidget(yt.page.commentContinuationRenderer.token)|json_encode|raw   }}{% endif %}
+}

@@ -2,7 +2,7 @@
 namespace Rehike\ResourceConstants;
 
 const YTS_HOST = 's.ytimg.com';
-const MODULAR_JS_PATH = 'www-en_US-vflkPQDpM';
+const MODULAR_JS_PATH = 'www-en_US-vfl2g6bso';
 
 function jsModuleUrl($name) {
     return '//' . YTS_HOST . '/yts/jsbin/' . MODULAR_JS_PATH . '/' . $name . '.js';
@@ -32,7 +32,10 @@ $ytConstants = (object) [
         'www-results' => '//' . YTS_HOST . '/yts/cssbin/www-results-vfl67U2zJ.css',
         'www-account-settings'=> '//' .  YTS_HOST . '/yts/cssbin/www-account-settings-vfl9mNWIu.css',
         'www-creatorpage' => '//' . YTS_HOST . '/yts/cssbin/www-creatorpage-vflfgomxn.css',
-        'www-error' => '//' . YTS_HOST . '/yts/cssbin/www-error-vflvD9R0Z.css'
+        'www-error' => '//' . YTS_HOST . '/yts/cssbin/www-error-vflvD9R0Z.css',
+        'www-live-chat' => '//' . YTS_HOST . '/yts/cssbin/www-live-chat-vflGrXn94.css',
+        'www-livestreaming-chatbadges' => '//' . YTS_HOST . '/yts/cssbin/www-livestreaming-chatbadges-vfl5EBaFs.css',
+        'www-livestreaming_chat_emoji' => '//' . YTS_HOST . '/yts/cssbin/www-livestreaming_chat_emoji-vfl49K1WZ.css'
     ],
     'css2x' => (object) [
         'www-core' => '//' . YTS_HOST . '/yts/cssbin/www-core-2x-vflNAXaGB.css',
