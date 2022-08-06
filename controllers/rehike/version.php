@@ -1,250 +1,11 @@
 <?php
 namespace Rehike\Controller\Version;
 
+use Rehike\Controller\core\HitchhikerController;
 use Rehike\Version\VersionController;
+use Rehike\i18n;
 
-/**
- * Inlined language system.
- * 
- * This is a preliminary/test system. It may be used universally
- * later.
- */
-class i18n
-{
-    /** @var string[] */
-    protected static $data = [];
-
-    /** @var string */
-    protected static $language = "";
-
-    /** @var string */
-    protected static $defaultLanguage = "en";
-
-    /**
-     * Register a language array
-     * 
-     * @param string $name
-     * @param string[] $array of language strings
-     * @return void
-     */
-    public static function register($name, $array)
-    {
-        self::$data += [$name => &$array];
-    }
-
-    public static function getStringId($id)
-    {
-        return @self::$data[self::$language][$id] 
-            ?? @self::$data[self::$defaultLanguage][$id] 
-            ?? ""
-        ;
-    }
-
-    /**
-     * Get a string's contents.
-     * 
-     * @param string $id of the string
-     * @param mixed[] $params
-     */
-    public static function get($id, ...$params)
-    {
-        $string = self::getStringId($id);
-
-        if (!is_callable($string))
-        {
-            return sprintf($string, ...$params);
-        }
-        else
-        {
-            return $string;
-        }
-    }
-
-    public static function setLanguage($value)
-    {
-        self::$language = $value;
-    }
-
-    public static function setDefaultLanguage($value)
-    {
-        self::$defaultLanguage = $value;
-    }
-}
-
-/**
- * i18n registration
- */
-i18n::register("en", [
-    "getFormattedDate" => function($date = 0) {
-        return date("F j, Y, h:i", $date);
-    },
-    "brandName" => "Rehike",
-    "versionHeader" => "Version %s",
-    "nightly" => "Nightly",
-    "nightlyInfoTooltip" => "This release is bleeding edge and may contain irregular bugs.",
-    "subheaderNightlyInfo" => "Current branch information",
-    "nonGitNotice" => "This release of Rehike lacks Git information.",
-    "nonGitExtended" => "This may occur if you downloaded the repository directly from GitHub, " .
-                        "such as from the \"Download ZIP\" feature. Some version information may be lost or " .
-                        "unavailable.",
-    "syncGithubButton" => "Synchronize with GitHub",
-    "failedNotice" => "Failed to get version information.",
-    "remoteFailedNotice" => "Failed to get remote version information.",
-    "remoteFailedExtended" => "Version information is limited.",
-    "noDotVersionNotice" => "The .version file is missing or corrupted.",
-    "noNewVersions" => "No new versions available.",
-    "oneNewVersion" => "1 new version available.",
-    "varNewVersions" => "%s new versions available.",
-    "unknownNewVersions" => "This version is critically out of date.",
-    "headingVersionInfo" => "Version information",
-    "viewOnGithub" => "View on GitHub"
-]);
-
-i18n::setLanguage("en");
-
-/**
- * Model declarations
- */
-class MVersionPage
-{
-    public $headingText;
-    public $brandName;
-    public $version = ""; // This gets replaced later
-    public $nightlyNotice;
-    public $nightlyInfo;
-    public $failedNotice;
-    public $nonGitNotice;
-
-    protected $isNightly = false;
-
-    public function __construct($data)
-    {
-        $this -> headingText = i18n::get("headingVersionInfo");
-        $this -> brandName = i18n::get("brandName");
-
-        if (@$data["semanticVersion"])
-        {
-            $this->version = i18n::get("versionHeader", $data["semanticVersion"]);
-        }
-
-        if (!@$data["isRelease"] && null != $data)
-        {
-            $this -> nightlyNotice = new MNightlyNotice();
-            $this -> nightlyInfo = new MNightlyInfo($data);
-            $this -> isNightly = true;
-        }
-
-        if (null == $data)
-        {
-            $this -> failedNotice = new MFailedNotice();
-			unset($this->brandName);
-			return;
-        }
-
-        if (!@$data["supportsDotGit"])
-        {
-            $this -> nonGitNotice = new MNonGitNotice();
-        }
-    }
-}
-
-class MNightlyNotice
-{
-    public $text;
-    public $tooltip;
-
-    public function __construct()
-    {
-        $this -> text = i18n::get("nightly");
-        $this -> tooltip = i18n::get("nightlyInfoTooltip");
-    }
-}
-
-class MNightlyInfo
-{
-    public $headingText;
-    public $branch;
-    public $commitHash;
-    public $fullCommitHash;
-    public $isPreviousHash = false;
-    public $commitName;
-    public $commitDateTime;
-
-    public function __construct(&$data)
-    {
-        if ($branch = @$data["branch"])
-        {
-			$this->headingText = i18n::get("subheaderNightlyInfo");
-            $this -> branch = $branch;
-        }
-
-        if ($hash = @$data["currentHash"])
-        {
-            $this -> commitHash = self::trimHash($hash);
-            $this -> fullCommitHash = $hash;
-        }
-        else if ($hash = @$data["previousHash"])
-        {
-            $this -> commitHash = self::trimHash($hash);
-            $this -> fullCommitHash = $hash;
-            $this -> isPreviousHash = true;
-        }
-
-        if ($name = @$data["subject"])
-        {
-            $this -> commitName = $name;
-        }
-
-        if ($time = @$data["time"])
-        {
-            $this -> commitDateTime = i18n::get("getFormattedDate")($time);
-        }
-
-        if (GH_ENABLED && @$this->fullCommitHash)
-        {
-            $this->ghButton = (object)[];
-            $this->ghButton->label = i18n::get("viewOnGithub");
-            $this->ghButton->endpoint = "//github.com/" . GH_REPO . "/tree/{$this->fullCommitHash}";
-        }
-    }
-
-    private static function trimHash($hash)
-    {
-        return substr($hash, 0, 7);
-    }
-}
-
-class MNotice
-{
-    public $text;
-    public $description;
-}
-
-class MFailedNotice extends MNotice
-{
-    public function __construct()
-    {
-        $this -> text = i18n::get("failedNotice");
-        $this -> description = i18n::get("noDotVersionNotice");
-    }
-}
-
-class MNonGitNotice extends MNotice
-{
-    public function __construct()
-    {
-        $this -> text = i18n::get("nonGitNotice");
-        $this -> description = i18n::get("nonGitExtended");
-    }
-}
-
-/**
- * Controller declarations
- */
-const GH_REPO = "Rehike/Rehike";
-const GH_ENABLED = true;
-
-const GH_API_COMMITS = "https://api.github.com/repos/" . GH_REPO . "/commits?sha="; // sha= + branch
+use Rehike\Model\Rehike\Version\MVersionPage;
 
 /**
  * Use remote Git repo if possible.
@@ -263,7 +24,7 @@ class RemoteGit
      */
     public static function getInfo($branch)
     {
-        if (!GH_ENABLED) return false; // Return false if GH access is not permitted.
+        if (!GetVersionController::GH_ENABLED) return false; // Return false if GH access is not permitted.
 
         return self::useCache($branch) ?? self::useRemote($branch) ?? false;
     }
@@ -348,7 +109,7 @@ class RemoteGit
      */
     private static function useRemote($branch)
     {
-        $ch = curl_init(GH_API_COMMITS . $branch);
+        $ch = curl_init(GetVersionController::GH_API_COMMITS . $branch);
         curl_setopt_array($ch, [
 			CURLOPT_RETURNTRANSFER => true,
 			CURLOPT_USERAGENT => "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:99.0) Gecko/20100101 Firefox/99.0"
@@ -374,12 +135,26 @@ class RemoteGit
     }
 }
 
-class GetVersionController
+class GetVersionController extends HitchhikerController
 {
+    public const GH_REPO = "Rehike/Rehike";
+    public const GH_ENABLED = true;
+
+    public const GH_API_COMMITS = "https://api.github.com/repos/" . self::GH_REPO . "/commits?sha="; // sha= + branch
+
     /**
      * Reference to Rehike\Version\VersionController::$versionInfo
      */
     public static $versionInfo;
+
+    public $template = "rehike/version";
+
+    public function onGet(&$yt, $request)
+    {
+        i18n::newNamespace("rehike/version")->registerFromFolder("i18n/rehike/version");
+        
+        $yt->page = (object)self::bake();
+    }
 
     public static function bake()
     {
@@ -393,7 +168,7 @@ class GetVersionController
         }
 
         // If remote git is expected, report it
-        if (GH_ENABLED) self::$versionInfo += ["expectRemoteGit" => true];
+        if (self::GH_ENABLED) self::$versionInfo += ["expectRemoteGit" => true];
 
         // ...and attempt to use it
         if (
@@ -428,11 +203,4 @@ class GetVersionController
 }
 
 // export
-return new class {
-    public static function get(&$yt, &$template)
-    {
-        $template = "rehike/version";
-
-        $yt->page = (object)GetVersionController::bake();
-    }
-};
+return new GetVersionController();

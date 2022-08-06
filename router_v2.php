@@ -49,7 +49,8 @@ Router::get([
     "/forcefatal" => "forcefatal",
     "/all_comments" => "all_comments",
     "/related_ajax" => "ajax/related",
-    "/browse_ajax" => "ajax/browse"
+    "/browse_ajax" => "ajax/browse",
+    "/rehike/version" => "rehike/version"
 ]);
 
 Router::post([
