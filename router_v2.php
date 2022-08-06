@@ -50,7 +50,8 @@ Router::get([
     "/all_comments" => "all_comments",
     "/related_ajax" => "ajax/related",
     "/browse_ajax" => "ajax/browse",
-    "/rehike/version" => "rehike/version"
+    "/rehike/version" => "rehike/version",
+    "/rehike/static/**" => "rehike/static_router"
 ]);
 
 Router::post([
