@@ -40,6 +40,7 @@ class MSubscriptionButton extends MButton
         "style-type" => "", // branded/unbranded
         "clicktracking" => "",
         "servicelink" => "",
+        "show-unsub-confirm-dialog" => "true",
         "visibility-tracking" => "",
         "show-unsub-confirm-time-frame" => "always",
         "channel-external-id" => ""
@@ -67,7 +68,8 @@ class MSubscriptionButton extends MButton
             "isSubscribed" => false,
             "type" => "FREE",
             "branded" => "true",
-            "channelExternalId" => ""
+            "channelExternalId" => "",
+            "params" => ""
         ];
 
         $this->disabled = $opts["isDisabled"];
@@ -76,6 +78,7 @@ class MSubscriptionButton extends MButton
         
         $this->type = $opts["type"];
         $this->attributes["channel-external-id"] = $opts["channelExternalId"];
+        $this->attributes["params"] = $opts["params"];
 
         if ($this->subscribed) {
             $this->style .= "subscribed";

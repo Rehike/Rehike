@@ -29,7 +29,7 @@
 {% endmacro %}
 
 {% macro comment(comment, isReply) %}
-<div class="comment-renderer   vve-check-visible vve-check-hidden" data-visibility-tracking="CMMBELZ1IhMI6bL2yIzE7QIVN8jBCh0WXA-s" data-visibility-types="12" data-cid="{{ comment.commentId }}">
+<div class="comment-renderer {{ comment.isLiked ? "liked" }}  vve-check-visible vve-check-hidden" data-visibility-tracking="CMMBELZ1IhMI6bL2yIzE7QIVN8jBCh0WXA-s" data-visibility-types="12" data-cid="{{ comment.commentId }}">
    <a href="{{ comment.authorEndpoint.commandMetadata.webCommandMetadata.url }}" class=" yt-uix-sessionlink      spf-link " data-sessionlink="itct=CMMBELZ1IhMI6bL2yIzE7QIVN8jBCh0WXA-s">  
       {% set thumbnailSize = (comment.isReply or isReply) ? '32' : '48' %}
       <span class="video-thumb comment-author-thumbnail yt-thumb yt-thumb-{{ thumbnailSize }}">
@@ -88,18 +88,7 @@
             {% endif %}
             {{ _self.like_button_group(comment) }}
             {% if comment.actionButtons.commentActionButtonsRenderer.creatorHeart %}
-            <button class="yt-uix-creator-heart-button yt-uix-tooltip" aria-label="{{ comment.actionButtons.commentActionButtonsRenderer.creatorHeart.creatorHeartRenderer.heartedTooltip }}" data-tooltip-text="{{ comment.actionButtons.commentActionButtonsRenderer.creatorHeart.creatorHeartRenderer.heartedTooltip }}">
-               <div class="creator-heart">
-                  <img src="{{ comment.actionButtons.commentActionButtonsRenderer.creatorHeart.creatorHeartRenderer.creatorThumbnail.thumbnails.0.url }}" class="creator-heart-background-hearted">
-                  <div class="creator-heart-big-hearted"></div>
-                  <div class="creator-heart-small-hearted">
-                     <div class="creator-heart-small-container">
-                        <div class="creator-heart-small-left" style="background: #ff0000;"></div>
-                        <div class="creator-heart-small-right" style="background: #ff0000;"></div>
-                     </div>
-                  </div>
-               </div>
-            </button>
+            
             {% endif %}
             {% if yt.signin.isSignedIn %}
             <div class="yt-uix-menu-container comment-renderer-action-menu yt-section-hover-container">
@@ -198,8 +187,8 @@ Loading...
 
 {% macro like_button_group(comment) %}
 <span role="radiogroup">
-<button class="yt-uix-button yt-uix-button-size-default yt-uix-button-default yt-uix-button-empty yt-uix-button-has-icon no-icon-markup comment-action-buttons-renderer-thumb yt-uix-sessionlink sprite-comment-actions sprite-like i-a-v-sprite-like" type="button" onclick=";return false;" aria-checked="false" aria-label="Like" role="radio" data-action="CAUQAhoaVWd5UThpY2VZanFNWTAwMG1KNTRBYUFCQWcqC215MmhfX2w0MXFjMAA4AEoVMTEyOTM1MjAzMzA1OTEyODQ0ODg1UACoAQy6ARhVQ202eUQyNkhsYWZ6cU5sWWFLN3VFYUE%3D" data-action-type="like" data-sessionlink="itct=CMkBEPBbIhMI6bL2yIzE7QIVN8jBCh0WXA-s" data-sessionlink-target="/comment_service_ajax?action_perform_comment_action=1" data-url="/comment_service_ajax?action_perform_comment_action=1"></button>
-<button class="yt-uix-button yt-uix-button-size-default yt-uix-button-default yt-uix-button-empty yt-uix-button-has-icon no-icon-markup comment-action-buttons-renderer-thumb yt-uix-sessionlink sprite-comment-actions sprite-dislike i-a-v-sprite-dislike" type="button" onclick=";return false;" aria-checked="false" aria-label="Dislike" role="radio" data-action="CAQQAhoaVWd5UThpY2VZanFNWTAwMG1KNTRBYUFCQWcqC215MmhfX2w0MXFjMAA4AEoVMTEyOTM1MjAzMzA1OTEyODQ0ODg1UACoAQy6ARhVQ202eUQyNkhsYWZ6cU5sWWFLN3VFYUE%3D" data-action-type="dislike" data-sessionlink="itct=CMcBEPBbIhMI6bL2yIzE7QIVN8jBCh0WXA-s" data-sessionlink-target="/comment_service_ajax?action_perform_comment_action=1" data-url="/comment_service_ajax?action_perform_comment_action=1"></button>
+<button class="yt-uix-button yt-uix-button-size-default yt-uix-button-default yt-uix-button-empty yt-uix-button-has-icon no-icon-markup comment-action-buttons-renderer-thumb yt-uix-sessionlink sprite-comment-actions sprite-like i-a-v-sprite-like" type="button" onclick=";return false;" aria-checked="false" aria-label="Like" role="radio" data-action="like" data-action-type="like" data-sessionlink="itct=CMkBEPBbIhMI6bL2yIzE7QIVN8jBCh0WXA-s" data-sessionlink-target="/comment_service_ajax?action_perform_comment_action=1" data-url="/comment_service_ajax?action_perform_comment_action=1"></button>
+<button class="yt-uix-button yt-uix-button-size-default yt-uix-button-default yt-uix-button-empty yt-uix-button-has-icon no-icon-markup comment-action-buttons-renderer-thumb yt-uix-sessionlink sprite-comment-actions sprite-dislike i-a-v-sprite-dislike" type="button" onclick=";return false;" aria-checked="false" aria-label="Dislike" role="radio" data-action="dislike" data-action-type="dislike" data-sessionlink="itct=CMcBEPBbIhMI6bL2yIzE7QIVN8jBCh0WXA-s" data-sessionlink-target="/comment_service_ajax?action_perform_comment_action=1" data-url="/comment_service_ajax?action_perform_comment_action=1"></button>
 </span>
 {% endmacro %}
 

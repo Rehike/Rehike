@@ -13,30 +13,28 @@ return new class extends AjaxController {
             $response = Request::innertubeRequest("subscription/subscribe", (object) [
                 "channelIds" => [
                     $_POST["c"] ?? null
-                ],
-                "params" => "EgIIDRgA"
+                ]/*,
+                "params" => "EgIIDRgA"*/
             ]);
             $ytdata = json_decode($response);
 
-            echo json_encode((object) [
-                "response" => $ytdata
-            ]);
+            if (!isset($ytdata -> error)) {
+                http_response_code(200);
+                echo json_encode((object) [
+                    "response" => "SUCCESS"
+                ]);
+            } else {
+                $errors = (object) [
+                    "errors" => []
+                ];
 
-            // if (!isset($ytdata -> error)) {
-            //     http_response_code(200);
-            //     echo "{}";
-            // } else {
-            //     $errors = (object) [
-            //         "errors" => []
-            //     ];
+                for ($i = 0; $i < count($ytdata -> error -> errors); $i++) {
+                    $errors[] = $ytdata -> error -> errors[$i] -> message ?? null;
+                }
 
-            //     for ($i = 0; $i < count($ytdata -> error -> errors); $i++) {
-            //         $errors[] = $ytdata -> error -> errors[$i] -> message ?? null;
-            //     }
-
-            //     http_response_code(400);
-            //     echo json_encode($errors);
-            // }
+                http_response_code(400);
+                echo json_encode($errors);
+            }
         } else if ($action == "remove_subscriptions") {
 
         }

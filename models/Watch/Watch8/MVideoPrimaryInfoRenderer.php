@@ -124,7 +124,9 @@ class MOwner
 
     public function __construct($dataHost)
     {
-        $info = &$dataHost::$secondaryInfo->owner->videoOwnerRenderer;
+        $secInfo = &$dataHost::$secondaryInfo;
+        $info = $secInfo->owner->videoOwnerRenderer;
+        
 
         if (isset($info))
         {
@@ -141,7 +143,7 @@ class MOwner
 
             // Build the subscription button from the InnerTube data.
             $this->subscriptionButtonRenderer = MSubscriptionActions::fromData(
-                $info -> subscriptionButton, $subscribeCount
+                $secInfo -> subscribeButton -> subscribeButtonRenderer, $subscribeCount
             );
         }
     }

@@ -20,7 +20,7 @@
         <span class="accessible-description" id="description-id-920876">
         - Duration: {{ getVideoTime(data) }}.
         </span>
-        <span class="stat attribution"><span class="" >{{ yt.config.byTextOnByline ? "by " }}{{ getText(data.shortBylineText) }}</span></span>
+        <span class="stat attribution">{{ yt.config.byTextOnByline ? "<span>by </span>" }}<span class="" >{{ getText(data.shortBylineText) }}</span></span>
         <span class="stat view-count">{{ getText(data.viewCountText) }}{% if yt.config.dateOnWatchSidebarItems %} • {{ getText(data.publishedTimeText) }}{% endif %}</span>
         </a>
     </div>
