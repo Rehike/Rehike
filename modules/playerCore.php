@@ -153,7 +153,11 @@ class PlayerCore {
         // so we don't crash everything if it's invalid...
         if (file_exists(self::CACHE_PATH)) {
             $playerCache = include(self::CACHE_PATH);
-            $maxTime = $playerCache->time + 18000 ?? 0;
+            if (isset($playerCache->time) && filter_var($playerCache->time, FILTER_VALIDATE_INT)) {
+                $maxTime = $playerCache->time + 18000 ?? 0;
+            } else {
+                $maxTime = time() + 180000;
+            }
 
             return (time() < $maxTime) 
                 ? $playerCache 
