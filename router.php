@@ -65,5 +65,6 @@ Router::post([
     "/playlist_video_ajax" => "ajax/playlist_video",
     "/subscription_ajax" => "ajax/subscription",
     "/service_ajax" => "ajax/service",
-    "/comment_service_ajax" => "ajax/comment_service"
+    "/comment_service_ajax" => "ajax/comment_service",
+    "/heart_ajax" => "ajax/heart"
 ]);
