@@ -24,7 +24,7 @@
         <span class="stat view-count">{{ getText(data.viewCountText) }}{% if yt.config.dateOnWatchSidebarItems %} • {{ getText(data.publishedTimeText) }}{% endif %}</span>
         </a>
     </div>
-    {% set timeOverlay = getThumbnailOverlay(data.thumbnailOverlays, "thumbnailOverlayResumePlaybackRenderer") %}
+    {% set timeOverlay = getThumbnailOverlay(data, "thumbnailOverlayResumePlaybackRenderer") %}
     <div class="thumb-wrapper{{ timeOverlay ? " contains-percent-duration-watched" }}">
         <a href="/watch?v={{ data.videoId }}" class=" vve-check thumb-link spf-link  yt-uix-sessionlink      spf-link " data-sessionlink="itct=CCwQpDAYAyITCPCb3sSz6toCFcuifgodz50MGCj4HTIHcmVsYXRlZEjEu4GtvZiOhnU"  tabindex="-1" rel=" spf-prefetch nofollow" data-visibility-tracking="CCwQpDAYAyITCPCb3sSz6toCFcuifgodz50MGCj4HUC59MSzzMLW5XA=" aria-hidden="true">
             <span class="yt-uix-simple-thumb-wrap yt-uix-simple-thumb-related" tabindex="0" data-vid="{{ data.videoId }}">

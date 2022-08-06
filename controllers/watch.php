@@ -28,8 +28,6 @@ return new class extends NirvanaController {
             die();
         }
 
-        include "controllers/mixins/guideNotSpfMixin.php";
-
         // begin request
         $yt->videoId = $request->params->v;
         $yt->playlistId = $request->params->list ?? null;

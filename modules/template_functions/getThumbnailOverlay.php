@@ -10,15 +10,17 @@
  * 
  * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * 
- * @param object[] $array of the thumbnail overlays
+ * @param object $array of the thumbnail overlays
  * @param string $name of the overlay identifier
  * 
  * @return ?object
  */
 \Rehike\TemplateFunctions::register("getThumbnailOverlay", function($array, $name)
 {
+    if (!isset($array -> thumbnailOverlays )) return null;
+
     // Iterate the array and figure out the thumbnail overlay
-    foreach ($array as $index => $contents)
+    foreach ($array -> thumbnailOverlays as $index => $contents)
     {
         // InnerTube API formats thumbnail overlays as
         // keys within an object. Fortunately, this is pretty
