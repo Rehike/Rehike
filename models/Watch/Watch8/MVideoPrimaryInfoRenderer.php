@@ -190,7 +190,16 @@ class MActionButton extends MButton
             }
             else
             {
-                $this->class += $data["class"];
+                /*
+                 * BUG (kirasicecreamm): This used += operator to
+                 * append the arrays, which is useful for associative,
+                 * but not numerical arrays.
+                 * 
+                 * This caused it to ignore the 0th item and so on
+                 * as it conflicted with the preexisting index in
+                 * this parent class.
+                 */
+                $this->class = array_merge($this->class, $data["class"]);
             }
         }
 
