@@ -24,14 +24,7 @@ i18n::newNamespace("main/regex")->registerFromFolder("i18n/regex");
 i18n::newNamespace("main/misc")->registerFromFolder("i18n/misc");
 i18n::newNamespace("main/guide")->registerFromFolder("i18n/guide");
 
-////////////////////////////////////////////////
-// Temporary Controller V1 compatibility code //
-$twig = &TemplateManager::exposeTwig();
-$template = &TemplateManager::exposeTemplate();
-////////////////////////////////////////////////
-
 // Controller V2 init
-
 ControllerV2::registerStateVariable($yt);
 
 // Player init
@@ -70,14 +63,3 @@ TemplateManager::addFunction('http_response_code', function($code) {
 TemplateManager::addFilter("base64_encode", function($a){
    return base64_encode($a);
 });
-
-
-// Still referenced by some legacy code, otherwise this should
-// be removed asap
-function findKey($array, string $key) {
-   for ($i = 0, $j = count($array); $i < $j; $i++) {
-      if (isset($array[$i]->{$key})) {
-         return $array[$i]->{$key};
-      }
-   }
-}
