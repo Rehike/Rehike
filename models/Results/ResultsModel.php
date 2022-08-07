@@ -12,7 +12,7 @@ class ResultsModel {
 
     /**
      * Bake a results page model
-     * 
+     *
      * @param object $yt (global state)
      * @param object $data from search response
      */
@@ -21,6 +21,10 @@ class ResultsModel {
         $contents = $data -> contents -> twoColumnSearchResultsRenderer -> primaryContents -> sectionListRenderer;
         $filterHeader = $contents -> subMenu -> searchSubMenuRenderer -> groups;
         $resultCount = $data -> estimatedResults;
+        // remove ad because it fucks up everything
+        if (isset($contents -> contents[0] -> itemSectionRenderer -> contents[0] -> promotedSparklesWebRenderer)) {
+            $contents -> contents = array_splice($contents -> contents, 1);
+        }
         $results = $contents -> contents[0] -> itemSectionRenderer -> contents;
 
         if (!is_null($filterHeader)) $response -> header = new MFiltersHeader($filterHeader, $resultCount);

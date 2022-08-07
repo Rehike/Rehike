@@ -1,10 +1,10 @@
 {
-	"previousHash": "e797af1ffd1594dbd9ec279953fa8f771006c30c",
-	"currentRevisionId": 395,
-	"subject": "standardize feed section list ids, cleanup search template",
-	"body": "standardize feed section list ids, cleanup search template",
+	"previousHash": "d4d2e717007acb3390e6bd8fc6785fe1b5df7406",
+	"currentRevisionId": 396,
+	"subject": "results_ajax; fix speedyg template",
+	"body": "results_ajax; fix speedyg template",
 	"branch": "master",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1659895664
+	"time": 1659911690
 }

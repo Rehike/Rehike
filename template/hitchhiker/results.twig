@@ -134,6 +134,11 @@
                     </li>
                     {% endfor %}
                 </ol>
+                {%- set lastItem = yt.page.results|last -%}
+                {%- if lastItem.continuationItemRenderer -%}
+                {%- from "common/uix/load_more_button.twig" import render as load_more -%}
+                {{ load_more(lastItem.continuationItemRenderer.continuationEndpoint.continuationCommand.token, "item-section-results", false, "results_ajax") }}
+                {%- endif -%}
             </li>
             {% endif %}
         </ol>
