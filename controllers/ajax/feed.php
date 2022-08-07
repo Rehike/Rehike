@@ -52,7 +52,7 @@ return new class extends AjaxController {
             ]);
             $ytdata = json_decode($response);
 
-            $yt->notifList = $ytdata->actions[0]->openPopupAction->popup->multiPageMenuRenderer->sections[0]->multiPageMenuNotificationSectionRenderer->items;
+            $yt->notifSections = $ytdata->actions[0]->openPopupAction->popup->multiPageMenuRenderer->sections;
         }
     }
 
@@ -66,6 +66,6 @@ return new class extends AjaxController {
         ]);
         $ytdata = json_decode($response);
 
-        $yt->notifList = $ytdata->actions[0]->openPopupAction->popup->multiPageMenuRenderer->sections[0]->multiPageMenuNotificationSectionRenderer->items;
+        $yt->notifSections = $ytdata->actions[0]->openPopupAction->popup->multiPageMenuRenderer->sections;
     }
 };

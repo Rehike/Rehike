@@ -1,10 +1,10 @@
 {
-	"previousHash": "0c191fe1146d2082aad5107d390b429b220cb51e",
-	"currentRevisionId": 391,
-	"subject": "oops",
-	"body": "oops",
+	"previousHash": "6b47146ca1a2086083e1f71f427599d24552abd0",
+	"currentRevisionId": 392,
+	"subject": "fix bug where notifications would only show comment if it was at top",
+	"body": "fix bug where notifications would only show comment if it was at top",
 	"branch": "master",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1659853804
+	"time": 1659856186
 }
