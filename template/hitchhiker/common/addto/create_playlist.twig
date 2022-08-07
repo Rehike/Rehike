@@ -1,0 +1,60 @@
+{% macro render(data) %}
+    <form class="create-playlist-widget-form yt-uix-focustrap" method="POST" action="/playlist_ajax?action_create_playlist=1" data-max-title-length="150">
+        <input class="video-ids-input" type="hidden" name="video_ids">
+        <input class="source-playlist-id-input" type="hidden" name="source_playlist_id">
+        <div class="{{ not data.isCompact ? 'create-playlist-section' }}">
+            {% if not data.isCompact %}
+            <label>
+                <h2 class="yt-uix-form-label">
+                    {{ data.label }}
+                </h2>
+                {{ _self.title_input() }}
+            </label>
+            {% else %}
+            <div class="yt-uix-form-label" style="margin-top:0">
+                {{ _self.title_input() }}
+            </div>
+            {% endif %}
+        </div>
+        <div class="{{ not data.isCompact ? 'create-playlist-section create-playlist-bottom-section' }} clearfix">
+            <input class="privacy-value-input" type="hidden" name="p" value="public">
+            <div class="yt-uix-menu yt-uix-menu-sibling-content privacy-button-container">
+                <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-{{ data.isCompact ? 'default' : 'text' }} yt-uix-button-has-icon no-icon-markup privacy-button yt-uix-menu-trigger" type="button" onclick=";return false;" aria-haspopup="true" role="button" aria-pressed="false" aria-label="{{ data.playlistPrivacyText }}" data-privacy-state="privacy-public"><span class="yt-uix-button-content">{{ data.publicText }}</span><span class="yt-uix-button-arrow yt-sprite"></span></button>
+                <div class="yt-uix-menu-content yt-ui-menu-content yt-uix-menu-content-hidden" role="menu">
+                    <ul class="create-playlist-widget-privacy-menu">
+                        <li role="menuitem">
+                            <button type="button" title="{{ data.publicText }}" class="yt-ui-menu-item has-icon yt-uix-menu-close-on-select yt-uix-button-has-icon no-icon-markup is-selected" data-value="public" data-privacy-state="privacy-public">
+                                <span class="yt-ui-menu-item-label">{{ data.publicText }}</span>
+                            </button>
+                        </li>
+                        <li role="menuitem">
+                            <button type="button" title="{{ data.unlistedText }}" class="yt-ui-menu-item has-icon yt-uix-menu-close-on-select yt-uix-button-has-icon no-icon-markup" data-value="unlisted" data-privacy-state="privacy-unlisted">
+                                <span class="yt-ui-menu-item-label">{{ data.unlistedText }}</span>
+                            </button>
+                        </li>
+                        <li role="menuitem">
+                            <button type="button" title="{{ data.privateText }}" class="yt-ui-menu-item has-icon yt-uix-menu-close-on-select yt-uix-button-has-icon no-icon-markup" data-value="private" data-privacy-state="privacy-private">
+                            <span class="yt-ui-menu-item-label">{{ data.privateText }}</span>
+                        </button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="create-playlist-buttons">
+                {% if not data.isCompact %}
+                <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-default cancel-button" type="reset" onclick=";return true;"><span class="yt-uix-button-content">Cancel</span></button>
+                {% endif %}
+                <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-primary create-button" type="submit" onclick=";return true;" disabled="True"><span class="yt-uix-button-content">Create</span></button>
+            </div>
+        </div>
+        <div class="yt-uix-focustrap-trap" tabindex="0"></div>
+    </form>
+{% endmacro %}
+
+{% macro title_input() %}
+<span class="title-input-container yt-uix-form-input-container yt-uix-form-input-text-container  yt-uix-form-input-fluid-container">
+    <span class=" yt-uix-form-input-fluid">
+        <input class="yt-uix-form-input-text title-input" name="n" type="text" maxlength="150">
+    </span>
+</span>
+{% endmacro %}

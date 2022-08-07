@@ -1,10 +1,10 @@
 {
-	"previousHash": "7dc517d3209827d72f3e82cdb00eb7d8975e84fc",
-	"currentRevisionId": 397,
-	"subject": "make it respond with 400",
-	"body": "make it respond with 400",
+	"previousHash": "67f8e9e3acec940ab5243b0434159f1534f22a8d",
+	"currentRevisionId": 402,
+	"subject": "Merge branch 'master' of https://github.com/Rehike/Rehike",
+	"body": "Merge branch 'master' of https://github.com/Rehike/Rehike",
 	"branch": "master",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1659912637
+	"time": 1659913467
 }

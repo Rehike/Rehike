@@ -1,0 +1,51 @@
+{% macro render(data) %}
+<div class="addto-playlist-panel menu-panel active-panel">
+    <div class="addto-search-playlist-section" dir="ltr">
+        <span class="search-icon yt-sprite"></span>
+        <input title="{{ data.searchText }}" aria-label="{{ data.searchText }}" type="text" class="addto-search-box yt-uix-form-input-text">
+    </div>
+    <div class="playlists yt-uix-scroller" style="width:auto">
+        <ul class="addto-playlist-panel yt-uix-kbd-nav yt-uix-kbd-nav-list" role="menu" tabindex="0">
+            {% for list in data.playlists %}
+                {% if list.playlistAddToOptionRenderer %}
+                    {{ _self.playlist_item(list.playlistAddToOptionRenderer) }}
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+<button class="create-playlist-item addto-menu-show-create-playlist-panel menu-panel active-panel">
+    {{ data.createNewText }}
+</button>
+<div class="addto-create-playlist-section create-playlist-panel menu-panel">
+    {% from "/common/addto/create_playlist.twig" import render as create_playlist %}
+    {{ create_playlist(data.createPlaylistPanelRenderer) }}
+</div>
+{% endmacro %}
+
+{% macro playlist_item(data) %}
+    {% set id = data.playlistId %}
+    {% set title = getText(data.title) %}
+
+    {% if data.privacy == "PUBLIC" %}
+        {% set icon = "public-icon" %}
+    {% elseif data.privacy == "UNLISTED" %}
+        {% set icon = "unlisted-icon" %}
+    {% elseif data.privacy == "PRIVATE" %}
+        {% set icon = "private-icon" %}
+    {% endif %}
+
+    {% if data.containsSelectedVideos == "ALL" %}
+        {% set status = "contains-all-selected-videos" %}
+    {% elseif data.containsSelectedVideos == "SOME" %}
+        {% set status = "contains-some-selected-videos" %}
+    {% else %}
+        {% set status = "" %}
+    {% endif %}
+
+    <li class="addto-playlist-item yt-uix-button-menu-item {{ status }}" data-full-list-id="{{ id }}" data-item-name="{{ title }}">
+        <button class="playlist-status" role="menuitemcheckbox" aria-checked="false"></button>
+        <span class="playlist-name">{{ title }}</span>
+        <span class="{{ icon }} yt-sprite"></span>
+    </li>
+{% endmacro %}

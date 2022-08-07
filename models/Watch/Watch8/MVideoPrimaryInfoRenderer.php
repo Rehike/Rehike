@@ -79,7 +79,7 @@ class MVideoPrimaryInfoRenderer
                 case "PLAYLIST_ADD":
                     // Push to the beginning of the array
                     // since this should always come first
-                    array_unshift($orderedButtonQueue, MActionButton::buildW8AddtoButton());
+                    array_unshift($orderedButtonQueue, MActionButton::buildW8AddtoButton($videoId));
                     break;
                 case "FLAG":
                     $orderedButtonQueue[] = MActionButton::buildReportButton();
@@ -206,7 +206,16 @@ class MActionButton extends MButton
             }
             else
             {
-                $this->class += $data["class"];
+                /*
+                 * BUG (kirasicecreamm): This used += operator to
+                 * append the arrays, which is useful for associative,
+                 * but not numerical arrays.
+                 * 
+                 * This caused it to ignore the 0th item and so on
+                 * as it conflicted with the preexisting index in
+                 * this parent class.
+                 */
+                $this->class = array_merge($this->class, $data["class"]);
             }
         }
 
@@ -224,6 +233,11 @@ class MActionButton extends MButton
         {
             $this->clickcard = &$data["clickcard"];
         }
+
+        if (@$data["videoActionsMenu"])
+        {
+            $this->videoActionsMenu = &$data["videoActionsMenu"];
+        }
     }
 
     /**
@@ -232,27 +246,44 @@ class MActionButton extends MButton
      * 
      * @return void
      */
-    public static function buildW8AddtoButton()
+    public static function buildW8AddtoButton($videoId)
     {
-        /*
-         * TODO (kirasicecreamm): Get sign in status and build
-         * clickcard conditionally.
-         * 
-         * The groundwork is done, so it should just be a simple
-         * conditional here.
-         */
-        return new self([
+        $buttonCfg = [
             "label" => "Add to", // TODO: i18n
-            "class" => "addto-button",
-            "clickcard" => new MSigninClickcard(
-                "Want to watch this again later?",
-                "Sign in to add this video to a playlist."
-            ),
-            "attributes" => [ // Clickcard attributes
-                "orientation" => "vertical",
-                "position" => "bottomleft"
-            ]
-        ]);
+            "class" => []
+        ];
+
+        if (!SignIn::isSignedIn())
+        {
+            $buttonCfg += [
+                "clickcard" => new MSigninClickcard(
+                    "Want to watch this again later?",
+                    "Sign in to add this video to a playlist."
+                ),
+                "attributes" => [ // Clickcard attributes
+                    "orientation" => "vertical",
+                    "position" => "bottomleft"
+                ]
+            ];
+        }
+        else
+        {
+            $buttonCfg += [
+                "videoActionsMenu" => (object)[
+                    "contentId" => "yt-uix-videoactionmenu-menu",
+                    "videoId" => $videoId
+                ]
+            ];
+
+            $buttonCfg["class"] += [
+                "yt-uix-menu-trigger",
+                "yt-uix-videoactionmenu-button"
+            ];
+        }
+
+        $buttonCfg["class"][] = "addto-button";
+
+        return new self($buttonCfg);
     }
 
     /**

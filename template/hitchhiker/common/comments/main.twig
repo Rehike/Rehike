@@ -87,8 +87,8 @@
             <span class="comment-renderer-like-count on">1</span>
             {% endif %}
             {{ _self.like_button_group(comment) }}
-            {% if comment.creatorHeart %}
-            {{ _self.creator_heart(comment.creatorHeart) }}
+            {% if comment.actionButtons.commentActionButtonsRenderer.creatorHeart %}
+               {{ _self.creator_heart(comment.actionButtons.commentActionButtonsRenderer.creatorHeart.creatorHeartRenderer)  }}
             {% endif %}
             {% if yt.signin.isSignedIn %}
             <div class="yt-uix-menu-container comment-renderer-action-menu yt-section-hover-container">
@@ -198,7 +198,6 @@ Loading...
 {%- endif -%}
 </span>
 {% endmacro %}
-
 
 {% macro creator_heart(data) %}
    {# Creator heart is noticeably lazy #}
