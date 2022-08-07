@@ -9,34 +9,60 @@ return new class extends AjaxController {
     public function onPost(&$yt, $request) {
         $action = self::findAction();
 
-        if ($action == "create_subscription_to_channel") {
-            $response = Request::innertubeRequest("subscription/subscribe", (object) [
-                "channelIds" => [
-                    $_POST["c"] ?? null
-                ],
-                "params" => $_POST["params"] ?? null
-            ]);
-            $ytdata = json_decode($response);
-
-            if (!isset($ytdata -> error)) {
-                http_response_code(200);
-                echo json_encode((object) [
-                    "response" => "SUCCESS"
-                ]);
-            } else {
-                $errors = (object) [
-                    "errors" => []
-                ];
-
-                for ($i = 0; $i < count($ytdata -> error -> errors); $i++) {
-                    $errors[] = $ytdata -> error -> errors[$i] -> message ?? null;
-                }
-
+        switch ($action) {
+            case "create_subscription_to_channel":
+                self::createSubscriptionToChannel($yt, $request);
+                break;
+            default:
                 http_response_code(400);
-                echo json_encode($errors);
-            }
-        } else if ($action == "remove_subscriptions") {
-
+                echo json_encode((object) [
+                    "errors" => []
+                ]);
+                die();
+                break;
         }
+
+        if (!isset($ytdata)) {
+            http_response_code(400);
+            echo json_encode((object) [
+                "errors" => []
+            ]);
+            die();
+        }
+
+        if (!isset($ytdata -> error)) {
+            http_response_code(200);
+            echo json_encode((object) [
+                "response" => "SUCCESS"
+            ]);
+        } else {
+            $errors = (object) [
+                "errors" => []
+            ];
+
+            for ($i = 0; $i < count($ytdata -> error -> errors); $i++) {
+                $errors[] = $ytdata -> error -> errors[$i] -> message ?? null;
+            }
+
+            http_response_code(400);
+            echo json_encode($errors);
+        }
+    }
+
+    /**
+     * Create a subscription to a channel.
+     * TODO(aubymori): Make this actually work.
+     *
+     * @param object          $yt      Template data.
+     * @param RequestMetadata $request Request data.
+     */
+    private function createSubscriptionToChannel(&$yt, $request) {
+        $response = Request::innertubeRequest("subscription/subscribe", (object) [
+            "channelIds" => [
+                $_POST["c"] ?? null
+            ],
+            "params" => $_POST["params"] ?? null
+        ]);
+        $ytdata = json_decode($response);
     }
 };

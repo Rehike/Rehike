@@ -1,10 +1,10 @@
 {
-	"previousHash": "d4d2e717007acb3390e6bd8fc6785fe1b5df7406",
-	"currentRevisionId": 396,
-	"subject": "results_ajax; fix speedyg template",
-	"body": "results_ajax; fix speedyg template",
+	"previousHash": "7dc517d3209827d72f3e82cdb00eb7d8975e84fc",
+	"currentRevisionId": 397,
+	"subject": "make it respond with 400",
+	"body": "make it respond with 400",
 	"branch": "master",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1659911690
+	"time": 1659912637
 }
