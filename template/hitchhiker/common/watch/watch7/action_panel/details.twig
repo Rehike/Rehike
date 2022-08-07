@@ -10,7 +10,7 @@
                     {%- if (snippet.navigationEndpoint) -%}
                         {%- set href = snippet.navigationEndpoint.commandMetadata.webCommandMetadata.url -%}
                         {%- set spf = (href|first == "/") -%}
-                        <a href="{{ href }}" class="yt-uix-sessionlink {{ spf ? 'spf-link' }} " target="_blank">
+                        <a href="{{ href }}" class=" {{ spf ? 'spf-link' }} " target="_blank">
                     {%- endif -%}
                     {{ snippet.text|nl2br }}
                     {%- if (snippet.navigationEndpoint) -%}

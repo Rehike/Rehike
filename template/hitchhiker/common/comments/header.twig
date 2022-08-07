@@ -1,11 +1,11 @@
 {% macro render(data) %}
-<div class="comments-header-renderer  vve-check-visible vve-check-hidden"
-    data-visibility-tracking="CAIQ7pgBIhMI_IXM6vaL4QIVgZLECh3BowD8"
+<div class="comments-header-renderer   "
+
     data-visibility-types="12">
     <h2 class="comment-section-header-renderer" tabindex="0">
         <b>{{ data.title }}</b>{% if data.commentsCountText %} • {{data.commentsCountText}}{% endif %}
     </h2>
-    <div class="comment-simplebox-renderer yt-uix-servicelink {{ not yt.signin.isSignedIn ? "vve-check" }}" data-servicelink="itct=CAUQwXUiEwj8hczq9ovhAhWBksQKHcGjAPw"data-visibility-tracking="CAUQwXUiEwj8hczq9ovhAhWBksQKHcGjAPw">
+    <div class="comment-simplebox-renderer  {{ not yt.signin.isSignedIn ? "" }}">
         <span class="video-thumb comment-author-thumbnail yt-thumb yt-thumb-48">
         <span class="yt-thumb-square">
             <span class="yt-thumb-clip">
@@ -33,8 +33,8 @@
         <div class="yt-uix-menu-content yt-ui-menu-content yt-uix-menu-content-hidden" role="menu">
             <ul>
                 {% for item in sortRenderer.items %}
-                <li>  
-                    <button type="button" class="yt-ui-menu-item yt-uix-menu-close-on-select comment-section-sort-menu-item yt-uix-sessionlink" data-menu_name="{{ item.menuName }}" data-sessionlink="itct=CAUQxqYCIhMI6bL2yIzE7QIVN8jBCh0WXA-s" data-sessionlink-target="/comment_service_ajax?action_get_comments=1" data-token="{{ item.continuation }}" data-url="/comment_service_ajax?action_get_comments=1">
+                <li>
+                    <button type="button" class="yt-ui-menu-item yt-uix-menu-close-on-select comment-section-sort-menu-item " data-menu_name="{{ item.menuName }}"  data-sessionlink-target="/comment_service_ajax?action_get_comments=1" data-token="{{ item.continuation }}" data-url="/comment_service_ajax?action_get_comments=1">
                     <span class="yt-ui-menu-item-label">{{ item.title }}</span>
                     </button>
                 </li>

@@ -8,7 +8,7 @@
  #}
 
 {##
- # @private   
+ # @private
  #}
 {%- macro _abstract(type, data) -%}
     {% from "/common/thumb/thumb_types.twig" import renderDefault, renderSimple %}
@@ -17,9 +17,8 @@
     {% set videoData = data.videoData %}
     {% set thumbnailSrc = getThumb(videoData, thumbnailWidth) %}
 
-    <a href="{{ getEndpoint(videoData) }}" class="yt-uix-sessionlink"
-        aria-hidden="true" data-sessionlink="{{ videoData.trackingParams }}"
-    > 
+    <a href="{{ getEndpoint(videoData) }}" class=""
+        aria-hidden="true">
         {%- if type == "default" -%}
             {{ renderDefault({
                 src: thumbnailSrc,

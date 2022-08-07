@@ -5,7 +5,7 @@
 {% import "common/thumb/thumb_types.twig" as thumb %}
 {% import "common/uix/button.twig" as button %}
 <li>
-    <div class="feed-item-container yt-lockup yt-lockup-tile yt-lockup-notification yt-uix-tile vve-check clearfix yt-uix-post-anchor yt-uix-post-anchor" data-post-action="/service_ajax?name=recordNotificationInteractionsEndpoint" data-post-data="{{ this.recordClickEndpoint.recordNotificationInteractionsEndpoint.serializedInteractionsRequest }}">
+    <div class="feed-item-container yt-lockup yt-lockup-tile yt-lockup-notification yt-uix-tile  clearfix yt-uix-post-anchor yt-uix-post-anchor" data-post-action="/service_ajax?name=recordNotificationInteractionsEndpoint" data-post-data="{{ this.recordClickEndpoint.recordNotificationInteractionsEndpoint.serializedInteractionsRequest }}">
         <div class="feed-item-dismissible">
             <div class="notification-avatar">
                 {% if not this.read %}<div class="unread-dot"></div>{% endif %}
@@ -23,7 +23,7 @@
             </div>
             <div class="yt-lockup-content">
                 <h3 class="yt-lockup-title">
-                    <a class="yt-uix-tile-link yt-ui-ellipsis yt-ui-ellipsis-6 yt-uix-sessionlink spf-link " href="{{ this.navigationEndpoint.getCommentsFromInboxCommand ? "/watch?v=" ~ this.navigationEndpoint.getCommentsFromInboxCommand.videoId ~ "&lc=" ~ this.navigationEndpoint.getCommentsFromInboxCommand.linkedCommentId : getUrl(this) }}" title="{{ getText(this.shortMessage) }}">{{ getText(this.shortMessage) }}</a>
+                    <a class="yt-uix-tile-link yt-ui-ellipsis yt-ui-ellipsis-6  spf-link " href="{{ this.navigationEndpoint.getCommentsFromInboxCommand ? "/watch?v=" ~ this.navigationEndpoint.getCommentsFromInboxCommand.videoId ~ "&lc=" ~ this.navigationEndpoint.getCommentsFromInboxCommand.linkedCommentId : getUrl(this) }}" title="{{ getText(this.shortMessage) }}">{{ getText(this.shortMessage) }}</a>
                     <span class="accessible-description" id="description-id-{{ random(10000, 99999) }}"> - Notification</span>
                 </h3>
                 <ul class="yt-lockup-byline">

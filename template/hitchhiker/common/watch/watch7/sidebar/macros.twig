@@ -13,20 +13,20 @@
 {% set data = data.compactVideoRenderer %}
 <li class="video-list-item related-list-item  show-video-time related-list-item-compact-video">
     <div class="content-wrapper">
-        <a href="/watch?v={{ data.videoId }}" class=" content-link spf-link  yt-uix-sessionlink      spf-link " data-sessionlink="itct=CCwQpDAYAyITCPCb3sSz6toCFcuifgodz50MGCj4HTIHcmVsYXRlZEjEu4GtvZiOhnU"  title="{{ getText(data.title) }}" rel=" spf-prefetch nofollow" data-visibility-tracking="CCwQpDAYAyITCPCb3sSz6toCFcuifgodz50MGCj4HUC59MSzzMLW5XA=" >
+        <a href="/watch?v={{ data.videoId }}" class=" content-link spf-link        spf-link "   title="{{ getText(data.title) }}" rel=" spf-prefetch nofollow">
         <span dir="ltr" class="title" aria-describedby="description-id-920876">
         {{ getText(data.title) }}
         </span>
         <span class="accessible-description" id="description-id-920876">
         - Duration: {{ getVideoTime(data) }}.
         </span>
-        <span class="stat attribution">{{ yt.config.byTextOnByline ? "<span>by </span>" }}<span class="" >{{ getText(data.shortBylineText) }}</span></span>
+        <span class="stat attribution">{{ yt.config.byTextOnByline ? "<span>by </span>" }}<span class="">{{ getText(data.shortBylineText) }}</span></span>
         <span class="stat view-count">{{ getText(data.viewCountText) }}{% if yt.config.dateOnWatchSidebarItems %} • {{ getText(data.publishedTimeText) }}{% endif %}</span>
         </a>
     </div>
     {% set timeOverlay = getThumbnailOverlay(data, "thumbnailOverlayResumePlaybackRenderer") %}
     <div class="thumb-wrapper{{ timeOverlay ? " contains-percent-duration-watched" }}">
-        <a href="/watch?v={{ data.videoId }}" class=" vve-check thumb-link spf-link  yt-uix-sessionlink      spf-link " data-sessionlink="itct=CCwQpDAYAyITCPCb3sSz6toCFcuifgodz50MGCj4HTIHcmVsYXRlZEjEu4GtvZiOhnU"  tabindex="-1" rel=" spf-prefetch nofollow" data-visibility-tracking="CCwQpDAYAyITCPCb3sSz6toCFcuifgodz50MGCj4HUC59MSzzMLW5XA=" aria-hidden="true">
+        <a href="/watch?v={{ data.videoId }}" class="  thumb-link spf-link        spf-link "   tabindex="-1" rel=" spf-prefetch nofollow"  aria-hidden="true">
             <span class="yt-uix-simple-thumb-wrap yt-uix-simple-thumb-related" tabindex="0" data-vid="{{ data.videoId }}">
             <img aria-hidden="true" style="top: 0px" width="168" height="94" data-thumb="{{ getThumb(data) }}" alt="" src="{{ PIXEL }}">
             <span class="video-time">{{ getVideoTime(data) }}</span></span>

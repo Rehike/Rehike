@@ -10,25 +10,25 @@
                     <h3 class="signin-clickcard-header">Sign in to YouTube</h3>
                     <div class="signin-clickcard-message">
                     </div>
-                    <a  href="https://accounts.google.com/ServiceLogin?passive=true&amp;uilel=3&amp;hl=en&amp;continue=https%3A%2F%2Fwww.youtube.com%2Fsignin%3Fnext%3D%252Fwatch%253Fv%253DtuPqvSRF08w%2526list%253DFLNaqshw8BAQ12nPRixBy4AA%26action_handle_signin%3Dtrue%26hl%3Den%26app%3Ddesktop%26feature%3D__FEATURE__&amp;service=youtube" class="yt-uix-button  signin-button yt-uix-sessionlink yt-uix-button-primary yt-uix-button-size-default" data-sessionlink="ei=VD2iWpnYHbi--AP_h6ngCQ"><span class="yt-uix-button-content">Sign in</span></a>
+                    <a  href="https://accounts.google.com/ServiceLogin?passive=true&amp;uilel=3&amp;hl=en&amp;continue=https%3A%2F%2Fwww.youtube.com%2Fsignin%3Fnext%3D%252Fwatch%253Fv%253DtuPqvSRF08w%2526list%253DFLNaqshw8BAQ12nPRixBy4AA%26action_handle_signin%3Dtrue%26hl%3Den%26app%3Ddesktop%26feature%3D__FEATURE__&amp;service=youtube" class="yt-uix-button  signin-button  yt-uix-button-primary yt-uix-button-size-default"><span class="yt-uix-button-content">Sign in</span></a>
                 </div>
             </span>
         </div>
         <div class="playlist-info">
             <h3 class="playlist-title">
-                <a href="/playlist?list={{ playlist.playlistId }}" class=" yt-uix-sessionlink      spf-link " data-sessionlink="ei=VD2iWpnYHbi--AP_h6ngCQ" >{{ playlist.title }}</a>
+                <a href="/playlist?list={{ playlist.playlistId }}" class="       spf-link ">{{ playlist.title }}</a>
             </h3>
             <ul class="playlist-details">
                 {% if playlist.shortBylineText %}
                     {% set author = playlist.shortBylineText.runs.0 %}
                     {% set href = author.navigationEndpoint.commandMetadata.webCommandMetadata.url %}
                     <li class="author-attribution">
-                        {{ yt.config.byTextOnByline ? "by " }}<a href="{{ href }}" class=" yt-uix-sessionlink      spf-link " data-sessionlink="ei=VD2iWpnYHbi--AP_h6ngCQ" >{{ author.text }}</a>
+                        {{ yt.config.byTextOnByline ? "by " }}<a href="{{ href }}" class="       spf-link ">{{ author.text }}</a>
                     </li>
                 {% endif %}
                 {% if playlist.videoCountText %}
                     <li class="playlist-progress">
-                        <span id="playlist-current-index">{{ playlist.videoCountText.currentIndex }}</span><span id="playlist-length">{{ playlist.videoCountText.videoCount }}</span>                
+                        <span id="playlist-current-index">{{ playlist.videoCountText.currentIndex }}</span><span id="playlist-length">{{ playlist.videoCountText.videoCount }}</span>
                     </li>
                 {% endif %}
             </ul>

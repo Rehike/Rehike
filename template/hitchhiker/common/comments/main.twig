@@ -1,11 +1,11 @@
 {% macro comment_thread(item) %}
 {% set comment = item.commentThreadRenderer.commentRenderer %}
-<section class="comment-thread-renderer  vve-check-visible vve-check-hidden" data-visibility-tracking="CL4BEMJ1GAAiEwjpsvbIjMTtAhU3yMEKHRZcD6w" data-visibility-types="12" data-priority="0">
+<section class="comment-thread-renderer   "  data-visibility-types="12" data-priority="0">
    {{ _self.comment(comment) }}
    {% if item.commentThreadRenderer.commentRepliesRenderer %}
    {% set replies = item.commentThreadRenderer.commentRepliesRenderer %}
    {% set repliesToken = replies.contents.0.continuationItemRenderer.continuationEndpoint.continuationCommand.token %}
-   <div class="comment-replies-renderer" data-visibility-tracking="CL8BEL51IhMI6bL2yIzE7QIVN8jBCh0WXA-s">
+   <div class="comment-replies-renderer">
       <div class="yt-uix-expander yt-uix-expander-collapsed comment-replies-renderer-header" tabindex="0">
          <div class="yt-uix-expander-collapsed-body">
             {% set viewRepliesText = getText(replies.viewReplies.buttonRenderer.text) %}
@@ -29,8 +29,8 @@
 {% endmacro %}
 
 {% macro comment(comment, isReply) %}
-<div class="comment-renderer {{ comment.isLiked ? "liked" }}  vve-check-visible vve-check-hidden" data-visibility-tracking="CMMBELZ1IhMI6bL2yIzE7QIVN8jBCh0WXA-s" data-visibility-types="12" data-cid="{{ comment.commentId }}">
-   <a href="{{ comment.authorEndpoint.commandMetadata.webCommandMetadata.url }}" class=" yt-uix-sessionlink      spf-link " data-sessionlink="itct=CMMBELZ1IhMI6bL2yIzE7QIVN8jBCh0WXA-s">  
+<div class="comment-renderer {{ comment.isLiked ? "liked" }}   "  data-visibility-types="12" data-cid="{{ comment.commentId }}">
+   <a href="{{ comment.authorEndpoint.commandMetadata.webCommandMetadata.url }}" class="       spf-link ">
       {% set thumbnailSize = (comment.isReply or isReply) ? '32' : '48' %}
       <span class="video-thumb comment-author-thumbnail yt-thumb yt-thumb-{{ thumbnailSize }}">
          <span class="yt-thumb-square">
@@ -49,7 +49,7 @@
       {% endif %}
       <div class="comment-renderer-header">
          {{ _self.channelLink(comment) }}
-         <span class="comment-renderer-time" tabindex="0"><a href="{{ comment.publishedTimeText.runs.0.navigationEndpoint.commandMetadata.webCommandMetadata.url }}" class="yt-uix-sessionlink       spf-link " data-sessionlink="itct=CMMBELZ1IhMI6bL2yIzE7QIVN8jBCh0WXA-s">{{ comment.publishedTimeText.runs.0.text }}</a>
+         <span class="comment-renderer-time" tabindex="0"><a href="{{ comment.publishedTimeText.runs.0.navigationEndpoint.commandMetadata.webCommandMetadata.url }}" class="       spf-link ">{{ comment.publishedTimeText.runs.0.text }}</a>
          </span>
          {%- if comment.linkedCommentBadge -%}
             <span class="comment-renderer-linked-comment">{{ comment.linkedCommentBadge.metadataBadgeRenderer.label }}</span>
@@ -130,7 +130,7 @@
 {% if comment.authorIsChannelOwner %}
 <span class="comment-renderer-author-comment-badge creator">
 {% endif %}
-   <a href="{{ comment.authorEndpoint.commandMetadata.webCommandMetadata.url }}" class="comment-author-text yt-uix-sessionlink      spf-link " data-sessionlink="itct=CMMBELZ1IhMI6bL2yIzE7QIVN8jBCh0WXA-s">{{ getText(comment.authorText) }}</a>
+   <a href="{{ comment.authorEndpoint.commandMetadata.webCommandMetadata.url }}" class="comment-author-text       spf-link ">{{ getText(comment.authorText) }}</a>
 {% if comment.authorCommentBadge.authorCommentBadgeRenderer.icon.iconType and comment.authorIsChannelOwner %}
    <span class="yt-badge comment-author-verified-badge yt-uix-tooltip" title="Verified"><span class="yt-comment-author-verified-icon yt-sprite"></span></span>
 {% elseif comment.authorCommentBadge and not comment.authorIsChannelOwner %}
@@ -146,7 +146,7 @@
    {%- if run.navigationEndpoint -%}{%- apply spaceless -%}
       {%- set href = run.navigationEndpoint.commandMetadata.webCommandMetadata.url -%}
       {%- set spf = (href|first == "/") -%}
-      <a href="{{ href }}" class="yt-uix-sessionlink {{ spf ? 'spf-link' }}" target="_blank">{{ run.text|spaceless }}</a>
+      <a href="{{ href }}" class=" {{ spf ? 'spf-link' }}" target="_blank">{{ run.text|spaceless }}</a>
    {%- endapply -%}{%- elseif run.emoji.isCustomEmoji -%}
       <img class="yt-comments-custom-emoji {{ loop.first and loop.last ? 'large' }} yt-uix-tooltip" title="{{ run.text }}" alt="{{ run.text }}" src="{{ run.emoji.image.thumbnails.0.url }}">
    {%- else -%}
@@ -156,8 +156,8 @@
 {%- endmacro -%}
 
 {% macro loadMoreWidget(token) %}
-<button class="yt-uix-button yt-uix-button-size-default yt-uix-button-default load-more-button yt-uix-load-more comment-section-renderer-paginator yt-uix-sessionlink" type="button" onclick=";return false;" aria-label="Show more
-   " data-uix-load-more-target-id="comment-section-renderer-items" data-uix-load-more-post-body="page_token={{ token }}" data-sessionlink="itct=CAsQuy8iEwiOxOGjvpnRAhUXqH4KHR1AD08omxw" data-uix-load-more-href="/comment_service_ajax?action_get_comments=1" data-sessionlink-target="/comment_service_ajax?action_get_comments=1" data-uix-load-more-post="true">
+<button class="yt-uix-button yt-uix-button-size-default yt-uix-button-default load-more-button yt-uix-load-more comment-section-renderer-paginator " type="button" onclick=";return false;" aria-label="Show more
+   " data-uix-load-more-target-id="comment-section-renderer-items" data-uix-load-more-post-body="page_token={{ token }}"  data-uix-load-more-href="/comment_service_ajax?action_get_comments=1" data-sessionlink-target="/comment_service_ajax?action_get_comments=1" data-uix-load-more-post="true">
    <span class="yt-uix-button-content">
       <span class="load-more-loading hid">
          <span class="yt-spinner">
@@ -188,8 +188,8 @@ Loading...
 {% macro like_button_group(comment) %}
 {%- from "common/uix/button.twig" import render as button -%}
 <span role="radiogroup">
-{# <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-default yt-uix-button-empty yt-uix-button-has-icon no-icon-markup comment-action-buttons-renderer-thumb yt-uix-sessionlink sprite-comment-actions sprite-like i-a-v-sprite-like" type="button" onclick=";return false;" aria-checked="false" aria-label="Like" role="radio" data-action="like" data-action-type="like" data-sessionlink="itct=CMkBEPBbIhMI6bL2yIzE7QIVN8jBCh0WXA-s" data-sessionlink-target="/comment_service_ajax?action_perform_comment_action=1" data-url="/comment_service_ajax?action_perform_comment_action=1"></button>
-<button class="yt-uix-button yt-uix-button-size-default yt-uix-button-default yt-uix-button-empty yt-uix-button-has-icon no-icon-markup comment-action-buttons-renderer-thumb yt-uix-sessionlink sprite-comment-actions sprite-dislike i-a-v-sprite-dislike" type="button" onclick=";return false;" aria-checked="false" aria-label="Dislike" role="radio" data-action="dislike" data-action-type="dislike" data-sessionlink="itct=CMcBEPBbIhMI6bL2yIzE7QIVN8jBCh0WXA-s" data-sessionlink-target="/comment_service_ajax?action_perform_comment_action=1" data-url="/comment_service_ajax?action_perform_comment_action=1"></button> #}
+{# <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-default yt-uix-button-empty yt-uix-button-has-icon no-icon-markup comment-action-buttons-renderer-thumb  sprite-comment-actions sprite-like i-a-v-sprite-like" type="button" onclick=";return false;" aria-checked="false" aria-label="Like" role="radio" data-action="like" data-action-type="like"  data-sessionlink-target="/comment_service_ajax?action_perform_comment_action=1" data-url="/comment_service_ajax?action_perform_comment_action=1"></button>
+<button class="yt-uix-button yt-uix-button-size-default yt-uix-button-default yt-uix-button-empty yt-uix-button-has-icon no-icon-markup comment-action-buttons-renderer-thumb  sprite-comment-actions sprite-dislike i-a-v-sprite-dislike" type="button" onclick=";return false;" aria-checked="false" aria-label="Dislike" role="radio" data-action="dislike" data-action-type="dislike"  data-sessionlink-target="/comment_service_ajax?action_perform_comment_action=1" data-url="/comment_service_ajax?action_perform_comment_action=1"></button> #}
 {%- if comment.likeButton -%}
 {{ button(comment.likeButton) }}
 {%- endif -%}
@@ -206,7 +206,7 @@ Loading...
    {% set isHearted = data.isHearted %}
    {#
       The tooltip isn't ever swapped out, so handling it differently would be even
-      weirder. This will unfortunately just have to say "Love" if the action is to unlove. 
+      weirder. This will unfortunately just have to say "Love" if the action is to unlove.
       Aria label does get swapped out, but the tooltip text is static.
    #}
    {% set defaultTooltip = data.unheartedTooltip %}

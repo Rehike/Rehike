@@ -1,7 +1,6 @@
 {# Render a guide section. #}
 {% macro render(section, addSeparator) %}
-<li class="guide-section vve-check"
-    data-visibility-tracking="">
+<li class="guide-section ">
     {# Define the title (if it exists) #}
     {% if section.formattedTitle %}
     {{ _self.title(section.formattedTitle) }}
@@ -22,7 +21,7 @@
     {% if title.runs %}
         {%- for run in title.runs -%}
             {% if run.navigationEndpoint %}
-            <a href="{{ run.navigationEndpoint.commandMetadata.webCommandMetadata.url }}" class="g-hovercard yt-uix-sessionlink      spf-link " data-ytid="{{ run.navigationEndpoint.browseEndpoint.browseId }}" data-sessionlink="" data-name="g-personal">{{ run.text }}</a>
+            <a href="{{ run.navigationEndpoint.commandMetadata.webCommandMetadata.url }}" class="g-hovercard       spf-link " data-ytid="{{ run.navigationEndpoint.browseEndpoint.browseId }}"  data-name="g-personal">{{ run.text }}</a>
             {% else %}
             {{ run.text }}
             {% endif %}

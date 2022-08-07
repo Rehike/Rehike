@@ -1,5 +1,5 @@
 {%- macro render(data) -%}
-    <div class="feed-item-container browse-list-item-container yt-section-hover-container compact-shelf shelf-item branded-page-box vve-check clearfix " data-visibility-tracking="CGYQ3BwYACITCOLXzPvf6toCFRA7fwodgP0KKSiOHg==">
+    <div class="feed-item-container browse-list-item-container yt-section-hover-container compact-shelf shelf-item branded-page-box  clearfix ">
         <div class="feed-item-dismissable">
             <div class="shelf-title-table">
                 {{ _self.title(data) }}
@@ -49,7 +49,7 @@
     <div class="shelf-title-row">
         <h2 class="branded-page-module-title shelf-title-cell">
             {%- if data.endpoint -%}
-            <a href="{{ data.endpoint.commandMetadata.webCommandMetadata.url }}" class="branded-page-module-title-link yt-uix-sessionlink      spf-link " data-sessionlink="itct=CGYQ3BwYACITCOLXzPvf6toCFRA7fwodgP0KKSiOHg" >
+            <a href="{{ data.endpoint.commandMetadata.webCommandMetadata.url }}" class="branded-page-module-title-link       spf-link ">
             {% endif %}
             {%- if data.thumbnail -%}
             <div class="yt-lockup-thumbnail">
@@ -63,7 +63,7 @@
             <span class="branded-page-module-title-text">{{ getText(data.title) }}</span>
             {% if data.endpoint %}
             </a>
-            {% endif %} 
+            {% endif %}
             {% if data.badges %}
             <span class="shelf-featured-badge">{{ data.badges[0].metadataBadgeRenderer.label }}</span>
             {% endif %}
@@ -73,7 +73,7 @@
             </span>
             {% endif %}
             {#{% if hasPlayAll %}
-            <a  href="/watch_videos?video_ids=ZUSPD9zOyJs%2C30HOemteiKQ%2CUUkn-enk2RU%2C4nqJiBRNQuw%2CCX11yw6YL1w%2C7bfS6seiLhk%2CJZ2fRE_nkak%2CDSRSgMp5X1w%2C42ZE4DCJkEo%2C23ILq4uxd-w%2Cu0feM_2mLvo%2CtJfDBSWYqU8%2CDkeiKbqa02g%2C_rB36UGoP4Y%2C4k9bXpi1tU4&amp;more_url=&amp;title=Trending&amp;type=0" class="yt-uix-button  shelves-play play-all-icon-btn yt-uix-sessionlink yt-uix-sessionlink yt-uix-button-default yt-uix-button-size-small yt-uix-button-has-icon no-icon-markup" data-sessionlink="itct=CGYQ3BwYACITCOLXzPvf6toCFRA7fwodgP0KKSiOHg"><span class="yt-uix-button-content">Play all</span></a>
+            <a  href="/watch_videos?video_ids=ZUSPD9zOyJs%2C30HOemteiKQ%2CUUkn-enk2RU%2C4nqJiBRNQuw%2CCX11yw6YL1w%2C7bfS6seiLhk%2CJZ2fRE_nkak%2CDSRSgMp5X1w%2C42ZE4DCJkEo%2C23ILq4uxd-w%2Cu0feM_2mLvo%2CtJfDBSWYqU8%2CDkeiKbqa02g%2C_rB36UGoP4Y%2C4k9bXpi1tU4&amp;more_url=&amp;title=Trending&amp;type=0" class="yt-uix-button  shelves-play play-all-icon-btn   yt-uix-button-default yt-uix-button-size-small yt-uix-button-has-icon no-icon-markup"><span class="yt-uix-button-content">Play all</span></a>
             {% endif %}#}
         </h2>
         <div class="menu-container shelf-title-cell"></div>

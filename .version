@@ -1,10 +1,10 @@
 {
-	"previousHash": "6b47146ca1a2086083e1f71f427599d24552abd0",
-	"currentRevisionId": 392,
-	"subject": "fix bug where notifications would only show comment if it was at top",
-	"body": "fix bug where notifications would only show comment if it was at top",
+	"previousHash": "9f39ec765c6acaa3dd05b923a31cef69830c88ed",
+	"currentRevisionId": 393,
+	"subject": "remove every unnecessary instance of tracking info",
+	"body": "remove every unnecessary instance of tracking info",
 	"branch": "master",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1659856186
+	"time": 1659893464
 }

@@ -1,19 +1,18 @@
 {% macro watch_discussion_disabled(message) %}
 <div id="watch-discussion" class="branded-page-box yt-card">
 <div id="comment-section-renderer"
-    class="comment-section-renderer vve-check"
-    data-visibility-tracking="CCcQuy8YAiITCJfKhonKnukCFdmhxAodcRcP4Q"
+    class="comment-section-renderer"
     data-child-tracking=""
 >
     <div class="comment-section-renderer-items" id="comment-section-renderer-items">
         <span class="yt-spinner-img comment-section-items-loading yt-sprite" title="Loading icon"></span>
 
-        <div class="display-message vve-check" data-visibility-tracking="CCgQljsYACITCJfKhonKnukCFdmhxAodcRcP4Q">
+        <div class="display-message">
             {%- for run in message.runs -%}
                 {%- if run.navigationEndpoint -%}
                     {%- set href = run.navigationEndpoint.commandMetadata.webCommandMetadata.url -%}
                     {%- set spf = (href|first == "/") -%}
-                    <a href="{{ href }}" class="yt-uix-sessionlink {{ spf ? 'spf-link' }}" target="_blank">{{ run.text }}</a>
+                    <a href="{{ href }}" class="{{ spf ? 'spf-link' }}" target="_blank">{{ run.text }}</a>
                 {%- else -%}
                     {{ run.text }}
                 {%- endif -%}

@@ -100,7 +100,7 @@
 {# LEGACY #}
 {%- macro title(info, type, overflow = true, class) -%}
 <h3 class="yt-lockup-title ">
-   <a href="{{ getUrl(info) }} " class=" {% if overflow %}yt-ui-ellipsis yt-ui-ellipsis-2{% endif %} yt-uix-sessionlink  {{ class ?: "" }}    spf-link " data-sessionlink="itct=CHkQlDUYACITCOLXzPvf6toCFRA7fwodgP0KKSiOHjIKZy1oaWdoLXRydloPRkV3aGF0X3RvX3dhdGNo"  title="{{ getText(info.title) }}" aria-describedby="description-id-{{ generateRid }}" dir="ltr">
+   <a href="{{ getUrl(info) }} " class=" {% if overflow %}yt-ui-ellipsis yt-ui-ellipsis-2{% endif %}   {{ class ?: "" }}    spf-link "   title="{{ getText(info.title) }}" aria-describedby="description-id-{{ generateRid }}" dir="ltr">
    {{ getText(info.title) }}{% if info.ownerBadges != null and getBadge(info.ownerBadges, "BADGE_STYLE_TYPE_VERIFIED") and type == "channel" %}    <span title="Verified" class="yt-uix-tooltip yt-channel-title-icon-verified yt-sprite"></span>{% endif %}
    </a>
    {%- if getVideoTime(info) != null -%}

@@ -5,7 +5,7 @@ use Rehike\Model\Common\MButton;
 
 /**
  * Implements a model for the subscription button.
- * 
+ *
  * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
@@ -23,9 +23,7 @@ class MSubscriptionButton extends MButton
     /** @var string[] */
     public $class = [
         "yt-uix-subscription-button",
-        "yt-can-buffer",
-        "yt-uix-servicelink",
-        "vve-check"
+        "yt-can-buffer"
     ];
 
     /** @var string[] */
@@ -39,9 +37,7 @@ class MSubscriptionButton extends MButton
         "subscribed-timestamp" => "0",
         "style-type" => "", // branded/unbranded
         "clicktracking" => "",
-        "servicelink" => "",
         "show-unsub-confirm-dialog" => "true",
-        "visibility-tracking" => "",
         "show-unsub-confirm-time-frame" => "always",
         "channel-external-id" => ""
     ];
@@ -75,7 +71,7 @@ class MSubscriptionButton extends MButton
         $this->disabled = $opts["isDisabled"];
         $this->branded = $opts["branded"];
         $this->subscribed = $opts["isSubscribed"];
-        
+
         $this->type = $opts["type"];
         $this->attributes["channel-external-id"] = $opts["channelExternalId"];
         $this->attributes["params"] = $opts["params"];
@@ -87,7 +83,7 @@ class MSubscriptionButton extends MButton
         } else {
             $this->style .= "subscribe";
         }
-        
+
         if ($this->branded)
         {
             $this->style .= "-branded";
