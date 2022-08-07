@@ -13,8 +13,8 @@ return new class extends AjaxController {
             $response = Request::innertubeRequest("subscription/subscribe", (object) [
                 "channelIds" => [
                     $_POST["c"] ?? null
-                ]/*,
-                "params" => "EgIIDRgA"*/
+                ],
+                "params" => $_POST["params"] ?? null
             ]);
             $ytdata = json_decode($response);
 

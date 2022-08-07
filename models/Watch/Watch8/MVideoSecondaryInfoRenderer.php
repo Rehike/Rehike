@@ -1,9 +1,7 @@
 <?php
 namespace Rehike\Model\Watch\Watch8;
 
-include_once "controllers/utils/extractUtils.php";
-
-use ExtractUtils;
+use Rehike\Util\ExtractUtils;
 use Rehike\Model\Traits\Runs;
 use Rehike\TemplateFunctions;
 

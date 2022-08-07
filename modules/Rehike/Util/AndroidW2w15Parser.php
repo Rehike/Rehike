@@ -1,4 +1,5 @@
 <?php
+namespace Rehike\Util;
 
 /**
  * Parse ANDROID 15.21.54 FEwhat_to_watch contents.

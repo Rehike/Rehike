@@ -8,10 +8,7 @@ use Rehike\Model\Common\MToggleButton;
 use Rehike\Model\Clickcard\MSigninClickcard;
 use Rehike\ConfigManager\ConfigManager;
 use Rehike\Signin\API as SignIn;
-
-include_once "controllers/utils/extractUtils.php";
-
-use \ExtractUtils;
+use Rehike\Util\ExtractUtils;
 
 /**
  * Implement the model for the primary info renderer.

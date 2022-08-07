@@ -1,4 +1,6 @@
 <?php
+namespace Rehike\Util;
+
 class ExtractUtils {
     public static function isolateCount(?string $input, string $substrRegex): string {
         if (!$input) return '';

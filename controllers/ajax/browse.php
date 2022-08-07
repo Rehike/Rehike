@@ -3,8 +3,7 @@ namespace Rehike\Controller\ajax;
 
 use Rehike\Controller\core\AjaxController;
 use Rehike\Request;
-
-require "controllers/utils/AndroidW2w15Parser.php";
+use Rehike\Util\AndroidW2w15Parser;
 
 /**
  * Related (watch) ajax controller
@@ -83,7 +82,7 @@ class AjaxBrowseController extends AjaxController {
         }
 
         if (isset($ytdata->continuationContents->sectionListContinuation)) {
-            $yt->page->shelfList = \AndroidW2W15Parser::parse($ytdata->continuationContents->sectionListContinuation->contents);
+            $yt->page->shelfList = AndroidW2W15Parser::parse($ytdata->continuationContents->sectionListContinuation->contents);
         } else if (isset($ytdata->onResponseReceivedActions[0]->appendContinuationItemsAction->continuationItems)) {
             $head = $ytdata->onResponseReceivedActions[0]->appendContinuationItemsAction;
 

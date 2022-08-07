@@ -7,10 +7,8 @@ use Com\Youtube\Innertube\Request\NextRequestParams\UnknownThing;
 use Rehike\Request;
 use Rehike\Util\Base64Url;
 use Rehike\ConfigManager\ConfigManager;
-use SpfPhp\SpfPhp;
-
-require "controllers/utils/watchUtils.php";
-require_once('controllers/utils/extractUtils.php');
+use Rehike\Util\WatchUtils;
+use Rehike\Util\ExtractUtils;
 
 //
 // export

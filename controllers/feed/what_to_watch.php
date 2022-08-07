@@ -4,9 +4,7 @@ namespace Rehike\Controller;
 use Rehike\Controller\core\NirvanaController;
 use Rehike\Request;
 use Rehike\RehikeConfigManager as cfg;
-
-// used by shelves style
-require "controllers/utils/AndroidW2w15Parser.php";
+use Rehike\Util\AndroidW2w15Parser;
 
 /**
  * What to Watch (home) feed controller
@@ -72,7 +70,7 @@ class FeedWhatToWatchController extends NirvanaController {
         /** Continuations are still buggy */
         $continuation = $ytdata->contents->singleColumnBrowseResultsRenderer->tabs[0]->tabRenderer->content->sectionListRenderer->continuations[0]->nextContinuationData->continuation;
 
-        $shelvesList = \AndroidW2w15Parser::parse($shelvesList);
+        $shelvesList = AndroidW2w15Parser::parse($shelvesList);
 
         // begin response
         $response = (object) [];

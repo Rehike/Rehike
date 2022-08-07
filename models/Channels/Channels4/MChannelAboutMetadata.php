@@ -1,8 +1,7 @@
 <?php
 namespace Rehike\Model\Channels\Channels4;
 
-require_once "controllers/utils/extractUtils.php";
-use \ExtractUtils;
+use Rehike\Util\ExtractUtils;
 use Rehike\i18n;
 use Rehike\TemplateFunctions as TF;
 

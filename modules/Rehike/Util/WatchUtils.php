@@ -1,4 +1,6 @@
 <?php
+namespace Rehike\Util;
+
 class WatchUtils
 {
     public static function getRecomAutoplay($results, &$index = 0)

@@ -12,20 +12,6 @@
 {{ yt.query }} - {{ parent() }}
 {%- endblock -%}
 
-{%- block alerts -%}
-<div class="yt-alert yt-alert-actionable yt-alert-warn">  
-   <div class="yt-alert-icon">
-      <img src="//s.ytimg.com/yt/img/pixel-vfl3z5WfW.gif" class="icon master-sprite" alt="Alert icon">
-   </div>
-   <div class="yt-alert-content" role="alert">    
-      <span class="yt-alert-vertical-trick"></span>
-      <div class="yt-alert-message">
-         This page is a work in progress, meaning that not all features are in-tact or are fully working.
-      </div>
-   </div>
-</div>
-{% endblock %}
-
 {%- block head_css -%}
 {{ core.css('www-results') }}
 {% endblock %}

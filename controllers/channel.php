@@ -8,12 +8,8 @@ use \Com\YouTube\Innertube\Request\BrowseRequestParams;
 use Rehike\Request;
 use Rehike\Util\Base64Url;
 use Rehike\i18n;
-
-require_once "controllers/utils/extractUtils.php";
-require_once "controllers/utils/channelUtils.php";
-
-use \ExtractUtils;
-use \ChannelUtils;
+use Rehike\Util\ExtractUtils;
+use Rehike\Util\ChannelUtils;
 
 use \Rehike\Model\Channels\Channels4Model as Channels4;
 

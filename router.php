@@ -52,6 +52,7 @@ Router::get([
     "/browse_ajax" => "ajax/browse",
     "/rehike/version" => "rehike/version",
     "/rehike/static/**" => "rehike/static_router",
+    "/share_ajax" => "ajax/share",
     "default" => "404"
 ]);
 

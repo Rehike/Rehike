@@ -1,10 +1,10 @@
 {
-	"previousHash": "84d13c9c5a5facd99fc9aeed3f6d02158d9cafd8",
-	"currentRevisionId": 388,
-	"subject": "up version to 0.5",
-	"body": "up version to 0.5",
+	"previousHash": "d14e9e10f8421a93d7e2019525bc4bcb43108365",
+	"currentRevisionId": 389,
+	"subject": "make utils into modules; remove results page alert",
+	"body": "make utils into modules; remove results page alert",
 	"branch": "master",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1659844031
+	"time": 1659852201
 }

@@ -1,8 +1,8 @@
 <?php
 namespace Rehike\Model\Channels\Channels4;
 
-require_once "controllers/utils/extractUtils.php";
-use \ExtractUtils;
+use Rehike\Util\ExtractUtils;
+use Rehike\Util\ImageUtils;
 use Rehike\TemplateFunctions as TF;
 use Rehike\Model\Common\Subscription\MSubscriptionActions;
 
@@ -33,9 +33,7 @@ class MHeader
         if ($a = @$header->avatar)
         {
             $this->thumbnail = $a;
-            $this->thumbnail->thumbnails[0]->url = self::synthesiseChannelAvatarSize100Url(
-                $this->thumbnail->thumbnails[0]->url
-            );
+            $this->thumbnail->thumbnails[0]->url = ImageUtils::changeGgphtImageSize($this->thumbnail->thumbnails[0]->url, 100);
             $this->thumbnail->href = $baseUrl;
         }
 
@@ -122,9 +120,5 @@ class MHeader
         }
 
         return $response;
-    }
-
-    protected static function synthesiseChannelAvatarSize100Url($url) {
-        return str_replace('s48', 's100', $url);
     }
 }
