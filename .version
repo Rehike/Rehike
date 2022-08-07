@@ -1,10 +1,10 @@
 {
-	"previousHash": "3ee5d4caad34cf6803d8efd4a0a9782a4cda880c",
-	"currentRevisionId": 387,
-	"subject": "i think this is deserved",
-	"body": "i think this is deserved",
+	"previousHash": "84d13c9c5a5facd99fc9aeed3f6d02158d9cafd8",
+	"currentRevisionId": 388,
+	"subject": "up version to 0.5",
+	"body": "up version to 0.5",
 	"branch": "master",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1659808087
+	"time": 1659844031
 }
