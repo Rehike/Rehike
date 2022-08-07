@@ -18,28 +18,34 @@
       </div>
    </div>
    <div class="yt-alert-buttons">
-      <button target="_blank" class="yt-uix-button    yt-uix-button-alert-error yt-uix-button-size-small" id="gterr-more"><span class="yt-uix-button-content">More information</span></button>
+      <button target="_blank" class="yt-uix-button    yt-uix-button-alert-error yt-uix-button-size-small" id="fatal-more"><span class="yt-uix-button-content">More information</span></button>
    </div>
 </div>
 {% endblock %}
 
 {%- block content -%}
 <img src="//s.ytimg.com/yts/img/tv_stack-vflmeOpv_.png" alt="Sorry, something went wrong! Our tubes must be clogged." title="Sorry, something went wrong! Our tubes must be clogged.">
-<div id="gterr-dialog-template" class="hid">
-   <div id="gterr-dialog" class="yt-dialog preserve-players" data-player-ready-pubsub-key="589">
+<div id="fatal-dialog-template" class="hid">
+   <div id="fatal-dialog" class="yt-dialog preserve-players" data-player-ready-pubsub-key="589">
       <div class="yt-dialog-base"> <span class="yt-dialog-align"></span>
          <div role="dialog" tabindex="0" class="yt-dialog-fg yt-uix-overlay-primary yt-uix-overlay">
             <div class="yt-dialog-fg-content yt-dialog-show-content">
                <div class="yt-dialog-content">
-                  <div class="gterr-overlay-content-container">
-                     <div style="margin-top: 20px">
-                        <h1>Error log</h1>
+                  <div class="yt-dialog-overlay-content-container">
+                     <div class="yt-dialog-header">
+                        <h2 class="yt-dialog-title">Error log</h2>
+                        <button id="fatal-log-close" class="yt-uix-button yt-uix-button-empty yt-uix-button-has-icon yt-uix-button-opacity yt-uix-button-size-default yt-uix-tooltip"
+                           data-tooltip-text="Close" onclick=";return false;" title="Close" type="button">
+                           <span class="yt-uix-button-icon-wrapper">
+                              <span class="yt-sprite yt-uix-button-icon yt-uix-button-icon-close">
+                              </span>
+                           </span>
+                           <span class="yt-uix-button-content">
+                           </span>
+                        </button>
                      </div>
-                     <div style="margin-top: 20px;width: 600px;height: 300px;border: 1px solid #ccc;padding: 6px;overflow: scroll;overflow-x: auto;">
-                        <pre style="white-space: pre-wrap;">{{ yt.errInfo.message }}</pre>
-                     </div>
-                     <div class="yt-uix-overlay-actions">
-                        <button id="gterr-log-close" class="yt-uix-button yt-uix-button-size-default yt-uix-button-default yt-uix-overlay-close" type="button" onclick=";return false;"><span class="yt-uix-button-content">Close</span></button>
+                     <div id="fatal-stack-trace">
+                        <pre>{{ yt.errInfo.message }}</pre>
                      </div>
                   </div>
                </div>
@@ -49,6 +55,36 @@
       </div>
    </div>
 </div>
+<style>
+   #fatal-dialog .yt-dialog-header h2.yt-dialog-title {
+      font-weight: 400;
+      font-size: 20px;
+   }
+
+   #fatal-dialog .yt-dialog-header {
+      position: relative;
+   }
+
+   #fatal-log-close {
+      position: absolute;
+      top: 10px;
+      right: -10px;
+   }
+
+   #fatal-stack-trace {
+      box-sizing: border-box;
+      padding: 6px;
+      overflow: scroll;
+      border: 1px solid #ccc;
+      overflow-x: auto;
+      width: calc(100vw - 96px);
+      height: calc(100vh - 112px);
+   }
+
+   #fatal-stack-trace > pre {
+      white-space: pre-wrap;
+   }
+</style>
 <script>
 (
 function() {
@@ -69,7 +105,7 @@ function create()
    document.body.insertBefore(bgdiv,
       document.getElementById("footer-container").nextSibling
    );
-   document.getElementById("gterr-dialog-template").setAttribute("class", "");
+   document.getElementById("fatal-dialog-template").setAttribute("class", "");
 }
 
 function kill()
@@ -79,11 +115,11 @@ function kill()
    );
 
    document.getElementById("yt-dialog-bg").outerHTML = ""; // ie < 9 no remove
-   document.getElementById("gterr-dialog-template").setAttribute("class", "hid");
+   document.getElementById("fatal-dialog-template").setAttribute("class", "hid");
 }
 
-document.getElementById("gterr-more").onclick = create;
-document.getElementById("gterr-log-close").onclick = kill;
+document.getElementById("fatal-more").onclick = create;
+document.getElementById("fatal-log-close").onclick = kill;
 
 })();
 

@@ -1,10 +1,10 @@
 {
-	"previousHash": "9f39ec765c6acaa3dd05b923a31cef69830c88ed",
-	"currentRevisionId": 393,
-	"subject": "remove every unnecessary instance of tracking info",
-	"body": "remove every unnecessary instance of tracking info",
+	"previousHash": "d9c8b83a7ef09743836c00a027e31da544605af4",
+	"currentRevisionId": 394,
+	"subject": "improved error log; remove references to goodtube in ids",
+	"body": "improved error log; remove references to goodtube in ids",
 	"branch": "master",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1659893464
+	"time": 1659894748
 }
