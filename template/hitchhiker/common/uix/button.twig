@@ -1,12 +1,16 @@
 {%- macro render(data, id) -%}
+    {% set wrapped = _self._buttonWrapper(data, id) %}
     {%- if data.clickcard and not data.manualClickcardWrapper -%}
         {% from "/common/uix/clickcard_wrapper.twig" import render as clickcard %}
-        {{ clickcard(data.clickcard, _self._buttonWrapper(data, id)) }}
+        {{ clickcard(data.clickcard, wrapped) }}
     {%- elseif data.menu and not data.manualMenuWrapper -%}
         {% from "/common/uix/menu_wrapper.twig" import render as menu %}
-        {{ menu(data.menu, _self._buttonWrapper(data, id)) }}
+        {{ menu(data.menu, wrapped) }}
+    {%- elseif data.videoActionsMenu and not data.manualMenuWrapper -%}
+        {% from "/common/uix/video_action_menu_wrapper.twig" import render as video_action_menu %}
+        {{ video_action_menu(data.videoActionsMenu, wrapped) }}
     {%- else -%}
-        {{ _self._buttonWrapper(data, id) }}
+        {{ wrapped }}
     {%- endif -%}
 {%- endmacro -%}
 

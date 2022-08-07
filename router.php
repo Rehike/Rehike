@@ -50,6 +50,7 @@ Router::get([
     "/all_comments" => "all_comments",
     "/related_ajax" => "ajax/related",
     "/browse_ajax" => "ajax/browse",
+    "/addto_ajax" => "ajax/addto",
     "/rehike/version" => "rehike/version",
     "/rehike/static/**" => "rehike/static_router",
     "/share_ajax" => "ajax/share",
@@ -66,5 +67,6 @@ Router::post([
     "/subscription_ajax" => "ajax/subscription",
     "/service_ajax" => "ajax/service",
     "/comment_service_ajax" => "ajax/comment_service",
-    "/heart_ajax" => "ajax/heart"
+    "/heart_ajax" => "ajax/heart",
+    "/addto_ajax" => "ajax/addto"
 ]);
