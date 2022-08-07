@@ -1,10 +1,10 @@
 {
-	"previousHash": "d9c8b83a7ef09743836c00a027e31da544605af4",
-	"currentRevisionId": 394,
-	"subject": "improved error log; remove references to goodtube in ids",
-	"body": "improved error log; remove references to goodtube in ids",
+	"previousHash": "e797af1ffd1594dbd9ec279953fa8f771006c30c",
+	"currentRevisionId": 395,
+	"subject": "standardize feed section list ids, cleanup search template",
+	"body": "standardize feed section list ids, cleanup search template",
 	"branch": "master",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1659894748
+	"time": 1659895664
 }

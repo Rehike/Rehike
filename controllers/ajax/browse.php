@@ -7,12 +7,12 @@ use Rehike\Util\AndroidW2w15Parser;
 
 /**
  * Related (watch) ajax controller
- * 
+ *
  * @author Aubrey Pankow <aubyomori@gmail.com>
  * @author Daylin Cooper <dcoop2004@gmail.com>
  * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
- * 
+ *
  * @version 1.0.20220805
  */
 class AjaxBrowseController extends AjaxController {
@@ -39,7 +39,7 @@ class AjaxBrowseController extends AjaxController {
         $yt->target = $_GET["target_id"];
 
         // WTW hack
-        if ($yt->target == "section-list-874807") {
+        if ($yt->target == "section-list-what_to_watch") {
             $response = Request::innertubeRequest(
                 "browse",
                 (object) [
@@ -88,13 +88,13 @@ class AjaxBrowseController extends AjaxController {
 
             // Store the page type
             $yt->continuationPage = $head->targetId ?? "";
-            
+
             $items = $head->continuationItems;
 
             $videoList = $ytdata->onResponseReceivedActions[0]->appendContinuationItemsAction->continuationItems;
 
             $newVideoList = [];
-            
+
             for ($i = 0; $i < count($items); $i++)
             {
                 if ($content = @$items[$i]->richItemRenderer->content)

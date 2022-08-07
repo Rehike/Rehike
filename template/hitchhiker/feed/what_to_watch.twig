@@ -68,7 +68,7 @@
     {% block branded_page_primary_column_content %}
         <div id="feed" class="">
             <div id="feed-main-what_to_watch" class="individual-feed" data-feed-name="what_to_watch" data-feed-type="main">
-                <ol id="section-list-874807" class="section-list">
+                <ol id="section-list-what_to_watch" class="section-list">
                 {% import "common/uix/shelf_old.twig" as shelf %}
                 {% import 'common/uix/load_more_button.twig' as load_more %}
                 {%- for compactShelf in yt.page.shelvesList -%}
@@ -77,7 +77,7 @@
                 {% endif %}
                 {% endfor %}
                 </ol>
-                {{ load_more.render(yt.page.continuation, "section-list-874807", true) }}
+                {{ load_more.render(yt.page.continuation, "section-list-what_to_watch", true) }}
             </div>
             <div id="feed-error" class="individual-feed  hid">
                 <p class="feed-message">

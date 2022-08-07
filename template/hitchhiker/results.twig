@@ -31,7 +31,7 @@
     {% import "common/uix/lockup.twig" as lockup %}
     {% import "common/uix/button.twig" as button %}
     <div id="results">
-        <ol id="section-list-{{ generateRid() }}" class="section-list">
+        <ol id="section-list-results" class="section-list">
             {% if yt.page.header %}
             <li class="branded-page-v2-subnav-container branded-page-gutter-padding">
                 <div class="search-header yt-uix-expander yt-uix-expander-collapsed">
@@ -114,19 +114,20 @@
             {% endif %}
             {% if yt.page.results %}
             <li>
-                <ol id="item-section-{{ generateRid() }}" class="item-section">
+                <ol id="item-section-results" class="item-section">
                     {% for result in yt.page.results %}
                     <li>
                         {% if yt.config.largeSearchThumbs %}
-                            {% if result.channelRenderer %}
-                            {{ lockup.tile(result, 138, 138) }}
-                            {% elseif result.videoRenderer  or result.playlistRenderer or result.radioRenderer %}
-                            {{ lockup.tile(result, 246, 138) }}
-                            {% elseif result.backgroundPromoRenderer %}
-                                <p class="display-message">{{ getText(result.backgroundPromoRenderer.title) }}</p>
-                            {% endif %}
-                        {% elseif result.videoRenderer or result.channelRenderer or result.playlistRenderer or result.radioRenderer %}
-                            {{ lockup.tile(result) }}
+                            {% set tw = 246 %}
+                            {% set th = 138 %}
+                        {% else %}
+                            {% set tw = 196 %}
+                            {% set th = 110 %}
+                        {% endif %}
+                        {% if result.videoRenderer or result.playlistRenderer or result.radioRenderer %}
+                            {{ lockup.tile(result, tw, th) }}
+                        {% elseif result.channelRenderer %}
+                            {{ lockup.tile(result, th, th) }}
                         {% elseif result.backgroundPromoRenderer %}
                             <p class="display-message">{{ getText(result.backgroundPromoRenderer.title) }}</p>
                         {% endif %}
