@@ -3,7 +3,7 @@
    until then. #}
 {% import '/common/comments/main.twig' as main %}
 {{ include("/common/comments/comments_list.twig") }}
-{% if yt.comments.repliesContinuationRenderer %}
-   {% set continuation = yt.comments.repliesContinuationRenderer %}
-   {{ main.loadMoreLink('action_get_comment_replies', yt.comments.repliesTargetId, continuation.token, getText(continuation.text)) }}
+{% if yt.page.repliesContinuationRenderer %}
+   {% set continuation = yt.page.repliesContinuationRenderer %}
+   {{ main.loadMoreLink('action_get_comment_replies', yt.page.repliesTargetId, continuation.token, getText(continuation.text)) }}
 {% endif %}

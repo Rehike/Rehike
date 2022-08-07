@@ -2,6 +2,6 @@
    should still be cleaned up but I'm keeping it relatively in tact
    until then. #}
 {% import '/common/comments/main.twig' as main %}
-{% for item in yt.comments.commentThreads %}
+{% for item in yt.page.commentThreads %}
    {{ main.comment_thread(item) }}
 {% endfor %}

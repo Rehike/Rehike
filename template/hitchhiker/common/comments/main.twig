@@ -186,9 +186,16 @@ Loading...
 {% endmacro %}
 
 {% macro like_button_group(comment) %}
+{%- from "common/uix/button.twig" import render as button -%}
 <span role="radiogroup">
-<button class="yt-uix-button yt-uix-button-size-default yt-uix-button-default yt-uix-button-empty yt-uix-button-has-icon no-icon-markup comment-action-buttons-renderer-thumb yt-uix-sessionlink sprite-comment-actions sprite-like i-a-v-sprite-like" type="button" onclick=";return false;" aria-checked="false" aria-label="Like" role="radio" data-action="like" data-action-type="like" data-sessionlink="itct=CMkBEPBbIhMI6bL2yIzE7QIVN8jBCh0WXA-s" data-sessionlink-target="/comment_service_ajax?action_perform_comment_action=1" data-url="/comment_service_ajax?action_perform_comment_action=1"></button>
-<button class="yt-uix-button yt-uix-button-size-default yt-uix-button-default yt-uix-button-empty yt-uix-button-has-icon no-icon-markup comment-action-buttons-renderer-thumb yt-uix-sessionlink sprite-comment-actions sprite-dislike i-a-v-sprite-dislike" type="button" onclick=";return false;" aria-checked="false" aria-label="Dislike" role="radio" data-action="dislike" data-action-type="dislike" data-sessionlink="itct=CMcBEPBbIhMI6bL2yIzE7QIVN8jBCh0WXA-s" data-sessionlink-target="/comment_service_ajax?action_perform_comment_action=1" data-url="/comment_service_ajax?action_perform_comment_action=1"></button>
+{# <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-default yt-uix-button-empty yt-uix-button-has-icon no-icon-markup comment-action-buttons-renderer-thumb yt-uix-sessionlink sprite-comment-actions sprite-like i-a-v-sprite-like" type="button" onclick=";return false;" aria-checked="false" aria-label="Like" role="radio" data-action="like" data-action-type="like" data-sessionlink="itct=CMkBEPBbIhMI6bL2yIzE7QIVN8jBCh0WXA-s" data-sessionlink-target="/comment_service_ajax?action_perform_comment_action=1" data-url="/comment_service_ajax?action_perform_comment_action=1"></button>
+<button class="yt-uix-button yt-uix-button-size-default yt-uix-button-default yt-uix-button-empty yt-uix-button-has-icon no-icon-markup comment-action-buttons-renderer-thumb yt-uix-sessionlink sprite-comment-actions sprite-dislike i-a-v-sprite-dislike" type="button" onclick=";return false;" aria-checked="false" aria-label="Dislike" role="radio" data-action="dislike" data-action-type="dislike" data-sessionlink="itct=CMcBEPBbIhMI6bL2yIzE7QIVN8jBCh0WXA-s" data-sessionlink-target="/comment_service_ajax?action_perform_comment_action=1" data-url="/comment_service_ajax?action_perform_comment_action=1"></button> #}
+{%- if comment.likeButton -%}
+{{ button(comment.likeButton) }}
+{%- endif -%}
+{%- if comment.dislikeButton -%}
+{{ button(comment.dislikeButton) }}
+{%- endif -%}
 </span>
 {% endmacro %}
 
@@ -202,8 +209,9 @@ Loading...
       Aria label does get swapped out, but the tooltip text is static.
    #}
    {% set defaultTooltip = data.unheartedTooltip %}
+   {% set heartedTooltip = data.heartedTooltip %}
    {% set styleClass = isHearted ? "hearted" : "unhearted" %}
-   <button class="yt-uix-creator-heart-button yt-uix-tooltip" aria-label="{{ defaultTooltip }}" data-tooltip-text="{{ defaultTooltip }}"{% if isEnabled %}
+   <button class="yt-uix-creator-heart-button yt-uix-tooltip" aria-label="{{ isHearted ? heartedTooltip : defaultTooltip }}" data-tooltip-text="{{ isHearted ? heartedTooltip : defaultTooltip }}"{% if isEnabled %}
       data-aria-hearted="{{ data.heartedTooltip }}"
       data-aria-unhearted="{{ data.unheartedTooltip }}"
       {% if isHearted %}
