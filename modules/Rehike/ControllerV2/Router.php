@@ -72,8 +72,17 @@ class Router
                     $endpoint = preg_replace($regexp, $redir, $_SERVER["REQUEST_URI"]);
                 }
 
-                header("Location: $endpoint");
-                die();
+                // Callback the custom handler, or fallback to the
+                // default implementation.
+                if (is_callable(CallbackStore::$handleRedirect))
+                {
+                    (CallbackStore::$handleRedirect)($endpoint);
+                }
+                else
+                {
+                    header("Location: $endpoint");
+                    die();
+                }
             }
         }
     }

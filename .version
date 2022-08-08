@@ -1,10 +1,10 @@
 {
-	"previousHash": "67f8e9e3acec940ab5243b0434159f1534f22a8d",
-	"currentRevisionId": 402,
-	"subject": "Merge branch 'master' of https://github.com/Rehike/Rehike",
-	"body": "Merge branch 'master' of https://github.com/Rehike/Rehike",
+	"previousHash": "689b4bbb6ab89411b8c474c856fb0f2b4571e5fa",
+	"currentRevisionId": 404,
+	"subject": "Fix redirects via SPF",
+	"body": "Fix redirects via SPF",
 	"branch": "master",
-	"committerName": "aubymori",
-	"committerEmail": "aubyomori@gmail.com",
-	"time": 1659913467
+	"committerName": "Coffee",
+	"committerEmail": "99076687+YukisCoffee@users.noreply.github.com",
+	"time": 1659923728
 }

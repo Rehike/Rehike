@@ -90,4 +90,12 @@ class Core
             return new GetControllerInstance($controllerName, $imports);
         }
     }
+
+    /**
+     * @see CallbackStore::setRedirectHandler
+     */
+    public static function setRedirectHandler($cb)
+    {
+        return CallbackStore::setRedirectHandler($cb);
+    }
 }

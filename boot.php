@@ -26,6 +26,7 @@ i18n::newNamespace("main/guide")->registerFromFolder("i18n/guide");
 
 // Controller V2 init
 ControllerV2::registerStateVariable($yt);
+ControllerV2::setRedirectHandler(require "modules/spfRedirectHandler.php");
 
 // Player init
 require "modules/playerCore.php";
