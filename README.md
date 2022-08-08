@@ -14,7 +14,7 @@
 
 A PHP project that aims to faithfully restore the old YouTube layout, known as Hitchhiker.
 
-## FaQ
+## Frequently asked questions (& more)
 
 See [FAQ.md](FAQ.md).
 
