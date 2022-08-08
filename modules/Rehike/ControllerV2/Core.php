@@ -49,10 +49,6 @@ class Core
      */
     public static $template;
 
-    // Temporary state variable
-    // Will be removed once controller v1 deprecated
-    public static $cv2HasBeenUsed = false;
-
     /** Register a state reference. @see $state */
     public static function registerStateVariable(&$state)
     {

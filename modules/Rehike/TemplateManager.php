@@ -116,18 +116,4 @@ class TemplateManager
             new TwigFilter($name, $callback)
         );
     }
-
-    //
-    // Reference exposure functions (mostly for CV1 compatiblity)
-    //
-
-    public static function &exposeTwig()
-    {
-        return self::$twig;
-    }
-
-    public static function &exposeTemplate()
-    {
-        return self::$template;
-    }
 }

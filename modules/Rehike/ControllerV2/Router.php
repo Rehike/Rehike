@@ -168,9 +168,6 @@ class Router
      */
     protected static function pointerHandler($pointer, $method)
     {
-        // Set temporary state variable for cv1 coexistence
-        Core::$cv2HasBeenUsed = true;
-
         /** @var GetControllerInstance $import */
         $import;
         if (is_callable($pointer))
