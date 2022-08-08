@@ -26,6 +26,19 @@ return new class extends NirvanaController {
             die();
         }
 
+        // Somewhere along the way, we removed this code
+        // during a codebase clean up and never reimplemented it.
+        // It's about time I fix that lol
+        if ("1" == @$_COOKIE['wide']) 
+        {
+            $yt -> theaterMode = $_COOKIE['wide'];
+        } 
+        else 
+        {
+            $yt -> theaterMode = "0";
+            $_COOKIE['wide'] = "0";
+        }
+
         // begin request
         $yt->videoId = $request->params->v;
         $yt->playlistId = $request->params->list ?? null;

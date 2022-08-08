@@ -1,10 +1,10 @@
 {
-	"previousHash": "689b4bbb6ab89411b8c474c856fb0f2b4571e5fa",
-	"currentRevisionId": 404,
-	"subject": "Fix redirects via SPF",
-	"body": "Fix redirects via SPF",
+	"previousHash": "0ca7eca1c7a35237802f6fe35e6c8dfa1d498430",
+	"currentRevisionId": 405,
+	"subject": "Fix theatre mode not working",
+	"body": "Fix theatre mode not working",
 	"branch": "master",
 	"committerName": "Coffee",
 	"committerEmail": "99076687+YukisCoffee@users.noreply.github.com",
-	"time": 1659923728
+	"time": 1659924052
 }
