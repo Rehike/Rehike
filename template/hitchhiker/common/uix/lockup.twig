@@ -8,6 +8,7 @@
 {% macro main(data, style, thumbX, thumbY) %}
     {% import "common/uix/lockup/thumb.twig" as thumb %}
     {% import "common/uix/subscription_button.twig" as subBtn %}
+    {% from "common/uix/badge_list.twig" import render as badge_list %}
     {% if data.info %}
         {% set info = data.info %}
         {% if data.type == "channel" %}
@@ -63,6 +64,11 @@
                                 <span class="yt-badge">Channel</span>
                             </li>
                         </ul>
+                    </div>
+                    {% endif %}
+                    {% if info.badges %}
+                    <div class="yt-lockup-badges">
+                        {{ badge_list(info.badges) }}
                     </div>
                     {% endif %}
                 </div>

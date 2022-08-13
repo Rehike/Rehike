@@ -1,13 +1,13 @@
 {% macro render(data, x = 196, y = 110) %}
 {% set info = data.info %}
-{% import "common/uix/watch_later_button.twig" as wlBtn %}
+{% import "common/thumbnail_overlays.twig" as overlays %}
 {% from "core/html/img.twig" import img %}
 <div class="yt-lockup-thumbnail {{ data.type == "playlist" or data.type == "radio" ? "yt-pl-thumb" }} {{ getWLOverlay(info) != null ? "contains-addto" }}">
     <a href="{{ getUrl(info) }}" class=" spf-link {{ data.type == "playlist" or data.type == "radio" ? "yt-pl-thumb-link" }}" aria-hidden="true">
         <div class="yt-thumb video-thumb {{data.type == "video" and yt.config.movingThumbnails ? "yt-uix-mouseover-img-wrap" }}">
             <span class="yt-thumb-simple">
                 {{ img({
-                    src: getThumb(data.thumbArray),
+                    src: getThumb(data.thumbArray, y),
                     width: x,
                     height: y,
                     ytImg: 1,
@@ -20,52 +20,9 @@
             </span>
         </div>
         {% if data.type == "playlist" or data.type == "radio" %}
-        {{ _self.playlistOverlay(data) }}
+        {{ overlays.playlist(data, false) }}
         {% endif %}
     </a>
-    {% if getVideoTime(info) != null %}
-    <span class="video-time">{{ getVideoTime(info) }}</span>
-    {% endif %}
-    {%- if getWLOverlay(info) != null -%}
-    {{ wlBtn.render(getWLOverlay(info), info.videoId) }}
-    {%- endif -%}
-    {% set percentWatched = getWatchedPercent(info) %}
-    {% if percentWatched != null %}
-    <span class="resume-playback-background"></span>
-    <span class="resume-playback-progress-bar" style="width:{{ percentWatched }}%"></span>
-    {% endif %}
-</div>
-{% endmacro %}
-
-{% macro playlistOverlay(data) %}
-{% set info = data.info %}
-<div class="sidebar">
-    <span class="yt-pl-sidebar-content yt-valign">
-        <span class="yt-valign-container">
-            <span class="formatted-video-count-label">
-                {% if data.type == "radio" %}
-                    <b>50+</b> videos
-                {% else %}
-                    {% for run in info.thumbnailText.runs %}
-                        {% if run.bold == true %}
-                        <b>
-                        {% endif %}
-                        {{ run.text }}
-                        {% if run.bold == true %}
-                        </b>
-                        {% endif %}
-                    {% endfor %}
-                {% endif %}
-            </span>
-            <span class="yt-pl-icon {{ data.type == "radio" ? "yt-pl-icon-mix" }} yt-pl-icon-reg yt-sprite"></span>
-        </span>
-    </span>
-</div>
-<div class="yt-pl-thumb-overlay">
-    <span class="yt-pl-thumb-overlay-content">
-        {% set overlay = getThumbnailOverlay(info.thumbnailOverlays, "thumbnailOverlayHoverTextRenderer") %}
-        <span class="play-icon yt-sprite"></span>
-        <span class="yt-pl-thumb-overlay-text">{{ getText(overlay.text) }}</span>
-    </span>
+    {{ overlays.render(data) }}
 </div>
 {% endmacro %}

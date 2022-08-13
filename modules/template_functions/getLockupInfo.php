@@ -7,12 +7,12 @@
     foreach($renderer as $key => $val) $rendName = $key;
     $response -> info = $renderer -> $rendName;
     $response -> style = (strpos($rendName, "grid") > -1) ? "grid" : "tile";
-    $response -> type = strtolower(str_replace("grid", "", str_replace("Renderer", "", $rendName)));
+    $response -> type = strtolower(str_replace("compact", "", str_replace("grid", "", str_replace("Renderer", "", $rendName))));
 
-    if ($response -> type == "playlist" and $response -> style == "tile") {
+    if (isset($response -> info -> thumbnails[0])) {
         $response -> thumbArray = $response -> info -> thumbnails[0];
     } else {
-        $response -> thumbArray = $response -> info -> thumbnail;
+        $response -> thumbArray = $response -> info -> thumbnail ?? null;
     }
 
     $validTypes = ["video", "channel", "playlist", "radio"];

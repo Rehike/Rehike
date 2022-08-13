@@ -1,10 +1,10 @@
 {
-	"previousHash": "00da0cb88b7885f7dba4ca844fdb7f8743f1ec62",
-	"currentRevisionId": 413,
-	"subject": "fix duration watched overlay",
-	"body": "fix duration watched overlay",
+	"previousHash": "a24c747e18560514714ece4d0223025c5ee5daa1",
+	"currentRevisionId": 414,
+	"subject": "generalize some lockup things; video item rewrite",
+	"body": "generalize some lockup things; video item rewrite",
 	"branch": "master",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1660413321
+	"time": 1660420375
 }

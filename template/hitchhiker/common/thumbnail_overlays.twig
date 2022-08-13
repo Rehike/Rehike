@@ -1,0 +1,48 @@
+{% macro render(data) %}
+{% from "common/uix/watch_later_button.twig" import render as watch_later %}
+{% set info = data.info %}
+{% if getVideoTime(info) != null %}
+<span class="video-time">{{ getVideoTime(info) }}</span>
+{% endif %}
+{%- if getWLOverlay(info) != null -%}
+{{ watch_later(getWLOverlay(info), info.videoId) }}
+{%- endif -%}
+{% set percentWatched = getWatchedPercent(info) %}
+{% if percentWatched != null %}
+<span class="resume-playback-background"></span>
+<span class="resume-playback-progress-bar" style="width:{{ percentWatched }}%"></span>
+{% endif %}
+{% endmacro %}
+
+{% macro playlist(data, useSpan = false) %}
+{% set info = data.info %}
+<{{ useSpan ? "span" : "div" }} class="sidebar">
+    <span class="yt-pl-sidebar-content yt-valign">
+        <span class="yt-valign-container">
+            <span class="formatted-video-count-label">
+                {% if data.type == "radio" %}
+                    <b>50+</b> videos {# TODO: i18n #}
+                {% else %}
+                    {% for run in info.thumbnailText.runs %}
+                        {% if run.bold == true %}
+                        <b>
+                        {% endif %}
+                        {{ run.text }}
+                        {% if run.bold == true %}
+                        </b>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            </span>
+            <span class="yt-pl-icon {{ data.type == "radio" ? "yt-pl-icon-mix" }} yt-pl-icon-reg yt-sprite"></span>
+        </span>
+    </span>
+</{{ useSpan ? "span" : "div" }}>
+<{{ useSpan ? "span" : "div" }} class="yt-pl-thumb-overlay">
+    <span class="yt-pl-thumb-overlay-content">
+        {% set overlay = getThumbnailOverlay(info, "thumbnailOverlayHoverTextRenderer") %}
+        <span class="play-icon yt-sprite"></span>
+        <span class="yt-pl-thumb-overlay-text">{{ getText(overlay.text) }}</span>
+    </span>
+</{{ useSpan ? "span" : "div" }}>
+{% endmacro %}

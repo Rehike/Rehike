@@ -6,48 +6,100 @@
 </ul>
 {% endmacro %}
 
-{# TODO: cleanup and generalise #}
-{% macro video_item(data) %}
-{% import "common/uix/watch_later_button.twig" as wlBtn %}
-{% if data.compactVideoRenderer %}
-{% set data = data.compactVideoRenderer %}
-<li class="video-list-item related-list-item  show-video-time related-list-item-compact-video">
-    <div class="content-wrapper">
-        <a href="/watch?v={{ data.videoId }}" class=" content-link spf-link        spf-link "   title="{{ getText(data.title) }}" rel=" spf-prefetch nofollow">
-        <span dir="ltr" class="title" aria-describedby="description-id-920876">
-        {{ getText(data.title) }}
-        </span>
-        <span class="accessible-description" id="description-id-920876">
-        - Duration: {{ getVideoTime(data) }}.
-        </span>
-        <span class="stat attribution">{{ yt.config.byTextOnByline ? "<span>by </span>" }}<span class="">{{ getText(data.shortBylineText) }}</span></span>
-        <span class="stat view-count">{{ getText(data.viewCountText) }}{% if yt.config.dateOnWatchSidebarItems %} • {{ getText(data.publishedTimeText) }}{% endif %}</span>
-        </a>
-    </div>
-    <div class="thumb-wrapper{{ timeOverlay ? " contains-percent-duration-watched" }}">
-        <a href="/watch?v={{ data.videoId }}" class="  thumb-link spf-link        spf-link "   tabindex="-1" rel=" spf-prefetch nofollow"  aria-hidden="true">
-            <span class="yt-uix-simple-thumb-wrap yt-uix-simple-thumb-related" tabindex="0" data-vid="{{ data.videoId }}">
-            <img aria-hidden="true" style="top: 0px" width="168" height="94" data-thumb="{{ getThumb(data) }}" alt="" src="{{ PIXEL }}">
-            <span class="video-time">{{ getVideoTime(data) }}</span></span>
-        </a>
-        {% set percentWatched = getWatchedPercent(info) %}
-        {% if percentWatched != null %}
-        <span class="resume-playback-background"></span>
-        <span class="resume-playback-progress-bar" style="width:{{ percentWatched }}%"></span>
-        {% endif %}
-        {% set wlButton = getWLOverlay(data) %}
-        {% if wlButton != null %}
-            {{ wlBtn.render(wlButton, info.videoId) }}
-        {% endif %}
-    </div>
-</li>
-{% elseif data.continuationItemRenderer %}
-{% set data = data.continuationItemRenderer %}
+{% macro video_item(renderer) %}
+{% if renderer.continuationItemRenderer %}
+{% set continuation = renderer.continuationItemRenderer.continuationEndpoint.continuationCommand.token %}
 <div id="watch-more-related" class="hid">
     <li id="watch-more-related-loading">Loading more suggestions...</li>
 </div>
-<button id="watch-more-related-button" class="yt-uix-button yt-uix-button-size-default yt-uix-button-expander" onclick=";return false;" data-continuation="{{ data.continuationEndpoint.continuationCommand.token }}" data-button-action="yt.www.watch.related.loadMore">
+<button id="watch-more-related-button" class="yt-uix-button yt-uix-button-size-default yt-uix-button-expander" onclick=";return false;" data-continuation="{{ continuation }}" data-button-action="yt.www.watch.related.loadMore">
     <span class="yt-uix-button-content">Show more</span>
 </button>
+{% else %}
+{% set data = getLockupInfo(renderer) %}
+<div class="debug hid">{{ data|json_encode }}</div>
+{% set info = data.info %}
+{% set a11yId = generateRid() %}
+{% import "common/thumbnail_overlays.twig" as overlays %}
+{% from "core/html/img.twig" import img %}
+{% from "common/uix/badge_list.twig" import render as badge_list %}
+<li class="video-list-item related-list-item {{ data.type == "video" ? "show-video-time" }} related-list-item-compact-{{ data.type }}">
+    {# playlist html structure is entirely different #}
+    {% if data != null %}
+    {% if data.type == "playlist" or data.type == "radio" %}
+    <a href="{{ getUrl(info) }}" class="related-playlist yt-pl-thumb-link spf {{ data.type == "radio" ? "mix-playlist" }} resumable-list">
+        <span class="yt-pl-thumb {{ data.type == "radio" ? "yt-mix-thumb" }}">
+            <span class="video-thumb yt-thumb yt-thumb-168">
+                <span class="yt-thumb-clip">
+                    {{ img({
+                        src: getThumb(data.thumbArray, 94),
+                        width: 168,
+                        height: 94,
+                        ytImg: 1,
+                        delayLoad: true,
+                        onload: ";window.__ytRIL && __ytRIL(this)",
+                    }) }}
+                    <span class="vertical-align"></span>
+                </span>
+            </span>
+            {{ overlays.playlist(data) }}
+        </span>
+        <span class="title" dir="ltr" title="{{ getText(info.title) }}">
+            {{ getText(info.title) }}
+        </span>
+        {% set author = getByline(info) %}
+        {% if author != null %}
+        <span class="stat attribution">
+            {{ yt.config.byTextOnByline ? "<span>by </span>"|raw }}
+            <span>{{ getText(author) }}</span>
+        </span>
+        {% endif %}
+    </a>
+    {% else %}
+    <div class="content-wrapper">
+        <a href="{{ getUrl(info) }}" class="content-link spf-link" title="{{ getText(info.title) }}">
+            <span dir="ltr" class="title" aria-describedby="description-id-{{ a11yId }}">
+                {{ getText(info.title) }}
+            </span>
+            {% set videoTime = getVideoTime(info) %}
+            {% if videoTime != null %}
+            <span id="description-id-{{ a11yId }}" class="accessible-description"> - Duration: {{ videoTime }}.</span> {# TODO: i18n #}
+            {% endif %}
+            {% set author = getByline(info) %}
+            {% if author != null %}
+            <span class="stat attribution">
+                {{ yt.config.byTextOnByline ? "<span>by </span>"|raw }}
+                <span>{{ getText(author) }}</span>
+            </span>
+            {% endif %}
+            {% if info.viewCountText %}
+            <span class="stat view-count">{{ getText(info.viewCountText) }}</span>
+            {% endif %}
+            {% if info.badges %}
+            {{ badge_list(info.badges) }}
+            {% endif %}
+        </a>
+    </div>
+    <div class="thumb-wrapper">
+        <a href="{{ getUrl(info) }}" class="thumb-link spf-link">
+            <span class="yt-uix-simple-thumb-wrap yt-uix-simple-thumb-related {{ data.type == "video" and yt.config.movingThumbnails ? "yt-uix-mouseover-img-wrap" }}">
+                {{ img({
+                    src: getThumb(data.thumbArray, 94),
+                    width: 168,
+                    height: 94,
+                    ytImg: 1,
+                    delayLoad: true,
+                    onload: ";window.__ytRIL && __ytRIL(this)",
+                    customAttributes: {
+                        "data-mouseover-src": getThumb(info.richThumbnail.movingThumbnailRenderer.movingThumbnailDetails)
+                    }
+                }) }}
+            </span>
+        </a>
+        {{ overlays.render(data) }}
+    </div>
+    {% endif %}
+</li>
+{% endif %}
 {% endif %}
 {% endmacro %}

@@ -1,0 +1,12 @@
+{% macro render(list) %}
+<ul class="yt-badge-list">
+    {% for item in list %}
+        {% if item.metadataBadgeRenderer %}
+            {% set this = item.metadataBadgeRenderer %}
+            <li class="yt-badge-item">
+                <span class="yt-badge {{ this.style == "BADGE_STYLE_TYPE_LIVE_NOW" ? "yt-badge-live" }}">{{ this.label }}</span>
+            </li>
+        {% endif %}
+    {% endfor %}
+</ul>
+{% endmacro %}
