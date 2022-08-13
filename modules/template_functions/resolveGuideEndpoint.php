@@ -11,11 +11,7 @@
  */
 \Rehike\TemplateFunctions::register('resolveGuideEndpoint', function($guideItem) {
     // $guideItem = guideEntryRenderer
-    if (isset($guideItem->entryData->guideEntryData->guideEntryId))
-    {
-        return $guideItem->entryData->guideEntryData->guideEntryId;
-    }
-    else if (isset($guideItem->navigationEndpoint->browseEndpoint->browseId))
+    if (isset($guideItem->navigationEndpoint->browseEndpoint->browseId))
     {
         $id = $guideItem->navigationEndpoint->browseEndpoint->browseId;
         
