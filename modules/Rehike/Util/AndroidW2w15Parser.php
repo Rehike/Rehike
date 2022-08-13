@@ -70,6 +70,20 @@ class AndroidW2w15Parser
                     ]
                 ]
             ];
+
+            // Add webCommandMetadata for byline (for getUrl parsing)
+            if (isset($renderer->longBylineText->runs[0]->navigationEndpoint))
+            {
+                $endpoint = &$renderer->longBylineText->runs[0]->navigationEndpoint;
+
+                $endpoint->commandMetadata = (object)[];
+                $endpoint->commandMetadata->webCommandMetadata = (object)[
+                    "url" => @$endpoint->browseEndpoint->canonicalBaseUrl
+                ];
+
+                // longBylineText and shortBylineText are copies of each other
+                $renderer->shortBylineText = &$renderer->longBylineText;
+            }
         }
 
         return $shelfRenderer;

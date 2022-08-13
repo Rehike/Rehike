@@ -27,10 +27,16 @@
                     {% if getByline(info) != null and data.type != "channel" %}
                     {% set byline = getByline(info) %}
                     <div class="yt-lockup-byline">
-                        {{ yt.config.byTextOnByline ? "by" }}
-                        <a href="{{ getUrl(byline.runs[0]) }}" class="spf-link">{{ getText(byline) }}</a>
-                        {% if info.ownerBadges != null and getBadge(info.ownerBadges, "BADGE_STYLE_TYPE_VERIFIED") %}
-                            <span title="Verified" class="yt-uix-tooltip yt-channel-title-icon-verified yt-sprite"></span>
+                        {% set bylineUrl = getUrl(byline.runs[0]) %}
+                        {% if bylineUrl %}
+                            {{ yt.config.byTextOnByline ? "by" }}
+                            <a href="{{ getUrl(byline.runs[0]) }}" class="spf-link">{{ getText(byline) }}</a>
+                            {% if info.ownerBadges != null and getBadge(info.ownerBadges, "BADGE_STYLE_TYPE_VERIFIED") %}
+                                <span title="Verified" class="yt-uix-tooltip yt-channel-title-icon-verified yt-sprite"></span>
+                            {% endif %}
+                        {% else %}
+                            {# If there is no byline URL, then it's probably something else (like mixes byline) #}
+                            {{ getText(byline) }}
                         {% endif %}
                     </div>
                     {% endif %}

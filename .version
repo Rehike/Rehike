@@ -1,10 +1,10 @@
 {
-	"previousHash": "5b9aeff1b697a6b7cfa078b831d24888127d8204",
-	"currentRevisionId": 410,
-	"subject": "Fix guide playlist addition",
-	"body": "Fix guide playlist addition",
+	"previousHash": "ba6df2c79b1e6bef0e83b389ea6d1ba9249e5455",
+	"currentRevisionId": 411,
+	"subject": "Fix channel links on shelves homepage",
+	"body": "Fix channel links on shelves homepage",
 	"branch": "master",
 	"committerName": "Coffee",
 	"committerEmail": "99076687+YukisCoffee@users.noreply.github.com",
-	"time": 1660398195
+	"time": 1660399534
 }
