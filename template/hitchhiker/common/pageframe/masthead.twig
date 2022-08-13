@@ -1,3 +1,6 @@
+{#
+   TODO (kirasicecreamm): Various cleanups, split into multiple files   
+#}
 <button id="a11y-skip-nav" class="skip-nav" data-target-id="main" tabindex="3">
 Skip navigation
 </button>
@@ -30,7 +33,23 @@ Skip navigation
                <div id="yt-masthead-notifications-content" class="yt-uix-scroller"></div>
             </div>
          </span>
-         <span id="yt-masthead-account-picker" class="yt-uix-clickcard" data-card-action="yt.www.masthead.handleAccountPickerClick" data-card-class="yt-masthead-account-picker-card{{ yt.signin.channelPicker|length> 1 ? " yt-masthead-multilogin" }}">
+         {#
+            FIX (kirasicecreamm): Multilogin class on account picker is actually
+            a bit misleading. It only applies if the user has multiple Google
+            accounts signed in, not multiple YouTube channels.
+
+            In the case of multiple channels, they are loaded via AJAX (/delegate_account_ajax), 
+            but it's okay to do it this way (for now?) since Rehike already has the information
+            at its disposal.
+
+            Also, TODO: Implement multilogin across the Rehike signin API. The API
+            response for actual multilogin (multiple Google accounts) is currently
+            unresearched by our team, so the functionality is presently disabled. When
+            reenabling the feature in this template, please horizontal scroll through
+            #yt-masthead-account-picker (the below element) as there is a commented
+            out class that is needed for the dark grey style.
+         #}
+         <span id="yt-masthead-account-picker" class="yt-uix-clickcard" data-card-action="yt.www.masthead.handleAccountPickerClick" data-card-class="yt-masthead-account-picker-card{#-- {{ yt.signin.channelPicker|length> 1 ? " yt-masthead-multilogin" }} --#}">
             <button class="yt-uix-button yt-uix-button-size-default yt-masthead-user-icon yt-uix-clickcard-target" type="button" onclick=";return false;" aria-label="Account profile photo that opens list of alternate accounts" aria-haspopup="true" data-position="bottomleft" data-force-position="true" data-position-fixed="true" data-orientation="vertical"><span class="yt-uix-button-content">  <span class="video-thumb  yt-thumb yt-thumb-27">
             <span class="yt-thumb-square">
             <span class="yt-thumb-clip">
@@ -63,7 +82,38 @@ Skip navigation
                </div>
                {%- if yt.signin.channelPicker|length> 1 -%}
                <div id="yt-masthead-multilogin" class="yt-masthead-multilogin-users">
-                  <div id="yt-delegate-accounts"></div>
+                  {#
+                     "Delegate" is the internal name for Google+ Brand Accounts, at least by the
+                     YouTube team.
+
+                     The official implementation was to delayload this fragment until the account menu
+                     was opened, requesting /delegate_account_ajax, which seems to be similar to a
+                     Creator API (o=U). Rehike could easily mirror this implementation, without even
+                     a second request to YouTube's servers, but for now I've just decided to implement
+                     it this lazy way.
+                  #}
+                  <div id="yt-delegate-accounts">
+                     {# TODO (kirasicecreamm): Clean up, macroise #}
+                     {%- for account in yt.signin.channelPicker -%}
+                     <a href="/signin?feature=masthead_switcher&action_handle_signin=true&next=%2F&authuser=0&skip_identity_prompt=False" class="yt-masthead-account-picker-option yt-masthead-account-picker-user-option">
+                        <span class="video-thumb yt-masthead-picker-photo-wrapper yt-thumb yt-thumb-36">
+                           <span class="yt-thumb-square">
+                              <span class="yt-thumb-clip">
+                                 <img src="{{ account.photo }}" alt="{{ account.name }}" width="36" height="36">
+                                 <span class="vertical-align"></span>
+                              </span>
+                           </span>
+                        </span>
+                        <div class="yt-masthead-picker-info">
+                           <div class="yt-masthead-picker-name">{{ account.name }}</div>
+                           <div class="yt-masthead-picker-account-subtitle">{{ account.byline }}</div>
+                        </div>
+                     </a>
+                     {%- endfor -%}
+                  </div>
+                  {# Aubrey's misimplementation of multilogin, reuse code and cleanup later #}
+                  {#--
+
                   <div class="yt-masthead-multilogin-users-header">Other accounts</div>
                   {%- for account in yt.signin.channelPicker -%}
                   <a href="/signin?feature=masthead_switcher&action_handle_signin=true&next=%2F&authuser=0&skip_identity_prompt=False" class="yt-masthead-account-picker-option yt-masthead-account-picker-user-option">
@@ -81,6 +131,8 @@ Skip navigation
                      </div>
                   </a>
                   {%- endfor -%}
+
+                  --#}
                </div>
                {%- endif -%}
                <div id="yt-channel-switcher-link" class="clearfix"></div>
