@@ -1,10 +1,10 @@
 {
-	"previousHash": "a24c747e18560514714ece4d0223025c5ee5daa1",
-	"currentRevisionId": 414,
-	"subject": "generalize some lockup things; video item rewrite",
-	"body": "generalize some lockup things; video item rewrite",
+	"previousHash": "5a943042b6ff8da96aaaf283e8ef9699f300e6de",
+	"currentRevisionId": 415,
+	"subject": "remove that from config",
+	"body": "remove that from config",
 	"branch": "master",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1660420375
+	"time": 1660420453
 }
