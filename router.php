@@ -53,6 +53,7 @@ Router::get([
     "/addto_ajax" => "ajax/addto",
     "/rehike/version" => "rehike/version",
     "/rehike/static/**" => "rehike/static_router",
+    "/rehike/settings" => "/rehike/settings",
     "/share_ajax" => "ajax/share",
     "/results_ajax" => "ajax/results",
     "default" => "404"

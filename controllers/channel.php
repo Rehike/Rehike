@@ -17,7 +17,7 @@ class ChannelController extends NirvanaController {
     public $template = "channel";
 
     public static $requestedTab = "";
-    
+
     public const SECONDARY_RESULTS_ENABLED_TAB_IDS = [
         "featured",
         "discussion",
