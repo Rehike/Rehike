@@ -1,10 +1,10 @@
 {
-	"previousHash": "5a943042b6ff8da96aaaf283e8ef9699f300e6de",
-	"currentRevisionId": 415,
-	"subject": "remove that from config",
-	"body": "remove that from config",
+	"previousHash": "770e778d3306b972082cd7ecb9fcd682c2c5491e",
+	"currentRevisionId": 416,
+	"subject": "fix #79",
+	"body": "fix #79",
 	"branch": "master",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1660420453
+	"time": 1660443140
 }
