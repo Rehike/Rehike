@@ -1,10 +1,10 @@
 {
-	"previousHash": "770e778d3306b972082cd7ecb9fcd682c2c5491e",
-	"currentRevisionId": 416,
-	"subject": "fix #79",
-	"body": "fix #79",
+	"previousHash": "fdc4d3466a67f970d3f88a08907588a772dc41e8",
+	"currentRevisionId": 417,
+	"subject": "remove video list item debug data",
+	"body": "remove video list item debug data",
 	"branch": "master",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1660443140
+	"time": 1660443302
 }

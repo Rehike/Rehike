@@ -17,7 +17,6 @@
 </button>
 {% else %}
 {% set data = getLockupInfo(renderer) %}
-<div class="debug hid">{{ data|json_encode }}</div>
 {% set info = data.info %}
 {% set a11yId = generateRid() %}
 {% import "common/thumbnail_overlays.twig" as overlays %}
