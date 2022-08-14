@@ -1,5 +1,6 @@
 <?php
 namespace Rehike\Model\Rehike\Version;
+use \Rehike\i18n;
 
 class MNonGitNotice extends MNotice
 {
