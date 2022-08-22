@@ -92,19 +92,21 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="expanded-shelf">
-                                            {% if yt.flow == "grid" %}
-                                            <ul id="channels-browse-content-grid" class="channels-browse-content-grid branded-page-gutter-padding grid-lockups-container">
+                                        {% if yt.flow == "grid" %} 
+                                        <div class="multirow-shelf">
+                                            <ul id="grid-what_to_watch_v2" class="shelf-content">
                                                 {% for item in yt.videoList %}
                                                     {% if item.gridVideoRenderer or item.gridPlaylistRenderer %}
-                                                        <li class="channels-content-item yt-shelf-grid-item">
+                                                        <li class="yt-shelf-grid-item">
                                                             {{ lockup.grid(item) }}
                                                         </li>
                                                     {% endif %}
                                                 {% endfor %}
                                             </ul>
-                                            {% elseif yt.flow == "list" %}
-                                            <ul id="home-video-list" class="expanded-shelf-content-list">
+                                        </div>
+                                        {% elseif yt.flow == "list" %}
+                                        <div class="expanded-shelf">
+                                            <ul class="expanded-shelf-content-list">
                                                 {% for item in yt.videoList %}
                                                     {% if item.videoRenderer or item.playlistRenderer %}
                                                         <li class="expanded-shelf-content-item-wrapper">
@@ -115,8 +117,8 @@
                                                     {% endif %}
                                                 {% endfor %}
                                             </ul>
-                                            {% endif %}
                                         </div>
+                                        {% endif %}
                                     </div>
                                 </div>
                             </li>
