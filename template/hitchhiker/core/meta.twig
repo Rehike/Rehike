@@ -25,7 +25,7 @@
 <link rel="publisher" href="https://plus.google.com/115229808208707341778">
 <link rel="alternate" href="android-app://com.google.android.youtube/http/www.youtube.com/">
 <link rel="alternate" href="ios-app://544007664/vnd.youtube/www.youtube.com/">
-<style id="comment-emojis">
+<style id="rehike-css">
     .yt-comments-custom-emoji {
         width: 16px;
         height: 16px;
@@ -37,9 +37,14 @@
         width: 24px;
         height: 24px;
     }
+
+    .video-list-item .stat .published-time::before {
+        content: "\002022";
+        margin: 0 5px;
+    }
 </style>
 {%- if yt.config.hhCSSFixes -%}
-<style id="rehike-fix">
+<style id="hh-css-fix">
     html {
         overflow-y: scroll;
     }

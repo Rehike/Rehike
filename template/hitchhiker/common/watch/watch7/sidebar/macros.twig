@@ -72,7 +72,12 @@
             </span>
             {% endif %}
             {% if info.viewCountText %}
-            <span class="stat view-count">{{ getText(info.viewCountText) }}</span>
+            <span class="stat">
+                <span class="view-count">{{ getText(info.viewCountText) }}</span>
+                {%- if yt.config.watchSidebarDates -%}
+                <span class="published-time">{{ getText(info.publishedTimeText) }}</span>
+                {%- endif -%}
+            </span>
             {% endif %}
             {% if info.badges %}
             {{ badge_list(info.badges) }}

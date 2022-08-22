@@ -1,10 +1,10 @@
 {
-	"previousHash": "7510f67c765673ad2e7c84096789e6a65bfb4701",
-	"currentRevisionId": 420,
-	"subject": "clean up w2w v2 and meta css",
-	"body": "clean up w2w v2 and meta css",
+	"previousHash": "9c910e61c9688a6c635ad22d04703d9ea5d23af8",
+	"currentRevisionId": 421,
+	"subject": "watchSidebarDates",
+	"body": "watchSidebarDates",
 	"branch": "master",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1661138027
+	"time": 1661139132
 }
