@@ -19,7 +19,7 @@ class CommentsHeader {
         }
 
         if ($a = @$data->createRenderer) {
-            $new->createParams = $a->commentSimpleboxRenderer->submitButton->buttonRenderer->serviceEndpoint->createCommentEndpoint->createCommentParams;
+            $new->createParams = $a->commentSimpleboxRenderer->submitButton->buttonRenderer->serviceEndpoint->createCommentEndpoint->createCommentParams ?? null;
         }
 
         if ($a = $data->sortMenu) {

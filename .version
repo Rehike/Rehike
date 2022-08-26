@@ -1,10 +1,10 @@
 {
-	"previousHash": "9c910e61c9688a6c635ad22d04703d9ea5d23af8",
-	"currentRevisionId": 421,
-	"subject": "watchSidebarDates",
-	"body": "watchSidebarDates",
+	"previousHash": "5c7fd2941e8ce1db3289f3e33fcd3baa160c0493",
+	"currentRevisionId": 422,
+	"subject": "fix comments signed out",
+	"body": "fix comments signed out",
 	"branch": "master",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1661139132
+	"time": 1661515364
 }
