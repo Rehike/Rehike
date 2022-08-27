@@ -30,7 +30,7 @@ class MFiltersHeader {
             // sort behaves differently
             // this is not denoted in innertube
             // probably handled by polymer js
-            if ($i == count($header)) $header[$i] -> searchFilterGroupRenderer -> isSort = true;
+            if ($i == count($header) - 1) $header[$i] -> searchFilterGroupRenderer -> isSort = true;
 
             for ($k = 0; $k < count($header[$i] -> searchFilterGroupRenderer -> filters); $k++) {
                 $status = $header[$i] -> searchFilterGroupRenderer -> filters[$k] -> searchFilterRenderer -> status ?? null;

@@ -134,11 +134,13 @@
                     </li>
                     {% endfor %}
                 </ol>
-                {%- set lastItem = yt.page.results|last -%}
-                {%- if lastItem.continuationItemRenderer -%}
-                {%- from "common/uix/load_more_button.twig" import render as load_more -%}
-                {{ load_more(lastItem.continuationItemRenderer.continuationEndpoint.continuationCommand.token, "item-section-results", false, "results_ajax") }}
-                {%- endif -%}
+                {% if yt.page.paginator %}
+                    <div class="branded-page-box search-pager  spf-link ">
+                        {% for btn in yt.page.paginator.items %}
+                            {{ button.render(btn) }}
+                        {% endfor %}
+                    </div>
+                {% endif %}
             </li>
             {% endif %}
         </ol>

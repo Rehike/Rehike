@@ -33,6 +33,8 @@ class Converter
         // so that I can use it later.
         $signedIn = Signin::isSignedIn();
 
+        $strings = &i18n::getNamespace("main/guide");
+
         $response = [];
 
         // Push the main section to the response
@@ -50,6 +52,13 @@ class Converter
         else
         {
             $bestOfYtSection = $data->items[3]; // Bad to hardcode but idc
+            $bestOfYtSection->guideSectionRenderer->formattedTitle = (object) [
+                'runs' => [
+                    (object) [
+                        'text' => $strings->bestOfYouTubeSection
+                    ]
+                ]
+            ];
             $response[] = $bestOfYtSection;
         }
         

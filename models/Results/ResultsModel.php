@@ -16,7 +16,7 @@ class ResultsModel {
      * @param object $yt (global state)
      * @param object $data from search response
      */
-    public static function bake(&$yt, $data) {
+    public static function bake(&$yt, $data, $paginatorInfo) {
         $response = (object) [];
         $contents = $data -> contents -> twoColumnSearchResultsRenderer -> primaryContents -> sectionListRenderer;
         $filterHeader = $contents -> subMenu -> searchSubMenuRenderer -> groups;
@@ -31,6 +31,19 @@ class ResultsModel {
         $response -> results = $results ?? null;
         $response -> data = $data;
 
+        // paginator
+        if (isset($paginatorInfo->pagesCount) && $paginatorInfo->pagesCount > 1) {
+            $response->paginator = new MPaginator($paginatorInfo);
+        }
+
         return $response;
+    }
+
+    public static function getResultsCount($data) {
+        if (isset($data->estimatedResults)) {
+            return (int) $data->estimatedResults;
+        } else {
+            return 0;
+        }
     }
 }
