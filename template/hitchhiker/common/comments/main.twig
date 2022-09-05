@@ -144,7 +144,7 @@
 {%- macro textContent(content) -%}
 {%- for run in content.runs -%}
    {%- if run.navigationEndpoint -%}{%- apply spaceless -%}
-      {%- set href = run.navigationEndpoint.commandMetadata.webCommandMetadata.url -%}
+      {%- set href = getUrl(run) -%}
       {%- set spf = (href|first == "/") -%}
       <a href="{{ href }}" class=" {{ spf ? 'spf-link' }}" target="_blank">{{ run.text|spaceless }}</a>
    {%- endapply -%}{%- elseif run.emoji.isCustomEmoji -%}

@@ -1,10 +1,10 @@
 {
-	"previousHash": "106cfdf625659446fa4df633b7a916f3d81e34da",
-	"currentRevisionId": 427,
-	"subject": "this does not need to be seperate",
-	"body": "this does not need to be seperate",
+	"previousHash": "110c9d26b7f92dc5d59a4ccd41082c1ac555bc2b",
+	"currentRevisionId": 428,
+	"subject": "update getUrl",
+	"body": "update getUrl",
 	"branch": "master",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1662394355
+	"time": 1662394786
 }
