@@ -93,6 +93,7 @@ class MMetadataRowContainer
             $musicItems = [];
 
             // Find the rows and go through them
+            if (isset($item->carouselLockups)) // For some reason they don't exist on some videos.
             foreach (@$item->carouselLockups as $lockup)
             foreach (@$lockup->carouselLockupRenderer->infoRows as $row)
             {
