@@ -29,10 +29,12 @@ ControllerV2::registerStateVariable($yt);
 ControllerV2::setRedirectHandler(require "modules/spfRedirectHandler.php");
 
 // Player init
-require "modules/playerCore.php";
-$_playerCore = PlayerCore::main();
-$yt->playerCore = $_playerCore;
-$yt->playerBasepos = $_playerCore->basepos;
+use \Rehike\Player\PlayerCore;
+PlayerCore::configure([
+   "cacheMaxTime" => 18000, // 5 hours in seconds
+   "cacheDestDir" => "cache",
+   "cacheDestName" => "player_cache" // .json
+]);
 
 // Parse user preferences as stored by the YouTube application.
 if (isset($_COOKIE["PREF"])) {

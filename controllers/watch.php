@@ -108,7 +108,7 @@ return new class extends NirvanaController {
                         'mdxContext' => (object) [],
                         'playerHeightPixels' => 1080,
                         'playerWidthPixels' => 1920,
-                        'signatureTimestamp' => $yt->playerCore->sts
+                        'signatureTimestamp' => $yt->playerConfig->signatureTimestamp
                     ]   
                 ],
                 "startTimeSecs" => $startTime ?? 0,

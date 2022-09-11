@@ -59,12 +59,12 @@ ytplayer.config = {
         "bgcolor": "#000000"
     },
     "assets": {
-        "css": {{ ('/s/player/' ~ yt.playerBasepos ~ '/www-player-webp.css')|json_encode|raw }},
-        "js": {{ ('/s/player/' ~ yt.playerBasepos ~ '/player_ias.vflset/en_US/base.js')|json_encode|raw }}
+        "css": {{ (yt.playerConfig.baseCssUrl)|json_encode|raw }},
+        "js": {{ (yt.playerConfig.baseJsUrl)|json_encode|raw }}
     },
     "html5": true,
     "url": "",
-    "sts": {{ yt.playerCore.sts }},
+    "sts": {{ yt.playerConfig.signatureTimestamp }},
     "attrs": {
         "id": "movie_player",
         "class": "ytp-embed"

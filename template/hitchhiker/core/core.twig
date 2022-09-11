@@ -12,7 +12,7 @@
       {{ core.js('scheduler/scheduler') }}
       {{ core.css('www-core') }}
       {%- block head_css  -%}{% endblock %}
-      <link rel="stylesheet" href="/s/player/{{ yt.playerBasepos }}/www-player.css" name="player/www-player">
+      <link rel="stylesheet" href="{{ yt.playerConfig.baseCssUrl }}" name="player/www-player">
       {{ core.css('www-pageframe') }}
       {{ core.css('www-guide') }}
       <title>{% block title %}YouTube{% endblock %}</title>

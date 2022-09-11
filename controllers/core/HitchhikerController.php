@@ -3,6 +3,7 @@ namespace Rehike\Controller\core;
 
 use Rehike\TemplateManager;
 use Rehike\Request;
+use Rehike\Player\PlayerCore;
 use SpfPhp\SpfPhp;
 use Rehike\ControllerV2\RequestMetadata;
 use Rehike\Model\Guide\MGuide as Guide;
@@ -106,6 +107,7 @@ abstract class HitchhikerController
         header("Content-Type: " .  $this -> contentType);
         $this->yt = &$yt;
         $this->init($yt, $template);
+        $this->initPlayer($yt);
 
         $this->onGet($yt, $request);
 
@@ -141,6 +143,19 @@ abstract class HitchhikerController
         $this->postInit($yt, $template);
 
         if ($this->useTemplate) $this->doGeneralRender();
+    }
+
+    /**
+     * Initialise the player.
+     * 
+     * @param object $yt        Template data.
+     * @return void
+     */
+    public function initPlayer(&$yt)
+    {
+        $playerConfig = PlayerCore::getInfo();
+
+        $yt->playerConfig = $playerConfig;
     }
 
     /**
