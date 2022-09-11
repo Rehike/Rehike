@@ -22,12 +22,13 @@ All comments on Never Gonna Give You Up - YouTube
 } -%}
 
 {%- block branded_page_primary_column_content -%}
+<div class="debug hid">{{ yt.page|json_encode }}</div>
 <div id="watch-response" class="clearfix">
     <div id="watch-response-header" class="clearfix"></div>
     <div id="watch-response-content">
         {% import '/common/watch/watch7/action_panel/base.twig' as action_panel %}
         <div id="watch-discussion" class="branded-page-box">
-            {{ action_panel.loading() }}
+            
         </div>
     </div>
 </div>

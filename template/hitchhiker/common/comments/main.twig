@@ -144,7 +144,7 @@
 {%- macro textContent(content) -%}
 {%- for run in content.runs -%}
    {%- if run.navigationEndpoint -%}{%- apply spaceless -%}
-      {%- set href = run.navigationEndpoint.commandMetadata.webCommandMetadata.url -%}
+      {%- set href = getUrl(run) -%}
       {%- set spf = (href|first == "/") -%}
       <a href="{{ href }}" class=" {{ spf ? 'spf-link' }}" target="_blank">{{ run.text|spaceless }}</a>
    {%- endapply -%}{%- elseif run.emoji.isCustomEmoji -%}
@@ -220,7 +220,7 @@ Loading...
       {% endif %}
       data-action-heart="{{ data.heartEndpoint.performCommentActionEndpoint.action }}"
       data-action-unheart="{{ data.unheartEndpoint.performCommentActionEndpoint.action }}"
-      data-url="/heart_ajax"
+      data-url="/comment_service_ajax?action_perform_comment_action=1"
    {% endif %}>
       <div class="creator-heart">
          <img src="{{ data.creatorThumbnail.thumbnails.0.url }}" class="creator-heart-background-{{ styleClass }}">
