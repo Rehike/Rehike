@@ -101,6 +101,15 @@ class CommentThread
     public static function commentRepliesRenderer($context)
     {
         /*
+         * Process teaser contents.
+         */
+        if (isset($context->teaserContents)) foreach($context->teaserContents as $item)
+        {
+            if (isset($item->commentRenderer))
+                $item->commentRenderer = self::commentRenderer($item->commentRenderer, true);
+        }
+
+        /*
          * YouTube has been updating desktop comments (as of 2022/06/23)
          * to use mobile style all caps text and author thumbnail.
          * 
