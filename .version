@@ -1,10 +1,10 @@
 {
-	"previousHash": "937f4fe25f99ebd60aa477d5dbf6c3faa420457d",
-	"currentRevisionId": 434,
-	"subject": "Merge branch 'master' of https://github.com/Rehike/Rehike",
-	"body": "Merge branch 'master' of https://github.com/Rehike/Rehike",
+	"previousHash": "d4effd8c0b8c3c6c925d1bf031feb2d47a9cca4e",
+	"currentRevisionId": 436,
+	"subject": "Correct thumbnails on channel videos.",
+	"body": "Correct thumbnails on channel videos.",
 	"branch": "master",
 	"committerName": "Coffee",
 	"committerEmail": "99076687+YukisCoffee@users.noreply.github.com",
-	"time": 1662857135
+	"time": 1663152200
 }
