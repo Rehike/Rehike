@@ -26,25 +26,28 @@ class MSubnav
         $i->addBackButton($baseUrl);
 
         // Process sort button
-        $sortData = $data->sortSetting->sortFilterSubMenuRenderer;
-        $sortButtonTitle = "";
-        $sortButtonOptions = [];
-
-        foreach ($sortData->subMenuItems as $item)
+        if (isset($sortData))
         {
-            if ($item->selected)
-            {
-                $sortButtonTitle = $item->title;
-            }
-            else
-            {
-                $sortButtonOptions += [
-                    $item->title => $item->navigationEndpoint->commandMetadata->webCommandMetadata->url
-                ];
-            }
-        }
+            $sortData = $data->sortSetting->sortFilterSubMenuRenderer;
+            $sortButtonTitle = "";
+            $sortButtonOptions = [];
 
-        $i->rightButtons[] = new MSubnavMenuButton("sort", $sortButtonTitle, $sortButtonOptions);
+            foreach ($sortData->subMenuItems as $item)
+            {
+                if ($item->selected)
+                {
+                    $sortButtonTitle = $item->title;
+                }
+                else
+                {
+                    $sortButtonOptions += [
+                        $item->title => $item->navigationEndpoint->commandMetadata->webCommandMetadata->url
+                    ];
+                }
+            }
+
+            $i->rightButtons[] = new MSubnavMenuButton("sort", $sortButtonTitle, $sortButtonOptions);
+        }
 
         $i->rightButtons[] = self::getFlowButton("grid");
 
