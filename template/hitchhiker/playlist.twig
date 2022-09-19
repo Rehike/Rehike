@@ -7,6 +7,10 @@
 {% set defaultAppbarVisibility = false %}
 {% set enableSnapScaling = true %}
 
+{%- block title -%}
+{{ getText(yt.page.plHeader.title) }} - {{ parent() }}
+{%- endblock -%}
+
 {% block foot_scripts %}
 <script>
     yt.setConfig('ANGULAR_JS', "\/\/s.ytimg.com\/yts\/jslib\/angular.min-vfl8oYsy-.js");
