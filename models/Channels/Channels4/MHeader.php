@@ -40,7 +40,10 @@ class MHeader
         // Add the banner if it exists
         if ($a = @$header->banner)
         {
-            $this->banner = $a;
+            $this->banner = (object) [
+                "image" => $a -> thumbnails[0] -> url ?? null,
+                "hdImage" => $a -> thumbnails[3] -> url ?? null
+            ];
             $this->banner->isCustom = true;
         }
         else

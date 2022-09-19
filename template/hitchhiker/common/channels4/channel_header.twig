@@ -3,23 +3,22 @@
     <div id="gh-banner">
         <style>
             #c4-header-bg-container {
-                background-image: url({{ header.banner.thumbnails.0.url }});
+                background-image: url({{ header.banner.image }});
             }
             
             
             @media screen and (-webkit-min-device-pixel-ratio: 1.5),
             screen and (min-resolution: 1.5dppx) {
                 #c4-header-bg-container {
-                    background-image: url({{ header.banner.thumbnails.3.url }});
+                    background-image: url({{ header.banner.hdImage }});
                 }
             }
             
             #c4-header-bg-container .hd-banner-image {
-                background-image: url({{ header.banner.thumbnails.3.url }});
-                background-size: 1262px auto;
+                background-image: url({{ header.banner.hdImage }});
             }
         </style>
-        <div id="c4-header-bg-container" class="c4-visible-on-hover-container {{ yt.page.hasCustomBanner ? 'has-custom-banner' }}">
+        <div id="c4-header-bg-container" class="c4-visible-on-hover-container {{ header.banner.isCustom ? 'has-custom-banner' }}">
             <div class="hd-banner">
                 <div class="hd-banner-image "></div>
             </div>

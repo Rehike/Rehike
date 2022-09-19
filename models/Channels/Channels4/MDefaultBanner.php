@@ -12,22 +12,33 @@ use Rehike\TemplateFunctions as TF;
  */
 class MDefaultBanner
 {
-    public $thumbnails;
+    public $image;
+    public $hdImage;
 
     public function __construct()
     {
-        $this->thumbnails[] = (object)[
-            "url" => TF::resourcePath(
-                Resources::$resourceConstants,
-                "img", "channels/c4/default_banner"
-            )
-        ];
+        $this -> image = TF::resourcePath(
+            Resources::$resourceConstants,
+            "img", "channels/c4/default_banner"
+        );
 
-        $this->thumbnails[] = (object)[
-            "url" => TF::resourcePath(
-                Resources::$resourceConstants,
-                "img", "channels/c4/default_banner_hq"
-            )
-        ];
+        $this -> hdImage = TF::resourcePath(
+            Resources::$resourceConstants,
+            "img", "channels/c4/default_banner_hq"
+        );
+
+        // $this->thumbnails[] = (object)[
+        //     "url" => TF::resourcePath(
+        //         Resources::$resourceConstants,
+        //         "img", "channels/c4/default_banner"
+        //     )
+        // ];
+
+        // $this->thumbnails[] = (object)[
+        //     "url" => TF::resourcePath(
+        //         Resources::$resourceConstants,
+        //         "img", "channels/c4/default_banner_hq"
+        //     )
+        // ];
     }
 }
