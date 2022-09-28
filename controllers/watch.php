@@ -15,6 +15,8 @@ use Rehike\Util\ExtractUtils;
 //
 return new class extends NirvanaController {
     public $template = 'watch';
+    
+    protected $delayLoadGuide = true;
 
     public function onGet(&$yt, $request)
     {

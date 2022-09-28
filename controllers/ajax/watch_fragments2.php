@@ -37,7 +37,7 @@ class AjaxWatchFragments2Controller extends AjaxController {
     }
 
     private function getGuide(&$yt) {
-        $this->template = "common/pageframe/guide";
+        $this->template = "common/appbar/appbar_guide";
         $this->spfIdListeners = [
             '@masthead_search<data-is-crosswalk>',
             'guide'
