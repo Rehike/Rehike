@@ -59,7 +59,23 @@ abstract class NirvanaController extends HitchhikerController
         // is open by default.
         if (SpfPhp::isSpfRequested() || !$this->delayLoadGuide)
         {
-            $yt->appbar->addGuide($this->getPageGuide());
+            //$yt->appbar->addGuide($this->getPageGuide());
+
+            // Attempt async (better way):
+            $this->getGuideAsync();
+        }
+    }
+
+    public function postInit(&$yt, &$template)
+    {
+        parent::postInit($yt, $template);
+
+        // Load guide result (if available)
+        if ($this->hasAsyncGuideRequest())
+        {
+            $yt->appbar->addGuide(
+                $this->getGuideAsyncResult()
+            );
         }
     }
 

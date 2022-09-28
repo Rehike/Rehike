@@ -176,6 +176,41 @@ abstract class HitchhikerController
         return Guide::fromData($guide);
     }
 
+    protected static $hasAsyncGuideRequest = false;
+
+    /**
+     * Asynchronously request the guide so that it can be worked
+     * with later.
+     * 
+     * This provides a more optimal implementation of the above
+     * function.
+     * 
+     * @return void
+     */
+    public function getGuideAsync()
+    {
+        self::$hasAsyncGuideRequest = true;
+
+        Request::queueInnertubeRequest("_guide", "guide", (object)[]);
+    }
+
+    public function hasAsyncGuideRequest()
+    {
+        return self::$hasAsyncGuideRequest;
+    }
+
+    /**
+     * Get the result of the asynchronous guide request.
+     * 
+     * @return object
+     */
+    public function getGuideAsyncResult()
+    {
+        return Guide::fromData(
+            json_decode(Request::getResponses()["_guide"])
+        );
+    }
+
     /**
      * Set the current page endpoint.
      * 
