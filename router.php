@@ -24,6 +24,12 @@ Router::redirect([
     "/shorts/(*)" => "/watch?v=$1",
     "/hashtag/(*)" => "/results?search_query=$1",
     "/feed/what_to_watch/**" => "/",
+    "/source/(*)" => function($request) {
+        if (isset($request -> path[1]))
+            return "/attribution?v=" . $request -> path[1];
+        else
+            return "/attribution";
+    },
     // TODO: Redirect confirmation page?
     "/redirect(/|?)*" => function($request) {
         if (isset($request->params->q))
@@ -56,6 +62,7 @@ Router::get([
     "/rehike/settings" => "/rehike/settings",
     "/share_ajax" => "ajax/share",
     "/results_ajax" => "ajax/results",
+    "/attribution" => "attribution",
     "default" => "404"
 ]);
 
@@ -68,6 +75,5 @@ Router::post([
     "/subscription_ajax" => "ajax/subscription",
     "/service_ajax" => "ajax/service",
     "/comment_service_ajax" => "ajax/comment_service",
-    "/heart_ajax" => "ajax/heart",
     "/addto_ajax" => "ajax/addto"
 ]);

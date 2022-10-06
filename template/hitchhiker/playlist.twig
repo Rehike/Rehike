@@ -66,7 +66,8 @@
             {%- set plh = yt.page.plHeader -%}
             <div id="pl-header" class="branded-page-box clearfix" data-all-playlists-url="{{ getUrl(plh.owner) }}/playlists">
                 <div class="pl-header-thumb" style="height: 126px;">
-                    <img src="{{ getThumb(plh, 126) }}" height="126px">
+                    {% set thumb = getThumb(plh, 126) %}
+                    <img src="{{ thumb.url }}" height="126px">
                     <a href="{{ getUrl(plh) }}" class="pl-header-play-all-overlay yt-valign spf-link">► Play all</a>
                 </div>
                 <div class="pl-header-content">
@@ -104,8 +105,9 @@
                                                             <span class="video-thumb yt-thumb yt-thumb-72">
                                                                 <span class="yt-thumb-default">
                                                                     <span class="yt-thumb-clip">
+                                                                        {% set vthumb = getThumb(this, 72) %}
                                                                         {{ img({
-                                                                            src: getThumb(this, 72),
+                                                                            src: vthumb.url,
                                                                             ytImg: true,
                                                                             onload: ";window.__ytRIL && __ytRIL(this)",
                                                                             delayLoad: true,
@@ -124,7 +126,7 @@
                                                     <div class="pl-video-owner">
                                                         {% set byline = this.shortBylineText %}
                                                         {{ yt.config.byTextOnByline ? "by" }}
-                                                        <a href="{{ getEndpoint(byline) }}" class=" g-hovercard      spf-link " data-ytid="{{ byline.navigationEndpoint.browseEndpoint.browseId }}" data-name="playlist">{{ getText(byline) }}</a>
+                                                        <a href="{{ getUrl(byline) }}" class=" g-hovercard      spf-link " data-ytid="{{ byline.navigationEndpoint.browseEndpoint.browseId }}" data-name="playlist">{{ getText(byline) }}</a>
                                                     </div>
                                                     <div class="pl-video-bottom-standalone-badge"></div>
                                                 </td>

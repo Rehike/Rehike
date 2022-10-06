@@ -106,7 +106,7 @@ class MMetadataRowContainer
                 $title = ucfirst(strtolower(TemplateFunctions::getText(@$data->title)));
 
                 $content = TemplateFunctions::getText(@$data->{$element});
-                $href = TemplateFunctions::getEndpoint(@$data->{$element}->runs[0]);
+                $href = TemplateFunctions::getUrl(@$data->{$element}->runs[0]);
                 if ("" == $href) $href = null;
 
                 $musicItems[] = self::createSimpleField($title, $content, $href);

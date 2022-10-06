@@ -1,0 +1,90 @@
+{% extends "core.twig" %}
+{% import "core/macros.twig" as core %}
+{% from "core/html/img.twig" import img %}
+{% from "common/uix/watch_later_button.twig" import render as watch_later %}
+
+{% block head_css %}
+{{ core.css("www-attribution")}}
+{% endblock %}
+
+{% block content %}
+<div id="debug" class="hid">{{ yt.page|json_encode }}</div>
+<div id="attribution-container" class="ytg-base">
+{%- if yt.page.header -%}
+    <h2>{{ yt.page.header.title }}</h2>
+    <div class="video-details">
+        <div class="video-entry">
+            <div>
+                <span class="ux-thumb-wrap contains-addto">
+                    <a href="/watch?v={{ yt.page.videoId }}" aria-hidden="true">
+                        <span class="video-thumb yt-thumb yt-thumb-288">
+                            <span class="yt-thumb-default">
+                                <span class="yt-thumb-clip">
+                                    {{ img({
+                                        src: yt.page.header.video.thumbnail,
+                                        onload: ";window.__ytRIL && __ytRIL(this)",
+                                        ytImg: 1,
+                                        width: 288,
+                                        delayLoad: false
+                                    }) }}
+                                    <span class="vertical-align"></span>
+                                </span>
+                            </span>
+                        </span>
+                    </a>
+                    {{ watch_later(yt.page.header.video.watchLater, yt.page.videoId) }}
+                </span>
+            </div>
+            <p>
+                <span class="video-title">{{ getText(yt.page.header.video.title) }}</span>
+            </p>
+        </div>
+    </div>
+{%- endif -%}
+{%- if yt.page.contents -%}
+<div class="source-videos">
+    <div class="section-header">
+        <h3>{{ yt.page.contents.title }}</h3>
+        <span>{{ yt.page.contents.subtitle }}</span>
+    </div>
+    <div class="video-list">
+        {%- for video in yt.page.contents.items -%}
+        <div class="video-entry">
+            <div>
+                <span class="ux-thumb-wrap contains-addto">
+                    <a href="/watch?v={{ video.videoId }}" aria-hidden="true">
+                        <span class="video-thumb yt-thumb yt-thumb-138">
+                            <span class="yt-thumb-default">
+                                <span class="yt-thumb-clip">
+                                    {{ img({
+                                        src: video.thumbnail,
+                                        onload: ";window.__ytRIL && __ytRIL(this)",
+                                        ytImg: 1,
+                                        width: 138,
+                                        delayLoad: false
+                                    }) }}
+                                    <span class="vertical-align"></span>
+                                </span>
+                            </span>
+                        </span>
+                    </a>
+                    {{ watch_later(video.watchLater, video.videoId) }}
+                </span>
+            </div>
+            <p>
+                <a href="/watch?v={{ video.videoId }}" class="video-title">{{ getText(video.title) }}</a>
+                <span class="video-username">
+                    {%- if yt.config.byTextOnByline -%}
+                    <span class="username-prepend">by </span>
+                    {%- endif -%}
+                    <a href="{{ getUrl(video.author) }}" class="yt-user-name" aria-label="{{ video.authorA11yLabel }}">{{ getText(video.author) }}</a>
+                </span>
+                <a href="{{ getUrl(video.attrLink) }}" class="attribution-link">{{ getText(video.attrLink) }}</a>
+            </p>
+        </div>
+        {%- endfor -%}
+    </div>
+</div>
+{%- endif -%}
+</div>
+{% endblock %}

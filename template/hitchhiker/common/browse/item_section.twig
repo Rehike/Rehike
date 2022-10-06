@@ -10,7 +10,7 @@
                     {%- if item.messageRenderer.text.runs -%}
                         {%- for run in item.messageRenderer.text.runs -%}
                             {%- if run.navigationEndpoint -%}
-                                <a href="{{ getEndpoint(run) }}">{{ run.text }}</a>
+                                <a href="{{ getUrl(run) }}">{{ run.text }}</a>
                             {%- else -%}
                                 {{ run.text }}
                             {%- endif -%}
