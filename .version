@@ -1,10 +1,10 @@
 {
-	"previousHash": "bfa44479977ce7fa321d1a6dbf2f01c319026e55",
-	"currentRevisionId": 437,
-	"subject": "Process teaser comments using comment thread model",
-	"body": "Process teaser comments using comment thread model",
+	"previousHash": "28d863a0b7c68288991938c36da65e0c12f13bcd",
+	"currentRevisionId": 442,
+	"subject": "Fix guide (again)",
+	"body": "Fix guide (again)",
 	"branch": "master",
 	"committerName": "Coffee",
 	"committerEmail": "99076687+YukisCoffee@users.noreply.github.com",
-	"time": 1663152609
+	"time": 1664396662
 }

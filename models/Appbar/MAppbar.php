@@ -11,12 +11,6 @@ class MAppbar
     public $guide;
     public $guideNotificationStrings;
 
-    public function __construct()
-    {
-        // Initialise an empty guide.
-        $this->guide = (object)[];
-    }
-
     /**
      * Add a centre navigation section to the appbar.
      * 

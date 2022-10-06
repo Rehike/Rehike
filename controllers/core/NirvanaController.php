@@ -57,9 +57,25 @@ abstract class NirvanaController extends HitchhikerController
         // Request appbar guide fragments if the page has the
         // guide enabled, the request is not SPF, and the guide
         // is open by default.
-        if (SpfPhp::isSpfRequested() || !$this->delayLoadGuide)
+        if (!$this->delayLoadGuide && !SpfPhp::isSpfRequested())
         {
-            $yt->appbar->addGuide($this->getPageGuide());
+            //$yt->appbar->addGuide($this->getPageGuide());
+
+            // Attempt async (better way):
+            $this->getGuideAsync();
+        }
+    }
+
+    public function postInit(&$yt, &$template)
+    {
+        parent::postInit($yt, $template);
+
+        // Load guide result (if available)
+        if ($this->hasAsyncGuideRequest())
+        {
+            $yt->appbar->addGuide(
+                $this->getGuideAsyncResult()
+            );
         }
     }
 
