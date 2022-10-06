@@ -206,8 +206,12 @@ abstract class HitchhikerController
      */
     public function getGuideAsyncResult()
     {
+        $guide = Request::getResponses()["_guide"];
+
+        if (is_null($guide)) return null;
+
         return Guide::fromData(
-            json_decode(Request::getResponses()["_guide"])
+            json_decode($guide)
         );
     }
 

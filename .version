@@ -1,10 +1,10 @@
 {
-	"previousHash": "28d863a0b7c68288991938c36da65e0c12f13bcd",
-	"currentRevisionId": 442,
-	"subject": "Fix guide (again)",
-	"body": "Fix guide (again)",
+	"previousHash": "80de5994ba65c5e74048e27d2120e8d5029795c0",
+	"currentRevisionId": 447,
+	"subject": "Make async guide safer",
+	"body": "Make async guide safer",
 	"branch": "master",
 	"committerName": "Coffee",
 	"committerEmail": "99076687+YukisCoffee@users.noreply.github.com",
-	"time": 1664396662
+	"time": 1665106774
 }
