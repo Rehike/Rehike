@@ -2,7 +2,6 @@
 {% if data.notificationRenderer %}
 {% set this = data.notificationRenderer %}
 {% from "core/html/img.twig" import img %}
-{% import "common/thumb/thumb_types.twig" as thumb %}
 {% import "common/uix/button.twig" as button %}
 <li>
     <div class="feed-item-container yt-lockup yt-lockup-tile yt-lockup-notification yt-uix-tile  clearfix yt-uix-post-anchor yt-uix-post-anchor" data-post-action="/service_ajax?name=recordNotificationInteractionsEndpoint" data-post-data="{{ this.recordClickEndpoint.recordNotificationInteractionsEndpoint.serializedInteractionsRequest }}">
