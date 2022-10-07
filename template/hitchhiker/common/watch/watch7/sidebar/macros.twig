@@ -30,11 +30,10 @@
         <span class="yt-pl-thumb {{ data.type == "radio" ? "yt-mix-thumb" }}">
             <span class="video-thumb yt-thumb yt-thumb-168">
                 <span class="yt-thumb-clip">
-                    {% set thumb = getThumb(data.thumbArray, 94) %}
                     {{ img({
-                        src: thumb.url,
-                        width: thumb.width,
-                        height: thumb.height,
+                        src: getThumb(data.thumbArray, 94),
+                        width: 168,
+                        height: 94,
                         ytImg: 1,
                         delayLoad: true,
                         onload: ";window.__ytRIL && __ytRIL(this)",
@@ -88,17 +87,15 @@
     <div class="thumb-wrapper">
         <a href="{{ getUrl(info) }}" class="thumb-link spf-link">
             <span class="yt-uix-simple-thumb-wrap yt-uix-simple-thumb-related {{ data.type == "video" and yt.config.movingThumbnails ? "yt-uix-mouseover-img-wrap" }}">
-                {% set thumb = getThumb(data.thumbArray, 94) %}
-                {% set rthumb = getThumb(info.richThumbnail.movingThumbnailRenderer.movingThumbnailDetails) %}
                 {{ img({
-                    src: thumb.url,
-                    width: thumb.width,
-                    height: thumb.height,
+                    src: getThumb(data.thumbArray, 94),
+                    width: 168,
+                    height: 94,
                     ytImg: 1,
                     delayLoad: true,
                     onload: ";window.__ytRIL && __ytRIL(this)",
                     customAttributes: {
-                        "data-mouseover-src": rthumb.url
+                        "data-mouseover-src": getThumb(info.richThumbnail.movingThumbnailRenderer.movingThumbnailDetails)
                     }
                 }) }}
             </span>

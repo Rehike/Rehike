@@ -2,6 +2,7 @@
 {% if data.notificationRenderer %}
 {% set this = data.notificationRenderer %}
 {% from "core/html/img.twig" import img %}
+{% import "common/thumb/thumb_types.twig" as thumb %}
 {% import "common/uix/button.twig" as button %}
 <li>
     <div class="feed-item-container yt-lockup yt-lockup-tile yt-lockup-notification yt-uix-tile  clearfix yt-uix-post-anchor yt-uix-post-anchor" data-post-action="/service_ajax?name=recordNotificationInteractionsEndpoint" data-post-data="{{ this.recordClickEndpoint.recordNotificationInteractionsEndpoint.serializedInteractionsRequest }}">
@@ -10,10 +11,9 @@
                 {% if not this.read %}<div class="unread-dot"></div>{% endif %}
                 <div class="yt-thumb video-thumb">
                     <span class="yt-thumb-simple">
-                        {% set thumb = getThumb(this, 40) %}
                         {{ img({
-                            src: thumb.url,
-                            width: thumb.width,
+                            src: getThumb(this, 40),
+                            width: 40,
                             height: 40,
                             onload: ";window.__ytRIL && __ytRIL(this)",
                             ytImg: 1
@@ -34,11 +34,10 @@
             <div class="notification-thumb">
                 <div class="yt-thumb video-thumb">
                     <span class="yt-thumb-simple">
-                        {% set vthumb = getThumb(this, 54, "videoThumbnail") %}
                         {{ img({
-                            src: vthumb.url,
-                            width: vthumb.width,
-                            height: vthumb.height,
+                            src: getThumb(this.videoThumbnail, 54),
+                            width: 72,
+                            height: 54,
                             onload: ";window.__ytRIL && __ytRIL(this)",
                             ytImg: 1
                         }) }}
