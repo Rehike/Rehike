@@ -11,9 +11,11 @@ class ChannelUtils {
                 break;
             case "user":
             case "c":
-                $response = Request::innertubeRequest("navigation/resolve_url", (object) [
+                Request::queueInnertubeRequest("resolve", "navigation/resolve_url", (object) [
                     "url" => "https://www.youtube.com/" . $request -> path[0] . "/" . $request -> path[1]
                 ]);
+                $response = Request::getResponses()["resolve"];
+
                 $ytdata = json_decode($response);
                 if (isset($ytdata -> endpoint -> browseEndpoint -> browseId)) {
                     return $ytdata -> endpoint -> browseEndpoint -> browseId;

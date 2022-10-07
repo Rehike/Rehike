@@ -219,7 +219,7 @@ class Request
     public static function getResponses()
     {
         $responses = self::getRequestManager()->runQueue();
-        $final = [];
+        static $final = [];
 
         // Find namespace for handling
         foreach (self::$namespacedRequestMap[self::getNamespace()] as $id => $namespace)
