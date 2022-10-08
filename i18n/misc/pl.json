@@ -3,4 +3,6 @@
     "subscriberTextPlural": "%s subskrybentów",
     "viewTextSingular": "%s wyświetlenie",
     "viewTextPlural": "%s wyświetleń"
+    "dateTextPublic": "Opublikowany %s",
+    "dateTextPrivate": "Przesłany %s"
 }
