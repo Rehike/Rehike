@@ -8,7 +8,7 @@
 {% set enableSnapScaling = true %}
 
 {%- block title -%}
-{{ getText(yt.page.plHeader.title) }} - {{ parent() }}
+{{ yt.page.plHeader.title }} - {{ parent() }}
 {%- endblock -%}
 
 {% block foot_scripts %}
@@ -49,7 +49,7 @@
 
 {%- block content -%}
     <div id="debug" class="hid">
-        {{ yt.page|json_encode() }}
+        {{ yt.page.raw|json_encode|raw }}
     </div>
     {%- embed "common/channels4/branded_page_v2.twig" -%}
         {%- set brandedPageConfig = {
@@ -70,7 +70,7 @@
                     <a href="{{ getUrl(plh) }}" class="pl-header-play-all-overlay yt-valign spf-link">► Play all</a>
                 </div>
                 <div class="pl-header-content">
-                    <h1 class="pl-header-title" tabindex="0">{{ getText(plh.title) }}</h1>
+                    <h1 class="pl-header-title" tabindex="0">{{ plh.title }}</h1>
                     <ul class="pl-header-details">
                         <li><a href="{{ getUrl(plh.owner) }}" class="spf-link">{{ getText(plh.owner.title) }}</a></li>
                         {%- for meta in plh.metas -%}

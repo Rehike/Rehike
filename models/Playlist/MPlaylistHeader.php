@@ -12,12 +12,20 @@ class MPlaylistHeader {
     public $metas;
     public $actions;
 
-    public function __construct($sidebar, $header) {
-        $priInfo = $sidebar -> items[0] -> playlistSidebarPrimaryInfoRenderer;
-        $secInfo = $sidebar -> items[1] -> playlistSidebarSecondaryInfoRenderer;
+    public function __construct($sidebar) {
+        $priInfo = $sidebar -> items[0] -> playlistSidebarPrimaryInfoRenderer ?? null;
+        $secInfo = $sidebar -> items[1] -> playlistSidebarSecondaryInfoRenderer ?? null;
 
         $this -> thumbnail = $priInfo -> thumbnailRenderer -> playlistVideoThumbnailRenderer -> thumbnail;
-        $this -> title = $priInfo -> title;
+        $this -> title = (function() use ($priInfo) {
+            if (isset($priInfo -> title)) {
+                return TemplateFunctions::getText($priInfo -> title);
+            } else if (isset($priInfo -> titleForm -> inlineFormRenderer -> formField -> textInputFormFieldRenderer -> value)) {
+                return $priInfo -> titleForm -> inlineFormRenderer -> formField -> textInputFormFieldRenderer -> value;
+            } else {
+                return "";
+            }
+        })();//TemplateFunctions::getText($priInfo -> title) ?? $priInfo -> titleForm -> inlineFormRenderer -> formField -> textInputFormFieldRenderer -> value ?? null;
         $this -> navigationEndpoint = $priInfo -> navigationEndpoint;
         $this -> owner = $secInfo -> videoOwner -> videoOwnerRenderer;
         $this -> metas = $priInfo -> stats;
@@ -42,11 +50,6 @@ class MPlaylistHeader {
                 "play-all-icon-btn"
             ],
             "href" => TemplateFunctions::getUrl($priInfo)
-        ]);
-
-        if (isset($header -> shareButton)) $this -> actions[] = new MButton((object) [
-            "style" => "default",
-            "size" => "default"
         ]);
     }
 }

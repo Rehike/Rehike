@@ -13,6 +13,7 @@ class PlaylistModel {
      */
     public static function bakePL($dataHost) {
         $response = (object) [];
+        $response -> raw = $dataHost;
 
         $contentContainer = $dataHost -> contents -> twoColumnBrowseResultsRenderer -> tabs[0] -> tabRenderer -> content ?? null;
 
@@ -33,7 +34,7 @@ class PlaylistModel {
 
         $response -> videoList = $contentContainer -> sectionListRenderer -> contents[0] -> itemSectionRenderer -> contents[0] -> playlistVideoListRenderer -> contents;
 
-        $response -> plHeader = new MPlaylistHeader(@$dataHost -> sidebar -> playlistSidebarRenderer, @$dataHost -> header -> playlistHeaderRenderer);
+        $response -> plHeader = new MPlaylistHeader(@$dataHost -> sidebar -> playlistSidebarRenderer);
 
         $response -> alerts = [];
         if (isset($dataHost -> alerts)) for ($i = 0; $i < count($dataHost -> alerts); $i++) {

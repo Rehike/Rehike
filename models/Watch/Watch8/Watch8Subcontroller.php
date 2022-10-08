@@ -172,23 +172,26 @@ class Watch8Subcontroller
 
             // Mostly Daylin's messy work
             // TODO: cleanup
-            $countText = $list->videoCountText->runs;
-            $curIndex = $countText[0]->text;
-            $videoCount = $countText[2]->text;
+            $countText = $list->videoCountText->runs ?? null;
+            
+            if (!is_null($countText)) {
+                $curIndex = $countText[0]->text;
+                $videoCount = $countText[2]->text;
 
-            if ("1" == $videoCount)
-            {
-                $videoCount = "1 video";
-            }
-            else
-            {
-                $videoCount .= " videos";
-            }
+                if ("1" == $videoCount)
+                {
+                    $videoCount = "1 video";
+                }
+                else
+                {
+                    $videoCount .= " videos";
+                }
 
-            $out->videoCountText = (object)[
-                "currentIndex" => $curIndex,
-                "videoCount" => $videoCount
-            ];
+                $out->videoCountText = (object)[
+                    "currentIndex" => $curIndex,
+                    "videoCount" => $videoCount
+                ];
+            }
 
             // "previous/next video ids also need a little work
             //  let's just catch two cases with one"

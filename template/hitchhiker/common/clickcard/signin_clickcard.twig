@@ -1,5 +1,6 @@
+{% from "common/uix/button.twig" import render as button %}
 <h3 class="signin-clickcard-header">{{ data.heading }}</h3>
 <div class="signin-clickcard-message">
     {{ data.message }}
 </div>
-<a  href="https://accounts.google.com/ServiceLogin?hl=en&amp;service=youtube&amp;uilel=3&amp;continue=https%3A%2F%2Fwww.youtube.com%2Fsignin%3Fnext%3D%252Fwatch%253Fv%253DdQw4w9WgXcQ%26hl%3Den%26feature%3D__FEATURE__%26app%3Ddesktop%26action_handle_signin%3Dtrue&amp;passive=true" class="yt-uix-button  signin-button  yt-uix-button-primary yt-uix-button-size-default"><span class="yt-uix-button-content">Sign in</span></a>
+{{ button(data.button) }}

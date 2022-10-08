@@ -1,4 +1,8 @@
 {
-    "subscriberCountIsolater": "/( subscribers)|( subscriber)/g",
-    "viewCountIsolater": "/( views)|( view)/g"
+    "likeCountIsolator": "/(like this video along with )|( other people)|( other person)/",
+    "likeTextDisabled": "I like this",
+    "countZero": "No",
+    "subscriberCountIsolator": "/( subscribers)|( subscriber)/",
+    "viewCountIsolator": "/( views)|( view)/",
+    "nonPublishCheck": "/(Premiere)|(Started)|(Streamed)/"
 }

@@ -2,5 +2,6 @@
     "autoplay": "Autoplay",
     "autoplayUpNext": "Up next",
     "autoplayTip": "When autoplay is enabled, a suggested video will automatically play next.",
-    "relatedItemA11yDesc": " - Duration: %s."
+    "relatedItemA11yDesc": " - Duration: %s.",
+    "actionAddTo": "Add to"
 }

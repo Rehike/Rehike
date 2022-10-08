@@ -1,6 +1,8 @@
 <?php
 namespace Rehike\Util;
 
+use Rehike\i18n;
+
 class ExtractUtils {
     public static function isolateCount(?string $input, string $substrRegex): string {
         if (!$input) return '';
@@ -12,8 +14,10 @@ class ExtractUtils {
     }
     
     public static function isolateLikeCnt(?string $likeCount): string {
-        $a = self::isolateCount($likeCount, '/(like this video along with )|( other people)|( other person)/');
-        if ($a != 'I like this') {
+        $i18n = i18n::getNamespace("main/regex");
+
+        $a = self::isolateCount($likeCount, $i18n -> get("likeCountIsolator"));
+        if ($a != $i18n -> get("likeTextDisabled")) {
             return $a;
         } else {
             return '';
@@ -21,8 +25,10 @@ class ExtractUtils {
     }
     
     public static function isolateSubCnt(?string $subCount): string {
-        $a = self::isolateCount($subCount, '/( subscribers)|( subscriber)/');
-        if ($a != 'No') {
+        $i18n = i18n::getNamespace("main/regex");
+
+        $a = self::isolateCount($subCount, $i18n -> get("subscriberCountIsolator"));
+        if ($a != $i18n -> get("subscriberCountZero")) {
             return $a;
         } else {
             return '0';
@@ -30,7 +36,9 @@ class ExtractUtils {
     }
     
     public static function isolateViewCnt(?string $viewCount): string {
-        $a = self::isolateCount($viewCount, '/( views)|( view)/');
+        $i18n = i18n::getNamespace("main/regex");
+        
+        $a = self::isolateCount($viewCount, $i18n -> get("viewCountIsolator"));
         if ($a != 'No') {
             return $a;
         } else {
@@ -38,22 +46,16 @@ class ExtractUtils {
         }
     }
     
-    public static function resolveDate($date) {
+    public static function resolveDate($date, $isPrivate = false) {
+        $i18n = i18n::getNamespace("main/regex");
+        $misc = i18n::getNamespace("main/misc");
+
         if (is_object($date)) $date = $date->simpleText;
-        if (!preg_match('/Premiered/', $date) &&
-            !preg_match('/Started/', $date) &&
-            !preg_match('/Streamed/', $date)
-        ) {
-            return 'Published on ' . $date;
+        if (!preg_match($i18n -> get("nonPublishCheck"), $date)) {
+            $string = $isPrivate ? "dateTextPrivate" : "dateTextPublic";
+            return $misc -> get($string, $date);
         } else {
             return $date;
         }
-    }
-    public static function resolveRedirectUrl(string $url): string {
-        $a = betterParseUrl($url);
-        if (isset($a->query['q'])) {
-            return htmlspecialchars_decode($a->query['q']);
-        }
-        return '';
     }
 }
