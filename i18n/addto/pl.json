@@ -1,0 +1,13 @@
+{
+    "addToHeading": "Dodaj do",
+    "searchPlaylists": "Szukaj playlist",
+    "createNewPlaylist": "Stwórz nową playlistę",
+    "createNewPlaylistDynamic": "%s (stwórz nową)",
+    "playlistTitle": "Tytuł playlisty",
+    "playlistPrivacy": "Prywatność playlisty",
+    "privacyPublic": "Publiczna",
+    "privacyUnlisted": "Niepubliczna",
+    "privacyPrivate": "Prywatna",
+    "cancel": "Anuluj",
+    "create": "Stwórz"
+}

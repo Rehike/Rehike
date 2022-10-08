@@ -1,0 +1,15 @@
+{
+    "useRingoBranding": "Użyj współczesnego loga YouTube",
+    "dateOnWatchSidebarItems": "Pokaż datę publikacji w sekcji \"Następny\" na stronie oglądania",
+    "useWebV2HomeEndpoint": "Nie używaj półek na stronie głównej",
+    "versionInFooter": "Pokaż wersję Rehike w stopce",
+    "useReturnYouTubeDislike": "Użyj API Return YouTube Dislike, aby pokazać liczbę łapek w dół",
+    "enableRehikeDebugger": "Włącz debuger Rehike",
+    "largeSearchThumbs": "Użyj większych miniatur na stronie wyszukiwania",
+    "byTextOnByline": "Pokaż \"autor:\" przed nazwą użytkownika na łączach wideo",
+    "noViewsText": "Pokaż liczbę wyświetleń na stronie oglądania bez \"wyświetleń\" po niej",
+    "movingThumbnails": "Pokaż podgląd filmów po najechaniu kursorem",
+    "guideOnWatchPage": "Zezwalaj na przypinanie przewodnika na stronie oglądania",
+    "hhCSSFixes": "Poprawki CSS dla Hitchhikera (Może wystąpić konflikt z niestandardowymi motywami!)",
+    "accountPickerYtStudio": "Link do YouTube Studio zamiast Creator Studio w selektorze kont"
+}
