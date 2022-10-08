@@ -1,4 +1,8 @@
 {
+    "likeCountIsolator": "/(lubi ten film wraz z )|( innymi ludźmi)|( inną osobą)/",
+    "likeTextDisabled": "To mi się podoba",
+    "countZero": "Brak",
     "subscriberCountIsolater": "/( subskrybentów)|( subskrybent)/g",
-    "viewCountIsolater": "/( wyświentleń)|( wyświetlenie)/g"
+    "viewCountIsolater": "/( wyświetleń)|( wyświetlenie)/g"
+    "nonPublishCheck": "/(Data premiery:)|(Transmisja zaczęła się)|(Nadawane na żywo)/"
 }
