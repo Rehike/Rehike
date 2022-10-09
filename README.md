@@ -1,11 +1,3 @@
-# ⚠ ATTENTION ⚠
-
-### REHIKE IS VERY EARLY IN DEVELOPMENT.
-### THERE ARE VERY MANY MISSING FEATURES AND IT SHOULD NOT BE USED FOR ANY REASON OTHER THAN DEVELOPMENT.
-### Please do not complain ELSEWHERE if ANYTHING doesn't work. Instead, [*make an issue here*](/issues) so we can actually track it.
-
-<hr/>
-
 # Rehike
 
 <p align="center">
@@ -24,7 +16,7 @@ See [CONTRIBUTORS.md](CONTRIBUTORS.md).
 
 ## Installation
 
-***Rehike is early in development. You should not expect a perfect user experience, should you choose to use it.***
+***Rehike is early in development. You should not expect a perfect user experience, should you choose to use it.*** If you encounter any issues using Rehike, please [make an issue](/issues) so that we can track it easily.
 
 [See this page for installation instructions.](https://github.com/Rehike/Rehike/blob/misc-install-guide/README.md)
 
@@ -32,9 +24,10 @@ See [CONTRIBUTORS.md](CONTRIBUTORS.md).
 
 Rehike makes use of the following open source software:
 
-- Composer
-- Twig
-- paquettg/php-html-parser
+- [Composer](//getcomposer.org)
+- [Twig](//twig.symfony.com)
+- [SpfPhp](//github.com/Rehike/SpfPhp)
+    - [YukisCoffee/simple_html_dom](//github.com/YukisCoffee/simple_html_dom) fork of [voku/simple_html_dom](//github.com/voku/simple_html_dom)
 - [Return YouTube Dislike API](https://www.returnyoutubedislike.com/)
 
 and much of their prerequisites.
