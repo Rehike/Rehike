@@ -4,39 +4,49 @@
     <img src="branding/banner.png" alt="Rehike branding image">
 </p>
 
-A PHP project that aims to faithfully restore the old YouTube layout, known as Hitchhiker.
+Rehike is a custom web frontend server for YouTube.
+
+We use it to accurately restore the old YouTube layout and feel, which is known as Hitchhiker. This version of YouTube existed from 2013 to 2020 and is preferred by us due to its speed and simplicity.
+
+**Rehike is not a browser extension, nor does it intend to function as one.** Rather, it works over the browser, offering more freedom to what it is allowed to do and greater portability. This makes Rehike browser-independent and, to an extent, system independent.
 
 ## Frequently asked questions (& more)
 
 See [FAQ.md](FAQ.md).
 
-## Contributors
+## I want to contribute!
 
 See [CONTRIBUTORS.md](CONTRIBUTORS.md).
 
 ## Installation
 
-***Rehike is early in development. You should not expect a perfect user experience, should you choose to use it.*** If you encounter any issues using Rehike, please [make an issue](/issues) so that we can track it easily.
+***Rehike is early in development. You should not expect a perfect user experience, should you choose to use it.*** If you encounter any problems while using Rehike, [please make an issue](//github.com/Rehike/Rehike/issues) so that we can track them easily.
 
-[See this page for installation instructions.](https://github.com/Rehike/Rehike/blob/misc-install-guide/README.md)
+We currently do not support an automated install. If you wish to use Rehike, you must set it up manually. Fortunately, that isn't too hard!
+
+[See this page for manual installation instructions.](https://github.com/Rehike/Rehike/blob/misc-install-guide/README.md)
 
 ## Acknowledgements
 
-Rehike makes use of the following open source software:
+Rehike makes use of the following software or services:
 
 - [Composer](//getcomposer.org)
 - [Twig](//twig.symfony.com)
 - [SpfPhp](//github.com/Rehike/SpfPhp)
     - [YukisCoffee/simple_html_dom](//github.com/YukisCoffee/simple_html_dom) fork of [voku/simple_html_dom](//github.com/voku/simple_html_dom)
+- [Protocol Buffers](//developers.google.com/protocol-buffers/)
 - [Return YouTube Dislike API](https://www.returnyoutubedislike.com/)
 
-and much of their prerequisites.
+Use of these third party services is governed by their respective licenses. Where possible, their application will be optional.
 
-## Player
+## Licence
 
-YouTube has made some changes to the player which have had their experiment flags removed.
-If you wish to revert the player back to the older design, use [this](https://github.com/YukisCoffee/yt-player-classicifier)!
+It is the belief of the team that code should generally be open and unrestricted.
+
+As such, we license all of our original code under the Unlicense; **you are free to do whatever you want with any code in the project that is authored by The Rehike Maintainers, Taniko Yamamoto, Daylin Cooper, or Aubrey Pankow, unless otherwise stated.**
+
+This licence is not applicable to the third party software we incorporate in the project. Please see their respective `LICENSE` files for more information on each.
 
 ## Thank you!
 
-Whether or not you choose to contribute to Rehike, we appreciate you checking out our project!
+Whether or not you choose to contribute to or use Rehike, we appreciate you checking out our project!

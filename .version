@@ -1,10 +1,10 @@
 {
-	"previousHash": "98f2041efb34d93a300eed23891ea23c4df7139e",
-	"currentRevisionId": 463,
-	"subject": "Slightly refine readme",
-	"body": "Slightly refine readme",
+	"previousHash": "81088a7c62d58bb76636c071faac6796b080e642",
+	"currentRevisionId": 464,
+	"subject": "Further documentation overhaul.",
+	"body": "Further documentation overhaul.",
 	"branch": "master",
 	"committerName": "Coffee",
 	"committerEmail": "99076687+YukisCoffee@users.noreply.github.com",
-	"time": 1665310657
+	"time": 1665356322
 }

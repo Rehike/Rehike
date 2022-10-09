@@ -1,0 +1,42 @@
+#!/bin/sh
+while IFS= read -r -d $'\0' ARG; do
+    if test "$ARG" == '--no-verify'; then
+        exit 0
+    fi
+done < /proc/$PPID/cmdline
+
+if git config --get custom.ignorePostCommitHook > /dev/null; then
+    exit 0
+fi
+
+previous_hash=$(git rev-list HEAD^1 --max-count=1)
+current_rev_id=$(git rev-list --count HEAD)
+subject=$(git log -1 --pretty="%s")
+body=$(git log -1 --pretty="%s")
+branch=$(git rev-parse --abbrev-ref HEAD)
+committer_name=$(git log -1 --pretty="%cn")
+committer_email=$(git log -1 --pretty="%ce")
+time=$(git log -1 --pretty="%ct")
+
+cat <<EOL > .version
+{
+	"previousHash": "$previous_hash",
+	"currentRevisionId": $current_rev_id,
+	"subject": "$subject",
+	"body": "$body",
+	"branch": "$branch",
+	"committerName": "$committer_name",
+	"committerEmail": "$committer_email",
+	"time": $time
+}
+EOL
+
+git add .version
+
+# Ignore next run
+git config custom.ignorePostCommitHook "true"
+
+git commit --no-verify --amend --no-edit
+
+# Stop ignoring
+git config --unset custom.ignorePostCommitHook
