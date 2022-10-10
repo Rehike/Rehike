@@ -47,17 +47,17 @@ class Channels4Model
             {
                 $response["header"]->addTabs($tabs);
 
-                foreach ($tabs as $tab)
+                foreach ($tabs as $tab) if (@$tab -> tabRenderer)
                 {
                     $tabEndpoint = $tab->tabRenderer->endpoint->commandMetadata->webCommandMetadata->url;
 
                     $yt->appbar->nav->addItem(
                         $tab->tabRenderer->title,
                         $tabEndpoint,
-                        $tab->tabRenderer->selected ? MAppbarNavItemStatus::Selected : MAppbarNavItemStatus::Unselected
+                        @$tab->tabRenderer->selected ? MAppbarNavItemStatus::Selected : MAppbarNavItemStatus::Unselected
                     );
 
-                    if ($tab->tabRenderer->selected)
+                    if (@$tab->tabRenderer->selected)
                     {
                         $baseUrl = self::$baseUrl;
                         self::$currentTab = str_replace("$baseUrl/", "", $tabEndpoint);

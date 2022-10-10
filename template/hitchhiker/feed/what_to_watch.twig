@@ -68,16 +68,17 @@
     {% block branded_page_primary_column_content %}
         <div id="feed" class="">
             <div id="feed-main-what_to_watch" class="individual-feed" data-feed-name="what_to_watch" data-feed-type="main">
-                <ol id="section-list-what_to_watch" class="section-list">
-                {% import "common/uix/shelf_old.twig" as shelf %}
+                {% set rid = generateRid() %}
+                <ol id="section-list-{{ rid }}" class="section-list">
+                {% from "common/browse/item_section.twig" import render as item_section %}
                 {% import 'common/uix/load_more_button.twig' as load_more %}
-                {%- for compactShelf in yt.page.shelvesList -%}
-                {% if compactShelf.itemSectionRenderer.contents.0.shelfRenderer %}
-                    {{ shelf.compact(compactShelf) }}
-                {% endif %}
+                {%- for shelf in yt.page.shelvesList -%}
+                <li>
+                    {{ item_section(shelf.itemSectionRenderer) }}
+                </li>
                 {% endfor %}
                 </ol>
-                {{ load_more.render(yt.page.continuation, "section-list-what_to_watch", true) }}
+                {{ load_more.render(yt.page.continuation, "section-list-" ~ rid, true) }}
             </div>
             <div id="feed-error" class="individual-feed  hid">
                 <p class="feed-message">

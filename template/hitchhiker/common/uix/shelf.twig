@@ -1,9 +1,7 @@
 {%- macro render(data) -%}
     <div class="feed-item-container browse-list-item-container yt-section-hover-container compact-shelf shelf-item branded-page-box  clearfix ">
         <div class="feed-item-dismissable">
-            <div class="shelf-title-table">
-                {{ _self.title(data) }}
-            </div>
+            {{ _self.title(data) }}
             {%- if data.content.horizontalListRenderer -%}
                 {{ _self.compact(data.content.horizontalListRenderer) }}
             {%- elseif data.content.expandedShelfContentsRenderer -%}
@@ -46,36 +44,43 @@
 {% endmacro %}
 
 {%- macro title(data) -%}
-    <div class="shelf-title-row">
-        <h2 class="branded-page-module-title shelf-title-cell">
-            {%- if data.endpoint -%}
-            <a href="{{ data.endpoint.commandMetadata.webCommandMetadata.url }}" class="branded-page-module-title-link       spf-link ">
-            {% endif %}
-            {%- if data.thumbnail -%}
-            <div class="yt-lockup-thumbnail">
-                <div class="yt-thumb video-thumb">
-                    <span class="yt-thumb-simple">
-                    <img height="20" onload=";window.__ytRIL &amp;&amp; __ytRIL(this)" alt="" width="20" data-ytimg="1" data-thumb="{{ data.thumbnail.thumbnails.0.url }}" src="{{ PIXEL }}">
-                    </span>
-                </div>
+    {%- from "core/html/img.twig" import img -%}
+    <h2 class="branded-page-module-title shelf-title-cell">
+        {%- if data.endpoint -%}
+        <a href="{{ data.endpoint.commandMetadata.webCommandMetadata.url }}" class="branded-page-module-title-link       spf-link ">
+        {% endif %}
+        {%- if data.thumbnail -%}
+        <div class="yt-lockup-thumbnail">
+            <div class="yt-thumb video-thumb">
+                <span class="yt-thumb-simple">
+                    {{img({
+                        width: 20,
+                        height: 20,
+                        onload: ";window.__ytRIL && __ytRIL(this)",
+                        delayLoad: true,
+                        ytImg: 1,
+                        ariaHidden: "false",
+                        src: getThumb(data)
+                    })}}
+                </span>
             </div>
-            {% endif %}
-            <span class="branded-page-module-title-text">{{ getText(data.title) }}</span>
-            {% if data.endpoint %}
-            </a>
-            {% endif %}
-            {% if data.badges %}
-            <span class="shelf-featured-badge">{{ data.badges[0].metadataBadgeRenderer.label }}</span>
-            {% endif %}
-            {%- if shelfRenderer.titleAnnotation -%}
-            <span class="shelf-annotation shelf-title-annotation">
-            {{ getText(data.titleAnnotation) }}
-            </span>
-            {% endif %}
-            {#{% if hasPlayAll %}
-            <a  href="/watch_videos?video_ids=ZUSPD9zOyJs%2C30HOemteiKQ%2CUUkn-enk2RU%2C4nqJiBRNQuw%2CCX11yw6YL1w%2C7bfS6seiLhk%2CJZ2fRE_nkak%2CDSRSgMp5X1w%2C42ZE4DCJkEo%2C23ILq4uxd-w%2Cu0feM_2mLvo%2CtJfDBSWYqU8%2CDkeiKbqa02g%2C_rB36UGoP4Y%2C4k9bXpi1tU4&amp;more_url=&amp;title=Trending&amp;type=0" class="yt-uix-button  shelves-play play-all-icon-btn   yt-uix-button-default yt-uix-button-size-small yt-uix-button-has-icon no-icon-markup"><span class="yt-uix-button-content">Play all</span></a>
-            {% endif %}#}
-        </h2>
-        <div class="menu-container shelf-title-cell"></div>
-    </div>
+        </div>
+        {% endif %}
+        <span class="branded-page-module-title-text">{{ getText(data.title) }}</span>
+        {% if data.endpoint %}
+        </a>
+        {% endif %}
+        {% if data.badges %}
+        <span class="shelf-featured-badge">{{ data.badges[0].metadataBadgeRenderer.label }}</span>
+        {% endif %}
+        {%- if data.titleAnnotation -%}
+        <span class="shelf-annotation shelf-title-annotation">
+        {{ getText(data.titleAnnotation) }}
+        </span>
+        {% endif %}
+    </h2>
+    {% if data.subtitle %}
+    <div class="shelf-description yt-ui-ellipsis yt-ui-ellipsis-2">{{ getText(data.subtitle) }}</div>
+    {% endif %}
+    <div class="menu-container shelf-title-cell"></div>
 {%- endmacro -%}

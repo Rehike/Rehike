@@ -6,9 +6,11 @@
     {% endif %}
     "content_html": {%- apply json_encode|raw -%}
     {% if yt.page.shelfList %}
-        {% import "common/uix/shelf_old.twig" as shelf %}
-        {% for shelf in yt.page.shelfList %}
-            {{ shelf.compact(shelf) }}
+        {% from "common/browse/item_section.twig" import render as item_section %}
+        {% for shelf in yt.page.shelfList.contents %}
+        <li>
+            {{ item_section(shelf.itemSectionRenderer) }}
+        </li>
         {% endfor %}
     {% elseif yt.page.lockupList %}
         {% import "common/uix/lockup.twig" as lockup %}

@@ -82,7 +82,9 @@ class AjaxBrowseController extends AjaxController {
         }
 
         if (isset($ytdata->continuationContents->sectionListContinuation)) {
-            $yt->page->shelfList = AndroidW2W15Parser::parse($ytdata->continuationContents->sectionListContinuation->contents);
+            $yt->page->shelfList = (object) [
+                "contents" => AndroidW2W15Parser::parse($ytdata->continuationContents->sectionListContinuation->contents)
+            ];
         } else if (isset($ytdata->onResponseReceivedActions[0]->appendContinuationItemsAction->continuationItems)) {
             $head = $ytdata->onResponseReceivedActions[0]->appendContinuationItemsAction;
 

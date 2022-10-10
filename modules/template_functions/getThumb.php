@@ -7,7 +7,7 @@
         $thumbs = $obj -> thumbnails;
     }
 
-    if (!isset($thumbs)) return "//i.ytimg.com/invalid_thumb";
+    if (!isset($thumbs)) return "//i.ytimg.com/";
 
     if (isset($height) && $height != 0){
         for ($i = 0; $i < count($thumbs); $i++) {

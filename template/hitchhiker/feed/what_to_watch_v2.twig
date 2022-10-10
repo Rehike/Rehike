@@ -61,7 +61,8 @@
             <div class="branded-page-v2-primary-col">
                 <div class="yt-card clearfix">
                     <div id="browse-items-primary">
-                        <ol id="item-section-what_to_watch_v2" class="item-section">
+                        {% set rid = generateRid() %}
+                        <ol id="item-section-{{ generateRid() }}" class="item-section">
                             <li>
                                 <div class="feed-item-container browse-list-item-container yt-section-hover-container compact-shelf shelf-item branded-page-box clearfix">
                                     <div class="feed-item-dismissable">
@@ -106,7 +107,7 @@
                                         </div>
                                         {% elseif yt.flow == "list" %}
                                         <div class="expanded-shelf">
-                                            <ul class="expanded-shelf-content-list">
+                                            <ul id="item-section-{{ rid }}" class="expanded-shelf-content-list">
                                                 {% for item in yt.videoList %}
                                                     {% if item.videoRenderer or item.playlistRenderer %}
                                                         <li class="expanded-shelf-content-item-wrapper">
@@ -123,8 +124,7 @@
                                 </div>
                             </li>
                         </ol>
-                        {% set target = yt.flow == "grid" ? "channels-browse-content-grid" : "home-video-list" %}
-                        {{ load_more.render(yt.page.continuation, target, true) }}
+                        {{ load_more.render(yt.page.continuation, "item-section" ~ rid, true) }}
                     </div>
                 </div>
             </div>

@@ -20,37 +20,37 @@ not-fixed-width-tab-widescreen
 
 {% block foot_scripts %}
 <script>
-    yt.setConfig('ANGULAR_JS', "\/yts\/jslib\/angular.min-vflWkvD5q.js");
-yt.setConfig('TRANSLATIONEDITOR_JS', "\/yts\/jsbin\/www-translationeditor-vflugm3V9\/www-translationeditor.js");
-yt.setMsg('UNSAVED_CHANGES_WARNING', "Some of the changes you have made to channel settings have not been saved and will be lost if you navigate away from this page.");
+  yt.setConfig('ANGULAR_JS', "\/yts\/jslib\/angular.min-vflWkvD5q.js");
+  yt.setConfig('TRANSLATIONEDITOR_JS', "\/yts\/jsbin\/www-translationeditor-vflugm3V9\/www-translationeditor.js");
+  yt.setMsg('UNSAVED_CHANGES_WARNING', "Some of the changes you have made to channel settings have not been saved and will be lost if you navigate away from this page.");
 
   yt.setConfig(
     'JS_PAGE_MODULES', [
-        'www/feed',
-      'www/ypc_bootstrap'
-    ]);
+    'www/feed',
+    'www/ypc_bootstrap'
+  ]);
 
 
 
 
-yt.setConfig('DISMISS_THROUGH_IT', true);
+  yt.setConfig('DISMISS_THROUGH_IT', true);
 
 
-    yt.setConfig({
-      'GUIDE_SELECTED_ITEM': "{{ serialiseEndpoint(yt.currentEndpoint) }}"
-    });
+  yt.setConfig({
+    'GUIDE_SELECTED_ITEM': "{{ serialiseEndpoint(yt.currentEndpoint) }}"
+  });
 
-    yt.setConfig({
-  'GUIDED_HELP_LOCALE': "en_US",
-  'GUIDED_HELP_ENVIRONMENT': "prod"
-});
+  yt.setConfig({
+    'GUIDED_HELP_LOCALE': "en_US",
+    'GUIDED_HELP_ENVIRONMENT': "prod"
+  });
 
 </script>
 {% endblock %}
 
 {%- block appbarContent -%}
-   {% set appbarContents = {
-      'items': {
+{% set appbarContents = {
+    'items': {
         0: {
             'title': 'Home',
             'href': '/',
@@ -60,40 +60,37 @@ yt.setConfig('DISMISS_THROUGH_IT', true);
             'href': '/feed/trending',
             'selected': true
         }
-      }
-   } %}
-   {{ appbar_nav.render(appbarContents) }}
+    }
+} %}
+{{ appbar_nav.render(appbarContents) }}
 {% endblock %}
 
-{%- block head_css  -%}
-    {{ core.css('www-home-c4') }}
+{%- block head_css -%}
+{{ core.css('www-home-c4') }}
 {% endblock %}
 
 {% block content %}
     {% embed 'common/channels4/branded_page_v2.twig' %}
-    {% import 'common/uix/lockup.twig' as lockup %}
-    {% import 'core/spinner.twig' as spinner %}
-    {% set brandedPageConfig = {
-        'baseBoldTitles': true,
-        'containerFlexWidth': true,
-        'hasTopRow': true,
-        'secondaryColumnHidden': true
-    } %}
-    {% block branded_page_primary_column_content %}
-        <div id="browse-items-primary">
-            <ol id="section-list-trending" class="section-list">
-            {% import "common/uix/shelf_old.twig" as shelf %}
-            {%- for shelfSlider in yt.page.shelvesList -%}
-              {#{{ shelf|json_encode }}#}
-              {% set shelfSliderContent = shelfSlider.itemSectionRenderer.contents.0.shelfRenderer %}
-              {% if shelfSliderContent.content.expandedShelfContentsRenderer %}
-                {{ shelf.expanded(shelfSlider) }}
-              {% elseif shelfSliderContent.content.horizontalListRenderer.items %}
-                {{ shelf.compact(shelfSlider) }}
-              {% endif %}
-            {% endfor %}
-            </ol>
-        </div>
-    {% endblock %}
+        {% import 'common/uix/lockup.twig' as lockup %}
+        {% import 'core/spinner.twig' as spinner %}
+        {% set brandedPageConfig = {
+            'baseBoldTitles': true,
+            'containerFlexWidth': true,
+            'hasTopRow': true,
+            'secondaryColumnHidden': true
+        } %}
+        {% block branded_page_primary_column_content %}
+            <div id="browse-items-primary">
+                {% set rid = generateRid() %}
+                <ol id="section-list-{{ rid }}" class="section-list">
+                    {% from "common/browse/item_section.twig" import render as item_section %}
+                    {%- for shelf in yt.page.shelvesList -%}
+                    <li>
+                    {{ item_section(shelf.itemSectionRenderer) }}
+                    </li>
+                    {% endfor %}
+                </ol>
+            </div>
+        {% endblock %}
     {% endembed %}
 {% endblock %}
