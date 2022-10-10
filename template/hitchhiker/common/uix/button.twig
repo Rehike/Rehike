@@ -47,8 +47,7 @@
             yt-uix-tooltip 
         {% endif %}" 
         type="button" 
-        {% if data.anchor %}
-        {% elseif data.href %}
+        {% if data.href and not data.anchor %}
         onclick=";window.location.href=this.getAttribute('href');return false;"
         {% else %}
         onclick=";return false;"

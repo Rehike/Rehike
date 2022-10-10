@@ -4,5 +4,8 @@
     "viewTextSingular": "%s view",
     "viewTextPlural": "%s views",
     "dateTextPublic": "Published on %s",
-    "dateTextPrivate": "Uploaded on %s"
+    "dateTextPrivate": "Uploaded on %s",
+    "subscribeText": "Subscribe",
+    "subscribedText": "Subscribed",
+    "unsubscribeText": "Unsubscribe"
 }

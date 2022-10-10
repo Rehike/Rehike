@@ -25,8 +25,4 @@ class ChannelUtils {
                 break;
         }
     }
-
-    public static function synthesiseChannelAvatarSize100Url($url): string {
-        return str_replace("s48", "s100", $url);
-    }
 }

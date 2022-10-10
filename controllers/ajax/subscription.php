@@ -6,12 +6,14 @@ return new class extends AjaxController {
     public $useTemplate = false;
     public $template = "ajax/subscription/get_subscription_preferences_overlay";
 
+    public $ytdata;
+
     public function onPost(&$yt, $request) {
         $action = self::findAction();
 
         switch ($action) {
             case "create_subscription_to_channel":
-                self::createSubscriptionToChannel($yt, $request);
+                $ytdata = self::createSubscriptionToChannel($yt, $request);
                 break;
             default:
                 http_response_code(400);
@@ -22,7 +24,7 @@ return new class extends AjaxController {
                 break;
         }
 
-        if (!isset($ytdata)) {
+        if (is_null($ytdata)) {
             http_response_code(400);
             echo json_encode((object) [
                 "errors" => []
@@ -63,6 +65,6 @@ return new class extends AjaxController {
             ],
             "params" => $_POST["params"] ?? null
         ]);
-        $ytdata = json_decode($response);
+        return json_decode($response);
     }
 };

@@ -47,7 +47,7 @@ class Channels4Model
             {
                 $response["header"]->addTabs($tabs);
 
-                foreach ($tabs as $tab) if (isset($tab->tabRenderer->selected))
+                foreach ($tabs as $tab)
                 {
                     $tabEndpoint = $tab->tabRenderer->endpoint->commandMetadata->webCommandMetadata->url;
 

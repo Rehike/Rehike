@@ -1,0 +1,49 @@
+{%- from "common/uix/button.twig" import render as button -%}
+{%- from "core/spinner.twig" import render as spinner -%}
+{
+    "url_short": "{{ yt.page.shortUrl }}",
+    "share_html": {%- apply json_encode|raw -%}
+    <div id="debug" class="hid">
+        {{ yt.page|json_encode }}
+    </div>
+    <div class="share-panel">
+        <div class="yt-uix-tabs">
+            <span class="yt-uix-button-group" data-button-toggle-group="share-panels">
+                {%- for tab in yt.page.tabs -%}
+                {{ button(tab) }}
+                {%- endfor -%}
+            </span>
+        </div>
+        <div class="share-panel-show-loading hid">
+            {{ spinner("Loading...") }}
+        </div>
+        <div class="share-panel-services-container">
+            <div id="share-services-container" class="clearfix">
+                <div class="share-panel-services">
+                    <ul class="share-group ytg-box">
+                        {%- for service in yt.page.services -%}
+                        <li>
+                            <button class="yt-uix-tooltip share-service-button share-{{ service.icon }}-icon" title="{{ service.tooltip }}" onclick="yt.window.popup('{{ service.url }}', {width:{{ service.width }},height:{{ service.height }},scrollbars:true});return false;">
+                                <span class="share-service-icon share-service-icon-{{ service.icon }} yt-sprite"></span>
+                                <span class="share-service-checkmark yt-sprite"></span>
+                            </button>
+                        </li>
+                        {%- endfor -%}
+                    </ul>
+                </div>
+            </div>
+            <div class="share-panel-url-container share-panel-reverse">
+                <span class="share-panel-url-input-container yt-uix-form-input-container yt-uix-form-input-text-container yt-uix-form-input-non-empty">
+                    <input type="text" class="yt-uix-form-input-text share-panel-url" name="share_url" value="{{ yt.page.shortUrl }}" data-video-id="{{ yt.page.videoId }}">
+                </span>
+            </div>
+        </div>
+        <div class="share-panel-embed-container hid" data-disabled="true">
+            <p class="display-message">This feature is not available right now. Check back later!</p>
+        </div>
+        <div class="share-panel-email-container hid" data-disabled="true">
+            <p class="display-message">This feature is not available right now. Check back later!</p>
+        </div>
+    </div>
+    {%- endapply -%}
+}
