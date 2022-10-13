@@ -13,7 +13,7 @@ use Rehike\Util\ChannelUtils;
 
 use \Rehike\Model\Channels\Channels4Model as Channels4;
 
-class ChannelController extends NirvanaController {
+class channel extends NirvanaController {
     public $template = "channel";
 
     public static $requestedTab = "";
@@ -39,13 +39,22 @@ class ChannelController extends NirvanaController {
         $ucid = ChannelUtils::getUcid($request);
         $yt->ucid = $ucid;
 
+        if ($ucid == "") {
+            http_response_code(404);
+            $this -> spfIdListeners = [];
+            $this -> template = "error/404";
+        }
+
         // Register the endpoint in the request
         $this->setEndpoint("browse", $ucid);
 
         // Get the requested tab
         $tab = "featured";
-        if (isset($request->path[2]) && "" != @$request->path[2])
-        {
+        if (!in_array($request -> path[0], ["channel", "user", "c"])) {
+            if (isset($request->path[1]) && "" != @$request->path[1]) {
+                $tab = strtolower($request -> path[1]);
+            }
+        } elseif (isset($request->path[2]) && "" != @$request->path[2]) {
             $tab = strtolower($request->path[2]);
         }
 
@@ -101,4 +110,4 @@ class ChannelController extends NirvanaController {
 }
 
 // Export
-return new ChannelController();
+return new channel();

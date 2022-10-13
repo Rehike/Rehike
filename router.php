@@ -63,7 +63,7 @@ Router::get([
     "/share_ajax" => "ajax/share",
     "/results_ajax" => "ajax/results",
     "/attribution" => "attribution",
-    "default" => "404"
+    "default" => "channel"
 ]);
 
 Router::post([

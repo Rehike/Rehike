@@ -38,7 +38,7 @@ use Rehike\Player\{
 class PlayerCore extends Configurable
 {
     static $playerJsRegex = "#/s/player/[a-zA-Z0-9/\-_.]*base.js#";
-    static $playerCssRegex = "#/s/player/[a-zA-Z0-9/\-_.]*(www-player|www-player-webp).css#";
+    static $playerCssRegex = "#/s/player/[a-zA-Z0-9/\-_.]*(www-player|www-player-webp|player-rtl).css#";
     static $stsRegex = "/signatureTimestamp:?\s*([0-9]*)/";
 
     static $cacheDestDir = "cache";
