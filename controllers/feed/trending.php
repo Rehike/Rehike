@@ -19,6 +19,7 @@ class FeedTrendingController extends NirvanaController {
 
     public function onGet(&$yt, $request) {
         $this->useJsModule('www/feed');
+        $this->setEndpoint("browse", "FEtrending");
         $yt->enableFooterCopyright = true;
 
         $response = Request::innertubeRequest("browse", (object)[

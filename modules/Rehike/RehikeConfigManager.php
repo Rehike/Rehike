@@ -17,7 +17,6 @@ class RehikeConfigManager extends ConfigManager
         [
             "useRingoBranding" => true,
             "uploadMenuType" => "MENU",
-            "useWebV2HomeEndpoint" => false,
             "versionInFooter" => true,
             "useReturnYouTubeDislike" => true,
             "enableRehikeDebugger" => false,

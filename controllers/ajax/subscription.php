@@ -53,7 +53,6 @@ return new class extends AjaxController {
 
     /**
      * Create a subscription to a channel.
-     * TODO(aubymori): Make this actually work.
      *
      * @param object          $yt      Template data.
      * @param RequestMetadata $request Request data.
@@ -61,7 +60,7 @@ return new class extends AjaxController {
     private function createSubscriptionToChannel(&$yt, $request) {
         $response = Request::innertubeRequest("subscription/subscribe", (object) [
             "channelIds" => [
-                $_POST["c"] ?? null
+                $_GET["c"] ?? null
             ],
             "params" => $_POST["params"] ?? null
         ]);

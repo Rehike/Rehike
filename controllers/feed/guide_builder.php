@@ -19,6 +19,7 @@ class FeedGuideBuilderController extends NirvanaController {
 
     public function onGet(&$yt, $request) {
         $this->useJsModule('www/feed');
+        $this->setEndpoint("browse", "FEguide_builder");
         
         $response = Request::innertubeRequest("browse", (object)[
             "browseId" => "FEguide_builder"

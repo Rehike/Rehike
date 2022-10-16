@@ -72,7 +72,7 @@
                 <ol id="section-list-{{ rid }}" class="section-list">
                 {% from "common/browse/item_section.twig" import render as item_section %}
                 {% import 'common/uix/load_more_button.twig' as load_more %}
-                {%- for shelf in yt.page.shelvesList -%}
+                {%- for shelf in yt.page.contents -%}
                 <li>
                     {{ item_section(shelf.itemSectionRenderer) }}
                 </li>

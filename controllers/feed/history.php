@@ -19,6 +19,7 @@ class FeedHistoryController extends NirvanaController {
 
     public function onGet(&$yt, $request) {
         $this->useJsModule('www/feed');
+        $this->setEndpoint("browse", "FEhistory");
 
         if (isset($request->path[2])) {
             switch($request->path[2]) {
