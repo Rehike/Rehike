@@ -34,7 +34,8 @@
                 "clickTrackingParams": "IhMIi8Dl17K/9QIVAt3ECh3HtwGN"
             }
         },
-        'XHR_APIARY_HOST': "youtubei.youtube.com"
+        'XHR_APIARY_HOST': "youtubei.youtube.com",
+        'STS': {{ yt.playerConfig.signatureTimestamp ?? "0" }}
     });
     yt.setConfig({
         'ROOT_VE_CHILDREN': [

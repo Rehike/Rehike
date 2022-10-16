@@ -182,7 +182,9 @@ ytplayer.load = function() {
    // it by default, so we need to do it ourselves.
    if ("SYARB_CONFIG" in window)
    {
-      document.getElementById("player-unavailable").innerHTML = "";
-      document.getElementById("player-unavailable").className = "";
+      var a = document.createElement("style");
+      a.id = "age-restrict-bypass-fix";
+      a.innerHTML = "#player-unavailable { display: none; }";
+      document.body.appendChild(a);
    }
 </script>
