@@ -5,7 +5,7 @@ class RichShelfUtils {
     public static function reformatResponse($response) {
         if ($items = @$response -> onResponseReceivedActions[0] -> appendContinuationItemsAction -> continuationItems) {
             $contents = [];
-            for ($i = 0; $i < count($items); $i++) {
+            for ($i = 0; $i < count($items); $i++) if (isset($items[$i]->richSectionRenderer->content->richShelfRenderer)) {
                 $contents[] = self::reformatShelf($items[$i]);
             }
             $response -> contents = $contents;
