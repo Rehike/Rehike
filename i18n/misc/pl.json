@@ -2,7 +2,7 @@
     "subscriberTextSingular": "%s subskrybent",
     "subscriberTextPlural": "%s subskrybentów",
     "viewTextSingular": "%s wyświetlenie",
-    "viewTextPlural": "%s wyświetleń"
+    "viewTextPlural": "%s wyświetleń",
     "dateTextPublic": "Opublikowany %s",
     "dateTextPrivate": "Przesłany %s"
 }
