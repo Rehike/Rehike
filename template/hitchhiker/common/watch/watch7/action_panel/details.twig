@@ -8,9 +8,13 @@
                 <p id="eow-description" class="">
                     {%- for snippet in secondaryInfo.description.runs -%}
                     {%- if (snippet.navigationEndpoint) -%}
-                        {%- set href = snippet.navigationEndpoint.commandMetadata.webCommandMetadata.url -%}
+                        {%- set href = getUrl(snippet) -%}
                         {%- set spf = (href|first == "/") -%}
+                        {% if snippet.navigationEndpoint.watchEndpoint.videoId == yt.videoId %}
+                        <a href="#" onclick="yt.www.watch.player.seekTo({{ snippet.navigationEndpoint.watchEndpoint.startTimeSeconds }});return false;">
+                        {% else %}
                         <a href="{{ href }}" class=" {{ spf ? 'spf-link' }} " target="_blank">
+                        {% endif %}
                     {%- endif -%}
                     {{ snippet.text|nl2br }}
                     {%- if (snippet.navigationEndpoint) -%}
