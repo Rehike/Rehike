@@ -1,10 +1,10 @@
 {
-	"previousHash": "81088a7c62d58bb76636c071faac6796b080e642",
-	"currentRevisionId": 464,
-	"subject": "Further documentation overhaul.",
-	"body": "Further documentation overhaul.",
+	"previousHash": "ac74514d609685e9a3fb4840acc4dcf1f91f3bd2",
+	"currentRevisionId": 473,
+	"subject": "Fix about errors from Aubrey's typo fix",
+	"body": "Fix about errors from Aubrey's typo fix",
 	"branch": "master",
 	"committerName": "Coffee",
 	"committerEmail": "99076687+YukisCoffee@users.noreply.github.com",
-	"time": 1665356322
+	"time": 1665889740
 }

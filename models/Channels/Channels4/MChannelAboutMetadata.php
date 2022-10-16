@@ -25,7 +25,7 @@ class MChannelAboutMetadata
 
         $this->subscriberCountText = self::getRichStat(
             $subCount,
-            $regexs->subscriberCountIsolater
+            $regexs->subscriberCountIsolator
         );
 
         $viewCountText = $miscStrings->viewTextPlural("0");
@@ -35,7 +35,7 @@ class MChannelAboutMetadata
 
         $this->viewCountText = self::getRichStat(
             $viewCountText,
-            $regexs->viewCountIsolater
+            $regexs->viewCountIsolator
         );
 
         $this->joinedDateText = TF::getText(@$data->joinedDateText);
@@ -62,12 +62,12 @@ class MChannelAboutMetadata
             $this->primaryLinks = $data->primaryLinks;
     }
 
-    public static function getRichStat($text, $isolater)
+    public static function getRichStat($text, $isolator)
     {
         if ("" == $text) return;
 
         $number = preg_replace(
-            str_replace("/g", "/", $isolater), "", $text
+            str_replace("/g", "/", $isolator), "", $text
         );
         $string = str_replace($number, "<b>$number<b>", $text);
         $string = explode("<b>", $string);
