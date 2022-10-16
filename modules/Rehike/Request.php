@@ -227,6 +227,16 @@ class Request
             $me = @$responses["{$namespace}_{$id}"];
             if (!isset($me)) continue; // assume errored
 
+            // Prevent impossible to find bugs by the static piece of shit not fucking
+            // wiping itself because some stupid fucking dumbass decided to actually
+            // make this fucking request manager instead of using something better
+            // someone else already made like a normal fucking human being. Fuck you
+            // Taniko and I wish only the greatest pain on you for writing this pile
+            // of shit that's been a thorn in our collective backs for years. FUCK YOU
+            // FUCK YOU FUCK YOU FUCK YOU FUCK YOU FUCK YOU FUCK YOU FUCK YOU FUCK YOU FUCK YOU
+            // FUCK YOU FUCK YOU FUCK YOU FUCK YOU FUCK YOU FUCK YOU FCUK YOU FKC OUY K UGF OUY KO UYOUCKOU
+            if (isset($final[$id])) unset($final[$id]);
+
             switch ($namespace)
             {
                 case self::NS_INITIALDATA:

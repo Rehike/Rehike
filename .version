@@ -1,10 +1,10 @@
 {
-	"previousHash": "01c6cebb00a99163aebc60b0104723eba45c030e",
-	"currentRevisionId": 477,
-	"subject": "Compatibility with Simple YouTube Age Restriction Bypass",
-	"body": "Compatibility with Simple YouTube Age Restriction Bypass",
+	"previousHash": "ec2e05805519d9f9d00c0498655de55dfe1404ee",
+	"currentRevisionId": 478,
+	"subject": "DIE",
+	"body": "DIE",
 	"branch": "master",
 	"committerName": "Coffee",
 	"committerEmail": "99076687+YukisCoffee@users.noreply.github.com",
-	"time": 1665893015
+	"time": 1665904706
 }
