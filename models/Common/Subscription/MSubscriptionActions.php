@@ -62,6 +62,8 @@ class MSubscriptionActions
 
     public static function fromData($data, $count = "", $branded = true)
     {
+
+
         return new self([
             "branded" => $branded,
             "longText" => $count,
@@ -69,9 +71,9 @@ class MSubscriptionActions
             "isSubscribed" => $data -> subscribed ?? false,
             "channelExternalId" => $data -> channelId ?? "",
             "params" => $data -> onSubscribeEndpoints[0] -> subscribeEndpoint -> params ?? null,
-            "subscribeText" => TemplateFunctions::getText($data -> unsubscribedButtonText),
-            "subscribedText" => TemplateFunctions::getText($data -> subscribedButtonText),
-            "unsubscribeText" => TemplateFunctions::getText($data -> unsubscribeButtonText)
+            "subscribeText" => TemplateFunctions::getText($data -> unsubscribedButtonText ?? null),
+            "subscribedText" => TemplateFunctions::getText($data -> subscribedButtonText ?? null),
+            "unsubscribeText" => TemplateFunctions::getText($data -> unsubscribeButtonText ?? null)
         ]);
     }
 
