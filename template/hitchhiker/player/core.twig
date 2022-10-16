@@ -8,12 +8,24 @@
       </div>
       <div id="player-api" class="player-width player-height off-screen-target player-api" tabIndex="-1"></div>
       <script >if (window.ytcsi) {window.ytcsi.tick("cfg", null, '');}</script>
+      {#
+         Player definition scripts. This is somewhat different to what you'd expect.
+         This implements a ytInitialPlayerResponse object, which is compatible with
+         Polymer's load methods. This simply allows extensions and userscripts to
+         intercept the player response before the player is loaded.   
+      #}
+      <script>
+         ytcfg.set("STS", {{ yt.playerConfig.signatureTimestamp }});
+         var ytInitialPlayerResponse = {
+            "playerResponse": {{ yt.playerResponse|json_encode|raw }}
+         };
+      </script>
       <script>{% apply spaceless %}
 var ytplayer = ytplayer || {};
 ytplayer.config = {
     "args": {
        {%- if yt.playerResponse -%}
-         raw_player_response: {{ yt.playerResponse|json_encode|raw }},
+         raw_player_response: ytInitialPlayerResponse.playerResponse,
          {% if yt.rawWatchNextResponse %}
          raw_watch_next_response: {{ yt.rawWatchNextResponse|raw }},
          {% endif %}
@@ -164,3 +176,15 @@ ytplayer.load = function() {
    </div>
    <div class="clear"></div>
 </div>
+<script>
+   // Check if the end-user uses age restrict bypass extension
+   // If so, the player unavailable message cannot be removed by
+   // it by default, so we need to do it ourselves.
+   if ("SYARB_CONFIG" in window)
+   {
+      var a = document.createElement("style");
+      a.id = "age-restrict-bypass-fix";
+      a.innerHTML = "#player-unavailable { display: none; }";
+      document.body.appendChild(a);
+   }
+</script>
