@@ -118,7 +118,9 @@ class MVideoPrimaryInfoRenderer
             // Kids video
             if (!$dataHost::$isKidsVideo)
             {
-                $orderedButtonQueue[] = MActionButton::buildShareButton($menu);
+                $shareButton = MActionButton::buildShareButton($menu);
+
+                if (null != $shareButton) $orderedButtonQueue[] = $shareButton;
             }
 
             // Report button shows as an action button for livestreams, rather than
@@ -368,11 +370,13 @@ class MActionButton extends MButton
     /**
      * Build a watch7 or watch8 share button.
      * 
-     * @return void
+     * @return MActionButton|null
      */
     public static function buildShareButton($menu)
     {
         $button = self::findActionButton($menu, "SHARE");
+
+        if (!isset($button)) return null;
 
         return new self([
             "label" => TemplateFunctions::getText($button -> text),
@@ -386,7 +390,7 @@ class MActionButton extends MButton
      * If the video is not a livestream, then the report button appears in
      * the more button's menu instead.
      * 
-     * @return void
+     * @return MActionButton
      */
     public static function buildReportButton($menu)
     {

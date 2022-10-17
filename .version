@@ -1,10 +1,10 @@
 {
-	"previousHash": "d1c8a083f09046a1c0d029285a75798cd8f45c9b",
-	"currentRevisionId": 487,
-	"subject": "Fix anchor buttons",
-	"body": "Fix anchor buttons",
+	"previousHash": "897191b4fc7dbb39b49f5e671c45935b4bcb10f5",
+	"currentRevisionId": 488,
+	"subject": "Fix null share button on certain videos (age restricted, etc.)",
+	"body": "Fix null share button on certain videos (age restricted, etc.)",
 	"branch": "master",
 	"committerName": "Coffee",
 	"committerEmail": "99076687+YukisCoffee@users.noreply.github.com",
-	"time": 1666010709
+	"time": 1666047118
 }
