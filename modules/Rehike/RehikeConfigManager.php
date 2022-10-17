@@ -16,6 +16,7 @@ class RehikeConfigManager extends ConfigManager
     public static $defaultConfig =
         [
             "useRingoBranding" => true,
+            "useGridHomeStyle" => false,
             "uploadMenuType" => "MENU",
             "versionInFooter" => true,
             "useReturnYouTubeDislike" => true,
@@ -56,6 +57,15 @@ class RehikeConfigManager extends ConfigManager
                 
                 $redump = true;
             }
+        }
+
+        // Migrate legacy alias for useGridHomeStyle
+        if (isset(self::$config->{"useWebV2HomeEndpoint"}))
+        {
+            unset(self::$config->{"useWebV2HomeEndpoint"});
+            self::$config->useGridHomeStyle = true;
+
+            $redump = true;
         }
 
         if ($redump) self::dumpConfig();

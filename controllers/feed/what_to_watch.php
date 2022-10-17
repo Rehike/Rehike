@@ -3,6 +3,7 @@ namespace Rehike\Controller;
 
 use Rehike\Controller\core\NirvanaController;
 use Rehike\Request;
+use Rehike\RehikeConfigManager as Config;
 use Rehike\Util\AndroidW2w15Parser;
 use Rehike\Util\WebV2Shelves;
 use Rehike\Util\RichShelfUtils;
@@ -20,6 +21,7 @@ use Rehike\Util\RichShelfUtils;
 class FeedWhatToWatchController extends NirvanaController {
     const BROWSE_ID              = 'FEwhat_to_watch';
     const STYLE_SHELVES_TEMPLATE = 'feed/what_to_watch';
+    const STYLE_GRIDDED_TEMPLATE = 'feed/what_to_watch_grid';
 
     public $template;
 
@@ -28,9 +30,19 @@ class FeedWhatToWatchController extends NirvanaController {
         $this->setEndpoint('browse', self::BROWSE_ID);
         $yt->enableFooterCopyright = true;
 
-        $this->template = self::STYLE_SHELVES_TEMPLATE;
+        // get style
+        if (Config::getConfigProp('useGridHomeStyle' ?? false))
+        {
+            $this->template = self::STYLE_GRIDDED_TEMPLATE;
 
-        $yt->page = self::buildStyleShelves();
+            self::buildStyleGridded($yt);
+        }
+        else
+        {
+            $this->template = self::STYLE_SHELVES_TEMPLATE;
+
+            $yt->page = self::buildStyleShelves();
+        }
     }
 
     /**
@@ -75,6 +87,61 @@ class FeedWhatToWatchController extends NirvanaController {
         $response = RichShelfUtils::reformatResponse($wv2data);
 
         return $response;
+    }
+
+    /**
+     * Build the gridded home page style (without categories)
+     * 
+     * TODO(dcooper): cleanup
+     * 
+     * @param object $yt  Reference to the global context (lazy)
+     * @return void
+     */
+    private static function buildStyleGridded(&$yt) {
+        $yt->page = (object) [];
+        $yt->flow = (isset($_GET["flow"]) and $_GET["flow"] == "2") ? "list" : "grid";
+
+        $response = Request::innertubeRequest(
+            "browse", 
+            (object)[
+                "browseId" => self::BROWSE_ID
+            ]
+        );
+
+        $ytdata = json_decode($response);
+        $items = $ytdata -> contents -> twoColumnBrowseResultsRenderer -> tabs[0] -> tabRenderer -> content -> richGridRenderer -> contents;
+
+        $yt -> response = $response;
+        $yt -> videoList = [];
+
+        for ($i = 0; $i < count($items); $i++)
+        {
+            if ($content = @$items[$i]->richItemRenderer->content)
+            {
+                if ("grid" == $yt->flow)
+                {
+                    foreach ($content as $name => $value)
+                    {
+                        // Convert name formatting
+                        // videoRenderer => gridVideoRenderer
+                        $name = "grid" . ucfirst($name);
+
+                        $yt->videoList[] = (object)[$name => $value];
+                        break;
+                    }
+                }
+                else
+                {
+                    $yt->videoList[] = $content;
+                }
+            }
+            else
+            {
+                $yt->videoList[] = $items[$i];
+            }
+        }
+
+        $yt -> page -> continuation = end($yt -> videoList) -> continuationItemRenderer -> continuationEndpoint -> continuationCommand -> token ?? null;
     }
 }
 
