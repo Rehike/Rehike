@@ -60,6 +60,12 @@ class channel extends NirvanaController {
 
         self::$requestedTab = $tab;
 
+        // Handle live tab redirect (if the channel is livestreaming)
+        if ("live" == $tab)
+        {
+            $this->handleLiveTabRedirect($request->rawPath);
+        }
+
         // Expose tab to configure frontend JS
         $yt->tab = $tab;
 
@@ -106,6 +112,29 @@ class channel extends NirvanaController {
         }
 
         $yt->page = Channels4::bake($yt, $page, $sidebar);
+    }
+
+    /**
+     * Redirect to a channel's livestream by visiting their live URL.
+     * 
+     * This only works if said channel is in the process of livestreaming,
+     * otherwise this will have no effect and will simply take you to the
+     * featured tab of the channel.
+     */
+    public function handleLiveTabRedirect($path)
+    {
+        Request::queueInnertubeRequest("resolve", "navigation/resolve_url", (object) [
+            "url" => "https://www.youtube.com" . $path
+        ]);
+        $response = Request::getResponses()["resolve"];
+
+        $ytdata = json_decode($response);
+        
+        if (isset($ytdata->endpoint->watchEndpoint))
+        {
+            $url = "/watch?v=" . $ytdata->endpoint->watchEndpoint->videoId;
+            (require "modules/spfRedirectHandler.php")($url);
+        }
     }
 }
 
