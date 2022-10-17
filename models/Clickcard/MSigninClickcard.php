@@ -29,7 +29,7 @@ class MSigninClickcard extends MAbstractClickcard
                 "content" => (object) [
                     "runs" => [
                         (object) [
-                            "text" => $button["text"] ?? null
+                            "text" => @$button["text"] ?? "Sign in"
                         ]
                     ]
                 ]

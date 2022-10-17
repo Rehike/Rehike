@@ -1,10 +1,10 @@
 {
-	"previousHash": "5ca7e2fe0a415b4e2c51d26e8506b16d7cbbca19",
-	"currentRevisionId": 483,
-	"subject": "Fix slight graphical glitch with WEB v2 shelves",
-	"body": "Fix slight graphical glitch with WEB v2 shelves",
+	"previousHash": "bc036fc9d220866fc3df0ddeb3dc5139fcf13a24",
+	"currentRevisionId": 484,
+	"subject": "Fix #115",
+	"body": "Fix #115",
 	"branch": "master",
 	"committerName": "Coffee",
 	"committerEmail": "99076687+YukisCoffee@users.noreply.github.com",
-	"time": 1665952835
+	"time": 1665976648
 }
