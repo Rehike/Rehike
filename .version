@@ -1,10 +1,10 @@
 {
-	"previousHash": "109ab57c0ac3d119ddcb6ecb00f7656f78d175e2",
-	"currentRevisionId": 486,
-	"subject": "Restore grid homepage style",
-	"body": "Restore grid homepage style",
+	"previousHash": "d1c8a083f09046a1c0d029285a75798cd8f45c9b",
+	"currentRevisionId": 487,
+	"subject": "Fix anchor buttons",
+	"body": "Fix anchor buttons",
 	"branch": "master",
 	"committerName": "Coffee",
 	"committerEmail": "99076687+YukisCoffee@users.noreply.github.com",
-	"time": 1666009172
+	"time": 1666010709
 }
