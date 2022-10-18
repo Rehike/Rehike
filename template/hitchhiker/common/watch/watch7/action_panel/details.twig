@@ -1,3 +1,21 @@
+{% macro description(data) %}
+{%- for snippet in data.runs -%}
+{%- if (snippet.navigationEndpoint) -%}
+    {%- set href = getUrl(snippet) -%}
+    {%- set spf = (href|first == "/") -%}
+    {% if snippet.navigationEndpoint.watchEndpoint.videoId == yt.videoId %}
+    <a href="#" onclick="yt.www.watch.player.seekTo({{ snippet.navigationEndpoint.watchEndpoint.startTimeSeconds }});return false;">
+    {% else %}
+    <a href="{{ href }}" class=" {{ spf ? 'spf-link' }} " target="_blank">
+    {% endif %}
+{%- endif -%}
+{{ snippet.text|nl2br }}
+{%- if (snippet.navigationEndpoint) -%}
+    </a>
+{%- endif -%}
+{% endfor %}
+{% endmacro %}
+
 {% set shouldCollapse = not secondaryInfo.description.runs is empty and not secondaryInfo.defaultExpanded %}
 <div id="action-panel-details" class="action-panel-content yt-uix-expander yt-card yt-card-has-padding {{ shouldCollapse ? "yt-uix-expander-collapsed" }}">
     <div id="watch-description" class="yt-uix-button-panel">
@@ -6,21 +24,7 @@
             <div id="watch-uploader-info"><strong class="watch-time-text">{{ secondaryInfo.dateText }}</strong></div>
             <div id="watch-description-text" class="">
                 <p id="eow-description" class="">
-                    {%- for snippet in secondaryInfo.description.runs -%}
-                    {%- if (snippet.navigationEndpoint) -%}
-                        {%- set href = getUrl(snippet) -%}
-                        {%- set spf = (href|first == "/") -%}
-                        {% if snippet.navigationEndpoint.watchEndpoint.videoId == yt.videoId %}
-                        <a href="#" onclick="yt.www.watch.player.seekTo({{ snippet.navigationEndpoint.watchEndpoint.startTimeSeconds }});return false;">
-                        {% else %}
-                        <a href="{{ href }}" class=" {{ spf ? 'spf-link' }} " target="_blank">
-                        {% endif %}
-                    {%- endif -%}
-                    {{ snippet.text|nl2br }}
-                    {%- if (snippet.navigationEndpoint) -%}
-                        </a>
-                    {%- endif -%}
-                    {% endfor %}
+                    {{ _self.description(secondaryInfo.description) }}
                 </p>
             </div>
             <div id="watch-description-extras">

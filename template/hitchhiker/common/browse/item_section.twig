@@ -1,5 +1,6 @@
 {%- macro render(data) -%}
     {% from "common/uix/shelf.twig" import render as shelf %}
+    {% from "common/channels4/video_player_view_component.twig" import render as video_player_view_component %}
     {% set rid = generateRid() %}
     <ol id="item-section-{{ rid }}" class="item-section">
         {%- for item in data.contents -%}
@@ -19,7 +20,9 @@
                         {{ item.messageRenderer.text.simpleText }}
                     {%- endif -%}
                 </p>
-            {%- endif -%}
+            {%- elseif item.channelVideoPlayerRenderer -%}
+                {{ video_player_view_component(item.channelVideoPlayerRenderer) }}
+            {%- endif %}
         {%- endfor -%}
     </ol>
 {%- endmacro -%}
