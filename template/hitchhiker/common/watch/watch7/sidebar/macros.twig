@@ -26,7 +26,7 @@
     {# playlist html structure is entirely different #}
     {% if data != null %}
     {% if data.type == "playlist" or data.type == "radio" %}
-    <a href="{{ getUrl(info) }}" class="related-playlist yt-pl-thumb-link spf {{ data.type == "radio" ? "mix-playlist" }} resumable-list">
+    <a href="{{ getUrl(info) }}" class="related-playlist yt-pl-thumb-link spf-link {{ data.type == "radio" ? "mix-playlist" }} resumable-list">
         <span class="yt-pl-thumb {{ data.type == "radio" ? "yt-mix-thumb" }}">
             <span class="video-thumb yt-thumb yt-thumb-168">
                 <span class="yt-thumb-clip">

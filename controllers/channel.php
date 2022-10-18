@@ -25,6 +25,11 @@ class channel extends NirvanaController {
         "about"
     ];
 
+    public function onPost(&$yt, $request) {
+        http_response_code(404);
+        $this -> template = "error/404";
+    }
+
     public function onGet(&$yt, $request)
     {
         $this->useJsModule("www/channels");
