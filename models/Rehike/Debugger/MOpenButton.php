@@ -20,30 +20,35 @@ class MOpenButton extends MButton
         "rebug-open-button"
     ];
 
-    public function __construct($errorCount)
+    public function __construct($errorCount, $condensed)
     {
         $i18n = &i18n::getNamespace("rebug");
 
-        $label = $i18n->openButtonLabel;
+        $label = "";
 
-        // Attempt to get version from version service
-        $versionInfo = &VersionController::$versionInfo;
-
-        if (isset($versionInfo))
+        if (!$condensed) 
         {
-            $label .= "@rehike";
+            $label = $i18n->openButtonLabel;
 
-            $branch = $versionInfo["branch"] ?? null;
-            $revId = $versionInfo["currentRevisionId"] ?? null;
+            // Attempt to get version from version service
+            $versionInfo = &VersionController::$versionInfo;
 
-            if (null != $branch)
+            if (isset($versionInfo))
             {
-                $label .= ".$branch";
-            }
+                $label .= "@rehike";
 
-            if (null != $revId)
-            {
-                $label .= ".$revId";
+                $branch = $versionInfo["branch"] ?? null;
+                $revId = $versionInfo["currentRevisionId"] ?? null;
+
+                if (null != $branch)
+                {
+                    $label .= ".$branch";
+                }
+
+                if (null != $revId)
+                {
+                    $label .= ".$revId";
+                }
             }
         }
 
@@ -51,13 +56,27 @@ class MOpenButton extends MButton
         {
             $this->class[] = "rebug-open-button-has-error";
 
-            if (1 == $errorCount)
+            if (!$condensed)
             {
-                $label .= " " . $i18n->openButtonErrorCountSingular;
+                if (1 == $errorCount)
+                {
+                    $label .= " " . $i18n->openButtonErrorCountSingular;
+                }
+                else
+                {
+                    $label .= " " . $i18n->openButtonErrorCountPlural(number_format($errorCount));
+                }
             }
             else
             {
-                $label .= " " . $i18n->openButtonErrorCountPlural(number_format($errorCount));
+                if (1 == $errorCount)
+                {
+                    $label = $i18n->condensedButtonLabelSingular;
+                }
+                else
+                {
+                    $label = $i18n->condensedButtonLabelPlural(number_format($errorCount));
+                }
             }
         }
 

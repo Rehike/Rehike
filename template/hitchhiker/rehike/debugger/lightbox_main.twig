@@ -15,7 +15,7 @@
                     <div class="yt-dialog-content">
                         <div class="yt-dialog-overlay-content-container">
                             {{ _self.dialog_header(data.header) }}
-                            {{ _self.dialog_tabs_switcher(data.tabs) }}
+                            {{ not rehikeDebugger.condensed ? _self.dialog_tabs_switcher(data.tabs) }}
                             {{ _self.dialog_tabs_container(data.tabs) }}
                         </div>
                     </div>
@@ -29,7 +29,12 @@
 {%- macro dialog_header(data) -%}
     <div class="yt-dialog-header">
         {%- if data.title -%}
-            <h2 class="yt-dialog-title">{{ data.title }}</h2>
+            <h2 class="yt-dialog-title">
+                {{ data.title }}
+                {%- if data.helpLink -%}
+                <a id="rebug-help-link" href="{{ data.helpLink.href }}" target="_blank">{{ data.helpLink.text }}</a>
+                {%- endif -%}
+            </h2>
         {%- endif -%}
         {%- if data.closeButton -%}
             {% from "/common/uix/button.twig" import render as button %}

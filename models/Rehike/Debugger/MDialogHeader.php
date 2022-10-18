@@ -15,11 +15,17 @@ class MDialogHeader
     public $title;
     public $closeButton;
 
-    public function __construct()
+    public function __construct($condensed)
     {
         $i18n = &i18n::getNamespace("rebug");
 
-        $this->title = $i18n->debuggerTitle;
+        $this->title = !$condensed ? $i18n->debuggerTitle : $i18n->condensedDebuggerTitle;
+        if ($condensed) {
+            $this-> helpLink = (object) [
+                "text" => $i18n->condensedDebuggerHelpLink,
+                "href" => "//github.com/Rehike/Rehike/wiki/Creating-an-issue"
+            ];
+        }
         $this->closeButton = new MDialogHeaderCloseButton();
     }
 }

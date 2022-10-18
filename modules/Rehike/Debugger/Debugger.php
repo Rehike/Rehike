@@ -23,23 +23,23 @@ class Debugger
     protected static $yt;
 
     /**
-     * Stores the result of getting the debugger's enabled status.
+     * Stores the result of getting the debugger's condensed status.
      * 
      * @var bool
      */
-    public static $enabled = false;
+    public static $condensed = true;
 
     /** @var ErrorWrapper[] */
     protected static $errors = [];
 
     /**
-     * Get if the debugger is enabled.
+     * Get if the debugger is condensed.
      * 
      * @return bool
      */
-    public static function isEnabled()
+    public static function isCondensed()
     {
-        return self::$enabled;
+        return self::$condensed;
     }
 
     /**
@@ -50,24 +50,24 @@ class Debugger
      */
     public static function init(&$yt)
     {
-        self::getEnabledStatus();
+        self::getCondensedStatus();
 
-        if (self::$enabled)
-        {
-            self::$yt = &$yt;
-            self::setupI18n();
-            self::$context = (object)[];
+        // Variable walker data should only be
+        // exposed if the debugger is enabled
+        if (!self::$condensed) self::$yt = &$yt;
 
-            error_reporting(E_ALL);
-            ini_set("display_errors", "off");
+        self::setupI18n();
+        self::$context = (object)[];
 
-            TemplateManager::addGlobal("rehikeDebugger", self::$context);
+        error_reporting(E_ALL);
+        ini_set("display_errors", "off");
 
-            // Disable the CoffeeException custom error screen
-            CoffeeException::disableBeautifulError();
+        TemplateManager::addGlobal("rehikeDebugger", self::$context);
 
-            set_error_handler("\\Rehike\\Debugger\\YcRehikeDebuggerErrorHandler");
-        }
+        // Disable the CoffeeException custom error screen
+        CoffeeException::disableBeautifulError();
+
+        set_error_handler("\\Rehike\\Debugger\\YcRehikeDebuggerErrorHandler");
     }
 
     /**
@@ -77,25 +77,30 @@ class Debugger
      */
     public static function expose()
     {
-        if (self::$enabled)
+        $i18n = &i18n::getNamespace("rebug");
+
+        $context = &self::$context;
+
+        if (!self::$condensed || (self::$condensed && self::getErrorCount() > 0))
         {
-            $i18n = &i18n::getNamespace("rebug");
+            $context->openButton = new OpenButton(self::getErrorCount(), self::$condensed);
+        }
 
-            $context = &self::$context;
+        $context->dialog = new Dialog(self::$condensed);
 
-            $context->openButton = new OpenButton(self::getErrorCount());
+        $context->condensed = self::$condensed;
 
-            $context->dialog = new Dialog();
+        $errorTab = &$context->dialog->addTab(
+            ErrorTab::createTab(
+                $i18n->tabErrorTitle(number_format(self::getErrorCount())),
+                "error",
+                true
+            )
+        );
+        $errorTab->pushErrors(self::$errors);
 
-            $errorTab = &$context->dialog->addTab(
-                ErrorTab::createTab(
-                    $i18n->tabErrorTitle(number_format(self::getErrorCount())),
-                    "error",
-                    true
-                )
-            );
-            $errorTab->pushErrors(self::$errors);
-
+        if (!self::$condensed)
+        {
             $ytWalker = &$context->dialog->addTab(YtWalker::createTab($i18n->tabYtWalkerTitle, "global_walker"));
             $ytWalker->addYt(self::$yt);
         }
@@ -135,14 +140,15 @@ class Debugger
     }
 
     /**
-     * Refresh the enabled status.
+     * Refresh the condensed status.
      * 
      * @return void
      */
-    protected static function getEnabledStatus()
+    protected static function getCondensedStatus()
     {
-        self::$enabled = RehikeConfigManager::getConfigProp("enableRehikeDebugger")
-            ?? false
+        self::$condensed = RehikeConfigManager::getConfigProp("enableRehikeDebugger")
+        ? false
+        : true
         ;
     }
 }

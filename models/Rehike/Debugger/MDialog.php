@@ -10,11 +10,12 @@ namespace Rehike\Model\Rehike\Debugger;
 class MDialog
 {
     public $header;
+    public $condensed;
     public $tabs = [];
 
-    public function __construct()
+    public function __construct($condensed)
     {
-        $this->header = new MDialogHeader();
+        $this->header = new MDialogHeader($condensed);
     }
 
     public function &addTab($tab)

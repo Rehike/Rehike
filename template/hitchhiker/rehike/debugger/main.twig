@@ -5,11 +5,13 @@
     @author The Rehike Maintainers
 #}
 {% if not yt.spf %}
-<div id="rebug-main">
+<div id="rebug-main" class="{{ rehikeDebugger.condensed ? "rebug-condensed" }}">
     <style>
         {% include "rehike/debugger/css/main.css.twig" %}
     </style>
-    {% include "rehike/debugger/openButton.twig" %}
+    {%- if rehikeDebugger.openButton -%}
+    {% include "rehike/debugger/open_button.twig" %}
+    {%- endif -%}
     <div id="rebug-lightbox-container">
         {% include "rehike/debugger/lightbox_main.twig" %}
     </div>
