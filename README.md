@@ -24,7 +24,11 @@ See [CONTRIBUTORS.md](CONTRIBUTORS.md).
 
 We currently do not support an automated install. If you wish to use Rehike, you must set it up manually. Fortunately, that isn't too hard!
 
-[See this page for manual installation instructions.](https://github.com/Rehike/Rehike/blob/misc-install-guide/README.md)
+[See this page for manual installation instructions.](//github.com/Rehike/Rehike/wiki/Installation)
+
+## Configuration
+
+[See this page for configuration details.](//github.com/Rehike/Rehike/wiki/Configuration)
 
 ## Acknowledgements
 
