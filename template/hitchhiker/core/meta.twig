@@ -69,3 +69,16 @@
     }
 </style>
 {%- endif -%}
+<script id="yt-dialog-fix">
+    document.addEventListener("click", function(event) {
+        for (var elm = event.target; null != elm.parentElement; elm = elm.parentElement) {
+            if ("getAttribute" in elm && elm.getAttribute("class")) {
+                if (elm.getAttribute("class").indexOf("yt-uix-overlay-close") > -1) {
+                    document.body.setAttribute("class", document.body.getAttribute("class").replace("yt-dialog-active", ""));
+                    document.getElementById("yt-dialog-bg").remove();
+                }
+            }
+        }
+        event.stopPropagation();
+    });
+</script>

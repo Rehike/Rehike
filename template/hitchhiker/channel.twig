@@ -103,23 +103,6 @@ not-fixed-width-tab-widescreen
     {%- block branded_page_primary_column_content -%}
         {% from "/common/browse/main.twig" import render as browse %}
         {{ browse(yt.page.content) }}
-        {#<ul id="browse-items-primary">
-            {% if yt.tab == "featured" %}
-                {% include "common/channels4/pages/featured.twig" %}
-            {% elseif yt.tab == "videos" %}
-                {% include "common/channels4/pages/videos.twig" %}
-            {% elseif yt.tab == "playlists" %}
-                {% include "common/channels4/pages/playlists.twig" %}
-            {% elseif yt.tab == "community" %}
-                {% include "common/channels4/pages/community.twig" %}
-            {% elseif yt.tab == "channels" %}
-                {% include "common/channels4/pages/channels.twig" %}
-            {% elseif yt.tab == "about" %}
-                {% include "common/channels4/pages/about.twig" %}
-            {% else %}
-                <p class="display-message">Channel tab "{{ yt.tab }}" not found. If you believe this is a mistake, please <a href="//github.com/Rehike/Rehike/issues/new">file an issue on our GitHub</a>.</p>
-            {% endif %}
-        </ul>#}
     {%- endblock -%}
 
     {%- block branded_page_secondary_column_content -%}

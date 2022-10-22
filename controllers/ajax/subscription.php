@@ -13,7 +13,10 @@ return new class extends AjaxController {
 
         switch ($action) {
             case "create_subscription_to_channel":
-                $ytdata = self::createSubscriptionToChannel($yt, $request);
+                $ytdata = self::createSubscriptionToChannel();
+                break;
+            case "remove_subscriptions":
+                $ytdata = self::removeSubscriptions();
                 break;
             default:
                 http_response_code(400);
@@ -57,12 +60,27 @@ return new class extends AjaxController {
      * @param object          $yt      Template data.
      * @param RequestMetadata $request Request data.
      */
-    private function createSubscriptionToChannel(&$yt, $request) {
+    private function createSubscriptionToChannel() {
         $response = Request::innertubeRequest("subscription/subscribe", (object) [
             "channelIds" => [
                 $_GET["c"] ?? null
             ],
             "params" => $_POST["params"] ?? null
+        ]);
+        return json_decode($response);
+    }
+
+    /**
+     * Remove a subscription from a channel.
+     * 
+     * @param object          $yt      Template data.
+     * @param RequestMetadata $request Request data.
+     */
+    private function removeSubscriptions() {
+        $response = Request::innertubeRequest("subscription/unsubscribe", (object) [
+            "channelIds" => [
+                $_GET["c"] ?? null
+            ]
         ]);
         return json_decode($response);
     }
