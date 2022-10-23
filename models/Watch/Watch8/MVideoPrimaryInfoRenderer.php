@@ -506,7 +506,7 @@ class MLikeButton extends MLikeButtonRendererButton
 {
     public function __construct($likeCount, $a11y, $isLiked, $videoId, $active = false)
     {
-        if ($active) $likeCount++;
+        if ($active && is_numeric($likeCount)) $likeCount++;
 
         $this->accessibilityAttributes = [
             "label" => $a11y
@@ -547,7 +547,7 @@ class MDislikeButton extends MLikeButtonRendererButton
 {
     public function __construct($dislikeCount, $a11y, $isDisliked, $videoId, $active = false)
     {
-        if ($active) $dislikeCount++;
+        if ($active && is_numeric($dislikeCount)) $dislikeCount++;
 
         $this->accessibilityAttributes = [
             "label" => $a11y

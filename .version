@@ -1,10 +1,10 @@
 {
-	"previousHash": "5351548091b7bebfdacf1ff2e4cf4661ae85610e",
-	"currentRevisionId": 491,
-	"subject": "Update readme to affect changes.",
-	"body": "Update readme to affect changes.",
+	"previousHash": "d31588fd8e5688d1df45f4c2e1c4c3b0f8a23afa",
+	"currentRevisionId": 499,
+	"subject": "Fix liked/disliked videos with disabled counts",
+	"body": "Fix liked/disliked videos with disabled counts",
 	"branch": "master",
 	"committerName": "Coffee",
 	"committerEmail": "99076687+YukisCoffee@users.noreply.github.com",
-	"time": 1666097376
+	"time": 1666495523
 }
