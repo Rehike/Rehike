@@ -104,6 +104,8 @@ class Channels4Model
 
         $response += ["content" => self::getTabContents($currentTabContents)];
 
+        $response += ["baseUrl" => self::$baseUrl];
+
         // Send the response array
         return (object)$response;
     }

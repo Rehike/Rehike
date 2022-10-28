@@ -1,0 +1,9 @@
+{
+    "viewSingular": "View reply",
+    "viewMulti": "View %s replies",
+    "viewSingularOwner": "View reply from %s",
+    "viewMultiOwner": "View %s replies from %s and others",
+    "hideSingular": "Hide reply",
+    "hideMulti": "Hide %s replies",
+    "replyCountIsolator": "/( replies)|( reply)/i"
+}

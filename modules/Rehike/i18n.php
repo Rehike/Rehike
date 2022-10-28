@@ -93,6 +93,11 @@ class i18n
         return self::$namespaces[$name];
     }
 
+    public static function &namespaceExists($name)
+    {
+        return isset(self::$namespaces[$name]);
+    }
+
     /**
      * Register language definitions from a file.
      * 

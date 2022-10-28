@@ -3,6 +3,7 @@ namespace Rehike\Model\Comments;
 
 use function YukisCoffee\getPropertyAtPath as getProp;
 use \Rehike\Model\Comments\MCommentVoteButton as VoteButton;
+use \Rehike\i18n;
 
 class CommentThread
 {
@@ -116,44 +117,38 @@ class CommentThread
          * This is to correct that style for English (update as needed when
          * i18n update).
          */
-        if (
-            isset($context->viewReplies) &&
-            !preg_match("/View/", $context->viewReplies->buttonRenderer->text->runs[0]->text)
-        )
+        if (isset($context->viewReplies))
         {
-            $text = &$context->viewReplies->buttonRenderer->text->runs[0]->text;
+            if (i18n::namespaceExists("comments")) {
+                $i18n = i18n::getNamespace("comments");
+            } else {
+                $i18n = i18n::newNamespace("comments");
+                $i18n -> registerFromFolder("i18n/comments");
+            }
+
+            $viewText = &$context->viewReplies->buttonRenderer->text->runs[0]->text;
             $hideText = &$context->hideReplies->buttonRenderer->text->runs[0]->text;
 
-            $replyCount = (int)str_replace([" REPLY", " REPLIES", ","], "", $text);
-            
-            if ($replyCount > 1)
-            {
-                $text = "View $replyCount replies";
-                $hideText = "Hide $replyCount replies";
-            }
-            else
-            {
-                $text = "View reply";
-                $hideText = "Hide reply";
+            $replyCount = (int) preg_replace($i18n -> replyCountIsolator, "", $viewText);
+            if (isset($context -> viewRepliesCreatorThumbnail)) {
+                $creatorName = $context -> viewRepliesCreatorThumbnail -> accessibility -> accessibilityData -> label;
             }
 
-            // Include author attribution if available
-            if (isset($context->viewRepliesCreatorThumbnail))
-            {
-                $name = $context->viewRepliesCreatorThumbnail->accessibility
-                    ->accessibilityData->label
-                ;
-
-                $text .= " from $name";
-                $hideText .= " from $name";
-
-                // "and others" if > 1
-                if ($replyCount > 1)
-                {
-                    $text .= " and others";
-                    $hideText .= " and others";
+            if ($replyCount > 1) {
+                if (isset($creatorName)) {
+                    $viewText = $i18n -> viewMultiOwner($replyCount, $creatorName);
+                } else {
+                    $viewText = $i18n -> viewMulti($replyCount);
+                }
+            } else {
+                if (isset($creatorName)) {
+                    $viewText = $i18n -> viewSingularOwner($creatorName);
+                } else {
+                    $viewText = $i18n -> viewSingular;
                 }
             }
+
+            $hideText = ($replyCount > 1) ? $i18n -> hideMulti($replyCount) : $i18n -> hideSingular;
         }
 
         return $context;
