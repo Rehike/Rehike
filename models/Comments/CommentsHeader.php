@@ -11,10 +11,13 @@ class CommentsHeader {
 
     public static function fromData($data) {
         $new = new self();
+
+        if ($a = @$data->titleText) {
+            $new->title = TemplateFunctions::getText($data->titleText);
+        }
         
         if ($a = @$data->countText) {
             $a = $a->runs;
-            $new->title = $a[1]->text;
             $new->commentsCountText = $a[0]->text;
         }
 
