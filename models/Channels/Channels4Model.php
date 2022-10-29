@@ -6,6 +6,7 @@ use Rehike\Model\Channels\Channels4\BrandedPageV2\MSubnav;
 use Rehike\Model\Channels\Channels4\Sidebar\MRelatedChannels;
 use Rehike\Model\Appbar\MAppbarNavItemStatus;
 use Rehike\TemplateFunctions as TF;
+use Rehike\Model\Browse\InnertubeBrowseConverter;
 
 class Channels4Model
 {
@@ -45,17 +46,48 @@ class Channels4Model
         {
             if (isset($response["header"]))
             {
+                /** @var object */
+                $videosTab = null;
+
+                // Splice "live" tab as this should be cascaded into videos.
+                for ($i = 0; $i < count($tabs); $i++)
+                {
+                    if (isset($tabs[$i]->tabRenderer))
+                    {
+                        // Do NOT call this $tab. It will break the logic for
+                        // god only fucking knows why and you'll get some sorta
+                        // duplicate tab renderer.
+                        $tabR = &$tabs[$i];
+
+                        $tabEndpoint = $tabR->tabRenderer->endpoint->commandMetadata->webCommandMetadata->url;
+
+                        if (stripos($tabEndpoint, "/videos"))
+                        {
+                            $videosTab = &$tabR;
+                        }
+                        else if (stripos($tabEndpoint, "/streams"))
+                        {
+                            $tabR->hidden = true;
+
+                            if ($tabR->tabRenderer->selected) $videosTab->tabRenderer->selected = true;
+                        }
+                    }
+                }
+
                 $response["header"]->addTabs($tabs);
 
                 foreach ($tabs as $tab) if (@$tab -> tabRenderer)
                 {
                     $tabEndpoint = $tab->tabRenderer->endpoint->commandMetadata->webCommandMetadata->url;
 
-                    $yt->appbar->nav->addItem(
-                        $tab->tabRenderer->title,
-                        $tabEndpoint,
-                        @$tab->tabRenderer->selected ? MAppbarNavItemStatus::Selected : MAppbarNavItemStatus::Unselected
-                    );
+                    if (!@$tab->hidden)
+                    {
+                        $yt->appbar->nav->addItem(
+                            $tab->tabRenderer->title,
+                            $tabEndpoint,
+                            @$tab->tabRenderer->selected ? MAppbarNavItemStatus::Selected : MAppbarNavItemStatus::Unselected
+                        );
+                    }
 
                     if (@$tab->tabRenderer->selected)
                     {
@@ -138,6 +170,10 @@ class Channels4Model
         {
             return self::handleGridTab($a, $content);
         }
+        else if ($a = @$content->richGridRenderer)
+        {
+            return self::handleGridTab(InnertubeBrowseConverter::richGridRenderer($a), $content, true);
+        }
         else if (($b = @$content->sectionListRenderer->contents[0]->itemSectionRenderer) && ($c = @$b->contents[0]->backstagePostThreadRenderer))
         {
             return self::handleBackstage($b);
@@ -148,7 +184,7 @@ class Channels4Model
         }
     }
 
-    public static function handleGridTab($data, $parentTab)
+    public static function handleGridTab($data, $parentTab, $rich = false)
     {
         $currentTab = self::$currentTab;
 
@@ -157,8 +193,11 @@ class Channels4Model
         switch ($currentTab)
         {
             case "videos":
-                if ($subnav = @$parentTab->sectionListRenderer->subMenu->channelSubMenuRenderer)
+            case "streams":
+                if ($subnav = @$parentTab->sectionListRenderer->subMenu->channelSubMenuRenderer || $rich)
                 {
+                    $subnav = $subnav ?? null;
+
                     $response += [
                         "brandedPageV2SubnavRenderer" => MSubnav::bakeVideos($subnav)
                     ];
@@ -166,9 +205,18 @@ class Channels4Model
                 break;
         }
 
-        $response += [
-            "browseContentGridRenderer" => $data
-        ];
+        if ($rich && isset($_GET["flow"]) && "list" == $_GET["flow"])
+        {
+            $response += [
+                "items" => $data->items
+            ];
+        }
+        else
+        {
+            $response += [
+                "browseContentGridRenderer" => $data
+            ];
+        }
 
         return (object)$response;
     }

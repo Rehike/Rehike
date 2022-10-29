@@ -49,13 +49,39 @@ class MSubnav
             $i->rightButtons[] = new MSubnavMenuButton("sort", $sortButtonTitle, $sortButtonOptions);
         }
 
-        $i->rightButtons[] = self::getFlowButton("grid");
+        $flow = $_GET["flow"] ?? "grid";
+        if (!in_array($flow, ["grid", "list"])) $flow = "grid";
+        $i->rightButtons[] = self::getFlowButton($flow);
 
         // Process uploads view
-        // TODO
-        $i->leftButtons[] = new MSubnavMenuButton("view", "Uploads", []);
+        $i->leftButtons[] = self::getViewButton();
 
         return $i;
+    }
+
+    public static function getViewButton()
+    {
+        $i18n = &i18n::getNamespace("channels");
+
+        $baseUrl = Channels4Model::getBaseUrl();
+        
+        $options = [];
+
+        $uploadsText = $title = $i18n->viewUploads;
+        $streamsText = $title = $i18n->viewLiveStreams;
+
+        if ("streams" == Channels4Model::$currentTab)
+        {
+            $activeText = $streamsText;
+            $options += [$uploadsText => "$baseUrl/videos"];
+        }
+        else
+        {
+            $activeText = $uploadsText;
+            $options += [$streamsText => "$baseUrl/streams"];
+        }
+
+        return new MSubnavMenuButton("view", $activeText, $options);
     }
 
     public static function getFlowButton($view)
@@ -67,17 +93,19 @@ class MSubnav
         $gridText = $i18n->flowGrid;
         $listText = $i18n->flowList;
 
+        $tab = ("streams" == Channels4Model::$currentTab) ? "streams" : "videos";
+
         $options = [];
 
         if ("grid" == $view)
         {
             $activeText = $gridText;
-            $options += [$listText => "$baseUrl/videos?flow=list"];
+            $options += [$listText => "$baseUrl/$tab?flow=list"];
         }
         else if ("list" == $view)
         {
             $activeText = $listText;
-            $options += [$listText => "$baseUrl/videos?flow=grid"];
+            $options += [$gridText => "$baseUrl/$tab?flow=grid"];
         }
 
         return new MSubnavMenuButton("flow", $activeText, $options);

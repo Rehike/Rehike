@@ -3,22 +3,30 @@
 #}
 {%- macro render(data) -%}
     {% from "common/browse/section_list.twig" import render as section_list %}
+    {% from "common/browse/browse_list_item_container.twig" import render as browse_list_item_container %}
     {% from "common/channels4/channel_about_metadata.twig" import render as channel_about_metadata %}
     {% from "common/channels4/browse_content_grid.twig" import render as browse_content_grid %}
+    {% from "common/channels4/branded_page_v2_subnav.twig" import render as branded_page_v2_subnav %}
     <ul id="browse-items-primary">
+        {% if data.brandedPageV2SubnavRenderer %}
+            {{ branded_page_v2_subnav(data.brandedPageV2SubnavRenderer) }}
+        {% endif %}
         {%- if data.sectionListRenderer -%}
             {{ section_list(data.sectionListRenderer) }}
         {%- elseif data.channelAboutMetadataRenderer -%}
             {{ channel_about_metadata(data.channelAboutMetadataRenderer) }}
         {%- elseif data.browseContentGridRenderer -%}
-            {% from "common/channels4/branded_page_v2_subnav.twig" import render as branded_page_v2_subnav %}
-            {% if data.brandedPageV2SubnavRenderer %}
-                {{ branded_page_v2_subnav(data.brandedPageV2SubnavRenderer) }}
-            {% endif %}
             {{ browse_content_grid(data.browseContentGridRenderer) }}
         {%- elseif data.backstageRenderer -%}
             {% from "common/comments/comment_section_renderer.twig" import render as comment_section_renderer %}
             <li><div class="branded-page-box-padding">{{ comment_section_renderer(data.backstageRenderer)  }}</div></li>
+        {%- elseif data.items -%}
+            {{ browse_list_item_container(data) }}
         {%- endif -%}
     </ul>
+    {% set last = data.items|last %}
+    {% if last.continuationItemRenderer %}
+        {% from 'common/uix/load_more_button.twig' import render as load_more_button %}
+        {{ load_more_button(last.continuationItemRenderer.continuationEndpoint.continuationCommand.token, "browse-items-primary") }}
+    {% endif %}
 {%- endmacro -%}
