@@ -1,0 +1,30 @@
+{%- macro render(data, id) -%}
+    {% import "common/uix/lockup.twig" as lockup %}
+    {%- for item in data.items -%}
+    {%- 
+        if item.gridVideoRenderer 
+        or item.videoRenderer
+        or item.gridPlaylistRenderer
+        or item.playlistRenderer
+        or item.gridRadioRenderer
+        or item.radioRenderer
+        or item.gridChannelRenderer
+        or item.channelRenderer
+    -%}
+    <li class="feed-item-container yt-section-hover-container browse-list-item-container branded-page-box vve-check ">
+        <div class="feed-item-dismissable ">
+            <div class="feed-item-main feed-item-no-author">
+                <div class="feed-item-main-content">
+                    {{ lockup.tile(item) }}
+                </div>
+            </div>
+        </div>
+        <div class="feed-item-dismissal-notices">
+            <div class="feed-item-dismissal feed-item-dismissal-hide hid">
+                This item has been hidden
+            </div>
+        </div>
+    </li>
+    {%- endif -%}
+    {%- endfor -%}
+{%- endmacro -%}

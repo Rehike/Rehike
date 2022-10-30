@@ -79,6 +79,11 @@ class MHeader
 
     public function addTabs($tabs)
     {
+        for ($i = 0; $i < count($tabs); $tab = $tabs[$i], $i++)
+        {
+            if (@$tab->hidden) array_splice($tabs, --$i, 1);
+        }
+
         $this->tabs = $tabs;
     }
 

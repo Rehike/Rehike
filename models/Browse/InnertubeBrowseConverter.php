@@ -87,4 +87,38 @@ class InnertubeBrowseConverter
 
         return $data;
     }
+
+    /**
+     * Convert a rich grid renderer to regular grid renderer
+     */
+    public static function richGridRenderer($data, $context = [])
+    {
+        $items = [];
+
+        foreach ($data->contents as $item)
+        {
+            if (@$item->richItemRenderer)
+            {
+                $items[] = self::richItemRenderer($item->richItemRenderer);
+            }
+            else if (@$item->continuationItemRenderer)
+            {
+                $items[] = $item;
+            }
+        }
+
+        return (object)[
+            "items" => $items
+        ];
+    }
+
+    /**
+     * Convert a rich item renderer to its canonical type.
+     * 
+     * @return array
+     */
+    public static function richItemRenderer($data, $context = [])
+    {
+        return $data->content;
+    }
 }
