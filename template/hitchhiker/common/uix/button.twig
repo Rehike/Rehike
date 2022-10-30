@@ -90,6 +90,9 @@
     {%- apply spaceless -%}
     <span class="yt-uix-button-content">
     {%- endapply -%}
+        {%- if data.content.simpleText -%}
+        {{ data.content.simpleText }}
+        {%- else -%}
         {%- for run in data.content.runs -%}
             {%- if not run.class and not run.accessibilityLabel -%}
                 {{ run.text }}
@@ -99,6 +102,7 @@
                 </span>
             {%- endif -%}
         {%- endfor -%}
+        {%- endif -%}
         {%- if data.content.arrow -%}
                 <span class="yt-uix-button-arrow yt-sprite"></span>
         {%- endif -%}

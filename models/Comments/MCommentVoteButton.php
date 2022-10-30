@@ -27,17 +27,14 @@ class MCommentVoteButton extends MButton {
     public $checked;
 
     public function __construct($data) {
-        $this -> type = $data["type"];
-        $this -> action = $data["action"] ?? "";
         $this -> a11yLabel = $data["a11yLabel"] ?? null;
-        $this -> checked = $data["checked"] ?? false;
 
-        $this -> class[] = "sprite-" . $this -> type;
-        $this -> class[] = "i-a-v-sprite-" . $this -> type;
+        $this -> class[] = "sprite-" . $data["type"];
+        $this -> class[] = "i-a-v-sprite-" . $data["type"];
 
-        $this -> attributes["action-type"] = $this -> type;
-        $this -> attributes["action"] = $this -> action;
-        $this -> accessibilityAttributes["checked"] = $this -> checked ? "true" : false;
+        $this -> attributes["action-type"] = $data["type"];
+        $this -> attributes["action"] = $data["action"];
+        $this -> accessibilityAttributes["checked"] = $data["checked"] ? "true" : "false";
     }
 
     public static function fromData($data) {

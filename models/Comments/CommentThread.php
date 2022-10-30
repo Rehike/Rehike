@@ -3,6 +3,7 @@ namespace Rehike\Model\Comments;
 
 use function YukisCoffee\getPropertyAtPath as getProp;
 use \Rehike\Model\Comments\MCommentVoteButton as VoteButton;
+use \Rehike\Model\Comments\MCommentReplyButton as ReplyButton;
 use \Rehike\i18n;
 
 class CommentThread
@@ -13,6 +14,7 @@ class CommentThread
     const LIKE_BUTTON_PATH = self::ACTIONS_PATH . ".likeButton.toggleButtonRenderer";
     const DISLIKE_BUTTON_PATH = self::ACTIONS_PATH . ".dislikeButton.toggleButtonRenderer";
     const HEART_BUTTON_PATH = self::ACTIONS_PATH . ".creatorHeart.creatorHeartRenderer";
+    const REPLY_BUTTON_PATH = self::ACTIONS_PATH . ".replyButton.buttonRenderer";
     const COMMON_A11Y_LABEL = "accessibilityData.label";
 
     public static function bakeComments($context)
@@ -67,7 +69,7 @@ class CommentThread
         $out = [];
 
         // PLEASE NOTE:
-        // The extra preceding property "comments"/"replies" is removed by this.
+        // The extra preceding property "comment"/"replies" is removed by this.
         if (isset($context->comment)) {
             $out['commentRenderer'] = self::commentRenderer($context->comment->commentRenderer);
         }
@@ -89,6 +91,8 @@ class CommentThread
 
         $context->likeButton = VoteButton::fromData(getProp($context, self::LIKE_BUTTON_PATH));
         $context->dislikeButton = VoteButton::fromData(getProp($context, self::DISLIKE_BUTTON_PATH));
+        $context->replyButton = ReplyButton::fromData(getProp($context, self::REPLY_BUTTON_PATH), $context -> commentId);
+
         try {
             $context->creatorHeart = getProp($context, self::HEART_BUTTON_PATH);
         } catch (\YukisCoffee\GetPropertyAtPathException $e) {
@@ -110,13 +114,6 @@ class CommentThread
                 $item->commentRenderer = self::commentRenderer($item->commentRenderer, true);
         }
 
-        /*
-         * YouTube has been updating desktop comments (as of 2022/06/23)
-         * to use mobile style all caps text and author thumbnail.
-         * 
-         * This is to correct that style for English (update as needed when
-         * i18n update).
-         */
         if (isset($context->viewReplies))
         {
             if (i18n::namespaceExists("comments")) {

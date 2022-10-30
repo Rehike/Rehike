@@ -9,14 +9,14 @@
         <span class="video-thumb comment-author-thumbnail yt-thumb yt-thumb-48">
         <span class="yt-thumb-square">
             <span class="yt-thumb-clip">
-                <img alt="{{ yt.signin.isSignedIn ? yt.signin.activeChannel.name : "Default profile photo" }}" height="48" onload=";window.__ytRIL &amp;&amp; __ytRIL(this)" src="{{ yt.signin.isSignedIn ? yt.signin.activeChannel.photo : "//s.ytimg.com/yts/img/avatar_48-vfllY0UTT.png" }}" width="48" data-ytimg="1" tabindex="0" role="img">
+                <img alt="{{ data.simpleBoxRenderer.authorThumbnail.accessibility.accessibilityData.label }}" height="48" onload=";window.__ytRIL &amp;&amp; __ytRIL(this)" src="{{ getThumb(data.simpleBoxRenderer.authorThumbnail, 48) }}" width="48" data-ytimg="1" tabindex="0" role="img">
                 <span class="vertical-align"></span>
             </span>
         </span>
         </span>
         {% if yt.signin.isSignedIn %}<div id="comment-simplebox-create-comment"></div>{% endif %}
-        <div class="comment-simplebox-renderer-collapsed comment-{{ yt.signin.isSignedIn ? "simplebox-trigger" : "section-renderer-redirect" }}" data-target="comment-section-renderer-items" data-simplebox-params="{{ data.createParams }}" data-simplebox-target="{{ yt.signin.isSignedIn ? "/comment_service_ajax?action_create_comment=1" : "https://accounts.google.com/ServiceLogin?service=youtube&passive=true&hl=en&continue=https%3A%2F%2Fwww.youtube.com%2F" }}"{{ yt.signin.isSignedIn ? " role=\"form\" aria-haspopup=\"true\" data-simplebox-id=\"comment-simplebox-create-comment\" data-placeholder=\"Add a public comment...\" data-simplebox-event=\"commentcreated\" data-simplebox-label=\"Comment\" data-simplebox-sessionlink=\"itct=CAgQ8FsiEwjpsvbIjMTtAhU3yMEKHRZcD6w\" data-simplebox-zero-step-params=\"\" data-attachment-editor-trigger=\"\"" }}>
-        <div class="comment-simplebox-renderer-collapsed-content">Add a public comment...</div>
+        <div class="comment-simplebox-renderer-collapsed comment-{{ yt.signin.isSignedIn ? "simplebox-trigger" : "section-renderer-redirect" }}" data-target="comment-section-renderer-items" data-simplebox-params="{{ data.createParams }}" data-simplebox-target="{{ yt.signin.isSignedIn ? "/comment_service_ajax?action_create_comment=1" : "https://accounts.google.com/ServiceLogin?service=youtube&passive=true&hl=en&continue=https%3A%2F%2Fwww.youtube.com%2F" }}"{% if yt.signin.isSignedIn %}role="form" aria-haspopup="true" data-simplebox-id="comment-simplebox-create-comment" data-placeholder="{{ data.simpleBoxRenderer.placeholderText }}" data-simplebox-event="commentcreated" data-simplebox-label="Comment" data-simplebox-sessionlink="itct=CAgQ8FsiEwjpsvbIjMTtAhU3yMEKHRZcD6w" data-simplebox-zero-step-params="" data-attachment-editor-trigger=""{% endif %}>
+        <div class="comment-simplebox-renderer-collapsed-content">{{ data.simpleBoxRenderer.placeholderText }}</div>
         <div class="comment-simplebox-arrow">
             <div class="arrow-inner"></div>
             <div class="arrow-outer"></div>
