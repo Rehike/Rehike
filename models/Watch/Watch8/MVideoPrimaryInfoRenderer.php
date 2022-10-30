@@ -611,7 +611,7 @@ class MSuperTitle
         foreach ($superTitleLink->runs as $run) if (" " != $run->text)
         {
             $this->items[] = (object)[
-                "text" => preg_replace("/For/", "for", preg_replace("/On/", "on", ucwords(strtolower($run->text)))),
+                "text" => $run->text,
                 "url" => TemplateFunctions::getUrl($run)
             ];
         }

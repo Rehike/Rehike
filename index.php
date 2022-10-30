@@ -3,14 +3,6 @@ ob_start();
 $root = $_SERVER['DOCUMENT_ROOT'];
 set_include_path($root);
 
-// TODO (kirasicecreamm): Clean this up.
-if (isset($_COOKIE['VISITOR_INFO1_LIVE'])) {
-    $visitor = $_COOKIE['VISITOR_INFO1_LIVE'];
-} else {
-    $visitor = '';
-    setcookie("VISITOR_INFO1_LIVE", $visitor);
-}
-
 // Ungodly global variable that connects everything together.
 // Do not touch, this needs to be carefully moved for clean up.
 // Think of it like nuclear waste :P
@@ -20,6 +12,21 @@ $yt = (object) [];
 include "resourceConstants.php";
 include "fatalHandler.php";
 include "boot.php";
+
+// TODO (kirasicecreamm): Clean this up.
+if (isset($_COOKIE['VISITOR_INFO1_LIVE'])) {
+    $visitor = $_COOKIE['VISITOR_INFO1_LIVE'];
+} else {
+    $coffee = new \YukisCoffee\CoffeeRequest\CoffeeRequest;
+    $response = $coffee -> request("https://www.youtube.com/");
+    preg_match("/ytcfg\.set\(({.*?})\);/", $response, $matches);
+    $ytcfg = json_decode(@$matches[1]);
+    $visitor = $ytcfg -> INNERTUBE_CONTEXT -> client -> visitorData ?? "";
+    $visitor = \Rehike\Util\Base64Url::decode($visitor);
+    $visitor = substr($visitor, 2);
+    $visitor = explode(chr(0x28), $visitor)[0];
+    setcookie("VISITOR_INFO1_LIVE", $visitor);
+}
 
 // Load configuration
 $rehikeConfig = Rehike\RehikeConfigManager::loadConfig();
