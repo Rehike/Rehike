@@ -343,6 +343,8 @@ class Converter
             }
         }
 
+        if (!isset($section)) return;
+
         // Ugly last item hack to get rid of the "show more" button WEB v2
         // reports
         if (isset($section->items[count($section->items ?? []) - 1]->guideCollapsibleEntryRenderer))
