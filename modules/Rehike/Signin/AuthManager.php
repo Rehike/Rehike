@@ -195,7 +195,7 @@ class AuthManager
 
                 if ("ACCOUNT_BOX" == @$item->icon->iconType)
                 {
-                    return $item->navigationEndpoint->browseEndpoint->browseId;
+                    return $item->navigationEndpoint->browseEndpoint->browseId ?? null;
                 }
             }
         }
