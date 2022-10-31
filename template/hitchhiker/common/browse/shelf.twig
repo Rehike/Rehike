@@ -6,6 +6,8 @@
                 {{ _self.compact(data.content.horizontalListRenderer) }}
             {%- elseif data.content.expandedShelfContentsRenderer -%}
                 {{ _self.expanded(data.content.expandedShelfContentsRenderer) }}
+            {% elseif data.content.gridRenderer %}
+                {{ _self.multirow(data.content.gridRenderer) }}
             {%- endif -%}
         </div>
         <div class="feed-item-dismissal-notices"></div>
@@ -39,6 +41,19 @@
                 </div>
             </li>
         {%- endfor -%}
+        </ul>
+    </div>
+{% endmacro %}
+
+{% macro multirow(data) %}
+    {% import "common/uix/lockup.twig" as lockup %}
+    <div class="multirow-shelf">
+        <ul id="grid-{{ generateRid() }}" class="shelf-content">
+            {% for item in data.items %}
+            <li class="yt-shelf-grid-item">
+                {{ lockup.grid(item) }}
+            </li>
+            {% endfor %}
         </ul>
     </div>
 {% endmacro %}
@@ -82,5 +97,29 @@
     {% if data.subtitle %}
     <div class="shelf-description yt-ui-ellipsis yt-ui-ellipsis-2">{{ getText(data.subtitle) }}</div>
     {% endif %}
-    <div class="menu-container shelf-title-cell"></div>
+    <div class="menu-container shelf-title-cell">
+        {% if data.menu %}
+        <div class="yt-uix-menu-container feed-item-action-menu">
+            {% if data.menu.menuRenderer.topLevelButtons %}
+            <ul class="yt-uix-menu-top-level-button-container">
+                {% from "common/uix/button.twig" import render as button %}
+                {% for button in data.menu.menuRenderer.topLevelButtons %}
+                {% set btn = button.buttonRenderer %}
+                {{ button({
+                    anchor: getUrl(btn) != "",
+                    href: getUrl(btn) != "" ? getUrl(btn) : null,
+                    style: btn.isSelected ? "blue-text" : "opacity",
+                    size: "default",
+                    tooltip: btn.tooltip,
+                    accessibilityLabel: btn.accessibility.label,
+                    hasIcon: true,
+                    icon: const2class(btn.icon.iconType),
+                    spf: true
+                }) }}
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
 {%- endmacro -%}

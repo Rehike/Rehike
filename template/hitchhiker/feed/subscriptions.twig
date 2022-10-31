@@ -11,11 +11,7 @@
 {% set enableSnapScaling = true %}
 
 {%- block title -%}
-Trending - {{ parent() }}
-{% endblock %}
-
-{%- block page_class -%}
-not-fixed-width-tab-widescreen
+Subscriptions - {{ parent() }}
 {% endblock %}
 
 {% block foot_scripts %}
@@ -58,8 +54,6 @@ not-fixed-width-tab-widescreen
 
 {% block content %}
     {% embed 'common/channels4/branded_page_v2.twig' %}
-        {% import 'common/uix/lockup.twig' as lockup %}
-        {% import 'core/spinner.twig' as spinner %}
         {% set brandedPageConfig = {
             'baseBoldTitles': true,
             'containerFlexWidth': true,
@@ -67,17 +61,8 @@ not-fixed-width-tab-widescreen
             'secondaryColumnHidden': true
         } %}
         {% block branded_page_primary_column_content %}
-            <div id="browse-items-primary">
-                {% set rid = generateRid() %}
-                <ol id="section-list-{{ rid }}" class="section-list">
-                    {% from "common/browse/item_section.twig" import render as item_section %}
-                    {%- for shelf in yt.page.shelvesList -%}
-                    <li>
-                    {{ item_section(shelf.itemSectionRenderer) }}
-                    </li>
-                    {% endfor %}
-                </ol>
-            </div>
+        {% from "common/browse/main.twig" import render as browse %}
+            {{ browse(yt.page.content) }}
         {% endblock %}
     {% endembed %}
 {% endblock %}

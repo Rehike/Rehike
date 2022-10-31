@@ -7,6 +7,7 @@ use Rehike\RehikeConfigManager as Config;
 use Rehike\Util\AndroidW2w15Parser;
 use Rehike\Util\WebV2Shelves;
 use Rehike\Util\RichShelfUtils;
+use Rehike\Model\Feed\MFeedAppbarNav;
 
 /**
  * What to Watch (home) feed controller
@@ -29,6 +30,7 @@ class FeedWhatToWatchController extends NirvanaController {
         $this->useJsModule('www/feed');
         $this->setEndpoint('browse', self::BROWSE_ID);
         $yt->enableFooterCopyright = true;
+        $yt->appbar->nav = new MFeedAppbarNav(self::BROWSE_ID);
 
         // get style
         if (Config::getConfigProp('useGridHomeStyle' ?? false))

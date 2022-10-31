@@ -39,20 +39,7 @@
 {% endblock %}
 
 {%- block appbarContent -%}
-   {% set appbarContents = {
-      'items': {
-        0: {
-            'title': 'Home',
-            'href': '/',
-            'selected': true
-        },
-        1: {
-            'title': 'Trending',
-            'href': '/feed/trending'
-        }
-      }
-   } %}
-   {{ appbar_nav.render(appbarContents) }}
+   {{ appbar_nav.render(yt.appbar.nav) }}
 {% endblock %}
 
 {% block content %}

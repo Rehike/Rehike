@@ -3,6 +3,7 @@ namespace Rehike\Controller;
 
 use Rehike\Controller\core\NirvanaController;
 use Rehike\Request;
+use Rehike\Model\Feed\MFeedAppbarNav;
 
 /**
  * Trending feed controller
@@ -20,6 +21,7 @@ class FeedTrendingController extends NirvanaController {
     public function onGet(&$yt, $request) {
         $this->useJsModule('www/feed');
         $this->setEndpoint("browse", "FEtrending");
+        $yt->appbar->nav = new MFeedAppbarNav("FEtrending");
         $yt->enableFooterCopyright = true;
 
         $response = Request::innertubeRequest("browse", (object)[

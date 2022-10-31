@@ -82,7 +82,7 @@
                 <span class="yt-uix-button-icon yt-uix-button-icon-{{ data.icon }} yt-sprite"></span>
             </span>
         {%- endif -%}
-        {{ _self._buttonContent(data) }}
+        {{ data.content and not data.content is empty ? _self._buttonContent(data) }}
     </{{ data.anchor ? "a" : "button" }}>
 {%- endmacro -%}
 
