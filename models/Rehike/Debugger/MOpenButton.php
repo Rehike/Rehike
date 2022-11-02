@@ -13,7 +13,7 @@ use \Rehike\Model\Common\MButton;
  */
 class MOpenButton extends MButton
 {
-    public $style = "opacity";
+    public $style = "STYLE_OPACITY";
 
     public $class = [
         "yt-uix-button-reverse",
@@ -81,6 +81,6 @@ class MOpenButton extends MButton
         }
 
         $this->setText($label);
-        $this->content->arrow = true;
+        $this->hasArrow = true;
     }
 }

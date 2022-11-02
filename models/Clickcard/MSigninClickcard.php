@@ -22,7 +22,7 @@ class MSigninClickcard extends MAbstractClickcard
             "heading" => $heading,
             "message" => $message,
             "button" => new MButton([
-                "style" => "primary",
+                "style" => "STYLE_PRIMARY",
                 "class" => ["signin-button"],
                 "anchor" => true,
                 "href" => $button["href"] ?? null,

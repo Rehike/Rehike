@@ -14,11 +14,8 @@ class MSubscriptionButton extends MButton
     /** @var string */
     public $style = "";
 
-    /** @var bool */
-    public $hasIcon = true;
-
-    /** @var bool */
-    public $noIconMarkup = true;
+    /** @var object */
+    public $icon;
 
     /** @var string[] */
     public $class = [
@@ -68,6 +65,8 @@ class MSubscriptionButton extends MButton
             "params" => "",
             "tooltip" => null
         ];
+        
+        $this->icon = (object) [];
 
         $this->disabled = $opts["isDisabled"];
         $this->branded = $opts["branded"];
@@ -102,7 +101,7 @@ class MSubscriptionButton extends MButton
         // $this->attributes["href"] = "https://accounts.google.com/ServiceLogin?hl=en&service=youtube&uilel=3&continue=http%3A%2F%2Fwww.youtube.com%2Fsignin%3Fcontinue_action%3DQUFFLUhqbm5YUkxYSGRlWHphMjAwczlsLTBlcUFzTmpnQXxBQ3Jtc0trV2hlS1FyeWExa3hJQWtuRTB5TXEyckFwVGNuajAwZU5UWXZzM0ZRR0F5X1hISm8ybmczbUdqQkp6VGExTEhrRXdLOG94NmRlbWhYQ3FQcjRiSHFNbkhWV0dBZHdyNzJ3LW9PRFcwd21sQ0dWY05OemRFZV9hZUo2TGFlY0pjaXAyMEp2aEFPcEVBSHktU3d0dEdhdy1JaWhFUU1SWVVKcm9OUGNjSHc2Sm4yZ2t2Rmx4V2NOTm1MT1NQX1lLaEZ2RjZCMGk%253D%26feature%3Dsubscribe%26action_handle_signin%3Dtrue%26next%3D%252Fchannel%252FUCuAXFkgsw1L7xaCfnd5JJOw%26hl%3Den%26app%3Ddesktop&passive=true";
 
         // i18n:
-        $this->content = (object)["runs" => [
+        $this->text = (object)["runs" => [
             (object)[
                 "text" => "Subscribe",
                 "class" => "subscribe-label"

@@ -9,21 +9,18 @@ namespace Rehike\Model\Common;
  */
 class MButton
 {
-    public $style = "default";
-    public $size = "default";
-    public $hasIcon = false;
-    public $noIconMarkup = false;
+    public $style = "STYLE_DEFAULT";
+    public $size = "SIZE_DEFAULT";
+    public $icon;
     public $tooltip;
     public $class = [];
     public $attributes = [];
-    public $accessibilityAttributes = [];
-    public $spf = false;
-    public $disabled = false;
-    public $content;
+    public $accessibility;
+    public $isDisabled = false;
 
     public function __construct($array = [])
     {
-        $this->content = (object)["runs" => []];
+        $this->text = (object)["runs" => []];
 
         foreach ($array as $key => $value)
         {
@@ -33,7 +30,7 @@ class MButton
 
     protected function setText($string)
     {
-        $this->content = (object)[
+        $this->text = (object)[
             "runs" => [(object)[
                 "text" => $string
             ]]
@@ -42,6 +39,6 @@ class MButton
 
     protected function addRun($object)
     {
-        $this->content->runs[] = $object;
+        $this->text->runs[] = $object;
     }
 }

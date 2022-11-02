@@ -69,7 +69,7 @@ class Channels4Model
                         {
                             $tabR->hidden = true;
 
-                            if ($tabR->tabRenderer->selected) $videosTab->tabRenderer->selected = true;
+                            if (@$tabR->tabRenderer->selected) $videosTab->tabRenderer->selected = true;
                         }
                     }
                 }

@@ -87,8 +87,13 @@ class MPaginatorButton extends MButton {
             $this->customAttributes["disabled"] = "True";
             $this->attributes["redirect-url"] = $url;
         } else {
-            $this->anchor = true;
-            $this->href = $url;
+            $this->navigationEndpoint = (object) [
+                "commandMetadata" => (object) [
+                    "webCommandMetadata" => (object) [
+                        "url" => $url
+                    ]
+                ]
+            ];
         }
     }
 }

@@ -4,29 +4,6 @@
     {%- for actionButton in info.actionButtons -%}
         {{ button(actionButton) }}
     {%- endfor -%}
-    {#
-    {{ button({
-        size: "default",
-        style: "opacity",
-        hasIcon: true,
-        noIconMarkup: true,
-        class: [
-            "pause-resume-autoplay",
-            "action-panel-trigger",
-            "action-panel-trigger-share"
-        ],
-        tooltip: "Share",
-        attributes: {
-            "trigger-for": "action-panel-share",
-            "button-toggle": "true"
-        },
-        content: {
-            runs: [{
-                text: "Share"
-            }]
-        }
-    }) }}
-    #}
     <div class="yt-uix-menu ">
         <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-opacity yt-uix-button-has-icon no-icon-markup pause-resume-autoplay yt-uix-menu-trigger yt-uix-tooltip" type="button" onclick=";return false;" title="More actions" aria-haspopup="true" aria-pressed="false" id="action-panel-overflow-button" role="button" aria-label="Action menu."><span class="yt-uix-button-content">More</span></button>
         <div class="yt-uix-menu-content yt-ui-menu-content yt-uix-menu-content-hidden" role="menu">

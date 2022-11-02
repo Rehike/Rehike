@@ -31,8 +31,6 @@ class MPlaylistHeader {
         $this -> metas = $priInfo -> stats;
         $this -> actions = [];
         $this -> actions[] = new MButton((object) [
-            "anchor" => true,
-            "spf" => true,
             "style" => "default",
             "size" => "default",
             "content" => (object) [
@@ -42,14 +40,19 @@ class MPlaylistHeader {
                     ]
                 ]
             ],
-            "hasIcon" => true,
-            "noIconMarkup" => true,
+            "icon" => (object) [],
             "class" => [
                 "playlist-play-all",
                 "yt-uix-button-playlist-action",
                 "play-all-icon-btn"
             ],
-            "href" => TemplateFunctions::getUrl($priInfo)
+            "navigationEndpoint" => (object) [
+                "commandMetadata" => (object) [
+                    "webCommandMetadata" => (object) [
+                        "url" => TemplateFunctions::getUrl($priInfo)
+                    ]
+                ]
+            ]
         ]);
     }
 }

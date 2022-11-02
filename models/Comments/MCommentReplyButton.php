@@ -4,8 +4,8 @@ use \Rehike\Model\Common\MButton;
 use \Rehike\TemplateFunctions;
 
 class MCommentReplyButton extends MButton {
-    public $size = "small";
-    public $style = "link";
+    public $size = "SIZE_SMALL";
+    public $style = "STYLE_LINK";
     public $class = [
         "comment-renderer-reply",
         "comment-simplebox-trigger",  
@@ -19,8 +19,7 @@ class MCommentReplyButton extends MButton {
         $this -> attributes["simplebox-params"] = $data["params"] ?? null;
         $this -> attributes["simplebox-label"] = $data["label"] ?? "";
         $this -> attributes["placeholder"] = $data["placeholder"] ?? "";
-        $this -> content = $data["text"];
-        $this -> data = json_encode($data["data"]);
+        $this -> text = $data["text"];
     }
 
     public static function fromData($data, $id) {
@@ -34,8 +33,7 @@ class MCommentReplyButton extends MButton {
             "params" => $params,
             "label" => $label,
             "placeholder" => $placeholder,
-            "text" => $text,
-            "data" => $data
+            "text" => $text
         ]);
     }
 }

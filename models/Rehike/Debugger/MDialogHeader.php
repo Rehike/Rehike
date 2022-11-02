@@ -32,9 +32,8 @@ class MDialogHeader
 
 class MDialogHeaderCloseButton extends MButton
 {
-    public $style = "opacity";
-    public $hasIcon = true;
-    public $icon = "close";
+    public $style = "STYLE_OPACITY";
+    public $icon;
 
     public $class = [
         "rebug-close-button"
@@ -47,5 +46,8 @@ class MDialogHeaderCloseButton extends MButton
         $i18n = &i18n::getNamespace("rebug");
 
         $this->tooltip = $i18n->debuggerClose;
+        $this->icon = (object) [
+            "iconType" => "CLOSE"
+        ];
     }
 }

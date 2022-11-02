@@ -10,13 +10,9 @@ class MShareTabBar {
     public function __construct($tabs) {
         for ($i = 0; $i < count($tabs); $i++) {
             $this -> tabs[] = new MButton([
-                "style" => "text",
-                "content" => (object) [
-                    "runs" => [
-                        (object) [
-                            "text" => $tabs[$i] -> text ?? ""
-                        ]
-                    ]
+                "style" => "STYLE_TEXT",
+                "text" => (object) [
+                    "simpleText" => $tabs[$i] -> text ?? ""
                 ],
                 "class" => [
                     "share-panel-" . $tabs[$i] -> type,

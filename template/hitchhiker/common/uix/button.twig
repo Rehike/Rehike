@@ -1,5 +1,5 @@
-{%- macro render(data, id) -%}
-    {% set wrapped = _self._buttonWrapper(data, id) %}
+{%- macro render(data, styleOverride, id) -%}
+    {% set wrapped = _self._buttonWrapper(data, styleOverride, id) %}
     {%- if data.clickcard and not data.manualClickcardWrapper -%}
         {% from "/common/uix/clickcard_wrapper.twig" import render as clickcard %}
         {{ clickcard(data.clickcard, wrapped) }}
@@ -14,22 +14,28 @@
     {%- endif -%}
 {%- endmacro -%}
 
-{%- macro _buttonWrapper(data, id) -%}
-    <{{ data.anchor ? "a" : "button" }} 
+{%- macro _buttonWrapper(data, styleOverride, id) -%}
+    {%- set hasUrl = getUrl(data) != "" -%}
+    <{{ hasUrl ? "a" : "button" }} 
         {% if data.href %}
         href="{{ data.href }}"
+        {% elseif hasUrl %}
+        href="{{ getUrl(data) }}"
         {% endif %}
         class="yt-uix-button 
-        yt-uix-button-size-{{ data.size }} 
-        yt-uix-button-{{ data.style }} 
-        {% if data.content.runs is empty %}
+        yt-uix-button-size-{{ resolveSize(data.size) }} 
+        yt-uix-button-{{ styleOverride ?? resolveStyle(data.style) }} 
+        {% if data.text.runs is empty %}
             yt-uix-button-empty
         {% endif %}
-        {% if data.hasIcon %}
+        {% if data.icon %}
             yt-uix-button-has-icon 
-            {% if data.noIconMarkup %}
+            {% if not data.icon.iconType %}
                 no-icon-markup 
             {% endif %}
+        {% endif %}
+        {% if hasUrl %}
+            spf-link
         {% endif %}
         {% if data.menu %}
             yt-uix-menu-trigger
@@ -47,9 +53,9 @@
             yt-uix-tooltip 
         {% endif %}" 
         type="button" 
-        {% if data.href and not data.anchor %}
+        {% if data.href %}
         onclick=";window.location.href=this.getAttribute('href');return false;"
-        {% elseif not data.anchor %}
+        {% elseif not hasUrl %}
         onclick=";return false;"
         {% endif %}
         {% if data.tooltip %} 
@@ -77,23 +83,25 @@
             disabled=""
         {% endif %}
     >
-        {%- if data.hasIcon and not data.noIconMarkup -%}
+        {%- if data.icon.iconType -%}
             <span class="yt-uix-button-icon-wrapper">
-                <span class="yt-uix-button-icon yt-uix-button-icon-{{ data.icon }} yt-sprite"></span>
+                <span class="yt-uix-button-icon yt-uix-button-icon-{{ const2class(data.icon.iconType) }} yt-sprite"></span>
             </span>
         {%- endif -%}
-        {{ data.content and not data.content is empty ? _self._buttonContent(data) }}
-    </{{ data.anchor ? "a" : "button" }}>
+        {%- apply spaceless -%}
+        {{ data.text and not data.text is empty ? _self._buttonContent(data) }}
+        {%- endapply -%}
+    </{{ hasUrl ? "a" : "button" }}>
 {%- endmacro -%}
 
 {%- macro _buttonContent(data) -%}
     {%- apply spaceless -%}
     <span class="yt-uix-button-content">
     {%- endapply -%}
-        {%- if data.content.simpleText -%}
-        {{ data.content.simpleText }}
+        {%- if data.text.simpleText -%}
+        {{ data.text.simpleText }}
         {%- else -%}
-        {%- for run in data.content.runs -%}
+        {%- for run in data.text.runs -%}
             {%- if not run.class and not run.accessibilityLabel -%}
                 {{ run.text }}
             {%- else -%}
@@ -103,7 +111,7 @@
             {%- endif -%}
         {%- endfor -%}
         {%- endif -%}
-        {%- if data.content.arrow -%}
+        {%- if data.hasArrow -%}
                 <span class="yt-uix-button-arrow yt-sprite"></span>
         {%- endif -%}
     {%- apply spaceless -%}

@@ -206,9 +206,8 @@ class MOwner
 class MActionButton extends MButton
 {
     // Define default button properties.
-    public $style = "opacity";
-    public $hasIcon = true;
-    public $noIconMarkup = true;
+    public $style = "STYLE_OPACITY";
+    public $icon;
     public $class = [
         "pause-resume-autoplay"
     ];
@@ -216,6 +215,8 @@ class MActionButton extends MButton
     public function __construct($data)
     {
         parent::__construct([]);
+
+        $this->icon = (object) [];
 
         // Set the button data as provided.
         $this->setText($data["label"] ?? "");
@@ -292,9 +293,9 @@ class MActionButton extends MButton
 
         // Look in "flexible items"
         if (!is_null($flexibleItems)) for ($i = 0; $i < count($flexibleItems); $i++) {
-            $curIconType = $flexibleItems[$i] -> menuFlexibleItemRenderer -> menuItem -> menuServiceItemRenderer -> icon -> iconType ?? null;
+            $curIconType = $flexibleItems[$i] -> menuFlexibleItemRenderer -> topLevelButton -> buttonRenderer -> icon -> iconType ?? null;
             if (!is_null($curIconType) && $curIconType == $iconType) {
-                return $flexibleItems[$i] -> menuFlexibleItemRenderer -> menuItem -> menuServiceItemRenderer;
+                return $flexibleItems[$i] -> menuFlexibleItemRenderer -> topLevelButton -> buttonRenderer;
             }
         }
 
@@ -459,8 +460,7 @@ class MLikeButtonRendererButton extends MToggleButton
     protected $hideNotToggled = true;
 
     public $style = "opacity";
-    public $hasIcon = true;
-    public $noIconMarkup = true;
+    public $icon;
     public $attributes = [
         "orientation" => "vertical",
         "position" => "bottomright",
@@ -470,6 +470,8 @@ class MLikeButtonRendererButton extends MToggleButton
     public function __construct($type, $active, $count, $state)
     {
         parent::__construct($state);
+
+        $this -> icon = (object) [];
 
         $class = "like-button-renderer-" . $type;
         $this->class[] = $class;
