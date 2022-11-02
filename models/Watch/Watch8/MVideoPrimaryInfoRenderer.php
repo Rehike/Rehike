@@ -167,7 +167,7 @@ class MOwner
     {
         $secInfo = &$dataHost::$secondaryInfo;
         $info = $secInfo->owner->videoOwnerRenderer;
-        
+        $i18n = i18n::getNamespace("watch/primary");
 
         if (isset($info))
         {
@@ -189,24 +189,7 @@ class MOwner
             } else if (isset($secInfo -> subscribeButton -> subscribeButtonRenderer)) {
                 $this->subscriptionButtonRenderer = MSubscriptionActions::fromData($secInfo -> subscribeButton -> subscribeButtonRenderer, $subscribeCount);
             } else if (isset($secInfo -> subscribeButton -> buttonRenderer)) { // channel settings button
-                $this->channelSettingsButtonRenderer = new MButton((object) [
-                    "style" => "default",
-                    "size" => "default",
-                    "content" => (object) [
-                        "runs" => [
-                            (object) [
-                                "text" => "Channel settings" // TODO: i18n
-                            ]
-                        ]
-                    ],
-                    "hasIcon" => true,
-                    "noIconMarkup" => true,
-                    "anchor" => true,
-                    "href" => "/advanced_settings",
-                    "class" => [
-                        "channel-settings-link"
-                    ]
-                ]);
+                $this->subscriptionButtonRenderer = MSubscriptionActions::buildMock(true, $subscribeCount);
             }
         }
     }

@@ -34,7 +34,8 @@ class MSubscriptionActions
             "params" => "",
             "subscribeText" => $i18n -> get("subscribeText"),
             "subscribedText" => $i18n -> get("subscribedText"),
-            "unsubscribeText" => $i18n -> get("unsubscribeText")
+            "unsubscribeText" => $i18n -> get("unsubscribeText"),
+            "tooltip" => null
         ];
 
         if ($opts["showCount"])
@@ -49,7 +50,8 @@ class MSubscriptionActions
             "type" => $opts["type"],
             "branded" => $opts["branded"],
             "channelExternalId" => $opts["channelExternalId"],
-            "params" => $opts["params"]
+            "params" => $opts["params"],
+            "tooltip" => $opts["tooltip"]
         ]);
 
         if ($opts["longText"])
@@ -62,8 +64,6 @@ class MSubscriptionActions
 
     public static function fromData($data, $count = "", $branded = true)
     {
-
-
         return new self([
             "branded" => $branded,
             "longText" => $count,
@@ -77,14 +77,17 @@ class MSubscriptionActions
         ]);
     }
 
-    public static function buildMock($branded = true)
+    public static function buildMock($count = "", $branded = true)
     {
+        $i18n = i18n::getNamespace("main/misc");
+
         return new self([
             "isDisabled" => true,
             "isSubscribed" => false,
-            "longText" => "",
-            "shortText" => "",
-            "branded" => $branded
+            "longText" => $count,
+            "shortText" => $count,
+            "branded" => $branded,
+            "tooltip" => $i18n -> selfSubscribeTooltip
         ]);
     }
 }

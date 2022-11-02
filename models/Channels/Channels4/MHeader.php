@@ -75,6 +75,19 @@ class MHeader
                 $a, $count
             );
         }
+        // Channel owner
+        elseif (isset($header->editChannelButtons))
+        {
+            if (isset($header->subscriberCountText))
+            {
+                $count = ExtractUtils::isolateSubCnt(TF::getText($header->subscriberCountText));
+                $this->subscriptionCount = TF::getText($header->subscriberCountText);
+            }
+
+            $this->subscriptionButton =MSubscriptionActions::buildMock(
+                $count
+            );
+        }
     }
 
     public function addTabs($tabs)

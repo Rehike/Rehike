@@ -8,11 +8,7 @@ return new class extends AjaxController {
     public function onGet(&$yt, $request) {
         $action = self::findAction();
 
-        if (is_null($action)) {
-            http_response_code(400);
-            echo "{\"errors\":[]}";
-            die();
-        }
+        if (is_null($action)) self::error();
 
         switch ($action) {
             case "get_share_box":
@@ -26,11 +22,7 @@ return new class extends AjaxController {
      */
     private function getShareBox(&$yt, $request) {
         $this -> template = "ajax/share/get_share_box";
-        if (!isset($request -> params -> video_id)) {
-            http_response_code(400);
-            echo "{\"errors\":[]}";
-            die();
-        }
+        if (!isset($request -> params -> video_id)) self::error();
         $videoId = $request -> params -> video_id;
 
         Request::queueInnertubeRequest("get_share_box", "next", (object) [

@@ -29,7 +29,7 @@ class AjaxRelatedController extends AjaxController {
         ];
 
         if (!isset($_GET["continuation"])) {
-            die("{\"name\":\"other\"}");
+            die('{"name":"other"}');
         }
 
         $response = Request::innertubeRequest(

@@ -3,6 +3,7 @@ namespace Rehike\Model\Watch\Watch8;
 
 use \Rehike\Model\Watch\Watch7\MVideoDiscussionRenderer;
 use \Rehike\Model\Watch\Watch7\MVideoDiscussionNotice;
+use \Rehike\i18n;
 
 /**
  * Implements the watch8 subcontroller for the watch model
@@ -95,6 +96,8 @@ class Watch8Subcontroller
         // Get data from the reference in the datahost
         $origResults = &self::MASTER::$secondaryResults;
         $response = [];
+        $i18n = i18n::newNamespace("watch/sec_results");
+        $i18n -> registerFromFolder("i18n/watch");
 
         if (isset($origResults->results))
         {
@@ -129,10 +132,13 @@ class Watch8Subcontroller
                     $autoplayIndex = self::getRecomAutoplay($recomsList);
 
                     // Move autoplay video to its own object
-                    $autoplayRenderer = (object)[
-                        "results" => [ $recomsList[$autoplayIndex] ]
+                    $compactAutoplayRenderer = (object)[
+                        "contents" => [ $recomsList[$autoplayIndex] ],
+                        "infoText" => $i18n -> autoplayInfoText,
+                        "title" => $i18n -> autoplayTitle,
+                        "toggleDesc" => $i18n -> autoplayToggleDesc
                     ];
-                    $response += ["autoplayRenderer" => $autoplayRenderer];
+                    $response += ["compactAutoplayRenderer" => $compactAutoplayRenderer];
 
                     // Remove the original reference to prevent it from 
                     // rendering twice

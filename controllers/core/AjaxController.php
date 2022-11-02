@@ -22,4 +22,9 @@ abstract class AjaxController extends NirvanaController {
         }
         return null;
     }
+
+    protected static function error() {
+        http_response_code(400);
+        die('{"errors":[]}');
+    }
 }

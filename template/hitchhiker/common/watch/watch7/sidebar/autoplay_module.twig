@@ -1,11 +1,12 @@
 {% import '/common/watch/watch7/sidebar/macros.twig' as sidebar %}
+{% set autoplay = secondaryResults.compactAutoplayRenderer %}
 <div class="autoplay-bar">
     <div class="checkbox-on-off">
-        <label for="autoplay-checkbox">Autoplay</label>
+        <label for="autoplay-checkbox">{{ autoplay.toggleDesc }}</label>
         <span class="autoplay-hovercard yt-uix-hovercard">
             <span class="autoplay-info-icon yt-uix-button-opacity yt-uix-hovercard-target yt-sprite" data-orientation="vertical" data-position="topright"></span>
             <span class="yt-uix-hovercard-content">
-                When autoplay is enabled, a suggested video will automatically play next.
+                {{ autoplay.infoText }}
             </span>
         </span>
         <span class="yt-uix-checkbox-on-off ">
@@ -16,9 +17,9 @@
         </span>
     </div>
     <h4 class="watch-sidebar-head">
-        Up next
+        {{ autoplay.title }}
     </h4>
     <div class="watch-sidebar-body">
-        {{ sidebar.video_list(secondaryResults.autoplayRenderer.results) }}
+        {{ sidebar.video_list(autoplay.contents) }}
     </div>
 </div>

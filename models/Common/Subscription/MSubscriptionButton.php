@@ -65,7 +65,8 @@ class MSubscriptionButton extends MButton
             "type" => "FREE",
             "branded" => "true",
             "channelExternalId" => "",
-            "params" => ""
+            "params" => "",
+            "tooltip" => null
         ];
 
         $this->disabled = $opts["isDisabled"];
@@ -75,6 +76,8 @@ class MSubscriptionButton extends MButton
         $this->type = $opts["type"];
         $this->attributes["channel-external-id"] = $opts["channelExternalId"];
         $this->attributes["params"] = $opts["params"];
+
+        $this->tooltip = $opts["tooltip"];
 
         if ($this->subscribed) {
             $this->style .= "subscribed";

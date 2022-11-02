@@ -19,39 +19,18 @@ return new class extends AjaxController {
                 $ytdata = self::removeSubscriptions();
                 break;
             default:
-                http_response_code(400);
-                echo json_encode((object) [
-                    "errors" => []
-                ]);
-                die();
+                self::error();
                 break;
         }
 
-        if (is_null($ytdata)) {
-            http_response_code(400);
-            echo json_encode((object) [
-                "errors" => []
-            ]);
-            die();
-        }
+        if (is_null($ytdata)) self::error();
 
         if (!isset($ytdata -> error)) {
             http_response_code(200);
             echo json_encode((object) [
                 "response" => "SUCCESS"
             ]);
-        } else {
-            $errors = (object) [
-                "errors" => []
-            ];
-
-            for ($i = 0; $i < count($ytdata -> error -> errors); $i++) {
-                $errors[] = $ytdata -> error -> errors[$i] -> message ?? null;
-            }
-
-            http_response_code(400);
-            echo json_encode($errors);
-        }
+        } else self::error();
     }
 
     /**

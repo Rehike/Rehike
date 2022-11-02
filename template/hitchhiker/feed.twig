@@ -1,0 +1,74 @@
+{% extends "core.twig" %}
+{% import 'core/macros.twig' as core %}
+{% import 'common/appbar/appbar_nav.twig' as appbar_nav %}
+
+{% set pageType = 'feed' %}
+{% set pageName = 'feed' %}
+
+{% set appbarEnabled = true %}
+{% set defaultGuideVisibility = true %}
+{% set defaultAppbarVisibility = not yt.appbar.nav is empty %}
+{% set enableSnapScaling = true %}
+
+{%- block title -%}
+{%- if yt.page.title -%}
+{{ yt.page.title }} - {{ parent() }}
+{%- else -%}
+{{ parent() }}
+{%- endif -%}
+{% endblock %}
+
+{% block foot_scripts %}
+<script>
+  yt.setConfig('ANGULAR_JS', "\/yts\/jslib\/angular.min-vflWkvD5q.js");
+  yt.setConfig('TRANSLATIONEDITOR_JS', "\/yts\/jsbin\/www-translationeditor-vflugm3V9\/www-translationeditor.js");
+  yt.setMsg('UNSAVED_CHANGES_WARNING', "Some of the changes you have made to channel settings have not been saved and will be lost if you navigate away from this page.");
+
+  yt.setConfig(
+    'JS_PAGE_MODULES', [
+    'www/feed',
+    'www/ypc_bootstrap'
+  ]);
+
+
+
+
+  yt.setConfig('DISMISS_THROUGH_IT', true);
+
+
+  yt.setConfig({
+    'GUIDE_SELECTED_ITEM': "{{ serialiseEndpoint(yt.currentEndpoint) }}"
+  });
+
+  yt.setConfig({
+    'GUIDED_HELP_LOCALE': "en_US",
+    'GUIDED_HELP_ENVIRONMENT': "prod"
+  });
+
+</script>
+{% endblock %}
+
+{%- block appbarContent -%}
+    {%- if not yt.appbar.nav is empty -%}
+    {{ appbar_nav.render(yt.appbar.nav) }}
+    {%- endif -%}
+{% endblock %}
+
+{%- block head_css -%}
+{{ core.css('www-home-c4') }}
+{% endblock %}
+
+{% block content %}
+    {% embed 'common/channels4/branded_page_v2.twig' %}
+        {% set brandedPageConfig = {
+            'baseBoldTitles': true,
+            'containerFlexWidth': true,
+            'hasTopRow': true,
+            'secondaryColumnHidden': true
+        } %}
+        {% block branded_page_primary_column_content %}
+        {% from "common/browse/main.twig" import render as browse %}
+        {{ browse(yt.page.content) }}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}

@@ -6,23 +6,24 @@ return new class extends AjaxController {
     public $template = "ajax/feed/get_notifications";
 
     public function onGet(&$yt, $request) {
-        if (!@$yt->signin["isSignedIn"]) { // feed_ajax is ONLY used signed in
-            echo json_encode((object)["errors"=>["You must be signed in"]]);
-            die();
-        }
+        if (!@$yt->signin["isSignedIn"]) self::error();
 
         $action = self::findAction();
 
         if (@$action == "get_unseen_notification_count") {
-            $this -> template = "ajax/feed/get_unseen_notification_count";
+            $this -> useTemplate = false;
 
             $response = Request::innertubeRequest("notification/get_unseen_count");
             $ytdata = json_decode($response);
 
             $updateAction = $ytdata->actions[0]->updateNotificationsUnseenCountAction;
 
-            $yt->unseenCount = $updateAction->unseenCount ?? $ytdata->unseenCount ?? null;
-            $yt->pollingTimeout = $updateAction->timeoutMs ?? 1800000;
+            echo json_encode((object) [
+                "unseen_notification_count" => $updateAction->unseenCount ?? $ytdata->unseenCount ?? null,
+                "timestamp_lower_bound" => 0,
+                "high_priority_notification_timeout_ms" => 3000,
+                "polling_timeout" => $updateAction->timeoutMs ?? 1800000
+            ]);
         } elseif (@$action == "continuation") {
             $this -> template = "ajax/feed/continuation";
             
@@ -57,6 +58,8 @@ return new class extends AjaxController {
     }
 
     public function onPost(&$yt, $request) {
+        if (!@$yt->signin["isSignedIn"]) self::error();
+
         $this -> spfIdListeners = [
             "yt-masthead-notifications-content"
         ];

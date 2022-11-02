@@ -65,7 +65,7 @@ class Channels4Model
                         {
                             $videosTab = &$tabR;
                         }
-                        else if (stripos($tabEndpoint, "/streams"))
+                        else if (stripos($tabEndpoint, "/streams") || stripos($tabEndpoint, "/shorts"))
                         {
                             $tabR->hidden = true;
 

@@ -11,6 +11,6 @@
     {% set last = data.contents|last %}
     {% if last.continuationItemRenderer %}
         {% from 'common/uix/load_more_button.twig' import render as load_more %}
-        {{ load_more(last.continuationItemRenderer.continuationEndpoint.continuationCommand.token, "browse-items-primary") }}
+        {{ load_more(last.continuationItemRenderer.continuationEndpoint.continuationCommand.token, "section-list-" ~ rid) }}
     {% endif %}
 {%- endmacro -%}

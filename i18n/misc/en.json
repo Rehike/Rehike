@@ -7,5 +7,6 @@
     "dateTextPrivate": "Uploaded on %s",
     "subscribeText": "Subscribe",
     "subscribedText": "Subscribed",
-    "unsubscribeText": "Unsubscribe"
+    "unsubscribeText": "Unsubscribe",
+    "selfSubscribeTooltip": "No need to subscribe to yourself!"
 }

@@ -3,53 +3,67 @@ namespace Rehike\Util;
 
 class RichShelfUtils {
     public static function reformatResponse($response) {
-        if ($items = @$response -> onResponseReceivedActions[0] -> appendContinuationItemsAction -> continuationItems) {
-            $contents = [];
-            for ($i = 0; $i < count($items); $i++) if (isset($items[$i]->richSectionRenderer->content->richShelfRenderer)) {
-                $contents[] = self::reformatShelf($items[$i]);
-            }
-            $response -> contents = $contents;
-            unset($response -> onResponseReceivedActions);
+        if (!isset($response -> onResponseReceivedActions)) return $response;
+
+        $contents = [];
+        foreach ($response -> onResponseReceivedActions as $action)
+        if (isset($action -> appendContinuationItemsAction -> continuationItems)) 
+        foreach ($action -> appendContinuationItemsAction -> continuationItems as $item)
+        if (isset($item -> richSectionRenderer -> content -> richShelfRenderer)) {
+            $contents[] = self::reformatShelf($item);
         }
-        return $response;
+        
+        return (object) [
+            "sectionListRenderer" => (object) [
+                "contents" => $contents
+            ]
+        ];
     }
 
     public static function reformatShelf($shelf) {
-        if ($richShelf = @$shelf -> richSectionRenderer -> content -> richShelfRenderer) {
-            $response = (object) [];
-            $response -> title = $richShelf -> title ?? null;
-            $response -> titleAnnotation = $richShelf -> subtitle ?? null;
-            $response -> thumbnail = $richShelf -> thumbnail ?? null;
-            $response -> endpoint = $richShelf -> endpoint ?? null;
-            $contents = [];
+        if (!isset($shelf -> richSectionRenderer -> content -> richShelfRenderer)) return $shelf;
 
-            for ($i = 0; $i < count($richShelf -> contents); $i++) {
-                $contents[] = self::reformatShelfItem($richShelf -> contents[$i]);
-            }
+        $richShelf = $shelf -> richSectionRenderer -> content -> richShelfRenderer;
+        $response = (object) [];
+        $response -> title = $richShelf -> title ?? null;
+        $response -> titleAnnotation = $richShelf -> subtitle ?? null;
+        $response -> thumbnail = $richShelf -> thumbnail ?? null;
+        $response -> endpoint = $richShelf -> endpoint ?? null;
+        $response -> menu = $richShelf -> menu ?? null;
+        $contents = [];
 
-            $response -> content = (object) [
-                "horizontalListRenderer" => (object) [
-                    "items" => $contents
-                ]
-            ];
+        foreach($richShelf -> contents as $item)
+            $contents[] = self::reformatShelfItem($item);
 
-            return (object) [
-                "itemSectionRenderer" => (object) [
-                    "contents" => [
-                        (object) [
-                            "shelfRenderer" => $response
-                        ]
+        $response -> content = (object) [
+            "horizontalListRenderer" => (object) [
+                "items" => $contents
+            ]
+        ];
+
+        return (object) [
+            "itemSectionRenderer" => (object) [
+                "contents" => [
+                    (object) [
+                        "shelfRenderer" => $response
                     ]
                 ]
-            ];
-        }
+            ]
+        ];
+
         return $shelf;
     }
 
     public static function reformatShelfItem($item) {
-        if ($tmp = @$item -> richItemRenderer -> content) {
-            return $tmp;
+        if (isset($item -> richItemRenderer -> content)) {
+            foreach ($item -> richItemRenderer -> content as $key => $val) {
+                $name = "grid" . ucfirst($key);
+                return (object) [
+                    $name => $val
+                ];
+            }
+        } else {
+            return $item;
         }
-        return $item;
     }
 }

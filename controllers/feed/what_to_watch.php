@@ -20,11 +20,9 @@ use Rehike\Model\Feed\MFeedAppbarNav;
  * @version 1.0.20220805
  */
 class FeedWhatToWatchController extends NirvanaController {
-    const BROWSE_ID              = 'FEwhat_to_watch';
-    const STYLE_SHELVES_TEMPLATE = 'feed/what_to_watch';
-    const STYLE_GRIDDED_TEMPLATE = 'feed/what_to_watch_grid';
+    const BROWSE_ID = 'FEwhat_to_watch';
 
-    public $template;
+    public $template = "feed/what_to_watch";
 
     public function onGet(&$yt, $request) {
         $this->useJsModule('www/feed');
@@ -32,19 +30,7 @@ class FeedWhatToWatchController extends NirvanaController {
         $yt->enableFooterCopyright = true;
         $yt->appbar->nav = new MFeedAppbarNav(self::BROWSE_ID);
 
-        // get style
-        if (Config::getConfigProp('useGridHomeStyle' ?? false))
-        {
-            $this->template = self::STYLE_GRIDDED_TEMPLATE;
-
-            self::buildStyleGridded($yt);
-        }
-        else
-        {
-            $this->template = self::STYLE_SHELVES_TEMPLATE;
-
-            $yt->page = self::buildStyleShelves();
-        }
+        $yt -> page -> content = self::buildHomepage();
     }
 
     /**
@@ -52,7 +38,7 @@ class FeedWhatToWatchController extends NirvanaController {
      * 
      * @return void
      */
-    private static function buildStyleShelves() {
+    private static function buildHomepage() {
         // Initial Android request to get continuation
         Request::queueInnertubeRequest(
             "android",
@@ -89,61 +75,6 @@ class FeedWhatToWatchController extends NirvanaController {
         $response = RichShelfUtils::reformatResponse($wv2data);
 
         return $response;
-    }
-
-    /**
-     * Build the gridded home page style (without categories)
-     * 
-     * TODO(dcooper): cleanup
-     * 
-     * @param object $yt  Reference to the global context (lazy)
-     * @return void
-     */
-    private static function buildStyleGridded(&$yt) {
-        $yt->page = (object) [];
-        $yt->flow = (isset($_GET["flow"]) and $_GET["flow"] == "2") ? "list" : "grid";
-
-        $response = Request::innertubeRequest(
-            "browse", 
-            (object)[
-                "browseId" => self::BROWSE_ID
-            ]
-        );
-
-        $ytdata = json_decode($response);
-        $items = $ytdata -> contents -> twoColumnBrowseResultsRenderer -> tabs[0] -> tabRenderer -> content -> richGridRenderer -> contents;
-
-        $yt -> response = $response;
-        $yt -> videoList = [];
-
-        for ($i = 0; $i < count($items); $i++)
-        {
-            if ($content = @$items[$i]->richItemRenderer->content)
-            {
-                if ("grid" == $yt->flow)
-                {
-                    foreach ($content as $name => $value)
-                    {
-                        // Convert name formatting
-                        // videoRenderer => gridVideoRenderer
-                        $name = "grid" . ucfirst($name);
-
-                        $yt->videoList[] = (object)[$name => $value];
-                        break;
-                    }
-                }
-                else
-                {
-                    $yt->videoList[] = $content;
-                }
-            }
-            else
-            {
-                $yt->videoList[] = $items[$i];
-            }
-        }
-
-        $yt -> page -> continuation = end($yt -> videoList) -> continuationItemRenderer -> continuationEndpoint -> continuationCommand -> token ?? null;
     }
 }
 

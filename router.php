@@ -13,10 +13,13 @@ Router::funnel([
     "/embed/*",
     "/yts/*",
     "/favicon.ico",
-    "/subscribe_embed",
+    "/subscribe_embed*",
     "/login",
     "/signin",
-    "/upload"
+    "/upload",
+    "/t/*",
+    "/howyoutubeworks/*",
+    "/profile"
 ]);
 
 Router::redirect([
@@ -34,15 +37,18 @@ Router::redirect([
     "/redirect(/|?)*" => function($request) {
         if (isset($request->params->q))
             return urldecode($request->params->q);
-    }
+    },
+    "/feed/library" => "/profile"
 ]);
 
 Router::get([
-    "/" => "feed/what_to_watch",
-    "/feed/trending" => "feed/trending",
-    "/feed/history**" => "feed/history",
-    "/feed/guide_builder" => "feed/guide_builder",
-    "/feed/subscriptions" => "feed/subscriptions",
+    // "/" => "feed/what_to_watch",
+    // "/feed/trending" => "feed/trending",
+    // "/feed/history**" => "feed/history",
+    // "/feed/guide_builder" => "feed/guide_builder",
+    // "/feed/subscriptions" => "feed/subscriptions",
+    "/" => "feed",
+    "/feed/**" => "feed",
     "/debug_browse" => "debug_browse",
     "/watch" => "watch",
     "/user/**" => "channel",

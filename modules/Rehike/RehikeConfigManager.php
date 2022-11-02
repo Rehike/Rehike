@@ -16,7 +16,6 @@ class RehikeConfigManager extends ConfigManager
     public static $defaultConfig =
         [
             "useRingoBranding" => true,
-            "useGridHomeStyle" => false,
             "uploadMenuType" => "MENU",
             "versionInFooter" => true,
             "useReturnYouTubeDislike" => true,

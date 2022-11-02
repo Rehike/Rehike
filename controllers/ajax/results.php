@@ -8,13 +8,7 @@ return new class extends AjaxController {
     public function onGet(&$yt, $request) {
         $action = self::findAction();
 
-        if (@$action != "continuation") {
-            http_response_code(400);
-            echo json_encode((object) [
-                "errors" => []
-            ]);
-            exit();
-        }
+        if (@$action != "continuation") self::error();
 
         $yt -> page = (object) [];
         $yt -> page -> target = $_GET["target_id"];
