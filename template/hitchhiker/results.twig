@@ -40,16 +40,16 @@
                             {%- if yt.page.header.filters -%}
                             <div class="filter-button-container">
                                 {{ button.render({
-                                    content: {
+                                    text: {
                                         runs: [
                                             {
                                                 text: "Filters"
                                             }
                                         ],
-                                        arrow: true
                                     },
-                                    size: "small",
-                                    style: "default",
+                                    hasArrow: true,
+                                    size: "SIZE_SMALL",
+                                    style: "STYLE_DEFAULT",
                                     accessibilityLabel: "Search filters",
                                     customAttributes: {
                                         "data-button-action": "",
