@@ -30,7 +30,7 @@
         {% endif %}
         {% if data.icon %}
             yt-uix-button-has-icon 
-            {% if not data.icon.iconType %}
+            {% if not data.icon.iconType or data.icon.noIconMarkupOverride %}
                 no-icon-markup 
             {% endif %}
         {% endif %}
