@@ -2,9 +2,9 @@
 {% import "common/uix/button.twig" as btn %}
 {% if yt.signin.isSignedIn %}
 {{ btn.render({
-    size: "small",
-    style: "default",
-    icon: {},
+    size: "SIZE_SMALL",
+    style: "STYLE_DEFAULT",
+    icon: { noIconMarkupOverride: true },
     tooltip: data.isToggled ? data.toggledTooltip : data.untoggledTooltip,
     class: [
         "addto-button",
@@ -19,9 +19,9 @@
 }) }}
 {% else %}
 {{ btn.render({
-    size: "small",
-    style: "default",
-    icon: {},
+    size: "SIZE_SMALL",
+    style: "STYLE_DEFAULT",
+    icon: { noIconMarkupOverride: true },
     tooltip: data.isToggled ? data.toggledTooltip : data.untoggledTooltip,
     class: [
         "addto-button",
