@@ -189,7 +189,7 @@ class MOwner
             } else if (isset($secInfo -> subscribeButton -> subscribeButtonRenderer)) {
                 $this->subscriptionButtonRenderer = MSubscriptionActions::fromData($secInfo -> subscribeButton -> subscribeButtonRenderer, $subscribeCount);
             } else if (isset($secInfo -> subscribeButton -> buttonRenderer)) { // channel settings button
-                $this->subscriptionButtonRenderer = MSubscriptionActions::buildMock(true, $subscribeCount);
+                $this->subscriptionButtonRenderer = MSubscriptionActions::buildMock($subscribeCount);
             }
         }
     }
