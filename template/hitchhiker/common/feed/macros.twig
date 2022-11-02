@@ -44,34 +44,6 @@
                 </div>
             </div>
             {% endif %}
-            <div class="yt-uix-menu-container yt-lockup-action-menu">
-                <div class="yt-uix-menu yt-uix-menu-flipped hide-until-delayloaded">
-                    {{ button.render({
-                        size: "SIZE_DEFAULT",
-                        style: "lockup-action-menu",
-                        icon: {}
-                        menu: true,
-                        manualMenuWrapper: true
-                    }) }}
-                    <div class="yt-uix-menu-content yt-ui-menu-content yt-uix-menu-content-hidden" role="menu">
-                        <ul>
-                            {% for item in this.contextualMenu.menuRenderer.items %}
-                            {% set mitem = item.menuServiceItemRenderer %}
-                            <li role="menuitem">
-                                <div class="service-endpoint-action-container hid">
-                                    <div class="service-endpoint-replace-enclosing-action-notification hid">
-                                        <div class="replace-enclosing-action-message">Notification preference updated.</div>
-                                    </div>
-                                </div>
-                                <button class="yt-ui-menu-item yt-uix-menu-close-on-select notification-opt-out-choice">
-                                    <span class="yt-ui-menu-item-label">{{ getText(mitem.text) }}</span>
-                                </button>
-                            </li>
-                            {% endfor %}
-                        </ul>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 </li>

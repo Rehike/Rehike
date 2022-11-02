@@ -24,10 +24,7 @@ class MSubscriptionButton extends MButton
     ];
 
     /** @var string[] */
-    public $accessibilityAttributes = [
-        "live" => "polite",
-        "busy" => "false"
-    ];
+    public $accessibility;
 
     /** @var string[] */
     public $attributes = [
@@ -67,6 +64,13 @@ class MSubscriptionButton extends MButton
         ];
         
         $this->icon = (object) [];
+
+        $this->accessibility = (object) [
+            "data" => (object) [
+                "live" => "polite",
+                "busy" => "false"
+            ]
+        ];
 
         $this->disabled = $opts["isDisabled"];
         $this->branded = $opts["branded"];

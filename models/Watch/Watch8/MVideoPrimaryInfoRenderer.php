@@ -493,8 +493,10 @@ class MLikeButton extends MLikeButtonRendererButton
     {
         if ($active && is_numeric($likeCount)) $likeCount++;
 
-        $this->accessibilityAttributes = [
-            "label" => $a11y
+        $this->accessibility = (object) [
+            "data" => (object) [
+                "label" => $a11y
+            ]
         ];
 
         $this->tooltip = "I like this"; // TODO: i18n
