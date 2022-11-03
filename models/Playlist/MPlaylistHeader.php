@@ -33,7 +33,7 @@ class MPlaylistHeader {
         $this -> actions[] = new MButton((object) [
             "style" => "default",
             "size" => "default",
-            "content" => (object) [
+            "text" => (object) [
                 "runs" => [
                     (object) [
                         "text" => "Play all"
