@@ -61,7 +61,7 @@
         {% if data.tooltip %} 
             title="{{ data.tooltip }}" 
         {% endif %}
-        {% for name, value in data.accessibility.data %}
+        {% for name, value in obj2arr(data.accessibility.accessibilityData) %}
             aria-{{ name }}="{{ value }}" 
         {% endfor %}
         {% if id %}

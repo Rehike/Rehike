@@ -22,9 +22,6 @@ class MCommentVoteButton extends MButton {
     /** @var string */
     public $a11yLabel;
 
-    /** @var boolean */
-    public $checked;
-
     public function __construct($data) {
         $this -> a11yLabel = $data["a11yLabel"] ?? null;
         $this -> icon = (object) [];
