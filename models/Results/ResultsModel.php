@@ -63,25 +63,38 @@ class ResultsModel {
         if (isset($content -> itemSectionRenderer))
         foreach($content -> itemSectionRenderer -> contents as &$item)
         if (isset($item -> channelRenderer)) {
-            if (!isset($item -> channelRenderer -> badges)) {
-                $item -> channelRenderer -> badges = [];
+            $channel = &$item -> channelRenderer;
+
+            if (!isset($channel -> badges)) {
+                $channel -> badges = [];
             }
 
-            array_unshift($item -> channelRenderer -> badges, (object) [
+            array_unshift($channel -> badges, (object) [
                 "metadataBadgeRenderer" => (object) [
                     "label" => $i18n -> channelBadge,
                     "style" => "BADGE_STYLE_TYPE_SIMPLE"
                 ]
             ]);
 
-            $item -> channelRenderer -> subscriptionActions = MSubscriptionActions
-            ::fromData(
-                    $item -> channelRenderer -> subscribeButton -> subscribeButtonRenderer,
-                    ExtractUtils::isolateSubCnt(
-                        TemplateFunctions::getText($item -> channelRenderer -> subscriberCountText
-                    )),
-                    false
-            );
+            if (isset($channel -> subscribeButton -> subscribeButtonRenderer)
+            ||  isset($channel -> subscribeButton -> buttonRenderer)) {
+                $channel -> subscriptionActions = MSubscriptionActions
+                ::fromData(
+                        $channel -> subscribeButton -> subscribeButtonRenderer,
+                        ExtractUtils::isolateSubCnt(
+                            TemplateFunctions::getText($channel -> subscriberCountText
+                        )),
+                        false
+                );
+            } else {
+                $channel -> subscriptionActions = MSubscriptionActions
+                ::buildMock(
+                        ExtractUtils::isolateSubCnt(
+                            TemplateFunctions::getText($channel -> subscriberCountText
+                        )),
+                        false
+                );
+            }
         }
 
         $response -> content = $contents;

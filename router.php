@@ -1,9 +1,9 @@
 <?php
 use Rehike\ControllerV2\Router;
+use Rehike\SimpleFunnel;
 
 if (isset($_GET["enable_polymer"]) && $_GET["enable_polymer"] == "1") {
-    include("simplefunnel.php");
-    die();
+    SimpleFunnel::funnelCurrentPage(true);
 }
 
 Router::funnel([
@@ -33,7 +33,6 @@ Router::redirect([
         else
             return "/attribution";
     },
-    // TODO: Redirect confirmation page?
     "/redirect(/|?)*" => function($request) {
         if (isset($request->params->q))
             return urldecode($request->params->q);
@@ -42,11 +41,6 @@ Router::redirect([
 ]);
 
 Router::get([
-    // "/" => "feed/what_to_watch",
-    // "/feed/trending" => "feed/trending",
-    // "/feed/history**" => "feed/history",
-    // "/feed/guide_builder" => "feed/guide_builder",
-    // "/feed/subscriptions" => "feed/subscriptions",
     "/" => "feed",
     "/feed/**" => "feed",
     "/debug_browse" => "debug_browse",
