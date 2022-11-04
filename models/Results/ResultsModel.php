@@ -1,5 +1,9 @@
 <?php
 namespace Rehike\Model\Results;
+use Rehike\i18n;
+use Rehike\Model\Common\Subscription\MSubscriptionActions;
+use Rehike\Util\ExtractUtils;
+use Rehike\TemplateFunctions;
 
 class ResultsModel {
     static $yt;
@@ -13,27 +17,78 @@ class ResultsModel {
     /**
      * Bake a results page model
      *
-     * @param object $yt (global state)
-     * @param object $data from search response
+     * @param object $data           From search response
+     * @param object $paginatorInfo  Info for paginated buttons at the bottom
      */
-    public static function bake(&$yt, $data, $paginatorInfo) {
+    public static function bake($data, $paginatorInfo, $query) {
+        $i18n = i18n::newNamespace("results");
+        $i18n -> registerFromFolder("i18n/results");
+
         $response = (object) [];
         $contents = $data -> contents -> twoColumnSearchResultsRenderer -> primaryContents -> sectionListRenderer;
-        $filterHeader = $contents -> subMenu -> searchSubMenuRenderer -> groups;
-        $resultCount = $data -> estimatedResults;
-        // remove ad because it fucks up everything
-        if (isset($contents -> contents[0] -> itemSectionRenderer -> contents[0] -> promotedSparklesWebRenderer)) {
-            $contents -> contents = array_splice($contents -> contents, 1);
+        $submenu = &$contents -> subMenu -> searchSubMenuRenderer;
+        $submenu -> resultCountText = $i18n -> resultCount(number_format(self::getResultsCount($data)));
+
+        $filterCrumbs = [];
+        foreach ($submenu -> groups as $group)
+        if (isset($group -> searchFilterGroupRenderer))
+        foreach($group -> searchFilterGroupRenderer -> filters as $filter)
+        if (@$filter -> searchFilterRenderer -> status == "FILTER_STATUS_SELECTED" 
+        && isset($filter -> searchFilterRenderer -> navigationEndpoint)) {
+            $filterCrumbs[] = $filter -> searchFilterRenderer;
         }
-        $results = $contents -> contents[0] -> itemSectionRenderer -> contents;
+        $submenu -> filterCrumbs = $filterCrumbs;
 
-        if (!is_null($filterHeader)) $response -> header = new MFiltersHeader($filterHeader, $resultCount);
-        $response -> results = $results ?? null;
-        $response -> data = $data;
+        if (count($filterCrumbs) > 0) {
+            $submenu -> clearAll = (object) [
+                "simpleText" => $i18n -> filtersClear,
+                "navigationEndpoint" => (object) [
+                    "commandMetadata" => (object) [
+                        "webCommandMetadata" => (object) [
+                            "url" => "/results?search_query=$query" 
+                        ]
+                    ]
+                ]
+            ];
+        }
 
-        // paginator
-        if (isset($paginatorInfo->pagesCount) && $paginatorInfo->pagesCount > 1) {
-            $response->paginator = new MPaginator($paginatorInfo);
+        for ($i = 0; $i < count($contents -> contents); $i++)
+        if (isset($contents -> contents[$i] -> itemSectionRenderer))
+        foreach($contents -> contents[$i] -> itemSectionRenderer -> contents as $item2)
+        if (isset($item2 -> promotedSparklesTextSearchRenderer)) {
+            array_splice($contents -> contents, $i, 1);
+        }
+
+        foreach ($contents -> contents as &$content)
+        if (isset($content -> itemSectionRenderer))
+        foreach($content -> itemSectionRenderer -> contents as &$item)
+        if (isset($item -> channelRenderer)) {
+            if (!isset($item -> channelRenderer -> badges)) {
+                $item -> channelRenderer -> badges = [];
+            }
+
+            array_unshift($item -> channelRenderer -> badges, (object) [
+                "metadataBadgeRenderer" => (object) [
+                    "label" => $i18n -> channelBadge,
+                    "style" => "BADGE_STYLE_TYPE_SIMPLE"
+                ]
+            ]);
+
+            $item -> channelRenderer -> subscriptionActions = MSubscriptionActions
+            ::fromData(
+                    $item -> channelRenderer -> subscribeButton -> subscribeButtonRenderer,
+                    ExtractUtils::isolateSubCnt(
+                        TemplateFunctions::getText($item -> channelRenderer -> subscriberCountText
+                    )),
+                    false
+            );
+        }
+
+        $response -> content = $contents;
+
+        // Paginator
+        if (isset($paginatorInfo -> pagesCount) && $paginatorInfo -> pagesCount > 1) {
+            $response -> paginator = new MPaginator($paginatorInfo);
         }
 
         return $response;

@@ -9,6 +9,7 @@
     {% import "common/uix/lockup/thumb.twig" as thumb %}
     {% import "common/uix/subscription_button.twig" as subBtn %}
     {% from "common/uix/badge_list.twig" import render as badge_list %}
+    {% from "common/uix/subscription_button.twig" import render as subscription_button %}
     {% if data.info %}
         {% set info = data.info %}
         {% if data.type == "channel" %}
@@ -57,20 +58,10 @@
                         {{ getText(getDescSnippet(info))|nl2br }}
                     </div>
                     {% endif %}
-                    {% if style == "tile" and data.type == "channel" %}
-                    <div class="yt-lockup-badges">
-                        <ul class="yt-badge-list">
-                            <li class="yt-badge-item">
-                                <span class="yt-badge">Channel</span>
-                            </li>
-                        </ul>
-                    </div>
-                    {% endif %}
-                    {% if info.badges %}
                     <div class="yt-lockup-badges">
                         {{ badge_list(info.badges) }}
+                        {{ data.type == "channel" ? subscription_button(info.subscriptionActions) }}
                     </div>
-                    {% endif %}
                 </div>
             </div>
         </div>

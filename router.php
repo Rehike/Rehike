@@ -54,7 +54,7 @@ Router::get([
     "/user/**" => "channel",
     "/channel/**" => "channel",
     "/c/**" => "channel",
-    "/live_chat" => "live_chat", //"special/get_live_chat",
+    "/live_chat" => "special/get_live_chat",
     "/feed_ajax" => "ajax/feed",
     "/results" => "results",
     "/playlist" => "playlist",
@@ -68,7 +68,6 @@ Router::get([
     "/rehike/static/**" => "rehike/static_router",
     "/rehike/settings" => "/rehike/settings",
     "/share_ajax" => "ajax/share",
-    "/results_ajax" => "ajax/results",
     "/attribution" => "attribution",
     "default" => "channel"
 ]);

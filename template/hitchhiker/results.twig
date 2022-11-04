@@ -13,7 +13,8 @@
 {%- endblock -%}
 
 {%- block head_css -%}
-{{ core.css('www-results') }}
+{{ core.css("www-results") }}
+{{ core.css("www-home-c4") }}
 {% endblock %}
 
 {% block content %}
@@ -30,121 +31,95 @@
     {% block branded_page_primary_column_content %}
     {% import "common/uix/lockup.twig" as lockup %}
     {% import "common/uix/button.twig" as button %}
+    {% from "common/results/search_submenu.twig" import render as search_submenu %}
+    {% from "common/uix/button.twig" import render as button %}
     <div id="results">
-        <ol id="section-list-results" class="section-list">
-            {% if yt.page.header %}
+        <ol id="section-list-{{ generateRid() }}" class="section-list">
+            {%- if yt.page.content.subMenu -%}
             <li class="branded-page-v2-subnav-container branded-page-gutter-padding">
-                <div class="search-header yt-uix-expander yt-uix-expander-collapsed">
-                    <div class="filter-top">
-                        <div class="filter-bar-container">
-                            {%- if yt.page.header.filters -%}
-                            <div class="filter-button-container">
-                                {{ button.render({
-                                    text: {
-                                        runs: [
-                                            {
-                                                text: "Filters"
-                                            }
-                                        ],
-                                    },
-                                    hasArrow: true,
-                                    size: "SIZE_SMALL",
-                                    style: "STYLE_DEFAULT",
-                                    accessibilityLabel: "Search filters",
-                                    customAttributes: {
-                                        "data-button-action": "",
-                                        "data-button-menu-id": "some-nonexistent-menu",
-                                        "data-button-toggle": "true",
-                                    },
-                                    class: [
-                                        "filter-button",
-                                        "yt-uix-expander-head"
-                                    ]
-                                }) }}
-                            </div>
-                            {%- endif -%}
-                            <div class="filter-crumb-spacer"></div>
-                            {%- if yt.page.header.resultCount -%}
-                            <p class="num-results first-focus" tabindex="0">{{ yt.page.header.resultCount }}</p>
-                            {%- endif -%}
-                        </div>
-                    </div>
-                    {%- if yt.page.header.filters -%}
-                    <div id="filter-dropdown" class="yt-uix-expander-body">
-                        {%- for group in yt.page.header.filters -%}
-                            {%- if group.searchFilterGroupRenderer -%}
-                                {% set this = group.searchFilterGroupRenderer %}
-                                <div class="filter-col">
-                                    <h4 class="filter-col-title">{{ getText(this.title) }}</h4>
-                                    <ul>
-                                        {%- for item in this.filters -%}
-                                        {%- set thisF = item.searchFilterRenderer -%}
-                                        <li>
-                                            {%- if thisF.status == "FILTER_STATUS_SELECTED" and group.searchFilterGroupRenderer.isSort -%}
-                                            <span class="filter filter-selected filter-sort" title="{{ thisF.tooltip }}">
-                                                <span class="filter-text" aria-label="{{ thisF.tooltip }}">{{ getText(thisF.label) }}</span>
-                                            </span>
-                                            {%- elseif thisF.status == "FILTER_STATUS_DISABLED" -%}
-                                            <span class="filter filter-disabled" title="{{ thisF.tooltip }}">
-                                                <span class="filter-text" aria-label="{{ thisF.tooltip }}">{{ getText(thisF.label) }}</span>
-                                            </span>
-                                            {%- else -%}
-                                            <a href="{{ getUrl(thisF) }}" aria-label="{{ thisF.tooltip }}" class="filter {{ thisF.status == "FILTER_STATUS_SELECTED" ? "filter-selected" }} spf-link">
-                                                <span class="filter-text {{ not thisF.status == "FILTER_STATUS_SELECTED" ? "filter-ghost" }}">{{ getText(thisF.label) }}</span>
-                                                {%- if thisF.status == "FILTER_STATUS_SELECTED" -%}
-                                                <span class="yt-close">×</span>
-                                                {%- endif -%}
-                                            </a>
-                                            {%- endif -%}
-                                        </li>
-                                        {%- endfor -%}
-                                    </ul>
-                                </div>
-                            {%- endif -%}
-                        {%- endfor -%}
-                        {%- if yt.page.header.hasSelectedFilter -%}
-                        <div class="clear-filters">
-                            <a href="/results?search_query={{ yt.query }}" class="filter spf-link">Clear all filters</a>
-                        </div>
-                        {%- endif -%}
-                    </div>
-                    {%- endif -%}
-                </div>
+                {{ search_submenu(yt.page.content.subMenu.searchSubMenuRenderer) }}
             </li>
-            {% endif %}
-            {% if yt.page.results %}
-            <li>
-                <ol id="item-section-results" class="item-section">
-                    {% for result in yt.page.results %}
+            {%- endif -%}
+            {# We cannot use the item section template because of large search thumbs #}
+            {%- for section in yt.page.content.contents -%}
+                {%- if section.itemSectionRenderer -%}
+                    {%- set this = section.itemSectionRenderer -%}
                     <li>
-                        {% if yt.config.largeSearchThumbs %}
-                            {% set tw = 246 %}
-                            {% set th = 138 %}
-                        {% else %}
-                            {% set tw = 196 %}
-                            {% set th = 110 %}
-                        {% endif %}
-                        {% if result.videoRenderer or result.playlistRenderer or result.radioRenderer %}
-                            {{ lockup.tile(result, tw, th) }}
-                        {% elseif result.channelRenderer %}
-                            {{ lockup.tile(result, th, th) }}
-                        {% elseif result.backgroundPromoRenderer %}
-                            <p class="display-message">{{ getText(result.backgroundPromoRenderer.title) }}</p>
-                        {% endif %}
+                        <ol id="item-section-{{ generateRid() }}" class="item-section">
+                            {%- for item in this.contents -%}
+                            <li>
+                                {%- if item.videoRenderer
+                                    or item.playlistRenderer
+                                    or item.radioRenderer
+                                    or item.channelRenderer
+                                -%}
+                                    {{ yt.config.largeSearchThumbs
+                                    ? lockup.tile(item, 246, 138)
+                                    : lockup.tile(item)
+                                    }}
+                                {%- elseif item.shelfRenderer -%}
+                                {%- set shelf = item.shelfRenderer -%}
+                                <div class="feed-item-container browse-list-item-container yt-section-hover-contaner compact-shelf shelf-item branded-page-box clearfix">
+                                    <div class="feed-item-dismissible">
+                                        <div class="shelf-title-table">
+                                            <div class="shelf-title-row">
+                                                <h2 class="branded-page-module-title shelf-title-cell">{{ getText(shelf.title) }}</h2>
+                                            </div>
+                                        </div>
+                                        <div class="vertical-shelf">
+                                            <div class="yt-uix-expander yt-uix-expander-collapsed">
+                                                <ul class="shelf-content">
+                                                    {%- set list = shelf.content.verticalListRenderer -%}
+                                                    {%- for video in list.items -%}
+                                                                                                        {# sic lmao #}
+                                                    <li{{ loop.index > list.collapsedItemCount ? ' class="collapsable"'  }}>
+                                                        {{ yt.config.largeSearchThumbs
+                                                        ? lockup.tile(video, 246, 138)
+                                                        : lockup.tile(video)
+                                                        }}
+                                                    </li>
+                                                    {%- endfor -%}
+                                                </ul>
+                                                <div class="yt-uix-expander-head yt-uix-expander-collapsed-body">
+                                                    {{ button({
+                                                        style: "STYLE_LINK",
+                                                        size: "SIZE_DEFAULT",
+                                                        icon: true,
+                                                        tooltip: "Show more",
+                                                        class: ["vertical-shelf-expander"]
+                                                    }) }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="feed-item-dismissal-notices"></div>
+                                </div>
+                                {%- elseif item.horizontalCardListRenderer -%}
+                                {%- set list = item.horizontalCardListRenderer -%}
+                                <div class="search-refinements">
+                                    <h3>{{ getText(list.header.richListHeaderRenderer.title) }}</h3>
+                                    {%- for refinement in list.cards -%}
+                                    <div class="search-refinement">
+                                        <a href="{{ getUrl(refinement.searchRefinementCardRenderer.searchEndpoint) }}" class="spf-link">{{ getText(refinement.searchRefinementCardRenderer.query) }}</a>
+                                    </div>
+                                    {%- endfor -%}
+                                </div>
+                                {%- endif -%}
+                                {%- endfor -%}
+                            </li>
+                        </ol>
                     </li>
-                    {% endfor %}
-                </ol>
-                {% if yt.page.paginator %}
-                    <div class="branded-page-box search-pager  spf-link ">
-                        {% for btn in yt.page.paginator.items %}
-                            {{ button.render(btn) }}
-                        {% endfor %}
-                    </div>
-                {% endif %}
-            </li>
-            {% endif %}
+                {%- endif -%}
+            {%- endfor -%}
         </ol>
     </div>
+    {% if yt.page.paginator %}
+        <div class="branded-page-box search-pager  spf-link ">
+            {% for btn in yt.page.paginator.items %}
+                {{ button.render(btn) }}
+            {% endfor %}
+        </div>
+    {% endif %}
     {% endblock %}
     {% endembed %}
 {% endblock %}

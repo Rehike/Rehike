@@ -37,6 +37,7 @@ class WatchModel
     static $secondaryInfo = null;
     static $commentSection = null;
     static $liveChat = null;
+    static $engagementPanels = null;
 
     /**
      * Bake a watch page model
@@ -58,6 +59,7 @@ class WatchModel
         self::$useRyd = self::shouldUseRyd();
         self::destructureData($data->contents);
         self::$subController = self::getSubcontroller();
+        self::$engagementPanels = $data -> engagementPanels ?? null;
 
         self::$isKidsVideo = self::getIsKidsVideo(self::$secondaryInfo);
         self::$isLive = self::getIsLive(self::$primaryInfo);

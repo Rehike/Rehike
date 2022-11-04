@@ -18,8 +18,8 @@ class ResultsController extends NirvanaController {
 
     public function onGet(&$yt, $request) {
         // invalid request redirect
-        if (!isset($_GET['search_query'])) {
-            header('Location: /');
+        if (!isset($_GET["search_query"])) {
+            header("Location: /");
             die();
         }
         
@@ -29,10 +29,10 @@ class ResultsController extends NirvanaController {
         $i18n->registerFromFolder("i18n/results");
         
         $yt -> query = $_GET["search_query"] ?? null;
-        self::$query = &$yt->query;
+        self::$query = &$yt -> query;
         // used for filters
         $yt -> params = $_GET["sp"] ?? null;
-        self::$param = &$yt->params;
+        self::$param = &$yt -> params;
 
         $resultsIndex = self::getPaginatorIndex($yt->params);
 
@@ -47,7 +47,7 @@ class ResultsController extends NirvanaController {
         $paginatorInfo = self::getPaginatorInfo($resultsCount, $resultsIndex);
         //var_dump($resultsIndex, $paginatorInfo);die();
 
-        $yt -> page = ResultsModel::bake($yt, $ytdata, $paginatorInfo);
+        $yt -> page = ResultsModel::bake($ytdata, $paginatorInfo, $yt -> query);
     }
 
     public static function getPaginatorIndex($sp) {
@@ -80,9 +80,9 @@ class ResultsController extends NirvanaController {
         $pagesCount = ceil($resultsCount / $rpp);
 
         return (object) [
-            'resultsPerPage' => $rpp,
-            'pageNumber' => $pageNo,
-            'pagesCount' => $pagesCount
+            "resultsPerPage" => $rpp,
+            "pageNumber" => $pageNo,
+            "pagesCount" => $pagesCount
         ];
     }
 
@@ -100,8 +100,8 @@ class ResultsController extends NirvanaController {
         }
 
         return str_replace(
-            ['+','/','='],
-            ['-','_','%3D'],
+            ["+","/","="],
+            ["-","_","%3D"],
             base64_encode($parsed->serializeToString())
         );
     }

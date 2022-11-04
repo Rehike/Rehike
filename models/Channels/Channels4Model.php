@@ -5,8 +5,8 @@ use Rehike\Model\Channels\Channels4\MChannelAboutMetadata;
 use Rehike\Model\Channels\Channels4\BrandedPageV2\MSubnav;
 use Rehike\Model\Channels\Channels4\Sidebar\MRelatedChannels;
 use Rehike\Model\Appbar\MAppbarNavItemStatus;
-use Rehike\TemplateFunctions as TF;
 use Rehike\Model\Browse\InnertubeBrowseConverter;
+use Rehike\Request;
 
 class Channels4Model
 {
@@ -177,6 +177,15 @@ class Channels4Model
         else if (($b = @$content->sectionListRenderer->contents[0]->itemSectionRenderer) && ($c = @$b->contents[0]->backstagePostThreadRenderer))
         {
             return self::handleBackstage($b);
+        }
+        else if (isset($content->sectionListRenderer->contents[0]->itemSectionRenderer->contents[0]->channelVideoPlayerRenderer))
+        {
+            $a = &$content->sectionListRenderer->contents[0]->itemSectionRenderer->contents[0]->channelVideoPlayerRenderer;
+            Request::queueInnertubeRequest("channelPlayer", "player", (object) [
+                "videoId" => $a -> videoId
+            ]);
+            $a -> playerResponse = Request::getResponses()["channelPlayer"];
+            return $content;
         }
         else
         {
