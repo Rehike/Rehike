@@ -28,7 +28,7 @@
         </div>
         {{ core.js("www-notfound/www-notfound") }}
         <script>
-            yt.setConfig({'SBOX_JS_URL': "{{ resourcePath(ytConstants, "js", "www-searchbox/www-searchbox") }}",'SBOX_SETTINGS': {"REQUEST_DOMAIN": "us", "REQUEST_LANGUAGE": "en", "HAS_ON_SCREEN_KEYBOARD": false},'SBOX_LABELS': {"SUGGESTION_DISMISS_LABEL": "Dismiss", "SUGGESTION_DISMISSED_LABEL": "Suggestion dismissed"}});
+            yt.setConfig({'SBOX_JS_URL': "{{ jsPath("www-searchbox/www-searchbox", ytConstants) }}",'SBOX_SETTINGS': {"REQUEST_DOMAIN": "us", "REQUEST_LANGUAGE": "en", "HAS_ON_SCREEN_KEYBOARD": false},'SBOX_LABELS': {"SUGGESTION_DISMISS_LABEL": "Dismiss", "SUGGESTION_DISMISSED_LABEL": "Suggestion dismissed"}});
             yt.www.notfound.init();
           </script>
     </body>

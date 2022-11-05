@@ -1,27 +1,9 @@
-{# 
-    Ideally, these would work better as PHP functions, wouldn't they?
-    Especially that absurd cssPath macro, which can't be broken up into multiple
-    lines, making it virtually unreadable.
-
-    TODO (kirasicecreamm): Move these behaviours (just path ones?) to PHP functions.
-#}
-
-{%- macro getPath(type, name) -%}{{ resourcePath(ytConstants, type, name) }}{% endmacro %}
-
-{%- macro jsPath(name) -%}{{ _self.getPath('js', name) }}{% endmacro %}
-
-{#
-    Check if 2x is allowed and exists, else in both cases, use the main one. 
-    It is an unreadable mess...
-#}
-{%- macro cssPath(name) -%}{{ (yt.PREF.f4 starts with "4") ? (_self.getPath("css2x", name) ?? _self.getPath("css", name)) : _self.getPath("css", name) }}{% endmacro %}
-
 {%- macro js(name) -%}
-<script src="{{ _self.jsPath(name) }}" type="text/javascript" name="{{ name }}"></script>
+<script src="{{ jsPath(name, ytConstants) }}" type="text/javascript" name="{{ name }}"></script>
 {% endmacro %}
 
 {%- macro css(name) -%}
-<link rel="stylesheet" href="{{ _self.cssPath(name) }}" name="{{ name }}">
+<link rel="stylesheet" href="{{ cssPath(name, yt.PREF, ytConstants) }}" name="{{ name }}">
 {% endmacro %}
 
 {% macro sprite(sprite, alt) %}

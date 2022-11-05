@@ -9,7 +9,7 @@ set_include_path($root);
 // love taniko
 $yt = (object) [];
 
-include "resourceConstants.php";
+$ytConstants = json_decode(file_get_contents("resource_constants.json"));
 include "fatalHandler.php";
 include "boot.php";
 
