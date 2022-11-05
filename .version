@@ -1,10 +1,10 @@
 {
-	"previousHash": "dc68148d4543c56f47ceea36638b6fcc4e07c6d8",
-	"currentRevisionId": 511,
-	"subject": "Fix watch later icon",
-	"body": "Fix watch later icon",
+	"previousHash": "94eadac0a1eedb27bb8796aa61c1d8bee9d72a20",
+	"currentRevisionId": 526,
+	"subject": "remove debug stuff",
+	"body": "remove debug stuff",
 	"branch": "master",
-	"committerName": "Coffee",
-	"committerEmail": "99076687+YukisCoffee@users.noreply.github.com",
-	"time": 1667391156
+	"committerName": "aubymori",
+	"committerEmail": "aubyomori@gmail.com",
+	"time": 1667690587
 }

@@ -24,8 +24,6 @@ return new class extends NirvanaController {
             "browseId" => $request->params->browse_id
         ]);
 
-        $yt->response = $response; // Maybe remove?
-
         $page = json_decode($response);
 
         $yt->page = $page;

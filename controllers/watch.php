@@ -143,7 +143,6 @@ return new class extends NirvanaController {
 
         $response = $responses["watch"];
         $presponse = $responses["player"];
-        $yt->response = $response;
 
         $ytdata = json_decode($response);
         $playerResponse = json_decode($presponse);
