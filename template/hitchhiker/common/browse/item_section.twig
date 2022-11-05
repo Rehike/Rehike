@@ -5,44 +5,54 @@
     {% set rid = generateRid() %}
     <ol id="item-section-{{ rid }}" class="item-section">
         {%- for item in data.contents -%}
-            {%- if item.shelfRenderer -%}
-                <li>{{ shelf(item.shelfRenderer) }}</li>
-            {%- elseif item.messageRenderer -%}
-                <p class="display-message">
-                    {%- set text = item.messageRenderer.subtext.messageSubtextRenderer.text ?? item.messageRenderer.text -%}
-                    {%- if text.runs -%}
-                        {%- for run in text.runs -%}
-                            {%- if run.navigationEndpoint -%}
-                                <a href="{{ getUrl(run) }}">{{ run.text }}</a>
-                            {%- else -%}
-                                {{ run.text }}
-                            {%- endif -%}
-                        {%- endfor -%}
-                    {%- elseif text.simpleText -%}
-                        {{ text.simpleText }}
-                    {%- endif -%}
-                </p>
-            {%- elseif item.channelVideoPlayerRenderer -%}
-                {{ video_player_view_component(item.channelVideoPlayerRenderer) }}
-            {%- elseif item.channelFeaturedContentRenderer -%}
-            <div class="c4-featured-content branded-page-box">
-                <div class="yt-uix-slider yt-section-hover-container" data-disabled-slider-buttons="true">
-                    <div class="yt-uix-slider-body">
-                        <ul class="yt-uix-slider-list">
-                            {%- for content in item.channelFeaturedContentRenderer.items -%}
-                                {{ lockup.tile(content, 288, 162, {
-                                    type: "li",
-                                    class: [
-                                        "featured-content-item",
-                                        "fluid"
-                                    ]
-                                }) }}
+            <li>
+                {%- if item.shelfRenderer -%}
+                    {{ shelf(item.shelfRenderer) }}
+                {%- elseif item.messageRenderer -%}
+                    <p class="display-message">
+                        {%- set text = item.messageRenderer.subtext.messageSubtextRenderer.text ?? item.messageRenderer.text -%}
+                        {%- if text.runs -%}
+                            {%- for run in text.runs -%}
+                                {%- if run.navigationEndpoint -%}
+                                    <a href="{{ getUrl(run) }}">{{ run.text }}</a>
+                                {%- else -%}
+                                    {{ run.text }}
+                                {%- endif -%}
                             {%- endfor -%}
-                        </ul>
+                        {%- elseif text.simpleText -%}
+                            {{ text.simpleText }}
+                        {%- endif -%}
+                    </p>
+                {%- elseif item.channelVideoPlayerRenderer -%}
+                    {{ video_player_view_component(item.channelVideoPlayerRenderer) }}
+                {%- elseif item.channelFeaturedContentRenderer -%}
+                <div class="c4-featured-content branded-page-box">
+                    <div class="yt-uix-slider yt-section-hover-container" data-disabled-slider-buttons="true">
+                        <div class="yt-uix-slider-body">
+                            <ul class="yt-uix-slider-list">
+                                {%- for content in item.channelFeaturedContentRenderer.items -%}
+                                    {{ lockup.tile(content, 288, 162, {
+                                        type: "li",
+                                        class: [
+                                            "featured-content-item",
+                                            "fluid"
+                                        ]
+                                    }) }}
+                                {%- endfor -%}
+                            </ul>
+                        </div>
                     </div>
                 </div>
-            </div>
+                {%- elseif item.videoRenderer
+                        or item.playlistRenderer
+                        or item.radioRenderer
+                        or item.channelRenderer 
+                -%}
+                    <div class="branded-page-box">
+                        {{ lockup.tile(item) }}
+                    </div>
             {%- endif %}
+            </li>
         {%- endfor -%}
     </ol>
 {%- endmacro -%}

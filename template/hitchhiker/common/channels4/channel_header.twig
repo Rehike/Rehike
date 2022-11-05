@@ -101,7 +101,16 @@
                 {% elseif item.expandableTabRenderer %}
                     {% set item = item.expandableTabRenderer %}
                     <li class="">
-                        <div id="channel-search" ><button class="show-search epic-nav-item secondary-nav" title="Search Channel"><span class="epic-nav-item-heading-icon search-icon yt-sprite"></span></button><form class="search-form epic-nav-item secondary-nav" action="{{ item.endpoint.commandMetadata.webCommandMetadata.url }}" method="get"><span class=" yt-uix-form-input-container yt-uix-form-input-text-container "><input class="yt-uix-form-input-text search-field" name="query" id="channels-search-field" type="text" value="" placeholder="Search Channel" maxlength="100" autocomplete="off"></span></form></div>
+                        <div id="channel-search" class="{{ item.selected ? "expanded" }}">
+                            <button class="show-search epic-nav-item secondary-nav" title="{{ item.title }}">
+                                <span class="epic-nav-item-heading-icon search-icon yt-sprite"></span>
+                            </button>
+                            <form class="search-form epic-nav-item secondary-nav" action="{{ getUrl(item.endpoint) }}" method="get">
+                                <span class=" yt-uix-form-input-container yt-uix-form-input-text-container">
+                                    <input class="yt-uix-form-input-text search-field" name="query" id="channels-search-field" type="text" value="{{ item.expandedText }}" placeholder="{{ item.title }}" maxlength="100" autocomplete="off">
+                                </span>
+                            </form>
+                         </div>                         
                     </li>
                 {% endif %}
             {% endfor %}

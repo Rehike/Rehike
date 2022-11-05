@@ -96,6 +96,14 @@ class Channels4Model
                         $currentTabContents = &$tab->tabRenderer->content;
                     }
                 }
+                elseif (@$tab -> expandableTabRenderer)
+                {
+                    if (@$tab->expandableTabRenderer->selected) {
+                        $baseUrl = self::$baseUrl;
+                        self::$currentTab = str_replace("$baseUrl/", "", $tabEndpoint);
+                        $currentTabContents = &$tab->expandableTabRenderer->content;
+                    }
+                }
 
                 $yt->appbar->nav->items[0]->title = $response["header"]->getTitle();
             }
@@ -177,15 +185,6 @@ class Channels4Model
         else if (($b = @$content->sectionListRenderer->contents[0]->itemSectionRenderer) && ($c = @$b->contents[0]->backstagePostThreadRenderer))
         {
             return self::handleBackstage($b);
-        }
-        else if (isset($content->sectionListRenderer->contents[0]->itemSectionRenderer->contents[0]->channelVideoPlayerRenderer))
-        {
-            $a = &$content->sectionListRenderer->contents[0]->itemSectionRenderer->contents[0]->channelVideoPlayerRenderer;
-            Request::queueInnertubeRequest("channelPlayer", "player", (object) [
-                "videoId" => $a -> videoId
-            ]);
-            $a -> playerResponse = Request::getResponses()["channelPlayer"];
-            return $content;
         }
         else
         {

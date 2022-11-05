@@ -83,7 +83,8 @@ class channel extends NirvanaController {
         // Perform InnerTube request
         Request::queueInnertubeRequest("main", "browse", (object)[
             "browseId" => $ucid,
-            "params" => Base64Url::encode($params->serializeToString())
+            "params" => Base64Url::encode($params->serializeToString()),
+            "query" => $request -> params -> query ?? null 
         ]);
 
         if (
