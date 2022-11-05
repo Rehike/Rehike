@@ -110,4 +110,23 @@ class MSubnav
 
         return new MSubnavMenuButton("flow", $activeText, $options);
     }
+
+    public static function fromData($data)
+    {
+        $i18n = &i18n::getNamespace("channels");
+
+        $baseUrl = Channels4Model::getBaseUrl();
+
+        $i = new self();
+
+        $i -> addBackButton($baseUrl);
+
+        if (count($data -> contentTypeSubMenuItems) > 1) {
+            $i -> leftButtons[] = MSubnavMenuButton::fromData($data -> contentTypeSubMenuItems);
+        } else {
+            $i -> title = $data -> contentTypeSubMenuItems[0] -> title;
+        }
+
+        return $i;
+    }
 }

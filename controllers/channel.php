@@ -80,6 +80,14 @@ class channel extends NirvanaController {
         $params = new BrowseRequestParams();
         $params->setTab($tab);
 
+        if (isset($request -> params -> shelf_id)) {
+            $params->setShelfId((int) $request -> params -> shelf_id);
+        }
+
+        if (isset($request -> params -> view)) {
+            $params->setView((int) $request -> params -> view);
+        }
+
         // Perform InnerTube request
         Request::queueInnertubeRequest("main", "browse", (object)[
             "browseId" => $ucid,

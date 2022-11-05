@@ -8,7 +8,7 @@
         {{ _self.subnav_menu_button(button) }}
     {% endfor %}
     {% if data.backButton %}
-    <a aria-label={{ data.backButton.accessibilityLabel }} class="yt-uix-button yt-uix-button-default yt-uix-button-size-default sub-menu-back-button yt-uix-button-empty yt-uix-button-has-icon  spf-link"  href={{ data.backButton.href }}><span class=yt-uix-button-icon-wrapper><span class="yt-sprite yt-uix-button-icon yt-uix-button-icon-channel-back"></span></span></a>
+    <a aria-label="{{ data.backButton.accessibilityLabel }}" class="yt-uix-button yt-uix-button-default yt-uix-button-size-default sub-menu-back-button yt-uix-button-empty yt-uix-button-has-icon  spf-link"  href="{{ data.backButton.href }}"><span class=yt-uix-button-icon-wrapper><span class="yt-sprite yt-uix-button-icon yt-uix-button-icon-channel-back"></span></span></a>
     {% endif %}
     {% if data.title %}
         <span class="branded-page-module-title">
@@ -28,11 +28,15 @@
     It's likely the channels4 developers designed it in a similar way.
 #}
 {% macro subnav_menu_button(data) %}
-<button aria-expanded=false aria-haspopup=true class="yt-uix-button yt-uix-button-default yt-uix-button-size-default subnav-{{ data.type }}-menu" data-button-menu-indicate-selected=true onclick=return!1 type=button>
-    <span class=yt-uix-button-content>{{ data.title }}</span><span class="yt-sprite yt-uix-button-arrow"></span>
-    <ul aria-haspopup=true class="hid yt-uix-button-menu yt-uix-button-menu-default"role=menu>
+<button aria-expanded="false" aria-haspopup="true" class="yt-uix-button yt-uix-button-default yt-uix-button-size-default subnav-{{ data.type }}-menu" data-button-menu-indicate-selected="true" onclick="return!1" type="button">
+    <span class="yt-uix-button-content">{{ data.title }}</span>
+    <span class="yt-sprite yt-uix-button-arrow"></span>
+    <ul aria-haspopup="true" class="hid yt-uix-button-menu yt-uix-button-menu-default" role="menu">
         {% for item in data.items %}
-        <li role=menuitem><span class="spf-link yt-uix-button-menu-item"href="{{ item.href }}"onclick='return yt.window.navigate(this.getAttribute("href")),!1'>{{ item.title }}</span>
+        <li role="menuitem">
+            <span class="spf-link yt-uix-button-menu-item" href="{{ item.href }}" onclick='return yt.window.navigate(this.getAttribute("href")),!1'>
+                {{ item.title }}
+            </span>
         {% endfor %}
     </ul>
 </button>

@@ -186,6 +186,21 @@ class Channels4Model
         {
             return self::handleBackstage($b);
         }
+        else if ($b = @$content->sectionListRenderer)
+        {
+            if ($submenu = @$b -> subMenu -> channelSubMenuRenderer)
+            {
+                $brandedPageV2SubnavRenderer = MSubnav::fromData($submenu);
+                unset($b -> subMenu);
+            }
+
+            return (object) [
+                "sectionListRenderer" => InnertubeBrowseConverter::sectionListRenderer($b, [
+                    "channelRendererUnbrandedSubscribeButton" => true
+                ]),
+                "brandedPageV2SubnavRenderer" => $brandedPageV2SubnavRenderer ?? null
+            ];
+        }
         else
         {
             return $content;
@@ -211,6 +226,15 @@ class Channels4Model
                     ];
                 }
                 break;
+            default:
+                if ($subnav = @$parentTab->sectionListRenderer->subMenu->channelSubMenuRenderer)
+                {
+                    $subnav = $subnav ?? null;
+
+                    $response += [
+                        "brandedPageV2SubnavRenderer" => MSubnav::fromData($subnav)
+                    ];
+                }
         }
 
         if ($rich && isset($_GET["flow"]) && "list" == $_GET["flow"])
@@ -222,7 +246,9 @@ class Channels4Model
         else
         {
             $response += [
-                "browseContentGridRenderer" => $data
+                "browseContentGridRenderer" => InnertubeBrowseConverter::gridRenderer($data, [
+                    "channelRendererUnbrandedSubscribeButton" => true
+                ])
             ];
         }
 

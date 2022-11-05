@@ -24,6 +24,20 @@ class MSubnavMenuButton
     {
         $this->items[] = $menu;
     }
+
+    public static function fromData($data) {
+        $items = [];
+
+        foreach ($data as $item) {
+            if ($item -> selected) {
+                $title = $item -> title;
+            } else {
+                $items[$item -> title] = $item -> endpoint -> commandMetadata -> webCommandMetadata -> url;
+            }
+        }
+
+        return new self("view", $title, $items);
+    }
 }
 
 class MSubnavMenuButtonMenu

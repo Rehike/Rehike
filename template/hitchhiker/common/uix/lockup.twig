@@ -52,16 +52,19 @@
                             {% endfor %}
                         </ul>
                     </div>
+                    {{ data.type == "channel" and style == "grid" ? subscription_button(info.subscriptionActions) }}
                     {% endif %}
                     {% if style == "tile" and getDescSnippet(info) != false %}
                     <div class="yt-lockup-description yt-ui-ellipsis yt-ui-ellipsis-2">
                         {{ getText(getDescSnippet(info))|nl2br }}
                     </div>
                     {% endif %}
+                    {%- if info.badges or (data.type == "channel" and style == "tile") -%}
                     <div class="yt-lockup-badges">
                         {{ badge_list(info.badges) }}
                         {{ data.type == "channel" ? subscription_button(info.subscriptionActions) }}
                     </div>
+                    {%- endif -%}
                 </div>
             </div>
         </{{ config.type ?? "div" }}>

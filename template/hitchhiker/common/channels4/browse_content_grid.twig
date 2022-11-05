@@ -18,7 +18,7 @@
                 or item.gridChannelRenderer
                 or item.channelRenderer
             -%}
-            <li class="channels-content-item yt-shelf-grid-item">{{ lockup.grid(item) }}</li>
+            <li class="channels-content-item yt-shelf-grid-item {{ item.channelRenderer or item.gridChannelRenderer ? "channel-shelf-item" }}">{{ lockup.grid(item) }}</li>
             {%- endif -%}
         {%- endfor -%}
     </ul>
