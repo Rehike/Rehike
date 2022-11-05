@@ -72,7 +72,7 @@ class MSubscriptionButton extends MButton
             ]
         ];
 
-        $this->disabled = $opts["isDisabled"];
+        $this->isDisabled = $opts["isDisabled"];
         $this->branded = $opts["branded"];
         $this->subscribed = $opts["isSubscribed"];
 
