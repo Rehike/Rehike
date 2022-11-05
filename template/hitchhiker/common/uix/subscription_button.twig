@@ -1,20 +1,21 @@
 {% macro render(data, class) %}
 {% from "/common/uix/button.twig" import render as button %}
-<span class="{{ class }} yt-uix-button-subscription-container {{ data.showSubscriptionPreferences ? 'with-preferences' }}">
-    {%- if data.showUnsubConfirmDialog -%}
+<span class="{{ class }} yt-uix-button-subscription-container {{ data.showSubscriptionPreferences ? "with-preferences" }}">
+    {%- if data.showUnsubConfirmDialog and data.unsubConfirmDialog -%}
         <span class="unsubscribe-confirmation-overlay-container">
             <div class="yt-uix-overlay "  data-overlay-style="primary" data-overlay-shape="tiny">
-                {% embed '/common/uix/dialog.twig' %}
+                {% embed "/common/uix/dialog.twig" %}
                 {% block dialog_content %}
+                {% from "/common/uix/button.twig" import render as button %}
                 <div class="unsubscribe-confirmation-overlay-content-container">
                     <div class="unsubscribe-confirmation-overlay-content">
                         <div class="unsubscribe-confirmation-message">
-                            Unsubscribe?
+                            {{ getText(data.unsubConfirmDialog.dialogMessages.0) }}
                         </div>
                     </div>
                     <div class="yt-uix-overlay-actions">
-                        <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-default yt-uix-overlay-close" type="button" onclick=";return false;"><span class="yt-uix-button-content">Cancel</span></button>
-                        <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-primary overlay-confirmation-unsubscribe-button yt-uix-overlay-close" type="button" onclick=";return false;"><span class="yt-uix-button-content">Unsubscribe</span></button>
+                        {{ button(data.unsubConfirmDialog.cancelButton.buttonRenderer) }}
+                        {{ button(data.unsubConfirmDialog.confirmButton.buttonRenderer) }}
                     </div>
                 </div>
                 {% endblock %}
@@ -25,7 +26,7 @@
     {% apply spaceless %}
     {{ button(data.subscriptionButton) }}
     {%- if data.showSubscriptionPreferences -%}
-        <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-default yt-uix-button-empty yt-uix-button-has-icon yt-uix-subscription-preferences-button" type="button" onclick=";return false;" aria-live="polite" aria-busy="false" aria-role="button" aria-label="Subscription preferences" data-channel-external-id="UCuAXFkgsw1L7xaCfnd5JJOw"><span class="yt-uix-button-icon-wrapper"><span class="yt-uix-button-icon yt-uix-button-icon-subscription-preferences yt-sprite"></span></span></button>
+        {{ button(data.subscriptionPreferencesButton) }}
     {% endif %}
     {%- if data.subscriberCountRenderer -%}
         {{ _self.subscriber_count(data.subscriberCountRenderer) }}
@@ -34,12 +35,12 @@
     {%- if data.showSubscriptionPreferences -%}
         <span class="subscription-preferences-overlay-container">
             <div class="yt-uix-overlay "  data-overlay-style="primary" data-overlay-shape="tiny">
-                {% embed '/common/uix/dialog.twig' %}
-                {% import '/core/spinner.twig' as spinner %}
+                {% embed "/common/uix/dialog.twig" %}
+                {% import "/core/spinner.twig" as spinner %}
                 {% block dialog_content %}
                 <div class="subscription-preferences-overlay-content-container">
                     <div class="subscription-preferences-overlay-loading ">
-                        {{ spinner.render('Loading...') }}
+                        {{ spinner.render("Loading...") }}
                     </div>
                     <div class="subscription-preferences-overlay-content"></div>
                 </div>

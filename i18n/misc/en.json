@@ -1,4 +1,9 @@
 {
+    "btnCancel": "Cancel",
+    "btnSave": "Save",
+    "showMore": "Show more",
+    "showLess": "Show less",
+    "loading": "Loading...",
     "subscriberTextSingular": "%s subscriber",
     "subscriberTextPlural": "%s subscribers",
     "viewTextSingular": "%s view",
@@ -8,5 +13,7 @@
     "subscribeText": "Subscribe",
     "subscribedText": "Subscribed",
     "unsubscribeText": "Unsubscribe",
-    "selfSubscribeTooltip": "No need to subscribe to yourself!"
+    "selfSubscribeTooltip": "No need to subscribe to yourself!",
+    "notificationPrefsTitle": "Notifications from %s",
+    "notificationPrefsLabel": "Subscription prefrences"
 }

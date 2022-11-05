@@ -83,21 +83,21 @@ class MSubscriptionButton extends MButton
         $this->tooltip = $opts["tooltip"];
 
         if ($this->subscribed) {
-            $this->style .= "subscribed";
+            $this->style .= "STYLE_SUBSCRIBED";
             $this->class[] = "hover-enabled";
             $this->attributes += ["is-subscribed" => "True"];
         } else {
-            $this->style .= "subscribe";
+            $this->style .= "STYLE_SUBSCRIBE";
         }
 
         if ($this->branded)
         {
-            $this->style .= "-branded";
+            $this->style .= "_BRANDED";
             $this->attributes["style-type"] = "branded";
         }
         else
         {
-            $this->style .= "-unbranded";
+            $this->style .= "_UNBRANDED";
             $this->attributes["style-type"] = "unbranded";
         }
 

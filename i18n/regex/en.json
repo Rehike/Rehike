@@ -4,5 +4,6 @@
     "countZero": "No",
     "subscriberCountIsolator": "/( subscribers)|( subscriber)/",
     "viewCountIsolator": "/( views)|( view)/",
-    "nonPublishCheck": "/(Premiere)|(Started)|(Streamed)/"
+    "nonPublishCheck": "/(Premiere)|(Started)|(Streamed)/",
+    "unsubChannelNameMatch": "/Unsubscribe from (.*?)\\?/"
 }

@@ -5,7 +5,7 @@
  # @author Aubrey Pankow <aubyomori@gmail.com>
  #}
 
-{% macro main(data, style, thumbX, thumbY) %}
+{% macro main(data, style, thumbX, thumbY, config) %}
     {% import "common/uix/lockup/thumb.twig" as thumb %}
     {% import "common/uix/subscription_button.twig" as subBtn %}
     {% from "common/uix/badge_list.twig" import render as badge_list %}
@@ -15,7 +15,7 @@
         {% if data.type == "channel" %}
             {% set thumbX = thumbY %}
         {% endif %}
-        <div class="yt-lockup yt-lockup-{{ style }} yt-lockup-{{ data.type }} clearfix">
+        <{{ config.type ?? "div" }} class="yt-lockup yt-lockup-{{ style }} yt-lockup-{{ data.type }} clearfix {% for class in config.class %}{{ class ~ " " }}{% endfor %}">
             <div class="yt-lockup-dismissible {{ style == "tile" ? "yt-uix-tile" }}">
                 {%- if data.type == "channel" -%}
                 {{ thumb.render(data, thumbY, thumbY) }}
@@ -64,7 +64,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </{{ config.type ?? "div" }}>
     {% endif %}
 {% endmacro %}
 
@@ -92,12 +92,12 @@
 </div>
 {% endmacro %}
 
-{% macro grid(data, thumbX = 196, thumbY = 110) %}
-    {{ _self.main(getLockupInfo(data), "grid", thumbX, thumbY) }}
+{% macro grid(data, thumbX = 196, thumbY = 110, config) %}
+    {{ _self.main(getLockupInfo(data), "grid", thumbX, thumbY, config) }}
 {% endmacro %}
 
-{% macro tile(data, thumbX = 196, thumbY = 110) %}
-    {{ _self.main(getLockupInfo(data), "tile", thumbX, thumbY) }}
+{% macro tile(data, thumbX = 196, thumbY = 110, config) %}
+    {{ _self.main(getLockupInfo(data), "tile", thumbX, thumbY, config) }}
 {% endmacro %}
 
 {# LEGACY #}

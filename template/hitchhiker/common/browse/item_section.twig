@@ -1,6 +1,7 @@
 {%- macro render(data) -%}
     {% from "common/browse/shelf.twig" import render as shelf %}
     {% from "common/channels4/video_player_view_component.twig" import render as video_player_view_component %}
+    {% import "common/uix/lockup.twig" as lockup %}
     {% set rid = generateRid() %}
     <ol id="item-section-{{ rid }}" class="item-section">
         {%- for item in data.contents -%}
@@ -23,6 +24,24 @@
                 </p>
             {%- elseif item.channelVideoPlayerRenderer -%}
                 {{ video_player_view_component(item.channelVideoPlayerRenderer) }}
+            {%- elseif item.channelFeaturedContentRenderer -%}
+            <div class="c4-featured-content branded-page-box">
+                <div class="yt-uix-slider yt-section-hover-container" data-disabled-slider-buttons="true">
+                    <div class="yt-uix-slider-body">
+                        <ul class="yt-uix-slider-list">
+                            {%- for content in item.channelFeaturedContentRenderer.items -%}
+                                {{ lockup.tile(content, 288, 162, {
+                                    type: "li",
+                                    class: [
+                                        "featured-content-item",
+                                        "fluid"
+                                    ]
+                                }) }}
+                            {%- endfor -%}
+                        </ul>
+                    </div>
+                </div>
+            </div>
             {%- endif %}
         {%- endfor -%}
     </ol>

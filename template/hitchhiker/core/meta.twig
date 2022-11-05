@@ -42,6 +42,19 @@
         content: "\002022";
         margin: 0 5px;
     }
+
+    body.yt-dialog-active {
+        overflow: visible;
+    }
+
+    /* Player overwrites this for some reason and it hides channel upsell video show more link */
+    .yt-uix-expander-ellipsis.yt-ui-ellipsis-10::before {
+        top: 0;
+    }
+
+    .yt-uix-expander-ellipsis.yt-ui-ellipsis-10 {
+        max-height: none;
+    }
 </style>
 {%- if yt.config.hhCSSFixes -%}
 <style id="hh-css-fix">
@@ -69,13 +82,29 @@
     }
 </style>
 {%- endif -%}
-<script id="yt-dialog-fix">
+<script id="hitchhiker-fix">
+    // Delegated event listener to fix some bugs with Hitchhiker
+    // that we can't be bothered to get working
     document.addEventListener("click", function(event) {
+        if (event.target.getAttribute("class").indexOf("yt-dialog-base") > -1) {
+            document.body.setAttribute("class", document.body.getAttribute("class").replace("yt-dialog-active", ""));
+            document.getElementById("yt-dialog-bg").remove();
+        }
+
+
         for (var elm = event.target; null != elm.parentElement; elm = elm.parentElement) {
             if ("getAttribute" in elm && elm.getAttribute("class")) {
+                // Fix dialogs not closing
                 if (elm.getAttribute("class").indexOf("yt-uix-overlay-close") > -1) {
                     document.body.setAttribute("class", document.body.getAttribute("class").replace("yt-dialog-active", ""));
                     document.getElementById("yt-dialog-bg").remove();
+                }
+
+                // Fix subscribe button darkening after unsubscription
+                if (elm.getAttribute("class").indexOf("overlay-confirmation-unsubscribe-button") > -1) {
+                    document.querySelectorAll(".yt-uix-subscription-button.yt-is-buffered").forEach((elm) => {
+                        elm.setAttribute("class", elm.getAttribute("class").replace("yt-is-buffered", ""));
+                    })
                 }
             }
         }

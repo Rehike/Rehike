@@ -1,0 +1,27 @@
+{%- from "common/uix/button.twig" import render as button -%}
+{
+    "content_html": {%- apply json_encode|raw -%}
+    <div class="overlay-confirmation-preferences-dialog">
+        <div class="overlay-confirmation-preferences-container">
+            <div class="overlay-confirmation-channel-info">{{ yt.page.title }}</div>
+            <div class="overlay-confirmation-content">
+                {%- for option in yt.page.options -%}
+                    <div class="overlay-confirmation-preferences-option">
+                        <label>
+                            <span class="yt-uix-form-input-radio-container {{ option.checked ? "checked" }}">
+                                <input type="radio" class="yt-uix-form-input-radio {{ option.class }}" name="overlay-confirmation-preferences-update-frequency" {{ option.checked ? 'checked="checked"' }} data-service-endpoint="{{ option.params }}">
+                                <span class="yt-uix-form-input-radio-element"></span>
+                            </span>
+                            {{ option.label }}
+                        </label>
+                    </div>
+                {%- endfor -%}
+            </div>
+        </div>
+    </div>
+    <div class="yt-uix-overlay-actions">
+        {{ button(yt.page.cancelButton) }}
+        {{ button(yt.page.saveButton) }}
+    </div>
+    {%- endapply -%}
+}

@@ -35,8 +35,27 @@ class MSubscriptionActions
             "subscribeText" => $i18n -> get("subscribeText"),
             "subscribedText" => $i18n -> get("subscribedText"),
             "unsubscribeText" => $i18n -> get("unsubscribeText"),
-            "tooltip" => null
+            "tooltip" => null,
+            "unsubConfirmDialog" => null,
+            "notificationStateId" => 3
         ];
+
+        $this->unsubConfirmDialog = $opts["unsubConfirmDialog"];
+
+        if ($a = @$this -> unsubConfirmDialog -> confirmButton -> buttonRenderer) {
+            $a -> class = [
+                "overlay-confirmation-unsubscribe-button",
+                "yt-uix-overlay-close"
+            ];
+        }
+
+        if ($a = @$this -> unsubConfirmDialog -> cancelButton -> buttonRenderer) {
+            $a -> class = [
+                "overlay-confirmation-unsubscribe-button",
+                "yt-uix-overlay-close"
+            ];
+            $a -> style = "STYLE_DEFAULT";
+        }
 
         if ($opts["showCount"])
         {
@@ -53,6 +72,8 @@ class MSubscriptionActions
             "params" => $opts["params"],
             "tooltip" => $opts["tooltip"]
         ]);
+
+        $this->subscriptionPreferencesButton = new MSubscriptionPreferencesButton($opts["channelExternalId"], $opts["notificationStateId"]);
 
         if ($opts["longText"])
         {
@@ -73,7 +94,9 @@ class MSubscriptionActions
             "params" => $data -> onSubscribeEndpoints[0] -> subscribeEndpoint -> params ?? null,
             "subscribeText" => TemplateFunctions::getText($data -> unsubscribedButtonText ?? null),
             "subscribedText" => TemplateFunctions::getText($data -> subscribedButtonText ?? null),
-            "unsubscribeText" => TemplateFunctions::getText($data -> unsubscribeButtonText ?? null)
+            "unsubscribeText" => TemplateFunctions::getText($data -> unsubscribeButtonText ?? null),
+            "unsubConfirmDialog" => $data -> onUnsubscribeEndpoints[0] -> signalServiceEndpoint -> actions[0] -> openPopupAction -> popup -> confirmDialogRenderer ?? null,
+            "notificationStateId" => $data -> notificationPreferenceButton -> subscriptionNotificationToggleButtonRenderer -> currentStateId ?? 3
         ]);
     }
 
