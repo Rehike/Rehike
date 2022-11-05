@@ -107,8 +107,6 @@ class channel extends NirvanaController {
 
         $responses = Request::getResponses();
 
-        $yt->response = $responses["main"]; // Maybe remove?
-
         $page = json_decode($responses["main"]);
 
         Channels4::registerBaseUrl($baseUrl);
