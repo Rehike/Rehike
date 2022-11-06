@@ -51,9 +51,6 @@ if (isset($_COOKIE["PREF"])) {
    ];
 }
 
-// Aubrey added this to include timestamp in ytGlobalJsConfig.twig,
-// should be moved
-$yt -> version = json_decode(file_get_contents($root . "/.version"));
 
 // Import all template functions
 foreach (glob('modules/template_functions/*.php') as $file) include $file;

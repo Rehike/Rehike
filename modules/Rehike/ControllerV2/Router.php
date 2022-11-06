@@ -120,7 +120,7 @@ class Router
                 $name = $value;
             }
 
-            if (\fnmatch($name, $_SERVER["REQUEST_URI"]))
+            if (\fnmatch($name, explode("?", $_SERVER["REQUEST_URI"])[0]))
             {
                 SimpleFunnel::funnelCurrentPage(true);
             }

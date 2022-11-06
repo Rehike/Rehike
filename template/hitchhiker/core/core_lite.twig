@@ -101,7 +101,7 @@
         {%- block head_css -%}{%- endblock -%}
         <!-- Smart CSS Insertion -->
     </head>
-    <body class="date-{{ yt.version.time|date("Ymd") }} en_US ltr lite exp-responsive exp-scrollable-guide site-center-aligned site-as-giant-card not-yt-legacy-css">
+    <body class="date-{{ yt.rehikeVersion.time|date("Ymd") }} en_US ltr lite exp-responsive exp-scrollable-guide site-center-aligned site-as-giant-card not-yt-legacy-css">
         {% if liteUseSpf %}{% include 'core/spf_module.twig' %}{% endif %}
         {%- if yt.useModularCore -%}
            {% include 'core/modular_js_v2.twig' %}

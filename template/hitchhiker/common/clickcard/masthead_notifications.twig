@@ -1,0 +1,7 @@
+{%- from "common/uix/button.twig" import render as button -%}
+<div id="yt-masthead-high-priority-notification-content"></div>
+<div id="yt-masthead-notifications-header">
+    <span id="yt-masthead-notifications-title">{{ data.title }}</span>
+    {{ button(data.button) }}
+</div>
+<div id="yt-masthead-notifications-content" class="yt-uix-scroller"></div>

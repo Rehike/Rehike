@@ -26,7 +26,6 @@ class RehikeConfigManager extends ConfigManager
             "movingThumbnails" => true,
             "guideOnWatchPage" => false,
             "hhCSSFixes" => true,
-            "accountPickerYtStudio" => true,
             "watchSidebarDates" => false
         ];
     

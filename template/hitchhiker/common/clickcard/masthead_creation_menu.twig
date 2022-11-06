@@ -1,0 +1,6 @@
+{%- from "common/uix/button.twig" import render as button -%}
+{%- for item in data.items -%}
+<div id="yt-masthead-creation-{{ item.type }}">
+    {{ button(item) }}
+</div>
+{%- endfor -%}

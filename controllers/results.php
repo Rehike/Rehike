@@ -28,8 +28,8 @@ class ResultsController extends NirvanaController {
         $i18n = &i18n::newNamespace("results");
         $i18n->registerFromFolder("i18n/results");
         
-        $yt -> query = $_GET["search_query"] ?? null;
-        self::$query = &$yt -> query;
+        $yt -> masthead -> searchbox -> query = $_GET["search_query"] ?? null;
+        self::$query = &$yt -> masthead -> searchbox -> query;
         // used for filters
         $yt -> params = $_GET["sp"] ?? null;
         self::$param = &$yt -> params;

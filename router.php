@@ -13,13 +13,14 @@ Router::funnel([
     "/embed/*",
     "/yts/*",
     "/favicon.ico",
-    "/subscribe_embed*",
+    "/subscribe_embed",
     "/login",
+    "/logout",
     "/signin",
     "/upload",
     "/t/*",
     "/howyoutubeworks/*",
-    "/profile"
+    "/create_channel"
 ]);
 
 Router::redirect([
@@ -63,6 +64,7 @@ Router::get([
     "/rehike/settings" => "/rehike/settings",
     "/share_ajax" => "ajax/share",
     "/attribution" => "attribution",
+    "/profile" => "profile",
     "default" => "channel"
 ]);
 

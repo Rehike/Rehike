@@ -1,7 +1,9 @@
 {%- macro render(data, target) -%}
-    <span class="yt-uix-clickcard">
+    <span {% if data.id %}id="{{ data.id }}" {% endif %} class="yt-uix-clickcard"
+    {% if data.cardClass %}data-card-class="{% for class in data.cardClass %}{{ class }}{{ not loop.last ? " " }}{% endfor %}"{% endif %}
+    {% if data.cardAction %}data-card-action="{{ data.cardAction }}"{% endif %}>
         {{ target }}
-        <div {% if data.id %}id="{{ data.id }}" {% endif %}class="{{ data.class }} yt-uix-clickcard-content">
+        <div {% if data.cardId %}id="{{ data.cardId }}" {% endif %}class="{{ data.class }} yt-uix-clickcard-content">
             {% 
                include "/common/clickcard/" ~ data.template ~ ".twig"
                ignore missing with {data: data.content}

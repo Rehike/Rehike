@@ -1,9 +1,10 @@
 <?php
 namespace Rehike\Controller\core;
 
-use Rehike\Model\Appbar\MAppbar as Appbar;
 use SpfPhp\SpfPhp;
+use Rehike\Model\Appbar\MAppbar as Appbar;
 use Rehike\Model\Footer\MFooter as Footer;
+use Rehike\Model\Masthead\MMasthead as Masthead;
 
 /**
  * Defines a general YouTube Nirvana controller.
@@ -52,6 +53,10 @@ abstract class NirvanaController extends HitchhikerController
         $yt->appbar = new Appbar();
         $yt->page = (object)[];
 
+        if ($this -> useTemplate) {
+            $yt -> masthead = new Masthead(true);
+            $yt -> footer = new Footer();
+        }
         $yt -> footer = new Footer();
 
         // Request appbar guide fragments if the page has the

@@ -1,0 +1,32 @@
+{%- from "common/thumb.twig" import render as thumb -%}
+{%- from "common/uix/button.twig" import render as button -%}
+<a href="{{ getUrl(data.email) }}" class="yt-masthead-picker-header yt-masthead-picker-active-account">
+    {{ getText(data.email) }}
+</a>
+<div id="yt-unlimited-member"></div>
+<div class="yt-masthead-picker-body">
+    <a href="{{ getUrl(data.photo) }}" class="yt-masthead-picker-photo-wrapper">
+        {{ thumb(data.photo.thumb) }}
+        <span class="yt-masthead-picker-photo-change">{{ getText(data.photo) }}</span>
+    </a>
+    <div class="yt-masthead-picker-info">
+        <div class="yt-masthead-picker-name" dir="ltr">
+            {{ data.username }}
+        </div>
+        <div id="yt-subscriber-count" class="yt-masthead-picker-account-subtitle">
+            {{ data.subCount }}
+        </div>
+        {%- for btn in data.buttons -%}
+        {{ button(btn) }}
+        {%- endfor -%}
+    </div>
+</div>
+<div id="yt-masthead-mulitlogin" class="yt-masthead-multilogin-users">
+    <div id="yt-delegate-accounts"></div>
+</div>
+<div id="yt-channel-switcher-link" class="clearfix"></div>
+<div class="yt-masthead-picker-footer clearfix">
+    {%- for btn in data.footer -%}
+    {{ button(btn) }}
+    {%- endfor -%}
+</div>

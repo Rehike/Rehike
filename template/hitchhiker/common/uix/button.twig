@@ -24,8 +24,8 @@
         {% endif %}
         class="yt-uix-button 
         yt-uix-button-size-{{ resolveSize(data.size) }} 
-        yt-uix-button-{{ styleOverride ?? resolveStyle(data.style) }} 
-        {% if data.text.runs is empty %}
+        {% if not data.noStyle %}yt-uix-button-{{ styleOverride ?? resolveStyle(data.style) }}{% endif %}
+        {% if data.text.runs is empty and not data.thumb %}
             yt-uix-button-empty
         {% endif %}
         {% if data.icon %}
@@ -64,8 +64,8 @@
         {% for name, value in obj2arr(data.accessibility.accessibilityData) %}
             aria-{{ name }}="{{ value }}" 
         {% endfor %}
-        {% if id %}
-            id="{{ id }}" 
+        {% if id or data.targetId %}
+            id="{{ id ?? data.targetId }}" 
         {% endif %}
         {% for name, value in data.customAttributes %}
             {{ name }}="{{ value }}" 
@@ -89,15 +89,19 @@
             </span>
         {%- endif -%}
         {%- apply spaceless -%}
-        {{ data.text and not data.text is empty ? _self._buttonContent(data) }}
+        {{ (data.text and not data.text is empty) or data.thumb ? _self._buttonContent(data) }}
         {%- endapply -%}
     </{{ hasUrl ? "a" : "button" }}>
 {%- endmacro -%}
 
 {%- macro _buttonContent(data) -%}
+    {%- from "common/thumb.twig" import render as thumb -%}
     {%- apply spaceless -%}
     <span class="yt-uix-button-content">
     {%- endapply -%}
+        {%- if data.thumb -%}
+        {{ thumb(data.thumb) }}
+        {%- endif -%}
         {%- if data.text.simpleText -%}
         {{ data.text.simpleText }}
         {%- else -%}

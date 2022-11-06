@@ -1,10 +1,10 @@
 {
-	"previousHash": "94eadac0a1eedb27bb8796aa61c1d8bee9d72a20",
-	"currentRevisionId": 526,
-	"subject": "remove debug stuff",
-	"body": "remove debug stuff",
+	"previousHash": "f29b4b48fea8e9a8ac36b87ee6865bf4e1ff82ae",
+	"currentRevisionId": 527,
+	"subject": "masthead rewrite",
+	"body": "masthead rewrite",
 	"branch": "master",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1667690587
+	"time": 1667748458
 }

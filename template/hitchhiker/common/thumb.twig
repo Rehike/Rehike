@@ -1,0 +1,18 @@
+{%- macro render(data) -%}
+{%- from "core/html/img.twig" import img -%}
+<span class="video-thumb yt-thumb yt-thumb-{{ data.width }}">
+    <span class="yt-thumb-{{ data.type }}">
+        <span class="yt-thumb-clip">
+            {{ img({
+                src: data.image,
+                width: data.width,
+                height: data.height,
+                ytImg: data.delayload,
+                delayload: data.delayload,
+                onload: data.delayload ? ";window.__ytRIL && __ytRIL(this)" : null
+            }) }}
+            <span class="vertical-align"></span>
+        </span>
+    </span>
+</span>
+{%- endmacro -%}

@@ -1,155 +1,42 @@
-{#
-   TODO (kirasicecreamm): Various cleanups, split into multiple files   
-#}
-<button id="a11y-skip-nav" class="skip-nav" data-target-id="main" tabindex="3">
-Skip navigation
-</button>
+{%- from "common/uix/button.twig" import render as button -%}
+{%- if yt.masthead.a11ySkipNav -%}
+<button id="a11y-skip-nav" class="skip-nav" data-target-id="content" tabindex="3">{{ yt.masthead.a11ySkipNav }}</button>
+{%- endif -%}
 <div id="yt-masthead">
-   <div class="yt-masthead-logo-container ">
-      {% if appbarEnabled %}
-      <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-text yt-uix-button-empty yt-uix-button-has-icon appbar-guide-toggle appbar-guide-clickable-ancestor" type="button" onclick=";return false;" id="appbar-guide-button" aria-controls="appbar-guide-menu" aria-label="Guide"><span class="yt-uix-button-icon-wrapper"><span class="yt-uix-button-icon yt-uix-button-icon-appbar-guide yt-sprite"></span></span></button>
-      <div id="appbar-main-guide-notification-container"></div>
-      {% endif %}
-      <span id="yt-masthead-logo-fragment"><a href="/" class="masthead-logo-renderer       spf-link "   id="logo-container" title="YouTube Home">  <span title="YouTube Home" class="logo masthead-logo-renderer-logo yt-sprite"></span>
-      </a></span>
-   </div>
-   <div id="yt-masthead-{{ yt.signin.isSignedIn ? 'user' : 'signin' }}">
-      {% if yt.config.uploadMenuType == "BUTTON" %}
-      <a href="//www.youtube.com/upload" class="yt-uix-button    yt-uix-button-default yt-uix-button-size-default"  id="upload-btn"><span class="yt-uix-button-content">Upload</span></a>
-      {% elseif yt.config.uploadMenuType == "ICON" %}
-      <a href="//www.youtube.com/upload" class="yt-uix-button    yt-uix-button-opacity yt-uix-button-size-default yt-uix-button-has-icon yt-uix-tooltip yt-uix-button-empty"  id="upload-btn" title="Upload" data-tooltip-text="Upload" aria-labelledby="yt-uix-tooltip567-arialabel"><span class="yt-uix-button-icon-wrapper"><span class="yt-uix-button-icon yt-uix-button-icon-material-upload yt-sprite"></span></span></a>
-      {% else %} {# creation menu is the default and should be used as the fallback for no option #}
-      <div id="yt-masthead-creation-menu" class="yt-uix-clickcard" data-card-class="yt-scrollbar yt-masthead-creation-clickcard"><button class="yt-uix-button yt-uix-button-size-default yt-uix-button-default yt-uix-button-empty yt-uix-button-has-icon no-icon-markup yt-uix-clickcard-target" type="button" onclick=";return false;" aria-haspopup="true" aria-label="Create a video or post" id="yt-masthead-creation-button" data-force-position="true" data-orientation="vertical" data-position="bottomleft" data-position-fixed="true"></button><div id="yt-masthead-creation-clickcard" class="yt-uix-clickcard-content"><div class="yt-masthead-creation-upload"><a href="/create_channel?next=%2Fupload&amp;upsell=upload" class="yt-uix-button    yt-uix-button-default yt-uix-button-size-default yt-uix-button-has-icon"  id="creation-upload-menu-item" data-upsell="upload"><span class="yt-uix-button-icon-wrapper"><span class="yt-uix-button-icon yt-uix-button-icon-creation-upload yt-sprite"></span></span><span class="yt-uix-button-content">Upload video</span></a></div><div class="yt-masthead-creation-live"><a href="/create_channel?next=%2Flivestreaming%2F&amp;upsell=live" class="yt-uix-button    yt-uix-button-default yt-uix-button-size-default yt-uix-button-has-icon"  id="creation-live-menu-item" data-upsell="live"><span class="yt-uix-button-icon-wrapper"><span class="yt-uix-button-icon yt-uix-button-icon-creation-live yt-sprite"></span></span><span class="yt-uix-button-content">Go live</span></a></div></div></div>
-      {% endif %}
-      {#
-       # Display the sign in button or user menu.
-       #}
-      {%- if yt.signin.isSignedIn -%}
-         <span id="yt-masthead-notifications" class="yt-uix-clickcard "data-card-action="yt.www.notifications.inbox.handleNotificationsClick"data-card-class="yt-scrollbar yt-notification-inbox-clickcard">
-            <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-default yt-uix-button-has-icon yt-uix-clickcard-target sb-notif-off yt-uix-tooltip" type="button" onclick=";return false;" aria-haspopup="true" id="yt-masthead-notifications-button" aria-label="Notifications" data-position="bottomleft" data-force-position="true" data-position-fixed="true" data-orientation="vertical"><span class="yt-uix-button-icon-wrapper"><span class="yt-uix-button-icon yt-uix-button-icon-bell yt-sprite"></span></span><span class="yt-uix-button-content">&zwnj;</span></button>
-            <div id="yt-masthead-notifications-clickcard" class="yt-uix-clickcard-content">
-               <div id="yt-masthead-high-priority-notification-content"></div>
-               <div id="yt-masthead-notifications-header"><span id="yt-masthead-notifications-title" role="heading">Notifications</span><a  href="/account_notifications" class="yt-uix-button    yt-uix-button-opacity yt-uix-button-size-default yt-uix-button-has-icon yt-uix-button-empty"  id="yt-masthead-notifications-settings" aria-label="Settings"><span class="yt-uix-button-icon-wrapper"><span class="yt-uix-button-icon yt-uix-button-icon-icon-account-settings yt-sprite"></span></span></a></div>
-               <div id="yt-masthead-notifications-content" class="yt-uix-scroller"></div>
-            </div>
-         </span>
-         {#
-            FIX (kirasicecreamm): Multilogin class on account picker is actually
-            a bit misleading. It only applies if the user has multiple Google
-            accounts signed in, not multiple YouTube channels.
-
-            In the case of multiple channels, they are loaded via AJAX (/delegate_account_ajax), 
-            but it's okay to do it this way (for now?) since Rehike already has the information
-            at its disposal.
-
-            Also, TODO: Implement multilogin across the Rehike signin API. The API
-            response for actual multilogin (multiple Google accounts) is currently
-            unresearched by our team, so the functionality is presently disabled. When
-            reenabling the feature in this template, please horizontal scroll through
-            #yt-masthead-account-picker (the below element) as there is a commented
-            out class that is needed for the dark grey style.
-         #}
-         <span id="yt-masthead-account-picker" class="yt-uix-clickcard" data-card-action="yt.www.masthead.handleAccountPickerClick" data-card-class="yt-masthead-account-picker-card{#-- {{ yt.signin.channelPicker|length> 1 ? " yt-masthead-multilogin" }} --#}">
-            <button class="yt-uix-button yt-uix-button-size-default yt-masthead-user-icon yt-uix-clickcard-target" type="button" onclick=";return false;" aria-label="Account profile photo that opens list of alternate accounts" aria-haspopup="true" data-position="bottomleft" data-force-position="true" data-position-fixed="true" data-orientation="vertical"><span class="yt-uix-button-content">  <span class="video-thumb  yt-thumb yt-thumb-27">
-            <span class="yt-thumb-square">
-            <span class="yt-thumb-clip">
-            <img src="{{ yt.signin.activeChannel.photo }}" aria-hidden="true" width="27" data-ytimg="1" alt="" onload=";window.__ytRIL &amp;&amp; __ytRIL(this)" height="27">
-            <span class="vertical-align"></span>
-            </span>
-            </span>
-            </span>
-            </span></button>
-            <div class="yt-masthead-account-picker yt-uix-clickcard-content">
-               <a class="yt-masthead-picker-header yt-masthead-picker-active-account" href="https://www.google.com/settings/u/0/personalinfo">
-               {{ yt.signin.googleAccount.email }}
-               </a>
-               <div id="yt-unlimited-member"></div>
-               <div class="yt-masthead-picker-body">
-                  <a class="yt-masthead-picker-photo-wrapper" href="//studio.youtube.com/channel/{{ yt.signin.ucid }}/editing/images">  <span class="video-thumb  yt-thumb yt-thumb-64">
-                  <span class="yt-thumb-square">
-                  <span class="yt-thumb-clip">
-                  <img src="{{ yt.signin.activeChannel.photo }}" aria-hidden="true" width="64" data-ytimg="1" alt="" onload=";window.__ytRIL &amp;&amp; __ytRIL(this)" height="64">
-                  <span class="vertical-align"></span>
-                  </span>
-                  </span>
-                  </span>
-                  <span class="yt-masthead-picker-photo-change">Change</span></a>
-                  <div class="yt-masthead-picker-info">
-                     <div class="yt-masthead-picker-name" dir="ltr">{{ yt.signin.activeChannel.name }}</div>
-                     <div class="yt-masthead-picker-account-subtitle" id="yt-subscriber-count">{{ yt.signin.activeChannel.byline ? yt.signin.activeChannel.byline : "&#8203;" }}</div>
-                     <a  href="{{ yt.config.accountPickerYtStudio ? "//studio.youtube.com/" : "/dashboard?o=U" }}" class="yt-uix-button  yt-masthead-picker-button yt-masthead-picker-button-primary  yt-uix-button-default yt-uix-button-size-default"><span class="yt-uix-button-content">{{ yt.config.accountPickerYtStudio ? "YouTube Studio" : "Creator Studio" }}</span></a><a  href="/account" class="yt-uix-button  yt-masthead-picker-button yt-masthead-picker-settings-button yt-uix-tooltip  yt-uix-button-default yt-uix-button-size-default yt-uix-button-has-icon yt-uix-tooltip yt-uix-button-empty"  title="YouTube settings"><span class="yt-uix-button-icon-wrapper"><span class="yt-uix-button-icon yt-uix-button-icon-icon-account-settings yt-sprite"></span></span></a>
-                  </div>
-               </div>
-               {%- if yt.signin.channelPicker|length> 1 -%}
-               <div id="yt-masthead-multilogin" class="yt-masthead-multilogin-users">
-                  {#
-                     "Delegate" is the internal name for Google+ Brand Accounts, at least by the
-                     YouTube team.
-
-                     The official implementation was to delayload this fragment until the account menu
-                     was opened, requesting /delegate_account_ajax, which seems to be similar to a
-                     Creator API (o=U). Rehike could easily mirror this implementation, without even
-                     a second request to YouTube's servers, but for now I've just decided to implement
-                     it this lazy way.
-                  #}
-                  <div id="yt-delegate-accounts">
-                     {# TODO (kirasicecreamm): Clean up, macroise #}
-                     {%- for account in yt.signin.channelPicker -%}
-                     <a href="/signin?feature=masthead_switcher&action_handle_signin=true&next=%2F&authuser=0&skip_identity_prompt=False" class="yt-masthead-account-picker-option yt-masthead-account-picker-user-option">
-                        <span class="video-thumb yt-masthead-picker-photo-wrapper yt-thumb yt-thumb-36">
-                           <span class="yt-thumb-square">
-                              <span class="yt-thumb-clip">
-                                 <img src="{{ account.photo }}" alt="{{ account.name }}" width="36" height="36">
-                                 <span class="vertical-align"></span>
-                              </span>
-                           </span>
-                        </span>
-                        <div class="yt-masthead-picker-info">
-                           <div class="yt-masthead-picker-name">{{ account.name }}</div>
-                           <div class="yt-masthead-picker-account-subtitle">{{ account.byline }}</div>
-                        </div>
-                     </a>
-                     {%- endfor -%}
-                  </div>
-                  {# Aubrey's misimplementation of multilogin, reuse code and cleanup later #}
-                  {#--
-
-                  <div class="yt-masthead-multilogin-users-header">Other accounts</div>
-                  {%- for account in yt.signin.channelPicker -%}
-                  <a href="/signin?feature=masthead_switcher&action_handle_signin=true&next=%2F&authuser=0&skip_identity_prompt=False" class="yt-masthead-account-picker-option yt-masthead-account-picker-user-option">
-                     <span class="video-thumb yt-masthead-picker-photo-wrapper yt-thumb yt-thumb-36">
-                        <span class="yt-thumb-square">
-                           <span class="yt-thumb-clip">
-                              <img src="{{ account.photo }}" alt="{{ account.name }}" width="36" height="36">
-                              <span class="vertical-align"></span>
-                           </span>
-                        </span>
-                     </span>
-                     <div class="yt-masthead-picker-info">
-                        <div class="yt-masthead-picker-name">{{ account.name }}</div>
-                        <div class="yt-masthead-picker-account-subtitle">{{ account.byline }}</div>
-                     </div>
-                  </a>
-                  {%- endfor -%}
-
-                  --#}
-               </div>
-               {%- endif -%}
-               <div id="yt-channel-switcher-link" class="clearfix"></div>
-               <div class="yt-masthead-picker-footer clearfix">
-                  <a  href="https://accounts.google.com/AddSession?uilel=0&amp;continue=http%3A%2F%2Fwww.youtube.com%2Fsignin%3Faction_handle_signin%3Dtrue%26next%3D%252Ffeed%252Fsubscriptions%253Fdisable_polymer%253D1%26app%3Ddesktop%26hl%3Den&amp;passive=false&amp;service=youtube&amp;hl=en" class="yt-uix-button  yt-masthead-picker-button  yt-uix-button-default yt-uix-button-size-default"><span class="yt-uix-button-content">Add account</span></a>
-                  <a  href="/logout" class="yt-uix-button  yt-masthead-picker-button  yt-uix-button-default yt-uix-button-size-default"><span class="yt-uix-button-content">Sign out</span></a>
-               </div>
-            </div>
-         </span>
-      {%- else -%}
-         <div class="signin-container "><button class="yt-uix-button yt-uix-button-size-default yt-uix-button-primary" type="button" onclick=";window.location.href=this.getAttribute(&#39;href&#39;);return false;" href="https://accounts.google.com/ServiceLogin?service=youtube&amp;uilel=3&amp;hl=en&amp;continue=https%3A%2F%2Fwww.youtube.com%2Fsignin%3Fapp%3Ddesktop%26action_handle_signin%3Dtrue%26hl%3Den%26next%3D%252F%26feature%3Dsign_in_button&amp;passive=true" role="link"><span class="yt-uix-button-content">Sign in</span></button></div>
-      {%- endif -%}
-   </div>
-   <div id="yt-masthead-content">
-      <form id="masthead-search" class="  search-form consolidated-form  " action="/results" onsubmit="if (document.getElementById(&#39;masthead-search-term&#39;).value == &#39;&#39;) return false;" data-clicktracking="CAIQ7VAiEwji18z73-raAhUQO38KHYD9Cikojh4">
-         <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-default search-btn-component search-button" type="submit" onclick="if (document.getElementById(&#39;masthead-search-term&#39;).value == &#39;&#39;) return false; document.getElementById(&#39;masthead-search&#39;).submit(); return false;;return true;" tabindex="2" id="search-btn" dir="ltr"><span class="yt-uix-button-content">Search</span></button>
-         <div id="masthead-search-terms" class="masthead-search-terms-border" dir="ltr"><input id="masthead-search-term" autocomplete="off" {{(pageType == 'home') ? 'autofocus'}} onkeydown="if (!this.value &amp;&amp; (event.keyCode == 40 || event.keyCode == 32 || event.keyCode == 34)) {this.onkeydown = null; this.blur();}" class="search-term masthead-search-renderer-input yt-uix-form-input-bidi" name="search_query" value="{% if pageType == "search" %}{{ yt.query }}{% endif %}" type="text" tabindex="1" {{ not yt.config.oldSearchbox ? "placeholder=\"Search\"" }} title="Search" aria-label="Search"></div>
-      </form>
-   </div>
+    <div class="yt-masthead-logo-container">
+        {%- if yt.masthead.guideToggle -%}
+        {{ button(yt.masthead.guideToggle) }}
+        <div id="appbar-main-guide-notification-container"></div>
+        {%- endif -%}
+        <span id="yt-masthead-logo-fragment">
+            <a href="/" id="logo-container" class="masthead-logo-renderer spf-link" title="{{ yt.masthead.logoTooltip }}">
+                <span class="logo masthead-logo-renderer-logo yt-sprite"></span>
+                {%- if yt.masthead.countryCode -%}
+                <span class="content-region">{{ yt.masthead.countryCode }}</span>
+                {%- endif -%}
+            </a>
+        </span>
+    </div>
+    {%- if yt.signin.isSignedIn -%}
+    <div id="yt-masthead-user" class="yt-uix-clickcard">
+    {%- else -%}
+    <div id="yt-masthead-signin">
+    {%- endif -%}
+        {%- for btn in yt.masthead.buttons -%}
+        {{ button(btn) }}
+        {%- endfor -%}
+    </div>
+    {%- if yt.masthead.searchbox -%}
+        <div id="yt-masthead-content">
+            <form action="/results" id="masthead-search" class="search-form consolidated-form" onsubmit="if (document.getElementById('masthead-search-term').value == '') return false;">
+                {{ button(yt.masthead.searchbox.button) }}
+                <div id="masthead-search-terms" class="masthead-search-terms-border" dir="ltr">
+                    <input type="text" id="masthead-search-term" class="search-term masthead-search-renderer-input yt-uix-form-input-bidi" autocomplete="off"
+                    {{ yt.masthead.searchbox.autofocus ? "autofocus" }} onkeydown="if (!this.value && (event.keyCode == 40 || event.keyCode == 32 || event.keyCode == 34)) {this.onkeydown = null; this.blur();}"
+                    name="search_query" value="{{ yt.masthead.searchbox.query }}" placeholder="{{ yt.masthead.searchbox.placeholder }}" title="{{ yt.masthead.searchbox.placeholder }}"
+                    aria-label="{{ yt.masthead.searchbox.placeholder }}" aria-haspopup="false" role="combobox" aria-autocomplete="list" dir="ltr" spellcheck="false" style="outline: currentColor none medium;">
+                </div>
+            </form>
+        </div>
+    {%- endif -%}
 </div>

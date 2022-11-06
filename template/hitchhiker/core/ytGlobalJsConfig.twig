@@ -126,7 +126,7 @@
             "weekdays": ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
         },
         'PAGE_CL': 194950063,
-        'PAGE_BUILD_LABEL': "rehike.rhfe.desktop_{{ yt.version.time|date("Ymd") }}_0_RC0",
+        'PAGE_BUILD_LABEL': "rehike.{{ yt.rehikeVersion.semanticVersion }}.{{ yt.rehikeVersion.time|date("Ymd") }}",
         'VARIANTS_CHECKSUM': "428a944d5eaeed109e12cae9cbe78c47",
         'CLIENT_PROTOCOL': "HTTP\/1.0",
         'CLIENT_TRANSPORT': "tcp",
@@ -160,9 +160,9 @@
         'ADS_INSTREAM_SKIPPABLE': "Video ad can be skipped.",
         'ADS_OVERLAY_IMPRESSION': "Ad displayed.",
         'MASTHEAD_NOTIFICATIONS_LABEL': {
-            "other": "# unread notifications.",
-            "case1": "1 unread notification.",
-            "case0": "0 unread notifications."
+            "other": "{{ yt.masthead.notificationStrings.plural }}",
+            "case1": "{{ yt.masthead.notificationStrings.singular }}",
+            "case0": "{{ yt.masthead.notificationStrings.none }}"
         },
         'MASTHEAD_NOTIFICATIONS_COUNT_99PLUS': "99+",
         'MDX_AUTOPLAY_OFF': 'Autoplay is off',
