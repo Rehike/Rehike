@@ -50,6 +50,7 @@ return new class extends \Rehike\Controller\core\NirvanaController {
      */
     public static function whatToWatch(&$yt) {
         $yt -> enableFooterCopyright = true;
+        $yt -> masthead -> searchbox -> autofocus = true;
 
         // Initial Android request to get continuation
         Request::queueInnertubeRequest(

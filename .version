@@ -1,10 +1,10 @@
 {
-	"previousHash": "a54a10c6d24df0ea5d2328e5ea073fd078c9c685",
-	"currentRevisionId": 528,
-	"subject": "fix search lol",
-	"body": "fix search lol",
+	"previousHash": "17861c8f97d3d1dc3154cfd3ad6622672f6c2f3b",
+	"currentRevisionId": 529,
+	"subject": "fix results title, and autofocus searchbox on home",
+	"body": "fix results title, and autofocus searchbox on home",
 	"branch": "master",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1667748903
+	"time": 1667748954
 }
