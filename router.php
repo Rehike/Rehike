@@ -20,7 +20,8 @@ Router::funnel([
     "/upload",
     "/t/*",
     "/howyoutubeworks/*",
-    "/create_channel"
+    "/create_channel",
+    "/new"
 ]);
 
 Router::redirect([

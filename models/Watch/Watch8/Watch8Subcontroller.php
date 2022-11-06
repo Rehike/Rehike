@@ -4,6 +4,7 @@ namespace Rehike\Model\Watch\Watch8;
 use \Rehike\Model\Watch\Watch7\MVideoDiscussionRenderer;
 use \Rehike\Model\Watch\Watch7\MVideoDiscussionNotice;
 use \Rehike\i18n;
+use \Rehike\Util\PrefUtils;
 
 /**
  * Implements the watch8 subcontroller for the watch model
@@ -131,12 +132,19 @@ class Watch8Subcontroller
                 {
                     $autoplayIndex = self::getRecomAutoplay($recomsList);
 
+                    if (isset($_COOKIE["PREF"])) {
+                        $pref = PrefUtils::parse($_COOKIE["PREF"]);
+                    } else {
+                        $pref = (object) [];
+                    }
+
                     // Move autoplay video to its own object
                     $compactAutoplayRenderer = (object)[
                         "contents" => [ $recomsList[$autoplayIndex] ],
                         "infoText" => $i18n -> autoplayInfoText,
                         "title" => $i18n -> autoplayTitle,
-                        "toggleDesc" => $i18n -> autoplayToggleDesc
+                        "toggleDesc" => $i18n -> autoplayToggleDesc,
+                        "checked" => PrefUtils::autoplayEnabled($pref)
                     ];
                     $response += ["compactAutoplayRenderer" => $compactAutoplayRenderer];
 

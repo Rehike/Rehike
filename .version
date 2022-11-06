@@ -1,10 +1,10 @@
 {
-	"previousHash": "17861c8f97d3d1dc3154cfd3ad6622672f6c2f3b",
-	"currentRevisionId": 529,
-	"subject": "fix results title, and autofocus searchbox on home",
-	"body": "fix results title, and autofocus searchbox on home",
+	"previousHash": "6267f8d397e9ed5032d69ab7411d4eeab97da357",
+	"currentRevisionId": 530,
+	"subject": "footer rewrite",
+	"body": "footer rewrite",
 	"branch": "master",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1667748954
+	"time": 1667766710
 }

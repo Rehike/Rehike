@@ -49,7 +49,7 @@ return new class extends \Rehike\Controller\core\NirvanaController {
      * Get and build homepage.
      */
     public static function whatToWatch(&$yt) {
-        $yt -> enableFooterCopyright = true;
+        $yt -> footer -> enableCopyright = true;
         $yt -> masthead -> searchbox -> autofocus = true;
 
         // Initial Android request to get continuation
