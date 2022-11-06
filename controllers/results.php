@@ -37,7 +37,7 @@ class ResultsController extends NirvanaController {
         $resultsIndex = self::getPaginatorIndex($yt->params);
 
         $response = Request::innertubeRequest("search", (object) [
-            "query" => $yt -> query,
+            "query" => self::$query,
             "params" => $yt -> params
         ]);
         $ytdata = json_decode($response);

@@ -1,10 +1,10 @@
 {
-	"previousHash": "f29b4b48fea8e9a8ac36b87ee6865bf4e1ff82ae",
-	"currentRevisionId": 527,
-	"subject": "masthead rewrite",
-	"body": "masthead rewrite",
+	"previousHash": "a54a10c6d24df0ea5d2328e5ea073fd078c9c685",
+	"currentRevisionId": 528,
+	"subject": "fix search lol",
+	"body": "fix search lol",
 	"branch": "master",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1667748458
+	"time": 1667748903
 }
