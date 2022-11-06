@@ -1,9 +1,6 @@
 {
     "btnCancel": "Cancel",
     "btnSave": "Save",
-    "showMore": "Show more",
-    "showLess": "Show less",
-    "loading": "Loading...",
     "subscriberTextSingular": "%s subscriber",
     "subscriberTextPlural": "%s subscribers",
     "viewTextSingular": "%s view",

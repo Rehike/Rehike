@@ -25,6 +25,9 @@
                 <div class="yt-lockup-content">
                     <h3 class="yt-lockup-title {{ info.menu ? "contains-action-menu" }}">
                         <a href="{{ getUrl(info) }}" class="spf-link yt-uix-tile-link yt-ui-ellipsis yt-ui-ellipsis-2" title="{{ getText(info.title) }}">{{ getText(info.title) }}</a>
+                        {%- if getVideoTime(info) != null -%}
+                            {{ _self.a11yDesc(getVideoTime(info)) }}
+                        {% endif %}
                     </h3>
                     {% if getByline(info) != null and data.type != "channel" %}
                     {% set byline = getByline(info) %}
@@ -34,7 +37,7 @@
                             {{ yt.config.byTextOnByline ? "by" }}
                             <a href="{{ getUrl(byline.runs[0]) }}" class="spf-link">{{ getText(byline) }}</a>
                             {% if info.ownerBadges != null and getBadge(info.ownerBadges, "BADGE_STYLE_TYPE_VERIFIED") %}
-                                <span title="Verified" class="yt-uix-tooltip yt-channel-title-icon-verified yt-sprite"></span>
+                                <span title="{{ yt.msgs.verified }}" class="yt-uix-tooltip yt-channel-title-icon-verified yt-sprite"></span>
                             {% endif %}
                         {% else %}
                             {# If there is no byline URL, then it's probably something else (like mixes byline) #}
@@ -107,7 +110,7 @@
 {%- macro title(info, type, overflow = true, class) -%}
 <h3 class="yt-lockup-title ">
    <a href="{{ getUrl(info) }} " class=" {% if overflow %}yt-ui-ellipsis yt-ui-ellipsis-2{% endif %}   {{ class ?: "" }}    spf-link "   title="{{ getText(info.title) }}" aria-describedby="description-id-{{ generateRid }}" dir="ltr">
-   {{ getText(info.title) }}{% if info.ownerBadges != null and getBadge(info.ownerBadges, "BADGE_STYLE_TYPE_VERIFIED") and type == "channel" %}    <span title="Verified" class="yt-uix-tooltip yt-channel-title-icon-verified yt-sprite"></span>{% endif %}
+   {{ getText(info.title) }}{% if info.ownerBadges != null and getBadge(info.ownerBadges, "BADGE_STYLE_TYPE_VERIFIED") and type == "channel" %}    <span title="{{ yt.msgs.verified }}" class="yt-uix-tooltip yt-channel-title-icon-verified yt-sprite"></span>{% endif %}
    </a>
    {%- if getVideoTime(info) != null -%}
       {{ _self.a11yDesc(getVideoTime(info)) }}
@@ -117,6 +120,6 @@
 
 {% macro a11yDesc(lengthText) %}
 <span class="accessible-description" id="description-id-{{ generateRid() }}">
-    - Duration: {{ lengthText }}.
+   {{ yt.msgs.durationA11y|format(lengthText) }}
 </span>
 {% endmacro %}

@@ -1,0 +1,15 @@
+{
+    "loading": "Loading...",
+    "working": "Working...",
+    "showMore": "Show more",
+    "showLess": "Show less",
+    "addToWatchLater": "Watch later",
+    "addedToWatchLater": "Added",
+    "addToHeader": "Add to",
+    "addToLoading": "Loading playlists...",
+    "addToError": "Error",
+    "watchLaterSignIn": "%sSign in%s to add this to Watch Later",
+    "loadingMoreSuggestions": "Loading more suggestions...",
+    "durationA11y": " - Duration: %s.",
+    "verified": "Verified"
+}

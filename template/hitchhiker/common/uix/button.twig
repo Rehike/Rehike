@@ -25,7 +25,7 @@
         class="yt-uix-button 
         yt-uix-button-size-{{ resolveSize(data.size) }} 
         {% if not data.noStyle %}yt-uix-button-{{ styleOverride ?? resolveStyle(data.style) }}{% endif %}
-        {% if data.text.runs and not data.simpleText is empty and not data.thumb %}
+        {% if data.text.runs is empty and not data.text.simpleText and not data.thumb %}
             yt-uix-button-empty
         {% endif %}
         {% if data.icon %}

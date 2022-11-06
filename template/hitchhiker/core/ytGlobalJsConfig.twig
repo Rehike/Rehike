@@ -103,7 +103,7 @@
         {% from "common/uix/watch_later_button.twig" import render as watch_later_button %}
         'WATCH_LATER_BUTTON': {{ watch_later_button({
             isToggled: false,
-            untoggledTooltip: "Watch later"
+            untoggledTooltip: yt.msgs.addToWatchLater
         }, "__VIDEO_ID__")|json_encode|raw }},
         'WATCH_QUEUE_BUTTON': "  \u003cbutton class=\"yt-uix-button yt-uix-button-size-small yt-uix-button-default yt-uix-button-empty yt-uix-button-has-icon no-icon-markup addto-button addto-queue-button video-actions spf-nolink hide-until-delayloaded addto-tv-queue-button yt-uix-tooltip\" type=\"button\" onclick=\";return false;\" title=\"Queue\" data-style=\"tv-queue\" data-video-ids=\"__VIDEO_ID__\"\u003e\u003c\/button\u003e\n",
         'WATCH_QUEUE_MENU': "  \u003cspan class=\"thumb-menu dark-overflow-action-menu video-actions\"\u003e\n    \u003cbutton aria-expanded=\"false\" onclick=\";return false;\" aria-haspopup=\"true\" type=\"button\" class=\"yt-uix-button-reverse flip addto-watch-queue-menu spf-nolink hide-until-delayloaded yt-uix-button yt-uix-button-dark-overflow-action-menu yt-uix-button-size-default yt-uix-button-has-icon no-icon-markup yt-uix-button-empty\" \u003e\u003cspan class=\"yt-uix-button-arrow yt-sprite\"\u003e\u003c\/span\u003e\u003cul class=\"watch-queue-thumb-menu yt-uix-button-menu yt-uix-button-menu-dark-overflow-action-menu hid\"\u003e\u003cli role=\"menuitem\" class=\"overflow-menu-choice addto-watch-queue-menu-choice addto-watch-queue-play-next yt-uix-button-menu-item\" data-action=\"play-next\" onclick=\";return false;\"  data-video-ids=\"__VIDEO_ID__\"\u003e\u003cspan class=\"addto-watch-queue-menu-text\"\u003ePlay next\u003c\/span\u003e\u003c\/li\u003e\u003cli role=\"menuitem\" class=\"overflow-menu-choice addto-watch-queue-menu-choice addto-watch-queue-play-now yt-uix-button-menu-item\" data-action=\"play-now\" onclick=\";return false;\"  data-video-ids=\"__VIDEO_ID__\"\u003e\u003cspan class=\"addto-watch-queue-menu-text\"\u003ePlay now\u003c\/span\u003e\u003c\/li\u003e\u003c\/ul\u003e\u003c\/button\u003e\n  \u003c\/span\u003e\n",
@@ -149,9 +149,9 @@
     yt.setMsg({
         'ADDTO_CREATE_NEW_PLAYLIST': "Create new playlist\n",
         'ADDTO_CREATE_PLAYLIST_DYNAMIC_TITLE': "  $dynamic_title_placeholder (create new)\n",
-        'ADDTO_WATCH_LATER': "Watch later",
-        'ADDTO_WATCH_LATER_ADDED': "Added",
-        'ADDTO_WATCH_LATER_ERROR': "Error",
+        'ADDTO_WATCH_LATER': "{{ yt.msgs.addToWatchLater }}",
+        'ADDTO_WATCH_LATER_ADDED': "{{ yt.msgs.addedToWatchLater }}",
+        'ADDTO_WATCH_LATER_ERROR': "{{ yt.msgs.addToError }}",
         'ADDTO_WATCH_QUEUE': "Watch Queue",
         'ADDTO_WATCH_QUEUE_ADDED': "Added",
         'ADDTO_WATCH_QUEUE_ERROR': "Error",

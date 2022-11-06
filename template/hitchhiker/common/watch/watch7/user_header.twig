@@ -12,7 +12,7 @@
     <div class="yt-user-info">
     <a href="{{ owner.navigationEndpoint.browseEndpoint.canonicalBaseUrl }}" class="       spf-link ">{{ getText(owner.title) }}</a>
     {% if owner.badges %}
-    <span data-tooltip-text="Verified" class="yt-channel-title-icon-verified yt-uix-tooltip yt-sprite" aria-label="Verified"></span>
+    <span data-tooltip-text="{{ yt.msgs.verified }}" class="yt-channel-title-icon-verified yt-uix-tooltip yt-sprite" aria-label="{{ yt.msgs.verified }}"></span>
     {% endif %}
     </div>
     <span id="watch7-subscription-container">

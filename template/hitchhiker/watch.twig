@@ -84,7 +84,7 @@ video-{{ yt.videoId }} {{ (yt.theaterMode) ? 'watch-wide watch-stage-mode' }}
     yt.setMsg({
       'EDITOR_AJAX_REQUEST_FAILED': "Something went wrong trying to get data from the server. Try again, or reload the page.",
       'EDITOR_AJAX_REQUEST_503': "This functionality is not available right now. Please try again later.",
-      'LOADING': "Loading..."    });
+      'LOADING': "{{ yt.msgs.loading }}"    });
 
       yt.setMsg('SPEEDYG_INFO', "Experiencing interruptions?");
 
@@ -173,61 +173,7 @@ video-{{ yt.videoId }} {{ (yt.theaterMode) ? 'watch-wide watch-stage-mode' }}
    <div class="player-api player-width player-height"></div>
 </div>
 <div id="watch7-container" class="">
-   <div id="player-messages">
-      {#
-      <div class="yt-dialog hid mealbar-promo-renderer">
-         <div class="yt-dialog-base">
-            <span class="yt-dialog-align"></span>
-            <div class="yt-dialog-fg" role="dialog">
-               <div class="yt-dialog-fg-content">
-                  <div class="yt-dialog-header">
-                     <h2 class="yt-dialog-title" role="alert">
-                        It’s YouTube. Uninterrupted.
-                     </h2>
-                  </div>
-                  <div class="yt-dialog-loading">
-                     <div class="yt-dialog-waiting-content">
-                        <p class="yt-spinner ">
-                           <span title="Loading icon" class="yt-spinner-img  yt-sprite"></span>
-                           <span class="yt-spinner-message">
-                           Loading...
-                           </span>
-                        </p>
-                     </div>
-                  </div>
-                  <div class="yt-dialog-content">
-                     <div class="mealbar-promo-message" tabindex="0">Want music and videos with zero ads? Get YouTube Premium.</div>
-                  </div>
-                  <div class="yt-dialog-working">
-                     <div class="yt-dialog-working-overlay"></div>
-                     <div class="yt-dialog-working-bubble">
-                        <div class="yt-dialog-waiting-content">
-                           <p class="yt-spinner ">
-                              <span title="Loading icon" class="yt-spinner-img  yt-sprite"></span>
-                              <span class="yt-spinner-message">
-                              Working...
-                              </span>
-                           </p>
-                        </div>
-                     </div>
-                  </div>
-                  <div class="yt-dialog-footer">
-                     <span class="generic-promo-impression-logging">
-                     <span data-feedback-token="AB9zfpL-kB7x2YGmNC9a66oco5SyBSCY_rPnMohm4KAykejA_Fc-lMXkxLOpwAqFwUZan5IIGgDQrqjb47rT_YirsNKD5M_M3vzSgjbtAlIpagaYjuiDHTVVaRP7xjnS_OoxtIQVMJUxLzI0B9wXrAFk_ReVnNhfvQ" class="generic-promo-impression-feedback"></span>
-                     </span>
-                     <div class="service-endpoint-action-container hid">
-                     </div>
-                     <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-blue-text    dismiss-menu-choice" type="button" onclick=";return false;" data-feedback-token="AB9zfpIzjrdfuscnt95IZafMnW7WpePYDrB1nGcolJmjpgOQtKVJ80s2qMVz5THHcvKYP_7rVfyCYTYzlB5KqzVZwcNX6b_2-6gBfwBas0m6Yk7djOepaj_iycZ-LZcUhm4v6eRzEmuS0nMpPEkHzJAJL-4zE25abg"   data-action="hide"><span class="yt-uix-button-content">Not now</span></button>
-                     <a  href="/premium" class="yt-uix-button   yt-uix-button-primary yt-uix-button-size-default">Try it free</span></a>
-                  </div>
-               </div>
-               <div class="yt-dialog-focus-trap" tabindex="0"></div>
-            </div>
-         </div>
-      </div>
-      <div class="mealbar-visibility" data-trigger-condition="TRIGGER_CONDITION_POST_AD" data-lact-th="" data-prompt-del-sec=""></div>
-    #}
-   </div>
+   <div id="player-messages"></div>
    <div id="watch7-main-container">
       <div id="watch7-main" class="clearfix">
          <div id="watch7-preview" class="player-width player-height hid">
@@ -246,10 +192,6 @@ video-{{ yt.videoId }} {{ (yt.theaterMode) ? 'watch-wide watch-stage-mode' }}
                   <div class="yt-alert-buttons"><a href="https://www.google.com/get/videoqualityreport/?v={{ yt.videoId }}" class="yt-uix-button   yt-uix-sessionlink yt-uix-button-alert-info yt-uix-button-size-small" data-sessionlink="ei=oEbaW5bqB5DkkgbJ1bGQAQ" id="speedyg-link" target="_blank"><span class="yt-uix-button-content">Find out why</span></a><button class="yt-uix-button yt-uix-button-size-default yt-uix-button-close close yt-uix-close" type="button" onclick=";return false;" aria-label="Close" data-close-parent-class="yt-alert"><span class="yt-uix-button-content">Close</span></button></div>
                </div>
             </div>
-            {#
-               Watch model rewrite makes results an array instead of
-               an object, so this has been updated to iterate.
-            #}
             {%- for result in yt.page.results -%}
                {%- if result.videoPrimaryInfoRenderer -%}
                   {% set info = result.videoPrimaryInfoRenderer %}
@@ -271,8 +213,6 @@ video-{{ yt.videoId }} {{ (yt.theaterMode) ? 'watch-wide watch-stage-mode' }}
             {%- endfor -%}
          </div>
          {% set secondaryResults = yt.page.secondaryResults %}
-         {# Secondary results should show, unless it is not available
-            AND primary results aren't either. #}
          {%- if yt.page.results or yt.page.secondaryResults -%}
             {% include '/common/watch/watch7/sidebar/watch_sidebar.twig' %}
          {%- endif -%}

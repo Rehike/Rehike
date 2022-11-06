@@ -1,6 +1,6 @@
 {% macro loading() %}
 {% import '/core/spinner.twig' as spinner %}
 <div class="action-panel-loading">
-    {{ spinner.render('Loading...') }}
+    {{ spinner.render(yt.msgs.loading) }}
 </div>
 {% endmacro %}

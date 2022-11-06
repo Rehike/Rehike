@@ -3,17 +3,17 @@
 <div id="hidden-component-template-wrapper" class="hid">
     {% if not yt.signin.isSignedIn %}
         <div id="shared-addto-watch-later-login" class="hid">
-            <a href="https://accounts.google.com/ServiceLogin?service=youtube&amp;uilel=3&amp;hl=en&amp;continue=https%3A%2F%2Fwww.youtube.com%2Fsignin%3Fapp%3Ddesktop%26action_handle_signin%3Dtrue%26hl%3Den%26next%3D%252F%26feature%3Dplaylist&amp;passive=true" class="sign-in-link">Sign in</a> to add this to Watch Later
+            {{ yt.msgs.watchLaterSignIn|format('<a href="https://accounts.google.com/ServiceLogin?service=youtube&amp;uilel=3&amp;hl=en&amp;continue=https%3A%2F%2Fwww.youtube.com%2Fsignin%3Fapp%3Ddesktop%26action_handle_signin%3Dtrue%26hl%3Den%26next%3D%252F%26feature%3Dsign_in_button&amp;passive=true">', '</a>')|raw }}
         </div>
     {% endif %}
     <div id="yt-uix-videoactionmenu-menu" class="yt-ui-menu-content">
         <div class="hide-on-create-pl-panel">
             <h3>
-                Add to
+                {{ yt.msgs.addToHeader }}
             </h3>
         </div>
         <div class="add-to-widget">
-            {{ spinner.render('Loading playlists...') }}
+            {{ spinner.render(yt.msgs.addToLoading) }}
         </div>
     </div>
 </div>
