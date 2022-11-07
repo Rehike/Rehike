@@ -5,4 +5,5 @@
     "subscriberCountIsolater": "/( subskrybentów)|( subskrybent)/g",
     "viewCountIsolater": "/( wyświetleń)|( wyświetlenie)/g"
     "nonPublishCheck": "/(Data premiery: )|(Transmisja zaczęła się )|(Nadawane na żywo )/"
+    "unsubChannelNameMatch": "/Rezygnujesz z subskrypcji kanału (.*?)\\?/"
 }
