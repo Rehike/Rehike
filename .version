@@ -1,10 +1,10 @@
 {
-	"previousHash": "e74446be051de61e025000c6a47461bc4c464b79",
-	"currentRevisionId": 531,
-	"subject": "fix #146",
-	"body": "fix #146",
+	"previousHash": "a277801ec780952a5e8b017d297e183b8eaaceb6",
+	"currentRevisionId": 535,
+	"subject": "proper error on simplebox",
+	"body": "proper error on simplebox",
 	"branch": "master",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1667767533
+	"time": 1667793890
 }

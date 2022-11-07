@@ -45,7 +45,10 @@ return new class extends AjaxController {
         ]);
         $ytdata = json_decode($response);
         $data = $ytdata -> actions[1] -> createCommentAction -> contents -> commentThreadRenderer ?? null;
-        $yt -> page = CommentThread::commentThreadRenderer($data);
+        if (null != $data) {
+            $yt -> page = CommentThread::commentThreadRenderer($data);
+        } else self::error();
+        
     }
 
     /**
@@ -65,7 +68,9 @@ return new class extends AjaxController {
         ]);
         $ytdata = json_decode($response);
         $data = $ytdata -> actions[1] -> createCommentReplyAction -> contents -> commentRenderer ?? null;
-        $yt -> page = CommentThread::commentRenderer($data, true);
+        if (null != $data) {
+            $yt -> page = CommentThread::commentRenderer($data, true);
+        } else self::error();
     }
 
     /**

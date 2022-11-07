@@ -11,5 +11,6 @@
     "watchLaterSignIn": "%sSign in%s to add this to Watch Later",
     "loadingMoreSuggestions": "Loading more suggestions...",
     "durationA11y": " - Duration: %s.",
-    "verified": "Verified"
+    "verified": "Verified",
+    "commentPostFail": "Comment failed to post."
 }
