@@ -1,8 +1,16 @@
 {
+    "btnCancel": "Anuluj",
+    "btnSave": "Zapisz",
     "subscriberTextSingular": "%s subskrybent",
     "subscriberTextPlural": "%s subskrybentów",
     "viewTextSingular": "%s wyświetlenie",
     "viewTextPlural": "%s wyświetleń",
     "dateTextPublic": "Opublikowany %s",
     "dateTextPrivate": "Przesłany %s"
+    "subscribeText": "Subskrybuj",
+    "subscribedText": "Subkrybujesz",
+    "unsubscribeText": "Usuń subskrypcję",
+    "selfSubscribeTooltip": "Nie musisz subskrybować samego siebie!",
+    "notificationPrefsTitle": "Powiadomienia od %s",
+    "notificationPrefsLabel": "Preferencje subskrypcji"
 }
