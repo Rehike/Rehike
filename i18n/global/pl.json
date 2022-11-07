@@ -1,0 +1,16 @@
+{
+    "loading": "Wczytuję...",
+    "working": "Pracuję...",
+    "showMore": "Pokaż więcej",
+    "showLess": "Pokaż mniej",
+    "addToWatchLater": "Do obejrzenia",
+    "addedToWatchLater": "Dodano",
+    "addToHeader": "Dodaj do",
+    "addToLoading": "Wczytuję playlisty...",
+    "addToError": "Błąd",
+    "watchLaterSignIn": "%sZaloguj się%s aby dodać ten film do obejrzenia",
+    "loadingMoreSuggestions": "Wczytuję więcej sugestii...",
+    "durationA11y": " - Czas trwania: %s.",
+    "verified": "Zweryfikowano",
+    "commentPostFail": "Komentarz nie został opublikowany."
+}

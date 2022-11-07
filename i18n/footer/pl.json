@@ -1,0 +1,23 @@
+{
+    "logoTooltip": "Strona główna YouTube",
+    "pickerLanguage": "Język: %s",
+    "pickerLocation": "Region: %s",
+    "pickerSafety": "Tryb ograniczonego dostępu: %s",
+    "safetyOn": "Włączony",
+    "safetyOff": "Wyłączony",
+    "buttonHistory": "Historia",
+    "buttonHelp": "Pomoc",
+    "primaryAbout": "Informacje",
+    "primaryPress": "Centrum prasowe",
+    "primaryCopyright": "Prawa autorskie",
+    "primaryCreators": "Twórcy",
+    "primaryAdvertise": "Reklamy",
+    "primaryDevs": "Programiści",
+    "primaryVersion": "Rehike v%s [%s]",
+    "secondaryTerms": "Warunki",
+    "secondaryPrivacy": "Prywatność",
+    "secondaryPolicySafety": "Zasady i bezpieczeństwo",
+    "secondaryFeedback": "Prześlij opinię",
+    "secondaryTestTube": "Spróbuj czegoś nowego!",
+    "secondaryCopyright": "© %s Google LLC"
+}
