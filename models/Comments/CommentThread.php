@@ -89,6 +89,11 @@ class CommentThread
         $context->isReply = $isReply;
         if (isset($context->voteCount)) self::addLikeCount($context);
 
+        // Eliminate surrounding spaces on channel mention
+        foreach ($context -> contentText -> runs as &$run) {
+            $run -> text = str_replace("\u{00A0}", "", $run -> text);
+        }
+
         $context->likeButton = VoteButton::fromData(getProp($context, self::LIKE_BUTTON_PATH));
         $context->dislikeButton = VoteButton::fromData(getProp($context, self::DISLIKE_BUTTON_PATH));
         $context->replyButton = ReplyButton::fromData(getProp($context, self::REPLY_BUTTON_PATH), $context -> commentId);
