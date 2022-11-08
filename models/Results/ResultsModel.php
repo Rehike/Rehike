@@ -30,6 +30,7 @@ class ResultsModel {
         $submenu -> resultCountText = $i18n -> resultCount(number_format(self::getResultsCount($data)));
 
         $filterCrumbs = [];
+        if (isset($submenu -> groups))
         foreach ($submenu -> groups as $group)
         if (isset($group -> searchFilterGroupRenderer))
         foreach($group -> searchFilterGroupRenderer -> filters as $filter)
