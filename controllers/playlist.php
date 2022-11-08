@@ -17,6 +17,8 @@ return new class extends NirvanaController {
 
         $yt -> playlistId = $request -> params -> list;
 
+        $this -> setEndpoint("browse", "VL" . $yt -> playlistId);
+
         $response = Request::innertubeRequest("browse", (object) [
             "browseId" => "VL" . $yt -> playlistId,
             "params" => "wgYCCAA%3D"
