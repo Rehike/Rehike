@@ -16,7 +16,7 @@ See [FAQ.md](FAQ.md).
 
 ## I want to contribute!
 
-See [CONTRIBUTORS.md](CONTRIBUTORS.md).
+See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Installation
 
