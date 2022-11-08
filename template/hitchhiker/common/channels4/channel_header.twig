@@ -18,7 +18,7 @@
                 background-image: url({{ header.banner.hdImage }});
             }
         </style>
-        <div id="c4-header-bg-container" class="c4-visible-on-hover-container {{ header.banner.isCustom ? 'has-custom-banner' }}">
+        <div id="c4-header-bg-container" class="c4-visible-on-hover-container {{ header.banner.isCustom ? "has-custom-banner" }}">
             <div class="hd-banner">
                 <div class="hd-banner-image "></div>
             </div>
@@ -62,7 +62,7 @@
             <div class="primary-header-upper-section">
                 <div class="primary-header-upper-section-block">
                     <h1 class="branded-page-header-title">
-                        <span class="qualified-channel-title ellipsized {{ header.badges ? 'has-badge' }}">
+                        <span class="qualified-channel-title ellipsized {{ header.badges ? "has-badge" }}">
                             {% apply spaceless %}
                             <span class="qualified-channel-title-wrapper">
                                 <span dir="ltr" class="qualified-channel-title-text">
@@ -82,8 +82,8 @@
                 </div>
                 <div class="primary-header-upper-section-block">
                     <div class="primary-header-actions">
-                    {% import 'common/uix/subscription_button.twig' as subscription_button %}
-                    {{ subscription_button.render(yt.page.header.subscriptionButton, 'channel-header-subscription-button-container') }}
+                    {% import "common/uix/subscription_button.twig" as subscription_button %}
+                    {{ subscription_button.render(header.subscriptionButton, "channel-header-subscription-button-container") }}
                     </div>
                 </div>
             </div>
@@ -96,7 +96,7 @@
                 {%- if item.tabRenderer -%}
                     {% set item = item.tabRenderer %}
                     <li class="">
-                        <a  href="{{ item.endpoint.commandMetadata.webCommandMetadata.url }}" class="yt-uix-button  spf-link {{ item.selected ? 'selected' }}  yt-uix-sessionlink yt-uix-button-epic-nav-item yt-uix-button-size-default" data-sessionlink="ei=PYD4WYi3NtLY-AOXuqv4Aw&amp;ved=CC8Qwy0iEwjIycGWgZvXAhVSLH4KHRfdCj8omxw"><span class="yt-uix-button-content">{{ item.title }}</span></a>
+                        <a  href="{{ item.endpoint.commandMetadata.webCommandMetadata.url }}" class="yt-uix-button  spf-link {{ item.status == 2 ? "selected" : item.status == 1 ? "partially-selected" }}  yt-uix-sessionlink yt-uix-button-epic-nav-item yt-uix-button-size-default" data-sessionlink="ei=PYD4WYi3NtLY-AOXuqv4Aw&amp;ved=CC8Qwy0iEwjIycGWgZvXAhVSLH4KHRfdCj8omxw"><span class="yt-uix-button-content">{{ item.title }}</span></a>
                     </li>
                 {% elseif item.expandableTabRenderer %}
                     {% set item = item.expandableTabRenderer %}

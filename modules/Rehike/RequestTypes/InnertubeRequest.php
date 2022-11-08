@@ -22,7 +22,7 @@ trait InnertubeRequest
      * @param string $cname (client name)
      * @param string $cver (client version)
      */
-    public static function queueInnertubeRequest($id, $action, $body = null, $cname = "WEB", $cver = "2.20220303.01.01")
+    public static function queueInnertubeRequest($id, $action, $body = null, $cname = "WEB", $cver = "2.20221104.02.00")
     {
         $host = "https://www.youtube.com";
         $key = "AIzaSyAO_FJ2SlqU8Q4STEHLGCilw_Y9_11qcW8";

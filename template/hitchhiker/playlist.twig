@@ -1,14 +1,16 @@
 {% extends "core.twig" %}
 {% import "core/macros.twig" as core %}
 
+{% set pageType = '' %}
+{% set pageName = 'playlist' %}
+
 {% set appbarEnabled = true %}
 {% set defaultGuideVisibility = true %}
-{# TEMPORARY VALUE: SET TO TRUE WHEN CHANNEL HEADER IS ADDED #}
-{% set defaultAppbarVisibility = false %}
+{% set defaultAppbarVisibility = true %}
 {% set enableSnapScaling = true %}
 
 {%- block title -%}
-{{ yt.page.plHeader.title }} - {{ parent() }}
+{{ getText(yt.page.header.title) }} - {{ parent() }}
 {%- endblock -%}
 
 {% block foot_scripts %}
@@ -23,10 +25,38 @@
 
 
 
-    yt.setConfig('CHANNEL_ID', null);
+    yt.setConfig('CHANNEL_ID', {{ yt.ucid }});
 
 
     yt.setConfig('CHANNEL_TAB', "playlist");
+
+    (function() {
+        var channelHeaderEl = document.querySelector('.channel-header');
+        if (!channelHeaderEl) {
+          return;
+        }
+  
+        if (!/channel-header-auto-hide/.test(channelHeaderEl.className)) {
+          return;
+        }
+  
+        var brandedPageContainer = document.querySelector('.branded-page-v2-container');
+        var originalHeight = brandedPageContainer.clientHeight;
+        channelHeaderEl.className = channelHeaderEl.className.replace(/\bhid\b/);
+        var height = brandedPageContainer.clientHeight;
+        var scrollDistance = height - originalHeight;
+  
+        document.body.style.minHeight = 0;
+  
+        var bodyScrollHeight = document.body.scrollHeight;
+        var bodyClientHeight = document.body.clientHeight;
+        var heightToIncrease = scrollDistance - (bodyScrollHeight - bodyClientHeight);
+        if (heightToIncrease > 0) {
+          document.body.style.minHeight = bodyScrollHeight + heightToIncrease + 'px';
+        }
+  
+        document.body.scrollTop = document.documentElement.scrollTop = scrollDistance;
+      }());
 
 
     yt.setConfig('DISMISS_THROUGH_IT', true);
@@ -47,6 +77,11 @@
 {{ core.css('www-home-c4') }}
 {% endblock %}
 
+{% import 'common/appbar/appbar_nav.twig' as appbar_nav %}
+{%- block appbarContent -%}
+   {{ appbar_nav.render(yt.appbar.nav) }}
+{% endblock %}
+
 {%- block content -%}
     <div id="debug" class="hid">
         {{ yt.page.raw|json_encode|raw }}
@@ -59,90 +94,80 @@
             'secondaryColumnHidden': yt.page.secondaryContent ? false : true
         } -%}
 
+        {%- block branded_page_top_row -%}
+            {% from "/common/channels4/channel_header.twig" import render as channel_header %}
+            {% if yt.page.channelHeader %}
+            {{ channel_header(yt.page.channelHeader) }}
+            {% endif %}
+        {% endblock %}
+
         {%- block branded_page_primary_column_content -%}
             {%- from "core/html/img.twig" import img as img -%}
-            {%- import "common/uix/button.twig" as button -%}
-            {%- if yt.page.plHeader -%}
-            {%- set plh = yt.page.plHeader -%}
-            <div id="pl-header" class="branded-page-box clearfix" data-all-playlists-url="{{ getUrl(plh.owner) }}/playlists">
+            {%- from "common/uix/button.twig" import render as button -%}
+            {%- if yt.page.header -%}
+            {%- set header = yt.page.header -%}
+            <div id="pl-header" class="branded-page-box clearfix" data-all-playlists-url="{{ getUrl(header.ownerEndpoint) }}/playlists">
                 <div class="pl-header-thumb" style="height: 126px;">
-                    <img src="{{ getThumb(plh, 126) }}" height="126px">
-                    <a href="{{ getUrl(plh) }}" class="pl-header-play-all-overlay yt-valign spf-link">► Play all</a>
+                    <img src="{{ getThumb(header.playlistHeaderBanner.heroPlaylistThumbnailRenderer, 126) }}" height="126px">
+                    <a href="{{ getUrl(plh) }}" class="pl-header-play-all-overlay yt-valign spf-link">► {{ getText(header.playlistHeaderBanner.heroPlaylistThumbnailRenderer.thumbnailOverlays.thumbnailOverlayHoverTextRenderer.text) }}</a>
                 </div>
                 <div class="pl-header-content">
-                    <h1 class="pl-header-title" tabindex="0">{{ plh.title }}</h1>
+                    <h1 class="pl-header-title" tabindex="0">{{ getText(header.title) }}</h1>
                     <ul class="pl-header-details">
-                        <li><a href="{{ getUrl(plh.owner) }}" class="spf-link">{{ getText(plh.owner.title) }}</a></li>
-                        {%- for meta in plh.metas -%}
-                        <li>{{ getText(meta) }}</li>
-                        {%- endfor -%}
+                        <li>
+                            <a href="{{ getUrl(header.ownerEndpoint) }}" class="spf-link">
+                                {{ getText(header.ownerText) }}
+                            </a>
+                        </li>
+                        {%- if header.numVideosText -%}
+                        <li>{{ getText(header.numVideosText) }}</li>
+                        {%- endif -%}
+                        {%- if header.viewCountText -%}
+                        <li>{{ getText(header.viewCountText) }}</li>
+                        {%- endif -%}
+                        {%- if header.byline[1] -%}
+                        <li>{{ getText(header.byline[1].playlistBylineRenderer.text) }}</li>
+                        {%- endif -%}
                     </ul>
                     <div class="playlist-actions">
-                        {%- for button in plh.actions -%}
-                        {{ button.render(button) }}
-                        {%- endfor -%}
+                        {%- if header.playButton.buttonRenderer -%}
+                        {{ button({
+                            style: "STYLE_DEFAULT",
+                            size: "SIZE_DEFAULT",
+                            text: header.playButton.buttonRenderer.text,
+                            navigationEndpoint: header.playButton.buttonRenderer.navigationEndpoint,
+                            icon: true,
+                            class: [
+                                "playlist-play-all",
+                                "play-all-icon-btn"
+                            ]
+                        }) }}
+                        {%- endif -%}
                     </div>
                 </div>
             </div>
             {%- endif -%}
             {%- if yt.page.videoList -%}
                 {%- import "common/uix/watch_later_button.twig" as wlBtn -%}
+                {%- from "common/uix/load_more_button.twig" import render as load_more -%}
                 <ul id="browse-items-primary">
                     <li>
                         <div id="pl-video-list" class="pl-video-list">
                             <table id="pl-video-table" class="pl-video-table">
                                 <tbody id="pl-load-more-destination">
+                                    {%- from "common/playlist/pl_video.twig" import render as pl_video -%}
                                     {%- for video in yt.page.videoList -%}
-                                        {%- if video.playlistVideoRenderer -%}
-                                            {%- set this = video.playlistVideoRenderer -%}
-                                            <tr class="pl-video yt-uix-tile" data-video-id="{{ this.videoId }}" data-set-video-id="" data-title="{{ getText(this.title) }}">
-                                                <td class="pl-video-handle"></td>
-                                                <td class="pl-video-index"></td> {# this is handled by css for some reason #}
-                                                <td class="pl-video-thumbnail">
-                                                    <span class="pl-video-thumb ux-thumb-wrap contains-addto">
-                                                        <a href="{{ getUrl(this) }}" class="spf-link" aria-hidden="true">
-                                                            <span class="video-thumb yt-thumb yt-thumb-72">
-                                                                <span class="yt-thumb-default">
-                                                                    <span class="yt-thumb-clip">
-                                                                        {{ img({
-                                                                            src: getThumb(this, 72),
-                                                                            ytImg: true,
-                                                                            onload: ";window.__ytRIL && __ytRIL(this)",
-                                                                            delayLoad: true,
-                                                                            width: 72
-                                                                        }) }}
-                                                                        <span class="vertical-align"></span>
-                                                                    </span>
-                                                                </span>
-                                                            </span>
-                                                        </a>
-                                                        {{ wlBtn.render(getWLOverlay(this), this.videoId) }}
-                                                    </span>
-                                                </td>
-                                                <td class="pl-video-title">
-                                                    <a href="{{ getUrl(this) }}" class="pl-video-title-link yt-uix-tile-link spf-link">{{ getText(this.title) }}</a>
-                                                    <div class="pl-video-owner">
-                                                        {% set byline = this.shortBylineText %}
-                                                        {{ yt.config.byTextOnByline ? "by" }}
-                                                        <a href="{{ getEndpoint(byline) }}" class=" g-hovercard      spf-link " data-ytid="{{ byline.navigationEndpoint.browseEndpoint.browseId }}" data-name="playlist">{{ getText(byline) }}</a>
-                                                    </div>
-                                                    <div class="pl-video-bottom-standalone-badge"></div>
-                                                </td>
-                                                <td class="pl-video-badges"></td>
-                                                <td class="pl-video-added-by"></td>
-                                                <td class="pl-video-time">
-                                                    <div class="more-menu-wrapper">
-                                                        <div class="timestamp">
-                                                            <span aria-label="{{ this.lengthText.accessibility.accessibilityData.label }}">{{ getText(this.lengthText) }}</span>
-                                                        </div>
-                                                        <div class="pl-video-edit-options"></div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        {%- endif -%}
+                                        {{ pl_video(video) }}
                                     {%- endfor -%}
                                 </tbody>
                             </table>
+                            {%- set last = yt.page.videoList|last -%}
+                            {%- if last.continuationItemRenderer -%}
+                            {{ load_more(
+                                last.continuationItemRenderer.continuationEndpoint.continuationCommand.token,
+                                "pl-load-more-destination"
+                            ) }}
+                            {%- endif -%}
                         </div>
                     </li>
                 </ul>

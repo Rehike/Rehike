@@ -12,5 +12,8 @@
     "loadingMoreSuggestions": "Loading more suggestions...",
     "durationA11y": " - Duration: %s.",
     "verified": "Verified",
-    "commentPostFail": "Comment failed to post."
+    "commentPostFail": "Comment failed to post.",
+    "usernamePrepend": "by ",
+    "shelfsliderNext": "Next",
+    "shelfsluderPrev": "Previous"
 }

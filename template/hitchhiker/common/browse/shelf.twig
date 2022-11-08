@@ -26,7 +26,16 @@
                 {% endfor %}
             </ul>
         </div>
-        <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-shelf-slider-pager yt-uix-shelfslider-prev" type="button" onclick=";return false;"><span class="yt-uix-button-content"><span data-tooltip-text="Previous" aria-label="Previous" class="yt-uix-shelfslider-prev-arrow yt-uix-tooltip yt-sprite"></span></span></button><button class="yt-uix-button yt-uix-button-size-default yt-uix-button-shelf-slider-pager yt-uix-shelfslider-next" type="button" onclick=";return false;"><span class="yt-uix-button-content"><span data-tooltip-text="Next" aria-label="Next" class="yt-uix-shelfslider-next-arrow yt-uix-tooltip yt-sprite"></span></span></button>
+        <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-shelf-slider-pager yt-uix-shelfslider-prev" type="button" onclick=";return false;">
+            <span class="yt-uix-button-content">
+                <span data-tooltip-text="{{ yt.msgs.shelfsliderPrev }}" aria-label="{{ yt.msgs.shelfsliderPrev }}" class="yt-uix-shelfslider-prev-arrow yt-uix-tooltip yt-sprite"></span>
+            </span>
+        </button>
+        <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-shelf-slider-pager yt-uix-shelfslider-next" type="button" onclick=";return false;">
+            <span class="yt-uix-button-content">
+                <span data-tooltip-text="{{ yt.msgs.shelfsliderNext }}" aria-label="{{ yt.msgs.shelfsliderNext }}" class="yt-uix-shelfslider-next-arrow yt-uix-tooltip yt-sprite"></span>
+            </span>
+        </button>
     </div>
 {% endmacro %}
 
