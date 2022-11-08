@@ -47,7 +47,7 @@ class ResultsController extends NirvanaController {
         $paginatorInfo = self::getPaginatorInfo($resultsCount, $resultsIndex);
         //var_dump($resultsIndex, $paginatorInfo);die();
 
-        $yt -> page = ResultsModel::bake($ytdata, $paginatorInfo, $yt -> query);
+        $yt -> page = ResultsModel::bake($ytdata, $paginatorInfo, self::$query);
     }
 
     public static function getPaginatorIndex($sp) {
