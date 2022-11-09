@@ -12,5 +12,8 @@
     "loadingMoreSuggestions": "Wczytuję więcej sugestii...",
     "durationA11y": " - Czas trwania: %s.",
     "verified": "Zweryfikowano",
-    "commentPostFail": "Komentarz nie został opublikowany."
+    "commentPostFail": "Komentarz nie został opublikowany.",
+    "usernamePrepend": "autor: ",
+    "shelfsliderNext": "Następny",
+    "shelfsluderPrev": "Poprzedni"
 }
