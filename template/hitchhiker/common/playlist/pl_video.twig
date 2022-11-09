@@ -1,0 +1,50 @@
+{%- macro render(data) -%}
+{%- from "core/html/img.twig" import img -%}
+{%- if data.playlistVideoRenderer -%}
+{%- set this = data.playlistVideoRenderer -%}
+<tr class="pl-video yt-uix-tile" data-video-id="{{ this.videoId }}" data-set-video-id="" data-title="{{ getText(this.title) }}">
+    <td class="pl-video-handle"></td>
+    <td class="pl-video-index"></td>
+    <td class="pl-video-thumbnail">
+        <span class="pl-video-thumb ux-thumb-wrap contains-addto">
+            <a href="{{ getUrl(this) }}" class="spf-link" aria-hidden="true">
+                <span class="video-thumb yt-thumb yt-thumb-72">
+                    <span class="yt-thumb-default">
+                        <span class="yt-thumb-clip">
+                            {{ img({
+                                src: getThumb(this, 72),
+                                ytImg: true,
+                                onload: ";window.__ytRIL && __ytRIL(this)",
+                                delayLoad: true,
+                                width: 72
+                            }) }}
+                            <span class="vertical-align"></span>
+                        </span>
+                    </span>
+                </span>
+            </a>
+            {{ wlBtn.render(getWLOverlay(this), this.videoId) }}
+        </span>
+    </td>
+    <td class="pl-video-title">
+        <a href="{{ getUrl(this) }}" class="pl-video-title-link yt-uix-tile-link spf-link">{{ getText(this.title) }}</a>
+        <div class="pl-video-owner">
+            {% set byline = this.shortBylineText %}
+            {{ yt.config.byTextOnByline ? yt.msgs.usernamePrepend }}
+            <a href="{{ getEndpoint(byline) }}" class="spf-link" data-ytid="{{ byline.navigationEndpoint.browseEndpoint.browseId }}" data-name="playlist">{{ getText(byline) }}</a>
+        </div>
+        <div class="pl-video-bottom-standalone-badge"></div>
+    </td>
+    <td class="pl-video-badges"></td>
+    <td class="pl-video-added-by"></td>
+    <td class="pl-video-time">
+        <div class="more-menu-wrapper">
+            <div class="timestamp">
+                <span aria-label="{{ this.lengthText.accessibility.accessibilityData.label }}">{{ getText(this.lengthText) }}</span>
+            </div>
+            <div class="pl-video-edit-options"></div>
+        </div>
+    </td>
+</tr>
+{%- endif -%}
+{%- endmacro -%}

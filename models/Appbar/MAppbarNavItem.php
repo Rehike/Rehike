@@ -1,15 +1,17 @@
 <?php
 namespace Rehike\Model\Appbar;
 
-use \Rehike\Model\Appbar\MAppbarNavItemStatus;
-
 class MAppbarNavItem
 {
     public $title;
     public $href;
-    public $status = MAppbarNavItemStatus::Unselected;
+    public $status = self::StatusUnselected;
 
-    public function __construct($title, $href, $status = MAppbarNavItemStatus::Unselected)
+    const StatusUnselected = 0;
+    const StatusPartiallySelected = 1;
+    const StatusSelected = 2;
+
+    public function __construct($title, $href, $status = self::StatusUnselected)
     {
         $this->title = $title;
         $this->href = $href;

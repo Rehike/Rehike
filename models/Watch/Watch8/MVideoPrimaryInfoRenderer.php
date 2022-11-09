@@ -415,8 +415,8 @@ class MLikeButtonRenderer
 
     public function __construct($dataHost, &$info, &$videoId)
     {
-        $origLikeButton = &$info->topLevelButtons[0]->toggleButtonRenderer;
-        $origDislikeButton = &$info->topLevelButtons[1]->toggleButtonRenderer;
+        $origLikeButton = &$info->topLevelButtons[0]->segmentedLikeDislikeButtonRenderer->likeButton->toggleButtonRenderer;
+        $origDislikeButton = &$info->topLevelButtons[0]->segmentedLikeDislikeButtonRenderer->dislikeButton->toggleButtonRenderer;
 
         $likeA11y = $origLikeButton->accessibility->label;
         $dislikeA11y = $origDislikeButton->accessibility->label;
@@ -430,15 +430,10 @@ class MLikeButtonRenderer
         if (is_numeric(str_replace(",", "", $likeCount)))
             $likeCountInt = (int)str_replace(",", "", $likeCount);
 
-        // Since December 2021, dislikes are unavailable.
-        $dislikeCount = "";
-
         // Account for RYD API data if it exists
         if ($dataHost::$useRyd && "" !== $likeCount)
         {
             $rydData = &$dataHost::$rydData;
-
-            $dislikeCount = number_format($rydData -> dislikes);
 
             $dislikeCountInt = (int)$rydData -> dislikes;
 

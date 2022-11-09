@@ -1,5 +1,6 @@
 {%- from "common/browse/item_section.twig" import render as item_section -%}
 {%- import "common/uix/lockup.twig" as lockup -%}
+{%- from "common/playlist/pl_video.twig" import render as pl_video -%}
 {
     {%- if yt.page.continuation -%}
     {%- import "common/uix/load_more_button.twig" as load_more -%}
@@ -27,6 +28,8 @@
                 {{ lockup.tile(item) }}
             </div>
         </li>
+    {%- elseif item.playlistVideoRenderer -%}
+        {{ pl_video(item) }}
     {%- endif -%}
     {%- endfor -%}
     {%- endapply -%},

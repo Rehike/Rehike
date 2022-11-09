@@ -16,14 +16,13 @@
         </div>
         <div class="playlist-info">
             <h3 class="playlist-title">
-                <a href="/playlist?list={{ playlist.playlistId }}" class="       spf-link ">{{ playlist.title }}</a>
+                <a href="/playlist?list={{ playlist.playlistId }}" class="spf-link">{{ playlist.title }}</a>
             </h3>
             <ul class="playlist-details">
                 {% if playlist.shortBylineText %}
                     {% set author = playlist.shortBylineText.runs.0 %}
-                    {% set href = author.navigationEndpoint.commandMetadata.webCommandMetadata.url %}
                     <li class="author-attribution">
-                        {{ yt.config.byTextOnByline ? "by " }}<a href="{{ href }}" class="       spf-link ">{{ author.text }}</a>
+                        {{ yt.config.byTextOnByline ? yt.msgs.usernamePrepend }}<a href="{{ getUrl(author) }}" class="spf-link">{{ author.text }}</a>
                     </li>
                 {% endif %}
                 {% if playlist.videoCountText %}

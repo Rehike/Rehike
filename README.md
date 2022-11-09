@@ -10,13 +10,13 @@ We use it to accurately restore the old YouTube layout and feel, which is known 
 
 **Rehike is not a browser extension, nor does it intend to function as one.** Rather, it works over the browser, offering more freedom to what it is allowed to do and greater portability. This makes Rehike browser-independent and, to an extent, system independent.
 
-## Frequently asked questions (& more)
+## How do I do this? FAQs? etc.
 
-See [FAQ.md](FAQ.md).
+See [the Rehike wiki](https://github.com/Rehike/Rehike/wiki).
 
 ## I want to contribute!
 
-See [CONTRIBUTORS.md](CONTRIBUTORS.md).
+See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Installation
 

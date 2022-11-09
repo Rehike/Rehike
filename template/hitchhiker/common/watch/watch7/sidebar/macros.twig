@@ -49,7 +49,7 @@
         {% set author = getByline(info) %}
         {% if author != null %}
         <span class="stat attribution">
-            {{ yt.config.byTextOnByline ? "<span>by </span>"|raw }}
+            {{ yt.config.byTextOnByline ? "<span>" ~ yt.msgs.usernamePrepend  ~ "</span>"|raw }}
             <span>{{ getText(author) }}</span>
         </span>
         {% endif %}

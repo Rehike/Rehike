@@ -4,7 +4,7 @@ namespace Rehike\Model\Channels;
 use Rehike\Model\Channels\Channels4\MChannelAboutMetadata;
 use Rehike\Model\Channels\Channels4\BrandedPageV2\MSubnav;
 use Rehike\Model\Channels\Channels4\Sidebar\MRelatedChannels;
-use Rehike\Model\Appbar\MAppbarNavItemStatus;
+use Rehike\Model\Appbar\MAppbarNavItem;
 use Rehike\Model\Browse\InnertubeBrowseConverter;
 use Rehike\Request;
 
@@ -73,8 +73,8 @@ class Channels4Model
                         }
                     }
                 }
-
-                $response["header"]->addTabs($tabs);
+                
+                $response["header"]->addTabs($tabs, ($yt -> partiallySelectTabs ?? false));
 
                 foreach ($tabs as $tab) if (@$tab -> tabRenderer)
                 {
@@ -85,11 +85,11 @@ class Channels4Model
                         $yt->appbar->nav->addItem(
                             $tab->tabRenderer->title,
                             $tabEndpoint,
-                            @$tab->tabRenderer->selected ? MAppbarNavItemStatus::Selected : MAppbarNavItemStatus::Unselected
+                            @$tab->tabRenderer->status
                         );
                     }
 
-                    if (@$tab->tabRenderer->selected)
+                    if (@$tab->tabRenderer->status > 0)
                     {
                         $baseUrl = self::$baseUrl;
                         self::$currentTab = str_replace("$baseUrl/", "", $tabEndpoint);

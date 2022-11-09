@@ -1,17 +1,20 @@
 <?php
-namespace Rehike\Model\Common\Alert;
+namespace Rehike\Model\Common;
 
-use \Rehike\Model\Common\Alert\MAlertType;
 use \Rehike\Model\Common\MButton;
 
 class MAlert {
+    const TypeInformation = "info";
+    const TypeWarning = "warn";
+    const TypeError = "error";
+    const TypeSuccess = "success";
+
     /**
      * What type the alert should be rendered in.
-     * See MAlertType above for more information.
      * 
-     * @var MAlertType
+     * @var string
      */
-    public $type = MAlertType::Information;
+    public $type = self::TypeInformation;
 
     /**
      * Text displayed inside the alert.
@@ -52,21 +55,21 @@ class MAlert {
      * 
      * @param string $type Alert type returne from InnerTube.
      * 
-     * @return MAlertType
+     * @return string
      */
     public static function parseInnerTubeType($type) {
         switch ($type) {
             case "INFO":
-                return MAlertType::Information;
+                return MAlert::TypeInformation;
                 break;
             case "WARNING":
-                return MAlertType::Warning;
+                return MAlert::TypeWarning;
                 break;
             case "ERROR":
-                return MAlertType::Error;
+                return MAlert::TypeError;
                 break;
             case "SUCCESS":
-                return MAlertType::Success;
+                return MAlert::TypeSuccess;
                 break;
         }
     }

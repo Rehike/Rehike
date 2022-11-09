@@ -46,67 +46,104 @@
                     {%- set this = section.itemSectionRenderer -%}
                     <li>
                         <ol id="item-section-{{ generateRid() }}" class="item-section">
+                            {%- if yt.page.content.header.textHeaderRenderer -%}
+                            <li class="safety-mode-message">
+                                {{ getText(yt.page.content.header.textHeaderRenderer.title) }}
+                            </li>
+                            {%- endif -%}
                             {%- for item in this.contents -%}
-                            <li>
                                 {%- if item.videoRenderer
                                     or item.playlistRenderer
                                     or item.radioRenderer
                                     or item.channelRenderer
                                 -%}
+                                <li>
                                     {{ yt.config.largeSearchThumbs
                                     ? lockup.tile(item, 246, 138)
                                     : lockup.tile(item)
                                     }}
+                                </li>
                                 {%- elseif item.shelfRenderer -%}
                                 {%- set shelf = item.shelfRenderer -%}
-                                <div class="feed-item-container browse-list-item-container yt-section-hover-contaner compact-shelf shelf-item branded-page-box clearfix">
-                                    <div class="feed-item-dismissible">
-                                        <div class="shelf-title-table">
-                                            <div class="shelf-title-row">
-                                                <h2 class="branded-page-module-title shelf-title-cell">{{ getText(shelf.title) }}</h2>
+                                <li>
+                                    <div class="feed-item-container browse-list-item-container yt-section-hover-contaner compact-shelf shelf-item branded-page-box clearfix">
+                                        <div class="feed-item-dismissible">
+                                            <div class="shelf-title-table">
+                                                <div class="shelf-title-row">
+                                                    <h2 class="branded-page-module-title shelf-title-cell">{{ getText(shelf.title) }}</h2>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="vertical-shelf">
-                                            <div class="yt-uix-expander yt-uix-expander-collapsed">
-                                                <ul class="shelf-content">
-                                                    {%- set list = shelf.content.verticalListRenderer -%}
-                                                    {%- for video in list.items -%}
-                                                                                                        {# sic lmao #}
-                                                    <li{{ loop.index > list.collapsedItemCount ? ' class="collapsable"'  }}>
-                                                        {{ yt.config.largeSearchThumbs
-                                                        ? lockup.tile(video, 246, 138)
-                                                        : lockup.tile(video)
-                                                        }}
-                                                    </li>
-                                                    {%- endfor -%}
-                                                </ul>
-                                                <div class="yt-uix-expander-head yt-uix-expander-collapsed-body">
-                                                    {{ button({
-                                                        style: "STYLE_LINK",
-                                                        size: "SIZE_DEFAULT",
-                                                        icon: true,
-                                                        tooltip: yt.msgs.showMore,
-                                                        class: ["vertical-shelf-expander"]
-                                                    }) }}
+                                            <div class="vertical-shelf">
+                                                <div class="yt-uix-expander yt-uix-expander-collapsed">
+                                                    <ul class="shelf-content">
+                                                        {%- set list = shelf.content.verticalListRenderer -%}
+                                                        {%- for video in list.items -%}
+                                                                                                            {# sic lmao #}
+                                                        <li{{ loop.index > list.collapsedItemCount ? ' class="collapsable"'  }}>
+                                                            {{ yt.config.largeSearchThumbs
+                                                            ? lockup.tile(video, 246, 138)
+                                                            : lockup.tile(video)
+                                                            }}
+                                                        </li>
+                                                        {%- endfor -%}
+                                                    </ul>
+                                                    <div class="yt-uix-expander-head yt-uix-expander-collapsed-body">
+                                                        {{ button({
+                                                            style: "STYLE_LINK",
+                                                            size: "SIZE_DEFAULT",
+                                                            icon: true,
+                                                            tooltip: yt.msgs.showMore,
+                                                            class: ["vertical-shelf-expander"]
+                                                        }) }}
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="feed-item-dismissal-notices"></div>
                                     </div>
-                                    <div class="feed-item-dismissal-notices"></div>
-                                </div>
+                                </li>
                                 {%- elseif item.horizontalCardListRenderer -%}
                                 {%- set list = item.horizontalCardListRenderer -%}
-                                <div class="search-refinements">
-                                    <h3>{{ getText(list.header.richListHeaderRenderer.title) }}</h3>
-                                    {%- for refinement in list.cards -%}
-                                    <div class="search-refinement">
-                                        <a href="{{ getUrl(refinement.searchRefinementCardRenderer.searchEndpoint) }}" class="spf-link">{{ getText(refinement.searchRefinementCardRenderer.query) }}</a>
+                                <li>
+                                    <div class="search-refinements">
+                                        <h3>{{ getText(list.header.richListHeaderRenderer.title) }}</h3>
+                                        {%- for refinement in list.cards -%}
+                                        <div class="search-refinement">
+                                            <a href="{{ getUrl(refinement.searchRefinementCardRenderer.searchEndpoint) }}" class="spf-link">{{ getText(refinement.searchRefinementCardRenderer.query) }}</a>
+                                        </div>
+                                        {%- endfor -%}
                                     </div>
-                                    {%- endfor -%}
-                                </div>
+                                </li>
+                                {%- elseif item.didYouMeanRenderer -%}
+                                {%- set dym = item.didYouMeanRenderer -%}
+                                <li class="spell-correction spell-correction-dym">
+                                    <span class="spell-correction-corrected">
+                                        {{ getText(dym.didYouMean) }}
+                                    </span>
+                                    <a href="{{ getUrl(dym.correctedQueryEndpoint) }}" class="spell-correction-corrected-query spf-link">
+                                        {%- for run in dym.correctedQuery.runs -%}
+                                        {{ run.italics ? "<i>" }}{{ run.text }}{{ run.italics ? "</i>" }}
+                                        {%- endfor -%}
+                                    </a>
+                                </li>
+                                {%- elseif item.showingResultsForRenderer -%}
+                                {%- set srf = item.showingResultsForRenderer -%}
+                                <li class="spell-correction">
+                                    <span class="spell-correction-corrected">
+                                        {{ getText(srf.showingResultsFor) }}
+                                    </span>
+                                    <a href="{{ getUrl(srf.correctedQueryEndpoint) }}" class="spell-correction-corrected-query spf-link">
+                                        {%- for run in srf.correctedQuery.runs -%}
+                                        {{ run.italics ? "<i>" }}{{ run.text }}{{ run.italics ? "</i>" }}
+                                        {%- endfor -%}
+                                    </a>
+                                    <span>{{ getText(srf.searchInsteadFor) }}</span>
+                                    <a href="{{ getUrl(srf.originalQueryEndpoint) }}" class="spf-link">
+                                        {{ getText(srf.originalQuery) }}
+                                    </a>
+                                </li>
                                 {%- endif -%}
-                                {%- endfor -%}
-                            </li>
+                            {%- endfor -%}
                         </ol>
                     </li>
                 {%- endif -%}

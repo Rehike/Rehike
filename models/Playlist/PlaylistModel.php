@@ -1,19 +1,15 @@
 <?php
 namespace Rehike\Model\Playlist;
 
-use \Rehike\Model\Common\Alert\MAlert;
-use \Rehike\Model\Common\Alert\MAlertType;
-use \Rehike\Model\Playlist\MPlaylistHeader;
+use \Rehike\Model\Common\MAlert;
 use \Rehike\TemplateFunctions;
+use \Rehike\i18n;
 
 class PlaylistModel {
-    /**
-     * Bake the main content,
-     * also gives UCID for channel header request
-     */
-    public static function bakePL($dataHost) {
+    public static function bake($dataHost) {
+        $i18n = i18n::newNamespace("playlist");
+        $i18n -> registerFromFolder("i18n/playlist");
         $response = (object) [];
-        $response -> raw = $dataHost;
 
         $contentContainer = $dataHost -> contents -> twoColumnBrowseResultsRenderer -> tabs[0] -> tabRenderer -> content ?? null;
 
@@ -21,10 +17,10 @@ class PlaylistModel {
             return (object) [
                 "alerts" => [
                     new MAlert((object) [
-                        "type" => MAlertType::Error,
+                        "type" => MAlert::TypeError,
                         "content" => [
                             (object) [
-                                "text" => "That playlist does not exist."
+                                "text" => $i18n -> nonexistent
                             ]
                         ]
                     ])
@@ -34,7 +30,9 @@ class PlaylistModel {
 
         $response -> videoList = $contentContainer -> sectionListRenderer -> contents[0] -> itemSectionRenderer -> contents[0] -> playlistVideoListRenderer -> contents;
 
-        $response -> plHeader = new MPlaylistHeader(@$dataHost -> sidebar -> playlistSidebarRenderer);
+        $response -> header = $dataHost -> header -> playlistHeaderRenderer ?? null;
+        $header = &$response -> header;
+        $header -> actions = [];
 
         $response -> alerts = [];
         if (isset($dataHost -> alerts)) for ($i = 0; $i < count($dataHost -> alerts); $i++) {

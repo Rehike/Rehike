@@ -3,6 +3,7 @@
 <div class="search-header yt-uix-expander yt-uix-expander-collapsed">
     <div class="filter-top">
         <div class="filter-bar-container">
+            {%- if data.button.toggleButtonRenderer -%}
             <div class="filter-button-container">
                 {% set btn = data.button.toggleButtonRenderer %}
                 {{ button({
@@ -36,9 +37,11 @@
             {%- else -%}
             <div class="filter-crumb-spacer"></div>
             {%- endif -%}
+            {%- endif -%}
             <p class="num-results first-focus" tabindex="0">{{ data.resultCountText }}</p>
         </div>
     </div>
+    {%- if data.groups -%}
     <div id="filter-dropdown" class="yt-uix-expander-body">
         {%- for group in data.groups -%}
             {%- if group.searchFilterGroupRenderer -%}
@@ -73,5 +76,6 @@
             </div>
             {%- endif -%}
     </div>
+    {%- endif -%}
 </div>
 {% endmacro %}
