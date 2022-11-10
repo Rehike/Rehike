@@ -1,4 +1,5 @@
 {%- macro render(data, styleOverride, id) -%}
+    {%- if not data is empty -%}
     {% set wrapped = _self._buttonWrapper(data, styleOverride, id) %}
     {%- if data.clickcard and not data.manualClickcardWrapper -%}
         {% from "/common/uix/clickcard_wrapper.twig" import render as clickcard %}
@@ -11,6 +12,7 @@
         {{ video_action_menu(data.videoActionsMenu, wrapped) }}
     {%- else -%}
         {{ wrapped }}
+    {%- endif -%}
     {%- endif -%}
 {%- endmacro -%}
 
