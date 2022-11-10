@@ -6,10 +6,10 @@
  #}
 
 {% macro main(data, style, thumbX, thumbY, config) %}
-    {% import "common/uix/lockup/thumb.twig" as thumb %}
-    {% import "common/uix/subscription_button.twig" as subBtn %}
+    {% from "common/uix/lockup/thumb.twig" import render as thumb %}
     {% from "common/uix/badge_list.twig" import render as badge_list %}
     {% from "common/uix/subscription_button.twig" import render as subscription_button %}
+    {% from "common/uix/button.twig" import render as button %}
     {% if data.info %}
         {% set info = data.info %}
         {% if data.type == "channel" %}
@@ -18,9 +18,9 @@
         <{{ config.type ?? "div" }} class="yt-lockup yt-lockup-{{ style }} yt-lockup-{{ data.type }} clearfix {% for class in config.class %}{{ class ~ " " }}{% endfor %}">
             <div class="yt-lockup-dismissible {{ style == "tile" ? "yt-uix-tile" }}">
                 {%- if data.type == "channel" -%}
-                {{ thumb.render(data, thumbY, thumbY) }}
+                {{ thumb(data, thumbY, thumbY) }}
                 {%- else -%}
-                {{ thumb.render(data, thumbX, thumbY) }}
+                {{ thumb(data, thumbX, thumbY) }}
                 {%- endif -%}
                 <div class="yt-lockup-content">
                     <h3 class="yt-lockup-title {{ info.menu ? "contains-action-menu" }}">
@@ -53,6 +53,18 @@
                             {% for meta in getMeta(info) %}
                             <li>{{ getText(meta) }}</li>
                             {% endfor %}
+                            {% if info.upcomingEventData %}
+                                {# hitchhiker localized date hack #}
+                                <li>
+                                    {%- for run in info.upcomingEventData.upcomingEventText.runs -%}
+                                        {%- if run.text == "DATE_PLACEHOLDER" -%}
+                                        <span class="localized-date" data-timestamp="{{ info.upcomingEventData.startTime }}" data-format="longdateonly"></span>
+                                        {%- else -%}
+                                        {{ run.text }}
+                                        {%- endif -%}
+                                    {%- endfor -%}
+                                </li>
+                            {% endif %}
                         </ul>
                     </div>
                     {{ data.type == "channel" and style == "grid" ? subscription_button(info.subscriptionActions) }}
@@ -62,10 +74,37 @@
                         {{ getText(getDescSnippet(info))|nl2br }}
                     </div>
                     {% endif %}
-                    {%- if info.badges or (data.type == "channel" and style == "tile") -%}
+                    {%- if info.badges or info.upcomingEventData or (data.type == "channel" and style == "tile") -%}
                     <div class="yt-lockup-badges">
-                        {{ badge_list(info.badges) }}
+                        {{ badge_list(info.badges, info.upcomingEventData) }}
                         {{ data.type == "channel" ? subscription_button(info.subscriptionActions) }}
+                    </div>
+                    {%- endif -%}
+                    {%- if info.buttons -%}
+                    <div class="yt-lockup-meta">
+                        {%- for btn in info.buttons -%}
+                            {%- if btn.toggleButtonRenderer -%}
+                                {%- set this = btn.toggleButtonRenderer -%}
+                                {%- if this.defaultServiceEndpoint.addUpcomingEventReminderEndpoint -%}
+                                <span class="yt-uix-livereminder">
+                                    {{ button({
+                                        style: "STYLE_DEFAULT",
+                                        size: "SIZE_SMALL",
+                                        icon: true,
+                                        class: ["yt-uix-livereminder-main-button"],
+                                        tooltip: this.defaultTooltip,
+                                        text: this.isToggled ? this.toggledText : this.defaultText,
+                                        attributes: {
+                                            "uix-livereminder-video-id": info.videoId,
+                                            "reminder-set-text": getText(this.toggledText),
+                                            "href": "",
+                                            "set-reminder-text": getText(this.defaultText)
+                                        }
+                                    }) }}
+                                </span>
+                                {%- endif -%}
+                            {%- endif -%}
+                        {%- endfor -%}
                     </div>
                     {%- endif -%}
                 </div>

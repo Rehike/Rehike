@@ -60,6 +60,7 @@ Router::get([
     "/related_ajax" => "ajax/related",
     "/browse_ajax" => "ajax/browse",
     "/addto_ajax" => "ajax/addto",
+    "/live_event_reminders_ajax" => "ajax/live_event_reminders",
     "/rehike/version" => "rehike/version",
     "/rehike/static/**" => "rehike/static_router",
     "/rehike/settings" => "/rehike/settings",

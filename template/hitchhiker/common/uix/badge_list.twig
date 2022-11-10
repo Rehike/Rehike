@@ -1,5 +1,10 @@
-{% macro render(list) %}
+{% macro render(list, eventData) %}
 <ul class="yt-badge-list">
+    {% if eventData.startTime %}
+    <li class="yt-badge-item">
+        <span class="yt-badge localized-date" data-timestamp="{{ eventData.startTime }}" data-format="weekdayshorttime"></span>
+    </li>
+    {% endif %}
     {% for item in list %}
         {% if item.metadataBadgeRenderer %}
             {% set this = item.metadataBadgeRenderer %}
