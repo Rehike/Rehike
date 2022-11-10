@@ -1,10 +1,10 @@
 {
-	"previousHash": "b91185ac5daca54afb768b417a3929b4c1ac7a9f",
-	"currentRevisionId": 565,
-	"subject": "Debugger mega-update!",
-	"body": "Debugger mega-update!",
+	"previousHash": "853d17ceac73176d20526f244ab029264069175d",
+	"currentRevisionId": 577,
+	"subject": "Fix subscribe button in channel sidebar",
+	"body": "Fix subscribe button in channel sidebar",
 	"branch": "master",
 	"committerName": "Coffee",
 	"committerEmail": "99076687+YukisCoffee@users.noreply.github.com",
-	"time": 1668111183
+	"time": 1668120659
 }

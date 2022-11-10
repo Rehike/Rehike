@@ -116,11 +116,11 @@ class InnertubeBrowseConverter
         if (@$context["channelRendererUnbrandedSubscribeButton"]) 
             $subscribeButtonBranded = false;
 
-        $data->subscriptionActions = new MSubscriptionActions([
-            "longText" => $subscriberCount,
-            "shortText" => $subscriberCount,
-            "branded" => $subscribeButtonBranded
-        ]);
+        $data->subscriptionActions = MSubscriptionActions::fromData(
+            $data->subscribeButton->subscribeButtonRenderer,
+            "",
+            $subscribeButtonBranded
+        );
 
         if (@$context["channelRendererNoMeta"])
         {
