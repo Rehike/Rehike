@@ -7,11 +7,26 @@
  * @author The Rehike Maintainers
  */
 
+#rebug-lightbox .hid
+{
+    display: none !important;
+}
+
 #rebug-open-button-container {
     position: fixed;
     bottom: 3px;
     right: 6px;
     z-index: 1000000002;
+}
+
+.rebug-open-button.condensed
+{
+    display: none;
+}
+
+.rebug-open-button.condensed.rebug-open-button-has-error
+{
+    display: inline-block;
 }
 
 .rebug-open-button-has-error {
@@ -37,6 +52,20 @@
     display: block;
 }
 
+#rebug-main .yt-dialog-title
+{
+    display: inline-block;
+}
+
+#rebug-main .rebug-history-button
+{
+    margin-left: 15px;
+    max-width: 300px;
+
+    /** History button shouldn't be displayed in sick beta release! */
+    display: none;
+}
+
 .rebug-close-button-wrapper {
     position: absolute;
     top: 10px;
@@ -48,8 +77,8 @@
 }
 
 #rebug-tabs-switcher + #rebug-tabbed-content-wrapper {
-    margin-left: 15px;
-    float: right;
+    /** 175px (width of tabs) + 15px (spacing) */
+    margin-left: 190px;
 }
 
 .rebug-tab {
@@ -80,12 +109,12 @@
        - left padding of parent [15px] - border width both sides [1px * 2])
        
        Height is equal to (height of lightbox content - height of header [51px]) */
-    width: 367px;
-    height: 329px;
+    width: 373px;
+    height: 335px;
+    padding: 0;
     overflow-y: scroll;
     background: #fbfbfb;
     border: 1px solid #ededed;
-    padding: 3px;
     display: none;
 }
 
@@ -107,7 +136,7 @@
 {
     .rebug-tab-content
     {
-        width: 567px;
+        width: 573px;
     }
 }
 
@@ -115,7 +144,7 @@
 {
     .rebug-tab-content
     {
-        height: 529px;
+        height: 535px;
     }
 
     #rebug-lightbox .yt-dialog-content
@@ -128,7 +157,7 @@
 {
     .rebug-tab-content
     {
-        width: 767px;
+        width: 773px;
     }
 }
 
@@ -136,7 +165,7 @@
 {
     .rebug-tab-content
     {
-        height: 729px;
+        height: 735px;
     }
 
     #rebug-lightbox .yt-dialog-content
@@ -162,48 +191,6 @@
 }
 
 /* Errors */
-#rebug-tab-content-error
-{
-    /* In order to set the padding to 0 here (it's 3px normally),
-       3px from both sides (6px total) need to be added to the final
-       width/height. */
-    width: 373px;
-    height: 335px;
-    padding: 0;
-}
-
-@media screen and (min-width: 850px)
-{
-    #rebug-tab-content-error
-    {
-        width: 573px;
-    }
-}
-
-@media screen and (min-height: 650px)
-{
-    #rebug-tab-content-error
-    {
-        height: 535px;
-    }
-}
-
-@media screen and (min-width: 1050px)
-{
-    #rebug-tab-content-error
-    {
-        width: 773px;
-    }
-}
-
-@media screen and (min-height: 850px)
-{
-    #rebug-tab-content-error
-    {
-        height: 735px;
-    }
-}
-
 .rebug-error-renderer .error-icon-warning, .rebug-error-renderer .error-icon-deprecated
 {
     background:no-repeat url(//s.ytimg.com/yts/imgbin/www-hitchhiker-vfllYIUv0.png) -67px -190px;
@@ -336,6 +323,27 @@
 .rebug-condensed #rebug-tab-content-error
 {
     display: block !important;
+}
+
+.rebug-tab-content .loading
+{
+    display: block;
+    text-align: center;
+    height: 100%;
+}
+
+.rebug-tab-content .loading::before
+{
+    content: "";
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+}
+
+.rebug-tab-content .loading .yt-spinner
+{
+    display: inline-block;
+    vertical-align: middle;
 }
 
 /*

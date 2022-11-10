@@ -22,6 +22,16 @@ class MOpenButton extends MButton
 
     public function __construct($errorCount, $condensed)
     {
+        if ($condensed) $this->class[] = "condensed";
+
+        if ($errorCount > 0) $this->class[] = "rebug-open-button-has-error";
+
+        $this->setText(self::getTitle($errorCount, $condensed));
+        $this->hasArrow = true;
+    }
+
+    public static function getTitle($errorCount = 0, $condensed = false)
+    {
         $i18n = &i18n::getNamespace("rebug");
 
         $label = "";
@@ -51,11 +61,13 @@ class MOpenButton extends MButton
                 }
             }
         }
+        else
+        {
+            $label = "";
+        }
 
         if ($errorCount > 0)
         {
-            $this->class[] = "rebug-open-button-has-error";
-
             if (!$condensed)
             {
                 if (1 == $errorCount)
@@ -79,8 +91,7 @@ class MOpenButton extends MButton
                 }
             }
         }
-
-        $this->setText($label);
-        $this->hasArrow = true;
+        
+        return $label;
     }
 }

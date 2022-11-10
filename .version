@@ -1,10 +1,10 @@
 {
-	"previousHash": "a277801ec780952a5e8b017d297e183b8eaaceb6",
-	"currentRevisionId": 535,
-	"subject": "proper error on simplebox",
-	"body": "proper error on simplebox",
+	"previousHash": "b91185ac5daca54afb768b417a3929b4c1ac7a9f",
+	"currentRevisionId": 565,
+	"subject": "Debugger mega-update!",
+	"body": "Debugger mega-update!",
 	"branch": "master",
-	"committerName": "aubymori",
-	"committerEmail": "aubyomori@gmail.com",
-	"time": 1667793890
+	"committerName": "Coffee",
+	"committerEmail": "99076687+YukisCoffee@users.noreply.github.com",
+	"time": 1668111183
 }

@@ -1,0 +1,285 @@
+/**
+ * @fileoverview Implements the history manager for Rebug.
+ * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
+ * @author The Rehike Maintainers
+ */
+
+rebug.history = {};
+
+/**
+ * Stores references to non-disposed registry entries.
+ * 
+ * @private @type {rebug.history.DebuggerSnapshot[]}
+ */
+rebug.history._registry = [];
+
+/**
+ * Stores a reference to the history button.
+ * 
+ * @private @type {Element}
+ */
+rebug.history._historyButton = null;
+
+/**
+ * Stores saved information about a particular debugger
+ * page.
+ * 
+ * @param {Object} data
+ * @param {string} url
+ * @param {string} title
+ * 
+ * @constructor
+ */
+rebug.history.DebuggerSnapshot = function(data, url, title)
+{
+    this.updatedTabs = {};
+
+    for (var keys = Object.keys(data), i = 0, j = keys.length; i < j; i++)
+    {
+        var key = keys[i], value = data[key];
+
+        this[key] = value;
+    }
+
+    if (url) this.url = url;
+    if (title) this.title = title;
+};
+
+/**
+ * The title of the snapshot's page.
+ * 
+ * @type {string}
+ */
+rebug.history.DebuggerSnapshot.prototype.title = "";
+
+/**
+ * The href to the particular snapshot.
+ * 
+ * @type {string}
+ */
+rebug.history.DebuggerSnapshot.prototype.url = "";
+
+/**
+ * A list of tabs to be updated over HTML.
+ * 
+ * @type {Object}
+ */
+rebug.history.DebuggerSnapshot.prototype.updatedTabs = {};
+
+/**
+ * Data updates specific to the global walker.
+ * 
+ * @type {Object}
+ */
+rebug.history.DebuggerSnapshot.prototype.globalWalker = {};
+
+/**
+ * Push a new entry to the history store.
+ * 
+ * @param {Object} data
+ * @param {string} url
+ * @param {string} title
+ */
+rebug.history.push = function(data, url, title)
+{
+    url = url || "";
+    title = title || "";
+
+    rebug.history._addRegistry(data, url, title, false);
+};
+
+/**
+ * Push a new entry and switch to it.
+ * 
+ * @param {Object} data
+ * @param {string} url
+ * @param {string} title
+ */
+rebug.history.pushAndSwitch = function(data, url, title)
+{
+    url = url || "";
+    title = title || "";
+
+    rebug.history._addRegistry(data, url, title, true);
+};
+
+/**
+ * Switch to a history store entry.
+ * 
+ * @param {number} index
+ */
+rebug.history.switch = function(index)
+{
+    var snapshot = rebug.history.getEntryByIndex(index);
+
+    rebug.history._switchToSnapshot(snapshot);
+};
+
+/**
+ * Get a registry entry by its index.
+ * 
+ * @param {number} index 
+ */
+rebug.history.getEntryByIndex = function(index)
+{
+    var registry = rebug.history._registry;
+
+    if (registry[index])
+    {
+        return registry[index];
+    }
+    else
+    {
+        return null;
+    }
+};
+
+/**
+ * Add a page to the registry.
+ * 
+ * @param {Object} data
+ * @param {string} url
+ * @param {string} title
+ * @param {boolean} switchTo (switch is an illegal variable name)
+ * 
+ * @private 
+ */
+rebug.history._addRegistry = function(data, url, title, switchTo)
+{
+    switchTo = switchTo || false;
+
+    var registry = rebug.history._registry;
+
+    var newEntry = new rebug.history.DebuggerSnapshot(data, url, title);
+
+    registry.unshift(newEntry);
+
+    if (switchTo)
+    {
+        // Newest item will always be the 0th item in this array.
+        rebug.history.switch(0);
+    }
+};
+
+/**
+ * Switch to a snapshot.
+ * 
+ * @param {rebug.history.DebuggerSnapshot} snapshot
+ */
+rebug.history._switchToSnapshot = function(snapshot)
+{
+    rebug.pubsub.publish("rebug-history-switch", snapshot);
+
+    rebug.history._updateTabs(snapshot.updatedTabs);
+    
+    // Because of laziness, this is the easiest way to prevent
+    // multiple tabs from rendering at the same time because
+    // of desynchronised client/server state:
+    rebug.tabs.switchTab(rebug.tabs.getCurrentId());
+};
+
+/**
+ * Update server-side rendered tabs with their new content.
+ * 
+ * @param {Object} tabs 
+ * @private
+ */
+rebug.history._updateTabs = function(tabs)
+{
+    for (var keys = Object.keys(tabs), i = 0, j = keys.length; i < j; i++)
+    {
+        var id = keys[i], tab = tabs[id];
+
+        rebug.history._updateTab(id, tab.title, tab.html);
+    }
+};
+ 
+/**
+ * Update a tab's title and HTML.
+ * 
+ * @param {string} id
+ * @param {string} title 
+ * @param {string} html 
+ * 
+ * @private
+ */
+rebug.history._updateTab = function(id, title, html)
+{
+    var tabEl = rebug.tabs.getTabById(id);
+    var contentEl = rebug.tabs.getContentById(id);
+
+    if (tabEl && contentEl)
+    {
+        tabEl.innerHTML = title;
+        contentEl.outerHTML = html;
+    }
+};
+
+/**
+ * Runs whenever the history button is clicked.
+ * 
+ * @private
+ */
+rebug.history._onClickHistoryButton = function()
+{
+
+};
+
+/**
+ * Set up the initial page, which requires some special
+ * treatment to save.
+ * 
+ * @private
+ */
+rebug.history._setupInitialPage = function()
+{
+    if (window._rebugcfg && window._rebugcfg.HISTORY_RAW_UPDATE_TAB_IDS)
+    {
+        var tabIds = window._rebugcfg.HISTORY_RAW_UPDATE_TAB_IDS;
+
+        var title = document.querySelector("head title").innerHTML || "";
+        var url = window.location.href;
+
+        var snapshot = new rebug.history.DebuggerSnapshot({}, url, title);
+
+        for (var i = 0, j = tabIds.length; i < j; i++)
+        {
+            var id = tabIds[i];
+
+            snapshot.updatedTabs[id] = {
+                title: rebug.tabs.getTitleById(id),
+                html: rebug.tabs.getContentById(id).outerHTML
+            };
+
+            snapshot.globalWalker = window._rebugcfg.globalWalker;
+
+            snapshot.openButton = 
+                document.getElementById("rebug-open-button-container")
+                .innerHTML
+            ;
+        }
+
+        rebug.history._registry.push(snapshot);
+    }
+};
+
+/**
+ * Runs upon Rebug initialisation.
+ * 
+ * @private
+ */
+rebug.history._onRebugInit = function()
+{
+    rebug.history._historyButton = document.querySelector(".rebug-history-button");
+
+    rebug.eventDelegate.add(
+        "click", 
+        "rebug-history-button", 
+        rebug.history._onClickHistoryButton
+    );
+
+    rebug.history._setupInitialPage();
+};
+
+rebug.pubsub.subscribe("rebug-init-finish", rebug.history._onRebugInit);

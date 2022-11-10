@@ -49,3 +49,5 @@ $yt->rehikeVersion->semanticVersion = \Rehike\Version\VersionController::getVers
 
 // Include the router for Controller v2 pages.
 require "router.php";
+
+Rehike\Debugger\Debugger::shutdown();

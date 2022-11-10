@@ -1,0 +1,204 @@
+/**
+ * @fileoverview Provides common utils for Rebug.
+ * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
+ * @author The Rehike Maintainers
+ */
+
+rebug.util = {};
+
+rebug.util.scrollLock = {};
+
+/**
+ * Is scroll lock enabled? 
+ * 
+ * @private
+ * @type {boolean}
+ */
+rebug.util.scrollLock._enabled = false;
+
+/**
+ * The previous scroll height.
+ * 
+ * @private
+ * @type {number}
+ */
+rebug.util.scrollLock._previousScroll = 0;
+
+/**
+ * A list of elements that were changed.
+ * 
+ * @private
+ * @type {Object[]}
+ */
+rebug.util.scrollLock._elements = [];
+
+/**
+ * Info of the body when changed.
+ * 
+ * @private
+ * @type {Object}
+ */
+rebug.util.scrollLock._bodyInfo = null;
+
+/**
+ * Get display information of an element for scroll locking it.
+ * 
+ * @param {Element} element 
+ * @return {Object}
+ */
+rebug.util.scrollLock.getElementInfo = function(element)
+{
+    var style = getComputedStyle(element);
+
+    var info = {
+        element: element,
+        hasPreviousInlineStyle: element.hasAttribute("style"),
+        previousInlineStyle: null,
+        shouldModify: style.display == "none" ? false : true
+    };
+
+    if (info.hasPreviousInlineStyle)
+    {
+        info.previousInlineStyle = element.getAttribute("style");
+    }
+
+    return info;
+};
+
+/**
+ * Enable scroll lock.
+ * 
+ * @return {void}
+ */
+rebug.util.scrollLock.enable = function()
+{
+    if (rebug.util.scrollLock._enabled) return;
+
+    // Get the original scroll position
+    var originalScroll = document.documentElement.scrollTop;
+    rebug.util.scrollLock._previousScroll = originalScroll;
+
+    // Iterate all direct children of body and determine
+    // if they should be acted upon.
+    for (var i = 0, j = document.body.children.length; i < j; i++)
+    {
+        var el = document.body.children[i];
+
+        var info = rebug.util.scrollLock.getElementInfo(el);
+
+        if (info.shouldModify)
+        {
+            rebug.util.scrollLock._elements.push(info);
+
+            info.element.setAttribute(
+                "style",
+                (
+                    (info.element.getAttribute("style") || "") +
+                    ";position:relative;top:-" + originalScroll + "px"
+                )
+            );
+        }
+    }
+
+    // Finally, freeze the body itself in place.
+    var bodyInfo = rebug.util.scrollLock.getElementInfo(document.body);
+    rebug.util.scrollLock._bodyInfo = bodyInfo;
+  
+    document.body.setAttribute(
+        "style",
+        (
+            (document.body.getAttribute("style") || "") +
+            ";overflow:hidden"
+        )
+    );
+
+    rebug.util.scrollLock._enabled = true;
+};
+
+/**
+ * Disable scroll lock.
+ * 
+ * @return {void}
+ */
+rebug.util.scrollLock.disable = function()
+{
+    if (!rebug.util.scrollLock._enabled) return;
+
+    // Undo body changes (this must be done first to avoid
+    // conflicts with children changes)
+    var bodyInfo = rebug.util.scrollLock._bodyInfo;
+
+    if (bodyInfo.hasPreviousInlineStyle)
+    {
+        document.body.setAttribute("style", bodyInfo.previousInlineStyle);
+    }
+    else
+    {
+        document.body.removeAttribute("style");
+    }
+
+    // And now iterate children to undo their property changes.
+    var children = rebug.util.scrollLock._elements;
+
+    for (var i = 0, j = children.length; i < j; i++)
+    {
+        var info = children[i];
+
+        if (info.hasPreviousInlineStyle)
+        {
+            info.element.setAttribute("style", info.previousInlineStyle);
+        }
+        else
+        {
+            info.element.removeAttribute("style");
+        }
+    }
+
+    rebug.util.scrollLock._elements = [];
+
+    document.documentElement.scrollTop = rebug.util.scrollLock._previousScroll;
+
+    rebug.util.scrollLock._enabled = false;
+};
+
+
+rebug.util.events = {};
+
+/**
+ * Add an event listener.
+ * 
+ * @param {Element} target 
+ * @param {string} name 
+ * @param {function(Event)} cb 
+ */
+rebug.util.events.add = function(target, name, cb)
+{
+    if (target.addEventListener)
+    {
+        target.addEventListener(name, cb);
+    }
+    else if (target.attachEvent)
+    {
+        target.attachEvent("on" + name, cb);
+    }
+};
+
+/**
+ * Remove an event listener.
+ * 
+ * @param {Element} target 
+ * @param {string} name 
+ * @param {function(Event)} cb 
+ */
+rebug.util.events.remove = function(target, name, cb)
+{
+    if (target.removeEventListener)
+    {
+        target.removeEventListener(name, cb);
+    }
+    else if (target.detachEvent)
+    {
+        target.detachEvent("on" + name, cb);
+    }
+};

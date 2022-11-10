@@ -7,69 +7,119 @@
 
 rebug.eventDelegate = {};
 
-(function(exports) {
-    var handlers = [];
+/**
+ * Stores a map of event handlers.
+ * 
+ * @type {Object[]}
+ * @private
+ */
+rebug.eventDelegate._handlers = [];
 
-    var activeEvents = [];
+/**
+ * Stores the names of all active events.
+ * 
+ * @type {string[]}
+ * @private
+ */
+rebug.eventDelegate._activeEvents = [];
 
-    function isActiveEventName(name)
+/**
+ * Add a delegated event handler.
+ * 
+ * @param {string} eventName 
+ * @param {string} className 
+ * @param {function(Event)} cb 
+ */
+rebug.eventDelegate.add = function(eventName, className, cb) {
+    if (!rebug.eventDelegate._isActiveEventName(eventName))
     {
-        return activeEvents.includes(name);
+        rebug.util.events.add(
+            document, 
+            eventName, 
+            rebug.eventDelegate._getDelegateHandler(eventName)
+        );
+
+        rebug.eventDelegate._activeEvents.push(eventName);
     }
 
-    function getDelegateHandler(eventName)
-    {
-        return function(e) {
-            var activeElement = e.target;
-            var handlerClassNameList = handlers[eventName];
-            
-            while (null != activeElement)
-            {
-                if (activeElement.className)
-                {
-                    var classes;
-                    if (activeElement.classList)
-                    {
-                        classes = activeElement.classList;
-                    }
-                    else
-                    {
-                        classes = activeElement.className.split(" ");
-                    }
+    rebug.eventDelegate._addHandler(eventName, className, cb);
+};
 
-                    for (var i = 0, j = classes.length; i < j; i++)
-                    {
-                        if (classes[i] in handlerClassNameList)
-                        {
-                            return handlerClassNameList[classes[i]](activeElement, e);
-                        }
-                        else if ("rebug-no-propagate" == classes[i])
-                        {
-                            return;
-                        }
-                    }
+/**
+ * Determine if an event already has an active handler by
+ * its name.
+ * 
+ * @param {string} name 
+ * @return {boolean}
+ * 
+ * @private
+ */
+rebug.eventDelegate._isActiveEventName = function(name)
+{
+    return rebug.eventDelegate._activeEvents.includes(name);
+};
+
+/**
+ * Generate a new event handler function.
+ * 
+ * @param {string} eventName 
+ * @return {function(Event)}
+ * 
+ * @private
+ */
+rebug.eventDelegate._getDelegateHandler = function(eventName)
+{
+    return function(e) {
+        var activeElement = e.target;
+        var handlerClassNameList = rebug.eventDelegate._handlers[eventName];
+        
+        while (null != activeElement)
+        {
+            if (activeElement.className)
+            {
+                var classes;
+                if (activeElement.classList)
+                {
+                    classes = activeElement.classList;
+                }
+                else
+                {
+                    classes = activeElement.className.split(" ");
                 }
 
-                activeElement = activeElement.parentElement;
+                for (var i = 0, j = classes.length; i < j; i++)
+                {
+                    if (classes[i] in handlerClassNameList)
+                    {
+                        return handlerClassNameList[classes[i]](activeElement, e);
+                    }
+                    else if ("rebug-no-propagate" == classes[i])
+                    {
+                        return;
+                    }
+                }
             }
-        };
-    }
 
-    function addHandler(eventName, className, cb)
-    {
-        if (!(eventName in handlers)) handlers[eventName] = {};
-
-        handlers[eventName][className] = cb;
-    }
-
-    exports.add = function(eventName, className, cb) {
-        if (!isActiveEventName(eventName))
-        {
-            document.addEventListener(eventName, getDelegateHandler(eventName));
-
-            activeEvents.push(eventName);
+            activeElement = activeElement.parentElement;
         }
-
-        addHandler(eventName, className, cb);
     };
-})(rebug.eventDelegate)
+};
+
+/**
+ * Add a handler to the internal array.
+ * 
+ * @param {string} eventName 
+ * @param {string} className 
+ * @param {function(Event)} cb 
+ * 
+ * @private
+ */
+rebug.eventDelegate._addHandler = function(eventName, className, cb)
+{
+    if (!(eventName in rebug.eventDelegate._handlers))
+    {
+        rebug.eventDelegate._handlers[eventName] = {};
+    }
+
+    rebug.eventDelegate._handlers[eventName][className] = cb;
+};

@@ -105,4 +105,11 @@ trait RichContent
             "nothingToSeeRenderer" => new MNothingToSee()
         ];
     }
+
+    public function addLoading()
+    {
+        $this->richDebuggerRenderer[] = (object)[
+            "loadingRenderer" => true
+        ];
+    }
 }

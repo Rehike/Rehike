@@ -6,6 +6,7 @@ use Rehike\Request;
 use Rehike\Player\PlayerCore;
 use SpfPhp\SpfPhp;
 use Rehike\ControllerV2\RequestMetadata;
+use Rehike\Debugger\Debugger;
 use Rehike\Model\Guide\MGuide as Guide;
 use Rehike\Model\Footer\MFooter as Footer;
 use Rehike\Model\Masthead\MMasthead as Masthead;
@@ -319,12 +320,6 @@ abstract class HitchhikerController
      */
     public function doGeneralRender()
     {
-        /*
-         * Expose the debugger if it is enabled. All necessary checks are performed
-         * within this function, so all that needs to be done here is calling it.
-        */
-        \Rehike\Debugger\Debugger::expose();
-
         if (SpfPhp::isSpfRequested() && $this->yt->spfEnabled)
         {
             // Report SPF status to the templater
@@ -342,12 +337,21 @@ abstract class HitchhikerController
             // Post-data generation callback for custom handling
             $this->handleSpfData($spf);
 
+            if (is_object($spf))
+                $spf->rebug_data = Debugger::exposeSpf();
+
             header("Content-Type: application/json");
 
             echo json_encode($spf);
         }
         else
         {
+            /*
+             * Expose the debugger if it is enabled. All necessary checks are performed
+             * within this function, so all that needs to be done here is calling it.
+             */
+            Debugger::expose();
+
             $capturedRender = TemplateManager::render();
 
             // In the case this is not an SPF request, we don't have to do anything.

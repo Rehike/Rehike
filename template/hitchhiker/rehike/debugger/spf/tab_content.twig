@@ -1,0 +1,11 @@
+{#
+    Render tab content HTML for SPF navigation.
+    
+    Usage: pass $tab to this render pointing to an MTab (generated
+    from a factory function usually, please see Rehike/Debugger/Debugger.php 
+    for more information.)
+
+    @author Taniko Yamamoto (kirasicecreamm@gmail.com)
+#}
+{% from "rehike/debugger/lightbox_main.twig" import dialog_tab_content %}
+{{ dialog_tab_content(tab) }}

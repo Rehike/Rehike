@@ -1,0 +1,65 @@
+/**
+ * @fileoverview Implements menus for Rebug.
+ * 
+ * This is work in progress and currently unimplemented; I pushed
+ * what was working early because I was sick.
+ * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
+ * @author The Rehike Maintainers
+ */
+
+rebug.menu = {};
+
+/**
+ * Create a Menu.
+ * 
+ * @return {rebug.menu.Menu}
+ */
+rebug.menu.create = function()
+{
+    return new rebug.menu.Menu();
+};
+
+/**
+ * @constructor
+ */
+rebug.menu.Menu = function() {};
+
+/**
+ * An array of menu items.
+ * 
+ * @type {rebug.menu.MenuItem[]}
+ */
+rebug.menu.Menu.prototype.items = [];
+
+/**
+ * Add a menu item by instance.
+ * 
+ * @param {rebug.menu.MenuItem} item 
+ */
+rebug.menu.Menu.prototype.addItemInstance = function(item)
+{
+    this.items.push(item);
+};
+
+/**
+ * @constructor
+ */
+rebug.menu.MenuItem = function() {};
+
+rebug.menu.MenuItem.prototype.onClick = function() {};
+
+rebug.menu.templates = null;
+
+rebug.menu._onInit = function()
+{
+    // Needs to be able to reference global walker
+    // templates.
+    rebug.menu.templates = {
+        element: rebug.globalWalker.templates.element,
+        text: rebug.globalWalker.templates.text,
+        extractElementArray: rebug.globalWalker.templates.extractElementArray
+    };
+};
+
+rebug.pubsub.subscribe("rebug-init-finish", rebug.menu._onInit);

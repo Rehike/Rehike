@@ -1,0 +1,32 @@
+rebug.widgets.Expander = {};
+
+rebug.widgets.Expander.onClick = function(elm, targetElement, noTargetCheck)
+{
+    noTargetCheck = noTargetCheck || false;
+
+    if (rebug.class.has(elm, "rebug-expander-has-target") && !noTargetCheck)
+    {
+        return;
+    }
+
+    if (rebug.class.has(elm, "rebug-expander-collapsed"))
+    {
+        rebug.class.remove(elm, "rebug-expander-collapsed");
+        rebug.class.add(elm, "rebug-expander-expanded");
+
+        rebug.pubsub.publish("rebug-expander-toggled", {
+            state: "opened",
+            target: elm
+        });
+    }
+    else
+    {
+        rebug.class.remove(elm, "rebug-expander-expanded");
+        rebug.class.add(elm, "rebug-expander-collapsed");
+
+        rebug.pubsub.publish("rebug-expander-toggled", {
+            state: "closed",
+            target: elm
+        });
+    }
+};

@@ -1,0 +1,141 @@
+/**
+ * @fileoverview Simple publish-subscription messaging.
+ * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
+ * @author The Rehike Maintainers
+ */
+
+rebug.pubsub = {};
+
+rebug.pubsub._subscriptions = {};
+
+/**
+ * Subscribe to a topic.
+ * 
+ * @export
+ * 
+ * @param {string} topic 
+ * @param {Function} cb 
+ * @return {void}
+ */
+rebug.pubsub.subscribe = function(topic, cb)
+{
+    if (topic && cb)
+    {
+        rebug.pubsub._ensureOpenScope(topic);
+
+        rebug.pubsub._subscriptions[topic].push(cb);
+    }
+    else
+    {
+        rebug.debug.error("rebug.pubsub.subscribe", "Invalid call to rebug.pubsub.subscribe().");
+    }
+};
+
+/**
+ * Unsubscribe from a topic.
+ * 
+ * @export
+ * 
+ * @param {string} topic 
+ * @param {Function} cb 
+ * @return {void}
+ */
+rebug.pubsub.unsubscribe = function(topic, cb)
+{
+    if (topic && cb)
+    {
+        rebug.pubsub._ensureOpenScope(topic);
+
+        var subscriptions = rebug.pubsub._subscriptions[topic];
+
+        for (var i = 0, j = subscriptions.length; i < j; i++)
+        {
+            if (cb == subscriptions[i])
+            {
+                subscriptions[i] = null;
+            }
+        }
+    }
+    else
+    {
+        rebug.debug.error("rebug.pubsub.unsubscribe", "Invalid call to rebug.pubsub.unsubscribe().");
+    }
+};
+
+/**
+ * Publish a topic.
+ * 
+ * @export
+ * 
+ * @param {string} topic 
+ * @param {*} extraData 
+ * @return {void}
+ */
+rebug.pubsub.publish = function(topic, extraData)
+{
+    extraData = extraData || null;
+
+    var subscriptions;
+
+    if (topic && rebug.pubsub._subscriptions[topic])
+    {
+        subscriptions = rebug.pubsub._subscriptions[topic];
+
+        for (var i = 0, j = subscriptions.length; i < j; i++)
+        if (null != subscriptions[i])
+        {
+            if (null != extraData)
+            {
+                subscriptions[i](extraData);
+            }
+            else
+            {
+                subscriptions[i]();
+            }
+        }
+    }
+    else if (topic) {} // Shouldn't error if there are no subscribers
+    else
+    {
+        rebug.debug.error("rebug.pubsub.publish", "Missing topic in call or registration.");
+    }
+};
+
+/**
+ * Remove a topic.
+ * 
+ * @export
+ * 
+ * @param {string} topic 
+ * @return {void}
+ */
+rebug.pubsub.clear = function(topic)
+{
+    var subscriptions = rebug.pubsub._subscriptions[topic];
+
+    // Unsubscribe all listeners as to not cause a rift in spacetime.
+    for (var i = 0, j = subscriptions.length; i < j; i++)
+    {
+        rebug.pubsub.unsubscribe(topic, subscriptions[i]);
+    }
+
+    delete rebug.pubsub._subscriptions[topic];
+};
+
+//
+// Declare private API
+//
+
+/**
+ * Open a new topic scope in the pubsub subscriptions array.
+ * 
+ * @private
+ * 
+ * @param {string} topic
+ * @return {void}
+ */
+rebug.pubsub._ensureOpenScope = function(topic)
+{
+    rebug.pubsub._subscriptions[topic] = rebug.pubsub._subscriptions[topic] || [];
+};

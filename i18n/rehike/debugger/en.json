@@ -13,6 +13,13 @@
     "errorNotice": "Notice",
     "errorDeprecated": "Deprecated",
     "tabErrorTitle": "Errors (%s)",
+    "tabConsoleTitle": "PHP console",
+    "tabNetworkTitle": "Network",
+    "tabPerformanceTitle": "Performance",
     "tabYtWalkerTitle": "Variable walker",
-    "nothingToSee": "Nothing to see here!"
+    "nothingToSee": "Nothing to see here!",
+    "historyCurrent": "Current page",
+    "historyPrevious": "Previous page",
+    "historyPagesAgo": "# pages ago",
+    "historyUnavailable": "History unavailable"
 }

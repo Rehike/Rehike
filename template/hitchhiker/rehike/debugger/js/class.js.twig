@@ -1,0 +1,69 @@
+/**
+ * @fileoverview CSS class utilities for Rebug.
+ * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
+ * @author The Rehike Maintainers
+ */
+
+rebug.class = {};
+
+/**
+ * Determine if an element has a class.
+ * 
+ * @param {Element} element 
+ * @param {string} className 
+ * @return {boolean}
+ */
+rebug.class.has = function(element, className)
+{
+    if ("" == className) return;
+
+    if (element.classList)
+    {
+        return element.classList.contains(className) ? true : false;
+    }
+    else
+    {
+        return element.getAttribute("class").indexOf(className) > -1;
+    }
+};
+
+/**
+ * Add a class to an element.
+ * 
+ * @param {Element} element 
+ * @param {string} className 
+ */
+rebug.class.add = function(element, className)
+{
+    if ("" == className) return;
+
+    if (element.classList)
+    {
+        element.classList.add(className);
+    }
+    else
+    {
+        element.setAttribute("class", element.getAttribute("class") + " " + className);
+    }
+};
+
+/**
+ * Remove a class from an element.
+ * 
+ * @param {Element} element 
+ * @param {string} className 
+ */
+rebug.class.remove = function(element, className)
+{
+    if ("" == className) return;
+
+    if (element.classList)
+    {
+        element.classList.remove(className);
+    }
+    else
+    {
+        element.setAttribute("class", element.getAttribute("class").replace(className, ""));
+    }
+};

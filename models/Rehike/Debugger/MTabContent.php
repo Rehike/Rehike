@@ -11,6 +11,8 @@ class MTabContent
 {
     use RichContent;
 
+    public $enableJsHistory = true;
+
     public static function createTab($title, $id, $selected = false)
     {
         $me = new static();

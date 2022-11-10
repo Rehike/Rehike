@@ -1,0 +1,103 @@
+/**
+ * @fileoverview Provides basic lightbox behaviours for Rebug.
+ * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
+ * @author The Rehike Maintainers
+ */
+
+rebug.lightbox = {};
+
+/**
+ * Stores a reference to the lightbox container element.
+ * 
+ * @type {Element}
+ */
+rebug.lightbox._lightboxContainer = null;
+
+/**
+ * Opens the Rebug lightbox.
+ */
+rebug.lightbox.open = function()
+{
+    var lightboxContainer = rebug.lightbox._lightboxContainer;
+
+    // Create YT dialog background HTML
+    rebug.lightbox._createDialogBackground();
+
+    // Unhide the lightbox
+    rebug.class.add(lightboxContainer, "open");
+
+    // Alert any potential listeners to the new state.
+    rebug.pubsub.publish("rebug-lightbox-opened");
+};
+
+/**
+ * Closes the Rebug lightbox.
+ */
+rebug.lightbox.close = function()
+{
+    var lightboxContainer = rebug.lightbox._lightboxContainer;
+
+    // Remove the dialog background
+    rebug.lightbox._removeDialogBackground();
+
+    // Hide the lightbox
+    rebug.class.remove(lightboxContainer, "open");
+
+    // Alert any potential listeners to the new state.
+    rebug.pubsub.publish("rebug-lightbox-closed");
+};
+
+/**
+ * Creates the lightbox dialog background.
+ * 
+ * @private
+ */
+rebug.lightbox._createDialogBackground = function()
+{
+    rebug.util.scrollLock.enable();
+    
+    rebug.class.add(document.body, "hide-players");
+    rebug.class.add(document.body, "yt-dialog-active");
+
+    // Create the dialog
+    var bgdiv = document.createElement("DIV");
+    bgdiv.setAttribute("id", "yt-dialog-bg");
+    bgdiv.setAttribute("class", "yt-dialog-bg");
+    bgdiv.setAttribute("style", "height: 100%; width: 100%; position: fixed;");
+    document.body.insertBefore(bgdiv, 
+        (
+            document.getElementById("footer-container") ||
+            document.body.children[document.body.children.length - 1]
+        ).nextSibling
+    );
+};
+
+/**
+ * Removes the dialog background.
+ * 
+ * @private
+ */
+rebug.lightbox._removeDialogBackground = function()
+{
+    // Remove the dialog and body classes
+    rebug.class.remove(document.body, "hide-players");
+    rebug.class.remove(document.body, "yt-dialog-active");
+
+    document.getElementById("yt-dialog-bg").remove();
+
+    rebug.util.scrollLock.disable();
+};
+
+/**
+ * Runs upon Rebug initialisation.
+ * 
+ * @private
+ */
+rebug.lightbox._init = function()
+{
+    rebug.lightbox._lightboxContainer = 
+        document.getElementById("rebug-lightbox-container") || null;
+};
+
+rebug.pubsub.subscribe("rebug-init-finish", rebug.lightbox._init);

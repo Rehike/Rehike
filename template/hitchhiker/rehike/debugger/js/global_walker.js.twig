@@ -1,0 +1,823 @@
+/**
+ * @fileoverview Implements scripts for the Rebug global variable viewer.
+ * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
+ * @author The Rehike Maintainers
+ */
+
+rebug.globalWalker = {};
+
+/**
+ * True if the global walker is currently loaded at all.
+ * 
+ * @private @type {boolean}
+ */
+rebug.globalWalker._isLoaded = false;
+
+/**
+ * True if the global walker is the currently open
+ * tab.
+ * 
+ * @private @type {boolean}
+ */
+rebug.globalWalker._isCurrentlyVisited = false;
+
+/**
+ * True if an SPF navigation has occurred.
+ * 
+ * @private @type {boolean}
+ */
+rebug.globalWalker._hasSpfNavigated = false;
+
+/**
+ * Stores a reference to the current root object.
+ * 
+ * @type {?Object}
+ */
+rebug.globalWalker.currentRoot = null;
+
+/**
+ * Implements the native JS templates for global walker v2.
+ * 
+ * This includes a very basic templating engine in order to
+ * efficiently render the content out.
+ */
+rebug.globalWalker.templates = {
+    /** alias @const */
+    HAS_EXPANDER: true,
+
+    /**
+     * Create a HTML element.
+     * 
+     * @param {string} tagName 
+     * @param {Object} options 
+     */
+    element: function(tagName, options) {
+        var element = document.createElement(tagName);
+
+        if (options.class)
+        {
+            for (var i = 0, j = options.class.length; i < j; i++)
+            {
+                rebug.class.add(element, options.class[i]);
+            }
+        }
+
+        if (options.attrs)
+        {
+            for (
+                var keys = Object.keys(options.attrs), i = 0, j = keys.length;
+                i < j;
+                i++
+            )
+            {
+                var key = keys[i], value = options.attrs[key];
+
+                element.setAttribute(key, value);
+            }
+        }
+
+        if (options.children)
+        {
+            this.extractElementArray(element, options.children);
+        }
+
+        if (options.text)
+        {
+            element.appendChild(document.createTextNode(options.text));
+        }
+
+        return element;
+    },
+
+    /**
+     * Create a HTML text node.
+     * 
+     * @param {string} defaultText
+     */
+    text: function(defaultText) {
+        return document.createTextNode(defaultText);
+    },
+
+    /**
+     * Extract an element array (used to return multiple
+     * elements internally) and append its contents to another
+     * element.
+     * 
+     * @param {Element} target 
+     * @param {Element[]|Element|string} elements 
+     */
+    extractElementArray: function(target, elements) {
+        // Work even if the element provided is an Element
+        // instead of an array.
+        if (!Array.isArray(elements))
+        {
+            elements = [elements];
+        }
+        
+        var el;
+        for (var i = 0, j = elements.length; i < j; i++)
+        {
+            el = elements[i];
+            if (el instanceof Node)
+            {
+                target.appendChild(el);
+            }
+            else if ("string" == typeof el)
+            {
+                target.insertAdjacentHTML("beforeend", el);
+            }
+        }
+    },
+
+    /**
+     * Produce a typed item by name and data type.
+     * 
+     * @param {string} name 
+     * @param {*} data 
+     * @return {Element|Element[]|string}
+     */
+    itemFactory: function(name, data, path) {
+        var type = typeof data;
+
+        // For some fucking ungodly reason, whoever the fuck
+        // made JavaScript decided that null, while literally being 
+        // one of the sole constructs in the entire fucking language that
+        // does not have the properties of an object at all (it cannot
+        // store its own properties nor methods, and it does not have
+        // a prototype) have the type "object".
+        //
+        // Thus, typeof null == "object". Why??? I have no fucking clue.
+        // But since this is the case, this causes a fatal error in
+        // execution because the variable is handled as an object instead
+        // of an unknown type as it should be.
+        //
+        // Average fucking programming language made by a homophobe
+        if (null == data) type = "null";
+
+        var itemPath = path + "." + name;
+
+        var attrs = rebug.globalWalker.getAttributes(itemPath);
+
+        switch (type)
+        {
+            // In JS, arrays are types of objects. Thus, a check
+            // needs to be done under this case.
+            case "object":
+                if (Array.isArray(data) || attrs.associativeArray)
+                {
+                    if (data.length == 0)
+                    {
+                        return this.abstractItem(
+                            name,
+                            this.itemEmptyArrayHandler(name),
+                            "array"
+                        );
+                    }
+                    else
+                    {
+                        return this.abstractItem(
+                            name,
+                            this.itemArrayHandler(
+                                name, 
+                                itemPath, 
+                                data, 
+                                data.length || Object.keys(data).length,
+                                attrs.associativeArray || false
+                            ),
+                            "array",
+                            this.HAS_EXPANDER
+                        );
+                    }
+                }
+                else
+                {
+                    return this.abstractItem(
+                        name,
+                        this.itemObjectHandler(
+                            name, 
+                            itemPath, 
+                            data
+                        ),
+                        "object",
+                        this.HAS_EXPANDER
+                    );
+                }
+            case "string":
+                return this.abstractItem(
+                    name,
+                    this.itemStringHandler(name, data),
+                    "string"
+                );
+            case "number":
+                return this.abstractItem(
+                    name,
+                    this.itemNumberHandler(name, data)
+                );
+            case "boolean":
+                return this.abstractItem(
+                    name,
+                    this.itemBoolHandler(name, data)
+                );
+            case "undefined": type = "null";
+            case "null":
+            default:
+                return this.abstractItem(
+                    name,
+                    this.itemUnknownHandler(name, type)
+                );
+        }
+    },
+
+    /**
+     * Renders an array of elements from an array of variables.
+     * 
+     * @param {Object|*[]} items 
+     * @return {Element[]}
+     */
+    itemScene: function (items, path) {
+        // Iteration must handled differently between standard
+        // objects and arrays.
+        var isArray = Array.isArray(items);
+
+        var out = [];
+
+        if (isArray) for (var i = 0, j = items.length; i < j; i++)
+        {
+            out.push(this.itemFactory(String(i), items[i], path));
+        }
+        else for ( // iterate object by key/value
+            var keys = Object.keys(items), i = 0, j = keys.length, key, value;
+            i < j;
+            i++
+        )
+        {
+            key = keys[i], value = items[key];
+            out.push(this.itemFactory(key, value, path));
+        }
+
+        return out;
+    },
+
+    /**
+     * Renders the base item wrapper.
+     * 
+     * @param {string} name 
+     * @param {Element} subElement 
+     * @param {string} type 
+     * @param {boolean} hasExpander 
+     * 
+     * @return {Element}
+     */
+    abstractItem: function(name, subElement, type, hasExpander) {
+        var itemClasses = ["global-walker-item"];
+
+        if (hasExpander)
+        {
+            itemClasses.push("rebug-expander");
+            itemClasses.push("rebug-expander-has-target");
+            itemClasses.push("rebug-expander-collapsed");
+        }
+
+        var el = this.element("div", {
+            class: itemClasses,
+            children: subElement
+        });
+
+        if (hasExpander) el.isWalkerToggleable = true;
+
+        return el;
+    },
+
+    /**
+     * Renders a base header wrapper.
+     * 
+     * @param {string} name 
+     * @param {Element[]|Element} subElement 
+     * @param {boolean} hasExpander 
+     * @return {Element}
+     */
+    abstractItemHeader: function(name, subElement, hasExpander) {
+        var itemChildren = [];
+
+        if (hasExpander)
+        {
+            itemChildren.push(this.element("span", {
+                class: ["toggle-icon"]
+            }));
+        }
+
+        itemChildren.push(this.element("span", {
+            class: ["variable-name"],
+            text: name
+        }));
+
+        itemChildren.push(this.element("span", {
+            class: ["colon"],
+            text: ": "
+        }));
+        
+        var el = this.element("div", {
+            class: [
+                "item-header",
+                hasExpander ? "rebug-expander-target" : ""
+            ],
+            children: itemChildren
+        });
+
+        this.extractElementArray(el, subElement);
+
+        el.isWalkerToggleable = true;
+
+        return el;
+    },
+
+    /**
+     * Renders an object item.
+     * 
+     * @param {string} name
+     * @param {string} path
+     * @param {Object} data 
+     * 
+     * @return {Element[]}
+     */
+    itemObjectHandler: function(name, path, data) {
+        var attrs = rebug.globalWalker.getAttributes(path);
+
+        var header = [];
+
+        if (attrs.type)
+        {
+            // Get end of the type for short name
+            var shortTypeName = attrs.type.split("\\");
+            shortTypeName = shortTypeName[shortTypeName.length - 1];
+
+            header.push(this.element("span", {
+                class: [
+                    "type-name-display",
+                    "yt-uix-tooltip"
+                ],
+                attrs: {
+                    "title": attrs.type,
+                    "data-tooltip-show-delay": "350"
+                },
+                text: shortTypeName
+            }));
+        }
+
+        header.push(this.element("span", {
+            class: ["brace"],
+            text: " {"
+        }))
+        
+        header.push(this.element("span", {
+            class: ["collapsed-display"],
+            children: [
+                this.text(" ... "),
+                this.element("span", {
+                    class: ["brace"],
+                    text: "}"
+                })
+            ]
+        }))
+
+        var childrenEl = this.element("div", {
+            class: ["children"]
+        });
+
+        childrenEl.childrenObj = data;
+        childrenEl.childrenPath = path;
+
+        return [
+            this.abstractItemHeader(
+                name, 
+                header,
+                this.HAS_EXPANDER
+            ),
+            this.element("div", {
+                class: ["expanded-display"],
+                children: [
+                    childrenEl,
+                    this.element("div", {
+                        class: ["brace"],
+                        text: "}"
+                    })
+                ]
+            })
+        ];
+    },
+
+    /**
+     * Render an array item.
+     * 
+     * @param {string} name
+     * @param {string} path
+     * @param {*[]} data 
+     * @param {number} length Length of the array
+     * @param {boolean} assoc Is the array associative?
+     * 
+     * @return {Element[]}
+     */
+    itemArrayHandler: function(name, path, data, length, assoc) {
+        assoc = assoc || false; // ES3 doesn't support defaults
+
+        var header = [];
+
+        if (assoc)
+        {
+            header.push(
+                this.element("span", {
+                    class: ["type-associative"],
+                    text: " assoc "
+                })
+            );
+        }
+
+        header.push(
+            this.element("span", {
+                class: ["brace"],
+                text: "["
+            })
+        );
+
+        header.push(
+            this.element("span", {
+                class: ["collapsed-display"],
+                children: [
+                    this.element("span", {
+                        class: ["array-length-display"],
+                        text: " " + length + " "
+                    }),
+                    this.element("span", {
+                        class: ["brace"],
+                        text: "]"
+                    })
+                ]
+            }
+        ));
+
+        var childrenEl = this.element("div", {
+            class: [
+                "children",
+                assoc ? "is-associative" : ""
+            ]
+        });
+
+        childrenEl.childrenObj = data;
+        childrenEl.childrenPath = path;
+        
+        return [
+            this.abstractItemHeader(name,
+                header,
+                this.HAS_EXPANDER 
+            ),
+            this.element("div", {
+                class: ["expanded-display"],
+                children: [
+                    childrenEl,
+                    this.element("div", {
+                        class: ["brace"],
+                        text: "]"
+                    })
+                ]
+            })
+        ];
+    },
+    
+    /**
+     * Renders an empty array view.
+     * 
+     * @param {string} name
+     * @return {Element[]}
+     */
+    itemEmptyArrayHandler: function(name) {
+        return this.abstractItemHeader(name, [
+            this.element("span", {
+                class: ["brace"],
+                text: "["
+            }),
+            this.element("span", {
+                class: ["array-length-display"],
+                text: " empty "
+            }),
+            this.element("span", {
+                class: ["brace"],
+                text: "]"
+            }),
+            this.element("div", {class:["children"]})
+        ]);
+    },
+
+    /**
+     * Renders a string item.
+     * 
+     * @param {string} name
+     * @param {string} data 
+     * @return {Element}
+     */
+    itemStringHandler: function(name, data) {
+        return this.abstractItemHeader(name, 
+            this.element("span", {
+                class: [
+                    "type-string"
+                ],
+                text: String(data)
+            }
+        ));
+    },
+
+    /**
+     * Renders a number item.
+     * 
+     * @param {string} name
+     * @param {number} data 
+     * @return {Element}
+     */
+    itemNumberHandler: function(name, data) {
+        return this.abstractItemHeader(name,
+            this.element("span", {
+                class: [
+                    "type-number"
+                ],
+                text: String(data)
+            })
+        );
+    },
+
+    /**
+     * Renders a boolean item.
+     * 
+     * @param {string} name
+     * @param {boolean} data 
+     * @return {Element}
+     */
+    itemBoolHandler: function(name, data) {
+        return this.abstractItemHeader(name,
+            this.element("span", {
+                class: [
+                    "type-bool"
+                ],
+                text: data ? "true" : "false"
+            })
+        );
+    },
+
+    /**
+     * Renders a placeholder for unknown items.
+     * 
+     * @param {string} name
+     * @param {string} type 
+     * @return {Element}
+     */
+    itemUnknownHandler: function(name, type) {
+        return this.abstractItemHeader(name, 
+            this.element("span", {
+                class: [
+                    "type-other"
+                ],
+                text: String(type).toLowerCase()
+            })
+        );
+    }
+};
+
+/**
+ * Get the attributes for a given data path.
+ * 
+ * @param {string} path 
+ * @return {Object}
+ */
+rebug.globalWalker.getAttributes = function(path)
+{
+    if (path in _rebugcfg.globalWalker.attr.yt)
+    {
+        return _rebugcfg.globalWalker.attr.yt[path];
+    }
+    else
+    {
+        return {};
+    }
+};
+
+/**
+ * Render a view for a given object.
+ * 
+ * @param {Object} obj Object to get a view for.
+ * @param {string} path Path of the object as a string.
+ * @return {?Element[]}
+ */
+rebug.globalWalker.getView = function(obj, path)
+{
+    if (obj && "object" == typeof obj)
+    {
+        return rebug.globalWalker.templates.itemScene(obj, path);
+    }
+    else
+    {
+        return null;
+    }
+};
+
+/**
+ * Render a view and dump its contents into an element.
+ * 
+ * @param {Object} obj Object to load a view for.
+ * @param {string} path Path of the object as a string.
+ * @param {Element} target Element to dump the response into.
+ */
+rebug.globalWalker.loadView = function(obj, path, target)
+{
+    var view = rebug.globalWalker.getView(obj, path);
+
+    rebug.globalWalker.templates.extractElementArray(target, view);
+};
+
+/**
+ * Update the root scene with a new root.
+ * 
+ * @param {Object} newRoot 
+ */
+rebug.globalWalker.updateRootScene = function(newRoot)
+{
+    var baseEl = document.querySelector("#rebug-tab-content-global_walker");
+
+    // Remove the loading scene (if it exists)
+    if (!rebug.globalWalker._isLoaded)
+    {
+        var loadingEl = baseEl.querySelector(".loading");
+        rebug.class.add(loadingEl, "hid");
+        loadingEl.style.display = "none";
+    }
+
+    var itemsEl = baseEl.querySelector(".global-walker-container .items");
+
+    // Remove any children if they exist
+    while (itemsEl.children.length > 0)
+    {
+        itemsEl.children[0].remove();
+    }
+
+    // Finally, render the scene.
+    rebug.globalWalker.loadView(
+        newRoot,
+        "yt",
+        itemsEl
+    );
+};
+
+/**
+ * Called in order to initialise the global walker view.
+ */
+rebug.globalWalker.loadInitialView = function()
+{
+    var root = null;
+
+    if (!rebug.globalWalker._hasSpfNavigated &&
+        window._rebugcfg && 
+        window._rebugcfg.globalWalker && 
+        window._rebugcfg.globalWalker.data &&
+        window._rebugcfg.globalWalker.data.yt
+    )
+    {
+        root = window._rebugcfg.globalWalker.data.yt;
+    }
+    else if (rebug.globalWalker._hasSpfNavigated)
+    {
+        root = rebug.globalWalker.currentRoot;
+    }
+
+    rebug.globalWalker.updateRootScene(root);
+
+    rebug.globalWalker._isLoaded = true;
+};
+
+/**
+ * Open children of a global walker item if there is only one 
+ * child property of it.
+ * 
+ * @param {Element} el 
+ */
+rebug.globalWalker.tryOpenSubchildren = function(el)
+{
+    if (1 == el.children.length && rebug.class.has(el.children[0], "rebug-expander"))
+    {
+        el.children[0].querySelector(".rebug-expander-target").click();
+    }
+};
+
+/**
+ * Handles any click that is recieved by a global walker item.
+ * 
+ * @param {Object} data 
+ */
+rebug.globalWalker.handleExpander = function(data)
+{
+    var childrenEl = data.target.querySelector(".children");
+
+    if ("opened" == data.state && childrenEl && !childrenEl.childrenLoaded)
+    {
+        rebug.globalWalker.loadView(
+            childrenEl.childrenObj,
+            childrenEl.childrenPath,
+            childrenEl
+        );
+
+        childrenEl.childrenLoaded = true;
+
+        rebug.globalWalker.tryOpenSubchildren(childrenEl);
+    }
+};
+
+/**
+ * Runs whenever any expander is clicked.
+ * 
+ * This is used to determine if the expander is a global
+ * walker item expander, and nothing else.
+ * 
+ * @private
+ * @param {Object} data
+ */
+rebug.globalWalker._handleExpander = function(data)
+{
+    if (data.target.isWalkerToggleable)
+    {
+        rebug.globalWalker.handleExpander(data);
+    }
+};
+
+/**
+ * Called back whenever a history switch (i.e. SPF navigation)
+ * occurs.
+ * 
+ * @param {Object} data
+ */
+rebug.globalWalker.onHistorySwitch = function(data)
+{
+    rebug.globalWalker.currentRoot = data.globalWalker.data.yt;
+
+    if (rebug.globalWalker._isLoaded)
+    {
+        rebug.globalWalker.updateRootScene(rebug.globalWalker.currentRoot);
+    }
+
+    rebug.globalWalker._hasSpfNavigated = true;
+};
+
+/**
+ * Runs whenever the global walker tab is visited.
+ * 
+ * @return {void}
+ */
+rebug.globalWalker.onVisit = function()
+{
+    if (!rebug.globalWalker._isLoaded)
+    {
+        rebug.globalWalker.loadInitialView();
+    }
+
+    if (!rebug.globalWalker._isCurrentlyVisited)
+    {
+        rebug.globalWalker._isCurrentlyVisited = true;
+    }
+
+    rebug.pubsub.subscribe(
+        "rebug-expander-toggled",
+        rebug.globalWalker._handleExpander
+    );
+};
+
+/**
+ * Runs whenever the tab is changed to another tab.
+ * 
+ * @return {void}
+ */
+rebug.globalWalker.onExit = function()
+{
+    rebug.globalWalker._isCurrentlyVisited = false;
+
+    rebug.pubsub.unsubscribe(
+        "rebug-expander-toggled",
+        rebug.globalWalker._handleExpander
+    );
+};
+
+/**
+ * Handle any tab switch in order to check for when the tab
+ * is switched to the global walker.
+ * 
+ * @return {void}
+ */
+rebug.globalWalker.onTabSwitch = function()
+{
+    if ("global_walker" == rebug.tabs.getCurrentId())
+    {
+        rebug.globalWalker.onVisit();
+    }
+    else if (rebug.globalWalker._isCurrentlyVisited)
+    {
+        rebug.globalWalker.onExit();
+    }
+};
+
+rebug.pubsub.subscribe("rebug-tab-switch", rebug.globalWalker.onTabSwitch);
+rebug.pubsub.subscribe("rebug-history-switch", rebug.globalWalker.onHistorySwitch);

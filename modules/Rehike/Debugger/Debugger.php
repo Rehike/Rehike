@@ -6,10 +6,14 @@ use \Rehike\TemplateManager;
 use \Rehike\i18n;
 use \YukisCoffee\CoffeeException;
 
-use \Rehike\Model\Rehike\Debugger\MOpenButton as OpenButton;
-use \Rehike\Model\Rehike\Debugger\MDialog as Dialog;
-use \Rehike\Model\Rehike\Debugger\MErrorTab as ErrorTab;
-use \Rehike\Model\Rehike\Debugger\MYtWalker as YtWalker;
+use \Rehike\Model\Rehike\Debugger\{
+    MOpenButton as OpenButton,
+    MDialog as Dialog,
+    MErrorTab as ErrorTab,
+    MYtWalker as YtWalker,
+    MLoadingTab as LoadingTab,
+    MNetworkTab as NetworkTab
+};
 
 /**
  * Implements the Rehike Debugger.
@@ -50,17 +54,17 @@ class Debugger
      */
     public static function init(&$yt)
     {
-        self::getCondensedStatus();
+        self::refreshInternalCondensedStatus();
 
         // Variable walker data should only be
         // exposed if the debugger is enabled
         if (!self::$condensed) self::$yt = &$yt;
 
         self::setupI18n();
-        self::$context = (object)[];
+        self::$context = new Context();
 
         error_reporting(E_ALL);
-        ini_set("display_errors", "off");
+        //ini_set("display_errors", "off");
 
         TemplateManager::addGlobal("rehikeDebugger", self::$context);
 
@@ -68,6 +72,100 @@ class Debugger
         CoffeeException::disableBeautifulError();
 
         set_error_handler("\\Rehike\\Debugger\\YcRehikeDebuggerErrorHandler");
+    }
+
+    /**
+     * Runs right before a standard page shutdown.
+     * 
+     * @return void
+     */
+    public static function shutdown()
+    {
+        if (!in_array($_GET["rebug_get_info"] ?? "false", ["false", "0"]))
+        {
+            self::handleGetInfo();
+        }
+    }
+
+    /**
+     * Handle a page requested with ?rebug_get_info=1
+     */
+    public static function handleGetInfo()
+    {
+        $headers = headers_list();
+        
+        // normalise
+        foreach ($headers as $index => $value)
+        {
+            list($key, $value) = explode(': ', $value);
+        
+            unset($headers[$index]);
+        
+            $headers[$key] = $value;
+        }
+
+        $originalContentType = $headers["Content-Type"] ?? "text/html";
+        
+        header("X-Rebug-Get-Info: true");
+        header("Content-Type: application/json");
+
+        $pageContent = ob_get_clean();
+        
+        $response = (object)[];
+        $response->content_type = $originalContentType;
+        $response->rebug_data = self::exposeSpf();
+        $response->response = $pageContent;
+
+        echo json_encode($response);
+    }
+
+    /**
+     * Get the internal context used by the debugger.
+     * 
+     * @return object
+     */
+    public static function getInternalContext()
+    {
+        return self::$context;
+    }
+
+    /**
+     * Setup the tabs available to the debugger session.
+     * 
+     * @param Dialog|FullPage $context
+     * @return void
+     */
+    public static function setupTabs($context)
+    {
+        $i18n = &i18n::getNamespace("rebug");
+
+        $errorTab = $context->addTab(
+            ErrorTab::createTab(
+                $i18n->tabErrorTitle(number_format(self::getErrorCount())),
+                "error",
+                true
+            )
+        );
+        $errorTab->pushErrors(self::$errors);
+
+        if (!self::$condensed)
+        {
+            /*
+            $context->addTab(
+                NetworkTab::createTab(
+                    $i18n->tabNetworkTitle,
+                    "network"
+                )
+            );
+            */
+
+            $ytWalker = $context->addTab(
+                YtWalker::createTab(
+                    $i18n->tabYtWalkerTitle, "global_walker"
+                )
+            );
+            $ytWalker->addYt(self::$yt);
+        }
     }
 
     /**
@@ -81,29 +179,57 @@ class Debugger
 
         $context = &self::$context;
 
-        if (!self::$condensed || (self::$condensed && self::getErrorCount() > 0))
-        {
-            $context->openButton = new OpenButton(self::getErrorCount(), self::$condensed);
-        }
+        $context->condensed = self::$condensed;
+
+        $context->openButton = new OpenButton(self::getErrorCount(), self::$condensed);
 
         $context->dialog = new Dialog(self::$condensed);
 
-        $context->condensed = self::$condensed;
+        self::setupTabs($context->dialog);
+    }
 
-        $errorTab = &$context->dialog->addTab(
-            ErrorTab::createTab(
-                $i18n->tabErrorTitle(number_format(self::getErrorCount())),
-                "error",
-                true
-            )
+    /**
+     * Expose the debugger to an SPF response.
+     * 
+     * @return object
+     */
+    public static function exposeSpf()
+    {
+        self::expose();
+
+        $context = self::$context;
+
+        $response = (object)[];
+
+        $response->updatedTabs = [];
+
+        foreach ($context->getTabs() as $tab) if ($tab->content->enableJsHistory)
+        {
+            $html = TemplateManager::render(
+                ["tab" => $tab], "rehike/debugger/spf/tab_content"
+            );
+
+            $response->updatedTabs += [
+                $tab->id => [
+                    "title" => $tab->title,
+                    "html" => $html
+                ]
+            ];
+        }
+
+        $response->openButton = TemplateManager::render(
+            [], "rehike/debugger/open_button"
         );
-        $errorTab->pushErrors(self::$errors);
 
         if (!self::$condensed)
         {
-            $ytWalker = &$context->dialog->addTab(YtWalker::createTab($i18n->tabYtWalkerTitle, "global_walker"));
-            $ytWalker->addYt(self::$yt);
+            $response->globalWalker = (object)[];
+            $response->globalWalker->data = (object)[];
+            $response->globalWalker->data->yt = self::$yt;
+            $response->globalWalker->attr = $context->jsAttrs;
         }
+
+        return $response;
     }
 
     /**
@@ -128,6 +254,18 @@ class Debugger
     }
 
     /**
+     * Add data to the context.
+     * 
+     * @param string $name
+     * @param mixed $value
+     * @return void
+     */
+    public static function addContext($name, $value)
+    {
+        self::$context->{$name} = $value;
+    }
+
+    /**
      * Initialise i18n
      * 
      * @return void
@@ -144,7 +282,7 @@ class Debugger
      * 
      * @return void
      */
-    protected static function getCondensedStatus()
+    protected static function refreshInternalCondensedStatus()
     {
         self::$condensed = RehikeConfigManager::getConfigProp("enableRehikeDebugger")
         ? false
