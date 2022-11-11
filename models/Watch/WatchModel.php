@@ -2,6 +2,7 @@
 namespace Rehike\Model\Watch;
 
 use Rehike\ConfigManager\ConfigManager;
+use Rehike\Signin\API as SignIn;
 
 /**
  * Implements all logic pertaining to the generation of watch
@@ -25,6 +26,7 @@ class WatchModel
     static $subController = "";
     static $isLive = false;
     static $isKidsVideo = false;
+    static $isOwner = false;
 
     // Set with the primary info renderer
     static $title;
@@ -63,6 +65,7 @@ class WatchModel
 
         self::$isKidsVideo = self::getIsKidsVideo(self::$secondaryInfo);
         self::$isLive = self::getIsLive(self::$primaryInfo);
+        self::$isOwner = self::getIsOwner(self::$secondaryInfo);
 
         // Get player error
         if ($error = @$yt->playerResponse->playabilityStatus->errorScreen->playerErrorMessageRenderer)
@@ -86,6 +89,7 @@ class WatchModel
         // Model baking logic
         return (object) [
             "isLive" => self::$isLive,
+            "isOwner" => self::$isOwner,
             "results" => self::bakeResults($data, $videoId),
             "secondaryResults" => self::bakeSecondaryResults($data),
             "title" => self::$title,
@@ -245,6 +249,20 @@ class WatchModel
         }
         else
         {
+            return false;
+        }
+    }
+
+    public static function getIsOwner(&$secondaryInfo)
+    {
+        if (!SignIn::isSignedIn()) return false;
+        if ($ucid = SignIn::getInfo()["ucid"]) {
+            if ($ucid == $secondaryInfo -> owner -> videoOwnerRenderer -> navigationEndpoint -> browseEndpoint -> browseId) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
             return false;
         }
     }

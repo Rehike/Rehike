@@ -4,5 +4,13 @@
     "autoplayInfoText": "When autoplay is enabled, a suggested video will automatically play next.",
     "relatedItemA11yDesc": " - Duration: %s.",
     "actionAddTo": "Add to",
-    "channelSettings": "Channel settings"
+    "channelSettings": "Channel settings",
+    "creatorBarInfo": "Information and configuration",
+    "creatorBarEnhancements": "Enhancements",
+    "creatorBarAudio": "Audio",
+    "creatorBarComments": "Comments",
+    "creatorBarCards": "Cards",
+    "creatorBarSubtitles": "Subtitles",
+    "creatorBarAnalytics": "Analytics",
+    "creatorBarVideoManager": "Video Manager"
 }

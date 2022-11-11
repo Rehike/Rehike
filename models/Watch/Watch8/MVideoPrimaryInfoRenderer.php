@@ -169,6 +169,10 @@ class MOwner
         $info = $secInfo->owner->videoOwnerRenderer;
         $i18n = i18n::getNamespace("watch/primary");
 
+        $signInInfo = (object) SignIn::getInfo();
+        $hasChannel = SignIn::isSignedIn() && isset($signInInfo -> ucid);
+        if ($hasChannel) $ucid = $signInInfo -> ucid;
+
         if (isset($info))
         {
             $this->title = $info->title ?? null;
@@ -189,7 +193,24 @@ class MOwner
             } else if (isset($secInfo -> subscribeButton -> subscribeButtonRenderer)) {
                 $this->subscriptionButtonRenderer = MSubscriptionActions::fromData($secInfo -> subscribeButton -> subscribeButtonRenderer, $subscribeCount);
             } else if (isset($secInfo -> subscribeButton -> buttonRenderer)) { // channel settings button
-                $this->subscriptionButtonRenderer = MSubscriptionActions::buildMock($subscribeCount);
+                $this->channelSettingsButtonRenderer = new MButton((object) [
+                    "style" => "default",
+                    "size" => "default",
+                    "text" => (object) [
+                        "simpleText" => $i18n -> channelSettings
+                    ],
+                    "icon" => true,
+                    "navigationEndpoint" => (object) [
+                        "commandMetadata" => (object) [
+                            "webCommandMetadata" => (object) [
+                                "url" => "//studio.youtube.com/channel/$ucid/editing/sections"
+                            ]
+                        ]
+                    ],
+                    "class" => [
+                        "channel-settings-link"
+                    ]
+                ]);
             }
         }
     }

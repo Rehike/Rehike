@@ -3,8 +3,10 @@ namespace Rehike\Model\Watch\Watch8;
 
 use \Rehike\Model\Watch\Watch7\MVideoDiscussionRenderer;
 use \Rehike\Model\Watch\Watch7\MVideoDiscussionNotice;
+use \Rehike\Model\Watch\Watch7\MCreatorBar;
 use \Rehike\i18n;
 use \Rehike\Util\PrefUtils;
+use \Rehike\Signin\API as SignIn;
 
 /**
  * Implements the watch8 subcontroller for the watch model
@@ -34,6 +36,15 @@ class Watch8Subcontroller
         $commentSection = &self::MASTER::$commentSection;
 
         $results = [];
+
+        $results[] = $secondaryInfo -> owner -> videoOwnerRenderer -> navigationEndpoint -> browseEndpoint -> browseId;
+
+        // Push creator bar if the video is yours
+        if (self::MASTER::$isOwner) {
+            $results[] = (object) [
+                "videoCreatorBarRenderer" => new MCreatorBar($videoId)
+            ];
+        }
 
         // Push primary info (if it exists)
         if (!is_null($primaryInfo)) $results[] = (object)[

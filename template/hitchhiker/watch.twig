@@ -23,6 +23,13 @@ video-{{ yt.videoId }} {{ (yt.theaterMode) ? 'watch-wide watch-stage-mode' }}
 {%- block appbarContent -%}
 {% endblock %}
 
+{%- block head_css -%}
+{% import 'core/macros.twig' as core %}
+{% if yt.page.isOwner %}
+{{ core.css("www-watch-inlineedit") }}
+{% endif %}
+{% endblock %}
+
 {% block foot_scripts %}
 <script>
     yt.setConfig({
@@ -193,6 +200,10 @@ video-{{ yt.videoId }} {{ (yt.theaterMode) ? 'watch-wide watch-stage-mode' }}
                </div>
             </div>
             {%- for result in yt.page.results -%}
+               {%- if result.videoCreatorBarRenderer -%}
+               {% set creator_bar = result.videoCreatorBarRenderer %}
+               {% include "/common/watch/watch7/creator_bar.twig" %}
+               {%- endif -%}
                {%- if result.videoPrimaryInfoRenderer -%}
                   {% set info = result.videoPrimaryInfoRenderer %}
                   {% set owner = info.owner %}

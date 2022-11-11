@@ -158,7 +158,7 @@ class MUploadButton extends MButton {
         $this -> navigationEndpoint = (object) [
             "commandMetadata" => (object) [
                 "webCommandMetadata" => (object) [
-                    "url" => $hasChannel ? "//studio.youtube.com/channel/$ucid/videos/upload" : "/create_channel?upsell=upload&next=/"
+                    "url" => $hasChannel ? "//studio.youtube.com/channel/$ucid/videos?d=ud" : "/create_channel?upsell=upload&next=/"
                 ]
             ]
         ];
@@ -180,7 +180,7 @@ class MUploadIconButton extends MButton {
         $this -> navigationEndpoint = (object) [
             "commandMetadata" => (object) [
                 "webCommandMetadata" => (object) [
-                    "url" => $hasChannel ? "//studio.youtube.com/channel/$ucid/videos/upload" : "/create_channel?upsell=upload&next=/"
+                    "url" => $hasChannel ? "//studio.youtube.com/channel/$ucid/videos?d=ud" : "/create_channel?upsell=upload&next=/"
                 ]
             ]
         ];
@@ -227,7 +227,7 @@ class MCreationClickcard {
         $items[] = new MCreationMenuItem(
             "upload",
             $i18n -> creationUpload,
-            $hasChannel ? "//studio.youtube.com/channel/$ucid/videos/upload" : "/create_channel?upsell=upload&next=/"
+            $hasChannel ? "//studio.youtube.com/channel/$ucid/videos?d=ud" : "/create_channel?upsell=upload&next=/"
         );
         $items[] = new MCreationMenuItem(
             "live",

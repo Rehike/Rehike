@@ -1,0 +1,17 @@
+{% from "common/uix/button.twig" import render as button %}
+<div id="watch7-creator-bar" class="clearfix yt-uix-button-panel yt-card yt-card-has-padding">
+    <ul id="watch7-creator-bar-nav-buttons">
+        {% for item in creator_bar.navButtons %}
+        <li class="creator-bar-item">
+            {{ button(item) }}
+        </li>
+        {% endfor %}
+    </ul>
+    <ul id="watch7-creator-bar-edit-buttons">
+        {% for item in creator_bar.editButtons %}
+        <li class="creator-bar-item yt-uix-tooltip yt-uix-tooltip-reverse" title="{{ item.itemTooltip }}" data-tooltip-text="{{ item.itemTooltip }}">
+            {{ button(item) }}
+        </li>
+        {% endfor %}
+    </ul>
+</div>
