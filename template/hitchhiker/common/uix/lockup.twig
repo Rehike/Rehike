@@ -24,7 +24,12 @@
                 {%- endif -%}
                 <div class="yt-lockup-content">
                     <h3 class="yt-lockup-title {{ info.menu ? "contains-action-menu" }}">
-                        <a href="{{ getUrl(info) }}" class="spf-link yt-uix-tile-link yt-ui-ellipsis yt-ui-ellipsis-2" title="{{ getText(info.title) }}">{{ getText(info.title) }}</a>
+                        <a href="{{ getUrl(info) }}" class="spf-link yt-uix-tile-link yt-ui-ellipsis yt-ui-ellipsis-2" title="{{ getText(info.title) }}">
+                            {{ getText(info.title) }}
+                            {% if data.type == "channel" and info.ownerBadges != null and getBadge(info.ownerBadges, "BADGE_STYLE_TYPE_VERIFIED") %}
+                                <span title="{{ yt.msgs.verified }}" class="yt-uix-tooltip yt-channel-title-icon-verified yt-sprite"></span>
+                            {% endif %}
+                        </a>
                         {%- if getVideoTime(info) != null -%}
                             {{ _self.a11yDesc(getVideoTime(info)) }}
                         {% endif %}
