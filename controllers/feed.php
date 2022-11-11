@@ -7,6 +7,9 @@ use Rehike\Util\RichShelfUtils;
 use Rehike\Model\Feed\MFeedAppbarNav;
 use Rehike\Signin\API as SignIn;
 use Rehike\TemplateFunctions;
+use \Com\YouTube\Innertube\Request\BrowseRequestParams;
+use \Rehike\Util\Base64Url;
+use \Rehike\Model\History\HistoryModel;
 
 return new class extends \Rehike\Controller\core\NirvanaController {
     public $template = "feed";
@@ -39,6 +42,9 @@ return new class extends \Rehike\Controller\core\NirvanaController {
             case "FEwhat_to_watch":
                 self::whatToWatch($yt);
                 break;
+            // case "FEhistory":
+            //     self::history($yt, $request);
+            //     break;
             default:
                 self::miscFeeds($yt, $request, $feedId);
                 break;
@@ -83,15 +89,40 @@ return new class extends \Rehike\Controller\core\NirvanaController {
         $yt -> page -> content = RichShelfUtils::reformatResponse($wv2data);
     }
 
+    public static function history(&$yt, $request) {
+        $params = new BrowseRequestParams();
+        if (isset($request -> params -> bp))
+            $params -> mergeFromString(Base64Url::decode($request -> params -> bp));
+
+        if (isset($request -> path[2]))
+            $params -> setTab($request -> path[2]);
+
+        Request::queueInnertubeRequest("history", "browse", (object) [
+            "browseId" => "FEhistory",
+            "params" => Base64Url::encode($params -> serializeToString())
+        ]);
+        $ytdata = json_decode(Request::getResponses()["history"]);
+
+        $yt -> page = HistoryModel::bake($ytdata);
+    }
+
     /**
      * Other feeds.
      */
     public static function miscFeeds(&$yt, $request, $feedId) {
-        $useListFlow = $request -> params -> flow == "2";
+        $params = new BrowseRequestParams();
+        if (isset($request -> params -> bp))
+            $params -> mergeFromString(Base64Url::decode($request -> params -> bp));
+        
+        if (isset($request -> params -> flow))
+            $params -> setFlow((int) $request -> params -> flow);
+        
+        if (isset($request -> path[2]))
+            $params -> setTab($request -> path[2]);
 
         Request::queueInnertubeRequest("feed", "browse", (object) [
             "browseId" => $feedId,
-            "params" => @$request -> params -> bp ?? ($useListFlow) ? "MAI%3D" : null
+            "params" => Base64Url::encode($params -> serializeToString())
         ]);
         $ytdata = json_decode(Request::getResponses()["feed"]);
 
@@ -100,6 +131,7 @@ return new class extends \Rehike\Controller\core\NirvanaController {
         if (isset($tab -> tabRenderer -> content))
             $yt -> page -> content = $tab -> tabRenderer -> content;
 
+        if (isset($ytdata -> header))
         foreach ($ytdata -> header as $header)
         if (isset($header -> title))
         if (isset($header -> title -> runs)
