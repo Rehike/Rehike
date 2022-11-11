@@ -60,7 +60,6 @@ Router::get([
     "/related_ajax" => "ajax/related",
     "/browse_ajax" => "ajax/browse",
     "/addto_ajax" => "ajax/addto",
-    "/live_event_reminders_ajax" => "ajax/live_event_reminders",
     "/rehike/version" => "rehike/version",
     "/rehike/static/**" => "rehike/static_router",
     "/rehike/settings" => "/rehike/settings",
@@ -79,5 +78,7 @@ Router::post([
     "/subscription_ajax" => "ajax/subscription",
     "/service_ajax" => "ajax/service",
     "/comment_service_ajax" => "ajax/comment_service",
-    "/addto_ajax" => "ajax/addto"
+    "/addto_ajax" => "ajax/addto",
+    "/live_events_reminders_ajax" => "ajax/live_events_reminders",
+    "default" => "channel"
 ]);
