@@ -4,6 +4,6 @@
     "countZero": "Brak",
     "subscriberCountIsolater": "/( subskrybentów)|( subskrybent)/g",
     "viewCountIsolater": "/( wyświetleń)|( wyświetlenie)/g",
-    "nonPublishCheck": "/(Data premiery: )|(Transmisja zaczęła się )|(Nadawane na żywo )|(Zaplanowane)/",
+    "nonPublishCheck": "/(Data premiery: )|(Transmisja zaczęła się )|(Nadawane na żywo )|(Zaplanowany na)/",
     "unsubChannelNameMatch": "/Rezygnujesz z subskrypcji kanału (.*?)\\?/"
 }
