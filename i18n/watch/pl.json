@@ -4,5 +4,13 @@
     "autoplayInfoText": "Jeśli masz włączone autoodtwarzanie, jako następny włączy się automatycznie proponowany film.",
     "relatedItemA11yDesc": " - Czas trwania: %s.",
     "actionAddTo": "Dodaj do",
-    "channelSettings": "Ustawienia kanału"
+    "channelSettings": "Ustawienia kanału",
+    "creatorBarInfo": "Informacje i ustawienia",
+    "creatorBarEnhancements": "Ulepszenia",
+    "creatorBarAudio": "Ścieżka dźwiękowa",
+    "creatorBarComments": "Adnotacje",
+    "creatorBarCards": "Karty",
+    "creatorBarSubtitles": "Napisy",
+    "creatorBarAnalytics": "Analityka",
+    "creatorBarVideoManager": "Menedżer filmów"
 }

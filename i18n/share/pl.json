@@ -1,6 +1,6 @@
 {
     "tabShare": "Udostępnij",
-    "tabEmbed": "Umieść",
-    "tabEmail": "E-mail",
-    "serviceTooltip": "Udostępnij do %s. Otwiera się w nowym oknie."
+    "tabEmbed": "Umieść na stronie",
+    "tabEmail": "Wyślij e-mailem",
+    "serviceTooltip": "Udostępnij w serwisie %s. Strona otworzy się w nowym oknie."
 }
