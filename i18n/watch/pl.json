@@ -5,12 +5,12 @@
     "relatedItemA11yDesc": " - Czas trwania: %s.",
     "actionAddTo": "Dodaj do",
     "channelSettings": "Ustawienia kanału",
-    "creatorBarInfo": "Informacja i konfiguracja",
+    "creatorBarInfo": "Informacje i ustawienia",
     "creatorBarEnhancements": "Ulepszenia",
-    "creatorBarAudio": "Dźwięk",
-    "creatorBarComments": "Komentarze",
+    "creatorBarAudio": "Ścieżka dźwiękowa",
+    "creatorBarComments": "Adnotacje",
     "creatorBarCards": "Karty",
     "creatorBarSubtitles": "Napisy",
-    "creatorBarAnalytics": "Statystyki",
+    "creatorBarAnalytics": "Analityka",
     "creatorBarVideoManager": "Menedżer filmów"
 }
