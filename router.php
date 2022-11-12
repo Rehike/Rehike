@@ -21,7 +21,8 @@ Router::funnel([
     "/t/*",
     "/howyoutubeworks/*",
     "/create_channel",
-    "/new"
+    "/new",
+    "/channel_switcher"
 ]);
 
 Router::redirect([
@@ -80,5 +81,6 @@ Router::post([
     "/comment_service_ajax" => "ajax/comment_service",
     "/addto_ajax" => "ajax/addto",
     "/live_events_reminders_ajax" => "ajax/live_events_reminders",
+    "/delegate_account_ajax" => "ajax/delegate_account",
     "default" => "channel"
 ]);

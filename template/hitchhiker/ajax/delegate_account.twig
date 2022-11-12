@@ -1,0 +1,19 @@
+{% from "common/thumb.twig" import render as thumb %}
+<div id="yt-delegate-accounts">
+    {%- for account in yt.page -%}
+    <a href="/signin?feature=masthead_switcher&authuser=1&next=%2F&action_handle_signin=true&skip_identity_prompt=False" class="yt-masthead-account-picker-option yt-masthead-account-picker-user-option">
+        {{ thumb({
+            type: "square",
+            width: 36,
+            height: 36,
+            delayload: true,
+            image: account.photo,
+            class: ["yt-masthead-picker-photo-wrapper"]
+        }) }}
+        <div class="yt-masthead-picker-info">
+            <div class="yt-masthead-picker-name" dir="ltr">{{ account.name }}</div>
+            <div class="yt-masthead-picker-account-subtitle">{{ account.byline }}</div>
+        </div>
+    </a>
+    {%- endfor -%}
+</div>

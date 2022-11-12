@@ -50,10 +50,7 @@ class MSubscriptionActions
         }
 
         if ($a = @$this -> unsubConfirmDialog -> cancelButton -> buttonRenderer) {
-            $a -> class = [
-                "overlay-confirmation-unsubscribe-button",
-                "yt-uix-overlay-close"
-            ];
+            $a -> class = ["yt-uix-overlay-close"];
             $a -> style = "STYLE_DEFAULT";
         }
 

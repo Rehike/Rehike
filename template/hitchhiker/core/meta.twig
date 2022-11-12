@@ -82,11 +82,16 @@
     }
 </style>
 {%- endif -%}
-<script id="hitchhiker-fix">
+{# <script id="hitchhiker-fix">
     // Delegated event listener to fix some bugs with Hitchhiker
     // that we can't be bothered to get working
     document.addEventListener("click", function(event) {
         if (event.target.getAttribute("class").indexOf("yt-dialog-base") > -1) {
+            for (var elm = event.target; null != elm.parentElement; elm = elm.parentElement) {
+                if (elm.id == "rebug-main") {
+                    event.stopPropagation();
+                }
+            }
             document.body.setAttribute("class", document.body.getAttribute("class").replace("yt-dialog-active", ""));
             document.getElementById("yt-dialog-bg").remove();
         }
@@ -110,4 +115,4 @@
         }
         event.stopPropagation();
     });
-</script>
+</script> #}

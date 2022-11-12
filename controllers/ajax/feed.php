@@ -44,7 +44,7 @@ return new class extends AjaxController {
             $yt -> notifList = $ytdata -> actions[0] -> appendContinuationItemsAction -> continuationItems ?? null;
             $yt -> nextContinuation = end($yt -> notifList) -> continuationItemRenderer -> continuationEndpoint -> getNotificationMenuEndpoint -> ctoken ?? null;
         } else {
-            $this -> spfIdListteners = [
+            $this -> spfIdListeners = [
                 "yt-masthead-notifications-content"
             ];
 

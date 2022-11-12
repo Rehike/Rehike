@@ -1,6 +1,6 @@
 {%- macro render(data) -%}
 {%- from "core/html/img.twig" import img -%}
-<span class="video-thumb yt-thumb yt-thumb-{{ data.width }}">
+<span class="video-thumb {% for class in data.class %}{{ class ~  " " }}{% endfor %} yt-thumb yt-thumb-{{ data.width }}">
     <span class="yt-thumb-{{ data.type }}">
         <span class="yt-thumb-clip">
             {{ img({
