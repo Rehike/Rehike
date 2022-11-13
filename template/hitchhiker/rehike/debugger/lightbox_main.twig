@@ -7,7 +7,22 @@
 #}
 
 {%- macro dialog(data) -%}
-    <div class="yt-dialog preserve-players rebug-base-dialog">
+    {# 
+        PATCH (dcooper): **This cannot have the yt-dialog class**, as it causes a bug in common.js at
+        yt.ui.Dialog.prototype.isAnyDialogDisplayed_() --> goog.dom.getElementsByClass("yt-dialog")
+
+        This bug breaks standard closing behaviour as implemented by YouTube's source code. The check essentially
+        recognises the Rebug dialog container as a parent dialog to any further open dialogs, such as the subscription
+        preferences one, and, as such, prevents the dialog from fully closing. This leaves the background sitting behind,
+        with all references disposed of by the UIX Overlay class upon its understanding that the bound dialog had closed properly,
+        therefore leaving it to the user to manually remove the dialog background scrim using Inspect Element or refreshing
+        the page.
+
+        Since there are no stylistic drawbacks to this change, I've opted to simply update Rebug to remove this class
+        and completely fix the behaviour, which has been a thorn in the side of Rehike developers and users alike for
+        months now.
+    #}
+    <div class="rebug-base-dialog">
         <div class="yt-dialog-base">
             <span class="yt-dialog-align"></span>
             <div role="dialog" tabindex="0" class="yt-dialog-fg yt-uix-overlay-primary yt-uix-overlay">

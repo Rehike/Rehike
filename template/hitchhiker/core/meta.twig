@@ -43,10 +43,6 @@
         margin: 0 5px;
     }
 
-    body.yt-dialog-active {
-        overflow: visible;
-    }
-
     /* Player overwrites this for some reason and it hides channel upsell video show more link */
     .yt-uix-expander-ellipsis.yt-ui-ellipsis-10::before {
         top: 0;
@@ -58,10 +54,6 @@
 </style>
 {%- if yt.config.hhCSSFixes -%}
 <style id="hh-css-fix">
-    html {
-        overflow-y: scroll;
-    }
-
     #watch-description-text {
         padding-top: 4px;
     }
