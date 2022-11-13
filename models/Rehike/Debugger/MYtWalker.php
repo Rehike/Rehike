@@ -69,9 +69,19 @@ class MYtWalker extends MTabContent
                 $key = $reflection->getName();
 
                 if ($value instanceof ReflectionProperty)
+                {
+                    /*
+                     * PATCH (dcooper): Required before PHP 8.1, else a ReflectionException is thrown
+                     * upon trying to access the contents of a protected or private property.
+                    */
+                    $reflection->setAccessible(true);
+
                     $value = $reflection->getValue($obj);
+                }
                 else
+                {
                     $value = "[function]";
+                }
 
                 if ($reflection->isPrivate() || $reflection->isProtected())
                 {
