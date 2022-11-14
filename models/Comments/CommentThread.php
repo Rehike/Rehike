@@ -5,6 +5,8 @@ use function YukisCoffee\getPropertyAtPath as getProp;
 use \Rehike\Model\Comments\MCommentVoteButton as VoteButton;
 use \Rehike\Model\Comments\MCommentReplyButton as ReplyButton;
 use \Rehike\i18n;
+use \Rehike\ConfigManager\ConfigManager;
+use \Rehike\Request;
 
 class CommentThread
 {
@@ -110,17 +112,10 @@ class CommentThread
 
     public static function commentRepliesRenderer($context)
     {
-        /*
-         * Process teaser contents.
-         */
-        if (isset($context->teaserContents)) foreach($context->teaserContents as $item)
-        {
-            if (isset($item->commentRenderer))
-                $item->commentRenderer = self::commentRenderer($item->commentRenderer, true);
-        }
-
         if (isset($context->viewReplies))
         {
+            $teaser = ConfigManager::getConfigProp("teaserReplies");
+
             if (i18n::namespaceExists("comments")) {
                 $i18n = i18n::getNamespace("comments");
             } else {
@@ -136,11 +131,18 @@ class CommentThread
                 $creatorName = $context -> viewRepliesCreatorThumbnail -> accessibility -> accessibilityData -> label;
             }
 
-            if ($replyCount > 1) {
+            if ($teaser && $replyCount < 3) {
+                unset($context -> viewReplies);
+                unset($context -> hideReplies);
+            } else if ($replyCount > 1) {
                 if (isset($creatorName)) {
-                    $viewText = $i18n -> viewMultiOwner($replyCount, $creatorName);
+                    $viewText = $teaser
+                    ? $i18n -> viewMultiTeaserOwner($replyCount, $creatorName)
+                    : $i18n -> viewMultiOwner($replyCount, $creatorName);
                 } else {
-                    $viewText = $i18n -> viewMulti($replyCount);
+                    $viewText = $teaser
+                    ? $i18n -> viewMultiTeaser($replyCount)
+                    : $i18n -> viewMulti($replyCount);
                 }
             } else {
                 if (isset($creatorName)) {
@@ -150,7 +152,37 @@ class CommentThread
                 }
             }
 
+            if ($teaser) {
+                foreach ($context ->contents as $content) {
+                    if ($ctoken = $content -> continuationItemRenderer -> continuationEndpoint -> continuationCommand -> token) {
+                        Request::queueInnertubeRequest("replies", "next", (object) [
+                            "continuation" => $ctoken
+                        ]);
+                        $data = json_decode(Request::getResponses()["replies"]);
+                        foreach ($data -> onResponseReceivedEndpoints as $endpoint) {
+                            if (isset($endpoint -> appendContinuationItemsAction)) {
+                                $items = $endpoint -> appendContinuationItemsAction -> continuationItems;
+                                array_splice($items, 2);
+                                if (!isset($context -> teaserContents)) {
+                                    $context -> teaserContents = [];
+                                }
+                                $context -> teaserContents += $items;
+                            }
+                        }
+                    }
+                }
+            }
+
             $hideText = ($replyCount > 1) ? $i18n -> hideMulti($replyCount) : $i18n -> hideSingular;
+        }
+
+        /*
+         * Process teaser contents.
+         */
+        if (isset($context->teaserContents)) foreach($context->teaserContents as $item)
+        {
+            if (isset($item->commentRenderer))
+                $item->commentRenderer = self::commentRenderer($item->commentRenderer, true);
         }
 
         return $context;

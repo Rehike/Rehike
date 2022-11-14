@@ -8,20 +8,24 @@
    <div class="comment-replies-renderer">
       <div class="yt-uix-expander yt-uix-expander-collapsed comment-replies-renderer-header" tabindex="0">
          <div class="yt-uix-expander-collapsed-body">
+            {% if replies.viewReplies %}
             {% set viewRepliesText = getText(replies.viewReplies.buttonRenderer.text) %}
             {{ _self.loadMoreLink('action_get_comment_replies', comment.commentId, repliesToken, viewRepliesText, true) }}
             <div class="yt-uix-expander-head comment-replies-renderer-expander-down comment-replies-renderer-view hid" tabindex="0">
                {{ viewRepliesText }}
             </div>
+            {% endif %}
             {%- for item in replies.teaserContents -%}
                {{ _self.comment(item.commentRenderer, true) }}
             {%- endfor -%}
          </div>
+         {% if replies.hideReplies %}
          <div id="comment-replies-renderer-{{ comment.commentId }}" class="yt-uix-expander-body comment-replies-renderer-pages">
             <div class="yt-uix-expander-head comment-replies-renderer-expander-up comment-replies-renderer-hide" tabindex="0">
                {{ getText(replies.hideReplies.buttonRenderer.text) }}
             </div>
          </div>
+         {% endif %}
       </div>
    </div>
    {% endif %}

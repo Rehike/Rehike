@@ -26,7 +26,8 @@ class RehikeConfigManager extends ConfigManager
             "movingThumbnails" => true,
             "guideOnWatchPage" => false,
             "hhCSSFixes" => true,
-            "watchSidebarDates" => false
+            "watchSidebarDates" => false,
+            "teaserReplies" => false
         ];
     
     /**
