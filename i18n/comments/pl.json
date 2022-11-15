@@ -3,6 +3,8 @@
     "viewMulti": "Pokaż %s odpowiedzi",
     "viewSingularOwner": "Pokaż odpowiedź od %s",
     "viewMultiOwner": "Pokaż %s odpowiedzi od %s i innych",
+    "viewMultiTeaser": "Pokaż wszystkie %s odpowiedzi",
+    "viewMultiTeaserOwner": "Pokaż wszystkie %s odpowiedzi od %s i innych",
     "hideSingular": "Ukryj odpowiedź",
     "hideMulti": "Ukryj %s odpowiedzi",
     "replyCountIsolator": "/( odpowiedzi)|( odpowiedź)/i"
