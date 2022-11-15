@@ -126,54 +126,58 @@ class CommentThread
             $viewText = &$context->viewReplies->buttonRenderer->text->runs[0]->text;
             $hideText = &$context->hideReplies->buttonRenderer->text->runs[0]->text;
 
-            $replyCount = (int) preg_replace($i18n -> replyCountIsolator, "", $viewText);
-            if (isset($context -> viewRepliesCreatorThumbnail)) {
-                $creatorName = $context -> viewRepliesCreatorThumbnail -> accessibility -> accessibilityData -> label;
-            }
-
-            if ($teaser && $replyCount < 3) {
-                unset($context -> viewReplies);
-                unset($context -> hideReplies);
-            } else if ($replyCount > 1) {
-                if (isset($creatorName)) {
-                    $viewText = $teaser
-                    ? $i18n -> viewMultiTeaserOwner($replyCount, $creatorName)
-                    : $i18n -> viewMultiOwner($replyCount, $creatorName);
-                } else {
-                    $viewText = $teaser
-                    ? $i18n -> viewMultiTeaser($replyCount)
-                    : $i18n -> viewMulti($replyCount);
+            // YouTube is experimenting with bringing back the
+            // old "View X replies" text format
+            if (!preg_match($i18n -> oldReplyTextRegex, $viewText)) {
+                $replyCount = (int) preg_replace($i18n -> replyCountIsolator, "", $viewText);
+                if (isset($context -> viewRepliesCreatorThumbnail)) {
+                    $creatorName = $context -> viewRepliesCreatorThumbnail -> accessibility -> accessibilityData -> label;
                 }
-            } else {
-                if (isset($creatorName)) {
-                    $viewText = $i18n -> viewSingularOwner($creatorName);
-                } else {
-                    $viewText = $i18n -> viewSingular;
-                }
-            }
 
-            if ($teaser) {
-                foreach ($context ->contents as $content) {
-                    if ($ctoken = $content -> continuationItemRenderer -> continuationEndpoint -> continuationCommand -> token) {
-                        Request::queueInnertubeRequest("replies", "next", (object) [
-                            "continuation" => $ctoken
-                        ]);
-                        $data = json_decode(Request::getResponses()["replies"]);
-                        foreach ($data -> onResponseReceivedEndpoints as $endpoint) {
-                            if (isset($endpoint -> appendContinuationItemsAction)) {
-                                $items = $endpoint -> appendContinuationItemsAction -> continuationItems;
-                                array_splice($items, 2);
-                                if (!isset($context -> teaserContents)) {
-                                    $context -> teaserContents = [];
+                if ($teaser && $replyCount < 3) {
+                    unset($context -> viewReplies);
+                    unset($context -> hideReplies);
+                } else if ($replyCount > 1) {
+                    if (isset($creatorName)) {
+                        $viewText = $teaser
+                        ? $i18n -> viewMultiTeaserOwner($replyCount, $creatorName)
+                        : $i18n -> viewMultiOwner($replyCount, $creatorName);
+                    } else {
+                        $viewText = $teaser
+                        ? $i18n -> viewMultiTeaser($replyCount)
+                        : $i18n -> viewMulti($replyCount);
+                    }
+                } else {
+                    if (isset($creatorName)) {
+                        $viewText = $i18n -> viewSingularOwner($creatorName);
+                    } else {
+                        $viewText = $i18n -> viewSingular;
+                    }
+                }
+
+                if ($teaser) {
+                    foreach ($context ->contents as $content) {
+                        if ($ctoken = $content -> continuationItemRenderer -> continuationEndpoint -> continuationCommand -> token) {
+                            Request::queueInnertubeRequest("replies", "next", (object) [
+                                "continuation" => $ctoken
+                            ]);
+                            $data = json_decode(Request::getResponses()["replies"]);
+                            foreach ($data -> onResponseReceivedEndpoints as $endpoint) {
+                                if (isset($endpoint -> appendContinuationItemsAction)) {
+                                    $items = $endpoint -> appendContinuationItemsAction -> continuationItems;
+                                    array_splice($items, 2);
+                                    if (!isset($context -> teaserContents)) {
+                                        $context -> teaserContents = [];
+                                    }
+                                    $context -> teaserContents += $items;
                                 }
-                                $context -> teaserContents += $items;
                             }
                         }
                     }
                 }
-            }
 
-            $hideText = ($replyCount > 1) ? $i18n -> hideMulti($replyCount) : $i18n -> hideSingular;
+                $hideText = ($replyCount > 1) ? $i18n -> hideMulti($replyCount) : $i18n -> hideSingular;
+            }
         }
 
         /*

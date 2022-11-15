@@ -7,5 +7,6 @@
     "viewMultiTeaserOwner": "View all %s replies from %s and others",
     "hideSingular": "Hide reply",
     "hideMulti": "Hide %s replies",
-    "replyCountIsolator": "/( replies)|( reply)/i"
+    "replyCountIsolator": "/( replies)|( reply)/i",
+    "oldReplyTextRegex": "/View /"
 }
