@@ -82,13 +82,9 @@
       <div class="comment-renderer-footer" data-vote-status="INDIFFERENT">
          <div class="comment-action-buttons-toolbar">
             {%- from "common/uix/button.twig" import render as button -%}
-            {# {% if comment.actionButtons.commentActionButtonsRenderer.replyButton %}
-            <button class="yt-uix-button yt-uix-button-size-small yt-uix-button-link comment-renderer-reply comment-simplebox-trigger" type="button" onclick=";return false;" data-placeholder="{{ getText(comment.actionButtons.commentActionButtonsRenderer.replyButton.buttonRenderer.navigationEndpoint.createCommentReplyDialogEndpoint.dialog.commentReplyDialogRenderer.placeholderText) }}" data-simplebox-event="replycreated" data-simplebox-id="comment-simplebox-reply-{{ comment.commentId }}" data-simplebox-label="{{ getText(comment.actionButtons.commentActionButtonsRenderer.replyButton.buttonRenderer.text) }}" data-simplebox-params="{{ comment.actionButtons.commentActionButtonsRenderer.replyButton.buttonRenderer.navigationEndpoint.createCommentReplyDialogEndpoint.dialog.commentReplyDialogRenderer.replyButton.buttonRenderer.serviceEndpoint.createCommentReplyEndpoint.createReplyParams }}" data-simplebox-sessionlink="itct=CMgBEPBbIhMI6bL2yIzE7QIVN8jBCh0WXA-s" data-simplebox-target="/comment_service_ajax?action_create_comment_reply=1"><span class="yt-uix-button-content">{{ getText(comment.actionButtons.commentActionButtonsRenderer.replyButton.buttonRenderer.text) }}</span></button>
-            {% endif %} #}
+            {% if comment.replyButton %}
             {{ button(comment.replyButton) }}
-            <div class="debug hid">
-                {{ comment.replyButton.data }}
-            </div>
+            {% endif %}
             {% if comment.voteCount and not comment.voteCount.indifferentText == "0" %}
             <span class="comment-renderer-like-count off">{{ comment.voteCount.indifferentText }}</span>
             <span class="comment-renderer-like-count on">{{ comment.voteCount.likedText }}</span>

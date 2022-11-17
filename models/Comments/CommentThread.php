@@ -98,7 +98,12 @@ class CommentThread
 
         $context->likeButton = VoteButton::fromData(getProp($context, self::LIKE_BUTTON_PATH));
         $context->dislikeButton = VoteButton::fromData(getProp($context, self::DISLIKE_BUTTON_PATH));
-        $context->replyButton = ReplyButton::fromData(getProp($context, self::REPLY_BUTTON_PATH), $context -> commentId);
+        
+        try {
+            $context->replyButton = ReplyButton::fromData(getProp($context, self::REPLY_BUTTON_PATH), $context -> commentId);
+        } catch(\YukisCoffee\GetPropertyAtPathException $e) {
+            $context->replyButton = null;
+        }
 
         try {
             $context->creatorHeart = getProp($context, self::HEART_BUTTON_PATH);
