@@ -24,14 +24,15 @@ class MSigninClickcard extends MAbstractClickcard
             "button" => new MButton([
                 "style" => "STYLE_PRIMARY",
                 "class" => ["signin-button"],
-                "anchor" => true,
-                "href" => $button["href"] ?? null,
-                "content" => (object) [
-                    "runs" => [
-                        (object) [
-                            "text" => @$button["text"] ?? "Sign in"
+                "navigationEndpoint" => (object) [
+                    "commandMetadata" => (object) [
+                        "webCommandMetadata" => (object) [
+                            "url" => $button["href"] ?? ""
                         ]
                     ]
+                ],
+                "text" => (object) [
+                    "simpleText" => $button["text"] ?? ""
                 ]
             ])
         ];

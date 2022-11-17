@@ -15,5 +15,7 @@
     "commentPostFail": "Comment failed to post.",
     "usernamePrepend": "by ",
     "shelfsliderNext": "Next",
-    "shelfsluderPrev": "Previous"
+    "shelfsluderPrev": "Previous",
+    "transcriptTitle": "Transcript",
+    "transcriptFail": "The interactive transcript could not be loaded."
 }

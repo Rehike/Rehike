@@ -1,0 +1,48 @@
+{%- macro render(data) -%}
+    {%- if not data is empty -%}
+    {% set wrapped = _self._menuitemWrapper(data) %}
+    {%- if data.clickcard and not data.manualClickcardWrapper -%}
+        {% from "/common/uix/clickcard_wrapper.twig" import render as clickcard %}
+        {{ clickcard(data.clickcard, wrapped) }}
+    {%- elseif data.menu and not data.manualMenuWrapper -%}
+        {% from "/common/uix/menu_wrapper.twig" import render as menu %}
+        {{ menu(data.menu, wrapped) }}
+    {%- elseif data.videoActionsMenu and not data.manualMenuWrapper -%}
+        {% from "/common/uix/video_action_menu_wrapper.twig" import render as video_action_menu %}
+        {{ video_action_menu(data.videoActionsMenu, wrapped) }}
+    {%- else -%}
+        {{ wrapped }}
+    {%- endif -%}
+    {%- endif -%}
+{%- endmacro -%}
+
+{% macro _menuitemWrapper(data) %}
+<button 
+    class="yt-ui-menu-item
+    {% if data.hasIcon %}
+    has-icon
+    {% endif %}
+    {% if data.closeOnSelect %}
+    yt-uix-menu-close-on-select
+    {% endif %}
+    {% if data.actionPanelTrigger %}
+    action-panel-trigger
+    action-panel-trigger-{{ data.actionPanelTrigger }}
+    {% endif %}
+    {% for class in data.class %}
+    {{ class }}
+    {% endfor %}
+    {% if data.clickcard %}
+    yt-uix-clickcard-target
+    {% endif %}"
+    type="button"
+    {% if data.actionPanelTrigger %}
+    data-trigger-for="action-panel-{{ data.actionPanelTrigger }}"
+    {% endif %}
+    {% for name, value in data.attributes %}
+    data-{{ name }}="{{ value }}"
+    {% endfor %}
+>
+    <span class="yt-ui-menu-item-label">{{ data.label }}</span>
+</button>
+{% endmacro %}

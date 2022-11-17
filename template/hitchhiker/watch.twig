@@ -28,6 +28,7 @@ video-{{ yt.videoId }} {{ (yt.theaterMode) ? 'watch-wide watch-stage-mode' }}
 {% if yt.page.isOwner %}
 {{ core.css("www-watch-inlineedit") }}
 {% endif %}
+{{ core.css("www-watch-transcript") }}
 {% endblock %}
 
 {% block foot_scripts %}
@@ -46,7 +47,7 @@ video-{{ yt.videoId }} {{ (yt.theaterMode) ? 'watch-wide watch-stage-mode' }}
         'www/watch',
           'www/watch_speedyg',
           'www/watch_autoplayrenderer',
-        ''       ],
+        'www/watch_transcript'       ],
 
 
       'REPORTVIDEO_JS': "\/yts\/jsbin\/www-reportvideo-vflidisXQ\/www-reportvideo.js",

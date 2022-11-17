@@ -1,16 +1,13 @@
 {%- macro render(data, target) -%}
-    <div class="yt-uix-menu {{ data.containerClass }}">
+    {% from "common/uix/menu_item.twig" import render as menu_item %}
+    <div class="yt-uix-menu {% for class in data.containerClass %}{{ class }}{{ not loop.last ? " " }}{% endfor %}">
         {{ target }}
-        <div class="yt-uix-menu-content yt-ui-menu-content-yt uix-menu-content-hidden" role="menu">
-            <ul{% if data.menuId %} id="{{ data.menuId }}"{% endif %}{% if data.menuClass %} class="{{ data.menuClass }}"{% endif %}>
+        <div class="yt-uix-menu-content yt-ui-menu-content yt-uix-menu-content-hidden" role="menu">
+            <ul{% if data.menuId %} id="{{ data.menuId }}"{% endif %}{% if data.menuClass %} class="{% for class in data.menuClass %}{{ class }}{{ not loop.last ? " " }}{% endfor %}"{% endif %}>
                 {% for item in data.items %}
-                    
+                    {{ menu_item(item) }}
                 {% endfor %}
             </ul>
         </div>
     </div>
-{%- endmacro -%}
-
-{%- macro menuItem(data) -%}
-
 {%- endmacro -%}

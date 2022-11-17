@@ -1,0 +1,26 @@
+{% from "common/watch/watch7/action_panel/base.twig" import loading %}
+<div id="action-panel-transcript" class="action-panel-content hid">
+    <div id="watch-actions-transcript-loading">
+        {{ loading() }}
+    </div>
+    <div id="watch-actions-transcript" class="hid">
+        <h2 class="yt-card-title">{{ yt.msgs.transcriptTitle }}</h2>
+        <div id="caption-line-template" class="hid">
+            <!--
+                <div class="caption-line-time">
+                    <div class="caption-line-start">__start__</div>
+                </div>
+                <div class="editable-line-text">
+                    <span class="editable-line-text-original">__original__</span>
+                    <label class="editable-line-text-current hid">__current__</label>
+                    <textarea class="editable-line-text-input hid">__input__</textarea>
+                </div>
+            -->
+        </div>
+        <div id="watch-transcript-container" class="yt-scrollbar">
+            <div id="watch-transcript-not-found" class="hid">
+                {{ yt.msgs.transcriptFail }}
+            </div>
+        </div>
+    </div>
+</div>
