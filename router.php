@@ -22,7 +22,8 @@ Router::funnel([
     "/howyoutubeworks/*",
     "/create_channel",
     "/new",
-    "/channel_switcher"
+    "/channel_switcher",
+    "/supported_browsers"
 ]);
 
 Router::redirect([
