@@ -1,9 +1,9 @@
 {
-    "likeCountIsolator": "/(lubi ten film wraz z )|( innymi ludźmi)|( inną osobą)/",
+    "likeCountIsolator": "/(like this video along with )|( other people)|( other person)/",
     "likeTextDisabled": "To mi się podoba",
     "countZero": "Brak",
-    "subscriberCountIsolater": "/( subskrybentów)|( subskrybent)/g",
-    "viewCountIsolater": "/( wyświetleń)|( wyświetlenie)/g",
+    "subscriberCountIsolator": "/( subskrybentów)|( subskrybent)/",
+    "viewCountIsolator": "/( wyświetleń)|( wyświetlenie)/",
     "nonPublishCheck": "/(Data premiery: )|(Transmisja zaczęła się )|(Nadawane na żywo )|(Zaplanowany na)/",
     "unsubChannelNameMatch": "/Rezygnujesz z subskrypcji kanału (.*?)\\?/"
 }
