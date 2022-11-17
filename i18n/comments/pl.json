@@ -7,5 +7,6 @@
     "viewMultiTeaserOwner": "Pokaż wszystkie %s odpowiedzi od %s i innych",
     "hideSingular": "Ukryj odpowiedź",
     "hideMulti": "Ukryj %s odpowiedzi",
-    "replyCountIsolator": "/( odpowiedzi)|( odpowiedź)/i"
+    "replyCountIsolator": "/( odpowiedzi)|( odpowiedź)/i",
+    "oldReplyTextRegex": "/Pokaż /"
 }
