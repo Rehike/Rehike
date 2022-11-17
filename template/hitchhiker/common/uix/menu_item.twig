@@ -36,7 +36,7 @@
     yt-uix-clickcard-target
     {% endif %}"
     type="button"
-    {% if data.actionPanelTrigger %}
+    {% if data.actionPanelTrigger and not data.fakeActionPanel %}
     data-trigger-for="action-panel-{{ data.actionPanelTrigger }}"
     {% endif %}
     {% for name, value in data.attributes %}

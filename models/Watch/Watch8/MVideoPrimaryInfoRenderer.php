@@ -280,6 +280,8 @@ class MActionButton extends MButton
         {
             $this->class[] = "action-panel-trigger";
             $this->class[] = "action-panel-trigger-" . $data["actionPanelTrigger"];
+
+            if (!@$data["fakeActionPanel"])
             $this->attributes["trigger-for"] = "action-panel-" . $data["actionPanelTrigger"];
             
             // Watch8 only: (if doing w7 in the future edit this)
@@ -384,14 +386,12 @@ class MActionButton extends MButton
         $buttonCfg = [
             "label" => $i18n -> actionReport,
             "class" => "report-button",
+            "actionPanelTrigger" => "report"
         ];
 
-        if (SignIn::isSignedIn()) {
+        if (!SignIn::isSignedIn()) {
             $buttonCfg += [
-                "actionPanelTrigger" => "report"
-            ];
-        } else {
-            $buttonCfg += [
+                "fakeActionPanel" => true,
                 "clickcard" => new MSigninClickcard(
                     $i18n -> reportClickcardHeading,
                     $i18n -> reportClickcardTip,
@@ -434,12 +434,12 @@ class MActionPanelOverflowMenu extends MMenu {
 
         $reportCfg = [
             "label" => $i18n -> actionReport,
+            "actionPanelTrigger" => "report",
             "hasIcon" => true
         ];
 
         if (SignIn::isSignedIn()) {
             $reportCfg += [
-                "actionPanelTrigger" => "report",
                 "closeOnSelect" => true
             ];
         } else {
@@ -455,7 +455,8 @@ class MActionPanelOverflowMenu extends MMenu {
                 "attributes" => [ // Clickcard attributes
                     "orientation" => "horizontal",
                     "position" => "topright"
-                ]
+                ],
+                "fakeActionPanel" => true
             ];
         }
 
