@@ -191,8 +191,7 @@ class MOwner
 
             // Build the subscription button from the InnerTube data.
             if (!SignIn::isSignedIn()) {
-                $this->subscriptionButtonRenderer = MSubscriptionActions::fromData((object)[], $subscribeCount);
-                // TODO: signin url (as href property)
+                $this->subscriptionButtonRenderer = MSubscriptionActions::signedOutStub($subscribeCount);
             } else if (isset($secInfo -> subscribeButton -> subscribeButtonRenderer)) {
                 $this->subscriptionButtonRenderer = MSubscriptionActions::fromData($secInfo -> subscribeButton -> subscribeButtonRenderer, $subscribeCount);
             } else if (isset($secInfo -> subscribeButton -> buttonRenderer)) { // channel settings button

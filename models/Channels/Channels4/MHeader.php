@@ -86,9 +86,18 @@ class MHeader
                 $this->subscriptionCount = TF::getText($header->subscriberCountText);
             }
 
-            $this->subscriptionButton =MSubscriptionActions::buildMock(
+            $this->subscriptionButton = MSubscriptionActions::buildMock(
                 $count
             );
+        }
+        else {
+            if (isset($header->subscriberCountText))
+            {
+                $count = ExtractUtils::isolateSubCnt(TF::getText($header->subscriberCountText));
+                $this->subscriptionCount = TF::getText($header->subscriberCountText);
+            }
+
+            $this->subscriptionButton = MSubscriptionActions::signedOutStub($count);
         }
     }
 

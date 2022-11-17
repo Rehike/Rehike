@@ -74,8 +74,6 @@ class channel extends NirvanaController {
         // Expose tab to configure frontend JS
         $yt->tab = $tab;
 
-        $baseUrl = "/" . $request->path[0] . "/" . $request->path[1];
-
         // Configure request params
         $params = new BrowseRequestParams();
         $params->setTab($tab);
@@ -108,6 +106,18 @@ class channel extends NirvanaController {
         $responses = Request::getResponses();
 
         $page = json_decode($responses["main"]);
+
+        
+        switch ($request -> path[0]) {
+            case "c":
+            case "user":
+            case "channel":
+                $baseUrl = "/" . $request->path[0] . "/" . $request->path[1];
+                break;
+            default:
+                $baseUrl = "/" . $request->path[0];
+                break;
+        }
 
         Channels4::registerBaseUrl($baseUrl);
 

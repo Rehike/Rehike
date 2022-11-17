@@ -77,23 +77,30 @@ class ResultsModel {
                 ]
             ]);
 
-            if (isset($channel -> subscribeButton -> subscribeButtonRenderer)
-            ||  isset($channel -> subscribeButton -> buttonRenderer)) {
+            if (isset($channel -> subscribeButton -> subscribeButtonRenderer)) {
                 $channel -> subscriptionActions = MSubscriptionActions
                 ::fromData(
-                        $channel -> subscribeButton -> subscribeButtonRenderer,
-                        ExtractUtils::isolateSubCnt(
-                            TemplateFunctions::getText($channel -> subscriberCountText
-                        )),
-                        false
+                    $channel -> subscribeButton -> subscribeButtonRenderer,
+                    ExtractUtils::isolateSubCnt(
+                        TemplateFunctions::getText($channel -> subscriberCountText
+                    )),
+                    false
+                );
+            } else if (isset($channel -> subscribeButton -> buttonRenderer)) {
+                $channel -> subscriptionActions = MSubscriptionActions
+                ::signedOutStub(
+                    ExtractUtils::isolateSubCnt(
+                        TemplateFunctions::getText($channel -> subscriberCountText
+                    )),
+                    false
                 );
             } else {
                 $channel -> subscriptionActions = MSubscriptionActions
                 ::buildMock(
-                        ExtractUtils::isolateSubCnt(
-                            TemplateFunctions::getText($channel -> subscriberCountText
-                        )),
-                        false
+                    ExtractUtils::isolateSubCnt(
+                        TemplateFunctions::getText($channel -> subscriberCountText
+                    )),
+                    false
                 );
             }
         }

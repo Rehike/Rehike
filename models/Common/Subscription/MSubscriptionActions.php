@@ -37,7 +37,8 @@ class MSubscriptionActions
             "unsubscribeText" => $i18n -> get("unsubscribeText"),
             "tooltip" => null,
             "unsubConfirmDialog" => null,
-            "notificationStateId" => 3
+            "notificationStateId" => 3,
+            "href" => null
         ];
 
         $this->unsubConfirmDialog = $opts["unsubConfirmDialog"];
@@ -67,7 +68,11 @@ class MSubscriptionActions
             "branded" => $opts["branded"],
             "channelExternalId" => $opts["channelExternalId"],
             "params" => $opts["params"],
-            "tooltip" => $opts["tooltip"]
+            "tooltip" => $opts["tooltip"],
+            "href" => $opts["href"],
+            "subscribeText" => $opts["subscribeText"],
+            "subscribedText" => $opts["subscribedText"],
+            "unsubscribeText" => $opts["unsubscribeText"]
         ]);
 
         $this->subscriptionPreferencesButton = new MSubscriptionPreferencesButton($opts["channelExternalId"], $opts["notificationStateId"]);
@@ -108,6 +113,15 @@ class MSubscriptionActions
             "shortText" => $count,
             "branded" => $branded,
             "tooltip" => $i18n -> selfSubscribeTooltip
+        ]);
+    }
+
+    public static function signedOutStub($count = "", $branded = true) {
+        return new self([
+            "longText" => $count,
+            "shortText" => $count,
+            "branded" => $branded,
+            "href" => "https://accounts.google.com/ServiceLogin?service=youtube&amp;uilel=3&amp;hl=en&amp;continue=https%3A%2F%2Fwww.youtube.com%2Fsignin%3Fapp%3Ddesktop%26action_handle_signin%3Dtrue%26hl%3Den%26next%3D%252F%26feature%3Dsign_in_button&amp;passive=true"
         ]);
     }
 }
