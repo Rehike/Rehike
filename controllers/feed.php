@@ -75,7 +75,7 @@ return new class extends \Rehike\Controller\core\NirvanaController {
         if (isset($tab -> tabRenderer -> content -> sectionListRenderer))
         foreach($tab -> tabRenderer -> content -> sectionListRenderer -> continuations as $cont)
         if (isset($cont -> reloadContinuationData))
-        $continuation = str_replace("%3D", "", $cont -> reloadContinuationData -> continuation);
+        $continuation = $cont -> reloadContinuationData -> continuation;
 
 
         $newContinuation = WebV2Shelves::continuationToWeb($continuation);

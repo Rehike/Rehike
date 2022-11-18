@@ -100,7 +100,7 @@ class ResultsController extends NirvanaController {
 
         return str_replace(
             ["+","/","="],
-            ["-","_","%3D"],
+            ["-","_",""],
             base64_encode($parsed->serializeToString())
         );
     }
