@@ -1,13 +1,6 @@
 {
-    "home": "Home",
     "trending": "Trending",
     "myChannel": "My channel",
-    "subscriptions": "Subscriptions",
-    "librarySection": "Library",
-    "history": "History",
-    "watchLater": "Watch later",
-    "likedVideos": "Liked videos",
-    "subscriptionsSection": "Subscriptions",
     "showMore": "Show more",
     "showFewer": "Show fewer",
     "guideBuilderLabel": "Browse channels",
