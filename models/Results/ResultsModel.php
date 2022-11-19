@@ -4,6 +4,7 @@ use Rehike\i18n;
 use Rehike\Model\Common\Subscription\MSubscriptionActions;
 use Rehike\Util\ExtractUtils;
 use Rehike\TemplateFunctions;
+use Rehike\Model\Browse\InnertubeBrowseConverter;
 
 class ResultsModel {
     static $yt;
@@ -60,52 +61,10 @@ class ResultsModel {
             array_splice($contents -> contents, $i, 1);
         }
 
-        foreach ($contents -> contents as &$content)
-        if (isset($content -> itemSectionRenderer))
-        foreach($content -> itemSectionRenderer -> contents as &$item)
-        if (isset($item -> channelRenderer)) {
-            $channel = &$item -> channelRenderer;
-
-            if (!isset($channel -> badges)) {
-                $channel -> badges = [];
-            }
-
-            array_unshift($channel -> badges, (object) [
-                "metadataBadgeRenderer" => (object) [
-                    "label" => $i18n -> channelBadge,
-                    "style" => "BADGE_STYLE_TYPE_SIMPLE"
-                ]
-            ]);
-
-            if (isset($channel -> subscribeButton -> subscribeButtonRenderer)) {
-                $channel -> subscriptionActions = MSubscriptionActions
-                ::fromData(
-                    $channel -> subscribeButton -> subscribeButtonRenderer,
-                    ExtractUtils::isolateSubCnt(
-                        TemplateFunctions::getText($channel -> subscriberCountText
-                    )),
-                    false
-                );
-            } else if (isset($channel -> subscribeButton -> buttonRenderer)) {
-                $channel -> subscriptionActions = MSubscriptionActions
-                ::signedOutStub(
-                    ExtractUtils::isolateSubCnt(
-                        TemplateFunctions::getText($channel -> subscriberCountText
-                    )),
-                    false
-                );
-            } else {
-                $channel -> subscriptionActions = MSubscriptionActions
-                ::buildMock(
-                    ExtractUtils::isolateSubCnt(
-                        TemplateFunctions::getText($channel -> subscriberCountText
-                    )),
-                    false
-                );
-            }
-        }
-
-        $response -> content = $contents;
+        $response -> content = InnerTubeBrowseConverter::sectionListRenderer($contents, [
+            "channelRendererUnbrandedSubscribeButton" => true,
+            "channelRendererChannelBadge" => true
+        ]);
 
         // Paginator
         if (isset($paginatorInfo -> pagesCount) && $paginatorInfo -> pagesCount > 1) {

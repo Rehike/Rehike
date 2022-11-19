@@ -10,6 +10,7 @@ use Rehike\TemplateFunctions;
 use \Com\YouTube\Innertube\Request\BrowseRequestParams;
 use \Rehike\Util\Base64Url;
 use \Rehike\Model\History\HistoryModel;
+use \Rehike\Model\Browse\InnertubeBrowseConverter;
 
 return new class extends \Rehike\Controller\core\NirvanaController {
     public $template = "feed";
@@ -129,7 +130,15 @@ return new class extends \Rehike\Controller\core\NirvanaController {
         if (isset($ytdata -> contents -> twoColumnBrowseResultsRenderer))
         foreach ($ytdata -> contents -> twoColumnBrowseResultsRenderer -> tabs as $tab)
         if (isset($tab -> tabRenderer -> content))
-            $yt -> page -> content = $tab -> tabRenderer -> content;
+            $content = $tab -> tabRenderer -> content;
+
+        if (isset($content -> sectionListRenderer)) {
+            $content -> sectionListRenderer = InnertubeBrowseConverter::sectionListRenderer($content -> sectionListRenderer, [
+                "channelRendererUnbrandedSubscribeButton" => true
+            ]);
+        }
+
+        $yt -> page -> content = $content;
 
         if (isset($ytdata -> header))
         foreach ($ytdata -> header as $header)

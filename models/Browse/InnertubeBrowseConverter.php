@@ -106,21 +106,70 @@ class InnertubeBrowseConverter
 
     public static function channelRenderer($data, $context = [])
     {
+        if (i18n::namespaceExists("browse/converter")) {
+            $i18n = i18n::getNamespace("browse/converter");
+        } else {
+            $i18n = i18n::newNamespace("browse/converter");
+            $i18n -> registerFromFolder("i18n/browse");
+        }
+
         if (@$context["channelRendererNoSubscribeCount"])
             $subscriberCount = "";
-        else
+        else if (isset($data->subscriberCountText))
             $subscriberCount = ExtractUtils::isolateSubCnt(TF::getText($data->subscriberCountText));
 
         $subscribeButtonBranded = true;
 
+        /**
+         * You know, I hate this. At first it was fun.
+         * I was able to easily make things with a
+         * competent API. however, they stopped being
+         * fucking competent in 2022. For the handles
+         * update they decided it would be a BRIGHT
+         * FUCKING IDEA to move the subscription count
+         * to the video count text, and put the handle
+         * in the subscription count text. How FUCKING
+         * HARD IS IT TO ADD ANOTHER FIELD?!?!?!?!?!!?
+         * HOW FUCKING HARD?!?!?!!?!?!?!?!?!!?! WHAT
+         * THE ACTUAL FUCK?!?!!?!?!? FUCKING DIE IN A
+         * DITCH, HOLY FUCKING SHIT.
+         *  - love, aubrey <3
+         */
+        if (substr($subscriberCount, 0, 1) == "@") {
+            $subscriberCount = ExtractUtils::isolateSubCnt(TF::getText($data->videoCountText));
+            unset($data->videoCountText);
+        }
+
         if (@$context["channelRendererUnbrandedSubscribeButton"]) 
             $subscribeButtonBranded = false;
 
-        $data->subscriptionActions = MSubscriptionActions::fromData(
-            $data->subscribeButton->subscribeButtonRenderer,
-            "",
-            $subscribeButtonBranded
-        );
+        if (@$context["channelRendererChannelBadge"]) {
+            if (!isset($data -> badges)) {
+                $data -> badges = [];
+            }
+            $data -> badges[] = (object) [
+                "metadataBadgeRenderer" => (object) [
+                    "label" => $i18n -> channelBadge,
+                    "style" => "BADGE_STYLE_TYPE_SIMPLE"
+                ]
+            ];
+        }
+
+        if (isset($data->subscribeButton))
+        {
+            $data->subscribeButton = MSubscriptionActions::fromData(
+                $data->subscribeButton->subscribeButtonRenderer,
+                $subscriberCount,
+                $subscribeButtonBranded
+            );
+        }
+        else
+        {
+            $data->subscribeButton = MSubscriptionActions::buildMock(
+                $subscriberCount,
+                $subscribeButtonBranded
+            );
+        }
 
         if (@$context["channelRendererNoMeta"])
         {
