@@ -60,14 +60,14 @@ class SimpleFunnel {
             CURLOPT_ENCODING => "",
             CURLOPT_HEADERFUNCTION =>
             function($curl, $header) use (&$headers) {
-              $len = strlen($header);
-              $header = explode(':', $header, 2);
-              if (count($header) < 2) // ignore invalid headers
+                $len = strlen($header);
+                $header = explode(':', $header, 2);
+                if (count($header) < 2) // ignore invalid headers
+                    return $len;
+            
+                $headers[trim($header[0])][] = trim($header[1]);
+                
                 return $len;
-          
-              $headers[trim($header[0])][] = trim($header[1]);
-              
-              return $len;
             }
         ]);
 
@@ -76,7 +76,6 @@ class SimpleFunnel {
         $response = (object) [];
         $response -> body = curl_exec($ch);
         $response -> headers = $headers;
-        //$response -> contentType = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
         $response -> status = curl_getinfo($ch, CURLINFO_RESPONSE_CODE);
 
         return $response;
@@ -102,7 +101,6 @@ class SimpleFunnel {
 
         if (!isset($funnelData -> body)) return;
         http_response_code($funnelData -> status);
-        //header("Content-Type: " . $funnelData -> contentType);
         foreach($funnelData -> headers as $name => $value) {
             $val = $value[0];
             header("$name: $val");
