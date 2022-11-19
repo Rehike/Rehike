@@ -81,7 +81,7 @@
                     {% endif %}
                     {%- if info.badges or info.upcomingEventData or (data.type == "channel" and style == "tile") -%}
                     <div class="yt-lockup-badges">
-                        {{ badge_list(info.badges, info.upcomingEventData) }}
+                        {{ info.badges or info.upcomingEventData ? badge_list(info.badges, info.upcomingEventData) }}
                         {{ data.type == "channel" ? subscription_button(info.subscribeButton) }}
                     </div>
                     {%- endif -%}
