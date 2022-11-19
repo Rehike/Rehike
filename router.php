@@ -23,7 +23,8 @@ Router::funnel([
     "/create_channel",
     "/new",
     "/channel_switcher",
-    "/supported_browsers"
+    "/supported_browsers",
+    "/getAccountSwitcherEndpoint"
 ]);
 
 Router::redirect([
