@@ -7,17 +7,17 @@
     "manageSubscriptionsLabel": "Zarządzaj subskrypcjami",
     "bestOfYouTubeSection": "Najlepsze w YouTube",
     "notifications": {
-        "watchLaterVideoAdded": "Zapisano na playliście Do obejrzenia",
-        "watchLaterVideoRemoved": "Usunięto z playlisty Do obejrzenia",
+        "watchLaterVideoAdded": "Dodano do listy Do obejrzenia",
+        "watchLaterVideoRemoved": "Usunięto z listy „Do obejrzenia”",
         "subscription": "Dodano subskrypcję",
-        "unsubscription": "Usunięto subskrypcję",
-        "playlistLike": "Zapisano do playlist",
+        "unsubscription": "Subskrypcja została usunięta",
+        "playlistLike": "Zapisano w playlistach",
         "playlistUnlike": "Usunięto z playlist",
-        "playlistVideoAdded": "Zapisano do playlisty",
+        "playlistVideoAdded": "Dodano do playlisty",
         "playlistVideoRemoved": "Usunięto z playlisty",
-        "videoLike": "Dodano do polubionych filmów",
-        "videoUnlike": "Usunięto z polubionych filmów",
-        "eventReminderSet": "Przypomnimy Ci o tym wydarzeniu",
-        "eventReminderRemoved": "Usunięto przypomnienie o wydarzeniu"
+        "videoLike": "Dodano do lubianych filmów",
+        "videoUnlike": "Usunięto z lubianych filmów",
+        "eventReminderSet": "Otrzymasz przypomnienie o tym wydarzeniu",
+        "eventReminderRemoved": "Przypomnienie o wydarzeniu zostało usunięte"
     }
 }
