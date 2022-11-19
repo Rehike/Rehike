@@ -115,7 +115,7 @@ class InnertubeBrowseConverter
 
         if (@$context["channelRendererNoSubscribeCount"])
             $subscriberCount = "";
-        else
+        else if (isset($data->subscriberCountText))
             $subscriberCount = ExtractUtils::isolateSubCnt(TF::getText($data->subscriberCountText));
 
         $subscribeButtonBranded = true;
