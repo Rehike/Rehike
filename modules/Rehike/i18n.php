@@ -97,7 +97,7 @@ class i18n
         return $this -> strings;
     }
 
-    public static function &namespaceExists($name)
+    public static function namespaceExists($name)
     {
         return isset(self::$namespaces[$name]);
     }
