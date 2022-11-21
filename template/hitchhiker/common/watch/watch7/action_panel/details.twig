@@ -36,12 +36,13 @@
                             <h4 class="title">{{ getText(item.title) }}</h4>
                             <ul class="content watch-info-tag-list">
                                 <li>
-                                    {% for runs in item.contents[0].runs %}
-                                        {% if runs.navigationEndpoint %}
-                                        <a{{ (href|first == "/") ? " class=\"spf-link\"" }} href="{{ runs.navigationEndpoint.urlEndpoint.url }}">
+                                    {% for run in item.contents[0].runs %}
+                                        {% if run.navigationEndpoint %}
+                                        {% set href = getUrl(run) %}
+                                        <a{{ (href|first == "/") ? " class=\"spf-link\"" }} href="{{ href }}">
                                         {% endif %}
-                                        {{ runs.text }}
-                                        {% if runs.navigationEndpoint %}
+                                        {{ run.text }}
+                                        {% if run.navigationEndpoint %}
                                         </a>
                                         {% endif %}
                                     {% endfor %}
