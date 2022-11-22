@@ -491,14 +491,19 @@ class MLikeButtonRenderer
 
     public function __construct($dataHost, &$info, &$videoId)
     {
-        $origLikeButton = &$info->topLevelButtons[0]->segmentedLikeDislikeButtonRenderer->likeButton->toggleButtonRenderer;
-        $origDislikeButton = &$info->topLevelButtons[0]->segmentedLikeDislikeButtonRenderer->dislikeButton->toggleButtonRenderer;
+        if (isset($info->topLevelButtons[0] -> segmentedLikeDislikeButtonRenderer)) {
+            $origLikeButton = $info->topLevelButtons[0]->segmentedLikeDislikeButtonRenderer->likeButton->toggleButtonRenderer ?? null;
+            $origDislikeButton = $info->topLevelButtons[0]->segmentedLikeDislikeButtonRenderer->dislikeButton->toggleButtonRenderer ?? null;
+        } else {
+            $origLikeButton = $info->topLevelButtons[0]->toggleButtonRenderer ?? null;
+            $origDislikeButton = $info->topLevelButtons[0]->toggleButtonRenderer ?? null;
+        }
 
-        $likeA11y = $origLikeButton->accessibility->label;
-        $dislikeA11y = $origDislikeButton->accessibility->label;
+        $likeA11y = $origLikeButton->accessibility->label ?? "";
+        $dislikeA11y = $origDislikeButton->accessibility->label ?? "";
 
-        $isLiked = $origLikeButton->isToggled;
-        $isDisliked = $origDislikeButton->isToggled;
+        $isLiked = $origLikeButton->isToggled ?? false;
+        $isDisliked = $origDislikeButton->isToggled ?? false;
 
         // Extract like count from like count string
         $likeCount = ExtractUtils::isolateLikeCnt($likeA11y ?? "");
