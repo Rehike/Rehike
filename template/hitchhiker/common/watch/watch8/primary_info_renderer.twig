@@ -22,7 +22,15 @@
              </span>
              {% endif %}
              <span id="eow-title" class="watch-title" dir="ltr" title="{{ getText(info.title) }}">
-             {{ getText(info.title) }}
+             {% for run in info.title.runs %}
+                {% if run.navigationEndpoint %}
+                <a {{ getUrl(run)|first == "/" ? 'class="spf-link" ' }}href="{{ getUrl(run) }}">
+                {% endif %}
+                {{ run.text }}
+                {% if run.navigationEndpoint %}
+                </a>
+                {% endif %}
+             {% endfor %}
              </span>
           </h1>
        </div>
