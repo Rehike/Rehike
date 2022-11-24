@@ -1,5 +1,5 @@
 <?php
-use \Com\YouTube\Innertube\Request\BrowseRequestParams;
+use \Com\Youtube\Innertube\Request\BrowseRequestParams;
 
 use \Rehike\Controller\core\NirvanaController;
 use \Rehike\Model\Playlist\PlaylistModel;

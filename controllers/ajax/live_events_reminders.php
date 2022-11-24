@@ -3,8 +3,8 @@ namespace Rehike\Controller\ajax;
 
 use Rehike\Request;
 use Rehike\Util\Base64Url;
-use Com\YouTube\Innertube\Request\EventReminderRequestParams;
-use Com\YouTube\Innertube\Request\EventReminderRequestParams\UnknownThing;
+use Com\Youtube\Innertube\Request\EventReminderRequestParams;
+use Com\Youtube\Innertube\Request\EventReminderRequestParams\UnknownThing;
 
 return new class extends \Rehike\Controller\core\AjaxController {
     public $useTemplate = false;

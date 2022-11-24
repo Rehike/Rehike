@@ -7,7 +7,7 @@ use Rehike\Util\RichShelfUtils;
 use Rehike\Model\Feed\MFeedAppbarNav;
 use Rehike\Signin\API as SignIn;
 use Rehike\TemplateFunctions;
-use \Com\YouTube\Innertube\Request\BrowseRequestParams;
+use \Com\Youtube\Innertube\Request\BrowseRequestParams;
 use \Rehike\Util\Base64Url;
 use \Rehike\Model\History\HistoryModel;
 use \Rehike\Model\Browse\InnertubeBrowseConverter;
