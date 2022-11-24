@@ -71,7 +71,7 @@
                                     </a>
                                 </span>
                             </span>
-                            {% if header.badges %}
+                            {% if getBadge(header.badges, "BADGE_STYLE_TYPE_VERIFIED") %}
                             <a href="//support.google.com/youtube/answer/3046484?hl=en" target="_blank" class="qualified-channel-title-badge">
                                 <span aria-label="{{ yt.msgs.verified }}" class="yt-channel-title-icon-verified yt-uix-tooltip yt-sprite" data-tooltip-text="{{ yt.msgs.verified }}"></span>
                             </a>
