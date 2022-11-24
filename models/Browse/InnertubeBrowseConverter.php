@@ -155,10 +155,17 @@ class InnertubeBrowseConverter
             ];
         }
 
-        if (isset($data->subscribeButton))
+        if (isset($data->subscribeButton->subscribeButtonRenderer))
         {
             $data->subscribeButton = MSubscriptionActions::fromData(
                 $data->subscribeButton->subscribeButtonRenderer,
+                $subscriberCount,
+                $subscribeButtonBranded
+            );
+        }
+        elseif (isset($data->subscribeButton->buttonRenderer))
+        {
+            $data->subscribeButton = MSubscriptionActions::signedOutStub(
                 $subscriberCount,
                 $subscribeButtonBranded
             );
