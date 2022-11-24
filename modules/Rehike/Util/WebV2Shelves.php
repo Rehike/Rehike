@@ -6,8 +6,8 @@ use \Rehike\Util\Base64Url;
 use \Com\Google\Protos\Youtube\Api\Innertube\BrowseContinuation;
 use \Com\Google\Protos\Youtube\Api\Innertube\BrowseContinuationAppendAction;
 use \Com\Google\Protos\Youtube\Api\Innertube\BrowseContinuationWrapper;
-use \Com\Google\Protos\YouTube\Api\Innertube\ContinuationTypeWrapper;
-use \Com\Google\Protos\YouTube\Api\Innertube\ContinuationWrapper;
+use \Com\Google\Protos\Youtube\Api\Innertube\ContinuationTypeWrapper;
+use \Com\Google\Protos\Youtube\Api\Innertube\ContinuationWrapper;
 
 class WebV2Shelves {
     /**
