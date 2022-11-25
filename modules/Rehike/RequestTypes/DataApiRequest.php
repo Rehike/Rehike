@@ -6,7 +6,7 @@ use Rehike\Request;
 /**
  * Implements the behaviour needed to request the InnerTube API.
  * 
- * @author Aubrey Pankow <kirasicecreamm@gmail.com>
+ * @author Aubrey Pankow <aubyomori@gmail.com>
  * @author The Rehike Maintainers
  */
 trait DataApiRequest

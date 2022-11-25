@@ -3,6 +3,7 @@ namespace Rehike\Model\Guide;
 
 use Rehike\i18n;
 use Rehike\Signin\API as Signin;
+use Rehike\ConfigManager\ConfigManager;
 
 /**
  * A god class for converting InnerTube guide responses to
@@ -51,15 +52,7 @@ class Converter
         }
         else
         {
-            $bestOfYtSection = $data->items[3]; // Bad to hardcode but idc
-            $bestOfYtSection->guideSectionRenderer->formattedTitle = (object) [
-                'runs' => [
-                    (object) [
-                        'text' => $strings->bestOfYouTubeSection
-                    ]
-                ]
-            ];
-            $response[] = $bestOfYtSection;
+            $response[] = self::getBestOfYouTubeSection();
         }
         
         // Push the guide management items (the "end section")
@@ -167,6 +160,86 @@ class Converter
             "guideSectionRenderer" => (object)[
                 "items" => $response
             ]
+        ];
+    }
+
+    /**
+     * This function is responsible for getting the Best of YouTube
+     * section.
+     * 
+     * Best of YouTube used to be directly obtained from InnerTube,
+     * but as of late 2022, they've changed it in a way that makes
+     * it incompatible with Hitchhiker. Now, we build it entirely
+     * locally, including the images (which are in 
+     * /rehike/static/best_of_youtube)
+     */
+    public static function getBestOfYouTubeSection() {
+        $strings = i18n::getNamespace("main/guide");
+
+        // Thumbnail prefix and suffix
+        $format = ConfigManager::getConfigProp("oldBestOfYouTubeIcons")
+        ? "/rehike/static/best_of_youtube/%s_old.jpg"
+        : "/rehike/static/best_of_youtube/%s.jpg";
+
+        $response = (object) [];
+        $response -> formattedTitle = (object) [
+            "simpleText" => $strings -> bestOfYouTubeTitle
+        ];
+
+        $items = [];
+
+        $items[] = self::bakeGuideItem(
+            "/channel/UC-9-kyTW8ZkZNDHQJ6FgpwQ",
+            $strings -> bestOfYouTubeMusic,
+            sprintf($format, "music")
+        );
+
+        $items[] = self::bakeGuideItem(
+            "/channel/UCEgdi0XIXXZ-qJOFPf4JSKw",
+            $strings -> bestOfYouTubeSports,
+            sprintf($format, "sports")
+        );
+
+        $items[] = self::bakeGuideItem(
+            "/gaming",
+            $strings -> bestOfYouTubeGaming,
+            sprintf($format, "gaming")
+        );
+
+        $items[] = self::bakeGuideItem(
+            "/channel/UClgRkhTL3_hImCAmdLfDE4g",
+            $strings -> bestOfYouTubeMoviesTv,
+            sprintf($format, "movies_tv")
+        );
+        
+        $items[] = self::bakeGuideItem(
+            "/channel/UCYfdidRxbB8Qhf0Nx7ioOYw",
+            $strings -> bestOfYouTubeNews,
+            sprintf($format, "news")
+        );
+
+        $items[] = self::bakeGuideItem(
+            "/channel/UC4R8DWoMoI7CAwX8_LjQHig",
+            $strings -> bestOfYouTubeLive,
+            sprintf($format, "live")
+        );
+
+        $items[] = self::bakeGuideItem(
+            "/channel/UCBR8-60-B28hp2BmDPdntcQ",
+            $strings -> bestOfYouTubeSpotlight,
+            sprintf($format, "spotlight")
+        );
+
+        $items[] = self::bakeGuideItem(
+            "/channel/UCzuqhhs6NWbgTzMuM09WKDQ",
+            $strings -> bestOfYouTube360,
+            sprintf($format, "360")
+        );
+
+        $response -> items = $items;
+
+        return (object) [
+            "guideSectionRenderer" => $response
         ];
     }
 

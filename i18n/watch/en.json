@@ -28,5 +28,8 @@
     "creatorBarCards": "Cards",
     "creatorBarSubtitles": "Subtitles",
     "creatorBarAnalytics": "Analytics",
-    "creatorBarVideoManager": "Video Manager"
+    "creatorBarVideoManager": "Video Manager",
+    "metadataLicense": "License",
+    "metadataLicenseStandard": "Standard YouTube License",
+    "metadataCategory": "Category"
 }

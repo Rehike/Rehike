@@ -27,7 +27,8 @@ class RehikeConfigManager extends ConfigManager
             "guideOnWatchPage" => false,
             "hhCSSFixes" => true,
             "watchSidebarDates" => false,
-            "teaserReplies" => false
+            "teaserReplies" => false,
+            "oldBestOfYouTubeIcons" => false
         ];
     
     /**

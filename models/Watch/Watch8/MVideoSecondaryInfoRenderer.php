@@ -4,6 +4,7 @@ namespace Rehike\Model\Watch\Watch8;
 use Rehike\Util\ExtractUtils;
 use Rehike\Model\Traits\Runs;
 use Rehike\TemplateFunctions;
+use Rehike\i18n;
 
 /**
  * Implement the model used by the video's secondary info renderer.
@@ -26,6 +27,8 @@ class MVideoSecondaryInfoRenderer
         {
             $info = &$dataHost::$secondaryInfo;
             $primaryInfo = &$dataHost::$primaryInfo;
+
+            i18n::newNamespace("watch/secondary") -> registerFromFolder("i18n/watch");
 
             $this->description = $info->description ?? null;
             $this->defaultExpanded = $info->defaultExpanded ?? false;
@@ -144,7 +147,9 @@ class MMetadataRowContainer
 
     protected function getCategoryField($dataHost)
     {
-        $title = "Category"; // TODO: i18n
+        $i18n = i18n::getNamespace("watch/secondayr");
+
+        $title = $i18n -> metadataCategory; // TODO: i18n
 
         $category = @$dataHost::$yt->playerResponse->microformat
             ->playerMicroformatRenderer->category
@@ -158,8 +163,10 @@ class MMetadataRowContainer
 
     protected function getLicenseField()
     {
-        $title = "License";
-        $text = "Standard YouTube License";
+        $i18n = i18n::getNamespace("watch/secondary");
+
+        $title = $i18n -> metadataLicense;
+        $text = $i18n -> metadataLicenseStandard;
 
         return self::createSimpleField($title, $text);
     }
