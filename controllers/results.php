@@ -4,7 +4,7 @@ namespace Rehike\Controller;
 use Rehike\Controller\core\NirvanaController;
 use Rehike\Model\Results\ResultsModel;
 
-use \Com\YouTube\Innertube\Request\SearchRequestParams;
+use \Com\Youtube\Innertube\Request\SearchRequestParams;
 
 use Rehike\Request;
 use Rehike\i18n;

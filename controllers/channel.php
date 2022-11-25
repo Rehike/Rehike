@@ -3,7 +3,7 @@ namespace Rehike\Controller;
 
 use Rehike\Controller\core\NirvanaController;
 
-use \Com\YouTube\Innertube\Request\BrowseRequestParams;
+use \Com\Youtube\Innertube\Request\BrowseRequestParams;
 
 use Rehike\Request;
 use Rehike\Util\Base64Url;
