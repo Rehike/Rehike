@@ -91,6 +91,11 @@ class CommentThread
         $context->isReply = $isReply;
         if (isset($context->voteCount)) self::addLikeCount($context);
 
+        if (isset($context->authorText->simpleText))
+        if (substr($context->authorText->simpleText, 0, 1) == "@") {
+            $context->authorText->simpleText = substr($context->authorText->simpleText, 1);
+        }
+
         // Eliminate surrounding spaces on channel mention
         foreach ($context -> contentText -> runs as &$run) {
             $run -> text = str_replace("\u{00A0}", "", $run -> text);
