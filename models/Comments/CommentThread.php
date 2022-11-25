@@ -19,6 +19,8 @@ class CommentThread
     const REPLY_BUTTON_PATH = self::ACTIONS_PATH . ".replyButton.buttonRenderer";
     const COMMON_A11Y_LABEL = "accessibilityData.label";
 
+    public static $dataApiData = [];
+
     public static function bakeComments($context)
     {
         // Top-level function
@@ -27,6 +29,25 @@ class CommentThread
         $context = @$context->continuationItems;
         
         $out = ["commentsThreads" => []];
+
+        $commentIds = [];
+        foreach($context as $comment) {
+            if ($a = $comment -> commentThreadRenderer -> comment -> commentRenderer -> commentId) {
+                $commentIds[] = $a;
+            }
+        }
+
+        Request::queueDataApiRequest("commentThreads", "comments", (object) [
+            "part" => "id,snippet",
+            "id" => implode(",", $commentIds)
+        ]);
+        $data = json_decode(Request::getResponses()["commentThreads"]);
+
+        foreach ($data -> items as $item) {
+            self::$dataApiData += [
+                $item -> id => $item -> snippet
+            ];
+        }
         
         if ($context) for ($i = 0, $count = count($context); $i < $count; $i++) {
             if (isset($context[$i]->commentThreadRenderer))
@@ -50,6 +71,25 @@ class CommentThread
         $items = @$context->continuationItems;
 
         $out = ["comments" => [], "repliesTargetId" => str_replace("comment-replies-item-", "", $context->targetId)];
+
+        $commentIds = [];
+        foreach($context as $comment) {
+            if ($a = $comment -> commentRenderer -> commentId) {
+                $commentIds[] = $a;
+            }
+        }
+
+        Request::queueDataApiRequest("commentThreads", "comments", (object) [
+            "part" => "id,snippet",
+            "id" => implode(",", $commentIds)
+        ]);
+        $data = json_decode(Request::getResponses()["commentThreads"]);
+
+        foreach ($data -> items as $item) {
+            self::$dataApiData += [
+                $item -> id => $item -> snippet
+            ];
+        }
 
 		if ($items) for ($i = 0, $count = count($items); $i < $count; $i++)
         {
@@ -91,9 +131,10 @@ class CommentThread
         $context->isReply = $isReply;
         if (isset($context->voteCount)) self::addLikeCount($context);
 
-        if (isset($context->authorText->simpleText))
-        if (substr($context->authorText->simpleText, 0, 1) == "@") {
-            $context->authorText->simpleText = substr($context->authorText->simpleText, 1);
+        if ($data = self::$dataApiData[$context->commentId]) {
+            $context->authorText = (object) [
+                "simpleText" => $data -> authorDisplayName
+            ];
         }
 
         // Eliminate surrounding spaces on channel mention

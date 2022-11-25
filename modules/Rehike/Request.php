@@ -15,6 +15,7 @@ class Request
     use \Rehike\RequestTypes\InnertubeRequest;
     use \Rehike\RequestTypes\UrlRequest;
     use \Rehike\RequestTypes\InitialDataRequest;
+    use \Rehike\RequestTypes\DataApiRequest;
 
     // Constant namespace identifiers
     // These are used for on response callbacks
@@ -22,6 +23,7 @@ class Request
     const NS_INNERTUBE = "NS_INNERTUBE";
     const NS_URL = "NS_URL";
     const NS_INITIALDATA = "NS_INITIALDATA";
+    const NS_DATAAPI = "NS_DATAAPI";
 
     /** 
      * A namespace map for remembering the types of a queued request.
@@ -244,6 +246,7 @@ class Request
                     break;
                 case self::NS_INNERTUBE:
                 case self::NS_URL:
+                case self::NS_DATAAPI:
                 default:
                     $final += [$id => $me];
                     break;
