@@ -11,7 +11,7 @@
     </a>
     <div class="yt-user-info">
     <a href="{{ owner.navigationEndpoint.browseEndpoint.canonicalBaseUrl }}" class="       spf-link ">{{ getText(owner.title) }}</a>
-    {% if getBadge(owner.badges, "BADGE_STYLE_TYPE_VERIFIED") %}
+    {% if owner.badges %}
     <span data-tooltip-text="{{ yt.msgs.verified }}" class="yt-channel-title-icon-verified yt-uix-tooltip yt-sprite" aria-label="{{ yt.msgs.verified }}"></span>
     {% endif %}
     </div>
