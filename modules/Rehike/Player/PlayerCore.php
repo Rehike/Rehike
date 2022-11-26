@@ -97,7 +97,7 @@ class PlayerCore extends Configurable
                 Cacher::write($remoteInfo);
             } catch (CacherException $e) {}
 
-            // If everything went write, then return the remote info:
+            // If everything went right, then return the remote info:
             return PlayerInfo::from($remoteInfo);
         }
     }
