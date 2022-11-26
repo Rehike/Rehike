@@ -26,7 +26,7 @@ class PropertyAtPath {
      * @param  string       $path  JS-style period delimited path
      * @return string
      */
-    public static function func(object|array $base, string $path): string {
+    public static function func(object|array &$base, string $path): string {
         $tree = explode(".", $path);
 
         if (is_object($base)) {
@@ -65,7 +65,7 @@ class PropertyAtPath {
      * @param  string       $path  JS-style period delimited path
      * @return mixed
      */
-    public static function get(object|array $base, string $path): mixed {
+    public static function get(object|array &$base, string $path): mixed {
         $func = self::func($base, $path);
         return @eval("return {$func};");
     }
