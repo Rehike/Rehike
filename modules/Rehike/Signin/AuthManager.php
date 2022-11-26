@@ -16,16 +16,51 @@ use Rehike\FileSystem as FS;
  */
 class AuthManager
 {
-    public static $shouldAuth = false;
+    /**
+     * Stores the value returned by the public API method self::shouldAuth().
+     * 
+     * @internal
+     * @var bool
+     */
+    private static $shouldAuth = false;
+
+    /**
+     * Stores the user's SAPISID; a login cookie used to authenticate each
+     * individual request.
+     * 
+     * During the authentication process, this is hashed, resulting in an
+     * SAPISIDHASH value.
+     * 
+     * @var string
+     */
     private static $sapisid;
+
+    /**
+     * Stores the current account's GAIA ID.
+     * 
+     * This is used internally in some places, as well as is used to identify
+     * the Google account as a whole.
+     * 
+     * @var string
+     */
     private static $currentGaiaId = "";
 
-    // Just because it should be the case doesn't
-    // mean that it will always be.
-    // If an error occurs during this process,
-    // this will remain false.
+    /**
+     * Stores the current signin state.
+     * 
+     * This isn't guaranteed. If an error occurs while attempting to get
+     * authentication data, the signin request will be rejected and this will
+     * remain false.
+     * 
+     * @var bool
+     */
     public static $isSignedIn = false;
 
+    /**
+     * Stores the resulting information from a signin request.
+     * 
+     * @var ?array
+     */
     public static $info = null;
 
     public static function __initStatic()
@@ -38,6 +73,12 @@ class AuthManager
         self::$shouldAuth = self::determineShouldAuth();
     }
 
+    /**
+     * Provide the global context ($yt) for internal use.
+     * 
+     * @param object $yt Global context
+     * @return void
+     */
     public static function use(&$yt)
     {
         // Merge data into main variable sent to the
@@ -59,12 +100,23 @@ class AuthManager
         $yt->signin = ["isSignedIn" => false];
     }
 
+    /**
+     * Get if authentication is available.
+     * 
+     * @return bool
+     */
     public static function shouldAuth()
     {
         return self::$shouldAuth;
     }
 
-    public static function determineShouldAuth()
+    /**
+     * Used internally as a one-time determination of the authentication's
+     * availability.
+     * 
+     * @return bool
+     */
+    private static function determineShouldAuth()
     {
         // Determined by the presence of SAPISID cookie.
         if (isset($_COOKIE) && isset($_COOKIE["SAPISID"]))
@@ -76,6 +128,13 @@ class AuthManager
         return false;
     }
 
+    /**
+     * Get the contents of the authentication HTTP header. This will generate
+     * a new SAPISIDHASH.
+     * 
+     * @param string $origin
+     * @return string
+     */
     public static function getAuthHeader($origin = "https://www.youtube.com")
     {
         $sapisid = self::$sapisid;
@@ -84,11 +143,21 @@ class AuthManager
         return "SAPISIDHASH {$time}_{$sha1}";
     }
 
+    /**
+     * Get the current user's GAIA ID.
+     * 
+     * @return string
+     */
     public static function getGaiaId()
     {
         return self::$currentGaiaId;
     }
 
+    /**
+     * Retrieve signin data from the server or cache.
+     * 
+     * @return array
+     */
     public static function getSigninData()
     {
         if (null != self::$info)
@@ -118,6 +187,11 @@ class AuthManager
         return self::$info;
     }
 
+    /**
+     * Request signin data from the server.
+     * 
+     * @return array
+     */
     public static function requestSigninData()
     {
         // Temporarily switch the request namespace
@@ -157,6 +231,13 @@ class AuthManager
         return $info;
     }
 
+    /**
+     * Generate a new signin data array from the getAccountSwitcherEndpoint
+     * response.
+     * 
+     * @param string $switcher getAccountSwitcherEndpoint response
+     * @return array
+     */
     public static function processSwitcherData($switcher)
     {
         $info = Switcher::parseResponse($switcher);
@@ -170,6 +251,13 @@ class AuthManager
         return $info;
     }
 
+    /**
+     * Modify the switcher endpoint's data to add the UCID obtained from the
+     * menu data.
+     * 
+     * @param array $info Reference to the data to modify.
+     * @param string $menu Response of the account_menu endpoint.
+     */
     public static function processMenuData(&$info, $menu)
     {
         // UCID must be retrieved here to work with GAIA id

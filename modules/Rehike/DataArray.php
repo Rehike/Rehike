@@ -2,6 +2,7 @@
 namespace Rehike;
 
 use ArrayAccess, ArrayIterator, IteratorAggregate;
+use ReturnTypeWillChange; // PHP 8.1+
 
 /**
  * Implements a general data array object that can be
@@ -82,25 +83,25 @@ class DataArray implements ArrayAccess, IteratorAggregate
      * all.
      */
 
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function offsetExists($offset)
     {
         return isset($this->boundArray[$offset]);
     }
 
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function offsetSet($offset, $value)
     {
         trigger_error("RequestMetadata->headers is read only.", E_USER_WARNING);
     }
 
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function offsetUnset($offset)
     {
         $this->offsetSet(null, null); // inherit warning
     }
 
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         return isset($this->boundArray[$offset])
@@ -109,7 +110,7 @@ class DataArray implements ArrayAccess, IteratorAggregate
         ;
     }
 
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function &getIterator()
     {
         return new ArrayIterator($this->boundArray);

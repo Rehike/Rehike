@@ -1,3 +1,7 @@
+{#
+    Date and language are prepended to the body class for non-appbar
+    pages. Since this is a shared template, a hack is used here.
+#}
 {{ not appbarEnabled ? "date-" ~ yt.rehikeVersion.time|date('Ymd') }}
 {{ not appbarEnabled ? "en_US" }}
 visibility-logging-enabled  

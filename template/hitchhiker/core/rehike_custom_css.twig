@@ -1,0 +1,55 @@
+{#
+    Rehike uses custom CSS in some areas to change some small inconsistencies
+    with Hitchhiker's implementation or to style custom implementations.
+#}
+{% if not yt.spf %}
+<style id="rehike-css">
+    .yt-comments-custom-emoji {
+        width: 16px;
+        height: 16px;
+        vertical-align: middle;
+        cursor: text;
+    }
+
+    .yt-comments-custom-emoji.large {
+        width: 24px;
+        height: 24px;
+    }
+
+    .video-list-item .stat .published-time::before {
+        content: "\002022";
+        margin: 0 5px;
+    }
+
+    /* Player overwrites this for some reason and it hides channel upsell video show more link */
+    .yt-uix-expander-ellipsis.yt-ui-ellipsis-10::before {
+        top: 0;
+    }
+
+    .yt-uix-expander-ellipsis.yt-ui-ellipsis-10 {
+        max-height: none;
+    }
+</style>
+{%- if yt.config.appearance.cssFixes -%}
+<style id="hh-css-fix">
+    #watch-description-text {
+        padding-top: 4px;
+    }
+
+    .comment-replies-renderer-view:hover,
+    .comment-replies-renderer-hide:hover {
+        text-decoration: underline;
+    }
+
+    #watch7-sidebar .video-list-item:hover a:visited .title,
+    #watch7-sidebar .video-list-item:hover a:visited .title .yt-deemphasized-text {
+        color: #167ac6;
+    }
+
+    .yt-uix-menu-top-level-button .yt-uix-button { /* for some reason this only applies to non-selected buttons in actual hh css??? */
+        padding: 0;
+        border: 0; /* prevents button from shrinking */
+    }
+</style>
+{%- endif -%}
+{% endif %}

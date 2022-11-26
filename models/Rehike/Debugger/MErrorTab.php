@@ -1,6 +1,8 @@
 <?php
 namespace Rehike\Model\Rehike\Debugger;
 
+use Rehike\Debugger\ErrorWrapper;
+
 /**
  * Implements the error tab.
  * 
@@ -11,6 +13,12 @@ class MErrorTab extends MTabContent
 {
     public function __construct() {}
 
+    /**
+     * Push a list of errors from the debugger's main API to the error tab.
+     * 
+     * @param ErrorWrapper[] $errors
+     * @return void
+     */
     public function pushErrors($errors)
     {
         $errorCount = count($errors);

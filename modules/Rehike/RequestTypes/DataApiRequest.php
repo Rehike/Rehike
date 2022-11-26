@@ -4,7 +4,8 @@ namespace Rehike\RequestTypes;
 use Rehike\Request;
 
 /**
- * Implements the behaviour needed to request the InnerTube API.
+ * Implements the behaviour needed to request the public YouTube Data API v3,
+ * without any limitations.
  * 
  * @author Aubrey Pankow <aubyomori@gmail.com>
  * @author The Rehike Maintainers

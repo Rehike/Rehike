@@ -4,6 +4,7 @@ namespace Rehike\Debugger;
 use \Rehike\Model\Rehike\Debugger\{
     MOpenButton,
     MDialog,
+    MTab,
     MErrorTab,
     MYtWalker,
     MLoadingTab
@@ -17,20 +18,42 @@ use \Rehike\Model\Rehike\Debugger\{
  */
 class Context
 {
-    /** @var MDialog */
+    /** 
+     * Properties used to build the dialog view.
+     * 
+     * @var MDialog 
+     */
     public $dialog = null;
 
-    /** @var MOpenButton */
+    /** 
+     * Properties used to build the open button's view.
+     * 
+     * @var MOpenButton 
+     */
     public $openButton = null;
 
-    /** @var bool */
+    /** 
+     * Reports if the debugger is in condensed mode (disabled generally).
+     * 
+     * @var bool 
+     */
     public $condensed = false;
 
+    /**
+     * Get all tabs in the dialog.
+     * 
+     * @return MTab[]
+     */
     public function getTabs()
     {
         return $this->dialog->tabs;
     }
 
+    /**
+     * Get all tab IDs available in the debugger.
+     * 
+     * @return string[]
+     */
     public function getTabIds()
     {
         $out = [];
@@ -43,6 +66,11 @@ class Context
         return $out;
     }
 
+    /**
+     * Get the tab IDs to be affected by the history manager in the JS land.
+     * 
+     * @return string[]
+     */
     public function getJsHistoryTabIds()
     {
         $out = [];

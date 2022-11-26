@@ -3,7 +3,16 @@ namespace Rehike\Util;
 
 use \Rehike\Request;
 
+/**
+ * General utilties for channels.
+ * 
+ * @author Aubrey Pankow <aubyomori@gmail.com>
+ * @author The Rehike Maintainers
+ */
 class ChannelUtils {
+    /**
+     * Get a channel's UCID from an internal request URL.
+     */
     public static function getUcid($request): string {
         if (in_array($request -> path[0], ["channel", "user", "c"])) {
             switch($request -> path[0]) {

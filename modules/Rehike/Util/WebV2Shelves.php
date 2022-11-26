@@ -9,6 +9,13 @@ use \Com\Google\Protos\Youtube\Api\Innertube\BrowseContinuationWrapper;
 use \Com\Google\Protos\Youtube\Api\Innertube\ContinuationTypeWrapper;
 use \Com\Google\Protos\Youtube\Api\Innertube\ContinuationWrapper;
 
+/**
+ * Used to request shelves homepage using the WEB v2 InnerTube client.
+ * 
+ * @author Aubrey Pankow <aubyomori@gmail.com>
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
+ * @author The Rehike Maintainers
+ */
 class WebV2Shelves {
     /**
      * Convert a shelves client continuation to a WEB-compatible one.

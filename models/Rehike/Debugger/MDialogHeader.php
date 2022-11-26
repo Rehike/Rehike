@@ -5,16 +5,33 @@ use \Rehike\i18n;
 use \Rehike\Model\Common\MButton;
 
 /**
- * Implements the dialog close button.
+ * Implements the dialog header.
  * 
  * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Developers
  */
 class MDialogHeader
 {
+    /**
+     * Title of the header.
+     * 
+     * @var string
+     */
     public $title;
+
+    /**
+     * A button to close the dialog.
+     * 
+     * @var MDialogHeaderCloseButton
+     */
     public $closeButton;
 
+    /**
+     * Create a new dialog header.
+     * 
+     * @param bool $condensed Is the debugger condensed?
+     * @parma bool $closeButton Whether or not to include the close button.
+     */
     public function __construct($condensed, $closeButton = true)
     {
         $i18n = &i18n::getNamespace("rebug");
@@ -40,6 +57,13 @@ class MDialogHeader
     }
 }
 
+/**
+ * Implements the close button used in the header. This is used in the JS
+ * world to close the dialog.
+ * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
+ * @author The Rehike Maintainers
+ */
 class MDialogHeaderCloseButton extends MButton
 {
     public $style = "STYLE_OPACITY";

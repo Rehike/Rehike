@@ -1,10 +1,22 @@
 <?php
 namespace Rehike\Signin;
 
+/**
+ * A really nasty switcher parser, wrote by Taniko circa March 2022.
+ * 
+ * Needless to say, it's one of the messier Rehike modules.
+ * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
+ * @author The Rehike Maintainers
+ */
 class Switcher
 {
-    // Parse getAccountSwitcherEndpoint response
-
+    /**
+     * Parse a getAccountSwitcherEndpoint response.
+     * 
+     * @param string $response Raw response (not JSON decoded).
+     * @return array Associative array of wrappers.
+     */
     public static function parseResponse($response)
     {
         $response = json_decode(substr($response, 4, strlen($response)));
@@ -18,6 +30,12 @@ class Switcher
         return $info;
     }
 
+    /**
+     * Get Google account information from the header.
+     * 
+     * @param object $data Decoded from the response.
+     * @return array Associative array of parsed data.
+     */
     public static function getGoogAccInfo($data)
     {
         $header = $data->data->actions[0]->getMultiPageMenuAction->
@@ -31,6 +49,12 @@ class Switcher
             ];
     }
 
+    /**
+     * Get the available channels on a Google account.
+     * 
+     * @param object $data Decoded from the response.
+     * @return array Iterative array of channel information.
+     */
     public static function getChannels($data)
     {
         $items = $data->data->actions[0]->getMultiPageMenuAction->
@@ -48,6 +72,12 @@ class Switcher
         return $channels;
     }
 
+    /**
+     * Get information about the active channel.
+     * 
+     * @param object $data Decoded from the response.
+     * @return ?array Channel item data
+     */
     public static function getActiveChannel($data)
     {
         $channels = self::getChannels($data);
@@ -63,6 +93,12 @@ class Switcher
         return null;
     }
 
+    /**
+     * Parse information about an account item.
+     * 
+     * @param object $account From the original response.
+     * @return array Parsed associative array.
+     */
     public static function accountItem($account)
     {
         return

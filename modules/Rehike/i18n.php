@@ -93,10 +93,20 @@ class i18n
         return self::$namespaces[$name];
     }
 
+    /**
+     * Get the internal strings stored.
+     * 
+     * @return string[]
+     */
     public function getStrings() {
         return $this -> strings;
     }
 
+    /**
+     * Determine if a namespace exists.
+     * 
+     * @return bool
+     */
     public static function namespaceExists($name)
     {
         return isset(self::$namespaces[$name]);

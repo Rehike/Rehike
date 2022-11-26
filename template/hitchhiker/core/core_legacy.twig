@@ -1,8 +1,18 @@
+{#
+   This implements the legacy base template, which YouTube continued to use
+   for some older pages after implementing appbar.
+#}
 {% import 'core/macros.twig' as core %}
 {% import "common/alert.twig" as alert %}
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
    <head>
+      {#
+         The Rehike debugger uses XHook as a component for debugging network
+         requests. Since the XHook script needs to be loaded before any other
+         scripts in order to properly hijack XHR, this is injected if the
+         debugger is enabled.
+      #}
       {% if rehikeDebugger and not rehikeDebugger.condensed %}
          <script>{% include "/rehike/debugger/js/xhook.js" %}</script>
       {% endif %}
@@ -27,6 +37,7 @@
       {%- if yt.config.appearance.modernLogo -%}
         {% include 'experiment/ringo/ringo.twig' %}
       {% endif %}
+      {% include "core/rehike_custom_css.twig %}
    </head>
    <body id="" class="{%- block body_class -%}  
    {% include "core/body_class.twig" %}
@@ -69,12 +80,18 @@
       <div id="footer-container" class="yt-base-gutter">
          {% include 'common/pageframe/footer.twig' %}
       </div>
+      {#
+         YouTube's legacy foot contains scripts.
+      #}
       <script>var yterr = yterr || true;</script>
       {{ core.js('www-core/www-core') }}
       {% include 'core/spf_module.twig' %}
       <script>if (window.ytcsi) {window.ytcsi.tick("je", null, '');}</script>  
       {%- block foot_scripts -%}{% endblock %}
-      {% include 'core/ytGlobalJsConfig.twig' %}
+      {% include 'core/yt_global_js_config.twig' %}
+      {#
+         Inject Rebug (if it is enabled)
+      #}
       {%- if rehikeDebugger -%}
          {% include "rehike/debugger/main.twig" %}
       {%- endif -%}
