@@ -74,7 +74,8 @@ class RehikeConfigManager extends ConfigManager
         "oldBestOfYouTubeIcons" => "appearance.oldBestOfYouTubeIcons",
         "guideOnWatchPage" => "REMOVE",
         "useWebV2HomeEndpoint" => "REMOVE",
-        "useGridHomeStyle" => "REMOVE"
+        "useGridHomeStyle" => "REMOVE",
+        "accountPickerYtStudio" => "REMOVE"
     ];
     
     /**

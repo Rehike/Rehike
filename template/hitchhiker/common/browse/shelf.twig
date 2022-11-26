@@ -4,6 +4,9 @@
             {{ _self.title(data) }}
             {%- if data.content.horizontalListRenderer -%}
                 {{ _self.compact(data.content.horizontalListRenderer) }}
+            {# Why the fuck is this different than horizontaListRenderer??? #}
+            {%- elseif data.content.horizontalMovieListRenderer -%}
+                {{ _self.compact(data.content.horizontalMovieListRenderer) }}
             {%- elseif data.content.expandedShelfContentsRenderer -%}
                 {{ _self.expanded(data.content.expandedShelfContentsRenderer) }}
             {% elseif data.content.gridRenderer %}

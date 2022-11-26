@@ -19,6 +19,8 @@
             <div class="yt-lockup-dismissible {{ style == "tile" ? "yt-uix-tile" }}">
                 {%- if data.type == "channel" -%}
                 {{ thumb(data, thumbY, thumbY) }}
+                {%- elseif data.type == "movie" -%}
+                {{ thumb(data, thumbX, (thumbX * 1.43)|round) }}
                 {%- else -%}
                 {{ thumb(data, thumbX, thumbY) }}
                 {%- endif -%}
@@ -82,7 +84,7 @@
                     {%- if info.badges or info.upcomingEventData or (data.type == "channel" and style == "tile") -%}
                     <div class="yt-lockup-badges">
                         {{ info.badges or info.upcomingEventData ? badge_list(info.badges, info.upcomingEventData) }}
-                        {{ data.type == "channel" ? subscription_button(info.subscribeButton) }}
+                        {{ data.type == "channel" and style == "tile" ? subscription_button(info.subscribeButton) }}
                     </div>
                     {%- endif -%}
                     {%- if info.buttons -%}

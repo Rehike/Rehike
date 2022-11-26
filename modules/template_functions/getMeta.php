@@ -1,11 +1,22 @@
 <?php
 
 \Rehike\TemplateFunctions::register("getMeta", function ($renderer) {
+    $VALID_METAS = [
+        "viewCountText",
+        "publishedTimeText",
+        "videoCountText"
+    ];
     $metas = [];
 
-    if (isset($renderer->viewCountText)) $metas[] = $renderer->viewCountText;
-    if (isset($renderer->publishedTimeText)) $metas[] = $renderer->publishedTimeText;
-    if (isset($renderer->videoCountText)) $metas[] = $renderer->videoCountText;
+    foreach($VALID_METAS as $meta) {
+        if (isset($renderer -> {$meta})
+        &&  (
+            isset($renderer -> {$meta} -> simpleText) ||
+            isset($renderer -> {$meta} -> runs)
+        )) {
+            $metas[] = $renderer -> {$meta};
+        }
+    }
 
     return $metas;
 });

@@ -5,6 +5,7 @@ use Rehike\i18n;
 use Rehike\TemplateFunctions as TF;
 use Rehike\Util\ExtractUtils;
 use Rehike\Model\Channels\Channels4\BrandedPageV2\MSubnav;
+use Rehike\Signin\API as SignIn;
 
 use Rehike\Model\Common\Subscription\MSubscriptionActions;
 
@@ -118,6 +119,8 @@ class InnertubeBrowseConverter
         else if (isset($data->subscriberCountText))
             $subscriberCount = ExtractUtils::isolateSubCnt(TF::getText($data->subscriberCountText));
 
+        $subscriberCount = $subscriberCount ?? "";
+
         $subscribeButtonBranded = true;
 
         /**
@@ -163,16 +166,17 @@ class InnertubeBrowseConverter
                 $subscribeButtonBranded
             );
         }
-        elseif (isset($data->subscribeButton->buttonRenderer))
+        elseif (SignIn::isSignedIn())
         {
-            $data->subscribeButton = MSubscriptionActions::signedOutStub(
+            $data->subscribeButton = MSubscriptionActions::buildMock(
                 $subscriberCount,
                 $subscribeButtonBranded
             );
+            
         }
         else
         {
-            $data->subscribeButton = MSubscriptionActions::buildMock(
+            $data->subscribeButton = MSubscriptionActions::signedOutStub(
                 $subscriberCount,
                 $subscribeButtonBranded
             );

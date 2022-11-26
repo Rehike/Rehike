@@ -59,6 +59,7 @@ class MVideoPrimaryInfoRenderer
             // Also set title of the whole page from this property
             $dataHost::$title = TemplateFunctions::getText($this->title);
 
+            if (isset($info->viewCount->videoViewCountRenderer))
             $this->viewCount = (true === ConfigManager::getConfigProp("appearance.noViewsText"))
             ? ExtractUtils::isolateViewCnt(TemplateFunctions::getText($info->viewCount->videoViewCountRenderer->viewCount))
             : TemplateFunctions::getText($info->viewCount->videoViewCountRenderer->viewCount) ?? null;
