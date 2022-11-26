@@ -52,7 +52,7 @@
             }
         },
         "advanced": {
-            "enableRehikeDebugger": {
+            "enableDebugger": {
                 "title": "Enable the debugger",
                 "subtitle": "The debugger lets you browse the contents of the global $yt variable. Only enable if you're a developer or reporting a bug and need more information."
             }
