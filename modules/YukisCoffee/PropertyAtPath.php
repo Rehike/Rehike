@@ -67,6 +67,10 @@ class PropertyAtPath {
      */
     public static function get(object|array &$base, string $path): mixed {
         $func = self::func($base, $path);
+        if (!@eval("return isset({$func});")) {
+            throw new PropertyAtPathException("Unknown property {$func}");
+            return null;
+        }
         return @eval("return {$func};");
     }
 
@@ -92,6 +96,10 @@ class PropertyAtPath {
      */
     public static function unset(object|array &$base, string $path): void {
         $func = self::func($base, $path);
+        if (!@eval("return isset({$func});")) {
+            throw new PropertyAtPathException("Unknown property {$func}");
+            return;
+        }
         @eval("unset({$func});");
     }
 }

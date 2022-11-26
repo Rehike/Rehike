@@ -136,7 +136,7 @@
 <span class="comment-renderer-author-comment-badge creator">
 {% endif %}
    <a href="{{ comment.authorEndpoint.commandMetadata.webCommandMetadata.url }}" class="comment-author-text       spf-link ">{{ getText(comment.authorText) }}</a>
-{% set verified = comment.authorCommentBadge.authorCommentBadgeRenderer %}
+{% set verified = comment.authorCommentBadge.authorCommentBadgeRenderer.icon.iconType %}
 {% if verified and comment.authorIsChannelOwner %}
    <span class="yt-badge comment-author-verified-badge yt-uix-tooltip" title="{{ yt.msgs.verified }}"><span class="yt-comment-author-verified-icon yt-sprite"></span></span>
 {% elseif verified and not comment.authorIsChannelOwner %}
