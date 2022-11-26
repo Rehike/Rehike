@@ -1,0 +1,61 @@
+{
+    "title": "Ustawienia Rehike",
+    "tabs": {
+        "appearance": "Wygląd",
+        "advanced": "Zaawansowane"
+    },
+    "props": {
+        "appearance": {
+            "modernLogo": {
+                "title": "Użyj loga YouTube z 2017+",
+                "subtitle": "Popsuje niektóre userstyle z 2016 roku i wcześniej."
+            },
+            "uploadButtonType": {
+                "title": "Typ przycisku przesłania",
+                "values": {
+                    "BUTTON": "Przycisk (2013-2016)",
+                    "ICON": "Ikona Material (2016-2018)",
+                    "MENU": "Menu tworzenia (2018+)*"
+                }
+            },
+            "largeSearchResults": {
+                "title": "Większe miniaturki na stronie wyszukiwania",
+                "subtitle": "Popsuje niektóre userstyle z 2016 roku i wcześniej."
+            },
+            "showVersionInFooter": {
+                "title": "Pokaż wersję Rehike w stopce"
+            },
+            "usernamePrepends": {
+                "title": "Pokaż \"autor: \" przed nazwą autora w linkach do filmów"
+            },
+            "noViewsText": {
+                "title": "Usuń tekst \"wyświetleń\" z liczby wyświetleń na stronie oglądania",
+                "subtitle": "Tak było przed 2016 rokiem."
+            },
+            "movingThumbnails": {
+                "title": "Pokaż animowany podgląd po najechaniu na film"
+            },
+            "cssFixes": {
+                "title": "Niespójność/poprawki błędów w CSS",
+                "subtitle": "Popsuje kompatybilność z niektórymi userstyle'ami."
+            },
+            "watchSidebarDates": {
+                "title": "Pokaż względną datę przesłania na stronie oglądania w proponowanych",
+                "subtitle": "Hitchhiker nie pokazywał tego domyślnie."
+            },
+            "teaserReplies": {
+                "title": "Pokaż dwie pierwsze odpowiedzi na każdy komentarz",
+                "subtitle": "Spowoduje to użycie wielu żądań i znacznie spowolni czas wczytywania komentarzy. Używaj według własnego uznania."
+            },
+            "oldBestOfYouTubeIcons": {
+                "title": "Stare czerwone ikony w sekcji \"Najlepsze w YouTube\""
+            }
+        },
+        "advanced": {
+            "enableDebugger": {
+                "title": "Włącz debugger",
+                "subtitle": "Debugger pozwala przeglądać zawartość globalnej zmiennej $yt. Włącz tylko jeśli jesteś deweloperem lub zgłaszasz błąd i potrzebujesz więcej informacji."
+            }
+        }
+    }
+}
