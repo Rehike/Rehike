@@ -284,7 +284,7 @@ class Debugger
      */
     protected static function refreshInternalCondensedStatus()
     {
-        self::$condensed = RehikeConfigManager::getConfigProp("enableRehikeDebugger")
+        self::$condensed = RehikeConfigManager::getConfigProp("advanced.enableRehikeDebugger")
         ? false
         : true
         ;

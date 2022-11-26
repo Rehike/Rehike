@@ -147,7 +147,7 @@ class MMetadataRowContainer
 
     protected function getCategoryField($dataHost)
     {
-        $i18n = i18n::getNamespace("watch/secondayr");
+        $i18n = i18n::getNamespace("watch/secondary");
 
         $title = $i18n -> metadataCategory; // TODO: i18n
 

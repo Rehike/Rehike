@@ -5,9 +5,6 @@ require "modules/Rehike/Constants.php";
 require "vendor/autoload.php";
 require "modules/rehikeAutoloader.php";
 
-// Does not properly autoload (this should be fixed)
-include "modules/YukisCoffee/GetPropertyAtPath.php";
-
 use Rehike\ControllerV2\Core as ControllerV2;
 use Rehike\TemplateManager;
 

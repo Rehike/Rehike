@@ -59,7 +59,9 @@ class MVideoPrimaryInfoRenderer
             // Also set title of the whole page from this property
             $dataHost::$title = TemplateFunctions::getText($this->title);
 
-            $this->viewCount = (true === ConfigManager::getConfigProp("noViewsText")) ? ExtractUtils::isolateViewCnt(TemplateFunctions::getText($info->viewCount->videoViewCountRenderer->viewCount)) : TemplateFunctions::getText($info->viewCount->videoViewCountRenderer->viewCount) ?? null;
+            $this->viewCount = (true === ConfigManager::getConfigProp("appearance.noViewsText"))
+            ? ExtractUtils::isolateViewCnt(TemplateFunctions::getText($info->viewCount->videoViewCountRenderer->viewCount))
+            : TemplateFunctions::getText($info->viewCount->videoViewCountRenderer->viewCount) ?? null;
             $this->badges = $info->badges ?? null;
             $this->superTitle = isset($info->superTitleLink) ? new MSuperTitle($info->superTitleLink) : null;
             $this->likeButtonRenderer = new MLikeButtonRenderer($dataHost, $info->videoActions->menuRenderer, $videoId);

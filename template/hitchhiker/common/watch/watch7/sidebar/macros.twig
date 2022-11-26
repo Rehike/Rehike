@@ -49,7 +49,7 @@
         {% set author = getByline(info) %}
         {% if author != null %}
         <span class="stat attribution">
-            {{ yt.config.byTextOnByline ? "<span>" ~ yt.msgs.usernamePrepend  ~ "</span>"|raw }}
+            {{ yt.config.appearance.usernamePrepends ? "<span>" ~ yt.msgs.usernamePrepend  ~ "</span>"|raw }}
             <span>{{ getText(author) }}</span>
         </span>
         {% endif %}
@@ -67,14 +67,14 @@
             {% set author = getByline(info) %}
             {% if author != null %}
             <span class="stat attribution">
-                {{ yt.config.byTextOnByline ? "<span>by </span>"|raw }}
+                {{ yt.config.appearance.usernamePrepends ? "<span>by </span>"|raw }}
                 <span>{{ getText(author) }}</span>
             </span>
             {% endif %}
             {% if info.viewCountText %}
             <span class="stat">
                 <span class="view-count">{{ getText(info.viewCountText) }}</span>
-                {%- if yt.config.watchSidebarDates -%}
+                {%- if yt.config.appearance.watchSidebarDates -%}
                 <span class="published-time">{{ getText(info.publishedTimeText) }}</span>
                 {%- endif -%}
             </span>
@@ -86,7 +86,7 @@
     </div>
     <div class="thumb-wrapper">
         <a href="{{ getUrl(info) }}" class="thumb-link spf-link">
-            <span class="yt-uix-simple-thumb-wrap yt-uix-simple-thumb-related {{ data.type == "video" and yt.config.movingThumbnails ? "yt-uix-mouseover-img-wrap" }}">
+            <span class="yt-uix-simple-thumb-wrap yt-uix-simple-thumb-related {{ data.type == "video" and yt.config.appearance.movingThumbnails ? "yt-uix-mouseover-img-wrap" }}">
                 {{ img({
                     src: getThumb(data.thumbArray, 94),
                     width: 168,

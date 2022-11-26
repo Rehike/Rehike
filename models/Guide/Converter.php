@@ -177,7 +177,7 @@ class Converter
         $strings = i18n::getNamespace("main/guide");
 
         // Thumbnail prefix and suffix
-        $format = ConfigManager::getConfigProp("oldBestOfYouTubeIcons")
+        $format = ConfigManager::getConfigProp("appearance.oldBestOfYouTubeIcons")
         ? "/rehike/static/best_of_youtube/%s_old.jpg"
         : "/rehike/static/best_of_youtube/%s.jpg";
 

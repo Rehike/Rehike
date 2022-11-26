@@ -58,7 +58,7 @@
                                     or item.channelRenderer
                                 -%}
                                 <li>
-                                    {{ yt.config.largeSearchThumbs
+                                    {{ yt.config.appearance.largeSearchResults
                                     ? lockup.tile(item, 246, 138)
                                     : lockup.tile(item)
                                     }}
@@ -80,7 +80,7 @@
                                                         {%- for video in list.items -%}
                                                                                                             {# sic lmao #}
                                                         <li{{ loop.index > list.collapsedItemCount ? ' class="collapsable"'  }}>
-                                                            {{ yt.config.largeSearchThumbs
+                                                            {{ yt.config.appearance.largeSearchResults
                                                             ? lockup.tile(video, 246, 138)
                                                             : lockup.tile(video)
                                                             }}

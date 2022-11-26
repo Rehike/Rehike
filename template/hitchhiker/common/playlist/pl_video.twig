@@ -30,7 +30,7 @@
         <a href="{{ getUrl(this) }}" class="pl-video-title-link yt-uix-tile-link spf-link">{{ getText(this.title) }}</a>
         <div class="pl-video-owner">
             {% set byline = this.shortBylineText %}
-            {{ yt.config.byTextOnByline ? yt.msgs.usernamePrepend }}
+            {{ yt.config.appearance.usernamePrepends ? yt.msgs.usernamePrepend }}
             <a href="{{ getEndpoint(byline) }}" class="spf-link" data-ytid="{{ byline.navigationEndpoint.browseEndpoint.browseId }}" data-name="playlist">{{ getText(byline) }}</a>
         </div>
         <div class="pl-video-bottom-standalone-badge"></div>

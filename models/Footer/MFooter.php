@@ -60,7 +60,7 @@ class MFooter {
             $i18n -> primaryDevs,
             "/yt/dev/"
         );
-        if (ConfigManager::getConfigProp("versionInFooter"))
+        if (ConfigManager::getConfigProp("appearance.versionInFooter"))
         $this -> primaryLinks[] = new MFooterLink(
             $i18n -> primaryVersion($rehikeVersion -> semanticVersion, $rehikeVersion -> branch),
             "/rehike/version"

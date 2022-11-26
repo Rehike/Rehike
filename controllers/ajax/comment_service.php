@@ -2,7 +2,7 @@
 use \Rehike\Controller\core\AjaxController;
 use \Rehike\Model\Comments\CommentThread;
 use \Rehike\Request;
-use function YukisCoffee\getPropertyAtPath as getProp;
+use YukisCoffee\PropertyAtPath;
 
 return new class extends AjaxController {
     public function onPost(&$yt, $request) {
@@ -89,11 +89,11 @@ return new class extends AjaxController {
         ]);
         $ytdata = json_decode($response);
         try {
-            $data = getProp($ytdata, "onResponseReceivedEndpoints[0].appendContinuationItemsAction");
-        } catch (\YukisCoffee\GetPropertyAtPathException $e) {
+            $data = PropertyAtPath::get($ytdata, "onResponseReceivedEndpoints[0].appendContinuationItemsAction");
+        } catch (\YukisCoffee\PropertyAtPathException $e) {
             try {
-                $data = getProp($ytdata, "onResponseReceivedEndpoints[1].reloadContinuationItemsCommand");
-            } catch(\YukisCoffee\GetPropertyAtPathException $e) {
+                $data = PropertyAtPath::get($ytdata, "onResponseReceivedEndpoints[1].reloadContinuationItemsCommand");
+            } catch(\YukisCoffee\PropertyAtPathException $e) {
                 echo json_encode((object) [
                     "error" => "Failed to get comment continuation/sort"
                 ]);
@@ -119,8 +119,8 @@ return new class extends AjaxController {
         ]);
         $ytdata = json_decode($response);
         try {
-            $data = getProp($ytdata, "onResponseReceivedEndpoints[0].appendContinuationItemsAction");
-        } catch(\YukisCoffee\GetPropertyAtPathException $e) {
+            $data = PropertyAtPath::get($ytdata, "onResponseReceivedEndpoints[0].appendContinuationItemsAction");
+        } catch(\YukisCoffee\PropertyAtPathException $e) {
             echo json_encode((object) [
                 "error" => "Failed to get comment replies"
             ]);

@@ -1,7 +1,7 @@
 <?php
 namespace Rehike\Model\Comments;
 
-use function YukisCoffee\getPropertyAtPath as getProp;
+use YukisCoffee\PropertyAtPath;
 use \Rehike\Model\Comments\MCommentVoteButton as VoteButton;
 use \Rehike\Model\Comments\MCommentReplyButton as ReplyButton;
 use \Rehike\i18n;
@@ -142,18 +142,18 @@ class CommentThread
             $run -> text = str_replace("\u{00A0}", "", $run -> text);
         }
 
-        $context->likeButton = VoteButton::fromData(getProp($context, self::LIKE_BUTTON_PATH));
-        $context->dislikeButton = VoteButton::fromData(getProp($context, self::DISLIKE_BUTTON_PATH));
+        $context->likeButton = VoteButton::fromData(PropertyAtPath::get($context, self::LIKE_BUTTON_PATH));
+        $context->dislikeButton = VoteButton::fromData(PropertyAtPath::get($context, self::DISLIKE_BUTTON_PATH));
         
         try {
-            $context->replyButton = ReplyButton::fromData(getProp($context, self::REPLY_BUTTON_PATH), $context -> commentId);
-        } catch(\YukisCoffee\GetPropertyAtPathException $e) {
+            $context->replyButton = ReplyButton::fromData(PropertyAtPath::get($context, self::REPLY_BUTTON_PATH), $context -> commentId);
+        } catch(\YukisCoffee\PropertyAtPathException $e) {
             $context->replyButton = null;
         }
 
         try {
-            $context->creatorHeart = getProp($context, self::HEART_BUTTON_PATH);
-        } catch (\YukisCoffee\GetPropertyAtPathException $e) {
+            $context->creatorHeart = PropertyAtPath::get($context, self::HEART_BUTTON_PATH);
+        } catch (\YukisCoffee\PropertyAtPathException $e) {
             $context->creatorHeart = null;
         } 
         
@@ -165,7 +165,7 @@ class CommentThread
     {
         if (isset($context->viewReplies))
         {
-            $teaser = ConfigManager::getConfigProp("teaserReplies");
+            $teaser = ConfigManager::getConfigProp("appearance.teaserReplies");
 
             if (i18n::namespaceExists("comments")) {
                 $i18n = i18n::getNamespace("comments");
@@ -270,7 +270,7 @@ class CommentThread
          }
         */
 
-        $likeAriaLabel = getProp($context, 
+        $likeAriaLabel = PropertyAtPath::get($context, 
             self::LIKE_BUTTON_PATH .
             ".accessibilityData." .
             self::COMMON_A11Y_LABEL

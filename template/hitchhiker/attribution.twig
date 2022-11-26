@@ -74,7 +74,7 @@
             <p>
                 <a href="/watch?v={{ video.videoId }}" class="video-title">{{ getText(video.title) }}</a>
                 <span class="video-username">
-                    {%- if yt.config.byTextOnByline -%}
+                    {%- if yt.config.appearance.usernamePrepends -%}
                     <span class="username-prepend">{{ yt.msgs.usernamePrepend }}</span>
                     {%- endif -%}
                     <a href="{{ getUrl(video.author) }}" class="yt-user-name" aria-label="{{ video.authorA11yLabel }}">{{ getText(video.author) }}</a>

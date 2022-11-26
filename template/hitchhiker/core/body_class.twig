@@ -2,10 +2,10 @@
 {{ not appbarEnabled ? "en_US" }}
 visibility-logging-enabled  
 ltr    
-{{ yt.config.useRingoBranding ? 'exp-invert-logo' }}
-{{ yt.config.movingThumbnails ? "exp-mouseover-img" }}
+{{ yt.config.appearance.modernLogo ? 'exp-invert-logo' }}
+{{ yt.config.appearance.movingThumbnails ? "exp-mouseover-img" }}
 exp-responsive 
-{{ yt.config.largeSearchThumbs ? "exp-search-big-thumbs" }} 
+{{ yt.config.appearance.largeSearchResults ? "exp-search-big-thumbs" }} 
 site-center-aligned 
 site-as-giant-card 
 {{ (appbarEnabled and defaultGuideVisibility) ? 'guide-pinning-enabled' }}   

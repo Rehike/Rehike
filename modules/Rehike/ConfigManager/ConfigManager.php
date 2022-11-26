@@ -1,6 +1,8 @@
 <?php
 namespace Rehike\ConfigManager;
 
+use YukisCoffee\PropertyAtPath;
+
 /**
  * An abstract ConfigManager
  */
@@ -8,6 +10,9 @@ class ConfigManager
 {
     /** @var array (because PHP limitations) */
     public static $defaultConfig = [];
+
+    /** @var array (because PHP limitation) */
+    public static $types = [];
 
     /** @var string */
     protected static $file = 'config.json';
@@ -92,19 +97,41 @@ class ConfigManager
      * This handles checking if an option is set in the
      * config. If it isn't, this returns null.
      * 
-     * @param string $name of the configuration property
+     * @param string $path  Period-delimited path of the config
      * @return mixed
      */
-    public static function getConfigProp($name)
+    public static function getConfigProp($path)
     {
         $cfg = static::getConfig();
 
-        if (isset($cfg->{$name}))
-        {
-            return $cfg->{$name};
+        try {
+            $value = PropertyAtPath::get($cfg, $path);
+        } catch(\YukisCoffee\PropertyAtPathException $e) {
+            return null;
         }
 
-        return null;
+        return $value;
+    }
+
+    /**
+     * Get a configuration option's type
+     * 
+     * This handles checking if an option is set in the
+     * config. If it isn't, this returns null.
+     * 
+     * @param string $path  Period-delimited path of the config
+     * @return string
+     */
+    public static function getConfigType($path) {
+        $types = json_decode(json_encode(static::$types));
+
+        try {
+            $value = PropertyAtPath::get($types, $path);
+        } catch(\YukisCoffee\PropertyAtPathException $e) {
+            return null;
+        }
+
+        return $value;
     }
 
     /**

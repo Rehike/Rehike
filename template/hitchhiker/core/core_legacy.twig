@@ -24,7 +24,7 @@
       {{ core.css('www-guide') }}
       <title>{% block title %}YouTube{% endblock %}</title>
       {% include 'core/meta.twig' %}
-      {%- if yt.config.useRingoBranding -%}
+      {%- if yt.config.appearance.modernLogo -%}
         {% include 'experiment/ringo/ringo.twig' %}
       {% endif %}
    </head>

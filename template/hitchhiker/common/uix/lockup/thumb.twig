@@ -4,7 +4,7 @@
 {% from "core/html/img.twig" import img %}
 <div class="yt-lockup-thumbnail {{ data.type == "playlist" or data.type == "radio" ? "yt-pl-thumb" }} {{ getWLOverlay(info) != null ? "contains-addto" }}">
     <a href="{{ getUrl(info) }}" class=" spf-link {{ data.type == "playlist" or data.type == "radio" ? "yt-pl-thumb-link" }}" aria-hidden="true">
-        <div class="yt-thumb video-thumb {{data.type == "video" and yt.config.movingThumbnails ? "yt-uix-mouseover-img-wrap" }}">
+        <div class="yt-thumb video-thumb {{data.type == "video" and yt.config.appearance.movingThumbnails ? "yt-uix-mouseover-img-wrap" }}">
             <span class="yt-thumb-simple">
                 {{ img({
                     src: getThumb(data.thumbArray, y),

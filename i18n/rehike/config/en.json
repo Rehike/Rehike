@@ -1,0 +1,61 @@
+{
+    "title": "Rehike settings",
+    "tabs": {
+        "appearance": "Appearance",
+        "advanced": "Advanced"
+    },
+    "props": {
+        "appearance": {
+            "modernLogo": {
+                "title": "Use the 2017+ YouTube logo",
+                "subtitle": "Will break some userstyles from 2016 and before."
+            },
+            "uploadButtonType": {
+                "title": "Upload button type",
+                "values": {
+                    "BUTTON": "Button (2013-2016)",
+                    "ICON": "Material icon (2016-2018)",
+                    "MENU": "Creation menu (2018+)*"
+                }
+            },
+            "largeSearchResults": {
+                "title": "Larger thumbnails on search page",
+                "subtitle": "Will break some userstyles from 2016 and before."
+            },
+            "showVersionInFooter": {
+                "title": "Show Rehike version in the footer"
+            },
+            "usernamePrepends": {
+                "title": "Show \"by\" before the author's name on video links"
+            },
+            "noViewsText": {
+                "title": "Remove \"views\" text from view count on watch page",
+                "subtitle": "This is how it was prior to 2016."
+            },
+            "movingThumbnails": {
+                "title": "Show an animated preview when hovering over a video"
+            },
+            "cssFixes": {
+                "title": "Inconsistency/bug fixes in CSS",
+                "subtitle": "Will break compatability with some userstyles."
+            },
+            "watchSidebarDates": {
+                "title": "Show relative upload date on watch page recommendations",
+                "subtitle": "Hitchhiker didn't show these by default."
+            },
+            "teaserReplies": {
+                "title": "Show the first two replies of each comment",
+                "subtitle": "This will use many requests and greatly slow the time comments take to load. Use at your own discretion."
+            },
+            "oldBestOfYouTubeIcons": {
+                "title": "Old red icons in \"Best of YouTube\" guide section"
+            }
+        },
+        "advanced": {
+            "enableRehikeDebugger": {
+                "title": "Enable the debugger",
+                "subtitle": "The debugger lets you browse the contents of the global $yt variable. Only enable if you're a developer or reporting a bug and need more information."
+            }
+        }
+    }
+}

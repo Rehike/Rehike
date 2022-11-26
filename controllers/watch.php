@@ -126,7 +126,7 @@ return new class extends NirvanaController {
          * Determine whether or not to use the Return YouTube Dislike
          * API to return dislikes. Retrieved from application config.
          */
-        if (true === ConfigManager::getConfigProp("useReturnYouTubeDislike"))
+        if (true === ConfigManager::getConfigProp("appearance.useRyd"))
         {
             $ch = curl_init("https://returnyoutubedislikeapi.com/votes?videoId=" . $yt->videoId);
             curl_setopt_array($ch, [

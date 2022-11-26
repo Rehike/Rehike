@@ -39,7 +39,7 @@
                     <div class="yt-lockup-byline">
                         {% set bylineUrl = getUrl(byline.runs[0]) %}
                         {% if bylineUrl %}
-                            {{ yt.config.byTextOnByline ? yt.msgs.usernamePrepend }}
+                            {{ yt.config.appearance.usernamePrepends ? yt.msgs.usernamePrepend }}
                             <a href="{{ getUrl(byline.runs[0]) }}" class="spf-link">{{ getText(byline) }}</a>
                             {% if info.ownerBadges %}
                                 <span title="{{ yt.msgs.verified }}" class="yt-uix-tooltip yt-channel-title-icon-verified yt-sprite"></span>
