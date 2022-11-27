@@ -5,24 +5,9 @@
         <span class="icon master-sprite yt-sprite"></span>
     </div>
     <div class="yt-alert-content">
-        {%- if data.content -%}
+        {%- if data.text -%}
             <div class="yt-alert-message">
-            {%- for run in data.content -%}
-                {%- if run.jumpToNl -%}
-                </div>
-                {%- endif -%}
-                {%- if run.href -%}
-                {%- if run.jumpToNl -%}
-                <div class="yt-alert-message">
-                {%- endif -%}
-                <a href="{{ run.href }}">{{ run.text }}</a>
-                {%- else -%}
-                {%- if run.jumpToNl -%}
-                <div class="yt-alert-message">
-                {%- endif -%}
-                {{ run.text }}
-                {%- endif -%}
-            {%- endfor -%}
+                {{ data.text }}
             </div>
         {%- endif -%}
     </div>

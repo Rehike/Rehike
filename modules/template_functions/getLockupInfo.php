@@ -9,9 +9,9 @@
     $response -> style = (strpos($rendName, "grid") > -1) ? "grid" : "tile";
     $response -> type = strtolower(str_replace("compact", "", str_replace("grid", "", str_replace("Renderer", "", $rendName))));
 
-    if ($a = $response -> info -> thumbnails[0]) {
+    if ($a = @$response -> info -> thumbnails[0]) {
         $response -> thumbArray = $a;
-    } else if ($a = $response -> info -> thumbnailRenderer -> showCustomThumbnailRenderer -> thumbnail) {
+    } else if ($a = @$response -> info -> thumbnailRenderer -> showCustomThumbnailRenderer -> thumbnail) {
         $response -> thumbArray = $a;
     } else {
         $response -> thumbArray = $response -> info -> thumbnail ?? null;

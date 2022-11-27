@@ -16,13 +16,9 @@ class PlaylistModel {
         if (!isset($contentContainer -> sectionListRenderer)) {
             return (object) [
                 "alerts" => [
-                    new MAlert((object) [
+                    new MAlert([
                         "type" => MAlert::TypeError,
-                        "content" => [
-                            (object) [
-                                "text" => $i18n -> nonexistent
-                            ]
-                        ]
+                        "text" => $i18n -> nonexistent
                     ])
                 ]
             ];
@@ -38,14 +34,10 @@ class PlaylistModel {
         if (isset($dataHost -> alerts)) for ($i = 0; $i < count($dataHost -> alerts); $i++) {
             $alert = $dataHost -> alerts[$i] -> alertWithButtonRenderer;
 
-            $response -> alerts[] = new MAlert((object) [
+            $response -> alerts[] = new MAlert([
                 "type" => MAlert::parseInnerTubeType($alert -> type),
                 "hasCloseButton" => (isset($alert -> dismissButton)),
-                "content" => [
-                    (object) [
-                        "text" => TemplateFunctions::getText($alert -> text)
-                    ]
-                ]
+                "text" => TemplateFunctions::getText($alert -> text)
             ]);
         } 
 

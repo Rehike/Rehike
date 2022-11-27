@@ -114,7 +114,7 @@ class i18n
      * 
      * @param string $languageName
      * @param string $filename
-     * @return void
+     * @return i18n
      */
     public function registerFromFile($languageName, $filename)
     {
@@ -159,6 +159,8 @@ class i18n
                 "Unsupported file type $fileType in file $filename."
             );
         }
+
+        return $this;
     }
 
     /**
@@ -168,7 +170,7 @@ class i18n
      * general functionality from it.
      * 
      * @param string $folderName
-     * @return void
+     * @return i18n
      */
     public function registerFromFolder($folderName)
     {
@@ -182,6 +184,8 @@ class i18n
             // Register from a file this path.
             self::registerFromFile($languageName, $file);
         }
+        
+        return $this;
     }
 
     /**
@@ -189,11 +193,13 @@ class i18n
      * 
      * @param string $name
      * @param string[] $array of language strings
-     * @return void
+     * @return i18n
      */
     public function registerFromArray($name, $array)
     {
         $this->strings += [$name => &$array];
+
+        return $this;
     }
 
     /**

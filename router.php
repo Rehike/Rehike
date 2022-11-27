@@ -69,6 +69,8 @@ Router::get([
     "/share_ajax" => "ajax/share",
     "/attribution" => "attribution",
     "/profile" => "profile",
+    "/rehike/config" => "rehike/config",
+    "/rehike/config/**" => "rehike/config",
     "default" => "channel"
 ]);
 
@@ -84,5 +86,6 @@ Router::post([
     "/addto_ajax" => "ajax/addto",
     "/live_events_reminders_ajax" => "ajax/live_events_reminders",
     "/delegate_account_ajax" => "ajax/delegate_account",
+    "/rehike/update_config" => "rehike/update_config",
     "default" => "channel"
 ]);

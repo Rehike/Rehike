@@ -1,0 +1,96 @@
+{% extends "core.twig" %}
+
+{% set appbarEnabled = true %}
+{% set defaultGuideVisibility = false %}
+{% set defaultAppbarVisibility = false %}
+{% set enableSnapScaling = true %}
+
+{% block head_css %}
+{% import 'core/macros.twig' as core %}
+{{ core.css("www-account-settings") }}
+{{ core.css("www-creatorpage") }}
+<style>
+{% include "rehike/config/css.twig" %}
+</style>
+{% endblock %}
+
+{% block content %}
+{% embed "common/creator/creator_page.twig" %}
+{% from "common/creator/creator_sidebar.twig" import render as creator_sidebar %}
+
+{% block creator_page_class %}account-page{% endblock %}
+
+{% block creator_page_sidebar %}
+{{ creator_sidebar(yt.page.sidebar.creatorSidebarRenderer) }}
+{% endblock %}
+
+{% block creator_page_content_class %}account-settings-container{% endblock %}
+
+{% macro checkbox_renderer(this) %}
+    <label>
+        <span class="rehike-config-option rehike-config-option-bool yt-uix-form-input-checkbox-container {{ this.checked ? "checked" }}" data-cfg-name="{{ this.name }}" data-original-value="{{ this.checked ? 'true' : 'false' }}">
+            {# Weird display bug occurs here #}
+            <input type="checkbox" class="yt-uix-form-input-checkbox setting-checkbox"{{ this.checked ? ' checked="checked"' }}>
+            <span class="yt-uix-form-input-checkbox-element"></span>
+        </span>
+        {{ this.title }}
+        {% if this.subtitle %}
+        <p class="setting-reminder">
+            {{ this.subtitle }}
+        </p>
+        {% endif %}
+    </label>
+{% endmacro %}
+
+{% macro select_renderer(this) %}
+    {{ this.label }}
+    <span class="rehike-config-option rehike-config-option-enum yt-uix-form-input-select" data-cfg-name="{{ this.name }}" data-original-value="{{ this.selectedValue }}">
+        <span class="yt-uix-form-input-select-content">
+            <span class="yt-uix-form-input-select-arrow yt-sprite"></span>
+            <span class="yt-uix-form-input-select-value"></span>
+        </span>
+        <select class="yt-uix-form-input-select-element setting-dropdown-list" aria-label="{{ this.label }}">
+            {% for value in this.values %}
+            <option value="{{ value.value }}"{{ value.selected ? ' selected=""' }}>{{ value.text }}</option>
+            {% endfor %}
+        </select>
+    </span>
+{% endmacro %}
+
+{% block creator_page_content %}
+<div class="ytg-fl account-container">
+    <div class="account-header">
+        <h1>{{ yt.page.content.title }}</h1>
+    </div>
+    <hr class="yt-horizontal-rule">
+    <form id="rehike-config-form" onsubmit="event.preventDefault();return!1">
+        <div class="account-content">
+            <div class="account-section rehike-config-options-container">
+                {% for option in yt.page.content.contents %}
+                <div class="account-section-setting">
+                    {% if option.checkboxRenderer %}
+                        {{ _self.checkbox_renderer(option.checkboxRenderer) }}
+                    {% elseif option.selectRenderer %}
+                        {{ _self.select_renderer(option.selectRenderer) }}
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+            <hr class="yt-horizontal-rule">
+            <div class="account-footer">
+                {% from "common/uix/button.twig" import render as button %}
+                {{ button(yt.page.content.saveButton, null, "rehike-config-save-button") }}
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+{% include "rehike/config/js.twig" %}
+</script>
+<script>
+    rehike.config.init();
+</script>
+{% endblock %}
+
+{% endembed %}
+{% endblock %}

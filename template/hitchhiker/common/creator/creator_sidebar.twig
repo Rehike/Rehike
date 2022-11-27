@@ -1,0 +1,27 @@
+{% macro render(data) %}
+<ul id="creator-sidebar" class="ytg1-col {{ data.sections|length == 1 ? "single-section" }}">
+    {% for section in data.sections %}
+        {% if section.creatorSidebarSectionRenderer %}
+            {% set this = section.creatorSidebarSectionRenderer %}
+            <li id="creator-sidebar-section-id-{{ this.targetId }}" class="creator-sidebar-section {{ this.isSelected ? "selected" }}">
+                <h3>{{ getText(this.title) }}</h3>
+                <ul class="creator-sidebar-submenu">
+                    {% for item in this.items %}
+                        {% if item.creatorSidebarItemRenderer %}
+                            {{ _self.item(item.creatorSidebarItemRenderer) }}
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </li>
+        {% endif %}
+    {% endfor %}
+</ul>
+{% endmacro %}
+
+{% macro item(data) %}
+<li class="creator-sidebar-item spf-link {{ data.isSelected ? "selected" }}">
+    <a href="{{ getUrl(data) }}" class="creator-sidebar-item-link">
+        {{ getText(data.title) }}
+    </a>
+</li>
+{% endmacro %}

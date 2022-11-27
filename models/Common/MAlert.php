@@ -1,7 +1,7 @@
 <?php
 namespace Rehike\Model\Common;
 
-use \Rehike\Model\Common\MButton;
+use Rehike\Model\Common\MButton;
 
 class MAlert {
     const TypeInformation = "info";
@@ -19,13 +19,9 @@ class MAlert {
     /**
      * Text displayed inside the alert.
      * 
-     * Each text should be an object.
-     * Use "text" property for text, "href" property for link
-     * Use "jumpToNl" to jump to a new line
-     * 
-     * @var string[]
+     * @var string
      */
-    public $content = [];
+    public $content = "";
 
     /**
      * Whether or not to render a close button
@@ -43,9 +39,9 @@ class MAlert {
     public $buttons = [];
 
     public function __construct($data) {
-        $this -> type = $data -> type;
-        $this -> content = $data -> content ?? null;
-        $this -> hasCloseButton = $data -> hasCloseButton ?? true;
+        $this -> type = $data["type"];
+        $this -> text = $data["text"] ?? null;
+        $this -> hasCloseButton = $data["hasCloseButton"] ?? true;
         $this -> buttons = null;
         // TODO: Buttons
     }
@@ -60,16 +56,16 @@ class MAlert {
     public static function parseInnerTubeType($type) {
         switch ($type) {
             case "INFO":
-                return MAlert::TypeInformation;
+                return self::TypeInformation;
                 break;
             case "WARNING":
-                return MAlert::TypeWarning;
+                return self::TypeWarning;
                 break;
             case "ERROR":
-                return MAlert::TypeError;
+                return self::TypeError;
                 break;
             case "SUCCESS":
-                return MAlert::TypeSuccess;
+                return self::TypeSuccess;
                 break;
         }
     }

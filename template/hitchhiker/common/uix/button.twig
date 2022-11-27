@@ -54,8 +54,10 @@
         {% if data.tooltip %}
             yt-uix-tooltip 
         {% endif %}" 
-        type="button" 
-        {% if data.href %}
+        type="{{ data.type ?? "button" }}" 
+        {% if data.onclick %}
+        onclick="{{ data.onclick }}"
+        {% elseif data.href %}
         onclick=";window.location.href=this.getAttribute('href');return false;"
         {% elseif not hasUrl %}
         onclick=";return false;"

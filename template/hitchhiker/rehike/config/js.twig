@@ -1,0 +1,152 @@
+/**
+ * @fileoverview Implements the base JS for the Rehike config manager.
+ * 
+ * @author Daylin Cooper <dcoop2004@gmail.com>
+ * @version 1.0
+ */
+
+(function(){
+/*{{ "*"~"/" }}
+
+ {######################################################
+ #                     IMPORTS.                        #
+ ######################################################}
+
+var rebug = {};
+
+{% include "rehike/debugger/js/class.js.twig" %}
+{% include "rehike/debugger/js/util.js.twig" %}
+{% include "rehike/debugger/js/event_delegate.js.twig" %}
+{% include "rehike/debugger/js/pubsub.js.twig" %}
+
+//*/
+
+var rehike = window.rehike || {};
+rehike.config = {};
+
+/**
+ *  @private
+ *  @type {Element[]} 
+ */
+rehike.config.props_ = [];
+
+/**
+ * @private
+ * @type {Object}
+ */
+rehike.config.modifications_ = {};
+
+/**
+ * @private
+ * @type {Element}
+ */
+rehike.config.saveButton_ = null;
+
+/**
+ * Initialise the config manager.
+ * 
+ * @return {void}
+ */
+rehike.config.init = function() {
+    var container = document.querySelector('.rehike-config-options-container');
+    var props = container.querySelectorAll('.rehike-config-option');
+
+    for (var i = 0, j = props.length; i < j; i++) {
+        rehike.config.props_.push(props[i]);
+    }
+
+    rebug.eventDelegate.add('change', 'rehike-config-option-bool',
+        rehike.config.onModifyBool_);
+    
+    rebug.eventDelegate.add('change', 'rehike-config-option-enum',
+        rehike.config.onModifyEnum_);
+
+    rebug.eventDelegate.add('click', 'rehike-config-save-button',
+        rehike.config.submit_);
+
+    rehike.config.saveButton_ = document.querySelector(
+        '.rehike-config-save-button');
+};
+
+window.rehike = window.rehike || {};
+window.rehike.config = window.rehike.config || {};
+window.rehike.config.init = rehike.config.init;
+
+/**
+ * Called whenever a boolean is modified.
+ * 
+ * @private
+ * 
+ * @param {Element} prop 
+ * @return {void}
+ */
+rehike.config.onModifyBool_ = function(prop) {
+    var name = prop.getAttribute('data-cfg-name');
+    var isChecked = rebug.class.has(prop, 'checked');
+
+    rehike.config.modifyProp_(name, isChecked);
+};
+
+/**
+ * Called whenever an enum is modified.
+ * 
+ * @private
+ * 
+ * @param {Element} prop 
+ * @return {void}
+ */
+rehike.config.onModifyEnum_ = function(prop) {
+    var name = prop.getAttribute('data-cfg-name');
+    var value = prop.querySelector('select').value;
+
+    rehike.config.modifyProp_(name, value);
+};
+
+/**
+ * Called whenever a property element is modified.
+ * 
+ * @private
+ * 
+ * @param {string} prop
+ * @param {*} value
+ * 
+ * @return {void}
+ */
+rehike.config.modifyProp_ = function(prop, value) {
+    rehike.config.saveButton_.disabled = false;
+    rehike.config.modifications_[prop] = value;
+};
+
+rehike.config.updateCurrentSession_ = function() {
+    rehike.config.saveButton_.disabled = true;
+    
+    var props = rehike.config.props_;
+    var mods = rehike.config.modifications_;
+    var a;
+    for (var i = 0, j = props.length; i < j; i++) {
+        if (a = mods[props[i].getAttribute('data-cfg-name')]) {
+            props[i].setAttribute('data-original-value', a);
+        }
+    }
+
+    rehike.config.modifications_ = {};
+};
+
+/**
+ * Submit the modified configuration.
+ */
+rehike.config.submit_ = function() {
+    var json = JSON.stringify(rehike.config.modifications_);
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', '/rehike/update_config');
+    xhr.onload = function() {
+        if (xhr.status == 200) {
+            rehike.config.updateCurrentSession_();
+        }
+    };
+    xhr.setRequestHeader('Content-Type', 'application/json')
+    xhr.send(json);
+};
+
+})();

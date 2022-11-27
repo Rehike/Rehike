@@ -92,6 +92,15 @@ class ConfigManager
     }
 
     /**
+     * Get the types of the configs
+     * 
+     * @return object
+     */
+    public static function getTypes() {
+        return json_decode(json_encode(static::$types));
+    }
+
+    /**
      * Get a configuration option
      * 
      * This handles checking if an option is set in the
@@ -106,11 +115,29 @@ class ConfigManager
 
         try {
             $value = PropertyAtPath::get($cfg, $path);
-        } catch(\YukisCoffee\PropertyAtPathException $e) {
+        } catch (\YukisCoffee\PropertyAtPathException $e) {
             return null;
         }
 
         return $value;
+    }
+
+    /**
+     * Set a configuration option
+     * 
+     * This handles checking if an option is set in the
+     * config. If it isn't, this returns null.
+     * 
+     * @param string $path   Period-delimited path of the config
+     * @param string $value  New value
+     * @return void
+     */
+    public static function setConfigProp($path, $value) {
+        try {
+            PropertyAtPath::set(static::$config, $path, $value);
+        } catch (\YukisCoffee\PropertyAtPathException $e) {
+            return;
+        }
     }
 
     /**
@@ -123,7 +150,7 @@ class ConfigManager
      * @return string
      */
     public static function getConfigType($path) {
-        $types = json_decode(json_encode(static::$types));
+        $types = static::getTypes();
 
         try {
             $value = PropertyAtPath::get($types, $path);
