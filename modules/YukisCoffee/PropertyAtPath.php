@@ -26,7 +26,7 @@ class PropertyAtPath {
      * @param  string       $path  JS-style period delimited path
      * @return string
      */
-    public static function func(object|array &$base, string $path): string {
+    public static function func(&$base, string $path): string {
         $tree = explode(".", $path);
 
         if (is_object($base)) {
@@ -65,7 +65,7 @@ class PropertyAtPath {
      * @param  string       $path  JS-style period delimited path
      * @return mixed
      */
-    public static function get(object|array &$base, string $path): mixed {
+    public static function get(&$base, string $path) {
         $func = self::func($base, $path);
         if (!@eval("return isset({$func});")) {
             throw new PropertyAtPathException("Unknown property {$func}");
@@ -82,7 +82,7 @@ class PropertyAtPath {
      * @param  mixed        $value Value to set the property to.
      * @return void
      */
-    public static function set(object|array &$base, string $path, $value): void {
+    public static function set(&$base, string $path, $value): void {
         $func = self::func($base, $path);
         @eval("{$func} = \$value;");
     }
@@ -94,7 +94,7 @@ class PropertyAtPath {
      * @param  string       $path  JS-style period delimited path
      * @return void
      */
-    public static function unset(object|array &$base, string $path): void {
+    public static function unset(&$base, string $path): void {
         $func = self::func($base, $path);
         if (!@eval("return isset({$func});")) {
             throw new PropertyAtPathException("Unknown property {$func}");

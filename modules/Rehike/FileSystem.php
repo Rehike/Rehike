@@ -4,6 +4,7 @@ namespace Rehike;
 use \Rehike\Exception\FileSystem\FsFileDoesNotExistException;
 use \Rehike\Exception\FileSystem\FsMkdirException;
 use \Rehike\Exception\FileSystem\FsWriteFileException;
+use \Rehike\Exception\FileSystem\FsFileReadFailureException;
 
 /**
  * Implements common file system helpers.
@@ -119,15 +120,48 @@ class FileSystem
     //
     // Alias operations
     //
-    public static function getFileContents($filename, $useIncludePath = false, $context = null, $offset = 0, $length = null)
+
+    public static function getFileContents($filename, $useIncludePath = true, $context = null, $offset = null, $length = null)
     {
-        $status = @\file_get_contents($filename, $useIncludePath, $context, $offset, $length);
+        /*
+         * PATCH (kirasicecreamm): The file_get_contents API vaguely differs between
+         * PHP versions.
+         * 
+         * This has been a source of odd crashing on what we could only just
+         * trace to PHP 7.x, which we intend to continue supporting for the near
+         * future.
+         */
+        $fgcArgs = [
+            $filename,
+            $useIncludePath,
+            $context
+        ];
+
+        if (\PHP_VERSION_ID < 80000)
+        {
+            $offset = 0;
+        }
+
+        $fgcArgs[] = $offset;
+        if (null != $length) $fgcArgs[] = $length;
+
+        $status = @\file_get_contents(...$fgcArgs);
 
         if (false == $status)
         {
-            throw new FsFileDoesNotExistException(
-                "Attempted to read nonexistent file \"$filename\""
-            );
+            if (\file_exists($filename))
+            {
+                throw new FsFileReadFailureException(
+                    "Failed to read file \"$filename\". Double check if PHP has " .
+                    "permission to access the file and try again."
+                );
+            }
+            else
+            {
+                throw new FsFileDoesNotExistException(
+                    "Attempted to read nonexistent file \"$filename\""
+                );
+            }
         }
         else
         {
