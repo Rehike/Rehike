@@ -83,7 +83,7 @@ class MFooter {
         );
         $this -> secondaryLinks[] = new MFooterLink(
             $i18n -> secondaryTestTube,
-            "/new"
+            "/rehike/config"
         );
         $this -> copyright = $i18n -> secondaryCopyright(date("Y"));
         $this -> buttons[] = new MHistoryButton();
