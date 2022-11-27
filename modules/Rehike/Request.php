@@ -134,9 +134,21 @@ class Request
     {
         $gaiaId = AuthManager::getGaiaId();
             
+        /*
+         * No GAIA ID is reported for channels associated with the Google
+         * account itself. Only brand accounts must account for the distinction.
+         */
         if ("" != $gaiaId)
         {
             self::$innertubeHeaders += [
+                /*
+                 * TODO(dcooper): Invalid AuthUser use.
+                 * 
+                 * AuthUser is used to switch between Google accounts (i.e.
+                 * Gmail addresses themselves) and should not be hardcoded as
+                 * zero as this will result in the wrong account being used by
+                 * Rehike.
+                 */
                 "X-Goog-AuthUser" => "0",
                 "X-Goog-PageId" => $gaiaId
             ];
@@ -259,7 +271,7 @@ class Request
     }
 
     /**
-     * Symlink for getResponses()
+     * Alias for getResponses()
      * 
      * @deprecated
      */

@@ -108,6 +108,12 @@ class Cacher
         }
     }
 
+    /**
+     * Update the cache in order to add new data.
+     * 
+     * @param string[] $addedResponses
+     * @return void
+     */
     public static function updateCache($addedResponses)
     {
         $data = self::readCacheFile();

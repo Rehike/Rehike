@@ -1,8 +1,21 @@
+{#
+   This template implements the primary hitchhiker layout implementation,
+   which is alike 2014 onwards, featuring appbar and its modified structure.
+
+   In other words, this implements the main YouTube page template that most
+   other pages extend.
+#}
 {% import 'core/macros.twig' as core %}
 {% import "common/alert.twig" as alert %}
 <!DOCTYPE html>
 <html lang="en" data-cast-api-enabled="true">
    <head>
+      {#
+         The Rehike debugger uses XHook as a component for debugging network
+         requests. Since the XHook script needs to be loaded before any other
+         scripts in order to properly hijack XHR, this is injected if the
+         debugger is enabled.
+      #}
       {% if rehikeDebugger and not rehikeDebugger.condensed and not yt.spf %}
          <script>{% include "/rehike/debugger/js/xhook.js" %}</script>
       {% endif %}
@@ -14,7 +27,7 @@
       <script>{{ include('/core/www-pageframesizing.js.twig') }}</script>
       {{ core.js('scheduler/scheduler') }}
       {{ core.css('www-core') }}
-      {%- block head_css  -%}{% endblock %}
+      {%- block head_css  -%}{%- endblock -%}
       <link rel="stylesheet" href="{{ yt.playerConfig.baseCssUrl }}" name="player/www-player">
       {{ core.css('www-pageframe') }}
       {{ core.css('www-guide') }}
@@ -23,7 +36,14 @@
       {%- if yt.config.appearance.modernLogo -%}
         {% include 'experiment/ringo/ringo.twig' %}
       {% endif %}
+      {% include "core/rehike_custom_css.twig %}
    </head>
+   {#
+      The body's class contains general metadata about the YouTube session,
+      including, such as experiments or important CSS configuration. It may need
+      to be changed by a child template at some point, so it's made a block
+      here.
+   #}
    <body dir="ltr" id="body" class="{%- block body_class -%}  
       {% include "core/body_class.twig" %}
       {% endblock %}" data-spf-name="other">
@@ -79,6 +99,9 @@
       <div id="footer-container" class="yt-base-gutter force-layer">
          {% include 'common/pageframe/footer.twig' %}
       </div>
+      {#
+         YouTube's foot contains templates and scripts.
+      #}
       {% include 'common/uix/lightbox/template_feed-privacy.twig' %}
       {% include 'common/uix/hidden_component_template_wrapper.twig' %}
       {% include 'core/spf_module.twig' %}
@@ -89,7 +112,10 @@
       {% endif %}
       <script>if (window.ytcsi) {window.ytcsi.tick("je", null, '');}</script>  
       {%- block foot_scripts -%}{% endblock %}
-      {% include 'core/ytGlobalJsConfig.twig' %}
+      {% include 'core/yt_global_js_config.twig' %}
+      {#
+         Inject Rebug (if it is enabled)
+      #}
       {%- if rehikeDebugger -%}
          {% include "rehike/debugger/main.twig" %}
       {%- endif -%}

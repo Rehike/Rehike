@@ -1,12 +1,12 @@
 <?php
+namespace Rehike;
+
 /**
  * A simple tool to funnel requests from a certain domain,
  * while ignoring any proxies active
  * 
  * @author Aubrey P. <aubyomori@gmail.com>
  */
-namespace Rehike;
-
 class SimpleFunnel {
     /**
      * Hostname for funnelCurrentPage

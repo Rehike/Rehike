@@ -1,7 +1,19 @@
 <?php
 namespace Rehike\Util;
 
+/**
+ * General utilities for converting richShelfRenderers from InnerTube into
+ * standard shelf renderers.
+ * 
+ * @author Aubrey Pankow <aubyomori@gmail.com>
+ * @author The Rehike Maintainers
+ */
 class RichShelfUtils {
+    /**
+     * Reformat a base response.
+     * 
+     * I have no idea what this code does.
+     */
     public static function reformatResponse($response) {
         if (!isset($response -> onResponseReceivedActions)) return $response;
 
@@ -20,6 +32,13 @@ class RichShelfUtils {
         ];
     }
 
+    /**
+     * Convert a richShelfRenderer into a standard shelfRenderer (as well as
+     * any outer wrappers).
+     * 
+     * @param object $shelf The iteration of shelf to use.
+     * @return object Modified shelf.
+     */
     public static function reformatShelf($shelf) {
         if (!isset($shelf -> richSectionRenderer -> content -> richShelfRenderer)) return $shelf;
 
@@ -54,6 +73,12 @@ class RichShelfUtils {
         return $shelf;
     }
 
+    /**
+     * Used to extract richItemRenderers used within rich shelves.
+     * 
+     * @param object $item richItemRenderer
+     * @return object $richItemRenderer->content
+     */
     public static function reformatShelfItem($item) {
         if (isset($item -> richItemRenderer -> content)) {
             foreach ($item -> richItemRenderer -> content as $key => $val) {

@@ -1,3 +1,13 @@
+{#
+    This is used as the base template for most Rehike pages. Pages should
+    extend this, rather than core/core.twig. This is used as a router for
+    more specific page extension.
+
+    Each core template provides a type of the YouTube layout.
+        - core.twig provides appbar (aka Nirvana)
+        - core_legacy.twig provides no-appbar (like hitchhiker in 2013)
+        - core_lite.twig provides a rare format used for live chat.
+#}
 {% if appbarEnabled %}
     {% set core = "core/core.twig" %}
 {% elseif isLite %}

@@ -10,8 +10,8 @@ use Rehike\ControllerV2\Core as ControllerV2;
  * This manages Twig and provides an API for interacting with its
  * bound instance.
  * 
- * It generally exists just to get Twig outside of the global
- * scope.
+ * It generally exists just to get the Twig instance away from the global
+ * scope for code safety.
  * 
  * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers

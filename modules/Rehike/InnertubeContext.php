@@ -5,6 +5,8 @@ namespace Rehike;
  * Generates a valid InnerTube client context required
  * for requesting the API.
  * 
+ * TODO: Deprecate?
+ * 
  * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */

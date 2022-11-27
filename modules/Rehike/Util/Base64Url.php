@@ -9,6 +9,12 @@ namespace Rehike\Util;
  */
 class Base64Url
 {
+    /**
+     * Encode a string into URL-formatted base64.
+     * 
+     * @param string $data
+     * @return string
+     */
     public static function encode($data)
     {
         return str_replace(
@@ -18,6 +24,12 @@ class Base64Url
         );
     }
 
+    /**
+     * Decode a string from URL-formatted base64.
+     * 
+     * @param string $data
+     * @return string
+     */
     public static function decode($data)
     {
         return base64_decode(

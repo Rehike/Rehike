@@ -79,7 +79,7 @@
         'GAPI_LOADER_URL': "\//s.ytimg.com/yts\/jsbin\/www-gapi-loader-vflugy459\/www-gapi-loader.js",
         'JS_COMMON_MODULE': "\//s.ytimg.com/yts\/jsbin\/www-en_US-vfl2g6bso\/common.js",
         'PAGE_FRAME_DELAYLOADED_CSS': "\//s.ytimg.com/yts\/cssbin\/www-pageframedelayloaded-vflkvMhoL.css",
-        'EXPERIMENT_FLAGS': {% include 'core/experimentFlags.json' %},
+        'EXPERIMENT_FLAGS': {% include 'core/experiment_flags.json' %},
         {% if not (defaultGuideVisibility or yt.spf) %}
             'GUIDE_DELAY_LOAD': true,
             'GUIDE_DELAYLOADED_CSS': {{ core.cssPath('www-guide')|json_encode|raw }},

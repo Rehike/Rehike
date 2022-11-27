@@ -1,6 +1,12 @@
 <?php
 namespace Rehike\Util;
 
+/**
+ * A set of utilities for parsing YouTube's PREF cookie.
+ * 
+ * @author Aubrey Pankow <aubymori@gmail.com>
+ * @author The Rehike Maintainers
+ */
 class PrefUtils {
     /**
      * Parse the PREF cookie.

@@ -16,24 +16,49 @@ use \Rehike\Model\Rehike\Debugger\{
 };
 
 /**
- * Implements the Rehike Debugger.
+ * Implements the PHP end of Rehike Debugger/Rebug.
+ * 
+ * A comment on nomenclature: We tend to call it the debugger in PHP land, 
+ * whereas it's called Rebug on the HTML and JS side of things.
+ * 
+ * HTML and JS lands are implemented in template/hitchhiker/rehike/debugger.
  * 
  * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Developers
  */
 class Debugger
 {
+    /**
+     * Stores the common context of this session's debugger.
+     * 
+     * @var Context
+     */
     protected static $context;
+
+    /**
+     * Reference to the global context.
+     * 
+     * @var object
+     */
     protected static $yt;
 
     /**
      * Stores the result of getting the debugger's condensed status.
      * 
+     * The debugger is condensed when it is disabled (it's not really ever
+     * REALLY disabled because it's used for beautiful error message delivery
+     * too).
+     * 
      * @var bool
      */
     public static $condensed = true;
 
-    /** @var ErrorWrapper[] */
+    /**
+     * Stores a log of all errors (not exceptions) that have occurred since
+     * the debugger was registered.
+     *  
+     * @var ErrorWrapper[] 
+     */
     protected static $errors = [];
 
     /**
