@@ -145,6 +145,10 @@
                                         {{ getText(srf.originalQuery) }}
                                     </a>
                                 </li>
+                                {%- elseif item.backgroundPromoRenderer -%}
+                                <p class="display-message">
+                                    {{ getText(item.backgroundPromoRenderer.title) }}
+                                </p>
                                 {%- endif -%}
                             {%- endfor -%}
                         </ol>
