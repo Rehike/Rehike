@@ -17,7 +17,7 @@
          debugger is enabled.
       #}
       {% if rehikeDebugger and not rehikeDebugger.condensed and not yt.spf %}
-         <script>{% include "/rehike/debugger/js/xhook.js" %}</script>
+         <script>{% include "rehike/debugger/js/xhook.js" %}</script>
       {% endif %}
       <style name="www-roboto" >@font-face{font-family:'Roboto';font-style:normal;font-weight:500;src:local('Roboto Medium'),local('Roboto-Medium'),url(//fonts.gstatic.com/s/roboto/v18/KFOlCnqEu92Fr1MmEU9fBBc9.ttf)format('truetype');}@font-face{font-family:'Roboto';font-style:normal;font-weight:400;src:local('Roboto Regular'),local('Roboto-Regular'),url(//fonts.gstatic.com/s/roboto/v18/KFOmCnqEu92Fr1Mu4mxP.ttf)format('truetype');}@font-face{font-family:'Roboto';font-style:italic;font-weight:500;src:local('Roboto Medium Italic'),local('Roboto-MediumItalic'),url(//fonts.gstatic.com/s/roboto/v18/KFOjCnqEu92Fr1Mu51S7ACc6CsE.ttf)format('truetype');}@font-face{font-family:'Roboto';font-style:italic;font-weight:400;src:local('Roboto Italic'),local('Roboto-Italic'),url(//fonts.gstatic.com/s/roboto/v18/KFOkCnqEu92Fr1Mu51xIIzc.ttf)format('truetype');}</style>
       <script name="www-roboto" >if (document.fonts && document.fonts.load) {document.fonts.load("400 10pt Roboto", "E");document.fonts.load("500 10pt Roboto", "E");}</script>
@@ -36,7 +36,7 @@
       {%- if yt.config.appearance.modernLogo -%}
         {% include 'experiment/ringo/ringo.twig' %}
       {% endif %}
-      {% include "core/rehike_custom_css.twig %}
+      {% include "core/rehike_custom_css.twig" %}
    </head>
    {#
       The body's class contains general metadata about the YouTube session,
