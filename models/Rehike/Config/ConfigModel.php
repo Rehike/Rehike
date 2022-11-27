@@ -55,7 +55,7 @@ class ConfigModel {
             -> creatorSidebarSectionRenderer -> items[] = 
             self::buildCreatorSidebarItem(
                 $text,
-                "/config/{$name}",
+                "/rehike/config/{$name}",
                 ($name == $tab)
             );
         }
