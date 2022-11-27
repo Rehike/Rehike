@@ -1,0 +1,12 @@
+{
+    "viewSingular": "Ver resposta",
+    "viewMulti": "Ver %s Respostas",
+    "viewSingularOwner": "Ver resposta do %s",
+    "viewMultiOwner": "Ver %s respostas do %s e outros",
+    "viewMultiTeaser": "Ver todas as %s respostas",
+    "viewMultiTeaserOwner": "Ver todas as %s respostas do %s e outros",
+    "hideSingular": "Esconder respostas",
+    "hideMulti": "Esconder %s respostas",
+    "replyCountIsolator": "/( respostas)|( responder)/i",
+    "oldReplyTextRegex": "/visualizações /"
+}

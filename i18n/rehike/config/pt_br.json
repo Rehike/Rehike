@@ -1,0 +1,62 @@
+{
+    "title": "Configurações do Rehike",
+    "save": "Salvar",
+    "tabs": {
+        "appearance": "Aparencia",
+        "advanced": "Avançado"
+    },
+    "props": {
+        "appearance": {
+            "modernLogo": {
+                "title": "Usar a logo de depois de 2017",
+                "subtitle": "Pode quebrar algums usersytles de antes de 2016."
+            },
+            "uploadButtonType": {
+                "title": "Tipo de butão de envio",
+                "values": {
+                    "BUTTON": "Butão (2013-2016)",
+                    "ICON": "Icone (2016-2018)",
+                    "MENU": "Menu de criação (2018+)*"
+                }
+            },
+            "largeSearchResults": {
+                "title": "Thumbnails maiores na pagina de pesquisa",
+                "subtitle": "Pode quebrar algums usersytles de antes de 2016."
+            },
+            "showVersionInFooter": {
+                "title": "Mostrar versão do Rehike no rodapé"
+            },
+            "usernamePrepends": {
+                "title": "Mostrar \"Por\" Antes do nome do autor do video"
+            },
+            "noViewsText": {
+                "title": "Remover o texto de \"Visualizações\" no indicador de visualizações de um video",
+                "subtitle": "Isso era assim antes de 2016."
+            },
+            "movingThumbnails": {
+                "title": "Mostrar thumbnail animada ao passar o mouse por cima de uma thumbnail"
+            },
+            "cssFixes": {
+                "title": "Correções/inconsistencias com o CSS",
+                "subtitle": "Isso ira quebrar a compatibilidade com algums userstyles."
+            },
+            "watchSidebarDates": {
+                "title": "Mostrar a data de criação na pagina de recomendados",
+                "subtitle": "O hitchhiker não mostrava isso por padrão."
+            },
+            "teaserReplies": {
+                "title": "Mostrar duas primeiras respostas de cada comentario",
+                "subtitle": "Isso ira fazer varias requests e ira fazer com que o carregamento de comentarios seja lento, use por contra propria."
+            },
+            "oldBestOfYouTubeIcons": {
+                "title": "Os antigos Icone vermelhos na pagina de  \"Melhor do youtube\""
+            }
+        },
+        "advanced": {
+            "enableDebugger": {
+                "title": "Habilitar o depurador",
+                "subtitle": "O depurador deixa você ver os conteudos de variaveis globais. So habilite se você for um desenvolvedor ou precise de mais imformações para reportar um bug."
+            }
+        }
+    }
+}

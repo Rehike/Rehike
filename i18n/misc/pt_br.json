@@ -1,0 +1,16 @@
+{
+    "btnCancel": "Cancelar",
+    "btnSave": "Salvar",
+    "subscriberTextSingular": "%s inscrito",
+    "subscriberTextPlural": "%s Inscritos",
+    "viewTextSingular": "%s visualização",
+    "viewTextPlural": "%s visualizações",
+    "dateTextPublic": "Publicado em %s",
+    "dateTextPrivate": "Postado em %s",
+    "subscribeText": "Inscreva-se",
+    "subscribedText": "Inscrito",
+    "unsubscribeText": "Desincrever",
+    "selfSubscribeTooltip": "Não precisa inscrever-se a si mesmo!",
+    "notificationPrefsTitle": "Notificações de %s",
+    "notificationPrefsLabel": "Preferencias de incrições"
+}
