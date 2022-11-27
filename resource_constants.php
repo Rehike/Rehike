@@ -30,7 +30,9 @@ return (object) [
         "www-pageframe" => "{$css}www-pageframe-2x-vfl7zB5iD.css",
         "www-guide" => "{$css}www-guide-2x-vflnLcFfr.css",
         "www-home-c4" => "{$css}www-home-c4-2x-vflBmvDSR.css",
-        "www-results" => "{$css}www-results-2x-vflilAG3t.css"
+        "www-results" => "{$css}www-results-2x-vflilAG3t.css",
+        "www-error" => "{$css}www-error-2x-vflvD9R0Z.css",
+        "www-watch-transcript" => "{$css}www-watch-transcript-2x-vflp9_n_i.css"
     ],
     "jsModulesPath" => $mod,
     "js" => (object) [
