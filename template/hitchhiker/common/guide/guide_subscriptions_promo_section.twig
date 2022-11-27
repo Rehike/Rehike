@@ -1,0 +1,30 @@
+{# Render a guide subscription section. #}
+{% macro render(section, addSeparator) %}
+{% import "common/guide/guide_section.twig" as super %}
+{% from "common/uix/button.twig" import render as button %}
+<li id="guide-subscriptions-section" class="guide-section without-filter">
+    {{ super.title(section.formattedTitle) }}
+    <div id="guide-subs-footer-container">
+        <div id="guide-subscriptions-promo" class="default-promo">
+            {{ button(section.button) }}
+            <div class="subscriptions-wrapper">
+                <div class="guide-channels-content yt-scrollbar">
+                    <ul id="guide-channels" class="guide-channels-list guide-item-container parent-list guide-infinite-list yt-uix-scroller filter-has-matches yt-uix-tdl">
+                        {{ super.item_list(section.items) }}
+                    </ul>
+                </div>
+                <a href="{{ getUrl(section.tooltip) }}" class="guide-subscriptions-promo-tooltip">
+                    <p>
+                        <span class="">
+                            {{ getText(section.tooltip.text) }}
+                        </span>
+                    </p>
+                </a>
+            </div>
+        </div>
+    </div>
+    {% if addSeparator %}
+    <hr class="guide-section-separator">
+    {% endif %}
+</li>
+{% endmacro %}

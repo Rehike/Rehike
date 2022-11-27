@@ -42,7 +42,8 @@ Router::redirect([
         if (isset($request->params->q))
             return urldecode($request->params->q);
     },
-    "/feed/library" => "/profile"
+    "/feed/library" => "/profile",
+    "/subscription_manager" => "/feed/channels"
 ]);
 
 Router::get([

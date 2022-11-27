@@ -1,11 +1,13 @@
 {
     "trending": "Trending",
     "myChannel": "My channel",
+    "subscriptions": "Subscriptions",
     "showMore": "Show more",
     "showFewer": "Show fewer",
     "guideBuilderLabel": "Browse channels",
     "manageSubscriptionsLabel": "Manage subscriptions",
     "bestOfYouTubeTitle": "Best of YouTube",
+    "bestOfYouTubePopularOnYouTube": "Popular on YouTube",
     "bestOfYouTubeMusic": "Music",
     "bestOfYouTubeSports": "Sports",
     "bestOfYouTubeGaming": "Gaming",
@@ -14,6 +16,8 @@
     "bestOfYouTubeLive": "Live",
     "bestOfYouTubeSpotlight": "Spotlight",
     "bestOfYouTube360": "360° Video",
+    "subscriptionsPromoButton": "Add channels",
+    "subscriptionsPromoTooltip": "Your subscriptions will show up here Browse some channels to get started.",
     "notifications": {
         "watchLaterVideoAdded": "Added to Watch Later",
         "watchLaterVideoRemoved": "Removed from Watch Later",

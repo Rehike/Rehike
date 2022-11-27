@@ -4,6 +4,8 @@ namespace Rehike\Model\Guide;
 use Rehike\i18n;
 use Rehike\Signin\API as Signin;
 use Rehike\ConfigManager\ConfigManager;
+use Rehike\Model\Common\MButton;
+use Rehike\Model\Traits\NavigationEndpoint;
 
 /**
  * A god class for converting InnerTube guide responses to
@@ -416,7 +418,7 @@ class Converter
             }
         }
 
-        if (!isset($section)) return;
+        if (!isset($section)) return self::buildSubscriptionsPromoSection();
 
         // Ugly last item hack to get rid of the "show more" button WEB v2
         // reports
@@ -461,6 +463,71 @@ class Converter
     }
 
     /**
+     * Build the subscription promo section.
+     * This shows when you have no subscriptions.
+     */
+    public static function buildSubscriptionsPromoSection() {
+        $i18n = i18n::getNamespace("main/guide");
+        $response = (object) [];
+        $format = ConfigManager::getConfigProp("appearance.oldBestOfYouTubeIcons")
+        ? "/rehike/static/best_of_youtube/%s_old.jpg"
+        : "/rehike/static/best_of_youtube/%s.jpg";
+
+        $response -> formattedTitle = (object) [
+            "simpleText" => $i18n -> subscriptions,
+            "navigationEndpoint" => NavigationEndpoint::createEndpoint("/feed/channels")
+        ];
+
+        $response -> button = new MButton([
+            "style" => "STYLE_PRIMARY",
+            "text" => (object) [
+                "simpleText" => $i18n -> subscriptionsPromoButton
+            ],
+            "icon" => (object) [
+                "iconType" => "PLUS"
+            ],
+            "navigationEndpoint" => NavigationEndpoint::createEndpoint("/feed/guide_builder")
+        ]);
+
+        $response -> tooltip = (object) [
+            "text" => (object) [
+                "simpleText" => $i18n -> subscriptionsPromoTooltip
+            ],
+            "navigationEndpoint" => NavigationEndpoint::createEndpoint("/feed/guide_builder")
+        ];
+
+        $response -> items =  [];
+
+        $response -> items[] = self::bakeGuideItem(
+            "/channel/UCF0pVplsI8R5kcAqgtoRqoA",
+            $i18n -> bestOfYouTubePopularOnYouTube,
+            sprintf($format, "popular_on_youtube")
+        );
+
+        $response -> items[] = self::bakeGuideItem(
+            "/channel/UC-9-kyTW8ZkZNDHQJ6FgpwQ",
+            $i18n -> bestOfYouTubeMusic,
+            sprintf($format, "music")
+        );
+
+        $response -> items[] = self::bakeGuideItem(
+            "/channel/UCEgdi0XIXXZ-qJOFPf4JSKw",
+            $i18n -> bestOfYouTubeSports,
+            sprintf($format, "sports")
+        );
+
+        $response -> items[] = self::bakeGuideItem(
+            "/gaming",
+            $i18n -> bestOfYouTubeGaming,
+            sprintf($format, "gaming")
+        );
+
+        return (object) [
+            "guideSubscriptionsPromoSectionRenderer" => $response
+        ];
+    }
+
+    /**
      * This function is responsible for getting the guide
      * "end section".
      * 
@@ -495,7 +562,7 @@ class Converter
         if ($signedIn)
         {
             $response[] = self::bakeGuideItem(
-                "/subscription_manager",
+                "/feed/channels",
                 $strings->manageSubscriptionsLabel,
                 "SYSTEM::SUBSCRIPTION_MANAGER"
             );
