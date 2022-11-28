@@ -1,5 +1,8 @@
 {
-    "title": "Ustawienia Rehike",
+    "title": "Konfiguracja Rehike",
+    "saveChanges": "Zapisz zmiany",
+    "saveChangesSuccess": "Konfiguracja została pomyślnie zaktualizowana!",
+    "saveChangesFailure": "Nie udało się zaktualizować konfiguracji!",
     "tabs": {
         "appearance": "Wygląd",
         "advanced": "Zaawansowane"
@@ -7,54 +10,81 @@
     "props": {
         "appearance": {
             "modernLogo": {
-                "title": "Użyj loga YouTube z 2017+",
-                "subtitle": "Popsuje niektóre userstyle z 2016 roku i wcześniej."
+                "title": "Użyj aktualnego logo YouTube",
+                "subtitle": "Używane od 2017 r. Włączenie tego może zepsuć niektóre niestandardowe motywy wykonane przed 2017 r."
             },
             "uploadButtonType": {
-                "title": "Typ przycisku przesłania",
+                "title": "Typ przycisku przesłania:",
                 "values": {
                     "BUTTON": "Przycisk (2013-2016)",
                     "ICON": "Ikona Material (2016-2018)",
-                    "MENU": "Menu tworzenia (2018+)*"
+                    "MENU": "Menu tworzenia (2018+)"
                 }
             },
             "largeSearchResults": {
                 "title": "Większe miniaturki na stronie wyszukiwania",
-                "subtitle": "Popsuje niektóre userstyle z 2016 roku i wcześniej."
+                "subtitle": "Może zepsuć niektóre niestandardowe motywy wykonane przed 2017 rokiem."
             },
             "showVersionInFooter": {
-                "title": "Pokaż wersję Rehike w stopce"
+                "title": "Pokaż wersję Rehike w stopce",
+                "subtitle": "Wyświetl wygodny link do strony o Rehike na końcu stopki."
+            },
+            "useRyd": {
+                "title": "Pokaż łapki w dół w filmach",
+                "subtitle": "Statystyki z API Return YouTube Dislike."
             },
             "usernamePrepends": {
-                "title": "Pokaż \"autor: \" przed nazwą autora w linkach do filmów"
+                "title": "Pokaż \"autor:\" przed nazwiskiem autora w linkach do filmów",
+                "subtitle": "Używane przed 2016 r."
             },
             "noViewsText": {
-                "title": "Usuń tekst \"wyświetleń\" z liczby wyświetleń na stronie oglądania",
-                "subtitle": "Tak było przed 2016 rokiem."
+                "title": "Usuń tekst \"wyświetleń\" z licznika wyświetleń na stronie oglądania",
+                "subtitle": "Przed 2016 r. wyświetlany był tylko sam licznik, bez żadnej etykiety."
             },
             "movingThumbnails": {
-                "title": "Pokaż animowany podgląd po najechaniu na film"
+                "title": "Pokaż animowany podgląd po najechaniu na film",
+                "subtitle": "Używane od 2018 r."
             },
             "cssFixes": {
-                "title": "Niespójność/poprawki błędów w CSS",
-                "subtitle": "Popsuje kompatybilność z niektórymi userstyle'ami."
+                "title": "Poprawki CSS YouTube",
+                "subtitle": "Naprawia błędy lub niespójności z oryginalnym CSS Hitchhiker'a. Może naruszyć kompatybilność z niektórymi userstyle'ami."
             },
             "watchSidebarDates": {
-                "title": "Pokaż względną datę przesłania na stronie oglądania w proponowanych",
-                "subtitle": "Hitchhiker nie pokazywał tego domyślnie."
+                "title": "Pokaż datę przesłania na stronie oglądania w proponowanych",
+                "subtitle": "W przeciwieństwie do Polymera, Hitchhiker nie pokazywał ich domyślnie."
             },
             "teaserReplies": {
                 "title": "Pokaż dwie pierwsze odpowiedzi na każdy komentarz",
-                "subtitle": "Spowoduje to użycie wielu żądań i znacznie spowolni czas wczytywania komentarzy. Używaj według własnego uznania."
+                "subtitle": "Używane przed 2016 r. Może to spowolnić czas wczytywania komentarzy. Używaj według własnego uznania."
             },
             "oldBestOfYouTubeIcons": {
-                "title": "Stare czerwone ikony w sekcji \"Najlepsze w YouTube\""
+                "title": "Stare czerwone ikony w sekcji \"Najlepsze w YouTube\"",
+                "subtitle": "Pokaż stare czerwone ikony kanałów tematycznych, a nie czarne używane obecnie."
             }
         },
         "advanced": {
             "enableDebugger": {
                 "title": "Włącz debugger",
-                "subtitle": "Debugger pozwala przeglądać zawartość globalnej zmiennej $yt. Włącz tylko jeśli jesteś deweloperem lub zgłaszasz błąd i potrzebujesz więcej informacji."
+                "subtitle": "Debugger dostarcza użyteczne narzędzia dla deweloperów. Włącz go tylko jeśli jesteś deweloperem lub zgłaszasz błąd i potrzebujesz więcej informacji."
+            },
+            "clearSigninCache": {
+                "title": "Cache logowania",
+                "subtitle": "Rehike buforuje dane logowania, aby nie wykonywać zbyt wielu zapytań do YouTube.",
+                "button": "Wyczyść cache logowania"
+            },
+            "clearPlayerCache": {
+                "title": "Cache odtwarzacza",
+                "subtitle": "Rehike buforuje informacje o odtwarzaczu, aby nie wykonywać zbyt wielu zapytań do YouTube.",
+                "button": "Wyczyść cache odtwarzania"
+            },
+            "factoryReset": {
+                "title": "Zresetuj Rehike",
+                "subtitle": "Zresetuj Rehike do ustawień domyślnych, włączając w to ustawienia, cache i wszelkie zmiany, które nie znajdują się w zdalnym repozytorium.",
+                "button": "Zresetuj Rehike"
+            },
+            "updateRehike": {
+                "title": "Zaktualizuj Rehike",
+                "button": "Zaktualizuj"
             }
         }
     }
