@@ -26,20 +26,24 @@ class MRelatedChannels
             $me->title = $shelf->title;
         }
 
-        if (isset($shelf->content->horizontalListRenderer->items))
-        {
-            foreach ($shelf->content->horizontalListRenderer->items as $i => $item)
-            {
-                $me->items[] = $item->gridChannelRenderer ?? $item->channelRenderer ?? null;
+        $items = $shelf->content->horizontalListRenderer->items
+        ??       $shelf->content->expandedShelfContentsRenderer->items
+        ??       null;
 
-                // Break at the 10th item
-                if ($i >= 9)
-                {
-                    $me->seeMoreButton = new MRelatedChannelsSeeMoreButton(
-                        @$shelf->endpoint->commandMetadata->webCommandMetadata->url
-                    );
-                    break;
-                }
+        if (!is_null($items))
+        foreach ($items as $i => $item)
+        {
+            $me->items[] = $item->gridChannelRenderer
+            ??             $item->channelRenderer
+            ??             null;
+
+            // Break at the 10th item
+            if ($i >= 9)
+            {
+                $me->seeMoreButton = new MRelatedChannelsSeeMoreButton(
+                    @$shelf->endpoint->commandMetadata->webCommandMetadata->url
+                );
+                break;
             }
         }
 

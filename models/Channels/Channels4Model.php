@@ -138,7 +138,7 @@ class Channels4Model
             if ($sidebarData)
             {
                 self::initSecondaryColumn($response);
-                $response["secondaryContent"]->items[] = $sidebarData;
+                $response["secondaryContent"]->items = $sidebarData;
             }
         }
 
@@ -279,7 +279,7 @@ class Channels4Model
 
     public static function getSidebarData($shelves, &$featuredData)
     {
-        $channelsShelf = null;
+        $channelsShelves = [];
 
         // Find the first channel shelf
         foreach ($shelves as $i => $shelf)
@@ -289,24 +289,32 @@ class Channels4Model
 
             if ($channelItem = @$shelf->content->horizontalListRenderer
                 ->items[0]->gridChannelRenderer
+            ||
+                $channelItem = @$shelf->content->expandedShelfContentsRenderer
+                ->items[0]->channelRenderer
             )
             {
-                $channelsShelf = $shelf;
+                $channelsShelves[] = $shelf;
 
                 if (null != $featuredData)
                 {
-                    array_splice($featuredData, $i, 1);
+                    //array_splice($featuredData, $i, 1);
+                    unset($featuredData[$i]);
                 }
-
-                break;
             }
         }
 
-        if (null != $channelsShelf)
+        if (0 < count($channelsShelves))
         {
-            $model = MRelatedChannels::fromShelf($channelsShelf);
+            $shelves = [];
+            foreach ($channelsShelves as $shelf) {
+                $shelves[] = (object) [
+                    "relatedChannelsRenderer" =>
+                    MRelatedChannels::fromShelf($shelf)
+                ];
+            }
 
-            return (object)["relatedChannelsRenderer" => $model];
+            return $shelves;
         }
 
         return null;
