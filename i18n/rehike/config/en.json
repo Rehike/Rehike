@@ -10,8 +10,8 @@
     "props": {
         "appearance": {
             "modernLogo": {
-                "title": "Use the 2017+ YouTube logo",
-                "subtitle": "Will break some userstyles from 2016 and before."
+                "title": "Use the old YouTube logo",
+                "subtitle": "Used before 2017. Enabling this may break some custom themes made before 2017."
             },
             "uploadButtonType": {
                 "title": "Upload button type:",
@@ -23,45 +23,49 @@
             },
             "largeSearchResults": {
                 "title": "Larger thumbnails on search page",
-                "subtitle": "Will break some userstyles from 2016 and before."
+                "subtitle": "Will break some custom themes made before 2017."
             },
             "showVersionInFooter": {
-                "title": "Show Rehike version in the footer"
+                "title": "Show Rehike version in the footer",
+                "subtitle": "Display a convenient link to the Rehike about page at the end of the footer."
             },
             "useRyd": {
                 "title": "Show dislikes on videos",
                 "subtitle": "Stats from the Return YouTube Dislike API."
             },
             "usernamePrepends": {
-                "title": "Show \"by\" before the author's name on video links"
+                "title": "Show \"by\" before the author's name on video links",
+                "subtitle": "Used before 2016."
             },
             "noViewsText": {
                 "title": "Remove \"views\" text from view count on watch page",
-                "subtitle": "This is how it was prior to 2016."
+                "subtitle": "Before 2016, only the count itself was displayed, without any label."
             },
             "movingThumbnails": {
-                "title": "Show an animated preview when hovering over a video"
+                "title": "Show an animated preview when hovering over a video",
+                "subtitle": "Used since 2018."
             },
             "cssFixes": {
-                "title": "Inconsistency/bug fixes in CSS",
-                "subtitle": "Will break compatability with some userstyles."
+                "title": "YouTube CSS fixes",
+                "subtitle": "Fixes bugs or inconsistencies with the original Hitchhiker CSS. May break compatibility with some userstyles."
             },
             "watchSidebarDates": {
-                "title": "Show relative upload date on watch page recommendations",
-                "subtitle": "Hitchhiker didn't show these by default."
+                "title": "Show upload date on watch page recommendations",
+                "subtitle": "Unlike Polymer, Hitchhiker didn't show these by default."
             },
             "teaserReplies": {
                 "title": "Show the first two replies of each comment",
-                "subtitle": "This will use many requests and greatly slow the time comments take to load. Use at your own discretion."
+                "subtitle": "Used before 2016. This may slow the time comments take to load. Use at your own discretion."
             },
             "oldBestOfYouTubeIcons": {
-                "title": "Old red icons in \"Best of YouTube\" guide section"
+                "title": "Old red icons in \"Best of YouTube\" guide section",
+                "subtitle": "Show the old red topic channel icons, rather than the black ones used today."
             }
         },
         "advanced": {
             "enableDebugger": {
                 "title": "Enable the debugger",
-                "subtitle": "The debugger lets you browse the contents of the global $yt variable. Only enable if you're a developer or reporting a bug and need more information."
+                "subtitle": "The debugger provides useful tools for developers. Only enable if you're a developer or reporting a bug and need more information."
             },
             "clearSigninCache": {
                 "title": "Sign-in cache",

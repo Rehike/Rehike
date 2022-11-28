@@ -1,10 +1,10 @@
 {
-	"previousHash": "731f59f20c7fb38b581c06028c0d718b3e191a63",
-	"currentRevisionId": 670,
-	"subject": "Clean up one of the odder design designs",
-	"body": "Clean up one of the odder design designs",
+	"previousHash": "6554ef4e297a892a94c40d0f9e91dd45d0af9ee2",
+	"currentRevisionId": 671,
+	"subject": "Config i18n improvements",
+	"body": "Config i18n improvements",
 	"branch": "master",
 	"committerName": "Coffee",
 	"committerEmail": "99076687+YukisCoffee@users.noreply.github.com",
-	"time": 1669638382
+	"time": 1669639424
 }
