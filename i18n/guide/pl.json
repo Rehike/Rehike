@@ -1,11 +1,13 @@
 {
     "trending": "Na czasie",
     "myChannel": "Mój kanał",
+    "subscriptions": "Subskrypcje",
     "showMore": "Pokaż więcej",
     "showFewer": "Pokaż mniej",
     "guideBuilderLabel": "Przeglądaj kanały",
     "manageSubscriptionsLabel": "Zarządzaj subskrypcjami",
     "bestOfYouTubeTitle": "Najlepsze w YouTube",
+    "bestOfYouTubePopularOnYouTube": "Popularne w YouTube",
     "bestOfYouTubeMusic": "Muzyka",
     "bestOfYouTubeSports": "Sport",
     "bestOfYouTubeGaming": "Gry",
@@ -14,6 +16,8 @@
     "bestOfYouTubeLive": "Na żywo",
     "bestOfYouTubeSpotlight": "Spotlight",
     "bestOfYouTube360": "Film 360°",
+    "subscriptionsPromoButton": "Dodaj kanały",
+    "subscriptionsPromoTooltip": "Twoje subskrypcje pojawią się tutaj Przejrzyj kilka kanałów, aby zacząć.",
     "notifications": {
         "watchLaterVideoAdded": "Dodano do listy Do obejrzenia",
         "watchLaterVideoRemoved": "Usunięto z listy „Do obejrzenia”",
