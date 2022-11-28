@@ -10,8 +10,8 @@
     "props": {
         "appearance": {
             "modernLogo": {
-                "title": "Use the old YouTube logo",
-                "subtitle": "Used before 2017. Enabling this may break some custom themes made before 2017."
+                "title": "Use the current YouTube logo",
+                "subtitle": "Used since 2017. Enabling this may break some custom themes made before 2017."
             },
             "uploadButtonType": {
                 "title": "Upload button type:",
