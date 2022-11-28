@@ -1,10 +1,10 @@
 {
-	"previousHash": "e831c0a23d7feab1211687c2cedd569572a64649",
-	"currentRevisionId": 668,
-	"subject": "PHP 7.x compatibility fixes",
-	"body": "PHP 7.x compatibility fixes",
+	"previousHash": "6554ef4e297a892a94c40d0f9e91dd45d0af9ee2",
+	"currentRevisionId": 671,
+	"subject": "Config i18n improvements",
+	"body": "Config i18n improvements",
 	"branch": "master",
 	"committerName": "Coffee",
 	"committerEmail": "99076687+YukisCoffee@users.noreply.github.com",
-	"time": 1669591332
+	"time": 1669639424
 }

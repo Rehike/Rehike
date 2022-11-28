@@ -1,6 +1,7 @@
 <?php
 namespace Rehike\Model\Watch\Watch8;
 
+use \Rehike\Model\Watch\WatchModel as WatchBase;
 use \Rehike\Model\Watch\Watch7\MVideoDiscussionRenderer;
 use \Rehike\Model\Watch\Watch7\MVideoDiscussionNotice;
 use \Rehike\Model\Watch\Watch7\MCreatorBar;
@@ -18,11 +19,6 @@ use \Rehike\Signin\API as SignIn;
 class Watch8Subcontroller
 {
     /**
-     * A static reference to the main model controller.
-     */
-    const MASTER = "Rehike\Model\Watch\WatchModel";
-
-    /**
      * Called from the main watch model
      * 
      * @param object $data
@@ -31,16 +27,16 @@ class Watch8Subcontroller
     public static function bakeResults(&$data, $videoId)
     {
         // Create references
-        $primaryInfo = &self::MASTER::$primaryInfo;
-        $secondaryInfo = &self::MASTER::$secondaryInfo;
-        $commentSection = &self::MASTER::$commentSection;
+        $primaryInfo = &WatchBase::$primaryInfo;
+        $secondaryInfo = &WatchBase::$secondaryInfo;
+        $commentSection = &WatchBase::$commentSection;
 
         $results = [];
 
         $results[] = $secondaryInfo -> owner -> videoOwnerRenderer -> navigationEndpoint -> browseEndpoint -> browseId;
 
         // Push creator bar if the video is yours
-        if (self::MASTER::$isOwner) {
+        if (WatchBase::$isOwner) {
             $results[] = (object) [
                 "videoCreatorBarRenderer" => new MCreatorBar($videoId)
             ];
@@ -48,12 +44,12 @@ class Watch8Subcontroller
 
         // Push primary info (if it exists)
         if (!is_null($primaryInfo)) $results[] = (object)[
-            "videoPrimaryInfoRenderer" => new MVideoPrimaryInfoRenderer(self::MASTER, $videoId)
+            "videoPrimaryInfoRenderer" => new MVideoPrimaryInfoRenderer(WatchBase::class, $videoId)
         ];
 
         // Push secondary info (if it exists)
         if (!is_null($secondaryInfo)) $results[] = (object)[
-            "videoSecondaryInfoRenderer" => new MVideoSecondaryInfoRenderer(self::MASTER)
+            "videoSecondaryInfoRenderer" => new MVideoSecondaryInfoRenderer(WatchBase::class)
         ];
 
         // Push comments (if they exist)
@@ -70,7 +66,7 @@ class Watch8Subcontroller
                     ->continuationEndpoint->continuationCommand->token;
                 
                 // Push the continuation token to yt global
-                self::MASTER::$yt->commentsToken = $continuationToken;
+                WatchBase::$yt->commentsToken = $continuationToken;
 
                 $results[] = (object)[
                     "videoDiscussionRenderer" => new MVideoDiscussionRenderer(
@@ -104,9 +100,9 @@ class Watch8Subcontroller
      */
     public static function bakeSecondaryResults(&$data)
     {
-        $yt = &self::MASTER::$yt;
+        $yt = &WatchBase::$yt;
         // Get data from the reference in the datahost
-        $origResults = &self::MASTER::$secondaryResults;
+        $origResults = &WatchBase::$secondaryResults;
         $response = [];
         $i18n = i18n::newNamespace("watch/sec_results");
         $i18n -> registerFromFolder("i18n/watch");
@@ -183,7 +179,7 @@ class Watch8Subcontroller
      */
     public static function bakePlaylist(&$data)
     {
-        $playlist = &self::MASTER::$playlist;
+        $playlist = &WatchBase::$playlist;
 
         // Return null if there is no playlist, this
         // makes the templater ignore it.
@@ -221,7 +217,7 @@ class Watch8Subcontroller
             // "previous/next video ids also need a little work
             //  let's just catch two cases with one"
             // Copied from Daylin's implementation again
-            $playlistId = &self::MASTER::$yt->playlistId;
+            $playlistId = &WatchBase::$yt->playlistId;
 
             $curIndexInt = &$list->localCurrentIndex;
             $prevIndexInt = $curIndexInt - 1;
@@ -282,7 +278,7 @@ class Watch8Subcontroller
          */
 
         // Disable if watch playlists available at all.
-        if (is_null(self::MASTER::$playlist))
+        if (is_null(WatchBase::$playlist))
         {
             return true;
         }
