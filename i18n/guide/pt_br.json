@@ -1,0 +1,31 @@
+{
+    "trending": "Em alta",
+    "myChannel": "Meu canal",
+    "showMore": "Mostrar mais",
+    "showFewer": "Mostrar menos",
+    "guideBuilderLabel": "Procurar canais",
+    "manageSubscriptionsLabel": "Gerenciar inscrições",
+    "bestOfYouTubeTitle": "Melhor do youtube",
+    "bestOfYouTubeMusic": "Musica",
+    "bestOfYouTubeSports": "Esportes",
+    "bestOfYouTubeGaming": "Jogos",
+    "bestOfYouTubeMoviesTv": "Filmes & Series",
+    "bestOfYouTubeNews": "Noticias",
+    "bestOfYouTubeLive": "Ao vivo",
+    "bestOfYouTubeSpotlight": "Holofote",
+    "bestOfYouTube360": "Videos em 360°",
+    "notifications": {
+        "watchLaterVideoAdded": "Adicionado ao assistir mais tarde",
+        "watchLaterVideoRemoved": "Removido do assistir mais tarde",
+        "subscription": "Inscrição adicionada",
+        "unsubscription": "Inscrição removida",
+        "playlistLike": "Salvado nas playlists",
+        "playlistUnlike": "Removido das playlists",
+        "playlistVideoAdded": "Adioconado na playlist",
+        "playlistVideoRemoved": "Removido da playlist",
+        "videoLike": "Adioconado ao videos com gostei",
+        "videoUnlike": "Removido dos videos com gostei",
+        "eventReminderSet": "Você sera lembrado desse evento",
+        "eventReminderRemoved": "Lembrete removido"
+    }
+}

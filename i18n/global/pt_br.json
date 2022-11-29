@@ -1,0 +1,21 @@
+{
+    "loading": "Carregando...",
+    "working": "Trabalhando...",
+    "showMore": "Mostrar mais",
+    "showLess": "Mostrar menos",
+    "addToWatchLater": "Assistir mais tarde",
+    "addedToWatchLater": "Adicionado",
+    "addToHeader": "Adicionar para",
+    "addToLoading": "Carregando playlists...",
+    "addToError": "Erro",
+    "watchLaterSignIn": "%sLogar-se%s para adicionar ao assistir mais tarde",
+    "loadingMoreSuggestions": "Carregando mais sugestões...",
+    "durationA11y": " - Duração: %s.",
+    "verified": "Verificado",
+    "commentPostFail": "Erro ao postar comentario.",
+    "usernamePrepend": "Por ",
+    "shelfsliderNext": "Proximo",
+    "shelfsliderPrev": "Anterior",
+    "transcriptTitle": "Transcrição",
+    "transcriptFail": "A transcrição interativa não pode ser carregada."
+}

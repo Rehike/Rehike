@@ -1,0 +1,23 @@
+{
+    "logoTooltip": "Pagina inicial do youtube",
+    "pickerLanguage": "língua: %s",
+    "pickerLocation": "Localização: %s",
+    "pickerSafety": "Modo restrito: %s",
+    "safetyOn": "Ligaod",
+    "safetyOff": "Desligado",
+    "buttonHistory": "Historico",
+    "buttonHelp": "Ajuda",
+    "primaryAbout": "Sobre",
+    "primaryPress": "imprensa",
+    "primaryCopyright": "Copyright",
+    "primaryCreators": "Criadores",
+    "primaryAdvertise": "Anunciar",
+    "primaryDevs": "Desenvolvedores",
+    "primaryVersion": "Rehike v%s [%s]",
+    "secondaryTerms": "Termos",
+    "secondaryPrivacy": "Privacidade",
+    "secondaryPolicySafety": "Politica & Segurança",
+    "secondaryFeedback": "Mandar feedback",
+    "secondaryTestTube": "Testar novos recursos",
+    "secondaryCopyright": "© %s Google LLC"
+}

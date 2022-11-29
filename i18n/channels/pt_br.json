@@ -1,0 +1,11 @@
+{
+    "flowGrid": "Grade",
+    "flowList": "Lista",
+    "viewUploads": "Uploads",
+    "viewAllVideos": "Todos os videos",
+    "viewLiveStreams": "Ao vivo",
+    "viewShorts": "Shorts",
+    "seeAll": "Ver tudo",
+    "backstageViewAllCommentsSingular": "Ver 1 comentario",
+    "backstageViewAllCommentsPlural": "Ver todos os %s comentarios"
+}

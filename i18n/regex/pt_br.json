@@ -1,0 +1,9 @@
+{
+    "likeCountIsolator": "/(De gostei nesse video junto com )|( outras pessoas)|( outra pessoa)/",
+    "likeTextDisabled": "Eu gosto disso",
+    "countZero": "Não",
+    "subscriberCountIsolator": "/( Inscritos)|( Inscrito)/",
+    "viewCountIsolator": "/( Visualizações)|( Visualização)/",
+    "nonPublishCheck": "/(Estreia)|(Começou)|(Ao vivo)|(Agendado)/",
+    "unsubChannelNameMatch": "/Remover inscrição do (.*?)\\?/"
+}
