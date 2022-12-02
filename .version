@@ -1,10 +1,10 @@
 {
-	"previousHash": "f0fbf8176520b9af37402818a91838f1f06858ba",
-	"currentRevisionId": 679,
-	"subject": "Fix default banner errors",
-	"body": "Fix default banner errors",
+	"previousHash": "6804d07fa55219cf34683a7d22cbd1c727592b87",
+	"currentRevisionId": 680,
+	"subject": "fix playlist page",
+	"body": "fix playlist page",
 	"branch": "master",
-	"committerName": "Coffee",
-	"committerEmail": "99076687+YukisCoffee@users.noreply.github.com",
-	"time": 1669723433
+	"committerName": "aubymori",
+	"committerEmail": "aubyomori@gmail.com",
+	"time": 1669946621
 }

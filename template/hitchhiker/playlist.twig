@@ -83,6 +83,10 @@
 {{ core.css('www-home-c4') }}
 {% endblock %}
 
+{%- block page_class -%}
+not-fixed-width-tab-widescreen
+{% endblock %}
+
 {% import 'common/appbar/appbar_nav.twig' as appbar_nav %}
 {%- block appbarContent -%}
    {{ appbar_nav.render(yt.appbar.nav) }}
