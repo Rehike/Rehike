@@ -1,10 +1,10 @@
 {
-	"previousHash": "6804d07fa55219cf34683a7d22cbd1c727592b87",
-	"currentRevisionId": 680,
-	"subject": "fix playlist page",
-	"body": "fix playlist page",
+	"previousHash": "68f4fcbb78561f96a7eaed3227a0798a9d033a4b",
+	"currentRevisionId": 681,
+	"subject": "remove deprecated getInnertubeResponses function",
+	"body": "remove deprecated getInnertubeResponses function",
 	"branch": "master",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1669946621
+	"time": 1670037429
 }

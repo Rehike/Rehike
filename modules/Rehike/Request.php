@@ -269,14 +269,4 @@ class Request
 
         return $final;
     }
-
-    /**
-     * Alias for getResponses()
-     * 
-     * @deprecated
-     */
-    public static function getInnertubeResponses()
-    {
-        return self::getResponses();
-    }
 }
