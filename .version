@@ -1,10 +1,10 @@
 {
-	"previousHash": "68f4fcbb78561f96a7eaed3227a0798a9d033a4b",
-	"currentRevisionId": 681,
-	"subject": "remove deprecated getInnertubeResponses function",
-	"body": "remove deprecated getInnertubeResponses function",
+	"previousHash": "d02406944838f6fc7e5a4f214fac167ba83dc7bd",
+	"currentRevisionId": 682,
+	"subject": "fix #210",
+	"body": "fix #210",
 	"branch": "master",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1670037429
+	"time": 1670087950
 }
