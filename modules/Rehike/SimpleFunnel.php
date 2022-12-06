@@ -75,6 +75,14 @@ class SimpleFunnel {
 
         $response = (object) [];
         $response -> body = curl_exec($ch);
+
+        // This header fucks EVERYTHING up
+        foreach ($headers as $name => $value) {
+            if (strtolower($name) == "content-encoding") {
+                unset($headers[$name]);
+            }
+        }
+
         $response -> headers = $headers;
         $response -> status = curl_getinfo($ch, CURLINFO_RESPONSE_CODE);
 

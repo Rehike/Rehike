@@ -1,10 +1,10 @@
 {
-	"previousHash": "4cc1878f9f1c5c7f2aa251effee322569448665c",
-	"currentRevisionId": 684,
-	"subject": "do sum stuff with roboto",
-	"body": "do sum stuff with roboto",
+	"previousHash": "3a9d851c3f90451c06d5c1c80c886b243b48cc3f",
+	"currentRevisionId": 685,
+	"subject": "fix bug where Content-Encoding header made simplefunnel break",
+	"body": "fix bug where Content-Encoding header made simplefunnel break",
 	"branch": "master",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1670160973
+	"time": 1670363661
 }
