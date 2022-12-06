@@ -24,7 +24,7 @@ if (isset($_COOKIE['VISITOR_INFO1_LIVE'])) {
     $visitor = $ytcfg -> INNERTUBE_CONTEXT -> client -> visitorData ?? "";
     $visitor = \Rehike\Util\Base64Url::decode($visitor);
     $visitor = substr($visitor, 2);
-    $visitor = explode(chr(0x28), $visitor)[0];
+    $visitor = explode("(", $visitor)[0];
     setcookie("VISITOR_INFO1_LIVE", $visitor);
 }
 
