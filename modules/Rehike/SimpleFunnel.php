@@ -10,8 +10,34 @@ namespace Rehike;
 class SimpleFunnel {
     /**
      * Hostname for funnelCurrentPage
+     * 
+     * @var string
      */
     public static $hostname = "www.youtube.com";
+
+    /**
+     * Remove these request headers
+     * LOWERCASE ONLY
+     * 
+     * @var string[]
+     */
+    public static $illegalRequestHeaders = [
+        "accept",
+        "accept-encoding",
+        "host",
+        "origin",
+        "referer"
+    ];
+
+    /**
+     * Remove these response headers
+     * LOWERCASE ONLY
+     * 
+     * @var string[]
+     */
+    public static $illegalResponseHeaders = [
+        "content-encoding"
+    ];
 
     /**
      * Funnel a response through.
@@ -36,16 +62,19 @@ class SimpleFunnel {
             "headers" => []
         ];
 
+        // Parse headers
         $headers = [];
-        foreach ($opts["headers"] as $key => $val) {
-            if (!in_array($key, ["Accept", "Accept-Encoding", "Host", "Origin", "Referer"])) {
-                $headers[] = "$key: $val";
+        foreach ($opts["headers"] as $name => $value) {
+            if (!in_array(strtolower($name), self::$illegalRequestHeaders)) {
+                $headers[] = "$name: $value";
             }
         }
 
+        // Set origin and referer to prevent CORS issues
         $headers["Origin"] = "https://" . $opts["host"];
         $headers["Referer"] = "https://" . $opts["host"] . $opts["uri"];
 
+        // Set up cURL and perform the request
         $url = "https://" . $opts["host"] . $opts["uri"];
         $ch = curl_init($url);
         curl_setopt_array($ch, [
@@ -59,6 +88,7 @@ class SimpleFunnel {
             CURLOPT_POSTFIELDS => $opts["body"],
             CURLOPT_ENCODING => "",
             CURLOPT_HEADERFUNCTION =>
+            // This function allows us to get the headers easily
             function($curl, $header) use (&$headers) {
                 $len = strlen($header);
                 $header = explode(':', $header, 2);
@@ -71,18 +101,21 @@ class SimpleFunnel {
             }
         ]);
 
+        // Initialize array for the header function defined above
         $headers = [];
 
+        // Set up response and add body
         $response = (object) [];
         $response -> body = curl_exec($ch);
 
-        // This header fucks EVERYTHING up
+        // Remove illegal response headers
         foreach ($headers as $name => $value) {
-            if (strtolower($name) == "content-encoding") {
+            if (in_array(strtolower($name), self::$illegalResponseHeaders)) {
                 unset($headers[$name]);
             }
         }
 
+        // Add headers and HTTP status
         $response -> headers = $headers;
         $response -> status = curl_getinfo($ch, CURLINFO_RESPONSE_CODE);
 
@@ -95,6 +128,7 @@ class SimpleFunnel {
      * @param object $funnelData
      */
     public static function output(object $funnelData): void {
+        // Output any errors
         if (isset($funnelData -> error)) {
             http_response_code(500);
             echo("
@@ -108,8 +142,12 @@ class SimpleFunnel {
         }
 
         if (!isset($funnelData -> body)) return;
+
         http_response_code($funnelData -> status);
+
+        // Set headers
         foreach($funnelData -> headers as $name => $value) {
+            // Hack because the header function fucking sucks
             $val = $value[0];
             header("$name: $val");
         }
@@ -123,7 +161,7 @@ class SimpleFunnel {
      * @param  bool $output  Whether or not to output the page
      * @return object|void
      */
-    public static function funnelCurrentPage(bool $output = false) {
+    public static function funnelCurrentPage(bool $output = false): ?object {
         $response = self::funnel([
             "method" => $_SERVER["REQUEST_METHOD"],
             "host" => self::$hostname,
@@ -135,6 +173,7 @@ class SimpleFunnel {
 
         if ($output) {
             self::output($response);
+            return null;
         } else {
             return $response;
         }
