@@ -1,0 +1,21 @@
+{
+    "loading": "Загрузка...",
+    "working": "Работаем...",
+    "showMore": "Ещё",
+    "showLess": "Свернуть",
+    "addToWatchLater": "Смотреть позже",
+    "addedToWatchLater": "Добавлен",
+    "addToHeader": "Добавить в",
+    "addToLoading": "Загрузка плейлистов...",
+    "addToError": "Ошибка",
+    "watchLaterSignIn": "%s Войдите %s чтобы добавить это в чтобы добавить это в Посмотреть позже",
+    "loadingMoreSuggestions": "Загрузка ещё предложений...",
+    "durationA11y": " - Продолжительность: %s.",
+    "verified": "Подтверждено",
+    "commentPostFail": "Не удалось опубликовать комментарий.",
+    "usernamePrepend": "от ",
+    "shelfsliderNext": "Следущий",
+    "shelfsliderPrev": "Предыдущий",
+    "transcriptTitle": "Текст видео",
+    "transcriptFail": "Не удалось загрузить текст видео."
+}
