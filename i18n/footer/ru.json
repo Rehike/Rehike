@@ -1,0 +1,23 @@
+{
+    "logoTooltip": "YouTube home",
+    "pickerLanguage": "Язык: %s",
+    "pickerLocation": "Страна: %s",
+    "pickerSafety": "Безопасный режим: %s",
+    "safetyOn": "вкл.",
+    "safetyOff": "выкл.",
+    "buttonHistory": "История",
+    "buttonHelp": "Справка",
+    "primaryAbout": "О сервисе",
+    "primaryPress": "Прессе",
+    "primaryCopyright": "Правообладателям",
+    "primaryCreators": "Авторам",
+    "primaryAdvertise": "Рекламодателям",
+    "primaryDevs": "Разработчикам",
+    "primaryVersion": "Rehike v%s [%s]",
+    "secondaryTerms": "Условия использования",
+    "secondaryPrivacy": "Конфиденциальность",
+    "secondaryPolicySafety": " Правила и безопасность",
+    "secondaryFeedback": "Отправить отзыв",
+    "secondaryTestTube": "Новые функции",
+    "secondaryCopyright": "© %s Google LLC"
+}
