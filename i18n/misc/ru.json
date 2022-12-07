@@ -6,7 +6,7 @@
     "viewTextSingular": "%s просмотр",
     "viewTextPlural": "%s просмотров",
     "dateTextPublic": "Опубликован в %s",
-    "dateTextPrivate": "Загружено %s",
+    "dateTextPrivate": "Загружено в %s",
     "subscribeText": "Подписаться",
     "subscribedText": "Подписан",
     "unsubscribeText": "Отписаться",
