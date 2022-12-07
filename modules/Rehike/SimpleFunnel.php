@@ -36,7 +36,8 @@ class SimpleFunnel {
      * @var string[]
      */
     public static $illegalResponseHeaders = [
-        "content-encoding"
+        "content-encoding",
+        "content-length"
     ];
 
     /**
