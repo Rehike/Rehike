@@ -1,0 +1,11 @@
+{
+    "flowGrid": "Сетка",
+    "flowList": "Список",
+    "viewUploads": "Загрузки",
+    "viewAllVideos": "Все видео",
+    "viewLiveStreams": "Прямые трансляции",
+    "viewShorts": "Клипы",
+    "seeAll": "Смотреть все",
+    "backstageViewAllCommentsSingular": "Посмотреть 1 комментарий",
+    "backstageViewAllCommentsPlural": "Посмотреть все %s Комментариев"
+}

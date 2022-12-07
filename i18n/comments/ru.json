@@ -1,0 +1,12 @@
+{
+    "viewSingular": "Посмотреть ответ",
+    "viewMulti": "Посмотреть %s ответов",
+    "viewSingularOwner": "Посмотреть ответ от %s",
+    "viewMultiOwner": "Посмотреть %s ответы от %s и других",
+    "viewMultiTeaser": "Посмотреть все %s ответы",
+    "viewMultiTeaserOwner": "Посмотреть все %s ответы от %s и другие",
+    "hideSingular": "Скрыть ответ",
+    "hideMulti": "Скрыть %s ответы",
+    "replyCountIsolator": "/( ответы)|( ответить)/i",
+    "oldReplyTextRegex": "/Посмотреть /"
+}
