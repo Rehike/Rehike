@@ -15,6 +15,8 @@ namespace YukisCoffee\CoffeeRequest;
  */
 class CoffeeRequestInstance
 {
+    public static $resolve = [];
+
     // Property declarations
     public $requestsMaxAttempts = 50;
     public $defaultOptions =
@@ -197,6 +199,8 @@ class CoffeeRequestInstance
             
             $curlArr[$curlOpt] = $value;
         }
+
+        $curlArr[\CURLOPT_RESOLVE] = self::$resolve;
         
         return $curlArr;
     }
