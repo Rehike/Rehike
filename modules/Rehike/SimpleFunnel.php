@@ -88,6 +88,7 @@ class SimpleFunnel {
             CURLOPT_HTTPHEADER => $headers,
             CURLOPT_POSTFIELDS => $opts["body"],
             CURLOPT_ENCODING => "",
+            CURLOPT_RESOLVE => \YukisCoffee\CoffeeRequest\CoffeeRequestInstance::$resolve,
             CURLOPT_HEADERFUNCTION =>
             // This function allows us to get the headers easily
             function($curl, $header) use (&$headers) {

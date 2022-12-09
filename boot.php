@@ -5,6 +5,12 @@ require "modules/Rehike/Constants.php";
 require "vendor/autoload.php";
 require "modules/rehikeAutoloader.php";
 
+use YukisCoffee\CoffeeRequest\CoffeeRequestInstance as CoffeeRequest;
+CoffeeRequest::$resolve = [
+   Rehike\Util\Nameserver\Nameserver::get("www.youtube.com", "1.1.1.1", 443)
+      ->serialize()
+];
+
 use Rehike\ControllerV2\Core as ControllerV2;
 use Rehike\TemplateManager;
 
