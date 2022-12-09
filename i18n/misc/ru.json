@@ -1,0 +1,16 @@
+{
+    "btnCancel": "Отменить",
+    "btnSave": "Сохранить",
+    "subscriberTextSingular": "%s подписчик",
+    "subscriberTextPlural": "%s подписчиков",
+    "viewTextSingular": "%s просмотр",
+    "viewTextPlural": "%s просмотров",
+    "dateTextPublic": "Опубликован в %s",
+    "dateTextPrivate": "Загружено в %s",
+    "subscribeText": "Подписаться",
+    "subscribedText": "Подписан",
+    "unsubscribeText": "Отписаться",
+    "selfSubscribeTooltip": "Не нужно подписываться на себя!",
+    "notificationPrefsTitle": "Уведомления от %s",
+    "notificationPrefsLabel": "Настройки подписки"
+}
