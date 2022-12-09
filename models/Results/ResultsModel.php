@@ -28,7 +28,9 @@ class ResultsModel {
         $response = (object) [];
         $contents = $data -> contents -> twoColumnSearchResultsRenderer -> primaryContents -> sectionListRenderer;
         $submenu = &$contents -> subMenu -> searchSubMenuRenderer;
-        $submenu -> resultCountText = $i18n -> resultCount(number_format(self::getResultsCount($data)));
+        $submenu -> resultCountText = self::getResultsCount($data) > 1
+        ? $i18n -> resultCountPlural(number_format(self::getResultsCount($data)))
+        : $i18n -> resultCountSingular(number_format(self::getResultsCount($data)));
 
         $filterCrumbs = [];
         if (isset($submenu -> groups))
