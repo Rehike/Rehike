@@ -82,7 +82,7 @@ class Request
         {
             self::$namespacedRequestMap[$namespace] = [];
             self::$requestManagers[$namespace] = new CoffeeRequest();
-            self::$requestManagers[$namespace]->requestMaxAttempts = 1;
+            self::$requestManagers[$namespace]->requestsMaxAttempts = 1;
         }
     }
 

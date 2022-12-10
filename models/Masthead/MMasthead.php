@@ -27,6 +27,9 @@ class MMasthead {
     /** @var MButton[] */
     public $buttons = [];
 
+    /** @var object */
+    public $notificationStrings;
+
     public function __construct($appbarEnabled) {
         $i18n = i18n::newNamespace("masthead");
         $i18n -> registerFromFolder("i18n/masthead");
@@ -214,6 +217,7 @@ class MCreationClickcard {
     ];
     public $id = "yt-masthead-creation-menu";
     public $cardId = "yt-masthead-creation-clickcard";
+    public $content;
 
     public function __construct() {
         $i18n = i18n::getNamespace("masthead");
