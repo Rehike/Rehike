@@ -7,6 +7,7 @@ namespace Rehike\Model\Common;
  * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
+#[\AllowDynamicProperties]
 class MButton
 {
     public $style = "STYLE_DEFAULT";
