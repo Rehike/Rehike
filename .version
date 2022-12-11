@@ -1,10 +1,10 @@
 {
-	"previousHash": "4e422a2ecc13c48bbac1483631d2a570e97cf578",
-	"currentRevisionId": 717,
-	"subject": "Merge branch 'master' of https://github.com/Rehike/Rehike",
-	"body": "Merge branch 'master' of https://github.com/Rehike/Rehike",
+	"previousHash": "00a59b95e66a39352fe32a6d3d7dceafabc4e2e1",
+	"currentRevisionId": 718,
+	"subject": "Prevent debugger fatal error with recursion",
+	"body": "Prevent debugger fatal error with recursion",
 	"branch": "master",
-	"committerName": "aubymori",
-	"committerEmail": "aubyomori@gmail.com",
-	"time": 1670702686
+	"committerName": "Coffee",
+	"committerEmail": "99076687+YukisCoffee@users.noreply.github.com",
+	"time": 1670724077
 }
