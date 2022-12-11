@@ -3,29 +3,38 @@ ob_start();
 $root = $_SERVER['DOCUMENT_ROOT'];
 set_include_path($root);
 
+include "includes/polyfill/AllowDynamicProperties.php";
+
 // Ungodly global variable that connects everything together.
 // Do not touch, this needs to be carefully moved for clean up.
 // Think of it like nuclear waste :P
 // love taniko
 $yt = (object) [];
 
-$ytConstants = include "resource_constants.php";
+$ytConstants = include "includes/resource_constants.php";
+
+require "includes/constants.php";
 include "fatalHandler.php";
+
+// Include the Composer and Rehike autoloaders, respectively.
+require "vendor/autoload.php";
+require "includes/rehike_autoloader.php";
+
 include "boot.php";
 
 // TODO (kirasicecreamm): Clean this up.
 if (isset($_COOKIE['VISITOR_INFO1_LIVE'])) {
     $visitor = $_COOKIE['VISITOR_INFO1_LIVE'];
 } else {
-    $coffee = new \YukisCoffee\CoffeeRequest\CoffeeRequest;
-    $response = $coffee -> request("https://www.youtube.com/");
-    preg_match("/ytcfg\.set\(({.*?})\);/", $response, $matches);
-    $ytcfg = json_decode(@$matches[1]);
-    $visitor = $ytcfg -> INNERTUBE_CONTEXT -> client -> visitorData ?? "";
-    $visitor = \Rehike\Util\Base64Url::decode($visitor);
-    $visitor = substr($visitor, 2);
-    $visitor = explode(chr(0x28), $visitor)[0];
-    setcookie("VISITOR_INFO1_LIVE", $visitor);
+    // $coffee = new \YukisCoffee\CoffeeRequest\CoffeeRequest;
+    // $response = $coffee -> request("https://www.youtube.com/");
+    // preg_match("/ytcfg\.set\(({.*?})\);/", $response, $matches);
+    // $ytcfg = json_decode(@$matches[1]);
+    // $visitor = $ytcfg -> INNERTUBE_CONTEXT -> client -> visitorData ?? "";
+    // $visitor = \Rehike\Util\Base64Url::decode($visitor);
+    // $visitor = substr($visitor, 2);
+    // $visitor = explode(chr(0x28), $visitor)[0];
+    // setcookie("VISITOR_INFO1_LIVE", $visitor);
 }
 
 // Load configuration

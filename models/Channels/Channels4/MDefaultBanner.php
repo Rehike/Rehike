@@ -16,7 +16,7 @@ class MDefaultBanner
 
     public function __construct()
     {
-        $resources = include "resource_constants.php";
+        $resources = include "includes/resource_constants.php";
 
         $this -> image = TF::imgPath(
             "channels/c4/default_banner",

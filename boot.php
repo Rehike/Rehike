@@ -1,9 +1,9 @@
 <?php
-require "modules/Rehike/Constants.php";
-
-// Include the Composer and Rehike autoloaders, respectively.
-require "vendor/autoload.php";
-require "modules/rehikeAutoloader.php";
+use YukisCoffee\CoffeeRequest\CoffeeRequest;
+CoffeeRequest::setResolve([
+   Rehike\Util\Nameserver\Nameserver::get("www.youtube.com", "1.1.1.1", 443)
+      ->serialize()
+]);
 
 use Rehike\ControllerV2\Core as ControllerV2;
 use Rehike\TemplateManager;
@@ -28,7 +28,7 @@ $yt -> msgs = $msgs -> getStrings()[$msgs -> getLanguage()];
 
 // Controller V2 init
 ControllerV2::registerStateVariable($yt);
-ControllerV2::setRedirectHandler(require "modules/spfRedirectHandler.php");
+ControllerV2::setRedirectHandler(require "includes/spf_redirect_handler.php");
 
 // Player init
 use \Rehike\Player\PlayerCore;
@@ -55,7 +55,7 @@ if (isset($_COOKIE["PREF"])) {
 
 
 // Import all template functions
-foreach (glob('modules/template_functions/*.php') as $file) include $file;
+foreach (glob('includes/template_functions/*.php') as $file) include $file;
 
 // should be moved
 TemplateManager::addFunction('http_response_code', function($code) {

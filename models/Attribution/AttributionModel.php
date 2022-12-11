@@ -2,7 +2,7 @@
 namespace Rehike\Model\Attribution;
 
 use Rehike\i18n;
-use Rehike\Request;
+use Rehike\Network;
 use Rehike\TemplateFunctions;
 
 class AttributionModel {
@@ -44,39 +44,42 @@ class AttributionModel {
                 if (isset($items[$i] -> richItemRenderer)) {
                     $videoId = $items[$i] -> richItemRenderer -> content -> reelItemRenderer -> videoId ?? null;
 
-                    // sfv_audio_pivot doesn't give us adequate data
-                    $reelItem = Request::innertubeRequest("reel/reel_item_watch", (object) [
-                        "disablePlayerResponse" => true,
-                        "playerRequest" => (object) [
-                            "videoId" => $videoId
-                        ]
-                    ]);
-                    $reelData = json_decode($reelItem);
+                    // TODO (kirasicecreamm): I DON'T WANT TO FIX THIS WTF THIS
+                    // WILL NEVER WORK OUT 😭😭
 
-                    $reelHeader = $reelData -> overlay -> reelPlayerOverlayRenderer -> reelPlayerHeaderSupportedRenderers -> reelPlayerHeaderRenderer ?? null;
-                    $contents -> items[] = (object) [];
-                    $current = $contents -> items[array_key_last($contents -> items)];
-                    $thumb = $items[$i] -> richItemRenderer -> content -> reelItemRenderer -> thumbnail -> thumbnails[0] -> url ?? null;
-                    $current -> thumbnail = preg_replace("/\?sqp=.*/", "", $thumb);
-                    $current -> title = $reelHeader -> reelTitleText;
-                    $current -> author = $reelHeader -> channelTitleText;
-                    $current -> authorA11yLabel = $i18n -> get("goToUser", TemplateFunctions::getText($reelHeader -> channelTitleText));
-                    $current -> author -> navigationEndpoint = $reelHeader -> channelNavigationEndpoint;
-                    $current -> attrLink = (object) [
-                        "simpleText" => $i18n -> get("viewAttrs"),
-                        "navigationEndpoint" => (object) [
-                            "commandMetadata" => (object) [
-                                "webCommandMetadata" => (object) [
-                                    "url" => ""
-                                ]
-                            ]
-                        ]
-                    ];
-                    $current -> videoId = $videoId;
-                    $current -> watchLater = (object) [
-                        "isToggled" => false,
-                        "untoggledTooltip" => $i18n -> get("watchLater")
-                    ];
+                    // // sfv_audio_pivot doesn't give us adequate data
+                    // $reelItem = Request::innertubeRequest("reel/reel_item_watch", (object) [
+                    //     "disablePlayerResponse" => true,
+                    //     "playerRequest" => (object) [
+                    //         "videoId" => $videoId
+                    //     ]
+                    // ]);
+                    // $reelData = json_decode($reelItem);
+
+                    // $reelHeader = $reelData -> overlay -> reelPlayerOverlayRenderer -> reelPlayerHeaderSupportedRenderers -> reelPlayerHeaderRenderer ?? null;
+                    // $contents -> items[] = (object) [];
+                    // $current = $contents -> items[array_key_last($contents -> items)];
+                    // $thumb = $items[$i] -> richItemRenderer -> content -> reelItemRenderer -> thumbnail -> thumbnails[0] -> url ?? null;
+                    // $current -> thumbnail = preg_replace("/\?sqp=.*/", "", $thumb);
+                    // $current -> title = $reelHeader -> reelTitleText;
+                    // $current -> author = $reelHeader -> channelTitleText;
+                    // $current -> authorA11yLabel = $i18n -> get("goToUser", TemplateFunctions::getText($reelHeader -> channelTitleText));
+                    // $current -> author -> navigationEndpoint = $reelHeader -> channelNavigationEndpoint;
+                    // $current -> attrLink = (object) [
+                    //     "simpleText" => $i18n -> get("viewAttrs"),
+                    //     "navigationEndpoint" => (object) [
+                    //         "commandMetadata" => (object) [
+                    //             "webCommandMetadata" => (object) [
+                    //                 "url" => ""
+                    //             ]
+                    //         ]
+                    //     ]
+                    // ];
+                    // $current -> videoId = $videoId;
+                    // $current -> watchLater = (object) [
+                    //     "isToggled" => false,
+                    //     "untoggledTooltip" => $i18n -> get("watchLater")
+                    // ];
                 }
             }
 

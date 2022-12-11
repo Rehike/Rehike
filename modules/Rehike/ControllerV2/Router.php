@@ -4,7 +4,7 @@ namespace Rehike\ControllerV2;
 use Rehike\ControllerV2\Util\GlobToRegexp;
 use Rehike\SimpleFunnel;
 
-include_once "modules/polyfill/fnmatch.php";
+include_once "includes/polyfill/fnmatch.php";
 
 /**
  * Implements the Controller V2 router.

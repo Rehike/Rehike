@@ -3,7 +3,7 @@ namespace Rehike\Controller\ajax;
 
 use Rehike\Controller\core\AjaxController;
 use Rehike\i18n;
-use Rehike\Request;
+use Rehike\Network;
 use Rehike\Model\AddTo\MAddTo as AddTo;
 
 return new class extends AjaxController {
@@ -23,13 +23,17 @@ return new class extends AjaxController {
         // Hence: very gross fix for a server-side bug
         sleep(3);
 
-        $response = Request::innertubeRequest("playlist/get_add_to_playlist", (object)[
-            "videoIds" => explode(",", $_POST["video_ids"]) ?? [""]
-        ]);
-        $response = json_decode($response);
+        Network::innertubeRequest(
+            action: "playlist/get_add_to_playlist",
+            body: [
+                "videoIds" => explode(",", $_POST["video_ids"]) ?? [""]
+            ]
+        )->then(function ($response) use ($yt) {
+            $data = $response->getJson();
 
-        $lists = $response->contents[0]->addToPlaylistRenderer->playlists;
+            $lists = $data->contents[0]->addToPlaylistRenderer->playlists;
 
-        $yt->page->addto = new AddTo($lists);
+            $yt->page->addto = new AddTo($lists);
+        });
     }
 };

@@ -26,8 +26,8 @@ ytplayer.config = {
     "args": {
        {%- if yt.playerResponse -%}
          raw_player_response: ytInitialPlayerResponse.playerResponse,
-         {% if yt.rawWatchNextResponse %}
-         raw_watch_next_response: {{ yt.rawWatchNextResponse|raw }},
+         {% if yt.watchNextResponse %}
+         raw_watch_next_response: {{ yt.watchNextResponse|json_encode|raw }},
          {% endif %}
        {% endif %}
        {%- if yt.page.playlist -%}

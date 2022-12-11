@@ -1,9 +1,16 @@
 <?php
 namespace Rehike\Controller\ajax;
 
-use Rehike\Request;
+use Rehike\Network;
 use Rehike\Util\RichShelfUtils;
 
+/**
+ * Controller for browse AJAX requests.
+ * 
+ * @author Aubrey Pankow <aubyomori@gmail.com>
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
+ * @author The Rehike Maintainers
+ */
 return new class extends \Rehike\Controller\core\AjaxController {
     public $template = "ajax/browse";
 
@@ -14,34 +21,40 @@ return new class extends \Rehike\Controller\core\AjaxController {
     public function onPost(&$yt, $request) {
         if (!isset($request -> params -> continuation)) self::error();
 
-        Request::queueInnertubeRequest("browse_ajax", "browse", (object) [
-            "continuation" => $request -> params -> continuation
-        ]);
-        $ytdata = json_decode(Request::getResponses()["browse_ajax"]);
+        Network::innertubeRequest(
+            action: "browse",
+            body: [
+                "continuation" => $request -> params -> continuation
+            ]
+        )->then(function ($response) use ($yt, $request) {
+            $ytdata = $response->getJson();
 
-        if (isset($ytdata -> onResponseReceivedActions)) {
-            foreach ($ytdata -> onResponseReceivedActions as $action) {
-                if (isset($action -> appendContinuationItemsAction)) {
-                    
-                    foreach ($action -> appendContinuationItemsAction -> continuationItems as &$item) {
-                        switch (true) {
-                            case isset($item -> continuationItemRenderer):
-                                $yt -> page -> continuation = $item -> continuationItemRenderer -> continuationEndpoint -> continuationCommand -> token;
-                                break;
-                            case isset($item -> richItemRenderer):
-                                $item = RichShelfUtils::reformatShelfItem($item);
-                                break;
-                            case isset($item -> richSectionRenderer -> content -> richShelfRenderer):
-                                $item = RichShelfUtils::reformatShelf($item);
-                                break;
+            if (isset($ytdata -> onResponseReceivedActions)) {
+                foreach ($ytdata -> onResponseReceivedActions as $action) {
+                    if (isset($action -> appendContinuationItemsAction)) {
+                        
+                        foreach ($action -> appendContinuationItemsAction -> continuationItems as &$item) {
+                            switch (true) {
+                                case isset($item -> continuationItemRenderer):
+                                    $yt -> page -> continuation = $item -> continuationItemRenderer -> continuationEndpoint -> continuationCommand -> token;
+                                    break;
+                                case isset($item -> richItemRenderer):
+                                    $item = RichShelfUtils::reformatShelfItem($item);
+                                    break;
+                                case isset($item -> richSectionRenderer -> content -> richShelfRenderer):
+                                    $item = RichShelfUtils::reformatShelf($item);
+                                    break;
+                            }
                         }
+                        $yt -> page -> items = $action -> appendContinuationItemsAction -> continuationItems;
                     }
-                    $yt -> page -> items = $action -> appendContinuationItemsAction -> continuationItems;
                 }
+            } else {
+                self::error();
             }
-        } else self::error();
-
-        $yt -> page -> target = $request -> params -> target_id;
-        $yt -> page -> response = $ytdata;
+    
+            $yt -> page -> target = $request -> params -> target_id;
+            $yt -> page -> response = $ytdata;
+        });
     }
 };

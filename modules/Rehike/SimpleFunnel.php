@@ -1,11 +1,14 @@
 <?php
 namespace Rehike;
 
+use YukisCoffee\CoffeeRequest\CoffeeRequest;
+
 /**
  * A simple tool to funnel requests from a certain domain,
  * while ignoring any proxies active
  * 
  * @author Aubrey P. <aubyomori@gmail.com>
+ * @author Taniko Y. <kirasicecreamm@gmail.com>
  */
 class SimpleFunnel {
     /**
@@ -19,14 +22,14 @@ class SimpleFunnel {
      * @param array $opts  Options such as headers and request method
      * @return object
      */
-    public static function funnel(array $opts): object {
+    public static function funnel(array $opts): void {
         // Required fields
-        if (!isset($opts["host"])) return (object) [
+        if (!isset($opts["host"])) self::output((object) [
             "error" => "No hostname specified"
-        ];
-        if (!isset($opts["uri"])) return (object) [
+        ]);
+        if (!isset($opts["uri"])) self::output((object) [
             "error" => "No URI specified"
-        ];
+        ]);
 
         // Default options
         $opts += [
@@ -36,49 +39,50 @@ class SimpleFunnel {
             "headers" => []
         ];
 
+        $illegalRequestHeaders = [
+            "Accept",
+            "Accept-Encoding",
+            "Host",
+            "Origin",
+            "Referer"
+        ];
+
         $headers = [];
         foreach ($opts["headers"] as $key => $val) {
-            if (!in_array($key, ["Accept", "Accept-Encoding", "Host", "Origin", "Referer"])) {
-                $headers[] = "$key: $val";
+            if (!in_array($key, $illegalRequestHeaders)) {
+                $headers[$key] = $val;
             }
         }
 
+        $headers["Host"] = $opts["host"];
         $headers["Origin"] = "https://" . $opts["host"];
         $headers["Referer"] = "https://" . $opts["host"] . $opts["uri"];
 
         $url = "https://" . $opts["host"] . $opts["uri"];
-        $ch = curl_init($url);
-        curl_setopt_array($ch, [
-            CURLOPT_CUSTOMREQUEST => $opts["method"],
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_HEADER => false,
-            CURLOPT_VERBOSE => true,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_USERAGENT => $opts["useragent"],
-            CURLOPT_HTTPHEADER => $headers,
-            CURLOPT_POSTFIELDS => $opts["body"],
-            CURLOPT_ENCODING => "",
-            CURLOPT_HEADERFUNCTION =>
-            function($curl, $header) use (&$headers) {
-                $len = strlen($header);
-                $header = explode(':', $header, 2);
-                if (count($header) < 2) // ignore invalid headers
-                    return $len;
-            
-                $headers[trim($header[0])][] = trim($header[1]);
-                
-                return $len;
-            }
-        ]);
 
-        $headers = [];
+        // Set up the request.
+        $params = [
+            "method" => $opts["method"],
+            "headers" => $headers,
+            "redirect" => "manual",
+        ];
 
-        $response = (object) [];
-        $response -> body = curl_exec($ch);
-        $response -> headers = $headers;
-        $response -> status = curl_getinfo($ch, CURLINFO_RESPONSE_CODE);
+        if ("POST" == $params["method"])
+        {
+            $params["body"] = $opts["body"];
+        }
 
-        return $response;
+        $request = CoffeeRequest::request($url, $params);
+
+        $request->then(function($response) {
+            // header("Content-Type: text/plain");
+            // var_dump($response);
+            // die();
+
+            self::output($response);
+        });
+
+        CoffeeRequest::run();
     }
 
     /**
@@ -99,13 +103,16 @@ class SimpleFunnel {
             return;
         }
 
-        if (!isset($funnelData -> body)) return;
+        $illegalResponseHeaders = [
+            "content-encoding"
+        ];
+
         http_response_code($funnelData -> status);
-        foreach($funnelData -> headers as $name => $value) {
-            $val = $value[0];
-            header("$name: $val");
+        foreach($funnelData -> headers as $name => $value)
+        if (!in_array($name, $illegalResponseHeaders)) {
+            header("$name: $value");
         }
-        echo($funnelData -> body);
+        echo($funnelData -> getText());
         die();
     }
     
@@ -116,7 +123,7 @@ class SimpleFunnel {
      * @return object|void
      */
     public static function funnelCurrentPage(bool $output = false) {
-        $response = self::funnel([
+        self::funnel([
             "method" => $_SERVER["REQUEST_METHOD"],
             "host" => self::$hostname,
             "uri" => $_SERVER["REQUEST_URI"],
@@ -124,11 +131,5 @@ class SimpleFunnel {
             "body" => file_get_contents("php://input"),
             "headers" => getallheaders()
         ]);
-
-        if ($output) {
-            self::output($response);
-        } else {
-            return $response;
-        }
     }
 }

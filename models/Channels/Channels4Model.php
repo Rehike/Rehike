@@ -6,7 +6,6 @@ use Rehike\Model\Channels\Channels4\BrandedPageV2\MSubnav;
 use Rehike\Model\Channels\Channels4\Sidebar\MRelatedChannels;
 use Rehike\Model\Appbar\MAppbarNavItem;
 use Rehike\Model\Browse\InnertubeBrowseConverter;
-use Rehike\Request;
 
 class Channels4Model
 {

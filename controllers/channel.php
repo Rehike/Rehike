@@ -5,7 +5,9 @@ use Rehike\Controller\core\NirvanaController;
 
 use \Com\Youtube\Innertube\Request\BrowseRequestParams;
 
-use Rehike\Request;
+use Rehike\Network;
+use Rehike\Async\Promise;
+use YukisCoffee\CoffeeRequest\Network\Response;
 use Rehike\Util\Base64Url;
 use Rehike\i18n;
 use Rehike\Util\ExtractUtils;
@@ -41,99 +43,111 @@ class channel extends NirvanaController {
         // BUG (kirasicecreamm): ChannelUtils::getUcid is hardcoded
         // to look at the path property of the input object.
         // This is bad design.
-        $ucid = ChannelUtils::getUcid($request);
-        $yt->ucid = $ucid;
+        ChannelUtils::getUcid($request)->then(function ($ucid) 
+            use ($yt, $request) 
+        {
+            $yt->ucid = $ucid;
 
-        if ($ucid == "") {
-            http_response_code(404);
-            $this -> spfIdListeners = [];
-            $this -> template = "error/404";
-        }
-
-        // Register the endpoint in the request
-        $this->setEndpoint("browse", $ucid);
-
-        // Get the requested tab
-        $tab = "featured";
-        if (!in_array($request -> path[0], ["channel", "user", "c"])) {
-            if (isset($request->path[1]) && "" != @$request->path[1]) {
-                $tab = strtolower($request -> path[1]);
+            if ($ucid == "") {
+                http_response_code(404);
+                $this -> spfIdListeners = [];
+                $this -> template = "error/404";
             }
-        } elseif (isset($request->path[2]) && "" != @$request->path[2]) {
-            $tab = strtolower($request->path[2]);
-        }
 
-        self::$requestedTab = $tab;
+            // Register the endpoint in the request
+            $this->setEndpoint("browse", $ucid);
 
-        // Handle live tab redirect (if the channel is livestreaming)
-        if ("live" == $tab)
-        {
-            $this->handleLiveTabRedirect($request->rawPath);
-        }
+            // Get the requested tab
+            $tab = "featured";
+            if (!in_array($request -> path[0], ["channel", "user", "c"])) {
+                if (isset($request->path[1]) && "" != @$request->path[1]) {
+                    $tab = strtolower($request -> path[1]);
+                }
+            } elseif (isset($request->path[2]) && "" != @$request->path[2]) {
+                $tab = strtolower($request->path[2]);
+            }
 
-        // Expose tab to configure frontend JS
-        $yt->tab = $tab;
+            self::$requestedTab = $tab;
 
-        // Configure request params
-        $params = new BrowseRequestParams();
-        $params->setTab($tab);
+            // Handle live tab redirect (if the channel is livestreaming)
+            if ("live" == $tab)
+            {
+                $this->handleLiveTabRedirect($request->rawPath);
+            }
 
-        if (isset($request -> params -> shelf_id)) {
-            $params->setShelfId((int) $request -> params -> shelf_id);
-        }
+            // Expose tab to configure frontend JS
+            $yt->tab = $tab;
 
-        if (isset($request -> params -> view)) {
-            $params->setView((int) $request -> params -> view);
-        }
+            // Configure request params
+            $params = new BrowseRequestParams();
+            $params->setTab($tab);
 
-        // Perform InnerTube request
-        Request::queueInnertubeRequest("main", "browse", (object)[
-            "browseId" => $ucid,
-            "params" => Base64Url::encode($params->serializeToString()),
-            "query" => $request -> params -> query ?? null 
-        ]);
+            if (isset($request -> params -> shelf_id)) {
+                $params->setShelfId((int) $request -> params -> shelf_id);
+            }
 
-        if (
-            in_array($tab, self::SECONDARY_RESULTS_ENABLED_TAB_IDS) &&
-            "featured" != $tab
-        )
-        {
-            Request::queueInnertubeRequest("sidebar", "browse", (object)[
-                "browseId" => $ucid
-            ]);
-        }
+            if (isset($request -> params -> view)) {
+                $params->setView((int) $request -> params -> view);
+            }
 
-        $responses = Request::getResponses();
+            switch ($request -> path[0]) {
+                case "c":
+                case "user":
+                case "channel":
+                    $baseUrl = "/" . $request->path[0] . "/" . $request->path[1];
+                    break;
+                default:
+                    $baseUrl = "/" . $request->path[0];
+                    break;
+            }
 
-        $page = json_decode($responses["main"]);
+            Channels4::registerBaseUrl($baseUrl);
 
-        
-        switch ($request -> path[0]) {
-            case "c":
-            case "user":
-            case "channel":
-                $baseUrl = "/" . $request->path[0] . "/" . $request->path[1];
-                break;
-            default:
-                $baseUrl = "/" . $request->path[0];
-                break;
-        }
+            // Perform InnerTube request
+            $channelRequest = Network::innertubeRequest(
+                action: "browse",
+                body: [
+                    "browseId" => $ucid,
+                    "params" => Base64Url::encode($params->serializeToString()),
+                    "query" => $request -> params -> query ?? null 
+                ]
+            );
 
-        Channels4::registerBaseUrl($baseUrl);
+            if (
+                in_array($tab, self::SECONDARY_RESULTS_ENABLED_TAB_IDS) &&
+                "featured" != $tab
+            )
+            {
+                $sidebarRequest = Network::innertubeRequest(
+                    action: "browse",
+                    body: [
+                        "browseId" => $ucid
+                    ]
+                );
+            }
+            else
+            {
+                $sidebarRequest = new Promise(fn($r) => $r());
+            }
 
-        // Handle the sidebar
-        $sidebar = null;
+            Promise::all([
+                "channel" => $channelRequest,
+                "sidebar" => $sidebarRequest
+            ])->then(function (array $responses) use ($yt) {
+                $channel = $responses["channel"]->getJson();
+                
+                if ($responses["sidebar"] instanceof Response)
+                {
+                    $sidebar = $responses["sidebar"]->getJson();
+                }
+                else
+                {
+                    $sidebar = $channel;
+                }
 
-        if (isset($responses["sidebar"]))
-        {
-            $sidebar = json_decode($responses["sidebar"]);
-        }
-        else if ("featured" == $tab)
-        {
-            $sidebar = $page;
-        }
-
-        $yt->page = Channels4::bake($yt, $page, $sidebar);
+                $yt->page = Channels4::bake($yt, $channel, $sidebar);
+            });
+        });
     }
 
     /**
@@ -145,18 +159,20 @@ class channel extends NirvanaController {
      */
     public function handleLiveTabRedirect($path)
     {
-        Request::queueInnertubeRequest("resolve", "navigation/resolve_url", (object) [
-            "url" => "https://www.youtube.com" . $path
-        ]);
-        $response = Request::getResponses()["resolve"];
-
-        $ytdata = json_decode($response);
+        Network::innertubeRequest(
+            action: "navigation/resolve_url",
+            body: [
+                "url" => "https://www.youtube.com" . $path
+            ]
+        )->then(function ($response) {
+            $ytdata = $response->getJson();
         
-        if (isset($ytdata->endpoint->watchEndpoint))
-        {
-            $url = "/watch?v=" . $ytdata->endpoint->watchEndpoint->videoId;
-            (require "modules/spfRedirectHandler.php")($url);
-        }
+            if (isset($ytdata->endpoint->watchEndpoint))
+            {
+                $url = "/watch?v=" . $ytdata->endpoint->watchEndpoint->videoId;
+                (require "includes/spf_redirect_handler.php")($url);
+            }
+        });
     }
 }
 

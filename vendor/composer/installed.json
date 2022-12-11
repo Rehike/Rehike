@@ -2,17 +2,17 @@
     "packages": [
         {
             "name": "google/protobuf",
-            "version": "v3.21.7",
-            "version_normalized": "3.21.7.0",
+            "version": "v3.21.11",
+            "version_normalized": "3.21.11.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/protocolbuffers/protobuf-php.git",
-                "reference": "56505903b395c5d38cbf4c8575bfef4f4c9d4c30"
+                "reference": "8f8dc48540aed2c96eb3febcc4816f1321f66b85"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/protocolbuffers/protobuf-php/zipball/56505903b395c5d38cbf4c8575bfef4f4c9d4c30",
-                "reference": "56505903b395c5d38cbf4c8575bfef4f4c9d4c30",
+                "url": "https://api.github.com/repos/protocolbuffers/protobuf-php/zipball/8f8dc48540aed2c96eb3febcc4816f1321f66b85",
+                "reference": "8f8dc48540aed2c96eb3febcc4816f1321f66b85",
                 "shasum": ""
             },
             "require": {
@@ -24,7 +24,7 @@
             "suggest": {
                 "ext-bcmath": "Need to support JSON deserialization"
             },
-            "time": "2022-09-29T21:58:56+00:00",
+            "time": "2022-12-08T06:36:59+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -43,7 +43,7 @@
                 "proto"
             ],
             "support": {
-                "source": "https://github.com/protocolbuffers/protobuf-php/tree/v3.21.7"
+                "source": "https://github.com/protocolbuffers/protobuf-php/tree/v3.21.11"
             },
             "install-path": "../google/protobuf"
         },
@@ -437,17 +437,17 @@
         },
         {
             "name": "twig/twig",
-            "version": "v3.4.1",
-            "version_normalized": "3.4.1.0",
+            "version": "v3.4.3",
+            "version_normalized": "3.4.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "e939eae92386b69b49cfa4599dd9bead6bf4a342"
+                "reference": "c38fd6b0b7f370c198db91ffd02e23b517426b58"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/e939eae92386b69b49cfa4599dd9bead6bf4a342",
-                "reference": "e939eae92386b69b49cfa4599dd9bead6bf4a342",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/c38fd6b0b7f370c198db91ffd02e23b517426b58",
+                "reference": "c38fd6b0b7f370c198db91ffd02e23b517426b58",
                 "shasum": ""
             },
             "require": {
@@ -459,7 +459,7 @@
                 "psr/container": "^1.0",
                 "symfony/phpunit-bridge": "^4.4.9|^5.0.9|^6.0"
             },
-            "time": "2022-05-17T05:48:52+00:00",
+            "time": "2022-09-28T08:42:51+00:00",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -500,7 +500,7 @@
             ],
             "support": {
                 "issues": "https://github.com/twigphp/Twig/issues",
-                "source": "https://github.com/twigphp/Twig/tree/v3.4.1"
+                "source": "https://github.com/twigphp/Twig/tree/v3.4.3"
             },
             "funding": [
                 {

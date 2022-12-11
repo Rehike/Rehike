@@ -1,7 +1,15 @@
 <?php
 use \Rehike\Controller\core\AjaxController;
-use \Rehike\Request;
+use \Rehike\Network;
 
+/**
+ * Controller for the common service AJAX endpoint.
+ * 
+ * This includes things like liking videos.
+ * 
+ * @author Aubrey Pankow <aubyomori@gmail.com>
+ * @author The Rehike Maintainers
+ */
 return new class extends AjaxController {
     public $useTemplate = false;
 
@@ -27,21 +35,25 @@ return new class extends AjaxController {
         $action = $_POST["action"];
         $videoId = $_POST["id"];
 
-        $response = Request::innertubeRequest("like/" . $action, (object) [
-            "target" => (object) [
-                "videoId" => $videoId
+        Network::innertubeRequest(
+            action: $action,
+            body: [
+                "target" => [
+                    "videoId" => $videoId
+                ]
             ]
-        ]);
-        $ytdata = json_decode($response);
+        )->then(function ($response) {
+            $ytdata = $response->getJson();
 
-        if (!@$ytdata -> errors) {
-            http_response_code(200);
-            echo json_encode((object) [
-                "code" => "SUCCESS"
-            ]);
-            die();
-        } else {
-            self::error();
-        }
+            if (!@$ytdata -> errors) {
+                http_response_code(200);
+                echo json_encode((object) [
+                    "code" => "SUCCESS"
+                ]);
+                die();
+            } else {
+                self::error();
+            }
+        });
     }
 };

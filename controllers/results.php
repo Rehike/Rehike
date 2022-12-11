@@ -6,13 +6,26 @@ use Rehike\Model\Results\ResultsModel;
 
 use \Com\Youtube\Innertube\Request\SearchRequestParams;
 
-use Rehike\Request;
+use Rehike\Network;
 use Rehike\i18n;
 use Rehike\Util\Base64Url;
 
+/**
+ * Controller for the results (search) page.
+ * 
+ * This handles the base logic for directing to the search page, including
+ * pagination, which doesn't exist in any other client but is still supported
+ * by the InnerTube API.
+ * 
+ * @author Aubrey Pankow <aubyomori@gmail.com>
+ * @author Daylin Cooper <dcoop2004@gmail.com>
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
+ * @author The Rehike Maintainers
+ */
 class ResultsController extends NirvanaController {
     public $template = "results";
 
+    // No clue why these are static.
     public static $query;
     public static $param;
 
@@ -23,32 +36,60 @@ class ResultsController extends NirvanaController {
             die();
         }
         
+        // Seemingly unused on the client-side (?), but this should still be
+        // declared regardless.
         $this -> useJsModule("www/results");
 
         $i18n = &i18n::newNamespace("results");
         $i18n->registerFromFolder("i18n/results");
         
-        $yt -> masthead -> searchbox -> query = $_GET["search_query"] ?? null;
-        self::$query = &$yt -> masthead -> searchbox -> query;
+        // Setup search query internally
+        $query = $_GET["search_query"] ?? null;
+        self::$query = $query;
+
+        // Display query in the searchbox.
+        $yt -> masthead -> searchbox -> query = $query;
+
         // used for filters
         $yt -> params = $_GET["sp"] ?? null;
         self::$param = &$yt -> params;
 
+        // Calculates the offset to give the InnerTube server.
         $resultsIndex = self::getPaginatorIndex($yt->params);
 
-        $response = Request::innertubeRequest("search", (object) [
-            "query" => self::$query,
-            "params" => $yt -> params
-        ]);
-        $ytdata = json_decode($response);
-
-        $resultsCount = ResultsModel::getResultsCount($ytdata);
-
-        $paginatorInfo = self::getPaginatorInfo($resultsCount, $resultsIndex);
-
-        $yt -> page = ResultsModel::bake($ytdata, $paginatorInfo, self::$query);
+        Network::innertubeRequest(
+            action: "search",
+            body: [
+                "query"  => self::$query,
+                "params" => $yt->params
+            ]
+        )->then(function ($response) use ($yt, $resultsIndex) {
+            $ytdata = $response->getJson();
+    
+            $resultsCount = ResultsModel::getResultsCount($ytdata);
+    
+            $paginatorInfo = self::getPaginatorInfo(
+                $resultsCount, $resultsIndex
+            );
+    
+            $yt -> page = ResultsModel::bake(
+                data:           $ytdata, 
+                paginatorInfo:  $paginatorInfo, 
+                query:          self::$query
+            );
+        });
     }
 
+    /**
+     * Get the index at which the page starts.
+     * 
+     * This is *not* the page number. This is the index by which to shift the
+     * given results from the start, i.e. an index of 20 would start 20 results
+     * after the first result.
+     * 
+     * @param $sp  Base64-encoded search parameter provided by the YT server.
+     * @return int
+     */
     public static function getPaginatorIndex($sp) {
         if ($sp == null) {
             return 0;
@@ -72,19 +113,35 @@ class ResultsController extends NirvanaController {
         }
     }
 
+    /**
+     * Get information for the paginator at the bottom of the search page.
+     * 
+     * @param int $resultsCount  The number of results for the query.
+     * @param int $index         Index at which to start the first result.
+     * @return object
+     */
     public static function getPaginatorInfo($resultsCount, $index) {
         // youtube is 20 results/page
-        $rpp = 20;
-        $pageNo = ceil($index / $rpp) + 1;
-        $pagesCount = ceil($resultsCount / $rpp);
+        $resultsPerPage = 20;
+
+        $pageNo = ceil($index / $resultsPerPage) + 1;
+        $pagesCount = ceil($resultsCount / $resultsPerPage);
 
         return (object) [
-            "resultsPerPage" => $rpp,
+            "resultsPerPage" => $resultsPerPage,
             "pageNumber" => $pageNo,
             "pagesCount" => $pagesCount
         ];
     }
 
+    /**
+     * Get the URL parameter that indicates the search page to the server.
+     * 
+     * @param string $sp    Standard base64-encoded parameter to be modified.
+     * @param int    $page  The page number to encode.
+     * 
+     * @return string  A modified search parameter that uses the page.
+     */
     public static function getPageParam($sp = null, $page = 1) {
         $parsed = new SearchRequestParams();
 
@@ -94,17 +151,22 @@ class ResultsController extends NirvanaController {
         } else {
             try {
                 $parsed->mergeFromString(Base64Url::decode($sp));
-            } catch (\Throwable $e) {}
+            } catch (\Throwable $e) {} // consume any exeception
+
             $parsed->setIndex(($page - 1) * 20);
         }
 
-        return str_replace(
-            ["+","/","="],
-            ["-","_",""],
-            base64_encode($parsed->serializeToString())
-        );
+        return Base64Url::encode($parsed->serializeToString());
     }
 
+    /**
+     * Returns the URL for a page's index.
+     * 
+     * @param string $sp    Standard base64 encoded parameter to be modified.
+     * @param int    $page  The page number to encode.
+     * 
+     * @return string  URL for that page.
+     */
     public static function getPageParamUrl($sp = null, $page = 1) {
         $query = urlencode(self::$query);
         $param = self::getPageParam($sp, $page);

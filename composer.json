@@ -2,6 +2,6 @@
     "require": {
         "twig/twig": "~3.3",
         "rehike/spfphp": "^1.0",
-        "google/protobuf": "^3.21"
+        "google/protobuf": "^3.21.11"
     }
 }

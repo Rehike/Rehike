@@ -5,7 +5,7 @@ use Rehike\Controller\core\AjaxController;
 use Rehike\Model\Comments\CommentThread;
 use Rehike\Model\Comments\CommentsHeader;
 use Rehike\Model\Appbar\MAppbar as Appbar;
-use Rehike\Request;
+use Rehike\Network;
 
 /**
  * Watch fragments ajax controller
@@ -19,6 +19,9 @@ use Rehike\Request;
  */
 class AjaxWatchFragments2Controller extends AjaxController {
     public $useTemplate = true;
+
+    // 404 by default.
+    // The real template will be set by subcontroller functions.
     public $template = '404';
 
     public function onPost(&$yt, $request) {
@@ -44,7 +47,9 @@ class AjaxWatchFragments2Controller extends AjaxController {
         ];
 
         $yt->appbar = new Appbar();
-        $yt->appbar->addGuide($this->getPageGuide());
+        $this->getPageGuide()->then(function ($guide) use ($yt) {
+            $yt->appbar->addGuide($guide);
+        });
     }
 
     private function getComments(&$yt) {
@@ -59,20 +64,24 @@ class AjaxWatchFragments2Controller extends AjaxController {
             'watch-discussion'
         ];
 
-        $response = Request::innertubeRequest("next", (object)[
-            "continuation" => $_GET['ctoken']
-        ]);
-        
-        $ytdata = json_decode($response);
+        Network::innertubeRequest(
+            action: "next", 
+            body: [ "continuation" => $_GET['ctoken'] ]
+        )->then(function($response) use (&$yt) {
+            $ytdata = $response->getJson();
 
-        $yt->commentsRenderer->headerRenderer = CommentsHeader::fromData($ytdata->onResponseReceivedEndpoints[0]->reloadContinuationItemsCommand->continuationItems[0]->commentsHeaderRenderer);
+            $yt->commentsRenderer->headerRenderer = CommentsHeader::fromData($ytdata->onResponseReceivedEndpoints[0]->reloadContinuationItemsCommand->continuationItems[0]->commentsHeaderRenderer);
 
-        /**
-         * Comments Threads Rewrite
-         * TODO: further rewrite may be necessary
-         */
-        $_oct = $ytdata->onResponseReceivedEndpoints[1]->reloadContinuationItemsCommand; // original comment threads
-        $yt->commentsRenderer->comments = CommentThread::bakeComments($_oct);
+            /**
+             * Comments Threads Rewrite
+             * TODO: further rewrite may be necessary
+             */
+            $_oct = $ytdata->onResponseReceivedEndpoints[1]->reloadContinuationItemsCommand; // original comment threads
+
+            CommentThread::bakeComments($_oct)->then(function ($value) use ($yt, $_oct) {
+                $yt->commentsRenderer->comments = $value;
+            });
+        });
     }
 }
 
