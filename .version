@@ -1,10 +1,10 @@
 {
-	"previousHash": "577d63302f233c48f7c9e35ea5d9e6e6e70407fb",
-	"currentRevisionId": 714,
-	"subject": "possible php 8.2 fix",
-	"body": "possible php 8.2 fix",
+	"previousHash": "00a59b95e66a39352fe32a6d3d7dceafabc4e2e1",
+	"currentRevisionId": 718,
+	"subject": "Prevent debugger fatal error with recursion",
+	"body": "Prevent debugger fatal error with recursion",
 	"branch": "master",
-	"committerName": "aubymori",
-	"committerEmail": "aubyomori@gmail.com",
-	"time": 1670642134
+	"committerName": "Coffee",
+	"committerEmail": "99076687+YukisCoffee@users.noreply.github.com",
+	"time": 1670724077
 }

@@ -27,6 +27,13 @@ class MDialogHeader
     public $closeButton;
 
     /**
+     * Help link for condensed mode.
+     * 
+     * @var object
+     */
+    public $helpLink;
+
+    /**
      * Create a new dialog header.
      * 
      * @param bool $condensed Is the debugger condensed?
