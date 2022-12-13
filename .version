@@ -1,10 +1,10 @@
 {
-	"previousHash": "00a59b95e66a39352fe32a6d3d7dceafabc4e2e1",
-	"currentRevisionId": 718,
-	"subject": "Prevent debugger fatal error with recursion",
-	"body": "Prevent debugger fatal error with recursion",
+	"previousHash": "2a64f38f89a9cb86bf5049bbb7a5f28ab230c81f",
+	"currentRevisionId": 721,
+	"subject": "begin work on custom embed",
+	"body": "begin work on custom embed",
 	"branch": "master",
-	"committerName": "Coffee",
-	"committerEmail": "99076687+YukisCoffee@users.noreply.github.com",
-	"time": 1670724077
+	"committerName": "aubymori",
+	"committerEmail": "aubyomori@gmail.com",
+	"time": 1670967248
 }
