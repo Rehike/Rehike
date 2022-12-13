@@ -81,6 +81,15 @@ class MYtWalker extends MTabContent
         // Reflection is not used to read arrays, only objects.
         $usingReflection = false;
 
+        /**
+         * PATCH (kirasicecreamm): Prevent obvious memory leak from recursion.
+         * 
+         * The simple solution is to keep a parent stack and check if the
+         * requested value is present on it, stopping in our tracks if we need
+         * to.
+         */
+        static $parentStack = [];
+
         if (is_object($obj))
         {
             /*
@@ -143,7 +152,19 @@ class MYtWalker extends MTabContent
                     */
                     $reflection->setAccessible(true);
 
-                    $value = $reflection->getValue($obj);
+                    /**
+                     * PATCH (kirasicecreamm): ReflectionProperty::getValue()
+                     * will cause a fatal error when attempting to read an
+                     * uninitalised *typed* property.
+                     */
+                    if ($reflection->isInitialized($obj))
+                    {
+                        $value = $reflection->getValue($obj);
+                    }
+                    else
+                    {
+                        $value = "uninitialized";
+                    }
                 }
                 else if ($value instanceof ReflectionMethod)
                 {
@@ -167,27 +188,49 @@ class MYtWalker extends MTabContent
             // Search by type
             if (is_object($value))
             {
-                if ("stdClass" != get_class($value))
+                if (false === array_search($value, $parentStack))
                 {
-                    self::defineAttr($attrs, $path, $key, [
-                        "type" => get_class($value)
-                    ]);
-                }
+                    $parentStack[] = &$value;
 
-                // Also deep iterate
-                self::getAttrsOfObj($attrs, $value, "$path.$key");
+                    if ("stdClass" != get_class($value))
+                    {
+                        self::defineAttr($attrs, $path, $key, [
+                            "type" => get_class($value)
+                        ]);
+                    }
+
+                    // Also deep iterate
+                    self::getAttrsOfObj($attrs, $value, "$path.$key");
+                }
+                else
+                {
+                    $value = "[ infinite cycle detected ]";
+                }
+                array_pop($parentStack);
             }
             else if (is_array($value))
             {
-                if (self::isAssociativeArray($value))
+                if (false === array_search($value, $parentStack))
                 {
-                    self::defineAttr($attrs, $path, $key, [
-                        "associativeArray" => true
-                    ]);
-                }
+                    $parentStack[] = &$value;
 
-                // Also deep iterate
-                self::getAttrsOfObj($attrs, $value, "$path.$key");
+                    if (self::isAssociativeArray($value))
+                    {
+                        self::defineAttr($attrs, $path, $key, [
+                            "associativeArray" => true
+                        ]);
+                    }
+
+                    // Also deep iterate
+                    self::getAttrsOfObj(
+                        $attrs, $value, "$path.$key", true
+                    );
+                }
+                else
+                {
+                    $value = "[ infinite cycle detected ]";
+                }
+                array_pop($parentStack);
             }
             else if (is_callable($value))
             {
