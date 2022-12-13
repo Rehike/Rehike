@@ -1,10 +1,10 @@
 {
-	"previousHash": "2a64f38f89a9cb86bf5049bbb7a5f28ab230c81f",
-	"currentRevisionId": 721,
-	"subject": "begin work on custom embed",
-	"body": "begin work on custom embed",
+	"previousHash": "c97e32d9b3c2991551bb86459997dd5dfdb7112a",
+	"currentRevisionId": 724,
+	"subject": "Merge branch 'master' of https://github.com/Rehike/Rehike",
+	"body": "Merge branch 'master' of https://github.com/Rehike/Rehike",
 	"branch": "master",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1670967251
+	"time": 1670967786
 }
