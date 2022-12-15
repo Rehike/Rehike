@@ -19,7 +19,7 @@ return new class extends AjaxController {
         $action = self::findAction();
 
         if (@$action == "get_unseen_notification_count") {
-            $this -> useTemplate = false;
+            $this->useTemplate = false;
 
             Network::innertubeRequest(
                 action: "notification/get_unseen_count"
@@ -36,9 +36,9 @@ return new class extends AjaxController {
                 ]);
             });
         } else if (@$action == "continuation") {
-            $this -> template = "ajax/feed/continuation";
+            $this->template = "ajax/feed/continuation";
             
-            if (!@$request -> params -> continuation) {
+            if (!@$request->params->continuation) {
                 echo json_encode((object) [
                     "errors" => [
                         "Specify a continuation"
@@ -50,20 +50,20 @@ return new class extends AjaxController {
             Network::innertubeRequest(
                 action: "notification/get_notification_menu",
                 body: [
-                    "ctoken" => $request -> params -> continuation ?? null
+                    "ctoken" => $request->params->continuation ?? null
                 ]
             )->then(function ($response) use ($yt) {
                 $ytdata = $response->getJson();
 
-                $yt -> notifList = $ytdata -> actions[0] -> appendContinuationItemsAction -> continuationItems ?? null;
-                $yt -> nextContinuation = (end($yt -> notifList) 
-                    -> continuationItemRenderer 
-                    -> continuationEndpoint 
-                    -> getNotificationMenuEndpoint 
-                    -> ctoken) ?? null;
+                $yt->notifList = $ytdata->actions[0] ->appendContinuationItemsAction->continuationItems ?? null;
+                $yt->nextContinuation = (end($yt->notifList) 
+                    ->continuationItemRenderer 
+                    ->continuationEndpoint 
+                    ->getNotificationMenuEndpoint 
+                    ->ctoken) ?? null;
             });
         } else {
-            $this -> spfIdListeners = [
+            $this->spfIdListeners = [
                 "yt-masthead-notifications-content"
             ];
 
@@ -84,7 +84,7 @@ return new class extends AjaxController {
     public function onPost(&$yt, $request) {
         if (!@$yt->signin["isSignedIn"]) self::error();
 
-        $this -> spfIdListeners = [
+        $this->spfIdListeners = [
             "yt-masthead-notifications-content"
         ];
 

@@ -34,7 +34,7 @@ class CommentThread
 
             $commentIds = [];
             foreach($context as $comment) {
-                if ($a = (@$comment -> commentThreadRenderer -> comment -> commentRenderer -> commentId)) {
+                if ($a = (@$comment->commentThreadRenderer->comment->commentRenderer->commentId)) {
                     $commentIds[] = $a;
                 }
             }
@@ -48,9 +48,9 @@ class CommentThread
             )->then(function ($response) use (&$context, &$out, $resolve) {
                 $data = $response->getJson();
 
-                foreach ($data -> items as $item) {
+                foreach ($data->items as $item) {
                     self::$dataApiData += [
-                        $item -> id => $item -> snippet
+                        $item->id => $item->snippet
                     ];
                 }
                 
@@ -91,7 +91,7 @@ class CommentThread
 
             $commentIds = [];
             foreach($context as $comment) {
-                if ($a = $comment -> commentRenderer -> commentId) {
+                if ($a = $comment->commentRenderer->commentId) {
                     $commentIds[] = $a;
                 }
             }
@@ -105,9 +105,9 @@ class CommentThread
             )->then(function ($response) use (&$items, &$out, $resolve) {
                 $data = $response->getJson();
 
-                foreach ($data -> items as $item) {
+                foreach ($data->items as $item) {
                     self::$dataApiData += [
-                        $item -> id => $item -> snippet
+                        $item->id => $item->snippet
                     ];
                 }
         
@@ -155,20 +155,20 @@ class CommentThread
 
         if ($data = self::$dataApiData[$context->commentId]) {
             $context->authorText = (object) [
-                "simpleText" => $data -> authorDisplayName
+                "simpleText" => $data->authorDisplayName
             ];
         }
 
         // Eliminate surrounding spaces on channel mention
-        foreach ($context -> contentText -> runs as &$run) {
-            $run -> text = str_replace("\u{00A0}", "", $run -> text);
+        foreach ($context->contentText->runs as &$run) {
+            $run->text = str_replace("\u{00A0}", "", $run->text);
         }
 
         $context->likeButton = VoteButton::fromData(PropertyAtPath::get($context, self::LIKE_BUTTON_PATH));
         $context->dislikeButton = VoteButton::fromData(PropertyAtPath::get($context, self::DISLIKE_BUTTON_PATH));
         
         try {
-            $context->replyButton = ReplyButton::fromData(PropertyAtPath::get($context, self::REPLY_BUTTON_PATH), $context -> commentId);
+            $context->replyButton = ReplyButton::fromData(PropertyAtPath::get($context, self::REPLY_BUTTON_PATH), $context->commentId);
         } catch(\YukisCoffee\PropertyAtPathException $e) {
             $context->replyButton = null;
         }
@@ -194,7 +194,7 @@ class CommentThread
                 $i18n = i18n::getNamespace("comments");
             } else {
                 $i18n = i18n::newNamespace("comments");
-                $i18n -> registerFromFolder("i18n/comments");
+                $i18n->registerFromFolder("i18n/comments");
             }
 
             $viewText = &$context->viewReplies->buttonRenderer->text->runs[0]->text;
@@ -202,55 +202,55 @@ class CommentThread
 
             // YouTube is experimenting with bringing back the
             // old "View X replies" text format
-            if (!preg_match($i18n -> oldReplyTextRegex, $viewText)) {
-                $replyCount = (int) preg_replace($i18n -> replyCountIsolator, "", $viewText);
-                if (isset($context -> viewRepliesCreatorThumbnail)) {
-                    $creatorName = $context -> viewRepliesCreatorThumbnail -> accessibility -> accessibilityData -> label;
+            if (!preg_match($i18n->oldReplyTextRegex, $viewText)) {
+                $replyCount = (int) preg_replace($i18n->replyCountIsolator, "", $viewText);
+                if (isset($context->viewRepliesCreatorThumbnail)) {
+                    $creatorName = $context->viewRepliesCreatorThumbnail->accessibility->accessibilityData->label;
                 }
 
                 if ($teaser && $replyCount < 3) {
-                    unset($context -> viewReplies);
-                    unset($context -> hideReplies);
+                    unset($context->viewReplies);
+                    unset($context->hideReplies);
                 } else if ($replyCount > 1) {
                     if (isset($creatorName)) {
                         $viewText = $teaser
-                        ? $i18n -> viewMultiTeaserOwner($replyCount, $creatorName)
-                        : $i18n -> viewMultiOwner($replyCount, $creatorName);
+                        ? $i18n->viewMultiTeaserOwner($replyCount, $creatorName)
+                        : $i18n->viewMultiOwner($replyCount, $creatorName);
                     } else {
                         $viewText = $teaser
-                        ? $i18n -> viewMultiTeaser($replyCount)
-                        : $i18n -> viewMulti($replyCount);
+                        ? $i18n->viewMultiTeaser($replyCount)
+                        : $i18n->viewMulti($replyCount);
                     }
                 } else {
                     if (isset($creatorName)) {
-                        $viewText = $i18n -> viewSingularOwner($creatorName);
+                        $viewText = $i18n->viewSingularOwner($creatorName);
                     } else {
-                        $viewText = $i18n -> viewSingular;
+                        $viewText = $i18n->viewSingular;
                     }
                 }
 
                 // if ($teaser) {
                 //     foreach ($context ->contents as $content) {
-                //         if ($ctoken = $content -> continuationItemRenderer -> continuationEndpoint -> continuationCommand -> token) {
+                //         if ($ctoken = $content->continuationItemRenderer->continuationEndpoint->continuationCommand->token) {
                 //             Request::queueInnertubeRequest("replies", "next", (object) [
                 //                 "continuation" => $ctoken
                 //             ]);
                 //             $data = json_decode(Request::getResponses()["replies"]);
-                //             foreach ($data -> onResponseReceivedEndpoints as $endpoint) {
-                //                 if (isset($endpoint -> appendContinuationItemsAction)) {
-                //                     $items = $endpoint -> appendContinuationItemsAction -> continuationItems;
+                //             foreach ($data->onResponseReceivedEndpoints as $endpoint) {
+                //                 if (isset($endpoint->appendContinuationItemsAction)) {
+                //                     $items = $endpoint->appendContinuationItemsAction->continuationItems;
                 //                     array_splice($items, 2);
-                //                     if (!isset($context -> teaserContents)) {
-                //                         $context -> teaserContents = [];
+                //                     if (!isset($context->teaserContents)) {
+                //                         $context->teaserContents = [];
                 //                     }
-                //                     $context -> teaserContents += $items;
+                //                     $context->teaserContents += $items;
                 //                 }
                 //             }
                 //         }
                 //     }
                 // }
 
-                $hideText = ($replyCount > 1) ? $i18n -> hideMulti($replyCount) : $i18n -> hideSingular;
+                $hideText = ($replyCount > 1) ? $i18n->hideMulti($replyCount) : $i18n->hideSingular;
             }
         }
 
@@ -301,13 +301,13 @@ class CommentThread
         
         $count = (int)self::getLikeCountFromLabel($likeAriaLabel);
 
-        if (@$context -> isLiked) {
-            $context -> voteCount = [
+        if (@$context->isLiked) {
+            $context->voteCount = [
                 "indifferentText" => (string)--$count,
                 "likedText" => (string)$count
             ];
         } else {
-            $context -> voteCount = [
+            $context->voteCount = [
                 "indifferentText" => (string)$count,
                 "likedText" => (string)++$count
             ];

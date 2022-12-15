@@ -67,7 +67,7 @@ class InnertubeBrowseConverter
      */
     public static function itemSectionRenderer($data, $context = [])
     {
-        foreach ($data -> contents as &$content) foreach ($content as $name => &$value)
+        foreach ($data->contents as &$content) foreach ($content as $name => &$value)
         {
             switch ($name)
             {
@@ -92,7 +92,7 @@ class InnertubeBrowseConverter
      */
     public static function sectionListRenderer($data, $context = [])
     {
-        foreach ($data -> contents as &$content) foreach ($content as $name => &$value)
+        foreach ($data->contents as &$content) foreach ($content as $name => &$value)
         {
             switch ($name)
             {
@@ -111,7 +111,7 @@ class InnertubeBrowseConverter
             $i18n = i18n::getNamespace("browse/converter");
         } else {
             $i18n = i18n::newNamespace("browse/converter");
-            $i18n -> registerFromFolder("i18n/browse");
+            $i18n->registerFromFolder("i18n/browse");
         }
 
         if (@$context["channelRendererNoSubscribeCount"])
@@ -147,12 +147,12 @@ class InnertubeBrowseConverter
             $subscribeButtonBranded = false;
 
         if (@$context["channelRendererChannelBadge"]) {
-            if (!isset($data -> badges)) {
-                $data -> badges = [];
+            if (!isset($data->badges)) {
+                $data->badges = [];
             }
-            $data -> badges[] = (object) [
+            $data->badges[] = (object) [
                 "metadataBadgeRenderer" => (object) [
-                    "label" => $i18n -> channelBadge,
+                    "label" => $i18n->channelBadge,
                     "style" => "BADGE_STYLE_TYPE_SIMPLE"
                 ]
             ];

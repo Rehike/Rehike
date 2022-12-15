@@ -27,7 +27,7 @@ return new class extends AjaxController {
         )->then(function ($response) use ($yt, $action) {
             $ytdata = $response->getJson();
 
-            $yt -> page = PickerModel::bake($ytdata, $action);
+            $yt->page = PickerModel::bake($ytdata, $action);
         });
     }
 };

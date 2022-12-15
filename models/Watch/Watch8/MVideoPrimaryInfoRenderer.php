@@ -50,7 +50,7 @@ class MVideoPrimaryInfoRenderer
     {
         $info = &$dataHost::$primaryInfo ?? null;
         $i18n = i18n::newNamespace("watch/primary");
-        $i18n -> registerFromFolder("i18n/watch");
+        $i18n->registerFromFolder("i18n/watch");
 
         if (!is_null($info))
         {
@@ -176,8 +176,8 @@ class MOwner
         $i18n = i18n::getNamespace("watch/primary");
 
         $signInInfo = (object) SignIn::getInfo();
-        $hasChannel = SignIn::isSignedIn() && isset($signInInfo -> ucid);
-        if ($hasChannel) $ucid = $signInInfo -> ucid;
+        $hasChannel = SignIn::isSignedIn() && isset($signInInfo->ucid);
+        if ($hasChannel) $ucid = $signInInfo->ucid;
 
         if (isset($info))
         {
@@ -195,14 +195,14 @@ class MOwner
             // Build the subscription button from the InnerTube data.
             if (!SignIn::isSignedIn()) {
                 $this->subscriptionButtonRenderer = MSubscriptionActions::signedOutStub($subscribeCount);
-            } else if (isset($secInfo -> subscribeButton -> subscribeButtonRenderer)) {
-                $this->subscriptionButtonRenderer = MSubscriptionActions::fromData($secInfo -> subscribeButton -> subscribeButtonRenderer, $subscribeCount);
-            } else if (isset($secInfo -> subscribeButton -> buttonRenderer)) { // channel settings button
+            } else if (isset($secInfo->subscribeButton->subscribeButtonRenderer)) {
+                $this->subscriptionButtonRenderer = MSubscriptionActions::fromData($secInfo->subscribeButton->subscribeButtonRenderer, $subscribeCount);
+            } else if (isset($secInfo->subscribeButton->buttonRenderer)) { // channel settings button
                 $this->channelSettingsButtonRenderer = new MButton((object) [
                     "style" => "default",
                     "size" => "default",
                     "text" => (object) [
-                        "simpleText" => $i18n -> channelSettings
+                        "simpleText" => $i18n->channelSettings
                     ],
                     "icon" => true,
                     "navigationEndpoint" => (object) [
@@ -317,7 +317,7 @@ class MActionButton extends MButton
         $i18n = i18n::getNamespace("watch/primary");
 
         $buttonCfg = [
-            "label" => $i18n -> get("actionAddTo"),
+            "label" => $i18n->get("actionAddTo"),
             "class" => []
         ];
 
@@ -325,10 +325,10 @@ class MActionButton extends MButton
         {
             $buttonCfg += [
                 "clickcard" => new MSigninClickcard(
-                    $i18n -> addToClickcardHeading,
-                    $i18n -> addToClickcardTip,
+                    $i18n->addToClickcardHeading,
+                    $i18n->addToClickcardTip,
                     [
-                        "text" => $i18n -> clickcardSignIn,
+                        "text" => $i18n->clickcardSignIn,
                         "href" => "https://accounts.google.com/ServiceLogin?continue=https%3A%2F%2Fwww.youtube.com%2Fsignin%3Fnext%3D%252F%253Faction_handle_signin%3Dtrue%26feature%3D__FEATURE__%26hl%3Den%26app%3Ddesktop&passive=true&hl=en&uilel=3&service=youtube"
                     ]
                 ),
@@ -368,7 +368,7 @@ class MActionButton extends MButton
         $i18n = i18n::getNamespace("watch/primary");
 
         return new self([
-            "label" => $i18n -> actionShare,
+            "label" => $i18n->actionShare,
             "actionPanelTrigger" => "share"
         ]);
     }
@@ -386,7 +386,7 @@ class MActionButton extends MButton
         $i18n = i18n::getNamespace("watch/primary");
 
         $buttonCfg = [
-            "label" => $i18n -> actionReport,
+            "label" => $i18n->actionReport,
             "class" => "report-button",
             "actionPanelTrigger" => "report"
         ];
@@ -395,10 +395,10 @@ class MActionButton extends MButton
             $buttonCfg += [
                 "fakeActionPanel" => true,
                 "clickcard" => new MSigninClickcard(
-                    $i18n -> reportClickcardHeading,
-                    $i18n -> reportClickcardTip,
+                    $i18n->reportClickcardHeading,
+                    $i18n->reportClickcardTip,
                     [
-                        "text" => $i18n -> clickcardSignIn,
+                        "text" => $i18n->clickcardSignIn,
                         "href" => "https://accounts.google.com/ServiceLogin?continue=https%3A%2F%2Fwww.youtube.com%2Fsignin%3Fnext%3D%252F%253Faction_handle_signin%3Dtrue%26feature%3D__FEATURE__%26hl%3Den%26app%3Ddesktop&passive=true&hl=en&uilel=3&service=youtube"
                     ]
                 ),
@@ -420,8 +420,8 @@ class MActionButton extends MButton
         $i18n = i18n::getNamespace("watch/primary");
 
         return new self([
-            "label" => $i18n -> actionMore,
-            "tooltip" => $i18n -> actionMoreTooltip,
+            "label" => $i18n->actionMore,
+            "tooltip" => $i18n->actionMoreTooltip,
             "id" => "action-panel-overflow-button",
             "menu" => new MActionPanelOverflowMenu()
         ]);
@@ -435,7 +435,7 @@ class MActionPanelOverflowMenu extends MMenu {
         $i18n = i18n::getNamespace("watch/primary");
 
         $reportCfg = [
-            "label" => $i18n -> actionReport,
+            "label" => $i18n->actionReport,
             "actionPanelTrigger" => "report",
             "hasIcon" => true
         ];
@@ -447,10 +447,10 @@ class MActionPanelOverflowMenu extends MMenu {
         } else {
             $reportCfg += [
                 "clickcard" => new MSigninClickcard(
-                    $i18n -> reportClickcardHeading,
-                    $i18n -> reportClickcardTip,
+                    $i18n->reportClickcardHeading,
+                    $i18n->reportClickcardTip,
                     [
-                        "text" => $i18n -> clickcardSignIn,
+                        "text" => $i18n->clickcardSignIn,
                         "href" => "https://accounts.google.com/ServiceLogin?continue=https%3A%2F%2Fwww.youtube.com%2Fsignin%3Fnext%3D%252F%253Faction_handle_signin%3Dtrue%26feature%3D__FEATURE__%26hl%3Den%26app%3Ddesktop&passive=true&hl=en&uilel=3&service=youtube"
                     ]
                 ),
@@ -462,11 +462,11 @@ class MActionPanelOverflowMenu extends MMenu {
             ];
         }
 
-        $this -> items[] = new MMenuItem($reportCfg);
-        $this -> items[] = new MMenuItem([
+        $this->items[] = new MMenuItem($reportCfg);
+        $this->items[] = new MMenuItem([
             "actionPanelTrigger" => "transcript",
             "closeOnSelect" => true,
-            "label" => $i18n -> actionTranscript,
+            "label" => $i18n->actionTranscript,
             "hasIcon" => true
         ]);
     }
@@ -494,7 +494,7 @@ class MLikeButtonRenderer
 
     public function __construct($dataHost, &$info, &$videoId)
     {
-        if (isset($info->topLevelButtons[0] -> segmentedLikeDislikeButtonRenderer)) {
+        if (isset($info->topLevelButtons[0] ->segmentedLikeDislikeButtonRenderer)) {
             $origLikeButton = $info->topLevelButtons[0]->segmentedLikeDislikeButtonRenderer->likeButton->toggleButtonRenderer ?? null;
             $origDislikeButton = $info->topLevelButtons[0]->segmentedLikeDislikeButtonRenderer->dislikeButton->toggleButtonRenderer ?? null;
         } else {
@@ -519,7 +519,7 @@ class MLikeButtonRenderer
         {
             $rydData = &$dataHost::$rydData;
 
-            $dislikeCountInt = (int)$rydData -> dislikes;
+            $dislikeCountInt = (int)$rydData->dislikes;
 
             $this->sparkbars = new MSparkbars($likeCountInt, $dislikeCountInt);
         }
@@ -550,7 +550,7 @@ class MLikeButtonRendererButton extends MToggleButton
     {
         parent::__construct($state);
 
-        $this -> icon = (object) [];
+        $this->icon = (object) [];
 
         $class = "like-button-renderer-" . $type;
         $this->class[] = $class;
@@ -580,31 +580,31 @@ class MLikeButton extends MLikeButtonRendererButton
             ]
         ];
 
-        $this -> tooltip = $i18n -> actionLikeTooltip;
+        $this->tooltip = $i18n->actionLikeTooltip;
         
         if ($active)
-            $this->tooltip = $i18n -> actionLikeTooltipActive;
+            $this->tooltip = $i18n->actionLikeTooltipActive;
 
-        $signinMessage = $i18n -> likeClickcardHeading;
-        $signinDetail = $i18n -> voteClickcardTip;
+        $signinMessage = $i18n->likeClickcardHeading;
+        $signinDetail = $i18n->voteClickcardTip;
 
         // Store a reference to the current sign in state.
         $signedIn = SignIn::isSignedIn();
 
         if ($signedIn) {
-            $this -> attributes["post-action"] = "/service_ajax?name=likeEndpoint";
-            $this -> class[] = "yt-uix-post-anchor";
+            $this->attributes["post-action"] = "/service_ajax?name=likeEndpoint";
+            $this->class[] = "yt-uix-post-anchor";
         }
 
         if (!$signedIn && !$active) {
             $this->clickcard = new MSigninClickcard($signinMessage, $signinDetail, [
-                "text" => $i18n -> clickcardSignIn,
+                "text" => $i18n->clickcardSignIn,
                 "href" => "https://accounts.google.com/ServiceLogin?continue=https%3A%2F%2Fwww.youtube.com%2Fsignin%3Fnext%3D%252F%253Faction_handle_signin%3Dtrue%26feature%3D__FEATURE__%26hl%3Den%26app%3Ddesktop&passive=true&hl=en&uilel=3&service=youtube"
             ]);
         } elseif ($signedIn && !$active) {
-            $this -> attributes["post-data"] = "action=like&id=" . $videoId;
+            $this->attributes["post-data"] = "action=like&id=" . $videoId;
         } elseif ($signedIn && $active) {
-            $this -> attributes["post-data"] = "action=removelike&id=" . $videoId;
+            $this->attributes["post-data"] = "action=removelike&id=" . $videoId;
         }
 
         parent::__construct("like-button", $active, $likeCount, $isLiked);
@@ -626,28 +626,28 @@ class MDislikeButton extends MLikeButtonRendererButton
             "label" => $a11y
         ];
 
-        $this -> tooltip = $i18n -> actionDislikeTooltip; // TODO: i18n
+        $this->tooltip = $i18n->actionDislikeTooltip; // TODO: i18n
 
-        $signinMessage = $i18n -> dislikeClickcardHeading;
-        $signinDetail = $i18n -> voteClickcardTip;
+        $signinMessage = $i18n->dislikeClickcardHeading;
+        $signinDetail = $i18n->voteClickcardTip;
 
         // Store a reference to the current sign in state.
         $signedIn = SignIn::isSignedIn();
 
         if ($signedIn) {
-            $this -> attributes["post-action"] = "/service_ajax?name=likeEndpoint";
-            $this -> class[] = "yt-uix-post-anchor";
+            $this->attributes["post-action"] = "/service_ajax?name=likeEndpoint";
+            $this->class[] = "yt-uix-post-anchor";
         }
 
         if (!$signedIn && !$active) {
             $this->clickcard = new MSigninClickcard($signinMessage, $signinDetail, [
-                "text" => $i18n -> clickcardSignIn,
+                "text" => $i18n->clickcardSignIn,
                 "href" => "https://accounts.google.com/ServiceLogin?continue=https%3A%2F%2Fwww.youtube.com%2Fsignin%3Fnext%3D%252F%253Faction_handle_signin%3Dtrue%26feature%3D__FEATURE__%26hl%3Den%26app%3Ddesktop&passive=true&hl=en&uilel=3&service=youtube"
             ]);
         } elseif ($signedIn && !$active) {
-            $this -> attributes["post-data"] = "action=dislike&id=" . $videoId;
+            $this->attributes["post-data"] = "action=dislike&id=" . $videoId;
         } elseif ($signedIn && $active) {
-            $this -> attributes["post-data"] = "action=removedislike&id=" . $videoId;
+            $this->attributes["post-data"] = "action=removedislike&id=" . $videoId;
         }
 
         parent::__construct("dislike-button", $active, $dislikeCount, $isDisliked);

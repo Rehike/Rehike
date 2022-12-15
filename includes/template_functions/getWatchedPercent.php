@@ -17,11 +17,11 @@
  * @return ?object
  */
 \Rehike\TemplateFunctions::register("getWatchedPercent", function($array) {
-    if (!isset($array -> thumbnailOverlays )) return null;
+    if (!isset($array->thumbnailOverlays )) return null;
 
-    foreach ($array -> thumbnailOverlays as $index => $contents) {
-        if (isset($contents -> thumbnailOverlayResumePlaybackRenderer)) {
-            return $contents -> thumbnailOverlayResumePlaybackRenderer -> percentDurationWatched;
+    foreach ($array->thumbnailOverlays as $index => $contents) {
+        if (isset($contents->thumbnailOverlayResumePlaybackRenderer)) {
+            return $contents->thumbnailOverlayResumePlaybackRenderer->percentDurationWatched;
         }
     }
     

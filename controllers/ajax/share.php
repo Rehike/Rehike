@@ -28,9 +28,9 @@ return new class extends AjaxController {
      * Get the share box.
      */
     private function getShareBox(&$yt, $request): void {
-        $this -> template = "ajax/share/get_share_box";
-        if (!isset($request -> params -> video_id)) self::error();
-        $videoId = $request -> params -> video_id;
+        $this->template = "ajax/share/get_share_box";
+        if (!isset($request->params->video_id)) self::error();
+        $videoId = $request->params->video_id;
 
         Network::innertubeRequest(
             action: "next",
@@ -40,18 +40,18 @@ return new class extends AjaxController {
         )->then(function ($response) use ($yt, $videoId) {
             $ytdata = $response->getJson();
 
-            $results = ($ytdata -> contents -> twoColumnWatchNextResults 
-                -> results -> results -> contents) ?? [];
+            $results = ($ytdata->contents->twoColumnWatchNextResults 
+                ->results->results->contents) ?? [];
             for ($i = 0; $i < count($results); $i++) {
-                if (isset($results[$i] -> videoPrimaryInfoRenderer)) {
-                    $primaryInfo = $results[$i] -> videoPrimaryInfoRenderer;
+                if (isset($results[$i] ->videoPrimaryInfoRenderer)) {
+                    $primaryInfo = $results[$i] ->videoPrimaryInfoRenderer;
                 }
             }
 
             if (isset($primaryInfo)) {
-                $yt -> page = ShareBoxModel::bake(
+                $yt->page = ShareBoxModel::bake(
                     videoId: $videoId, 
-                    title: TemplateFunctions::getText($primaryInfo -> title)
+                    title: TemplateFunctions::getText($primaryInfo->title)
                 );
             } else {
                 http_response_code(400);

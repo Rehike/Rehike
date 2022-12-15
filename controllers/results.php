@@ -38,7 +38,7 @@ class ResultsController extends NirvanaController {
         
         // Seemingly unused on the client-side (?), but this should still be
         // declared regardless.
-        $this -> useJsModule("www/results");
+        $this->useJsModule("www/results");
 
         $i18n = &i18n::newNamespace("results");
         $i18n->registerFromFolder("i18n/results");
@@ -48,11 +48,11 @@ class ResultsController extends NirvanaController {
         self::$query = $query;
 
         // Display query in the searchbox.
-        $yt -> masthead -> searchbox -> query = $query;
+        $yt->masthead->searchbox->query = $query;
 
         // used for filters
-        $yt -> params = $_GET["sp"] ?? null;
-        self::$param = &$yt -> params;
+        $yt->params = $_GET["sp"] ?? null;
+        self::$param = &$yt->params;
 
         // Calculates the offset to give the InnerTube server.
         $resultsIndex = self::getPaginatorIndex($yt->params);
@@ -72,7 +72,7 @@ class ResultsController extends NirvanaController {
                 $resultsCount, $resultsIndex
             );
     
-            $yt -> page = ResultsModel::bake(
+            $yt->page = ResultsModel::bake(
                 data:           $ytdata, 
                 paginatorInfo:  $paginatorInfo, 
                 query:          self::$query

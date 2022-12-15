@@ -34,14 +34,14 @@ class WebV2Shelves {
         $browseCont = new BrowseContinuation();
 
         // Unwrap in order to modify the class.
-        $contWrapper -> mergeFromString($decoded);
-        $innerWrapper = $contWrapper -> getBrowseContinuation();
+        $contWrapper->mergeFromString($decoded);
+        $innerWrapper = $contWrapper->getBrowseContinuation();
         
-        $rawTypeWrapper = Base64Url::decode($innerWrapper -> getEncodedAction());
-        $contTypeWrapper -> mergeFromString($rawTypeWrapper);
+        $rawTypeWrapper = Base64Url::decode($innerWrapper->getEncodedAction());
+        $contTypeWrapper->mergeFromString($rawTypeWrapper);
 
-        $rawBrowseContinuation = Base64Url::decode($contTypeWrapper -> getReloadContinuation());
-        $browseCont -> mergeFromString($rawBrowseContinuation);
+        $rawBrowseContinuation = Base64Url::decode($contTypeWrapper->getReloadContinuation());
+        $browseCont->mergeFromString($rawBrowseContinuation);
 
         // Now work in reverse to form a new continuation token.
         $browseCont->clearReloadAction();
@@ -49,18 +49,18 @@ class WebV2Shelves {
         $newBrowseContinuation = Base64Url::encode($browseCont->serializeToString());
 
         $ctwBuilder = new ContinuationTypeWrapper();
-        $ctwBuilder -> setAppendContinuation($newBrowseContinuation);
-        $newTypeWrapper = Base64Url::encode($ctwBuilder -> serializeToString());
+        $ctwBuilder->setAppendContinuation($newBrowseContinuation);
+        $newTypeWrapper = Base64Url::encode($ctwBuilder->serializeToString());
 
         $bcwBuilder = new BrowseContinuationWrapper();
-        $bcwBuilder -> setBrowseId("FEwhat_to_watch");
-        $bcwBuilder -> setEncodedAction($newTypeWrapper);
-        $bcwBuilder -> setTargetId("browse-feedFEwhat_to_watch");
-        $newInnerWrapper = $bcwBuilder -> serializeToString();
+        $bcwBuilder->setBrowseId("FEwhat_to_watch");
+        $bcwBuilder->setEncodedAction($newTypeWrapper);
+        $bcwBuilder->setTargetId("browse-feedFEwhat_to_watch");
+        $newInnerWrapper = $bcwBuilder->serializeToString();
 
         $cwBuilder = new ContinuationWrapper();
-        $cwBuilder -> setBrowseContinuation($bcwBuilder);
-        $newOuterWrapper = Base64Url::encode($cwBuilder -> serializeToString());
+        $cwBuilder->setBrowseContinuation($bcwBuilder);
+        $newOuterWrapper = Base64Url::encode($cwBuilder->serializeToString());
 
         return $newOuterWrapper;
     }

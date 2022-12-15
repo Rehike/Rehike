@@ -91,13 +91,13 @@ class SimpleFunnel {
      * @param object $funnelData
      */
     public static function output(object $funnelData): void {
-        if (isset($funnelData -> error)) {
+        if (isset($funnelData->error)) {
             http_response_code(500);
             echo("
             <title>SimpleFunnel Error</title>
             <style>body>*{margin:8px 0}</style>
             <h2>An error has occured in SimpleFunnel</h2>
-            <p><b>Error</b>: " . $funnelData -> error . "</p>
+            <p><b>Error</b>: " . $funnelData->error . "</p>
             <small><i>Please report this to the GitHub.</i></small>
             ");
             return;
@@ -107,12 +107,12 @@ class SimpleFunnel {
             "content-encoding"
         ];
 
-        http_response_code($funnelData -> status);
-        foreach($funnelData -> headers as $name => $value)
+        http_response_code($funnelData->status);
+        foreach($funnelData->headers as $name => $value)
         if (!in_array($name, $illegalResponseHeaders)) {
             header("$name: $value");
         }
-        echo($funnelData -> getText());
+        echo($funnelData->getText());
         die();
     }
     

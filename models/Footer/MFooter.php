@@ -30,64 +30,64 @@ class MFooter {
 
     public function __construct() {
         $i18n = i18n::newNamespace("footer");
-        $i18n -> registerFromFolder("i18n/footer");
+        $i18n->registerFromFolder("i18n/footer");
         $rehikeVersion = (object) \Rehike\Version\VersionController::$versionInfo;
-        $rehikeVersion -> semanticVersion = \Rehike\Version\VersionController::getVersion();
+        $rehikeVersion->semanticVersion = \Rehike\Version\VersionController::getVersion();
 
-        $this -> logoTooltip = $i18n -> logoTooltip;
+        $this->logoTooltip = $i18n->logoTooltip;
 
-        $this -> primaryLinks[] = new MFooterLink(
-            $i18n -> primaryAbout,
+        $this->primaryLinks[] = new MFooterLink(
+            $i18n->primaryAbout,
             "/yt/about/"
         );
-        $this -> primaryLinks[] = new MFooterLink(
-            $i18n -> primaryPress,
+        $this->primaryLinks[] = new MFooterLink(
+            $i18n->primaryPress,
             "/yt/press/"
         );
-        $this -> primaryLinks[] = new MFooterLink(
-            $i18n -> primaryCopyright,
+        $this->primaryLinks[] = new MFooterLink(
+            $i18n->primaryCopyright,
             "/yt/copyright/"
         );
-        $this -> primaryLinks[] = new MFooterLink(
-            $i18n -> primaryCreators,
+        $this->primaryLinks[] = new MFooterLink(
+            $i18n->primaryCreators,
             "/yt/creators/"
         );
-        $this -> primaryLinks[] = new MFooterLink(
-            $i18n -> primaryAdvertise,
+        $this->primaryLinks[] = new MFooterLink(
+            $i18n->primaryAdvertise,
             "/yt/advertise/"
         );
-        $this -> primaryLinks[] = new MFooterLink(
-            $i18n -> primaryDevs,
+        $this->primaryLinks[] = new MFooterLink(
+            $i18n->primaryDevs,
             "/yt/dev/"
         );
         if (ConfigManager::getConfigProp("appearance.showVersionInFooter"))
-        $this -> primaryLinks[] = new MFooterLink(
-            $i18n -> primaryVersion($rehikeVersion -> semanticVersion, $rehikeVersion -> branch),
+        $this->primaryLinks[] = new MFooterLink(
+            $i18n->primaryVersion($rehikeVersion->semanticVersion, $rehikeVersion->branch),
             "/rehike/version"
         );
-        $this -> secondaryLinks[] = new MFooterLink(
-            $i18n -> secondaryTerms,
+        $this->secondaryLinks[] = new MFooterLink(
+            $i18n->secondaryTerms,
             "/t/terms"
         );
-        $this -> secondaryLinks[] = new MFooterLink(
-            $i18n -> secondaryPrivacy,
+        $this->secondaryLinks[] = new MFooterLink(
+            $i18n->secondaryPrivacy,
             "//www.google.com/intl/en/policies/privacy/"
         );
-        $this -> secondaryLinks[] = new MFooterLink(
-            $i18n -> secondaryPolicySafety,
+        $this->secondaryLinks[] = new MFooterLink(
+            $i18n->secondaryPolicySafety,
             "/yt/policyandsafety"
         );
-        $this -> secondaryLinks[] = new MFooterLink(
-            $i18n -> secondaryFeedback,
+        $this->secondaryLinks[] = new MFooterLink(
+            $i18n->secondaryFeedback,
             "//support.google.com/youtube/"
         );
-        $this -> secondaryLinks[] = new MFooterLink(
-            $i18n -> secondaryTestTube,
+        $this->secondaryLinks[] = new MFooterLink(
+            $i18n->secondaryTestTube,
             "/new"
         );
-        $this -> copyright = $i18n -> secondaryCopyright(date("Y"));
-        $this -> buttons[] = new MHistoryButton();
-        $this -> buttons[] = new MHelpButton();
+        $this->copyright = $i18n->secondaryCopyright(date("Y"));
+        $this->buttons[] = new MHistoryButton();
+        $this->buttons[] = new MHelpButton();
     }
 }
 
@@ -99,8 +99,8 @@ class MFooterLink {
     public $navigationEndpoint;
 
     public function __construct($text, $url) {
-        $this -> simpleText = $text;
-        $this -> navigationEndpoint = (object) [
+        $this->simpleText = $text;
+        $this->navigationEndpoint = (object) [
             "commandMetadata" => (object) [
                 "webCommandMetadata" => (object) [
                     "url" => $url
@@ -118,13 +118,13 @@ class MHistoryButton extends MButton {
     public function __construct() {
         $i18n = i18n::getNamespace("footer");
 
-        $this -> icon = (object) [
+        $this->icon = (object) [
             "iconType" => "FOOTER_HISTORY"
         ];
-        $this -> text = (object) [
-            "simpleText" => $i18n -> buttonHistory
+        $this->text = (object) [
+            "simpleText" => $i18n->buttonHistory
         ];
-        $this -> navigationEndpoint = (object) [
+        $this->navigationEndpoint = (object) [
             "commandMetadata" => (object) [
                 "webCommandMetadata" => (object) [
                     "url" => "/feed/history"
@@ -151,10 +151,10 @@ class MHelpButton extends MButton {
     public function __construct() {
         $i18n = i18n::getNamespace("footer");
 
-        $this -> text = (object) [
-            "simpleText" => $i18n -> buttonHelp
+        $this->text = (object) [
+            "simpleText" => $i18n->buttonHelp
         ];
-        $this -> icon = (object) [
+        $this->icon = (object) [
             "iconType" => "QUESTIONMARK"
         ];
     }

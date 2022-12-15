@@ -21,12 +21,12 @@ return new class extends HitchhikerController {
     public $template = "attribution";
 
     public function onGet(&$yt, $request) {
-        if (!isset($request -> params -> v)) {
-            $this -> template = "oops";
+        if (!isset($request->params->v)) {
+            $this->template = "oops";
             return;
         }
         
-        $videoId = $request -> params -> v;
+        $videoId = $request->params->v;
 
         Network::innertubeRequest(
             action: "navigation/resolve_url",
@@ -36,8 +36,8 @@ return new class extends HitchhikerController {
         )->then(function ($resolve) {
             $resolveData = $resolve->getJson();
 
-            if (!isset($resolveData -> endpoint -> browseEndpoint -> params)) {
-                $this -> template = "oops";
+            if (!isset($resolveData->endpoint->browseEndpoint->params)) {
+                $this->template = "oops";
                 return;
             }
             
@@ -45,13 +45,13 @@ return new class extends HitchhikerController {
                 action: "browse",
                 body: [
                     "browseId" => "FEsfv_audio_pivot",
-                    "params" => $resolveData -> endpoint -> browseEndpoint -> params
+                    "params" => $resolveData->endpoint->browseEndpoint->params
                 ]
                 );
         })->then(function ($response) use ($yt, $videoId) {
             $ytdata = $response->getJson();
 
-            $yt -> page = AttributionModel::bake($ytdata, $videoId);
+            $yt->page = AttributionModel::bake($ytdata, $videoId);
         });
     }
 };

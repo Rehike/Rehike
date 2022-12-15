@@ -43,11 +43,11 @@ return new class extends NirvanaController {
          */
         if ("1" == @$_COOKIE['wide']) 
         {
-            $yt -> theaterMode = $_COOKIE['wide'];
+            $yt->theaterMode = $_COOKIE['wide'];
         } 
         else 
         {
-            $yt -> theaterMode = "0";
+            $yt->theaterMode = "0";
             $_COOKIE['wide'] = "0";
         }
 

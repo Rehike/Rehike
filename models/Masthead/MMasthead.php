@@ -32,39 +32,39 @@ class MMasthead {
 
     public function __construct($appbarEnabled) {
         $i18n = i18n::newNamespace("masthead");
-        $i18n -> registerFromFolder("i18n/masthead");
+        $i18n->registerFromFolder("i18n/masthead");
 
-        $this -> a11ySkipNav = $i18n -> a11ySkipNav;
+        $this->a11ySkipNav = $i18n->a11ySkipNav;
 
         if ($appbarEnabled)
-            $this -> guideToggle = new MAppbarGuideToggle();
+            $this->guideToggle = new MAppbarGuideToggle();
 
-        $this -> logoTooltip = $i18n -> logoTooltip;
-        $this -> searchbox = new MMastheadSearchbox();
+        $this->logoTooltip = $i18n->logoTooltip;
+        $this->searchbox = new MMastheadSearchbox();
 
-        $this -> notificationStrings = (object) [
-            "none" => $i18n -> notificationsNone,
-            "singular" => $i18n -> notificationsSingular,
-            "plural" => $i18n -> notificationsPlural,
+        $this->notificationStrings = (object) [
+            "none" => $i18n->notificationsNone,
+            "singular" => $i18n->notificationsSingular,
+            "plural" => $i18n->notificationsPlural,
         ];
 
         switch (Config::getConfigProp("appearance.uploadButtonType")) {
             case "BUTTON":
-                $this -> buttons[] = new MUploadButton();
+                $this->buttons[] = new MUploadButton();
                 break;
             case "ICON":
-                $this -> buttons[] = new MUploadIconButton();
+                $this->buttons[] = new MUploadIconButton();
                 break;
             default:
-                $this -> buttons[] = new MCreationMenu();
+                $this->buttons[] = new MCreationMenu();
                 break;
         }
 
         if (SignIn::isSignedIn()) {
-            $this -> buttons[] = new MNotificationButton();
-            $this -> buttons[] = new MAccountPickerButton();
+            $this->buttons[] = new MNotificationButton();
+            $this->buttons[] = new MAccountPickerButton();
         } else {
-            $this -> buttons[] = new MSignInButton();
+            $this->buttons[] = new MSignInButton();
         }
     }
 }
@@ -81,14 +81,14 @@ class MAppbarGuideToggle extends MButton {
     public function __construct() {
         $i18n = i18n::getNamespace("masthead");
 
-        $this -> accessibility = (object) [
+        $this->accessibility = (object) [
             "accessibilityData" => (object) [
                 "controls" => "appbar-guide-menu",
-                "label" => $i18n -> appbarGuideLabel
+                "label" => $i18n->appbarGuideLabel
             ]
         ];
 
-        $this -> icon = (object) [
+        $this->icon = (object) [
             "iconType" => "APPBAR_GUIDE"
         ];
     }
@@ -110,12 +110,12 @@ class MMastheadSearchbox {
     public function __construct() {
         $i18n = i18n::getNamespace("masthead");
     
-        $this -> placeholder = $i18n -> searchboxPlaceholder;
-        $this -> button = new MButton([
+        $this->placeholder = $i18n->searchboxPlaceholder;
+        $this->button = new MButton([
             "style" => "STYLE_DEFAULT",
             "size" => "SIZE_DEFAULT",
             "text" => (object) [
-                "simpleText" => $i18n -> searchboxPlaceholder
+                "simpleText" => $i18n->searchboxPlaceholder
             ],
             "targetId" => "search-btn",
             "class" => [
@@ -139,8 +139,8 @@ class MSignInButton extends MButton {
     public function __construct() {
         $i18n = i18n::getNamespace("masthead");
 
-        $this -> text = (object) [
-            "simpleText" => $i18n -> signInButton
+        $this->text = (object) [
+            "simpleText" => $i18n->signInButton
         ];
     }
 }
@@ -152,13 +152,13 @@ class MUploadButton extends MButton {
         $i18n = i18n::getNamespace("masthead");
 
         $signInInfo = (object) SignIn::getInfo();
-        $hasChannel = SignIn::isSignedIn() && isset($signInInfo -> ucid);
-        if ($hasChannel) $ucid = $signInInfo -> ucid;
+        $hasChannel = SignIn::isSignedIn() && isset($signInInfo->ucid);
+        if ($hasChannel) $ucid = $signInInfo->ucid;
 
-        $this -> text = (object) [
-            "simpleText" => $i18n -> uploadButton
+        $this->text = (object) [
+            "simpleText" => $i18n->uploadButton
         ];
-        $this -> navigationEndpoint = (object) [
+        $this->navigationEndpoint = (object) [
             "commandMetadata" => (object) [
                 "webCommandMetadata" => (object) [
                     "url" => $hasChannel ? "//studio.youtube.com/channel/$ucid/videos?d=ud" : "/create_channel?upsell=upload&next=/"
@@ -176,18 +176,18 @@ class MUploadIconButton extends MButton {
         $i18n = i18n::getNamespace("masthead");
 
         $signInInfo = (object) SignIn::getInfo();
-        $hasChannel = SignIn::isSignedIn() && isset($signInInfo -> ucid);
-        if ($hasChannel) $ucid = $signInInfo -> ucid;
+        $hasChannel = SignIn::isSignedIn() && isset($signInInfo->ucid);
+        if ($hasChannel) $ucid = $signInInfo->ucid;
 
-        $this -> tooltip = $i18n -> uploadButton;
-        $this -> navigationEndpoint = (object) [
+        $this->tooltip = $i18n->uploadButton;
+        $this->navigationEndpoint = (object) [
             "commandMetadata" => (object) [
                 "webCommandMetadata" => (object) [
                     "url" => $hasChannel ? "//studio.youtube.com/channel/$ucid/videos?d=ud" : "/create_channel?upsell=upload&next=/"
                 ]
             ]
         ];
-        $this -> icon = (object) [
+        $this->icon = (object) [
             "iconType" => "MATERIAL_UPLOAD"
         ];
     }
@@ -203,8 +203,8 @@ class MCreationMenu extends MButton {
     ];
 
     public function __construct() {
-        $this -> clickcard = new MCreationClickcard();
-        $this -> icon = (object) [];
+        $this->clickcard = new MCreationClickcard();
+        $this->icon = (object) [];
     }
 }
 
@@ -223,28 +223,28 @@ class MCreationClickcard {
         $i18n = i18n::getNamespace("masthead");
 
         $signInInfo = (object) SignIn::getInfo();
-        $hasChannel = SignIn::isSignedIn() && isset($signInInfo -> ucid);
-        if ($hasChannel) $ucid = $signInInfo -> ucid;
+        $hasChannel = SignIn::isSignedIn() && isset($signInInfo->ucid);
+        if ($hasChannel) $ucid = $signInInfo->ucid;
 
         $items = [];
 
         $items[] = new MCreationMenuItem(
             "upload",
-            $i18n -> creationUpload,
+            $i18n->creationUpload,
             $hasChannel ? "//studio.youtube.com/channel/$ucid/videos?d=ud" : "/create_channel?upsell=upload&next=/"
         );
         $items[] = new MCreationMenuItem(
             "live",
-            $i18n -> creationLive,
+            $i18n->creationLive,
             $hasChannel ? "//studio.youtube.com/channel/$ucid/livestreaming" : "/create_channel?upsell=livestreaming&next=/"
         );
         if ($hasChannel) $items[] = new MCreationMenuItem(
             "post",
-            $i18n -> creationPost,
+            $i18n->creationPost,
             $hasChannel ? "/channel/$ucid/community?show_create_dialog=1" : "/create_chanel?upsell=community&next=/"
         );
 
-        $this -> content = (object) [
+        $this->content = (object) [
             "items" => $items
         ];
     }
@@ -252,15 +252,15 @@ class MCreationClickcard {
 
 class MCreationMenuItem extends MButton {
     public function __construct($type, $label, $url) {
-        $this -> targetId = "creation-$type-menu-item";
-        $this -> type = $type;
-        $this -> icon = (object) [
+        $this->targetId = "creation-$type-menu-item";
+        $this->type = $type;
+        $this->icon = (object) [
             "iconType" => "CREATION_" . strtoupper($type)
         ];
-        $this -> text = (object) [
+        $this->text = (object) [
             "simpleText" => $label
         ];
-        $this -> navigationEndpoint = (object) [
+        $this->navigationEndpoint = (object) [
             "commandMetadata" => (object) [
                 "webCommandMetadata" => (object) [
                     "url" => $url
@@ -283,18 +283,18 @@ class MNotificationButton extends MButton {
     ];
 
     public function __construct() {
-        $this -> accessibility = (object) [
+        $this->accessibility = (object) [
             "accessibilityData" => (object) [
                 "haspopup" => "true"
             ]
         ];
-        $this -> icon = (object) [
+        $this->icon = (object) [
             "iconType" => "BELL"
         ];
-        $this -> text = (object) [
+        $this->text = (object) [
             "simpleText" => "0"
         ];
-        $this -> clickcard = new MNotificationClickcard();
+        $this->clickcard = new MNotificationClickcard();
     }
 }
 
@@ -311,9 +311,9 @@ class MNotificationClickcard {
     public function __construct() {
         $i18n = i18n::getNamespace("masthead");
 
-        $this -> content = (object) [];
-        $this -> content -> title = $i18n -> notificationsTitle;
-        $this -> content -> button = new MNotificationSettingsButton();
+        $this->content = (object) [];
+        $this->content->title = $i18n->notificationsTitle;
+        $this->content->button = new MNotificationSettingsButton();
     }
 }
 
@@ -324,15 +324,15 @@ class MNotificationSettingsButton extends MButton {
     public function __construct() {
         $i18n = i18n::getNamespace("masthead");
 
-        $this -> accessibility = (object) [
+        $this->accessibility = (object) [
             "accessibilityLabel" => (object) [
-                "label" => $i18n -> notificationsSettings
+                "label" => $i18n->notificationsSettings
             ]
         ];
-        $this -> icon = (object) [
+        $this->icon = (object) [
             "iconType" => "ICON_ACCOUNT_SETTINGS"
         ];
-        $this -> navigationEndpoint = (object) [
+        $this->navigationEndpoint = (object) [
             "commandMetadata" => (object) [
                 "webCommandMetadata" => (object) [
                     "url" => "/account_notifications"
@@ -357,17 +357,17 @@ class MAccountPickerButton extends MButton {
     public function __construct() {
         $i18n = i18n::getNamespace("masthead");
         $signInInfo = (object) SignIn::getInfo();
-        $this -> thumb = new MThumbSquare([
-            "image" => ImageUtils::changeGgphtImageSize($signInInfo -> activeChannel["photo"], 27),
+        $this->thumb = new MThumbSquare([
+            "image" => ImageUtils::changeGgphtImageSize($signInInfo->activeChannel["photo"], 27),
             "size" => 27,
             "delayload" => true
         ]);
-        $this -> accessibility = (object) [
+        $this->accessibility = (object) [
             "accessibilityData" => (object) [
-                "label" => $i18n -> accountPickerLabel
+                "label" => $i18n->accountPickerLabel
             ]
         ];
-        $this -> clickcard = new MAccountPickerClickcard();
+        $this->clickcard = new MAccountPickerClickcard();
     }
 }
 
@@ -383,13 +383,13 @@ class MAccountPickerClickcard {
     public function __construct() {
         $i18n = i18n::getNamespace("masthead");
         $signInInfo = (object) SignIn::getInfo();
-        $activeChannel = $signInInfo -> activeChannel;
+        $activeChannel = $signInInfo->activeChannel;
 
-        $this -> content = (object) [];
-        $content = &$this -> content;
+        $this->content = (object) [];
+        $content = &$this->content;
 
-        $content -> email = (object) [
-            "simpleText" => $signInInfo -> googleAccount["email"],
+        $content->email = (object) [
+            "simpleText" => $signInInfo->googleAccount["email"],
             "navigationEndpoint" => (object) [
                 "commandMetadata" => (object) [
                     "webCommandMetadata" => (object) [
@@ -398,10 +398,10 @@ class MAccountPickerClickcard {
                 ]
             ]
         ];
-        $content -> username = $activeChannel["name"];
-        $content -> subCount = $activeChannel["byline"];
-        $content -> photo = (object) [
-            "simpleText" => $i18n -> accountPickerPhotoChange,
+        $content->username = $activeChannel["name"];
+        $content->subCount = $activeChannel["byline"];
+        $content->photo = (object) [
+            "simpleText" => $i18n->accountPickerPhotoChange,
             "navigationEndpoint" => (object) [
                 "commandMetadata" => (object) [
                     "webCommandMetadata" => (object) [
@@ -415,13 +415,13 @@ class MAccountPickerClickcard {
                 "delayload" => true
             ])
         ];
-        $content -> buttons = [];
-        $content -> buttons[] = new MAccountPickerStudioButton();
-        $content -> buttons[] = new MAccountPickerSettingsButton();
+        $content->buttons = [];
+        $content->buttons[] = new MAccountPickerStudioButton();
+        $content->buttons[] = new MAccountPickerSettingsButton();
 
-        $content -> footer = [];
-        $content -> footer[] = new MAccountPickerAddButton();
-        $content -> footer[] = new MAccountPickerSignOutButton();
+        $content->footer = [];
+        $content->footer[] = new MAccountPickerAddButton();
+        $content->footer[] = new MAccountPickerSignOutButton();
     }
 }
 
@@ -434,13 +434,13 @@ class MAccountPickerStudioButton extends MButton {
     public function __construct() {
         $i18n = i18n::getNamespace("masthead");
         $signInInfo = (object) SignIn::getInfo();
-        $hasChannel = SignIn::isSignedIn() && isset($signInInfo -> ucid);
+        $hasChannel = SignIn::isSignedIn() && isset($signInInfo->ucid);
 
         if ($hasChannel) {
-            $this -> text = (object) [
-                "simpleText" => $i18n -> accountPickerStudio
+            $this->text = (object) [
+                "simpleText" => $i18n->accountPickerStudio
             ];
-            $this -> navigationEndpoint = (object) [
+            $this->navigationEndpoint = (object) [
                 "commandMetadata" => (object) [
                     "webCommandMetadata" => (object) [
                         "url" => "//studio.youtube.com/"
@@ -448,10 +448,10 @@ class MAccountPickerStudioButton extends MButton {
                 ]
             ];
         } else {
-            $this -> text = (object) [
-                "simpleText" => $i18n -> accountPickerCreate
+            $this->text = (object) [
+                "simpleText" => $i18n->accountPickerCreate
             ];
-            $this -> navigationEndpoint = (object) [
+            $this->navigationEndpoint = (object) [
                 "commandMetadata" => (object) [
                     "webCommandMetadata" => (object) [
                         "url" => "//studio.youtube.com/"
@@ -471,15 +471,15 @@ class MAccountPickerSettingsButton extends MButton {
     public function __construct() {
         $i18n = i18n::getNamespace("masthead");
 
-        $this -> navigationEndpoint = (object) [
+        $this->navigationEndpoint = (object) [
             "commandMetadata" => (object) [
                 "webCommandMetadata" => (object) [
                     "url" => "/account"
                 ]
             ]
         ];
-        $this -> tooltip = $i18n -> accountPickerSettings;
-        $this -> icon = (object) [
+        $this->tooltip = $i18n->accountPickerSettings;
+        $this->icon = (object) [
             "iconType" => "ICON_ACCOUNT_SETTINGS"
         ];
     }
@@ -491,10 +491,10 @@ class MAccountPickerAddButton extends MButton {
     public function __construct() {
         $i18n = i18n::getNamespace("masthead");
 
-        $this -> text = (object) [
-            "simpleText" => $i18n -> accountPickerAddAccount
+        $this->text = (object) [
+            "simpleText" => $i18n->accountPickerAddAccount
         ];
-        $this -> navigationEndpoint = (object) [
+        $this->navigationEndpoint = (object) [
             "commandMetadata" => (object) [
                 "webCommandMetadata" => (object) [
                     "url" => "//accounts.google.com/AddSession?passive=false&hl=en&continue=https%3A%2F%2Fwww.youtube.com%2Fsignin%3Fhl%3Den%26next%3D%252F%253Fdisable_polymer%253D1%26action_handle_signin%3Dtrue%26app%3Ddesktop&uilel=0&service=youtube"
@@ -510,10 +510,10 @@ class MAccountPickerSignOutButton extends MButton {
     public function __construct() {
         $i18n = i18n::getNamespace("masthead");
 
-        $this -> text = (object) [
-            "simpleText" => $i18n -> accountPickerSignOut
+        $this->text = (object) [
+            "simpleText" => $i18n->accountPickerSignOut
         ];
-        $this -> navigationEndpoint = (object) [
+        $this->navigationEndpoint = (object) [
             "commandMetadata" => (object) [
                 "webCommandMetadata" => (object) [
                     "url" => "/logout"

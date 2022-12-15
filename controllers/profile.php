@@ -34,7 +34,7 @@ return new class extends \Rehike\Controller\core\HitchhikerController {
         )->then(function ($response) {
             $ytdata = $response->getJson();
 
-            if ($a = @$ytdata -> endpoint -> urlEndpoint -> url) {
+            if ($a = @$ytdata->endpoint->urlEndpoint->url) {
                 header("Location: " . str_replace("https://www.youtube.com", "", $a));
             }
         });

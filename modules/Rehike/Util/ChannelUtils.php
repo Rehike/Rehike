@@ -18,22 +18,22 @@ class ChannelUtils {
      * @return Promise<string>
      */
     public static function getUcid($request): Promise/*<string>*/ {
-        if (in_array($request -> path[0], ["channel", "user", "c"])) {
-            switch($request -> path[0]) {
+        if (in_array($request->path[0], ["channel", "user", "c"])) {
+            switch($request->path[0]) {
                 case "channel":
                     return new Promise(fn($r) => $r(
-                        $request -> path[1] ?? ""
+                        $request->path[1] ?? ""
                     ));
                     break;
                 case "user":
                 case "c":
                     return self::handleNameUrl(
-                        $request -> path[0] . "/" . $request -> path[1]
+                        $request->path[0] . "/" . $request->path[1]
                     );
                     break;
             }
         } else {
-            return self::handleNameUrl($request -> path[0]);
+            return self::handleNameUrl($request->path[0]);
         }
 
         return "";
@@ -58,8 +58,8 @@ class ChannelUtils {
             )->then(function ($response) use ($resolve) {
                 $ytdata = $response->getJson();
 
-                if (isset($ytdata -> endpoint -> browseEndpoint -> browseId)) {
-                    $resolve($ytdata -> endpoint -> browseEndpoint -> browseId);
+                if (isset($ytdata->endpoint->browseEndpoint->browseId)) {
+                    $resolve($ytdata->endpoint->browseEndpoint->browseId);
                 } else {
                     $resolve("");
                 }

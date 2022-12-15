@@ -29,10 +29,10 @@ class MSubnavMenuButton
         $items = [];
 
         foreach ($data as $item) {
-            if ($item -> selected) {
-                $title = $item -> title;
+            if ($item->selected) {
+                $title = $item->title;
             } else {
-                $items[$item -> title] = $item -> endpoint -> commandMetadata -> webCommandMetadata -> url;
+                $items[$item->title] = $item->endpoint->commandMetadata->webCommandMetadata->url;
             }
         }
 

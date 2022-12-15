@@ -15,7 +15,7 @@ return new class extends AjaxController {
         $action = self::findAction();
         if (!@$action) self::error();
 
-        $yt -> page = (object) [];
+        $yt->page = (object) [];
         
         switch ($action) {
             case "create_comment":
@@ -42,7 +42,7 @@ return new class extends AjaxController {
      * @param $yt Template data.
      */
     private function createComment(&$yt) {
-        $this -> template = "ajax/comment_service/create_comment";
+        $this->template = "ajax/comment_service/create_comment";
 
         $content = $_POST["content"] ?? null;
         $params = $_POST["params"] ?? null;
@@ -62,11 +62,11 @@ return new class extends AjaxController {
         )->then(function ($response) use ($yt) {
             $ytdata = $response->getJson();
 
-            $data = $ytdata -> actions[1] -> createCommentAction -> contents 
-                -> commentThreadRenderer ?? null;
+            $data = $ytdata->actions[1] ->createCommentAction->contents 
+                ->commentThreadRenderer ?? null;
             
             if (null != $data) {
-                $yt -> page = CommentThread::commentThreadRenderer($data);
+                $yt->page = CommentThread::commentThreadRenderer($data);
             } else {
                 self::error();
             }
@@ -79,7 +79,7 @@ return new class extends AjaxController {
      * @param $yt Template data.
      */
     private function createCommentReply(&$yt) {
-        $this -> template = "ajax/comment_service/create_comment_reply";
+        $this->template = "ajax/comment_service/create_comment_reply";
 
         $content = $_POST["content"] ?? null;
         $params = $_POST["params"] ?? null;
@@ -99,11 +99,11 @@ return new class extends AjaxController {
         )->then(function ($response) use ($yt) {
             $ytdata = $response->getJson();
 
-            $data = $ytdata -> actions[1] -> createCommentReplyAction 
-                -> contents -> commentRenderer ?? null;
+            $data = $ytdata->actions[1] ->createCommentReplyAction 
+                ->contents->commentRenderer ?? null;
             
             if (null != $data) {
-                $yt -> page = CommentThread::commentRenderer($data, true);
+                $yt->page = CommentThread::commentRenderer($data, true);
             } else {
                 self::error();
             }
@@ -117,7 +117,7 @@ return new class extends AjaxController {
      * @param $yt Template data.
      */
     private function getComments(&$yt) {
-        $this -> template = "ajax/comment_service/get_comments";
+        $this->template = "ajax/comment_service/get_comments";
 
         $ctoken = $_POST["page_token"] ?? null;
         if(!@$ctoken) self::error();
@@ -130,13 +130,13 @@ return new class extends AjaxController {
         )->then(function ($response) use ($yt) {
             $ytdata = $response->getJson();
 
-            foreach ($ytdata -> onResponseReceivedEndpoints as $endpoint)
+            foreach ($ytdata->onResponseReceivedEndpoints as $endpoint)
             {
-                if ($a = $endpoint -> appendContinuationItemsAction)
+                if ($a = $endpoint->appendContinuationItemsAction)
                 {
                     $data = $a;
                 } 
-                else if ($a = $endpoint -> reloadContinuationItemsCommand) 
+                else if ($a = $endpoint->reloadContinuationItemsCommand) 
                 {
                     $data = $a;
                 }
@@ -163,7 +163,7 @@ return new class extends AjaxController {
      * @param $yt Template data.
      */
     private function getCommentReplies(&$yt) {
-        $this -> template = "ajax/comment_service/get_comment_replies";
+        $this->template = "ajax/comment_service/get_comment_replies";
 
         $ctoken = $_POST["page_token"] ?? null;
         if (!@$ctoken) self::error();
@@ -176,8 +176,8 @@ return new class extends AjaxController {
         )->then(function ($response) use ($yt) {
             $ytdata = $response->getJson();
 
-            foreach ($ytdata -> onResponseReceivedEndpoints as $endpoint) {
-                if ($a = $endpoint -> appendContinuationItemsAction) {
+            foreach ($ytdata->onResponseReceivedEndpoints as $endpoint) {
+                if ($a = $endpoint->appendContinuationItemsAction) {
                     $data = $a;
                 }
             }
@@ -202,7 +202,7 @@ return new class extends AjaxController {
      * (Like, dislike, heart, etc.)
      */
     private function performCommentAction() {
-        $this -> useTemplate = false;
+        $this->useTemplate = false;
 
         Network::innertubeRequest(
             action: "comment/perform_comment_action",
@@ -214,7 +214,7 @@ return new class extends AjaxController {
         )->then(function ($response) {
             $ytdata = $response->getJson();
 
-            if (@$ytdata -> actionResults[0] -> status == "STATUS_SUCCEEDED") {
+            if (@$ytdata->actionResults[0] ->status == "STATUS_SUCCEEDED") {
                 echo json_encode((object) [
                     "response" => "SUCCESS"
                 ]);

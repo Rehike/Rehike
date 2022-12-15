@@ -119,12 +119,12 @@ class MSubnav
 
         $i = new self();
 
-        $i -> addBackButton($baseUrl);
+        $i->addBackButton($baseUrl);
 
-        if (count($data -> contentTypeSubMenuItems) > 1) {
-            $i -> leftButtons[] = MSubnavMenuButton::fromData($data -> contentTypeSubMenuItems);
+        if (count($data->contentTypeSubMenuItems) > 1) {
+            $i->leftButtons[] = MSubnavMenuButton::fromData($data->contentTypeSubMenuItems);
         } else {
-            $i -> title = $data -> contentTypeSubMenuItems[0] -> title;
+            $i->title = $data->contentTypeSubMenuItems[0] ->title;
         }
 
         return $i;

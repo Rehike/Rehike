@@ -39,10 +39,10 @@ class MAlert {
     public $buttons = [];
 
     public function __construct($data) {
-        $this -> type = $data["type"];
-        $this -> text = $data["text"] ?? null;
-        $this -> hasCloseButton = $data["hasCloseButton"] ?? true;
-        $this -> buttons = null;
+        $this->type = $data["type"];
+        $this->text = $data["text"] ?? null;
+        $this->hasCloseButton = $data["hasCloseButton"] ?? true;
+        $this->buttons = null;
         // TODO: Buttons
     }
 

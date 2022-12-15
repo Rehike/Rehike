@@ -29,7 +29,7 @@ class channel extends NirvanaController {
 
     public function onPost(&$yt, $request) {
         http_response_code(404);
-        $this -> template = "error/404";
+        $this->template = "error/404";
     }
 
     public function onGet(&$yt, $request)
@@ -50,8 +50,8 @@ class channel extends NirvanaController {
 
             if ($ucid == "") {
                 http_response_code(404);
-                $this -> spfIdListeners = [];
-                $this -> template = "error/404";
+                $this->spfIdListeners = [];
+                $this->template = "error/404";
             }
 
             // Register the endpoint in the request
@@ -59,9 +59,9 @@ class channel extends NirvanaController {
 
             // Get the requested tab
             $tab = "featured";
-            if (!in_array($request -> path[0], ["channel", "user", "c"])) {
+            if (!in_array($request->path[0], ["channel", "user", "c"])) {
                 if (isset($request->path[1]) && "" != @$request->path[1]) {
-                    $tab = strtolower($request -> path[1]);
+                    $tab = strtolower($request->path[1]);
                 }
             } elseif (isset($request->path[2]) && "" != @$request->path[2]) {
                 $tab = strtolower($request->path[2]);
@@ -82,15 +82,15 @@ class channel extends NirvanaController {
             $params = new BrowseRequestParams();
             $params->setTab($tab);
 
-            if (isset($request -> params -> shelf_id)) {
-                $params->setShelfId((int) $request -> params -> shelf_id);
+            if (isset($request->params->shelf_id)) {
+                $params->setShelfId((int) $request->params->shelf_id);
             }
 
-            if (isset($request -> params -> view)) {
-                $params->setView((int) $request -> params -> view);
+            if (isset($request->params->view)) {
+                $params->setView((int) $request->params->view);
             }
 
-            switch ($request -> path[0]) {
+            switch ($request->path[0]) {
                 case "c":
                 case "user":
                 case "channel":
@@ -109,7 +109,7 @@ class channel extends NirvanaController {
                 body: [
                     "browseId" => $ucid,
                     "params" => Base64Url::encode($params->serializeToString()),
-                    "query" => $request -> params -> query ?? null 
+                    "query" => $request->params->query ?? null 
                 ]
             );
 

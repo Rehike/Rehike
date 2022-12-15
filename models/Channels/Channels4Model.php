@@ -73,9 +73,9 @@ class Channels4Model
                     }
                 }
                 
-                $response["header"]->addTabs($tabs, ($yt -> partiallySelectTabs ?? false));
+                $response["header"]->addTabs($tabs, ($yt->partiallySelectTabs ?? false));
 
-                foreach ($tabs as $tab) if (@$tab -> tabRenderer)
+                foreach ($tabs as $tab) if (@$tab->tabRenderer)
                 {
                     $tabEndpoint = $tab->tabRenderer->endpoint->commandMetadata->webCommandMetadata->url;
 
@@ -95,7 +95,7 @@ class Channels4Model
                         $currentTabContents = &$tab->tabRenderer->content;
                     }
                 }
-                elseif (@$tab -> expandableTabRenderer)
+                elseif (@$tab->expandableTabRenderer)
                 {
                     if (@$tab->expandableTabRenderer->selected) {
                         $baseUrl = self::$baseUrl;
@@ -187,10 +187,10 @@ class Channels4Model
         }
         else if ($b = @$content->sectionListRenderer)
         {
-            if ($submenu = @$b -> subMenu -> channelSubMenuRenderer)
+            if ($submenu = @$b->subMenu->channelSubMenuRenderer)
             {
                 $brandedPageV2SubnavRenderer = MSubnav::fromData($submenu);
-                unset($b -> subMenu);
+                unset($b->subMenu);
             }
 
             return (object) [

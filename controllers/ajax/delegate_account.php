@@ -11,7 +11,7 @@ return new class extends \Rehike\Controller\core\AjaxController {
     ];
 
     public function onGet(&$yt, $request) {
-        return $this -> onPost($yt, $request);
+        return $this->onPost($yt, $request);
     }
 
     public function onPost(&$yt, $request) {
@@ -27,12 +27,12 @@ return new class extends \Rehike\Controller\core\AjaxController {
         }
 
         for ($i = 0; $i < count($channelList); $i++) {
-            if ($channelList[$i] -> selected) {
+            if ($channelList[$i] ->selected) {
                 array_splice($channelList, $i, 1);
                 $i--;
             }
         }
 
-        $yt -> page = $channelList;
+        $yt->page = $channelList;
     }
 };

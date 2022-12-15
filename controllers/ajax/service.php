@@ -14,9 +14,9 @@ return new class extends AjaxController {
     public $useTemplate = false;
 
     public function onPost(&$yt, $request) {
-        if (!@$request -> params -> name) self::error();
+        if (!@$request->params->name) self::error();
 
-        $endpoint = $request -> params -> name;
+        $endpoint = $request->params->name;
 
         switch ($endpoint) {
             case "likeEndpoint":
@@ -45,7 +45,7 @@ return new class extends AjaxController {
         )->then(function ($response) {
             $ytdata = $response->getJson();
 
-            if (!@$ytdata -> errors) {
+            if (!@$ytdata->errors) {
                 http_response_code(200);
                 echo json_encode((object) [
                     "code" => "SUCCESS"

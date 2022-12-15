@@ -111,7 +111,7 @@ return new class extends AjaxController {
         )->then(function ($response) {
             $ytdata = $response->getJson();
 
-            if ($ytdata -> status = "STATUS_SUCCEEDED") {
+            if ($ytdata->status = "STATUS_SUCCEEDED") {
                 http_response_code(200);
                 echo json_encode((object) []);
             } else {
@@ -149,7 +149,7 @@ return new class extends AjaxController {
         )->then(function ($response) {
             $ytdata = $response->getJson();
 
-            if ($ytdata -> status = "STATUS_SUCCEEDED") {
+            if ($ytdata->status = "STATUS_SUCCEEDED") {
                 http_response_code(200);
                 echo json_encode((object) []);
             } else {

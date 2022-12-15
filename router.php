@@ -37,8 +37,8 @@ Router::redirect([
     "/hashtag/(*)" => "/results?search_query=$1",
     "/feed/what_to_watch/**" => "/",
     "/source/(*)" => function($request) {
-        if (isset($request -> path[1]))
-            return "/attribution?v=" . $request -> path[1];
+        if (isset($request->path[1]))
+            return "/attribution?v=" . $request->path[1];
         else
             return "/attribution";
     },

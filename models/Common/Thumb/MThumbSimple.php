@@ -20,10 +20,10 @@ class MThumbSimple {
     public $delayload = false;
 
     public function __construct($data) {
-        $this -> image = $data["image"] ?? "";
-        $this -> width = $data["width"] ?? 0;
-        $this -> height = $data["height"] ?? 0;
-        $this -> alt = $data["alt"] ?? "";
-        $this -> delayload = $data["delayload"] ?? false;
+        $this->image = $data["image"] ?? "";
+        $this->width = $data["width"] ?? 0;
+        $this->height = $data["height"] ?? 0;
+        $this->alt = $data["alt"] ?? "";
+        $this->delayload = $data["delayload"] ?? false;
     }
 }

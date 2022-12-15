@@ -4,11 +4,11 @@ namespace Rehike\Controller\rehike;
 class StaticRouter {
     public function get(&$yt, &$template, $request) {
         $filename = "static/";
-        for ($i = 2; $i < count($request -> path); $i++) {
-            if ($i == count($request -> path) - 1) {
-                $filename .= $request -> path[$i];
+        for ($i = 2; $i < count($request->path); $i++) {
+            if ($i == count($request->path) - 1) {
+                $filename .= $request->path[$i];
             } else {
-                $filename .= $request -> path[$i] . "/";
+                $filename .= $request->path[$i] . "/";
             }
         }
 

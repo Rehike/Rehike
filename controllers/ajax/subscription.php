@@ -30,7 +30,7 @@ return new class extends AjaxController {
                 $request = self::removeSubscriptions();
                 break;
             case "get_subscription_preferences_overlay":
-                $this -> useTemplate = true;
+                $this->useTemplate = true;
                 $this->template = 
                     "ajax/subscription/get_subscription_preference_overlay"
                 ;
@@ -44,7 +44,7 @@ return new class extends AjaxController {
         $request->then(function ($ytdata) {
             if (is_null($ytdata)) self::error();
 
-            if (!isset($ytdata -> error)) {
+            if (!isset($ytdata->error)) {
                 http_response_code(200);
                 echo json_encode((object) [
                     "response" => "SUCCESS"
@@ -111,21 +111,21 @@ return new class extends AjaxController {
             ]
         )->then(function ($response) use ($yt) {
             $ytdata = $response->getJson();
-            $header = $ytdata -> header -> c4TabbedHeaderRenderer ?? null;
-            $yt -> page = new MSubscriptionPreferencesOverlay([
-                "title" => $header -> title ?? "",
+            $header = $ytdata->header->c4TabbedHeaderRenderer ?? null;
+            $yt->page = new MSubscriptionPreferencesOverlay([
+                "title" => $header->title ?? "",
                 "options" => ($header 
-                    -> subscribeButton 
-                    -> subscribeButtonRenderer 
-                    -> notificationPreferenceButton 
-                    -> subscriptionNotificationToggleButtonRenderer 
-                    -> command 
-                    -> commandExecutorCommand 
-                    -> commands[0] 
-                    -> openPopupAction 
-                    -> popup 
-                    -> menuPopupRenderer 
-                    -> items) ?? []
+                    ->subscribeButton 
+                    ->subscribeButtonRenderer 
+                    ->notificationPreferenceButton 
+                    ->subscriptionNotificationToggleButtonRenderer 
+                    ->command 
+                    ->commandExecutorCommand 
+                    ->commands[0] 
+                    ->openPopupAction 
+                    ->popup 
+                    ->menuPopupRenderer 
+                    ->items) ?? []
             ]);
         });
     }
