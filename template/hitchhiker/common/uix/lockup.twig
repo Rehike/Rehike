@@ -25,6 +25,11 @@
                 {{ thumb(data, thumbX, thumbY) }}
                 {%- endif -%}
                 <div class="yt-lockup-content">
+                    {% if info.topStandaloneBadge %}
+                    <span class="yt-badge standalone-collection-badge-renderer-icon">
+                        {{ info.topStandaloneBadge.metadataBadgeRenderer.label }}
+                    </span>
+                    {% endif %}
                     <h3 class="yt-lockup-title {{ info.menu ? "contains-action-menu" }}">
                         <a href="{{ getUrl(info) }}" class="spf-link yt-uix-tile-link yt-ui-ellipsis yt-ui-ellipsis-2" title="{{ getText(info.title) }}">
                             {{ getText(info.title) }}
