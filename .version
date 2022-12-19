@@ -1,10 +1,10 @@
 {
-	"previousHash": "b757973000ff6fc21853764439658fe83c640347",
-	"currentRevisionId": 726,
-	"subject": "don't show appbar on channels without tabs",
-	"body": "don't show appbar on channels without tabs",
+	"previousHash": "fad17d90f7df300764f35b6fd318861125b11700",
+	"currentRevisionId": 727,
+	"subject": "fix pre-init error caused by previous commit",
+	"body": "fix pre-init error caused by previous commit",
 	"branch": "master",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1671470558
+	"time": 1671470976
 }

@@ -97,7 +97,7 @@ class Channels4Model
                 {
                     $tabEndpoint = $tab->tabRenderer->endpoint->commandMetadata->webCommandMetadata->url;
 
-                    if (!@$tab->hidden)
+                    if (!@$tab->hidden && isset($yt->appbar->nav))
                     {
                         $yt->appbar->nav->addItem(
                             $tab->tabRenderer->title,
@@ -122,7 +122,10 @@ class Channels4Model
                     }
                 }
 
-                $yt->appbar->nav->items[0]->title = $response["header"]->getTitle();
+                if (isset($yt->appbar->nav))
+                {
+                    $yt->appbar->nav->items[0]->title = $response["header"]->getTitle();
+                }
             }
         }
 
