@@ -1,10 +1,10 @@
 {
-	"previousHash": "ed9a26fc4b84d386acd313457727a16af3060374",
-	"currentRevisionId": 728,
-	"subject": "redirect invalid ucids to 404 page",
-	"body": "redirect invalid ucids to 404 page",
+	"previousHash": "0b60537470a0bc7f096d4097312eb30d31efe83e",
+	"currentRevisionId": 729,
+	"subject": "fix channel appbar",
+	"body": "fix channel appbar",
 	"branch": "master",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1671471092
+	"time": 1671472377
 }

@@ -25,22 +25,19 @@ class Channels4Model
         if ($header = @$data->header->c4TabbedHeaderRenderer)
         {
             $response += ["header" => new Channels4\MHeader($header, self::getBaseUrl())];
+        }
 
-            if (isset($header->tabs))
-            {
-                // Init appbar
-                $yt->appbar->addNav();
-            }
+        if (isset($data->contents->twoColumnBrowseResultsRenderer->tabs))
+        {
+            // Init appbar
+            $yt->appbar->addNav();
 
             // Also add the owner info we just got to the appbar
-            if (isset($yt->appbar->nav))
-            {
-                $yt->appbar->nav->addOwner(
-                    $response["header"]->getTitle(),
-                    self::getBaseUrl(),
-                    $response["header"]->thumbnail ?? "",
-                );
-            }
+            $yt->appbar->nav->addOwner(
+                $response["header"]->getTitle(),
+                self::getBaseUrl(),
+                $response["header"]->thumbnail ?? "",
+            );
         }
 
         $currentTabContents = null;
@@ -91,7 +88,7 @@ class Channels4Model
                     }
                 }
                 
-                $response["header"]->addTabs($tabs, ($yt -> partiallySelectTabs ?? false));
+                $response["header"]->addTabs($tabs, ($yt->partiallySelectTabs ?? false));
 
                 foreach ($tabs as $tab) if (@$tab -> tabRenderer)
                 {
