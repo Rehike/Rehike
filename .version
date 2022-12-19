@@ -1,10 +1,10 @@
 {
-	"previousHash": "fad17d90f7df300764f35b6fd318861125b11700",
-	"currentRevisionId": 727,
-	"subject": "fix pre-init error caused by previous commit",
-	"body": "fix pre-init error caused by previous commit",
+	"previousHash": "ed9a26fc4b84d386acd313457727a16af3060374",
+	"currentRevisionId": 728,
+	"subject": "redirect invalid ucids to 404 page",
+	"body": "redirect invalid ucids to 404 page",
 	"branch": "master",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1671470976
+	"time": 1671471092
 }
