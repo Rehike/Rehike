@@ -4,9 +4,8 @@ namespace Rehike\Model\Channels;
 use Rehike\Model\Channels\Channels4\MChannelAboutMetadata;
 use Rehike\Model\Channels\Channels4\BrandedPageV2\MSubnav;
 use Rehike\Model\Channels\Channels4\Sidebar\MRelatedChannels;
-use Rehike\Model\Appbar\MAppbarNavItem;
 use Rehike\Model\Browse\InnertubeBrowseConverter;
-use Rehike\Request;
+use Rehike\Model\Common\MAlert;
 
 class Channels4Model
 {
@@ -39,6 +38,18 @@ class Channels4Model
         }
 
         $currentTabContents = null;
+
+        if ($alerts = @$data->alerts)
+        {
+            $response += ["alerts" => []];
+            foreach ($alerts as $alert)
+            {
+                $alert = $alert->alertWithButtonRenderer
+                  ?? $alert->alertRenderer
+                  ?? null;
+                $response["alerts"][] = MAlert::fromData($alert);
+            }
+        }
 
         // If we have twoColumnBrowseResultsRenderer with tabs,
         // process them (add navigation and store a reference)

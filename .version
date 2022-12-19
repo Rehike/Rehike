@@ -1,10 +1,10 @@
 {
-	"previousHash": "c97e32d9b3c2991551bb86459997dd5dfdb7112a",
-	"currentRevisionId": 724,
-	"subject": "Merge branch 'master' of https://github.com/Rehike/Rehike",
-	"body": "Merge branch 'master' of https://github.com/Rehike/Rehike",
+	"previousHash": "6f02f0c8ca8270a6cfeb8088c17dae39705c9a9a",
+	"currentRevisionId": 725,
+	"subject": "fix #227",
+	"body": "fix #227",
 	"branch": "master",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1670967786
+	"time": 1671470350
 }
