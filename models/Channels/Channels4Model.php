@@ -22,19 +22,25 @@ class Channels4Model
         // Declare the response array.
         $response = [];
 
-        // Init appbar
-        $yt->appbar->addNav();
-
         if ($header = @$data->header->c4TabbedHeaderRenderer)
         {
             $response += ["header" => new Channels4\MHeader($header, self::getBaseUrl())];
 
+            if (isset($header->tabs))
+            {
+                // Init appbar
+                $yt->appbar->addNav();
+            }
+
             // Also add the owner info we just got to the appbar
-            $yt->appbar->nav->addOwner(
-                $response["header"]->getTitle(),
-                self::getBaseUrl(),
-                $response["header"]->thumbnail ?? "",
-            );
+            if (isset($yt->appbar->nav))
+            {
+                $yt->appbar->nav->addOwner(
+                    $response["header"]->getTitle(),
+                    self::getBaseUrl(),
+                    $response["header"]->thumbnail ?? "",
+                );
+            }
         }
 
         $currentTabContents = null;

@@ -1,10 +1,10 @@
 {
-	"previousHash": "6f02f0c8ca8270a6cfeb8088c17dae39705c9a9a",
-	"currentRevisionId": 725,
-	"subject": "fix #227",
-	"body": "fix #227",
+	"previousHash": "b757973000ff6fc21853764439658fe83c640347",
+	"currentRevisionId": 726,
+	"subject": "don't show appbar on channels without tabs",
+	"body": "don't show appbar on channels without tabs",
 	"branch": "master",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1671470350
+	"time": 1671470558
 }
