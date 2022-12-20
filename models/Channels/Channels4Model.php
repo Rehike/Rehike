@@ -13,11 +13,15 @@ class Channels4Model
     public static $currentTab = null;
     public static $yt;
 
+    private static $videosSort;
+
     private static $subscriptionCount = "";
 
     public static function bake(&$yt, $data, $sidebarData = null)
     {
         self::$yt = &$yt;
+
+        self::$videosSort = $yt->videosSort ?? 0;
 
         // Declare the response array.
         $response = [];
@@ -193,26 +197,26 @@ class Channels4Model
         }
         else if ($a = @$content->sectionListRenderer->contents[0]->itemSectionRenderer->contents[0]->gridRenderer)
         {
-            return self::handleGridTab($a, $content);
+        return self::handleGridTab($a, $content);
         }
         else if ($a = @$content->richGridRenderer)
         {
-            return self::handleGridTab(InnertubeBrowseConverter::richGridRenderer($a), $content, true);
+            return self::handleGridTab(InnertubeBrowseConverter::richGridRenderer($a), $content, self::$yt->videosSort, true);
         }
-        else if (($b = @$content->sectionListRenderer->contents[0]->itemSectionRenderer) && ($c = @$b->contents[0]->backstagePostThreadRenderer))
+        else if (($a = @$content->sectionListRenderer->contents[0]->itemSectionRenderer) && (isset($a->contents[0]->backstagePostThreadRenderer)))
         {
-            return self::handleBackstage($b);
+            return self::handleBackstage($a);
         }
-        else if ($b = @$content->sectionListRenderer)
+        else if ($a = @$content->sectionListRenderer)
         {
-            if ($submenu = @$b -> subMenu -> channelSubMenuRenderer)
+            if ($submenu = @$a->subMenu->channelSubMenuRenderer)
             {
                 $brandedPageV2SubnavRenderer = MSubnav::fromData($submenu);
-                unset($b -> subMenu);
+                unset($a->subMenu);
             }
 
             return (object) [
-                "sectionListRenderer" => InnertubeBrowseConverter::sectionListRenderer($b, [
+                "sectionListRenderer" => InnertubeBrowseConverter::sectionListRenderer($a, [
                     "channelRendererUnbrandedSubscribeButton" => true
                 ]),
                 "brandedPageV2SubnavRenderer" => $brandedPageV2SubnavRenderer ?? null
@@ -224,7 +228,7 @@ class Channels4Model
         }
     }
 
-    public static function handleGridTab($data, $parentTab, $rich = false)
+    public static function handleGridTab($data, $parentTab, $sort = null, $rich = false)
     {
         $currentTab = self::$currentTab;
 
@@ -239,7 +243,7 @@ class Channels4Model
                     $subnav = $subnav ?? null;
 
                     $response += [
-                        "brandedPageV2SubnavRenderer" => MSubnav::bakeVideos($subnav)
+                        "brandedPageV2SubnavRenderer" => MSubnav::bakeVideos($sort)
                     ];
                 }
                 break;
@@ -345,5 +349,9 @@ class Channels4Model
     public static function getBaseUrl()
     {
         return self::$baseUrl;
+    }
+
+    public static function getVideosSort() {
+        return self::$videosSort;
     }
 }
