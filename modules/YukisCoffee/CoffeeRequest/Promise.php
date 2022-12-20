@@ -313,7 +313,7 @@ class Promise/*<T>*/
             $this->reason = $e;
         }
 
-        // If there's nothing to resolve, do nothing
+        // If there's nothing to reject, do nothing
         $current = $this->getCurrentThenIndex();
 
         if (isset($this->catches[$current]))
