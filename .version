@@ -1,10 +1,10 @@
 {
-	"previousHash": "71748e26539c49c9557556995a23dda2ee634250",
-	"currentRevisionId": 731,
-	"subject": "fix changing flow reverting sort to default",
-	"body": "fix changing flow reverting sort to default",
+	"previousHash": "087336d1484d786d4991d2e848a332419cd5fd70",
+	"currentRevisionId": 732,
+	"subject": "fix #228",
+	"body": "fix #228",
 	"branch": "master",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1671565847
+	"time": 1671566329
 }
