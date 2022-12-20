@@ -1,10 +1,10 @@
 {
-	"previousHash": "f0c4e6f45d12c04a7b6c9d7b3f562f9854dda134",
-	"currentRevisionId": 730,
-	"subject": "videos page sorting (THIS SUCKS)",
-	"body": "videos page sorting (THIS SUCKS)",
+	"previousHash": "71748e26539c49c9557556995a23dda2ee634250",
+	"currentRevisionId": 731,
+	"subject": "fix changing flow reverting sort to default",
+	"body": "fix changing flow reverting sort to default",
 	"branch": "master",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1671565702
+	"time": 1671565847
 }

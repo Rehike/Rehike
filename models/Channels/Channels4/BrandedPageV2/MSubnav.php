@@ -103,6 +103,16 @@ class MSubnav
         $gridText = $i18n->flowGrid;
         $listText = $i18n->flowList;
 
+        $sort = "dd";
+        switch (Channels4Model::getVideosSort()) {
+            case 0:
+                $sort = "dd";
+                break;
+            case 1;
+                $sort = "p";
+                break;
+        }
+
         $tab = ("streams" == Channels4Model::$currentTab) ? "streams" : "videos";
 
         $options = [];
@@ -110,12 +120,12 @@ class MSubnav
         if ("grid" == $view)
         {
             $activeText = $gridText;
-            $options += [$listText => "$baseUrl/$tab?flow=list"];
+            $options += [$listText => "$baseUrl/$tab?sort=$sort&flow=list"];
         }
         else if ("list" == $view)
         {
             $activeText = $listText;
-            $options += [$gridText => "$baseUrl/$tab?flow=grid"];
+            $options += [$gridText => "$baseUrl/$tab?sort=$sort&flow=grid"];
         }
 
         return new MSubnavMenuButton("flow", $activeText, $options);
