@@ -2,6 +2,7 @@
 namespace Rehike\Model\Common;
 
 use Rehike\Model\Common\MButton;
+use Rehike\TemplateFunctions;
 
 class MAlert {
     const TypeInformation = "info";
@@ -44,6 +45,20 @@ class MAlert {
         $this -> hasCloseButton = $data["hasCloseButton"] ?? true;
         $this -> buttons = null;
         // TODO: Buttons
+    }
+
+    /**
+     * Build an alert from InnerTube data.
+     * 
+     * @param object $data  Data.
+     * @return MAlert
+     */
+    public static function fromData($data) {
+        return new self([
+            "type" => MAlert::parseInnerTubeType($data -> type),
+            "hasCloseButton" => (isset($data -> dismissButton)),
+            "text" => TemplateFunctions::getText($data -> text)
+        ]);
     }
 
     /**

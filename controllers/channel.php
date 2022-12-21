@@ -18,11 +18,27 @@ class channel extends NirvanaController {
 
     public static $requestedTab = "";
 
+    // Tabs where the "Featured channels" sidebar should show on
     public const SECONDARY_RESULTS_ENABLED_TAB_IDS = [
         "featured",
         "discussion",
         "community",
         "about"
+    ];
+
+    // Indices of which cloud chip corresponds to each sort option
+    public const VIDEO_TAB_SORT_INDICES = [
+        "dd",
+        "p"
+    ];
+
+    // Sort map for regular tabs that still use the old sorting backend
+    public const SORT_MAP = [
+        null,
+        "p",
+        "da",
+        "dd",
+        "lad"
     ];
 
     public function onPost(&$yt, $request) {
@@ -86,6 +102,15 @@ class channel extends NirvanaController {
             $params->setView((int) $request -> params -> view);
         }
 
+        if (isset($request->params->sort) && !in_array($tab, ["videos", "streams", "shorts"]))
+        {
+            $id = array_search($request->params->sort, self::SORT_MAP);
+            if (is_int($id))
+            {
+                $params->setSort($id);
+            }
+        }
+
         // Perform InnerTube request
         Request::queueInnertubeRequest("main", "browse", (object)[
             "browseId" => $ucid,
@@ -107,8 +132,54 @@ class channel extends NirvanaController {
 
         $page = json_decode($responses["main"]);
 
+        $yt->response = $page;
+
+        // Get content for current sort if it
+        // is not recently uploaded (default)
+        $yt->videosSort = 0;
+        if ($tab == "videos" && isset($request->params->sort))
+        {
+            // Get index of sort name
+            $sort = array_search($request->params->sort, self::VIDEO_TAB_SORT_INDICES);
+            $yt->videosSort = $sort;
+            if ($sort > 0)
+            {
+                $tabs = &$page->contents->twoColumnBrowseResultsRenderer->tabs;
+
+                foreach ($tabs as &$tab)
+                {
+                    if (@$tab->tabRenderer->selected)
+                    {
+                        $grid = &$tab->tabRenderer->content->richGridRenderer ?? null;
+                        break;
+                    } 
+                }
+
+                if (isset($grid))
+                {
+                    $ctoken = $grid->header->feedFilterChipBarRenderer->contents[$sort]->chipCloudChipRenderer
+                    ->navigationEndpoint->continuationCommand->token ?? null;
+
+                    if (isset($ctoken))
+                    {
+                        Request::queueInnertubeRequest("sort", "browse", (object) [
+                            "continuation" => $ctoken
+                        ]);
+                        $newContents = Request::getResponses()["sort"];
+                        $newContents = json_decode($newContents);
+                        $newContents = $newContents->onResponseReceivedActions[1]->reloadContinuationItemsCommand
+                        ->continuationItems ?? null;
+                        if (isset($newContents) && is_array($newContents))
+                        {
+                            $grid->contents = $newContents;
+                        }
+                    }
+                }
+            }
+        }
+
         
-        switch ($request -> path[0]) {
+        switch ($request->path[0]) {
             case "c":
             case "user":
             case "channel":

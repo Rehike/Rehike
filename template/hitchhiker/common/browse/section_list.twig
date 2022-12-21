@@ -5,6 +5,23 @@
         {%- for item in data.contents -%}
             {%- if item.itemSectionRenderer -%}
                 <li>{{ item_section(item.itemSectionRenderer) }}</li>
+            {%- elseif item.messageRenderer -%}
+            <li>
+                <p class="display-message">
+                    {%- set text = item.messageRenderer.subtext.messageSubtextRenderer.text ?? item.messageRenderer.text -%}
+                    {%- if text.runs -%}
+                        {%- for run in text.runs -%}
+                            {%- if run.navigationEndpoint -%}
+                                <a href="{{ getUrl(run) }}">{{ run.text }}</a>
+                            {%- else -%}
+                                {{ run.text }}
+                            {%- endif -%}
+                        {%- endfor -%}
+                    {%- elseif text.simpleText -%}
+                        {{ text.simpleText }}
+                    {%- endif -%}
+                </p>
+            </li>
             {%- endif -%}
         {%- endfor -%}
     </ol>

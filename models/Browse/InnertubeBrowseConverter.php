@@ -92,7 +92,7 @@ class InnertubeBrowseConverter
      */
     public static function sectionListRenderer($data, $context = [])
     {
-        foreach ($data -> contents as &$content) foreach ($content as $name => &$value)
+        foreach ($data->contents as &$content) foreach ($content as $name => &$value)
         {
             switch ($name)
             {

@@ -83,7 +83,9 @@
 {% endblock %}
 
 {%- block appbarContent -%}
-   {{ appbar_nav.render(yt.appbar.nav) }}
+    {% if yt.appbar.nav %}
+    {{ appbar_nav.render(yt.appbar.nav) }}
+    {% endif %}
 {% endblock %}
 
 {%- block page_class -%}

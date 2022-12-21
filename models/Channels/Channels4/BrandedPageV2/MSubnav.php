@@ -17,7 +17,7 @@ class MSubnav
         $this->backButton = new MSubnavBackButton($href);
     }
 
-    public static function bakeVideos($data)
+    public static function bakeVideos()
     {
         $i = new self();
 
@@ -25,29 +25,7 @@ class MSubnav
 
         $i->addBackButton($baseUrl);
 
-        // Process sort button
-        if (isset($sortData))
-        {
-            $sortData = $data->sortSetting->sortFilterSubMenuRenderer;
-            $sortButtonTitle = "";
-            $sortButtonOptions = [];
-
-            foreach ($sortData->subMenuItems as $item)
-            {
-                if ($item->selected)
-                {
-                    $sortButtonTitle = $item->title;
-                }
-                else
-                {
-                    $sortButtonOptions += [
-                        $item->title => $item->navigationEndpoint->commandMetadata->webCommandMetadata->url
-                    ];
-                }
-            }
-
-            $i->rightButtons[] = new MSubnavMenuButton("sort", $sortButtonTitle, $sortButtonOptions);
-        }
+        $i->rightButtons[] = self::getSortButton(Channels4Model::getVideosSort());
 
         $flow = $_GET["flow"] ?? "grid";
         if (!in_array($flow, ["grid", "list"])) $flow = "grid";
@@ -84,6 +62,38 @@ class MSubnav
         return new MSubnavMenuButton("view", $activeText, $options);
     }
 
+    public static function getSortButton($sort) {
+        $i18n = i18n::getNamespace("channels");
+        $baseUrl = Channels4Model::getBaseUrl();
+        $tab = Channels4Model::$currentTab;
+        $flow = $_GET["flow"] ?? "grid";
+
+        $options = [];
+        
+        $newestText = $i18n->videoSortNewest;
+        $popularText = $i18n->videoSortPopular;
+
+        switch ($sort)
+        {
+            case 0:
+                $activeText = $newestText;
+                $options += [
+                    $popularText => "$baseUrl/$tab?sort=p&flow=$flow"
+                ];
+                break;
+            case 1:
+                $activeText = $popularText;
+                $options += [
+                    $newestText => "$baseUrl/$tab?sort=dd&flow=$flow"
+                ];
+                break;
+            default:
+                return;
+        }
+
+        return new MSubnavMenuButton("sort", $activeText, $options);
+    }
+
     public static function getFlowButton($view)
     {
         $i18n = &i18n::getNamespace("channels");
@@ -93,6 +103,16 @@ class MSubnav
         $gridText = $i18n->flowGrid;
         $listText = $i18n->flowList;
 
+        $sort = "dd";
+        switch (Channels4Model::getVideosSort()) {
+            case 0:
+                $sort = "dd";
+                break;
+            case 1;
+                $sort = "p";
+                break;
+        }
+
         $tab = ("streams" == Channels4Model::$currentTab) ? "streams" : "videos";
 
         $options = [];
@@ -100,12 +120,12 @@ class MSubnav
         if ("grid" == $view)
         {
             $activeText = $gridText;
-            $options += [$listText => "$baseUrl/$tab?flow=list"];
+            $options += [$listText => "$baseUrl/$tab?sort=$sort&flow=list"];
         }
         else if ("list" == $view)
         {
             $activeText = $listText;
-            $options += [$gridText => "$baseUrl/$tab?flow=grid"];
+            $options += [$gridText => "$baseUrl/$tab?sort=$sort&flow=grid"];
         }
 
         return new MSubnavMenuButton("flow", $activeText, $options);
@@ -119,12 +139,12 @@ class MSubnav
 
         $i = new self();
 
-        $i -> addBackButton($baseUrl);
+        $i->addBackButton($baseUrl);
 
-        if (count($data -> contentTypeSubMenuItems) > 1) {
-            $i -> leftButtons[] = MSubnavMenuButton::fromData($data -> contentTypeSubMenuItems);
+        if (count($data->contentTypeSubMenuItems) > 1) {
+            $i->leftButtons[] = MSubnavMenuButton::fromData($data->contentTypeSubMenuItems);
         } else {
-            $i -> title = $data -> contentTypeSubMenuItems[0] -> title;
+            $i->title = $data->contentTypeSubMenuItems[0]->title;
         }
 
         return $i;

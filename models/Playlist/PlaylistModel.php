@@ -31,14 +31,12 @@ class PlaylistModel {
         $header -> actions = [];
 
         $response -> alerts = [];
-        if (isset($dataHost -> alerts)) for ($i = 0; $i < count($dataHost -> alerts); $i++) {
-            $alert = $dataHost -> alerts[$i] -> alertWithButtonRenderer;
+        if (isset($dataHost -> alerts)) foreach ($dataHost->alerts as $alert) {
+            $alert = $alert->alertWithButtonRenderer
+                  ?? $alert->alertRenderer
+                  ?? null;
 
-            $response -> alerts[] = new MAlert([
-                "type" => MAlert::parseInnerTubeType($alert -> type),
-                "hasCloseButton" => (isset($alert -> dismissButton)),
-                "text" => TemplateFunctions::getText($alert -> text)
-            ]);
+            $response -> alerts[] = MAlert::fromData($alert);
         } 
 
         return $response;

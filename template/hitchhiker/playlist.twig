@@ -12,11 +12,19 @@
 
 {% set appbarEnabled = true %}
 {% set defaultGuideVisibility = true %}
+{% if yt.page.channelHeader %}
 {% set defaultAppbarVisibility = true %}
+{% else %}
+{% set defaultAppbarVisibility = false %}
+{% endif %}
 {% set enableSnapScaling = true %}
 
 {%- block title -%}
+{% if yt.page.header.title %}
 {{ getText(yt.page.header.title) }} - {{ parent() }}
+{% else %}
+{{ parent() }}
+{% endif %}
 {%- endblock -%}
 
 {% block foot_scripts %}

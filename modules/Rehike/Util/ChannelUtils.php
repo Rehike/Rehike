@@ -17,7 +17,15 @@ class ChannelUtils {
         if (in_array($request -> path[0], ["channel", "user", "c"])) {
             switch($request -> path[0]) {
                 case "channel":
-                    return $request -> path[1] ?? "";
+                    $ucid = $request->path[1] ?? "";
+                    if (substr($ucid, 0, 2) == "UC")
+                    {
+                        return $ucid;
+                    }
+                    else
+                    {
+                        return "";
+                    }
                     break;
                 case "user":
                 case "c":
