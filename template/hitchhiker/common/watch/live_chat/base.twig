@@ -1,10 +1,23 @@
 {% macro render(data) %}
+{% set collapsed = data.initialDisplayState == "LIVE_CHAT_DISPLAY_STATE_COLLAPSED" %}
 <div id="watch-sidebar-live-chat" class="  yt-card yt-card-has-padding yt-uix-expander ">
-    <div class="yt-uix-expander live-chat-expander">
-       <iframe id="live-chat-iframe" class="live-chat-iframe yt-uix-expander-body" src="/live_chat?continuation={{ data.continuations.0.reloadContinuationData.continuation }}" data-host-origin="https://www.youtube.com/"></iframe>
-       <div id="hide-live-comments">
-          <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-expander yt-uix-expander-head yt-uix-expander-body" type="button" onclick=";return false;" id="hide-live-chat-button"><span class="yt-uix-button-content">{{ getText(data.showHideButton.toggleButtonRenderer.defaultText) }}</span></button>
-          <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-expander yt-uix-expander-head yt-uix-expander-collapsed-body" type="button" onclick=";return false;" id="show-live-chat-button"><span class="yt-uix-button-content">{{ getText(data.showHideButton.toggleButtonRenderer.toggledText) }}</span></button>
+    <div class="yt-uix-expander live-chat-expander {{ collapsed ? "yt-uix-expander-collapsed" }}">
+        {% set url = data.isReplay ? "/live_chat_replay" : "/live_chat" %}
+        {% set url = url ~ "?continuation=" ~ data.continuations[0].reloadContinuationData.continuation %}
+        <iframe id="live-chat-iframe" class="live-chat-iframe yt-uix-expander-body"
+        src="{{ url }}" data-host-origin="https://www.youtube.com/"></iframe>
+        <div id="hide-live-comments">
+            {% set btn = data.showHideButton.toggleButtonRenderer %}
+            <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-expander yt-uix-expander-head yt-uix-expander-body" type="button" onclick=";return false;" id="hide-live-chat-button">
+                <span class="yt-uix-button-content">
+                    {{ collapsed ? getText(btn.toggledText) : getText(btn.defaultText) }}
+                </span>
+            </button>
+            <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-expander yt-uix-expander-head yt-uix-expander-collapsed-body" type="button" onclick=";return false;" id="show-live-chat-button">
+                <span class="yt-uix-button-content">
+                    {{ collapsed ? getText(btn.defaultText) : getText(btn.toggledText) }}
+                </span>
+            </button>
        </div>
     </div>
 </div>
