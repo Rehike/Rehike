@@ -55,6 +55,7 @@ Router::get([
     "/channel/**" => "channel",
     "/c/**" => "channel",
     "/live_chat" => "special/get_live_chat",
+    "/live_chat_replay" => "special/get_live_chat",
     "/feed_ajax" => "ajax/feed",
     "/results" => "results",
     "/playlist" => "playlist",

@@ -6,13 +6,5 @@
     Each core template provides a type of the YouTube layout.
         - core.twig provides appbar (aka Nirvana)
         - core_legacy.twig provides no-appbar (like hitchhiker in 2013)
-        - core_lite.twig provides a rare format used for live chat.
 #}
-{% if appbarEnabled %}
-    {% set core = "core/core.twig" %}
-{% elseif isLite %}
-    {% set core = "core/core_lite.twig" %}
-{% else %}
-    {% set core = "core/core_legacy.twig" %}
-{% endif %}
-{% extends core %}
+{% extends appbarEnabled ? "core/core.twig" : "core/core_legacy.twig" %}
