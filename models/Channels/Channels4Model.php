@@ -201,7 +201,7 @@ class Channels4Model
         }
         else if ($a = @$content->richGridRenderer)
         {
-            return self::handleGridTab(InnertubeBrowseConverter::richGridRenderer($a), $content, self::$yt->videosSort, true);
+            return self::handleGridTab(InnertubeBrowseConverter::richGridRenderer($a), $content, @self::$yt->videosSort, true);
         }
         else if (($a = @$content->sectionListRenderer->contents[0]->itemSectionRenderer) && (isset($a->contents[0]->backstagePostThreadRenderer)))
         {
