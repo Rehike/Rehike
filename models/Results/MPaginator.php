@@ -3,7 +3,6 @@ namespace Rehike\Model\Results;
 
 use Rehike\Controller\ResultsController;
 use Rehike\i18n;
-use Rehike\Model\Common\MButton;
 
 /**
  * Implements the search paginator model.
@@ -76,24 +75,5 @@ class MPaginator {
         }
 
         return $response;
-    }
-}
-
-class MPaginatorButton extends MButton {
-    public function __construct($text, $selected, $url) {
-        $this->setText($text);
-        
-        if ($selected) {
-            $this->customAttributes["disabled"] = "True";
-            $this->attributes["redirect-url"] = $url;
-        } else {
-            $this->navigationEndpoint = (object) [
-                "commandMetadata" => (object) [
-                    "webCommandMetadata" => (object) [
-                        "url" => $url
-                    ]
-                ]
-            ];
-        }
     }
 }

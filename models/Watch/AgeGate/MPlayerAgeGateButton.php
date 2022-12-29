@@ -1,35 +1,7 @@
 <?php
-namespace Rehike\Model\Watch;
+namespace Rehike\Model\Watch\AgeGate;
 
 use Rehike\Model\Common\MButton;
-
-class MPlayerAgeGate
-{
-    public $reason;
-    public $subreason;
-
-    public function __construct()
-    {
-        $reason = "Content warning";
-        
-        $this->reason = (object)["simpleText" => $reason];
-        $this->subreason = (object)["watch7PlayerAgeGateContent" => new MPlayerAgeGateContent()];
-    }
-}
-
-class MPlayerAgeGateContent
-{
-    public $message;
-    public $button;
-
-    public function __construct()
-    {
-        $message = "This video may be inappropriate for some users.";
-        
-        $this->message = $message;
-        $this->button = new MPlayerAgeGateButton();
-    }
-}
 
 class MPlayerAgeGateButton extends MButton
 {

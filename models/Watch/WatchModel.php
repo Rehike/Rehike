@@ -4,6 +4,8 @@ namespace Rehike\Model\Watch;
 use Rehike\ConfigManager\ConfigManager;
 use Rehike\Signin\API as SignIn;
 
+use Rehike\Model\Watch\AgeGate\MPlayerAgeGate;
+
 /**
  * Implements all logic pertaining to the generation of watch
  * page data.
