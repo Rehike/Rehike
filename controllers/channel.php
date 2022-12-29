@@ -41,6 +41,11 @@ class channel extends NirvanaController {
         "lad"
     ];
 
+    public const VIDEO_TABS = [
+        "videos",
+        "streams"
+    ];
+
     public function onPost(&$yt, $request) {
         http_response_code(404);
         $this -> template = "error/404";
@@ -137,7 +142,7 @@ class channel extends NirvanaController {
         // Get content for current sort if it
         // is not recently uploaded (default)
         $yt->videosSort = 0;
-        if ($tab == "videos" && isset($request->params->sort))
+        if (in_array($tab, self::VIDEO_TABS) && isset($request->params->sort))
         {
             // Get index of sort name
             $sort = array_search($request->params->sort, self::VIDEO_TAB_SORT_INDICES);
@@ -162,6 +167,8 @@ class channel extends NirvanaController {
 
                     if (isset($ctoken))
                     {
+                        $yt->showSort = true;
+
                         Request::queueInnertubeRequest("sort", "browse", (object) [
                             "continuation" => $ctoken
                         ]);

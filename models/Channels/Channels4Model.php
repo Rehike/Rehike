@@ -17,11 +17,14 @@ class Channels4Model
 
     private static $subscriptionCount = "";
 
+    public static $showSort;
+
     public static function bake(&$yt, $data, $sidebarData = null)
     {
         self::$yt = &$yt;
 
-        self::$videosSort = $yt->videosSort ?? 0;
+        self::$videosSort = $yt->videosSort ?? null;
+        self::$showSort = $yt->showSort ?? false;
 
         // Declare the response array.
         $response = [];
@@ -201,7 +204,7 @@ class Channels4Model
         }
         else if ($a = @$content->richGridRenderer)
         {
-            return self::handleGridTab(InnertubeBrowseConverter::richGridRenderer($a), $content, self::$yt->videosSort, true);
+            return self::handleGridTab(InnertubeBrowseConverter::richGridRenderer($a), $content, self::$videosSort, true);
         }
         else if (($a = @$content->sectionListRenderer->contents[0]->itemSectionRenderer) && (isset($a->contents[0]->backstagePostThreadRenderer)))
         {
@@ -243,7 +246,7 @@ class Channels4Model
                     $subnav = $subnav ?? null;
 
                     $response += [
-                        "brandedPageV2SubnavRenderer" => MSubnav::bakeVideos($sort)
+                        "brandedPageV2SubnavRenderer" => MSubnav::bakeVideos()
                     ];
                 }
                 break;
