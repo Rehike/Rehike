@@ -259,7 +259,7 @@ class WatchModel
     {
         if (!SignIn::isSignedIn()) return false;
         if ($ucid = SignIn::getInfo()["ucid"]) {
-            if ($ucid == $secondaryInfo->owner->videoOwnerRenderer->navigationEndpoint->browseEndpoint->browseId) {
+            if ($ucid == @$secondaryInfo->owner->videoOwnerRenderer->navigationEndpoint->browseEndpoint->browseId) {
                 return true;
             } else {
                 return false;

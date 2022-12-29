@@ -21,9 +21,18 @@ class ChannelUtils {
         if (in_array($request->path[0], ["channel", "user", "c"])) {
             switch($request->path[0]) {
                 case "channel":
-                    return new Promise(fn($r) => $r(
-                        $request->path[1] ?? ""
-                    ));
+                    return new Promise(function ($resolve) use ($request) {
+                        $ucid = $request->path[1] ?? "";
+
+                        if (substr($ucid, 0, 2) == "UC")
+                        {
+                            $resolve($ucid);
+                        }
+                        else
+                        {
+                            $resolve("");
+                        }
+                    });
                     break;
                 case "user":
                 case "c":

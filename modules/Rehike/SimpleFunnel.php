@@ -13,8 +13,35 @@ use YukisCoffee\CoffeeRequest\CoffeeRequest;
 class SimpleFunnel {
     /**
      * Hostname for funnelCurrentPage
+     * 
+     * @var string
      */
     public static $hostname = "www.youtube.com";
+
+    /**
+     * Remove these request headers
+     * LOWERCASE ONLY
+     * 
+     * @var string[]
+     */
+    public static $illegalRequestHeaders = [
+        "accept",
+        "accept-encoding",
+        "host",
+        "origin",
+        "referer"
+    ];
+
+    /**
+     * Remove these response headers
+     * LOWERCASE ONLY
+     * 
+     * @var string[]
+     */
+    public static $illegalResponseHeaders = [
+        "content-encoding",
+        "content-length"
+    ];
 
     /**
      * Funnel a response through.
@@ -58,6 +85,7 @@ class SimpleFunnel {
         $headers["Origin"] = "https://" . $opts["host"];
         $headers["Referer"] = "https://" . $opts["host"] . $opts["uri"];
 
+        // Set up cURL and perform the request
         $url = "https://" . $opts["host"] . $opts["uri"];
 
         // Set up the request.

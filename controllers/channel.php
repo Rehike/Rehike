@@ -20,11 +20,27 @@ class channel extends NirvanaController {
 
     public static $requestedTab = "";
 
+    // Tabs where the "Featured channels" sidebar should show on
     public const SECONDARY_RESULTS_ENABLED_TAB_IDS = [
         "featured",
         "discussion",
         "community",
         "about"
+    ];
+
+    // Indices of which cloud chip corresponds to each sort option
+    public const VIDEO_TAB_SORT_INDICES = [
+        "dd",
+        "p"
+    ];
+
+    // Sort map for regular tabs that still use the old sorting backend
+    public const SORT_MAP = [
+        null,
+        "p",
+        "da",
+        "dd",
+        "lad"
     ];
 
     public function onPost(&$yt, $request) {

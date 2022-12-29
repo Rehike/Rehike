@@ -74,8 +74,8 @@
             {% if info.viewCountText %}
             <span class="stat">
                 <span class="view-count">{{ rehike.getText(info.viewCountText) }}</span>
-                {%- if rehike.config.appearance.watchSidebarDates -%}
-                <span class="published-time">{{ rehike.getText(info.publishedTimeText) }}</span>
+                {%- if rehike.config.appearance.watchSidebarDates and info.publishedTimeText -%}
+                    <span class="published-time">{{ rehike.getText(info.publishedTimeText) }}</span>
                 {%- endif -%}
             </span>
             {% endif %}

@@ -12,11 +12,19 @@
 
 {% set appbarEnabled = true %}
 {% set defaultGuideVisibility = true %}
+{% if yt.page.channelHeader %}
 {% set defaultAppbarVisibility = true %}
+{% else %}
+{% set defaultAppbarVisibility = false %}
+{% endif %}
 {% set enableSnapScaling = true %}
 
 {%- block title -%}
-{{ rehike.getText(yt.page.header.title) }} - {{ parent() }}
+    {%- if yt.page.header.title -%}
+        {{ rehike.getText(yt.page.header.title) }} - {{ parent() }}
+    {%- else -%}
+        {{ parent() }}
+    {%- endif -%}
 {%- endblock -%}
 
 {% block foot_scripts %}
@@ -81,6 +89,10 @@
 
 {%- block head_css -%}
 {{ core.css('www-home-c4') }}
+{% endblock %}
+
+{%- block page_class -%}
+not-fixed-width-tab-widescreen
 {% endblock %}
 
 {% import 'common/appbar/appbar_nav.twig' as appbar_nav %}

@@ -90,7 +90,8 @@ class MHeader
                 $count
             );
         }
-        else {
+        elseif (isset($header->subscribeButton))
+        {
             if (isset($header->subscriberCountText))
             {
                 $count = ExtractUtils::isolateSubCnt(TF::getText($header->subscriberCountText));

@@ -1,66 +1,56 @@
 <?php
 namespace Rehike\Controller\Special;
 
-return new class {
-    public function get(&$yt, &$template, $request)
+use Rehike\SimpleFunnel;
+
+return new class
+{
+    public const YTCFG_REGEX = "/ytcfg\.set\(({.*?})\);/";
+
+    public function get(&$yt, $request)
     {
-        /**
-         * Handle HTTP headers
-         */
-        $header = [];
+        $chatData = SimpleFunnel::funnelCurrentPage();
+        $chatHtml = &$chatData->body;
 
-        // Push header array
-        $header[] = "Host: www.youtube.com";
+        $matches = [];
+        preg_match(self::YTCFG_REGEX, $chatHtml, $matches);
 
-        // Push the rest of the headers
-        foreach (getallheaders() as $name => $value)
+        if (!isset($matches[1]))
+            self::error();
+
+        $ytcfg = json_decode($matches[1]);
+        // Store the original ytcfg to replace in the HTML
+        $oytcfg = $matches[1];
+
+        if (is_null($ytcfg))
+            self::error();
+
+        // Force light mode
+        $ytcfg->LIVE_CHAT_ALLOW_DARK_MODE = false;
+
+        // Configure experiment flags to disable
+        // new icons and the color update
+        if (!is_object($ytcfg->EXPERIMENT_FLAGS))
         {
-            if (!in_array($name, ["Host", "Accept-Encoding", "Cookie"], true)) 
-                $header[] = "{$name}: {$value}";
-
-            // Light theme hack
-            if ("Cookie" == $name)
-            {
-                if (preg_match("/f6=[0-9]+/", $value))
-                {
-                    $header["Cookie"] = preg_replace("/f6=[0-9]+/", "f6=40080000", $value);
-                }
-                else if (preg_match("/PREF=/", $value))
-                {
-                    $header["Cookie"] = preg_replace("/PREF=/", "PREF=f6=40080000&", $value);
-                }
-                else
-                {
-                    $header["Cookie"] = $value . "; PREF=f6=40080000";
-                }
-            }
+            $ytcfg->EXPERIMENT_FLAGS = (object) [];
         }
 
-        if (!isset($header["Cookie"]))
-        {
-            $header["Cookie"] = "PREF=f6=40080000";
-        }
+        $exps = &$ytcfg->EXPERIMENT_FLAGS;
+        
+        $exps->kevlar_system_icons = false;
+        $exps->web_darker_dark_theme = false;
+        $exps->kevlar_watch_color_update = false;
+        $exps->web_sheets_ui_refresh = false;
 
-        /**
-         * cURL array declaration
-         */
-        $curlParams = [
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_HEADER => false,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTPHEADER => $header,
-            CURLOPT_ENCODING => "" // Automatically determine
-        ];
+        $chatHtml = str_replace($oytcfg, json_encode($ytcfg), $chatHtml);
 
-        /**
-         * Perform request
-         */
-        $ch = curl_init("https://www.youtube.com" . $_SERVER["REQUEST_URI"]);
-        curl_setopt_array($ch, $curlParams);
-        $responseBody = curl_exec($ch);
+        SimpleFunnel::output($chatData);
+    }
 
-        curl_close($ch);
-
-        echo $responseBody;
+    public static function error()
+    {
+        http_response_code(400);
+        echo "[Rehike] Fatal error while attempting to load live chat";
+        die();
     }
 };

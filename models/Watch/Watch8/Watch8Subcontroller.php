@@ -33,8 +33,6 @@ class Watch8Subcontroller
 
         $results = [];
 
-        $results[] = $secondaryInfo->owner->videoOwnerRenderer->navigationEndpoint->browseEndpoint->browseId;
-
         // Push creator bar if the video is yours
         if (WatchBase::$isOwner) {
             $results[] = (object) [

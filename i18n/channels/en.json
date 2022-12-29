@@ -6,6 +6,9 @@
     "viewLiveStreams": "Live streams",
     "viewShorts": "Shorts",
     "seeAll": "See all",
-    "backstageViewAllCommentsSingular": "View 1 comment",
-    "backstageViewAllCommentsPlural": "View all %s comments"
+    "backstageViewAllCommentsSingular": "View comment",
+    "backstageViewAllCommentsPlural": "View all %s comments",
+    "videoSortPopular": "Most popular",
+    "videoSortOldest": "Date added (oldest)",
+    "videoSortNewest": "Date added (newest)"
 }

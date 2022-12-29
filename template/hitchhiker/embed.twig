@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noindex">
+        {% include "core/roboto.twig" %}
+        <link rel="stylesheet" href="{{ yt.playerConfig.baseCssUrl }}" name="www-player">
+        <style>
+            html {
+                overflow: hidden;
+            }
+    
+            body {
+                font: 12px Roboto, Arial, sans-serif;
+                background-color: #000;
+                color: #fff;
+                height: 100%;
+                width: 100%;
+                overflow: hidden;
+                position: absolute;
+                margin: 0;
+                padding: 0;
+            }
+    
+            #player {
+                width: 100%;
+                height: 100%;
+            }
+    
+            h1 {
+                text-align: center;
+                color: #fff;
+            }
+    
+            h3 {
+                margin-top: 6px;
+                margin-bottom: 3px;
+            }
+    
+            .player-unavailable {
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                padding: 25px;
+                font-size: 13px;
+                background: url(/img/meh7.png) 50% 65% no-repeat;
+            }
+    
+            .player-unavailable .message {
+                text-align: left;
+                margin: 0 -5px 15px;
+                padding: 0 5px 14px;
+                border-bottom: 1px solid #888;
+                font-size: 19px;
+                font-weight: normal;
+            }
+    
+            .player-unavailable a {
+                color: #167ac6;
+                text-decoration: none;
+            }
+        </style>
+        <script>
+            var ytcsi = {
+                gt: function(n) {
+                    n = (n || "") + "data_";
+                    return ytcsi[n] || (ytcsi[n] = {
+                        tick: {},
+                        info: {}
+                    })
+                },
+                now: window.performance && window.performance.timing && window.performance.now && window.performance.timing.navigationStart ? function() {
+                    return window.performance.timing.navigationStart + window.performance.now()
+                } : function() {
+                    return (new Date).getTime()
+                },
+                tick: function(l, t, n) {
+                    var ticks = ytcsi.gt(n).tick;
+                    var v = t || ytcsi.now();
+                    if (ticks[l]) {
+                        ticks["_" + l] = ticks["_" + l] || [ticks[l]];
+                        ticks["_" + l].push(v)
+                    }
+                    ticks[l] = v
+                },
+                info: function(k,
+                    v, n) {
+                    ytcsi.gt(n).info[k] = v
+                },
+                setStart: function(t, n) {
+                    ytcsi.tick("_start", t, n)
+                }
+            };
+            (function(w, d) {
+                ytcsi.setStart(w.performance ? w.performance.timing.responseStart : null);
+                var isPrerender = (d.visibilityState || d.webkitVisibilityState) == "prerender";
+                var vName = !d.visibilityState && d.webkitVisibilityState ? "webkitvisibilitychange" : "visibilitychange";
+                if (isPrerender) {
+                    var startTick = function() {
+                        ytcsi.setStart();
+                        d.removeEventListener(vName, startTick)
+                    };
+                    d.addEventListener(vName, startTick, false)
+                }
+                if (d.addEventListener) d.addEventListener(vName, function() {
+                    ytcsi.tick("vc")
+                }, false);
+            
+                function isGecko() {
+                    if (!w.navigator) return false;
+                    try {
+                        if (w.navigator.userAgentData && w.navigator.userAgentData.brands && w.navigator.userAgentData.brands.length) {
+                            var brands = w.navigator.userAgentData.brands;
+                            for (var i = 0; i < brands.length; i++)
+                                if (brands[i] && brands[i].brand === "Firefox") return true;
+                            return false
+                        }
+                    } catch (e) {
+                        setTimeout(function() {
+                            throw e;
+                        })
+                    }
+                    if (!w.navigator.userAgent) return false;
+                    var ua = w.navigator.userAgent;
+                    return ua.indexOf("Gecko") > 0 && ua.toLowerCase().indexOf("webkit") < 0 && ua.indexOf("Edge") < 0 && ua.indexOf("Trident") < 0 && ua.indexOf("MSIE") < 0
+                }
+                if (isGecko()) {
+                    var isHidden =
+                        (d.visibilityState || d.webkitVisibilityState) == "hidden";
+                    if (isHidden) ytcsi.tick("vc")
+                }
+                var slt = function(el, t) {
+                    setTimeout(function() {
+                        var n = ytcsi.now();
+                        el.loadTime = n;
+                        if (el.slt) el.slt()
+                    }, t)
+                };
+                w.__ytRIL = function(el) {
+                    if (!el.getAttribute("data-thumb"))
+                        if (w.requestAnimationFrame) w.requestAnimationFrame(function() {
+                            slt(el, 0)
+                        });
+                        else slt(el, 16)
+                }
+            })(window, document);
+        </script>
+        <script>
+            var ytcfg = {
+                d: function() {
+                    return window.yt && yt.config_ || ytcfg.data_ || (ytcfg.data_ = {})
+                },
+                get: function(k, o) {
+                    return k in ytcfg.d() ? ytcfg.d()[k] : o
+                },
+                set: function() {
+                    var a = arguments;
+                    if (a.length > 1) ytcfg.d()[a[0]] = a[1];
+                    else
+                        for (var k in a[0]) ytcfg.d()[k] = a[0][k]
+                }
+            };
+            ytcfg.set({
+                "EVENT_ID": "BOKUY9D5G8OBir4PpqGE-AE",
+                "EXPERIMENT_FLAGS": {
+                    "allow_music_base_url": true,
+                    "allow_skip_networkless": true,
+                    "always_send_and_write": true,
+                    "autoescape_tempdata_url": true,
+                    "background_thread_flush_logs_due_to_batch_limit": true,
+                    "cancel_pending_navs": true,
+                    "change_ad_badge_to_stark": true,
+                    "clear_user_partitioned_ls": true,
+                    "csi_on_gel": true,
+                    "deprecate_csi_has_info": true,
+                    "deprecate_pair_servlet_enabled": true,
+                    "deprecate_two_way_binding_child": true,
+                    "deprecate_two_way_binding_parent": true,
+                    "desktop_client_release": true,
+                    "desktop_image_cta_no_background": true,
+                    "desktop_log_img_click_location": true,
+                    "desktop_notification_high_priority_ignore_push": true,
+                    "desktop_notification_set_title_bar": true,
+                    "desktop_sparkles_light_cta_button": true,
+                    "disable_child_node_auto_formatted_strings": true,
+                    "disable_pacf_logging_for_memory_limited_tv": true,
+                    "disable_simple_mixed_direction_formatted_strings": true,
+                    "disable_thumbnail_preloading": true,
+                    "embeds_web_disable_ads_for_pfl": true,
+                    "embeds_web_enable_iframe_src_with_intent": true,
+                    "embeds_web_enable_replace_unload_w_pagehide": true,
+                    "embeds_web_nwl_disable_nocookie": true,
+                    "enable_docked_chat_messages": true,
+                    "enable_mixed_direction_formatted_strings": true,
+                    "enable_pacf_through_ybfe_web_logging_for_page_top": true,
+                    "enable_skip_ad_guidance_prompt": true,
+                    "enable_skippable_ads_for_unplugged_ad_pod": true,
+                    "enable_sli_flush": true,
+                    "enable_watch_next_pause_autoplay_lact": true,
+                    "enable_ypc_spinners": true,
+                    "export_networkless_options": true,
+                    "forward_domain_admin_state_on_embeds": true,
+                    "gfeedback_for_signed_out_users_enabled": true,
+                    "gpa_sparkles_ten_percent_layer": true,
+                    "h5_companion_enable_adcpn_macro_substitution_for_click_pings": true,
+                    "h5_inplayer_enable_adcpn_macro_substitution_for_click_pings": true,
+                    "h5_set_masthead_ads_asynchronously": true,
+                    "hide_endpoint_overflow_on_ytd_display_ad_renderer": true,
+                    "html5_control_flow_include_trigger_logging_in_tmp_logs": true,
+                    "html5_enable_ads_client_monitoring_log_tv": true,
+                    "html5_enable_single_video_vod_ivar_on_pacf": true,
+                    "html5_log_trigger_events_with_debug_data": true,
+                    "html5_web_enable_halftime_preroll": true,
+                    "il_use_view_model_logging_context": true,
+                    "is_browser_support_for_webcam_streaming": true,
+                    "json_condensed_response": true,
+                    "kevlar_dropdown_fix": true,
+                    "kevlar_gel_error_routing": true,
+                    "kevlar_guide_refresh": true,
+                    "live_chat_increased_min_height": true,
+                    "live_chat_use_new_emoji_picker": true,
+                    "log_errors_through_nwl_on_retry": true,
+                    "log_vis_on_tab_change": true,
+                    "log_web_endpoint_to_layer": true,
+                    "mdx_enable_privacy_disclosure_ui": true,
+                    "mdx_load_cast_api_bootstrap_script": true,
+                    "migrate_events_to_ts": true,
+                    "networkless_logging": true,
+                    "no_sub_count_on_sub_button": true,
+                    "pageid_as_header_web": true,
+                    "parse_query_data_from_url": true,
+                    "polymer_bad_build_labels": true,
+                    "polymer_verifiy_app_state": true,
+                    "qoe_send_and_write": true,
+                    "scheduler_use_raf_by_default": true,
+                    "service_worker_enabled": true,
+                    "service_worker_push_enabled": true,
+                    "service_worker_push_home_page_prompt": true,
+                    "service_worker_push_watch_page_prompt": true,
+                    "shorten_initial_gel_batch_timeout": true,
+                    "skip_invalid_ytcsi_ticks": true,
+                    "super_sticker_emoji_picker_category_button_icon_filled": true,
+                    "suppress_error_204_logging": true,
+                    "use_new_nwl_initialization": true,
+                    "use_new_nwl_saw": true,
+                    "use_new_nwl_stw": true,
+                    "use_new_nwl_wts": true,
+                    "use_player_abuse_bg_library": true,
+                    "use_request_time_ms_header": true,
+                    "use_session_based_sampling": true,
+                    "use_shared_nsm": true,
+                    "use_shared_nsm_and_keep_yt_online_updated": true,
+                    "use_watch_fragments2": true,
+                    "verify_ads_itag_early": true,
+                    "vss_final_ping_send_and_write": true,
+                    "vss_playback_use_send_and_write": true,
+                    "warm_load_nav_start_web": true,
+                    "web_always_load_chat_support": true,
+                    "web_api_url": true,
+                    "web_dedupe_ve_grafting": true,
+                    "web_enable_voz_audio_feedback": true,
+                    "web_gel_timeout_cap": true,
+                    "web_one_platform_error_handling": true,
+                    "web_prefetch_preload_video": true,
+                    "web_yt_config_context": true,
+                    "ytidb_clear_embedded_player": true,
+                    "H5_async_logging_delay_ms": 1000.0,
+                    "addto_ajax_log_warning_fraction": 0.1,
+                    "autoplay_pause_by_lact_sampling_fraction": 0.0,
+                    "log_window_onerror_fraction": 0.1,
+                    "tv_pacf_logging_sample_rate": 0.01,
+                    "web_system_health_fraction": 0.01,
+                    "ytidb_transaction_ended_event_rate_limit": 0.02,
+                    "ytidb_transaction_ended_event_rate_limit_session": 0.2,
+                    "ytidb_transaction_ended_event_rate_limit_transaction": 0.1,
+                    "autoplay_pause_by_lact_sec": 0,
+                    "botguard_async_snapshot_timeout_ms": 3000,
+                    "check_navigator_accuracy_timeout_ms": 0,
+                    "initial_gel_batch_timeout": 2000,
+                    "log_web_meta_interval_ms": 0,
+                    "max_prefetch_window_sec_for_livestream_optimization": 0,
+                    "min_prefetch_offset_sec_for_livestream_optimization": 10,
+                    "network_polling_interval": 30000,
+                    "polymer_log_prop_change_observer_percent": 0,
+                    "prefetch_comments_ms_after_video": 0,
+                    "service_worker_push_logged_out_prompt_watches": -1,
+                    "service_worker_push_prompt_cap": -1,
+                    "service_worker_push_prompt_delay_microseconds": 3888000000000,
+                    "watch_next_pause_autoplay_lact_sec": 4500,
+                    "web_foreground_heartbeat_interval_ms": 28000,
+                    "web_gel_debounce_ms": 10000,
+                    "web_logging_max_batch": 100,
+                    "ytidb_remake_db_retries": 1,
+                    "ytidb_reopen_db_retries": 0,
+                    "embeds_web_synth_ch_headers_banned_urls_regex": "",
+                    "live_chat_unicode_emoji_json_url": "https://www.gstatic.com/youtube/img/emojis/emojis-svg-9.json",
+                    "service_worker_push_force_notification_prompt_tag": "1",
+                    "service_worker_scope": "/",
+                    "web_client_version_override": "",
+                    "kevlar_command_handler_command_banlist": [],
+                    "web_op_signal_type_banlist": []
+                },
+                "GAPI_HINT_PARAMS": "m;/_/scs/abc-static/_/js/k\u003dgapi.gapi.en.PlpnwD4HYro.O/d\u003d1/rs\u003dAHpOoo-D4573md5GmdJHX15d0lc3SoObhA/m\u003d__features__",
+                "GAPI_HOST": "https://apis.google.com",
+                "GAPI_LOCALE": "en_US",
+                "GL": "US",
+                "HL": "en",
+                "HTML_LANG": "en",
+                "INNERTUBE_API_KEY": "AIzaSyAO_FJ2SlqU8Q4STEHLGCilw_Y9_11qcW8",
+                "INNERTUBE_API_VERSION": "v1",
+                "INNERTUBE_CLIENT_NAME": "WEB",
+                "INNERTUBE_CLIENT_VERSION": "2.20221104.02.00",
+                "INNERTUBE_CONTEXT": {
+                    {{ yt.page.innertubeContext|json_encode|raw }}
+                },
+                "INNERTUBE_CONTEXT_CLIENT_NAME": 56,
+                "INNERTUBE_CONTEXT_CLIENT_VERSION": "1.20221206.01.00",
+                "INNERTUBE_CONTEXT_GL": "US",
+                "INNERTUBE_CONTEXT_HL": "en",
+                "LATEST_ECATCHER_SERVICE_TRACKING_PARAMS": {
+                    "client.name": "WEB_EMBEDDED_PLAYER"
+                },
+                "SERVER_NAME": "WebFE",
+                "SESSION_INDEX": "0",
+                "VISITOR_DATA": "CgtjR3M3NTUzeTBaVSiExNOcBg%3D%3D",
+                "WEB_PLAYER_CONTEXT_CONFIGS": {
+                    "WEB_PLAYER_CONTEXT_CONFIG_ID_EMBEDDED_PLAYER": {
+                        "rootElementId": "movie_player",
+                        "jsUrl": "{{ yt.playerConfig.baseJsUrl }}",
+                        "cssUrl": "{{ yt.playerConfig.baseCssUrl }}",
+                        "contextId": "WEB_PLAYER_CONTEXT_CONFIG_ID_EMBEDDED_PLAYER",
+                        "eventLabel": "embedded",
+                        "contentRegion": "US",
+                        "hl": "en_US",
+                        "hostLanguage": "en",
+                        "innertubeApiKey": "AIzaSyAO_FJ2SlqU8Q4STEHLGCilw_Y9_11qcW8",
+                        "innertubeApiVersion": "v1",
+                        "innertubeContextClientVersion": "2.20221104.02.00",
+                        "device": {
+                            "brand": "",
+                            "model": "",
+                            "browser": "Firefox",
+                            "browserVersion": "102.0",
+                            "os": "Windows",
+                            "osVersion": "10.0",
+                            "platform": "DESKTOP",
+                            "interfaceName": "WEB_EMBEDDED_PLAYER",
+                            "interfaceVersion": "1.20221206.01.00"
+                        },
+                        "serializedExperimentIds": "23983296,24001373,24002022,24002025,24004644,24007246,24080738,24135310,24169501,24255165,24292955,24407200,24408610,24411032,24415864,24416291,24423887,24434209",
+                        "serializedExperimentFlags": "{% include "player/flags.twig" %}",
+                        "startMuted": false,
+                        "enableMutedAutoplay": false,
+                        "mobileIphoneSupportsInlinePlayback": true,
+                        "isMobileDevice": false,
+                        "cspNonce": "FT3bKhDbemIwaFwrm5Wm4A",
+                        "canaryState": "none",
+                        "enableCsiLogging": true,
+                        "disableAutonav": false,
+                        "authorizedUserIndex": 0,
+                        "isEmbed": true,
+                        "embedOptOutDeprecation": false,
+                        "disableCastApi": false,
+                        "disableMdxCast": false,
+                        "datasyncId": "116362474172410783029||",
+                        "embedsEnablePfpImaIntegration": false,
+                        "embedsEnableAppendUtmParams": false,
+                        "embedsDisableInfoPanels": false
+                    }
+                },
+                "XSRF_FIELD_NAME": "session_token",
+                "XSRF_TOKEN": "QUFFLUhqbUpFTnN1V3ZESm00NkpLb0s1NU9OczZPT0NXd3xBQ3Jtc0tudUZGUDZ3UDVjTWYxSThCUldWSDNPcXhBbGkzaXdZQ245YlJaU2RuUTBOYUJBdDhWTmFHekpvODdUVWJzOUJZYjMta2RiYWhlTWlwU1Y2dmhHTlZULTlQTjA5MlZ0emJ1akNYaVJuTm5fUXBsY21OSQ\u003d\u003d",
+                "SERVER_VERSION": "control",
+                "DATASYNC_ID": "116362474172410783029||",
+                "SERIALIZED_CLIENT_CONFIG_DATA": "CITE05wGEIjdrgUQ_Jb-EhC4i64FEIeR_hIQg92uBRC4kP4SELKI_hIQ2L6tBQ%3D%3D",
+                "ROOT_VE_TYPE": 16623,
+                "CLIENT_PROTOCOL": "h2",
+                "CLIENT_TRANSPORT": "tcp",
+                "PLAYER_VARS": {
+                    "embedded_player_response": "{{ yt.page.playerResponse|json_encode }}",
+                    "video_id": "{{ yt.page.videoId }}",
+                    "user_display_name": "",
+                    "user_display_image": "",
+                    "user_display_email": ""
+                },
+                "POST_MESSAGE_ORIGIN": "*",
+                "VIDEO_ID": "{{ yt.page.videoId }}",
+                "DOMAIN_ADMIN_STATE": ""
+            });
+            window.ytcfg.obfuscatedData_ = [];
+        </script>
+        <script>
+            var yterr = yterr || true;
+        </script>
+        <script src="{{ yt.playerConfig.embedJsUrl }}"></script>
+        <script src="{{ yt.playerConfig.baseJsUrl }}"></script>
+    </head>
+    <body class="date-{{ yt.rehikeVersion.time|date("Ymd") }} en_US ltr site-center-aligned site-as-giant-card">
+        <div id="player"></div>
+        <script>writeEmbed();</script>
+        <script nonce="FT3bKhDbemIwaFwrm5Wm4A">ytcsi.info('st', 56.0);</script>
+        <noscript>
+            <div class="player-unavailable">
+                <h1 class="message">An error occurred.</h1>
+                <div class="submessage">Unable to execute JavaScript.</div>
+            </div>
+        </noscript>
+    </body>
+</html>

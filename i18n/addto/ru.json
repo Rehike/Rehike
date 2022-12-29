@@ -1,0 +1,13 @@
+{
+    "addToHeading": "Добавить в",
+    "searchPlaylists": "Поиск плейлистов",
+    "createNewPlaylist": "Создать новый плейлист",
+    "createNewPlaylistDynamic": "%s (создать новый)",
+    "playlistTitle": "Название плейлиста",
+    "playlistPrivacy": "Конфиденциальность плейлиста",
+    "privacyPublic": "Публичный",
+    "privacyUnlisted": "Доступ по ссылке",
+    "privacyPrivate": "Приватный",
+    "cancel": "Отменить",
+    "create": "Создать"
+}

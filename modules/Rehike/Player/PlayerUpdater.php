@@ -55,6 +55,7 @@ class PlayerUpdater
         // response.
         $jsUrl = self::extractApplicationUrl($html);
         $cssUrl = self::extractApplicationCss($html);
+        $embedJsUrl = self::extractEmbedUrl($html);
 
         // Now get the sts from the application itself.
         $js = self::requestApplication(self::unrelativize($jsUrl));
@@ -65,6 +66,7 @@ class PlayerUpdater
         return (object)[
             "baseJsUrl" => $jsUrl,
             "baseCssUrl" => $cssUrl,
+            "embedJsUrl" => $embedJsUrl,
             "signatureTimestamp" => $sts
         ];
     }
@@ -137,6 +139,26 @@ class PlayerUpdater
         else
         {
             throw new UpdaterException("Failed to get application CSS endpoint");
+        }
+    }
+
+    /**
+     * Extract the player embed JS URL from a HTML response.
+     * 
+     * @param string $html
+     * @return string
+     */
+    public static function extractEmbedUrl($html)
+    {
+        $status = preg_match(PlayerCore::$embedJsRegex, $html, $matches);
+
+        if (false != $status)
+        {
+            return $matches[0];
+        }
+        else
+        {
+            throw new UpdaterException("Failed to extract application URL");
         }
     }
 
