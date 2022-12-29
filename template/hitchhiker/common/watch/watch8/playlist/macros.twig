@@ -1,11 +1,11 @@
 {%- macro item(data, iteration) -%}
     {% set href = data.navigationEndpoint.commandMetadata.webCommandMetadata.url %}
-    {% set title = getText(data.title) %}
-    {% set byline = getText(data.longBylineText) %}
+    {% set title = rehike.getText(data.title) %}
+    {% set byline = rehike.getText(data.longBylineText) %}
     {% set thumbnail = data.thumbnail.thumbnails.0.url %}
     <li class="yt-uix-scroller-scroll-unit  {{ data.selected ? ' currently-playing' }}" data-video-id="{{ data.videoId }}" data-innertube-clicktracking="{{ data.trackingParams }}" data-index="{{ iteration - 1 }}" data-thumbnail-url="{{ thumbnail }}" data-video-username="{{ byline }}" data-video-title="{{ title }}">
         <span class="index">
-        {{ getText(data.indexText) }}
+        {{ rehike.getText(data.indexText) }}
         </span>
         <a href="{{ href }}" class=" spf-link  playlist-video clearfix        spf-link ">
             <span class="video-thumb  yt-thumb yt-thumb-72">
@@ -21,7 +21,7 @@
                     {{ title }}
                 </h4>
                 <span class="video-uploader-byline">
-                <span class="">{{ yt.config.byTextOnByline ? yt.msgs.usernamePrepend }}{{ byline }}</span>
+                <span class="">{{ rehike.config.byTextOnByline ? yt.msgs.usernamePrepend }}{{ byline }}</span>
                 </span>
             </div>
         </a>

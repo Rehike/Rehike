@@ -35,7 +35,7 @@
                     {%- if item.metadataRowRenderer -%}
                     {% set item = item.metadataRowRenderer %}
                         <li class="watch-meta-item yt-uix-expander-body">
-                            <h4 class="title">{{ getText(item.title) }}</h4>
+                            <h4 class="title">{{ rehike.getText(item.title) }}</h4>
                             <ul class="content watch-info-tag-list">
                                 <li>
                                     {% if item.contents[0].runs %}

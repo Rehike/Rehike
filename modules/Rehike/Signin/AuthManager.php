@@ -202,12 +202,16 @@ class AuthManager
         $switcher = null;
         /** @var string */
         $menu = null;
+
+        $info = null;
         
         Network::urlRequest(
             "https://www.youtube.com/getAccountSwitcherEndpoint",
             Network::getDefaultYoutubeOpts()
-        )->then(function($response) use (&$switcher) {
+        )->then(function($response) use (&$switcher, &$info) {
             $switcher = $response->getText();
+
+            $info = self::processSwitcherData($switcher);
 
             Network::useAuthGaiaId();
 
@@ -221,8 +225,6 @@ class AuthManager
 
         // This call blocks the thread until the requests are done.
         Network::run();
-        
-        $info = self::processSwitcherData($switcher);
         
         self::processMenuData($info, $menu);
 

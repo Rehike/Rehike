@@ -28,7 +28,7 @@
                 {%- for crumb in data.filterCrumbs -%}
                 <li class="filter-crumb" title="{{ crumb.tooltip }}">
                     <a href="{{ getUrl(crumb) }}" class="filter spf-link" aria-label="{{ crumb.tooltip }}">
-                        <span class="filter-text filter-ghost">{{ getText(crumb.label) }}</span>
+                        <span class="filter-text filter-ghost">{{ rehike.getText(crumb.label) }}</span>
                         <span class="yt-close">×</span>
                     </a>
                 </li>
@@ -47,7 +47,7 @@
             {%- if group.searchFilterGroupRenderer -%}
                 {%- set this = group.searchFilterGroupRenderer -%}
                 <div class="filter-col">
-                    <h4 class="filter-col-title">{{ getText(this.title) }}</h4>
+                    <h4 class="filter-col-title">{{ rehike.getText(this.title) }}</h4>
                     <ul>
                         {%- for sFilter in this.filters -%}
                             {%- if sFilter.searchFilterRenderer -%}
@@ -55,12 +55,12 @@
                                 <li>
                                     {%- if not thisF.status or (thisF.status == "FILTER_STATUS_SELECTED" and thisF.navigationEndpoint) -%}
                                     <a href="{{ getUrl(thisF) }}" class="filter spf-link" title="{{ thisF.tooltip }}" aria-label="{{ thisF.tooltip }}">
-                                        <span class="filter-text filter-ghost">{{ getText(thisF.label) }}</span>
+                                        <span class="filter-text filter-ghost">{{ rehike.getText(thisF.label) }}</span>
                                         {{ thisF.status ? '<span class="yt-close">×</span>' }}
                                     </a>
                                     {%- elseif thisF.status == "FILTER_STATUS_DISABLED" -%}
                                     <span class="filter filter-disabled" title="{{ thisF.tooltip }}">
-                                        <span class="filter-text" aria-label="{{ thisF.tooltip }}">{{ getText(thisF.label) }}</span>
+                                        <span class="filter-text" aria-label="{{ thisF.tooltip }}">{{ rehike.getText(thisF.label) }}</span>
                                     </span>
                                     {%- endif -%}
                                 </li>
@@ -72,7 +72,7 @@
         {%- endfor -%}
             {%- if data.clearAll -%}
             <div class="clear-filters">
-                <a href="{{ getUrl(data.clearAll) }}" class="filter spf-link">{{ getText(data.clearAll) }}</a>
+                <a href="{{ getUrl(data.clearAll) }}" class="filter spf-link">{{ rehike.getText(data.clearAll) }}</a>
             </div>
             {%- endif -%}
     </div>

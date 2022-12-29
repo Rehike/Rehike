@@ -40,4 +40,9 @@ class ContextManager
      * @var string
      */
     public static $gl = "US";
+
+    public static function setVisitorData(string $visitor): void
+    {
+        self::$visitorData = $visitor;
+    }
 }

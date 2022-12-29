@@ -1,4 +1,7 @@
 <?php
+// Functions cannot be autoloaded, so load them manually.
+require "includes/functions/async.php";
+
 /**
  * Declare and install the Rehike autoloader.
  * 

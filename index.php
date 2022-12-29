@@ -1,62 +1,61 @@
 <?php
-ob_start();
-$root = $_SERVER['DOCUMENT_ROOT'];
-set_include_path($root);
+// ,                                                 
+// ,,,,,                                             
+// ,,,,,,,,,.                                        
+// ,,,,,,,,,,,,,,                                    
+// ,,,,,,,,,,,,,,,,,,                                
+// ,,,,,,,,,,,,,,,,,,,,,,,                           
+// ,,,,,,,,,,,##,,,,,,,,,,,,,,                       
+// ,,,,,,,,,@@@@@%,,,,,,,,,,,,,,,,.                  
+// ,,,,,,,,,,*&&*,,,,,,,,,,,,,,,,,,,,,,              
+// ,,,,,,,,,,,@@@@@%,,,,@@*,,,,,,,,,,,,,,,,          
+// ,,,,,,@@@,,@@@@@@@@@@@@@@,,,,,,,,,,,,,,,,,,,.     
+// ,,,,,&@@@@,,@@@@@*,,,,,,@@,,,,,,,,,,,,,,,,,,,,,,. 
+// ,,,,,,@@@@&,*@@@@@@@#*,,,%@@,,,,,,,,,,,,,,,,,,,,  
+// ,,,,,,,@@@@(,(@@@&@@@@@,,,,@@,,,,,,,,,,,,,,,      
+// ,,,,,,,,,,,,,,%@@%,,,#@@#,,,%@&,,,,,,,,.          
+// ,,,,,,,,,,,,,,,&@@*,,,,@@@,,,,,,,,,               
+// ,,,,,,,,,,,,,,,,@@@,,,,,#,,,,,,                   
+// ,,,,,,,,,,,,,,,,,@@@,,,,,,.                       
+// ,,,,,,,,,,,,,,,,,,,,,,                            
+// ,,,,,,,,,,,,,,,,,,                                
+// ,,,,,,,,,,,,,.                                    
+// ,,,,,,,,,                                         
+// ,,,,, 
+//
+//
+// Rehike:
+//
+// A classic YouTube server emulator written in PHP.
+// See the README.md file for installation instructions and more.
+//
+// If you wish to contribute, please see CONTRIBUTING.md.
+//
+// And check out some of the cool people that brought it to you!
+//    - Taniko Yamamoto (@kiraicecreamm or @YukisCoffee on everything)
+//    - Aubrey Pankow (@aubymori on Twitter and YouTube)
+//    - Daylin Cooper (@Nightlinbit on GitHub)
+//
+//-----------------------------------------------------------------------------
+//
+// This file is the insertion point for the Rehike server. Every request
+// to YouTube should go through this file.
+//
+// This is responsible for early imports and starting the Rehike session.
+//
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+ob_start();
+set_include_path($_SERVER['DOCUMENT_ROOT']);
+
+// PHP < 8.2 IDE fix
 include "includes/polyfill/AllowDynamicProperties.php";
 
-// Ungodly global variable that connects everything together.
-// Do not touch, this needs to be carefully moved for clean up.
-// Think of it like nuclear waste :P
-// love taniko
-$yt = (object) [];
-
-$ytConstants = include "includes/resource_constants.php";
-
 require "includes/constants.php";
-include "fatalHandler.php";
 
 // Include the Composer and Rehike autoloaders, respectively.
 require "vendor/autoload.php";
 require "includes/rehike_autoloader.php";
+foreach (glob('includes/template_functions/*.php') as $file) include $file;
 
-include "boot.php";
-
-// TODO (kirasicecreamm): Clean this up.
-if (isset($_COOKIE['VISITOR_INFO1_LIVE'])) {
-    $visitor = $_COOKIE['VISITOR_INFO1_LIVE'];
-} else {
-    // $coffee = new \YukisCoffee\CoffeeRequest\CoffeeRequest;
-    // $response = $coffee->request("https://www.youtube.com/");
-    // preg_match("/ytcfg\.set\(({.*?})\);/", $response, $matches);
-    // $ytcfg = json_decode(@$matches[1]);
-    // $visitor = $ytcfg->INNERTUBE_CONTEXT->client->visitorData ?? "";
-    // $visitor = \Rehike\Util\Base64Url::decode($visitor);
-    // $visitor = substr($visitor, 2);
-    // $visitor = explode(chr(0x28), $visitor)[0];
-    // setcookie("VISITOR_INFO1_LIVE", $visitor);
-}
-
-// Load configuration
-$rehikeConfig = Rehike\RehikeConfigManager::loadConfig();
-$yt->config = $rehikeConfig;
-
-Rehike\Debugger\Debugger::init($yt);
-
-// Post boot events
-Rehike\ContextManager::$visitorData = $visitor;
-
-// * Set signin state
-Rehike\Signin\AuthManager::use($yt);
-
-// Load version information from the version service
-// and push it to the global yt variable
-// This can probably be improved in the future
-\Rehike\Version\VersionController::init();
-$yt->rehikeVersion = (object)\Rehike\Version\VersionController::$versionInfo;
-$yt->rehikeVersion->semanticVersion = \Rehike\Version\VersionController::getVersion();
-
-// Include the router for Controller v2 pages.
-require "router.php";
-
-Rehike\Debugger\Debugger::shutdown();
+\Rehike\Boot\Bootloader::startSession();

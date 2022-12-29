@@ -2,7 +2,10 @@
 namespace Rehike\Async;
 
 use Rehike\Async\Concurrency\AsyncFunction;
+
 use YukisCoffee\CoffeeRequest\Promise;
+use YukisCoffee\CoffeeRequest\Loop;
+use YukisCoffee\CoffeeRequest\Enum\PromiseStatus;
 
 use Generator;
 
@@ -136,5 +139,33 @@ class Concurrency
             // of the callback.
             return new Promise(fn($r) => $r($result));
         }
+    }
+
+    /**
+     * Synchronously get the result of a Promise (or throw an exeception).
+     * 
+     * As this is blocking, using this will have none of the benefits of an
+     * asynchronous design.
+     * 
+     * This should be used rarely, and only for critical code.
+     */
+    public static function awaitSync(Promise $p): mixed
+    {
+        $result = null;
+
+        // Registers the base handlers for the Promise.
+        $p->then(function ($r) use (&$result) {
+            $result = $r;
+        })->catch(function ($e) {
+            throw $e;
+        });
+
+        do
+        {
+            Loop::run();
+        }
+        while (PromiseStatus::PENDING == $p->status);
+
+        return $result;
     }
 }

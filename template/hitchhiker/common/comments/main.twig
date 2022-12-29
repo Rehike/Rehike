@@ -9,7 +9,7 @@
       <div class="yt-uix-expander yt-uix-expander-collapsed comment-replies-renderer-header" tabindex="0">
          <div class="yt-uix-expander-collapsed-body">
             {% if replies.viewReplies %}
-            {% set viewRepliesText = getText(replies.viewReplies.buttonRenderer.text) %}
+            {% set viewRepliesText = rehike.getText(replies.viewReplies.buttonRenderer.text) %}
             {{ _self.loadMoreLink('action_get_comment_replies', comment.commentId, repliesToken, viewRepliesText, true) }}
             <div class="yt-uix-expander-head comment-replies-renderer-expander-down comment-replies-renderer-view hid" tabindex="0">
                {{ viewRepliesText }}
@@ -22,7 +22,7 @@
          {% if replies.hideReplies %}
          <div id="comment-replies-renderer-{{ comment.commentId }}" class="yt-uix-expander-body comment-replies-renderer-pages">
             <div class="yt-uix-expander-head comment-replies-renderer-expander-up comment-replies-renderer-hide" tabindex="0">
-               {{ getText(replies.hideReplies.buttonRenderer.text) }}
+               {{ rehike.getText(replies.hideReplies.buttonRenderer.text) }}
             </div>
          </div>
          {% endif %}
@@ -39,7 +39,7 @@
       <span class="video-thumb comment-author-thumbnail yt-thumb yt-thumb-{{ thumbnailSize }}">
          <span class="yt-thumb-square">
             <span class="yt-thumb-clip">
-               <img alt="{{ getText(comment.authorText) }}" data-ytimg="1" height="{{ thumbnailSize }}" onload=";window.__ytRIL &amp;&amp; __ytRIL(this)" role="img" src="{{ comment.authorThumbnail.thumbnails.0.url }}" tabindex="0" width="{{ thumbnailSize }}">
+               <img alt="{{ rehike.getText(comment.authorText) }}" data-ytimg="1" height="{{ thumbnailSize }}" onload=";window.__ytRIL &amp;&amp; __ytRIL(this)" role="img" src="{{ comment.authorThumbnail.thumbnails.0.url }}" tabindex="0" width="{{ thumbnailSize }}">
                <span class="vertical-align"></span>
             </span>
          </span>
@@ -49,11 +49,11 @@
    </div>
    <div class="comment-renderer-content">
       {% if comment.pinnedCommentBadge %}
-      <div class="comment-renderer-pinned-comment-badge">    {{ getText(comment.pinnedCommentBadge.pinnedCommentBadgeRenderer.label) }}</div>
+      <div class="comment-renderer-pinned-comment-badge">    {{ rehike.getText(comment.pinnedCommentBadge.pinnedCommentBadgeRenderer.label) }}</div>
       {% endif %}
       <div class="comment-renderer-header">
          {{ _self.channelLink(comment) }}
-         <span class="comment-renderer-time" tabindex="0"><a href="{{ getUrl(comment.publishedTimeText.runs[0]) }}" class="spf-link ">{{ getText(comment.publishedTimeText) }}</a>
+         <span class="comment-renderer-time" tabindex="0"><a href="{{ getUrl(comment.publishedTimeText.runs[0]) }}" class="spf-link ">{{ rehike.getText(comment.publishedTimeText) }}</a>
          </span>
          {%- if comment.linkedCommentBadge -%}
             <span class="comment-renderer-linked-comment">{{ comment.linkedCommentBadge.metadataBadgeRenderer.label }}</span>
@@ -64,12 +64,12 @@
          <div class="comment-text-toggle hid">
             <div class="comment-text-toggle-link read-more">
                 <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-link" type="button" onclick="return false;">
-                    <span class="yt-uix-button-content">{{ getText(comment.expandButton.buttonRenderer.text) }}</span>
+                    <span class="yt-uix-button-content">{{ rehike.getText(comment.expandButton.buttonRenderer.text) }}</span>
                </button>
             </div>
             <div class="comment-text-toggle-link show-less hid">
                 <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-link" type="button" onclick="return false;">
-                    <span class="yt-uix-button-content">{{ getText(comment.collapseButton.buttonRenderer.text) }}</span>
+                    <span class="yt-uix-button-content">{{ rehike.getText(comment.collapseButton.buttonRenderer.text) }}</span>
                 </button>
             </div>
          </div>
@@ -135,7 +135,7 @@
 {% if comment.authorIsChannelOwner %}
 <span class="comment-renderer-author-comment-badge creator">
 {% endif %}
-   <a href="{{ comment.authorEndpoint.commandMetadata.webCommandMetadata.url }}" class="comment-author-text       spf-link ">{{ getText(comment.authorText) }}</a>
+   <a href="{{ comment.authorEndpoint.commandMetadata.webCommandMetadata.url }}" class="comment-author-text       spf-link ">{{ rehike.getText(comment.authorText) }}</a>
 {% set verified = comment.authorCommentBadge.authorCommentBadgeRenderer.icon.iconType %}
 {% if verified and comment.authorIsChannelOwner %}
    <span class="yt-badge comment-author-verified-badge yt-uix-tooltip" title="{{ yt.msgs.verified }}"><span class="yt-comment-author-verified-icon yt-sprite"></span></span>

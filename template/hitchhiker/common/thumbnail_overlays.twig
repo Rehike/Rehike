@@ -40,9 +40,9 @@
 </{{ useSpan ? "span" : "div" }}>
 <{{ useSpan ? "span" : "div" }} class="yt-pl-thumb-overlay">
     <span class="yt-pl-thumb-overlay-content">
-        {% set overlay = getThumbnailOverlay(info, "thumbnailOverlayHoverTextRenderer") %}
+        {% set overlay = rehike.getThumbnailOverlay(info, "thumbnailOverlayHoverTextRenderer") %}
         <span class="play-icon yt-sprite"></span>
-        <span class="yt-pl-thumb-overlay-text">{{ getText(overlay.text) }}</span>
+        <span class="yt-pl-thumb-overlay-text">{{ rehike.getText(overlay.text) }}</span>
     </span>
 </{{ useSpan ? "span" : "div" }}>
 {% endmacro %}

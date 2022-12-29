@@ -87,13 +87,13 @@
                         delayLoad: true,
                         ytImg: 1,
                         ariaHidden: "false",
-                        src: getThumb(data)
+                        src: rehike.getThumb(data)
                     })}}
                 </span>
             </div>
         </div>
         {% endif %}
-        <span class="branded-page-module-title-text">{{ getText(data.title) }}</span>
+        <span class="branded-page-module-title-text">{{ rehike.getText(data.title) }}</span>
         {% if data.endpoint %}
         </a>
         {% endif %}
@@ -102,12 +102,12 @@
         {% endif %}
         {%- if data.titleAnnotation -%}
         <span class="shelf-annotation shelf-title-annotation">
-        {{ getText(data.titleAnnotation) }}
+        {{ rehike.getText(data.titleAnnotation) }}
         </span>
         {% endif %}
     </h2>
     {% if data.subtitle %}
-    <div class="shelf-description yt-ui-ellipsis yt-ui-ellipsis-2">{{ getText(data.subtitle) }}</div>
+    <div class="shelf-description yt-ui-ellipsis yt-ui-ellipsis-2">{{ rehike.getText(data.subtitle) }}</div>
     {% endif %}
     <div class="menu-container shelf-title-cell">
         {% if data.menu %}

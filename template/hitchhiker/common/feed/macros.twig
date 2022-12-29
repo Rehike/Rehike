@@ -11,7 +11,7 @@
                 <div class="yt-thumb video-thumb">
                     <span class="yt-thumb-simple">
                         {{ img({
-                            src: getThumb(this, 40),
+                            src: rehike.getThumb(this, 40),
                             width: 40,
                             height: 40,
                             onload: ";window.__ytRIL && __ytRIL(this)",
@@ -22,11 +22,11 @@
             </div>
             <div class="yt-lockup-content">
                 <h3 class="yt-lockup-title">
-                    <a class="yt-uix-tile-link yt-ui-ellipsis yt-ui-ellipsis-6  spf-link " href="{{ this.navigationEndpoint.getCommentsFromInboxCommand ? "/watch?v=" ~ this.navigationEndpoint.getCommentsFromInboxCommand.videoId ~ "&lc=" ~ this.navigationEndpoint.getCommentsFromInboxCommand.linkedCommentId : getUrl(this) }}" title="{{ getText(this.shortMessage) }}">{{ getText(this.shortMessage) }}</a>
+                    <a class="yt-uix-tile-link yt-ui-ellipsis yt-ui-ellipsis-6  spf-link " href="{{ this.navigationEndpoint.getCommentsFromInboxCommand ? "/watch?v=" ~ this.navigationEndpoint.getCommentsFromInboxCommand.videoId ~ "&lc=" ~ this.navigationEndpoint.getCommentsFromInboxCommand.linkedCommentId : getUrl(this) }}" title="{{ rehike.getText(this.shortMessage) }}">{{ rehike.getText(this.shortMessage) }}</a>
                     <span class="accessible-description" id="description-id-{{ random(10000, 99999) }}"> - Notification</span>
                 </h3>
                 <ul class="yt-lockup-byline">
-                    <li>{{ getText(this.sentTimeText) }}</li>
+                    <li>{{ rehike.getText(this.sentTimeText) }}</li>
                 </ul>
             </div>
             {% if this.videoThumbnail %}
@@ -34,7 +34,7 @@
                 <div class="yt-thumb video-thumb">
                     <span class="yt-thumb-simple">
                         {{ img({
-                            src: getThumb(this.videoThumbnail, 54),
+                            src: rehike.getThumb(this.videoThumbnail, 54),
                             width: 72,
                             height: 54,
                             onload: ";window.__ytRIL && __ytRIL(this)",

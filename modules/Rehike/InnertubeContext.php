@@ -1,6 +1,8 @@
 <?php
 namespace Rehike;
 
+use Rehike\Util\Base64Url;
+
 /**
  * Generates a valid InnerTube client context required
  * for requesting the API.
@@ -12,27 +14,6 @@ namespace Rehike;
  */
 class InnertubeContext
 {
-    /**
-     * Encode a string in base64 url format.
-     * 
-     * This doesn't have = padding and replaces the
-     *      + /
-     * characters with
-     *      - _
-     * to be transmissable through a URL.
-     * 
-     * 
-     * This should be ideally be moved to a trait later for use across
-     * multiple different classes.
-     * 
-     * @param string $data
-     * @return string url-friendly base64
-     */
-    public static function base64url_encode($data) 
-    {
-        return str_replace("=", "%3D", strtr(base64_encode($data), '+/', '-_'));
-    } 
-
     /**
      * Convert an integer to a ULEB128 binary for use in
      * synthesising protobuf.
@@ -98,7 +79,7 @@ class InnertubeContext
         
         $date = time();
         
-        return self::base64url_encode(
+        return Base64Url::encode(
             chr(0x0a) . self::int2uleb128( strlen($visitor) ) . $visitor . chr(0x28) . self::int2uleb128($date)
         );
     }

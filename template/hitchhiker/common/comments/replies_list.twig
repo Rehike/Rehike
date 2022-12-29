@@ -5,5 +5,5 @@
 {{ include("/common/comments/comments_list.twig") }}
 {% if yt.page.repliesContinuationRenderer %}
    {% set continuation = yt.page.repliesContinuationRenderer %}
-   {{ main.loadMoreLink('action_get_comment_replies', yt.page.repliesTargetId, continuation.token, getText(continuation.text)) }}
+   {{ main.loadMoreLink('action_get_comment_replies', yt.page.repliesTargetId, continuation.token, rehike.getText(continuation.text)) }}
 {% endif %}

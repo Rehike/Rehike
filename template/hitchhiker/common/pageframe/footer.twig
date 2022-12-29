@@ -14,14 +14,14 @@
         <ul id="footer-links-primary">
             {% for link in yt.footer.primaryLinks %}
             <li>
-                <a href="{{ getUrl(link) }}">{{ getText(link) }}</a>
+                <a href="{{ getUrl(link) }}">{{ rehike.getText(link) }}</a>
             </li>
             {% endfor %}
         </ul>
         <ul id="footer-links-secondary">
             {% for link in yt.footer.secondaryLinks %}
             <li>
-                <a href="{{ getUrl(link) }}">{{ getText(link) }}</a>
+                <a href="{{ getUrl(link) }}">{{ rehike.getText(link) }}</a>
             </li>
             {% endfor %}
             {%- if yt.footer.enableCopyright -%}

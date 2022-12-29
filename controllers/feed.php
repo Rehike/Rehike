@@ -12,6 +12,8 @@ use \Rehike\Util\Base64Url;
 use \Rehike\Model\History\HistoryModel;
 use \Rehike\Model\Browse\InnertubeBrowseConverter;
 
+use function Rehike\Async\async;
+
 /**
  * Common controller for all feed pages.
  * 
@@ -87,6 +89,8 @@ return new class extends \Rehike\Controller\core\NirvanaController {
      * with its older name "What to Watch".
      */
     public static function whatToWatch(&$yt) {
+    return async(function() use ($yt) 
+    {
         // The copyright text in the description only appeared if the
         // user originated from the homepage.
         $yt->footer->enableCopyright = true;
@@ -95,37 +99,38 @@ return new class extends \Rehike\Controller\core\NirvanaController {
         $yt->masthead->searchbox->autofocus = true;
 
         // Initial Android request to get continuation
-        Network::innertubeRequest(
+        $response = yield Network::innertubeRequest(
             action: "browse",
             body: [
                 "browseId" => "FEwhat_to_watch"
             ],
             clientName: "ANDROID",
             clientVersion: "17.14.33"
-        )->then(function($response) {
-            $ytdata = $response->getJson();
+        );
 
-            // Why we need to write better InnerTube parsing tools:
-            foreach ($ytdata->contents->singleColumnBrowseResultsRenderer->tabs as $tab)
-            if (isset($tab->tabRenderer->content->sectionListRenderer))
-            foreach($tab->tabRenderer->content->sectionListRenderer->continuations as $cont)
-            if (isset($cont->reloadContinuationData))
-            $continuation = $cont->reloadContinuationData->continuation;
+        $ytdata = $response->getJson();
 
-            $newContinuation = WebV2Shelves::continuationToWeb($continuation);
+        // Why we need to write better InnerTube parsing tools:
+        foreach ($ytdata->contents->singleColumnBrowseResultsRenderer->tabs as $tab)
+        if (isset($tab->tabRenderer->content->sectionListRenderer))
+        foreach($tab->tabRenderer->content->sectionListRenderer->continuations as $cont)
+        if (isset($cont->reloadContinuationData))
+        $continuation = $cont->reloadContinuationData->continuation;
 
-            // Thrown to next then
-            return Network::innertubeRequest(
-                action: "browse",
-                body: [
-                    "continuation" => $newContinuation
-                ]
-            );
-        })->then(function($response) use ($yt) {
-            $data = $response->getJson();
+        $newContinuation = WebV2Shelves::continuationToWeb($continuation);
 
-            $yt->page->content = RichShelfUtils::reformatResponse($data);
-        });
+        // Thrown to next then
+        $response = yield Network::innertubeRequest(
+            action: "browse",
+            body: [
+                "continuation" => $newContinuation
+            ]
+        );
+
+        $data = $response->getJson();
+
+        $yt->page->content = RichShelfUtils::reformatResponse($data);
+    });
     }
 
     /**

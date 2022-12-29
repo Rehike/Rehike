@@ -16,7 +16,7 @@
 {% set enableSnapScaling = true %}
 
 {%- block title -%}
-{{ getText(yt.page.header.title) }} - {{ parent() }}
+{{ rehike.getText(yt.page.header.title) }} - {{ parent() }}
 {%- endblock -%}
 
 {% block foot_scripts %}
@@ -114,25 +114,25 @@
             {%- set header = yt.page.header -%}
             <div id="pl-header" class="branded-page-box clearfix" data-all-playlists-url="{{ getUrl(header.ownerEndpoint) }}/playlists">
                 <div class="pl-header-thumb" style="height: 126px;">
-                    <img src="{{ getThumb(header.playlistHeaderBanner.heroPlaylistThumbnailRenderer, 126) }}" height="126px">
-                    <a href="{{ getUrl(plh) }}" class="pl-header-play-all-overlay yt-valign spf-link">► {{ getText(header.playlistHeaderBanner.heroPlaylistThumbnailRenderer.thumbnailOverlays.thumbnailOverlayHoverTextRenderer.text) }}</a>
+                    <img src="{{ rehike.getThumb(header.playlistHeaderBanner.heroPlaylistThumbnailRenderer, 126) }}" height="126px">
+                    <a href="{{ getUrl(plh) }}" class="pl-header-play-all-overlay yt-valign spf-link">► {{ rehike.getText(header.playlistHeaderBanner.heroPlaylistThumbnailRenderer.thumbnailOverlays.thumbnailOverlayHoverTextRenderer.text) }}</a>
                 </div>
                 <div class="pl-header-content">
-                    <h1 class="pl-header-title" tabindex="0">{{ getText(header.title) }}</h1>
+                    <h1 class="pl-header-title" tabindex="0">{{ rehike.getText(header.title) }}</h1>
                     <ul class="pl-header-details">
                         <li>
                             <a href="{{ getUrl(header.ownerEndpoint) }}" class="spf-link">
-                                {{ getText(header.ownerText) }}
+                                {{ rehike.getText(header.ownerText) }}
                             </a>
                         </li>
                         {%- if header.numVideosText -%}
-                        <li>{{ getText(header.numVideosText) }}</li>
+                        <li>{{ rehike.getText(header.numVideosText) }}</li>
                         {%- endif -%}
                         {%- if header.viewCountText -%}
-                        <li>{{ getText(header.viewCountText) }}</li>
+                        <li>{{ rehike.getText(header.viewCountText) }}</li>
                         {%- endif -%}
                         {%- if header.byline[1] -%}
-                        <li>{{ getText(header.byline[1].playlistBylineRenderer.text) }}</li>
+                        <li>{{ rehike.getText(header.byline[1].playlistBylineRenderer.text) }}</li>
                         {%- endif -%}
                     </ul>
                     <div class="playlist-actions">

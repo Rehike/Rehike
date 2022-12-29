@@ -26,8 +26,8 @@
                 {%- endif -%}
                 <div class="yt-lockup-content">
                     <h3 class="yt-lockup-title {{ info.menu ? "contains-action-menu" }}">
-                        <a href="{{ getUrl(info) }}" class="spf-link yt-uix-tile-link yt-ui-ellipsis yt-ui-ellipsis-2" title="{{ getText(info.title) }}">
-                            {{ getText(info.title) }}
+                        <a href="{{ getUrl(info) }}" class="spf-link yt-uix-tile-link yt-ui-ellipsis yt-ui-ellipsis-2" title="{{ rehike.getText(info.title) }}">
+                            {{ rehike.getText(info.title) }}
                             {% if data.type == "channel" and info.ownerBadges %}
                                 <span title="{{ yt.msgs.verified }}" class="yt-uix-tooltip yt-channel-title-icon-verified yt-sprite"></span>
                             {% endif %}
@@ -41,14 +41,14 @@
                     <div class="yt-lockup-byline">
                         {% set bylineUrl = getUrl(byline.runs[0]) %}
                         {% if bylineUrl %}
-                            {{ yt.config.appearance.usernamePrepends ? yt.msgs.usernamePrepend }}
-                            <a href="{{ getUrl(byline.runs[0]) }}" class="spf-link">{{ getText(byline) }}</a>
+                            {{ rehike.config.appearance.usernamePrepends ? yt.msgs.usernamePrepend }}
+                            <a href="{{ getUrl(byline.runs[0]) }}" class="spf-link">{{ rehike.getText(byline) }}</a>
                             {% if info.ownerBadges %}
                                 <span title="{{ yt.msgs.verified }}" class="yt-uix-tooltip yt-channel-title-icon-verified yt-sprite"></span>
                             {% endif %}
                         {% else %}
                             {# If there is no byline URL, then it's probably something else (like mixes byline) #}
-                            {{ getText(byline) }}
+                            {{ rehike.getText(byline) }}
                         {% endif %}
                     </div>
                     {% endif %}
@@ -58,7 +58,7 @@
                     <div class="yt-lockup-meta">
                         <ul class="yt-lockup-meta-info">
                             {% for meta in getMeta(info) %}
-                            <li>{{ getText(meta) }}</li>
+                            <li>{{ rehike.getText(meta) }}</li>
                             {% endfor %}
                             {% if info.upcomingEventData %}
                                 {# hitchhiker localized date hack #}
@@ -78,7 +78,7 @@
                     {% endif %}
                     {% if style == "tile" and getDescSnippet(info) != false %}
                     <div class="yt-lockup-description yt-ui-ellipsis yt-ui-ellipsis-2">
-                        {{ getText(getDescSnippet(info))|nl2br }}
+                        {{ rehike.getText(getDescSnippet(info))|nl2br }}
                     </div>
                     {% endif %}
                     {%- if info.badges or info.upcomingEventData or (data.type == "channel" and style == "tile") -%}
@@ -105,9 +105,9 @@
                                         text: this.isToggled ? this.toggledText : this.defaultText,
                                         attributes: {
                                             "uix-livereminder-video-id": info.videoId,
-                                            "reminder-set-text": getText(this.toggledText),
+                                            "reminder-set-text": rehike.getText(this.toggledText),
                                             "href": "",
-                                            "set-reminder-text": getText(this.defaultText)
+                                            "set-reminder-text": rehike.getText(this.defaultText)
                                         }
                                     }) }}
                                 </span>
@@ -131,7 +131,7 @@
             {% set this = video.childVideoRenderer %}
             <li class="yt-lockup-playlist-item clearfix">
                 <span class="yt-lockup-playlist-item-length">{{ getVideoTime(this) }}</span>
-                <a href="{{ getUrl(this) }}" class="yt-lockup-playlist-item-title spf-link">{{ getText(this.title) }}</a>
+                <a href="{{ getUrl(this) }}" class="yt-lockup-playlist-item-title spf-link">{{ rehike.getText(this.title) }}</a>
             </li>
         {% endif %}
     {% endfor %}
@@ -140,7 +140,7 @@
 <div class="yt-lockup-meta">
     <ul class="yt-lockup-meta-info">
         <li>
-            <a href="{{ getUrl(info.viewPlaylistText.runs[0]) }}" class="spf-link">{{ getText(info.viewPlaylistText) }}{% if data.type == "playlist" %} ({{ getText(info.videoCountText) }}){% endif %}</a>
+            <a href="{{ getUrl(info.viewPlaylistText.runs[0]) }}" class="spf-link">{{ rehike.getText(info.viewPlaylistText) }}{% if data.type == "playlist" %} ({{ rehike.getText(info.videoCountText) }}){% endif %}</a>
         </li>
     </ul>
 </div>
@@ -157,8 +157,8 @@
 {# LEGACY #}
 {%- macro title(info, type, overflow = true, class) -%}
 <h3 class="yt-lockup-title ">
-   <a href="{{ getUrl(info) }} " class=" {% if overflow %}yt-ui-ellipsis yt-ui-ellipsis-2{% endif %}   {{ class ?: "" }}    spf-link "   title="{{ getText(info.title) }}" aria-describedby="description-id-{{ generateRid }}" dir="ltr">
-   {{ getText(info.title) }}{% if info.ownerBadges and type == "channel" %}    <span title="{{ yt.msgs.verified }}" class="yt-uix-tooltip yt-channel-title-icon-verified yt-sprite"></span>{% endif %}
+   <a href="{{ getUrl(info) }} " class=" {% if overflow %}yt-ui-ellipsis yt-ui-ellipsis-2{% endif %}   {{ class ?: "" }}    spf-link "   title="{{ rehike.getText(info.title) }}" aria-describedby="description-id-{{ generateRid }}" dir="ltr">
+   {{ rehike.getText(info.title) }}{% if info.ownerBadges and type == "channel" %}    <span title="{{ yt.msgs.verified }}" class="yt-uix-tooltip yt-channel-title-icon-verified yt-sprite"></span>{% endif %}
    </a>
    {%- if getVideoTime(info) != null -%}
       {{ _self.a11yDesc(getVideoTime(info)) }}
