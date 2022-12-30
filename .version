@@ -1,10 +1,10 @@
 {
-	"previousHash": "9588cbad54f8e06aa860c4174cc974e0f46a5809",
-	"currentRevisionId": 734,
-	"subject": "look i don't even care this shit needs a rewrite anyways",
-	"body": "look i don't even care this shit needs a rewrite anyways",
+	"previousHash": "4a3df02e8312a5ff33045989932a8491e8406a16",
+	"currentRevisionId": 735,
+	"subject": "Backport config page fixes from 0.7",
+	"body": "Backport config page fixes from 0.7",
 	"branch": "master",
-	"committerName": "aubymori",
-	"committerEmail": "aubyomori@gmail.com",
-	"time": 1672297489
+	"committerName": "Taniko Yamamoto",
+	"committerEmail": "99076687+YukisCoffee@users.noreply.github.com",
+	"time": 1672380225
 }
