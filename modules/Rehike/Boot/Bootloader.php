@@ -62,6 +62,7 @@ final class Bootloader
     {
         Tasks::initNetwork();
         Tasks::initResourceConstants();
+        Tasks::initConfigManager();
     }
 
     /**

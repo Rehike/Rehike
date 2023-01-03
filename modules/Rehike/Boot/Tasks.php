@@ -14,6 +14,7 @@ use Rehike\{
     Player\PlayerCore,
     Misc\RehikeUtilsDelegate,
     Misc\ResourceConstantsStore,
+    RehikeConfigManager,
     Util\Nameserver\Nameserver,
     Util\Base64Url
 };
@@ -36,6 +37,11 @@ final class Tasks
     public static function initResourceConstants(): void
     {
         ResourceConstantsStore::init();
+    }
+
+    public static function initConfigManager(): void
+    {
+        RehikeConfigManager::loadConfig();
     }
 
     public static function setupTemplateManager(): void
