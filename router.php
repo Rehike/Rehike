@@ -43,7 +43,8 @@ Router::redirect([
             return urldecode($request->params->q);
     },
     "/feed/library" => "/profile",
-    "/subscription_manager" => "/feed/channels"
+    "/subscription_manager" => "/feed/channels",
+    "/rehike/settings" => "/rehike/config"
 ]);
 
 Router::get([
@@ -67,7 +68,6 @@ Router::get([
     "/addto_ajax" => "ajax/addto",
     "/rehike/version" => "rehike/version",
     "/rehike/static/**" => "rehike/static_router",
-    "/rehike/settings" => "/rehike/settings",
     "/share_ajax" => "ajax/share",
     "/attribution" => "attribution",
     "/profile" => "profile",

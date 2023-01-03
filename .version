@@ -1,10 +1,10 @@
 {
-	"previousHash": "4a3df02e8312a5ff33045989932a8491e8406a16",
-	"currentRevisionId": 735,
-	"subject": "Backport config page fixes from 0.7",
-	"body": "Backport config page fixes from 0.7",
+	"previousHash": "0f78efc54bca733d24485dfeafbf8c56405605a0",
+	"currentRevisionId": 736,
+	"subject": "Fix invalid settings page entry in router",
+	"body": "Fix invalid settings page entry in router",
 	"branch": "master",
 	"committerName": "Taniko Yamamoto",
 	"committerEmail": "99076687+YukisCoffee@users.noreply.github.com",
-	"time": 1672380225
+	"time": 1672785765
 }
