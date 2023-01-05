@@ -1,10 +1,10 @@
 {
-	"previousHash": "4a3df02e8312a5ff33045989932a8491e8406a16",
-	"currentRevisionId": 735,
-	"subject": "Backport config page fixes from 0.7",
-	"body": "Backport config page fixes from 0.7",
+	"previousHash": "892a2965c1cbae4780fc23ac67a2eff9a9b9d844",
+	"currentRevisionId": 738,
+	"subject": "Merge branch 'master' of https://github.com/Rehike/Rehike",
+	"body": "Merge branch 'master' of https://github.com/Rehike/Rehike",
 	"branch": "master",
-	"committerName": "Taniko Yamamoto",
-	"committerEmail": "99076687+YukisCoffee@users.noreply.github.com",
-	"time": 1672380225
+	"committerName": "aubymori",
+	"committerEmail": "aubyomori@gmail.com",
+	"time": 1672962052
 }
