@@ -3,6 +3,23 @@ ob_start();
 $root = $_SERVER['DOCUMENT_ROOT'];
 set_include_path($root);
 
+// Correct the working directory if the currently used one differs from the
+// true root.
+if (
+    (DIRECTORY_SEPARATOR == "\\" 
+        ? strtr($_SERVER["DOCUMENT_ROOT"], "\\", "/")
+        : $_SERVER["DOCUMENT_ROOT"])
+    != (DIRECTORY_SEPARATOR == "\\" 
+        ? ($corrected = explode("/index.php", strtr(__FILE__, "\\", "/"))[0])
+        : ($corrected = explode("/index.php", __FILE__)[0]))
+)
+{
+    $_SERVER["DOCUMENT_ROOT"] = $corrected;
+    $root = $corrected;
+    chdir($corrected);
+    set_include_path($corrected);
+}
+
 // Ungodly global variable that connects everything together.
 // Do not touch, this needs to be carefully moved for clean up.
 // Think of it like nuclear waste :P
