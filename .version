@@ -1,10 +1,10 @@
 {
-	"previousHash": "0f78efc54bca733d24485dfeafbf8c56405605a0",
-	"currentRevisionId": 736,
-	"subject": "Fix invalid settings page entry in router",
-	"body": "Fix invalid settings page entry in router",
+	"previousHash": "892a2965c1cbae4780fc23ac67a2eff9a9b9d844",
+	"currentRevisionId": 738,
+	"subject": "Merge branch 'master' of https://github.com/Rehike/Rehike",
+	"body": "Merge branch 'master' of https://github.com/Rehike/Rehike",
 	"branch": "master",
-	"committerName": "Taniko Yamamoto",
-	"committerEmail": "99076687+YukisCoffee@users.noreply.github.com",
-	"time": 1672785765
+	"committerName": "aubymori",
+	"committerEmail": "aubyomori@gmail.com",
+	"time": 1672962052
 }
