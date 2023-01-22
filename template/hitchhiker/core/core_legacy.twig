@@ -75,6 +75,10 @@
       <div id="footer-container" class="yt-base-gutter">
          {% include 'common/pageframe/footer.twig' %}
       </div>
+      {% if yt.rehikeSecurityNotice %}
+         {% from "rehike/security/security_lightbox.twig" import render as security_lightbox %}
+         {{ security_lightbox(yt.rehikeSecurityNotice) }}
+      {% endif %}
       {#
          YouTube's legacy foot contains scripts.
       #}

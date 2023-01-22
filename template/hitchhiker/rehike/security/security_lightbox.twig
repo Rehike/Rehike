@@ -1,0 +1,126 @@
+{% macro render(data) %}
+{% from "common/uix/button.twig" import render as button %}
+<div id="rehike-security-notice-wrapper">
+   <div id="rehike-security-notice-lightbox" class="yt-dialog preserve-players" data-player-ready-pubsub-key="589">
+      <div class="yt-dialog-base"> <span class="yt-dialog-align"></span>
+         <div role="dialog" tabindex="0" class="yt-dialog-fg yt-uix-overlay-primary yt-uix-overlay">
+            <div class="yt-dialog-fg-content yt-dialog-show-content">
+               <div class="yt-dialog-content">
+                  <div class="yt-dialog-overlay-content-container">
+                     <div class="yt-dialog-header">
+                        <h2 class="yt-dialog-title">{{ data.title }}</h2>
+                     </div>
+                     <div id="rehike-security-notice-text">
+                        {%- for run in data.message -%}
+                            {%- if run.navigationEndpoint -%}
+                                <a href="{{ getUrl(run) }}">{{ run.text }}</a>
+                            {%- else -%}
+                                {{ run.text }}
+                            {%- endif -%}
+                        {%- endfor -%}
+                     </div>
+                     {{ button(data.moreOptionsButton) }}
+                     <div class="yt-uix-overlay-actions">
+                        {{ button(data.doNotShowAgainButton) }}
+                        {{ button(data.learnMoreButton) }}
+                        {{ button(data.dismissButton) }}
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="yt-dialog-focus-trap" tabindex="0"></div>
+         </div>
+      </div>
+   </div>
+</div>
+<style>
+    #rehike-security-notice-lightbox .yt-dialog-fg
+    {
+        max-width: 640px;
+    }
+
+    #rehike-security-notice-ignore-button
+    {
+        display: none;
+    }
+
+    #rehike-security-notice-lightbox.more-options 
+    #rehike-security-notice-ignore-button
+    {
+        display: inline-block;
+    }
+
+    #rehike-security-notice-lightbox.more-options 
+    #rehike-security-notice-more-options-button
+    {
+        visibility: hidden;
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    #rehike-security-notice-more-options-button
+    {
+        padding: 0;
+    }
+
+    #rehike-security-notice-lightbox .yt-uix-overlay-actions
+    {
+        margin-top: 5px;
+    }
+</style>
+<script>
+// I speedran this at 3 am forgive me
+(function(){
+
+function create()
+{
+   document.body.setAttribute("class",
+      document.body.getAttribute("class") + " hide-players yt-dialog-active"
+   );
+
+   var bgdiv = document.createElement("DIV");
+   bgdiv.setAttribute("id", "yt-dialog-bg");
+   bgdiv.setAttribute("class", "yt-dialog-bg");
+   bgdiv.setAttribute("style", "height: 100%; width: 100%; position: fixed;");
+   document.body.insertBefore(bgdiv,
+      document.getElementById("footer-container").nextSibling
+   );
+}
+
+function kill()
+{
+   document.body.setAttribute("class",
+      document.body.getAttribute("class").replace(" hide-players yt-dialog-active", "")
+   );
+
+   document.getElementById("yt-dialog-bg").outerHTML = ""; // ie < 9 no remove
+   document.getElementById("rehike-security-notice-wrapper").setAttribute("class", "hid");
+}
+
+function expandMoreOptions()
+{
+    document.getElementById("rehike-security-notice-lightbox").setAttribute("class", "more-options");
+}
+
+function disableWarning()
+{
+    var xhr = new XMLHttpRequest();
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', '/rehike/update_config');
+    xhr.onload = function() {};
+    xhr.setRequestHeader('Content-Type', 'application/json')
+    xhr.send(JSON.stringify({
+        "hidden.securityIgnoreWindowsServerRunningAsSystem": true
+    }));
+
+    kill();
+}
+
+create();
+document.getElementById("rehike-security-notice-dismiss-button").onclick = kill;
+document.getElementById("rehike-security-notice-more-options-button").onclick = expandMoreOptions;
+document.getElementById("rehike-security-notice-ignore-button").onclick = disableWarning;
+
+})();
+</script>
+{% endmacro %}

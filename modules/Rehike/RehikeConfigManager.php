@@ -32,6 +32,9 @@ class RehikeConfigManager extends ConfigManager
         ],
         "advanced" => [
             "enableDebugger" => false
+        ],
+        "hidden" => [
+            "securityIgnoreWindowsServerRunningAsSystem" => false
         ]
     ];
 
@@ -53,6 +56,9 @@ class RehikeConfigManager extends ConfigManager
         ],
         "advanced" => [
             "enableDebugger" => "bool"
+        ],
+        "hidden" => [
+            "securityIgnoreWindowsServerRunningAsSystem" => "bool"
         ]
     ];
 

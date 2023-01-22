@@ -3,6 +3,7 @@ namespace Rehike\Controller\core;
 
 use Rehike\TemplateManager;
 use Rehike\Request;
+use Rehike\SecurityChecker;
 use Rehike\Player\PlayerCore;
 use SpfPhp\SpfPhp;
 use Rehike\ControllerV2\RequestMetadata;
@@ -10,6 +11,7 @@ use Rehike\Debugger\Debugger;
 use Rehike\Model\Guide\MGuide as Guide;
 use Rehike\Model\Footer\MFooter as Footer;
 use Rehike\Model\Masthead\MMasthead as Masthead;
+use Rehike\Model\Rehike\Security\SecurityLightbox;
 
 /**
  * Defines a general YouTube Hitchhiker controller.
@@ -310,6 +312,11 @@ abstract class HitchhikerController
         $template = $this->template;
         
         $yt->currentEndpoint = self::$currentEndpoint;
+
+        if (!SecurityChecker::isSecure() && !SpfPhp::isSpfRequested())
+        {
+            $yt->rehikeSecurityNotice = new SecurityLightbox();
+        }
     }
 
     /**
