@@ -79,11 +79,11 @@ class CommentThread
             }
         }
 
-        Request::queueDataApiRequest("commentThreads", "comments", (object) [
+        Request::queueDataApiRequest("replies", "comments", (object) [
             "part" => "id,snippet",
             "id" => implode(",", $commentIds)
         ]);
-        $data = json_decode(Request::getResponses()["commentThreads"]);
+        $data = json_decode(Request::getResponses()["replies"]);
 
         foreach ($data -> items as $item) {
             self::$dataApiData += [

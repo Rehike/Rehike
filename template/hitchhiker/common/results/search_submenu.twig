@@ -54,10 +54,14 @@
                                 {%- set thisF = sFilter.searchFilterRenderer -%}
                                 <li>
                                     {%- if not thisF.status or (thisF.status == "FILTER_STATUS_SELECTED" and thisF.navigationEndpoint) -%}
-                                    <a href="{{ getUrl(thisF) }}" class="filter spf-link" title="{{ thisF.tooltip }}" aria-label="{{ thisF.tooltip }}">
+                                    <a href="{{ getUrl(thisF) }}" class="filter {{ thisF.status == "FILTER_STATUS_SELECTED" ? "filter-selected" }} spf-link" title="{{ thisF.tooltip }}" aria-label="{{ thisF.tooltip }}">
                                         <span class="filter-text filter-ghost">{{ getText(thisF.label) }}</span>
                                         {{ thisF.status ? '<span class="yt-close">×</span>' }}
                                     </a>
+                                    {%- elseif thisF.status == "FILTER_STATUS_SELECTED" -%}
+                                    <span class="filter filter-selected filter-sort" title="{{ thisF.tooltip }}">
+                                        <span class="filter-text" aria-label="{{ thisF.tooltip }}">{{ getText(thisF.label) }}</span>
+                                    </span>
                                     {%- elseif thisF.status == "FILTER_STATUS_DISABLED" -%}
                                     <span class="filter filter-disabled" title="{{ thisF.tooltip }}">
                                         <span class="filter-text" aria-label="{{ thisF.tooltip }}">{{ getText(thisF.label) }}</span>

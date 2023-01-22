@@ -25,7 +25,10 @@ class MSubnav
 
         $i->addBackButton($baseUrl);
 
-        $i->rightButtons[] = self::getSortButton(Channels4Model::getVideosSort());
+        if (!is_null(Channels4Model::getVideosSort()))
+        {
+            $i->rightButtons[] = self::getSortButton(Channels4Model::getVideosSort());
+        }
 
         $flow = $_GET["flow"] ?? "grid";
         if (!in_array($flow, ["grid", "list"])) $flow = "grid";
