@@ -70,7 +70,7 @@ class Response
     /**
      * Get the response decoded as JSON.
      */
-    public function getJson(): object
+    public function getJson(): object|array
     {
         /*
          * TODO (kirasicecreamm): Slow validation method.
