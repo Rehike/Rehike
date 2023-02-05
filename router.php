@@ -24,7 +24,8 @@ Router::funnel([
     "/new",
     "/channel_switcher",
     "/supported_browsers",
-    "/getAccountSwitcherEndpoint"
+    "/getAccountSwitcherEndpoint",
+    "/channel_image_upload/*"
 ]);
 
 Router::redirect([
