@@ -1,3 +1,4 @@
+{% import "common/watch/watch7/action_panel/base.twig" as action_panel %}
 {%- from "common/uix/button.twig" import render as button -%}
 {%- from "core/spinner.twig" import render as spinner -%}
 {
@@ -37,9 +38,19 @@
                     <input type="text" class="yt-uix-form-input-text share-panel-url" name="share_url" value="{{ yt.page.shortUrl }}" data-video-id="{{ yt.page.videoId }}">
                 </span>
             </div>
+            <span class="share-panel-start-at-container">
+                 <label>
+                     <span class="yt-uix-form-input-checkbox-container">
+                        <input class="share-panel-start-at" type="checkbox">
+                        <span class="yt-uix-form-input-checkbox-element"></span>
+                    </span>
+                    {{ yt.page.startStr }}
+                </label>
+                <input type="text" value="0:00" title="Video start time" class="yt-uix-form-input-text share-panel-start-at-time">
+            </span>
         </div>
-        <div class="share-panel-embed-container hid" data-disabled="true">
-            <p class="display-message">This feature is not available right now. Check back later!</p>
+        <div class="share-panel-embed-container hid">
+            {{ action_panel.loading() }}
         </div>
         <div class="share-panel-email-container hid" data-disabled="true">
             <p class="display-message">This feature is not available right now. Check back later!</p>
