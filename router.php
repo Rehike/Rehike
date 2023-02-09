@@ -22,7 +22,6 @@ Router::funnel([
     "/howyoutubeworks/*",
     "/create_channel",
     "/new",
-    "/channel_switcher",
     "/supported_browsers",
     "/getAccountSwitcherEndpoint",
     "/channel_image_upload/*"
@@ -72,6 +71,7 @@ Router::get([
     "/share_ajax" => "ajax/share",
     "/attribution" => "attribution",
     "/profile" => "profile",
+    "/channel_switcher" => "channel_switcher",
     "/rehike/config" => "rehike/config",
     "/rehike/config/**" => "rehike/config",
     "default" => "channel"
