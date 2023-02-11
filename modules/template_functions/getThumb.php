@@ -1,33 +1,46 @@
 <?php
-
-\Rehike\TemplateFunctions::register('getThumb', function($obj, $height = 0) {
-    if (isset($obj -> thumbnail -> thumbnails)) {
-        $thumbs = $obj -> thumbnail -> thumbnails;
-    } else if (isset($obj -> thumbnails)) {
-        $thumbs = $obj -> thumbnails;
-    }
-
-    if (!isset($thumbs)) return "//i.ytimg.com/";
-
-    if (isset($height) && $height != 0){
-        for ($i = 0; $i < count($thumbs); $i++) {
-            if ($thumbs[$i] -> height >= $height) {
-                $thumb = $thumbs[$i];
-            }
+\Rehike\TemplateFunctions::register("getThumb", function(?object $container, int $height = 0): ?string {
+    if (!isset($container->thumbnails)) return null;
+    
+    $thumbs = &$container->thumbnails;
+    $thumb = null;
+    foreach ($thumbs as $ithumb)
+    {
+        if (isset($ithumb->height) && $ithumb->height >= $height)
+        {
+            $thumb = $ithumb;
         }
-    } else {
-        $thumb = $thumbs[array_key_last($thumbs)];
     }
 
-    if (isset($thumb -> width) && isset($thumb -> height)) {
-        $ratio = $thumb -> width / $thumb -> height;
+    // Fallback if there's no thumbnail that matches the height
+    if (is_null($thumb))
+    {
+        $thumb = $thumbs[count($thumbs) - 1];
+    }
 
-        if ($ratio >= 1.7 && $ratio < 1.8) {
-            return $thumb -> url;
-        } else {
-            return preg_replace("/\?sqp=.*/", "", $thumb -> url);
+    if (
+        isset($thumb->width) &&
+        isset($thumb->height) &&
+        $thumb->width > 0 &&
+        $thumb->height > 0
+    )
+    // See whether or not we need to change
+    // the URL. Shorts thumbnails are given
+    // in their original aspect ratio, which
+    // causes a heavily stretched thumbnail
+    // when displayed on Hitchhiker.
+    {
+        $ratio = $thumb->width / $thumb->height;
+
+        if ($ratio >= 1.7 && $ratio < 1.8)
+        {
+            return $thumb->url;
         }
-    } else {
-        return $thumb -> url;
+        else
+        {
+            return preg_replace("/\?sqp=.*/", "", $thumb->url);
+        }
     }
+    
+    return $thumb->url;
 });
