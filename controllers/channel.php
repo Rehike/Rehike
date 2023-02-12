@@ -198,6 +198,7 @@ class channel extends NirvanaController {
         }
 
         Channels4::registerBaseUrl($baseUrl);
+        Channels4::registerCurrentTab($tab);
 
         // Handle the sidebar
         $sidebar = null;

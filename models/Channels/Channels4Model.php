@@ -10,7 +10,7 @@ use Rehike\Model\Common\MAlert;
 class Channels4Model
 {
     private static $baseUrl;
-    public static $currentTab = null;
+    private static $currentTab = null;
     public static $yt;
 
     private static $videosSort;
@@ -112,16 +112,12 @@ class Channels4Model
 
                     if (@$tab->tabRenderer->status > 0)
                     {
-                        $baseUrl = self::$baseUrl;
-                        self::$currentTab = str_replace("$baseUrl/", "", $tabEndpoint);
                         $currentTabContents = &$tab->tabRenderer->content;
                     }
                 }
                 elseif (@$tab -> expandableTabRenderer)
                 {
                     if (@$tab->expandableTabRenderer->selected) {
-                        $baseUrl = self::$baseUrl;
-                        self::$currentTab = str_replace("$baseUrl/", "", $tabEndpoint);
                         $currentTabContents = &$tab->expandableTabRenderer->content;
                     }
                 }
@@ -342,6 +338,16 @@ class Channels4Model
         }
 
         return null;
+    }
+
+    public static function registerCurrentTab($currentTab)
+    {
+        self::$currentTab = $currentTab;
+    }
+
+    public static function getCurrentTab()
+    {
+        return self::$currentTab;
     }
 
     public static function registerBaseUrl($baseUrl)

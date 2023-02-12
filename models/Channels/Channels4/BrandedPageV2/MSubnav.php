@@ -51,7 +51,7 @@ class MSubnav
         $uploadsText = $title = $i18n->viewUploads;
         $streamsText = $title = $i18n->viewLiveStreams;
 
-        if ("streams" == Channels4Model::$currentTab)
+        if ("streams" == Channels4Model::getCurrentTab())
         {
             $activeText = $streamsText;
             $options += [$uploadsText => "$baseUrl/videos"];
@@ -68,7 +68,7 @@ class MSubnav
     public static function getSortButton($sort) {
         $i18n = i18n::getNamespace("channels");
         $baseUrl = Channels4Model::getBaseUrl();
-        $tab = Channels4Model::$currentTab;
+        $tab = Channels4Model::getCurrentTab();
         $flow = $_GET["flow"] ?? "grid";
 
         $options = [];
@@ -116,7 +116,7 @@ class MSubnav
                 break;
         }
 
-        $tab = ("streams" == Channels4Model::$currentTab) ? "streams" : "videos";
+        $tab = ("streams" == Channels4Model::getCurrentTab()) ? "streams" : "videos";
 
         $options = [];
 
