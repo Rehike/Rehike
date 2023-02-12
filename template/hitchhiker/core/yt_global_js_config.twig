@@ -8,7 +8,7 @@
         INNERTUBE_API_KEY: "AIzaSyAO_FJ2SlqU8Q4STEHLGCilw_Y9_11qcW8",
         INNERTUBE_API_VERSION: "v1",
         APIARY_HOST: "",
-        'VISITOR_DATA': "Cgt5dXB2SU8wTGxlNA%3D%3D",
+        'VISITOR_DATA': "{{ yt.visitor }}",
         'DELEGATED_SESSION_ID': null,
         'GAPI_HOST': "https:\/\/apis.google.com",
         'GAPI_LOCALE': "en_US",
@@ -19,7 +19,7 @@
             "client": {
                 "hl": "en",
                 "gl": "US",
-                "visitorData": "CgtRUmUwTG1tRUp5WSiSsKOPBg%3D%3D",
+                "visitorData": "{{ yt.visitor }}",
                 "clientName": "WEB",
                 "clientVersion": "2.20220119.01.00",
                 "platform": "DESKTOP"
@@ -69,7 +69,7 @@
     yt.setConfig({
         'PAGE_NAME': "{{ pageName ?? pageType }}", {# page type usually works, but some pages (index) differ #}
         'LOGGED_IN': {{ yt.signin.isSignedIn ? "true" : "false" }},
-        'SESSION_INDEX': null,
+        'SESSION_INDEX': 0,
         'VALID_SESSION_TEMPDATA_DOMAINS': ["www.youtube.com", "gaming.youtube.com"],
         'PARENT_TRACKING_PARAMS': "",
         'FORMATS_FILE_SIZE_JS': ["%s B", "%s KB", "%s MB", "%s GB", "%s TB"],

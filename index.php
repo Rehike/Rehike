@@ -53,6 +53,7 @@ Rehike\Debugger\Debugger::init($yt);
 
 // Post boot events
 Rehike\ContextManager::$visitorData = $visitor;
+$yt->visitor = Rehike\InnertubeContext::genVisitorData(Rehike\ContextManager::$visitorData);
 
 // * Set signin state
 Rehike\Signin\AuthManager::use($yt);

@@ -1,0 +1,128 @@
+{%- from "common/uix/button.twig" import render as button -%}
+{%- from "core/spinner.twig" import render as spinner -%}
+{
+  "iframe_code": "<iframe width=\"__width__\" height=\"__height__\" src=\"__url__\" frameborder=\"0\" gesture=\"media\" allowfullscreen></iframe>",
+  "iframe_url": "{{ yt.page.embedUrl }}",
+  "alternate_embed_urls": {
+
+    {%- for url in yt.page.alternateUrls -%}
+
+        "{{ url.key }}": "{{ url.content }}"
+        {% if loop.last == false %},{% endif %}
+
+    {%- endfor -%}
+
+  },
+  "embed_html": {%- apply json_encode|raw -%}
+
+    <div id="debug" class="hid">
+        {{ yt.page|json_encode }}
+    </div>
+    <div class="share-panel">
+        <div class="share-panel-show-loading hid">
+            {{ spinner(yt.msgs.loading) }}
+        </div>
+        <div class="yt-uix-expander yt-uix-expander-collapsed">
+
+        {% if yt.page.isList %}
+            <div class="share-panel-playlist-options">
+ 
+                <span class="yt-uix-form-input-checkbox-container  checked">
+                    <input type="checkbox" class="yt-uix-form-input-checkbox" name="embed-with-playlist" checked="checked" id="embed-with-playlist" value="1">
+                    <span class="yt-uix-form-input-checkbox-element"></span>
+                </span>
+ 
+                <label for=embed-with-playlist>{{ yt.page.strs.sharePlaylist }}</label>
+
+ 
+                <button type="button" aria-expanded="false" class=" yt-uix-button yt-uix-button-default yt-uix-button-size-default" onclick=";return false;" aria-haspopup="true" data-button-menu-indicate-selected="true">
+                    <span class="yt-uix-button-content">{{ yt.page.strs.currentVideo }}</span>
+                    <span class="yt-uix-button-arrow yt-sprite"></span>
+                    <ul class=" yt-uix-button-menu yt-uix-button-menu-default hid" role="menu" aria-haspopup="true">
+                        <li role="menuitem">
+                            <span id="embed-with-playlist-current" class=" yt-uix-button-menu-item" onclick=";return false;" >{{ yt.page.strs.currentVideo }}</span>
+                        </li>
+                        <li role="menuitem">
+                            <span id="embed-with-playlist-first" class=" yt-uix-button-menu-item" onclick=";return false;" >{{ yt.page.strs.startPlaylist }}</span>
+                        </li>
+                    </ul>
+                </button>
+ 
+            </div>
+        {% endif %}
+
+
+    <span class=" yt-uix-form-input-container yt-uix-form-input-text-container ">
+    <input class="yt-uix-form-input-text share-embed-code" title="{{ yt.page.strs.embedCode }}">
+  </span>
+
+    <div class="yt-uix-expander-body">
+
+        <div id="share-preview" class="share-embed-options">
+            <span>{{ yt.page.strs.preview }}</span>
+
+            <div id="video-preview"></div>
+        </div>
+
+        <div class="share-embed-options">
+            <label for="embed-layout-options">{{ yt.page.strs.videoSize }}</label>
+            <span class="yt-uix-form-input-select ">
+                <span class="yt-uix-form-input-select-content">
+                    <span class="yt-uix-form-input-select-arrow yt-sprite"></span>
+                        <span class="yt-uix-form-input-select-value"></span>
+                    </span>
+                    <select class="yt-uix-form-input-select-element " id="embed-layout-options">
+
+                        {%- for size in yt.page.sizes -%}
+                            <option value="{{ size.name }}" 
+
+                                {% if size.text is not defined %}
+                                    data-width="{{ size.width }}" data-height="{{ size.height }}">
+                                        {{ size.width }} &times; {{ size.height}}
+                                {% else %}
+                                    >{{ size.text }}
+                                {% endif %}
+                            </option>
+                        {%- endfor -%}
+
+                    </select>
+                </span>
+                <span id="share-embed-customize" class="hid">
+                    <input type="text" class="yt-uix-form-input-text share-embed-size-custom-width" maxlength="4"> &times;
+                    <input type="text" class="yt-uix-form-input-text share-embed-size-custom-height" maxlength="4">
+                </span>
+        </div>
+
+        <ul class="share-embed-options">
+
+            {%- for option in yt.page.options -%}
+                <li>
+                    <label>
+                        <input type="checkbox" class="share-embed-option" name="{{ option.name }}" 
+                            {% if option.active == true %} checked {% endif %}>
+
+                            {{ option.text }} 
+                            {% if option.url is defined %} 
+                                [<a href="{{ option.url }}" target="_blank">?</a>] 
+                            {% endif %}
+
+
+                    </label>
+                </li>
+            {%- endfor -%}
+
+            <li>
+                <p class="share-panel-embed-legal">{{ yt.page.strs.legalNotice }}<a href=\"https://developers.google.com/youtube/terms\">{{ yt.page.strs.legalNoticeLink }}</a></p>
+            </li>
+        </ul>
+    </div>
+    <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-expander yt-uix-expander-head yt-uix-expander-collapsed-body yt-uix-gen204" type="button" onclick=";return false;">
+        <span class="yt-uix-button-content">{{ yt.msgs.showMore }}</span>
+    </button>
+    <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-expander yt-uix-expander-head yt-uix-expander-body" type="button" onclick=";return false;">
+        <span class="yt-uix-button-content">{{ yt.msgs.showLess }}</span>
+    </button>
+
+</div>
+{%- endapply -%}
+}
