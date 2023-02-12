@@ -4,11 +4,11 @@
     "viewUploads": "Загрузки",
     "viewAllVideos": "Все видео",
     "viewLiveStreams": "Прямые трансляции",
-    "viewShorts": "Клипы",
-    "seeAll": "Смотреть все",
-    "backstageViewAllCommentsSingular": "Посмотреть 1 комментарий",
-    "backstageViewAllCommentsPlural": "Посмотреть все %s Комментариев",
+    "viewShorts": "Shorts",
+    "seeAll": "Показать всё",
+    "backstageViewAllCommentsSingular": "Посмотреть комментарий",
+    "backstageViewAllCommentsPlural": "Посмотреть все %s комментарии",
     "videoSortPopular": "Самые популярные",
-    "videoSortOldest": "По дате добавления (сначало старые)",
-    "videoSortNewest": "По дате добавления (сначало новые)"
+    "videoSortOldest": "Дата добавления (сначало старая)",
+    "videoSortNewest": "Дата добавления (самые новые)"
 }
