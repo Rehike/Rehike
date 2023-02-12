@@ -5,6 +5,7 @@ use Rehike\Model\Channels\Channels4\MChannelAboutMetadata;
 use Rehike\Model\Channels\Channels4\BrandedPageV2\MSubnav;
 use Rehike\Model\Channels\Channels4\Sidebar\MRelatedChannels;
 use Rehike\Model\Browse\InnertubeBrowseConverter;
+use Rehike\Model\Channels\Channels4\MSubConfirmationDialog;
 use Rehike\Model\Common\MAlert;
 
 class Channels4Model
@@ -160,6 +161,11 @@ class Channels4Model
                 self::initSecondaryColumn($response);
                 $response["secondaryContent"]->items = $sidebarData;
             }
+        }
+
+        if ($yt->subConfirmation)
+        {
+            $response += ["subConfirmationDialog" => new MSubConfirmationDialog($response["header"])];
         }
 
         $response += ["content" => self::getTabContents($currentTabContents)];

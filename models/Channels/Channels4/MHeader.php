@@ -13,10 +13,11 @@ class MHeader
     public $title;
     public $badges;
     public $thumbnail;
+    public $url;
     public $banner;
     public $headerLinks;
     public $tabs;
-    public $subscriptionButtons;
+    public $subscriptionButton;
 
     private $subscriptionCount;
 
@@ -34,10 +35,10 @@ class MHeader
         // Add the avatar if it exists
         if ($a = @$header->avatar)
         {
-            $this->thumbnail = $a;
-            $this->thumbnail->thumbnails[0]->url = ImageUtils::changeGgphtImageSize($this->thumbnail->thumbnails[0]->url, 100);
-            $this->thumbnail->href = $baseUrl;
+            $this->thumbnail = ImageUtils::changeGgphtImageSize($a->thumbnails[0]->url, 100);
         }
+
+        $this->url = $baseUrl;
 
         // Add the banner if it exists
         if ($a = @$header->banner)

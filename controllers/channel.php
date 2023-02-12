@@ -56,8 +56,7 @@ class channel extends NirvanaController {
         $this->useJsModule("www/channels");
 
         // Init i18n
-        $i18n = &i18n::newNamespace("channels");
-        $i18n->registerFromFolder("i18n/channels");
+        i18n::newNamespace("channels")->registerFromFolder("i18n/channels");
 
         // BUG (kirasicecreamm): ChannelUtils::getUcid is hardcoded
         // to look at the path property of the input object.
@@ -185,7 +184,12 @@ class channel extends NirvanaController {
             }
         }
 
-        
+        $yt->subConfirmation = false;
+
+        if (isset($request->params->sub_confirmation))
+        if ($request->params->sub_confirmation == "1")
+            $yt->subConfirmation = true;
+
         switch ($request->path[0]) {
             case "c":
             case "user":
