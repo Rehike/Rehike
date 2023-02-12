@@ -2,44 +2,43 @@
 
 namespace Rehike\Model\ChannelSwitcher;
 
+use Rehike\i18n;
 use Rehike\TemplateFunctions as TF;
 
-// TODO: i18n
-class MChannelItem {
-
-    public $isSelected = false;
-    public $uChannelId;
-    public $signInToken;
-    public $accountPhoto;
-    public $accountName;
-    public $accountSubscribers;
+class MChannelItem
+{
+    public bool $selected = false;
+    public string $ucid;
+    public string $url;
+    public string $avatar;
+    public string $title;
+    public string $subscriberCountText;
 
     
-    public function __construct($channelJson) {
+    public function __construct(object $data)
+    {
+        $i18n = i18n::getNamespace("channel_switcher");
 
+        $this->selected = $data->isSelected;
+        $this->avatar = TF::getThumb($data->accountPhoto, 56);
+        $this->title = TF::getText(@$data->accountName);
 
-        $this->isSelected = $channelJson->isSelected;
-        $this->accountPhoto = $channelJson->accountPhoto->thumbnails[0]->url;
-        $this->accountName = TF::getText(@$channelJson->accountName);
+        $this->subscriberCountText = $data->hasChannel
+        ? TF::getText(@$data->accountByline)
+        : $i18n->ownerAccountNoChannel;
 
-        $this->accountSubscribers = $channelJson->hasChannel ? str_replace("No", "0", TF::getText(@$channelJson->accountByline)) 
-                                                             : "Owner account, no channel";
+        $tokenRoot = $data->serviceEndpoint->selectActiveIdentityEndpoint->supportedTokens;
 
-        $tokenRoot = $channelJson->serviceEndpoint->selectActiveIdentityEndpoint->supportedTokens;
-
-
-        foreach($tokenRoot as $token) {
-            
-            if (isset($token->offlineCacheKeyToken)) {
-                $this->uChannelId = "UC" . $token->offlineCacheKeyToken->clientCacheKey;
+        foreach($tokenRoot as $token)
+        {
+            if (isset($token->offlineCacheKeyToken))
+            {
+                $this->ucid = "UC" . $token->offlineCacheKeyToken->clientCacheKey;
             }
-
-            if (isset($token->accountSigninToken)) {
-                $this->signInToken = str_replace("skip_identity_prompt=true", "skip_identity_prompt=False", $token->accountSigninToken->signinUrl);
+            elseif (isset($token->accountSigninToken))
+            {
+                $this->url = $token->accountSigninToken->signinUrl;
             }
-
         }
-
-
     }
 }

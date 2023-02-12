@@ -4,32 +4,47 @@ namespace Rehike\Model\ChannelSwitcher;
 use Rehike\TemplateFunctions as TF;
 use Rehike\i18n;
 
-// TODO: i18n
 // TODO: video counts, which can be done like so:
 /*
     Request::queueInnertubeRequest("id", ""creator/get_creator_channels", (object) [
         "channel_array" => channelIds
     ])
 */
-class ChannelSwitcherModel {
-
-    public static function bake($channelsData, $switcherData) {
+class ChannelSwitcherModel
+{
+    public static function bake(?array $channels, ?object $switcher)
+    {
         $response = (object) [];
-        $channels = [];
+        $response->channels = [];
 
+        $i18n = i18n::newNamespace("channel_switcher");
+        $i18n->registerFromFolder("i18n/channel_switcher");
 
-        for ($i = 0; $i < count($channelsData); $i++) {
+        $response->headerTextPrefix = $i18n->pageHeaderPrefix;
+        $response->learnMoreLinkText = $i18n->learnMoreLink;
 
-            if (!isset($channelsData[$i]->accountItemRenderer)) continue;
-            $channels[] = new MChannelItem($channelsData[$i]->accountItemRenderer);
-
+        foreach ($channels as $channel) 
+        {
+            if (isset($channel->accountItemRenderer))
+            {
+                $response->channels[] = (object) [ 
+                    "accountItemRenderer" => new MChannelItem($channel->accountItemRenderer)
+                ];
+            }
+            elseif (isset($channel->buttonRenderer))
+            {
+                $response->channels[] = (object) [
+                    "createChannelItemRenderer" => new MCreateChannelItem($channel->buttonRenderer)
+                ];
+            }
         }
 
-        $email = TF::getText(@$switcherData->data->actions[0]->getMultiPageMenuAction->menu->multiPageMenuRenderer->sections[0]->accountSectionListRenderer->header->googleAccountHeaderRenderer->email);
+        $response->email = TF::getText(
+            @$switcher->data->actions[0]->getMultiPageMenuAction
+            ->menu->multiPageMenuRenderer->sections[0]
+            ->accountSectionListRenderer->header->googleAccountHeaderRenderer->email
+        );
 
-
-        $response->channels = $channels;
-        $response->email = $email;
         return $response;
     }
 }

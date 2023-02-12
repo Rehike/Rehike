@@ -101,6 +101,19 @@ class Switcher
      */
     public static function accountItem($account)
     {
+        if (isset($account->serviceEndpoint->selectActiveIdentityEndpoint->supportedTokens))
+        foreach ($account->serviceEndpoint->selectActiveIdentityEndpoint->supportedTokens as $token)
+        {
+            if (isset($token->pageIdToken))
+            {
+                $gaiaId = $token->pageIdToken->pageId;
+            }
+            elseif (isset($token->accountSigninToken))
+            {
+                $switchUrl = $token->accountSigninToken->signinUrl;
+            }
+        }
+
         return
             [
                 "name" => $account->accountName->simpleText,
@@ -108,7 +121,8 @@ class Switcher
                 "byline" => $account->accountByline->simpleText,
                 "selected" => $account->isSelected,
                 "hasChannel" => $account->hasChannel,
-                "gaiaId" => $account->serviceEndpoint->selectActiveIdentityEndpoint->supportedTokens[0]->pageIdToken->pageId ?? ""
+                "gaiaId" => $gaiaId ?? "",
+                "switchUrl" => $switchUrl ?? ""
             ];
     }
 }
