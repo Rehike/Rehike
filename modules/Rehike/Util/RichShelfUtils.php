@@ -11,8 +11,6 @@ namespace Rehike\Util;
 class RichShelfUtils {
     /**
      * Reformat a base response.
-     * 
-     * I have no idea what this code does.
      */
     public static function reformatResponse($response) {
         if (!isset($response -> onResponseReceivedActions)) return $response;

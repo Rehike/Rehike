@@ -163,7 +163,7 @@ class Channels4Model
             }
         }
 
-        if ($yt->subConfirmation && !is_null($response["header"]->title))
+        if (@$yt->subConfirmation && !is_null($response["header"]->title))
         {
             $response += ["subConfirmationDialog" => new MSubConfirmationDialog($response["header"])];
         }

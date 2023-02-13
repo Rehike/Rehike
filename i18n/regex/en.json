@@ -5,5 +5,7 @@
     "subscriberCountIsolator": "/( subscribers)|( subscriber)/",
     "viewCountIsolator": "/( views)|( view)/",
     "nonPublishCheck": "/(Premiere)|(Started)|(Streamed)|(Scheduled)/",
-    "unsubChannelNameMatch": "/Unsubscribe from (.*?)\\?/"
+    "unsubChannelNameMatch": "/Unsubscribe from (.*?)\\?/",
+    "videoTimeIsolator": "/([0-9]?[0-9])( seconds)|(1 second)/",
+    "secondsIsolator": "/( seconds)|( second)/"
 }
