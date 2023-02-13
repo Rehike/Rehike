@@ -105,20 +105,29 @@ class MHeader
 
     public function addTabs($tabs, $partSelect = false)
     {
-        for ($i = 0; $i < count($tabs); $tab = $tabs[$i] ?? null, $i++)
-        {
-            if (is_null(@$tab)) continue;
-            if (@$tab->hidden || !isset($tab->tabRenderer->title)) array_splice($tabs, --$i, 1);
-        }
-        
-        foreach ($tabs as &$tab)
-        if (@$tab->tabRenderer->selected)
-        {
-            $tab->tabRenderer->status = $partSelect ? MAppbarNavItem::StatusPartiallySelected : MAppbarNavItem::StatusSelected;
-            unset($tab->tabRenderer->selected);
-        }
+        $this->tabs = [];
 
-        $this->tabs = $tabs;
+        foreach ($tabs as &$tab)
+        {
+            if (!isset($tab->tabRenderer->title)
+            ||  @$tab->hidden)
+            {
+                continue;
+            }
+
+            if (@$tab->tabRenderer->selected)
+            {
+                $tab->tabRenderer->status = $partSelect ? MAppbarNavItem::StatusPartiallySelected : MAppbarNavItem::StatusSelected;
+            }
+            else
+            {
+                $tab->tabRenderer->status = MAppbarNavItem::StatusUnselected;
+            }
+
+            unset($tab->tabRenderer->selected);
+
+            $this->tabs[] = $tab;
+        }
     }
 
     public function getTitle()
