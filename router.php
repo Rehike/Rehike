@@ -44,7 +44,11 @@ Router::redirect([
     },
     "/feed/library" => "/profile",
     "/subscription_manager" => "/feed/channels",
-    "/rehike/settings" => "/rehike/config"
+    "/rehike/settings" => "/rehike/config",
+    "/subscription_center?(*)" => function($request) {
+        if ($user = @$request->params->add_user)
+            return "/user/$user?sub_confirmation=1";
+    }
 ]);
 
 Router::get([
