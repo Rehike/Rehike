@@ -2,7 +2,7 @@
 <div id="appbar-nav" class="appbar-content-hidable">
    {% if nav.owner %}
    <a href="{{ nav.owner.href }}">
-      <img class="appbar-nav-avatar" src="{{ nav.owner.thumbnail.thumbnails.0.url }}" title="{{ nav.owner.title }}" alt="{{ nav.owner.title }}" height="23" width="23">
+      <img class="appbar-nav-avatar" src="{{ nav.owner.thumbnail }}" title="{{ nav.owner.title }}" alt="{{ nav.owner.title }}" height="23" width="23">
    </a>
    {% endif %}
    <ul class="appbar-nav-menu">

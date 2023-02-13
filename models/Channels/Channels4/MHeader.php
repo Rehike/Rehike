@@ -107,7 +107,7 @@ class MHeader
     {
         for ($i = 0; $i < count($tabs); $tab = $tabs[$i] ?? null, $i++)
         {
-            if (is_null($tab)) continue;
+            if (is_null(@$tab)) continue;
             if (@$tab->hidden || !isset($tab->tabRenderer->title)) array_splice($tabs, --$i, 1);
         }
         
