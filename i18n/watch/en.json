@@ -31,5 +31,6 @@
     "creatorBarVideoManager": "Video Manager",
     "metadataLicense": "License",
     "metadataLicenseStandard": "Standard YouTube License",
-    "metadataCategory": "Category"
+    "metadataCategory": "Category",
+    "metadataSong": "Song"
 }
