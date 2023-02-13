@@ -53,6 +53,10 @@
                 "title": "Show upload date on watch page recommendations",
                 "subtitle": "Unlike Polymer, Hitchhiker didn't show these by default."
             },
+            "watchSidebarVerification": {
+                "title": "Show verification badges on watch page recommendations",
+                "subtitle": "Unlike Polymer, Hitchhiker didn't show these by default."
+            },
             "teaserReplies": {
                 "title": "Show the first two replies of each comment",
                 "subtitle": "Used before 2016. This may slow the time comments take to load. Use at your own discretion."

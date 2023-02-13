@@ -73,6 +73,9 @@
                 <span>by </span>
                 {% endif %}
                 <span>{{ getText(author) }}</span>
+                {% if yt.config.appearance.watchSidebarVerification and info.ownerBadges %}
+                    <span title="{{ yt.msgs.verified }}" class="yt-uix-tooltip yt-channel-title-icon-verified yt-sprite"></span>
+                {% endif %}
             </span>
             {% endif %}
             {% if info.viewCountText %}

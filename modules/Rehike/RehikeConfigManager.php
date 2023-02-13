@@ -27,6 +27,7 @@ class RehikeConfigManager extends ConfigManager
             "movingThumbnails" => true,
             "cssFixes" => true,
             "watchSidebarDates" => false,
+            "watchSidebarVerification" => false,
             "teaserReplies" => false,
             "oldBestOfYouTubeIcons" => false
         ],
@@ -51,6 +52,7 @@ class RehikeConfigManager extends ConfigManager
             "movingThumbnails" => "bool",
             "cssFixes" => "bool",
             "watchSidebarDates" => "bool",
+            "watchSidebarVerification" => "bool",
             "teaserReplies" => "bool",
             "oldBestOfYouTubeIcons" => "bool"
         ],
@@ -111,6 +113,16 @@ class RehikeConfigManager extends ConfigManager
                 self::$config->{$key} = $value;
                 
                 $redump = true;
+            }
+            else
+            foreach (self::$defaultConfig[$key] as $option => $val)
+            {
+                if (!isset(self::$config->{$key}->{$option}))
+                {
+                    self::$config->{$key}->{$option} = $val;
+
+                    $redump = true;
+                }
             }
         }
 
