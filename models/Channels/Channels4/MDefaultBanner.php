@@ -13,6 +13,7 @@ class MDefaultBanner
 {
     public $image;
     public $hdImage;
+    public $isCustom = false;
 
     public function __construct()
     {

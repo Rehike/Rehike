@@ -19,7 +19,7 @@ class MHeader
     public $tabs;
     public $subscriptionButton;
 
-    private $subscriptionCount;
+    protected $subscriptionCount;
 
     public function __construct($header, $baseUrl)
     {
@@ -105,9 +105,12 @@ class MHeader
 
     public function addTabs($tabs, $partSelect = false)
     {
-        for ($i = 0; $i < count($tabs); $tab = $tabs[$i], $i++)
+        for ($i = 0; $i < count($tabs); $i++)
         {
-            if (@$tab->hidden) array_splice($tabs, --$i, 1);
+            if (isset($tabs[$i])) $tab = $tabs[$i];
+            else continue;
+
+            if (@$tab->hidden || !isset($tab->tabRenderer->title)) array_splice($tabs, --$i, 1);
         }
         
         foreach ($tabs as &$tab)
@@ -127,7 +130,7 @@ class MHeader
 
     public function getThumbnail()
     {
-        return $this->thumbnail->thumbnails[0]->url ?? "";
+        return $this->thumbnail;
     }
 
     public function getSubscriptionCount()

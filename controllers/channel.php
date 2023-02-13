@@ -95,9 +95,15 @@ class channel extends NirvanaController {
         $yt->tab = $tab;
 
         // Configure request params
-        $params = new BrowseRequestParams();
-        $params->setTab($tab);
-
+        if ("featured" != $tab ||
+            isset($request -> params -> shelf_id) ||
+            isset($request -> params -> view) ||
+            (isset($request -> params -> sort) && !in_array($tab, ["videos", "streams", "shorts"])))
+        {
+            $params = new BrowseRequestParams();
+            $params->setTab($tab);
+        }
+        
         if (isset($request -> params -> shelf_id)) {
             $params->setShelfId((int) $request -> params -> shelf_id);
         }
@@ -118,7 +124,7 @@ class channel extends NirvanaController {
         // Perform InnerTube request
         Request::queueInnertubeRequest("main", "browse", (object)[
             "browseId" => $ucid,
-            "params" => Base64Url::encode($params->serializeToString()),
+            "params" => isset($params) ? Base64Url::encode($params->serializeToString()) : null,
             "query" => $request -> params -> query ?? null 
         ]);
 

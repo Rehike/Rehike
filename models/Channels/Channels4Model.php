@@ -34,8 +34,12 @@ class Channels4Model
         {
             $response += ["header" => new Channels4\MHeader($header, self::getBaseUrl())];
         }
+        elseif ($header = @$data->header->carouselHeaderRenderer)
+        {
+            $response += ["header" => new Channels4\MCarouselHeader($header, self::getBaseUrl())];
+        }
 
-        if (isset($data->contents->twoColumnBrowseResultsRenderer->tabs))
+        if (isset($response["header"]) && isset($data->contents->twoColumnBrowseResultsRenderer->tabs))
         {
             // Init appbar
             $yt->appbar->addNav();
@@ -81,49 +85,56 @@ class Channels4Model
                         // duplicate tab renderer.
                         $tabR = &$tabs[$i];
 
-                        $tabEndpoint = $tabR->tabRenderer->endpoint->commandMetadata->webCommandMetadata->url;
+                        $tabEndpoint = $tabR->tabRenderer->endpoint->commandMetadata->webCommandMetadata->url ?? null;
 
-                        if (stripos($tabEndpoint, "/videos"))
+                        if (!is_null($tabEndpoint))
                         {
-                            $videosTab = &$tabR;
-                        }
-                        else if (stripos($tabEndpoint, "/streams") || stripos($tabEndpoint, "/shorts"))
-                        {
-                            $tabR->hidden = true;
+                            if (stripos($tabEndpoint, "/videos"))
+                            {
+                                $videosTab = &$tabR;
+                            }
+                            else if (stripos($tabEndpoint, "/streams") || stripos($tabEndpoint, "/shorts"))
+                            {
+                                $tabR->hidden = true;
 
-                            if (@$tabR->tabRenderer->selected) $videosTab->tabRenderer->selected = true;
+                                if (@$tabR->tabRenderer->selected) $videosTab->tabRenderer->selected = true;
+                            }
                         }
                     }
                 }
                 
                 $response["header"]->addTabs($tabs, ($yt->partiallySelectTabs ?? false));
 
-                foreach ($tabs as $tab) if (@$tab -> tabRenderer)
+                foreach ($tabs as $tab) if (@$tab->tabRenderer)
                 {
-                    $tabEndpoint = $tab->tabRenderer->endpoint->commandMetadata->webCommandMetadata->url;
+                    $tabEndpoint = $tab->tabRenderer->endpoint->commandMetadata->webCommandMetadata->url ?? null;
 
-                    if (!@$tab->hidden && isset($yt->appbar->nav))
+                    if (!is_null($tabEndpoint))
                     {
-                        $yt->appbar->nav->addItem(
-                            $tab->tabRenderer->title,
-                            $tabEndpoint,
-                            @$tab->tabRenderer->status
-                        );
+                        if (!@$tab->hidden && isset($yt->appbar->nav))
+                        {
+                            $yt->appbar->nav->addItem(
+                                $tab->tabRenderer->title,
+                                $tabEndpoint,
+                                @$tab->tabRenderer->status
+                            );
+                        }
                     }
 
-                    if (@$tab->tabRenderer->status > 0)
+                    if (@$tab->tabRenderer->status > 0
+                    ||  @$tab->tabRenderer->selected)
                     {
                         $currentTabContents = &$tab->tabRenderer->content;
                     }
                 }
-                elseif (@$tab -> expandableTabRenderer)
+                elseif (@$tab->expandableTabRenderer)
                 {
                     if (@$tab->expandableTabRenderer->selected) {
                         $currentTabContents = &$tab->expandableTabRenderer->content;
                     }
                 }
 
-                if (isset($yt->appbar->nav))
+                if (isset($yt->appbar->nav->items[0]))
                 {
                     $yt->appbar->nav->items[0]->title = $response["header"]->getTitle();
                 }

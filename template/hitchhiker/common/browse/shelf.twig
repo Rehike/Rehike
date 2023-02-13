@@ -60,13 +60,23 @@
 {% macro multirow(data) %}
     {% import "common/uix/lockup.twig" as lockup %}
     <div class="multirow-shelf">
-        <ul id="grid-{{ generateRid() }}" class="shelf-content">
-            {% for item in data.items %}
-            <li class="yt-shelf-grid-item">
-                {{ lockup.grid(item) }}
-            </li>
-            {% endfor %}
-        </ul>
+        {% if data.isCollapsible %}
+        <div class="yt-uix-expander yt-uix-expander-collapsed">
+        {% endif %}
+            <ul id="grid-{{ generateRid() }}" class="shelf-content">
+                {% for item in data.items %}
+                <li class="yt-shelf-grid-item">
+                    {{ lockup.grid(item) }}
+                </li>
+                {% endfor %}
+            </ul>
+        {% if data.isCollapsible %}
+            <div class="yt-uix-expander-head">
+                <span class="multirow-shelf-expander">{{ getText(data.showMoreText) }}</span>
+                <span class="multirow-shelf-collapser">{{ getText(data.showFewerText) }}</span>
+            </div>
+        </div>
+        {% endif %}
     </div>
 {% endmacro %}
 
