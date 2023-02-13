@@ -15,19 +15,19 @@ class MCommentReplyButton extends MButton {
     ];
 
     public function __construct($data) {
-        $this -> attributes["simplebox-id"] = "comment-simplebox-reply-" . $data["id"];
-        $this -> attributes["simplebox-params"] = $data["params"] ?? null;
-        $this -> attributes["simplebox-label"] = $data["label"] ?? "";
-        $this -> attributes["placeholder"] = $data["placeholder"] ?? "";
-        $this -> text = $data["text"];
+        $this->attributes["simplebox-id"] = "comment-simplebox-reply-" . $data["id"];
+        $this->attributes["simplebox-params"] = $data["params"] ?? null;
+        $this->attributes["simplebox-label"] = $data["label"] ?? "";
+        $this->attributes["placeholder"] = $data["placeholder"] ?? "";
+        $this->text = $data["text"];
     }
 
     public static function fromData($data, $id) {
-        $dialog = $data -> navigationEndpoint -> createCommentReplyDialogEndpoint -> dialog -> commentReplyDialogRenderer ?? null;
-        $params = $dialog -> replyButton -> buttonRenderer -> serviceEndpoint -> createCommentReplyEndpoint -> createReplyParams ?? "";
-        $label = TemplateFunctions::getText($dialog -> replyButton -> buttonRenderer -> text);
-        $placeholder = TemplateFunctions::getText($dialog -> placeholderText);
-        $text = $data -> text;
+        $dialog = $data->navigationEndpoint->createCommentReplyDialogEndpoint->dialog->commentReplyDialogRenderer ?? null;
+        $params = $dialog->replyButton->buttonRenderer->serviceEndpoint->createCommentReplyEndpoint->createReplyParams ?? "";
+        $label = TemplateFunctions::getText($dialog->replyButton->buttonRenderer->text);
+        $placeholder = TemplateFunctions::getText($dialog->placeholderText);
+        $text = $data->text;
         return new self([
             "id" => $id,
             "params" => $params,

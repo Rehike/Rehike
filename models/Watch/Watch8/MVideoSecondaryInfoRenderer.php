@@ -28,7 +28,7 @@ class MVideoSecondaryInfoRenderer
             $info = &$dataHost::$secondaryInfo;
             $primaryInfo = &$dataHost::$primaryInfo;
 
-            i18n::newNamespace("watch/secondary") -> registerFromFolder("i18n/watch");
+            i18n::newNamespace("watch/secondary")->registerFromFolder("i18n/watch");
 
             $this->description = $info->description ?? null;
             $this->defaultExpanded = $info->defaultExpanded ?? false;
@@ -149,7 +149,7 @@ class MMetadataRowContainer
     {
         $i18n = i18n::getNamespace("watch/secondary");
 
-        $title = $i18n -> metadataCategory; // TODO: i18n
+        $title = $i18n->metadataCategory; // TODO: i18n
 
         $category = @$dataHost::$yt->playerResponse->microformat
             ->playerMicroformatRenderer->category
@@ -165,8 +165,8 @@ class MMetadataRowContainer
     {
         $i18n = i18n::getNamespace("watch/secondary");
 
-        $title = $i18n -> metadataLicense;
-        $text = $i18n -> metadataLicenseStandard;
+        $title = $i18n->metadataLicense;
+        $text = $i18n->metadataLicenseStandard;
 
         return self::createSimpleField($title, $text);
     }

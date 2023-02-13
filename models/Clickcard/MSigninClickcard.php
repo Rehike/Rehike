@@ -39,15 +39,15 @@ class MSigninClickcard extends MAbstractClickcard
     }
 
     public static function fromData($data) {
-        $heading = $data -> title ?? null;
-        $message = $data -> content ?? null;
-        $button = $data -> button -> buttonRenderer ?? null;
+        $heading = $data->title ?? null;
+        $message = $data->content ?? null;
+        $button = $data->button->buttonRenderer ?? null;
         
         return new self(
             TemplateFunctions::getText($heading) ?? null,
             TemplateFunctions::getText($message) ?? null,
             [
-                "text" => TemplateFunctions::getText($button -> text) ?? null,
+                "text" => TemplateFunctions::getText($button->text) ?? null,
                 "href" => TemplateFunctions::getUrl($button) ?? null
             ]
         );

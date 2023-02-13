@@ -12,7 +12,7 @@ class MNightlyNotice
     {
         $strings = i18n::getNamespace('rehike/version');
 
-        $this -> text = $strings->nightly;
-        $this -> tooltip = $strings->nightlyInfoTooltip;
+        $this->text = $strings->nightly;
+        $this->tooltip = $strings->nightlyInfoTooltip;
     }
 }

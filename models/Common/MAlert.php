@@ -40,10 +40,10 @@ class MAlert {
     public $buttons = [];
 
     public function __construct($data) {
-        $this -> type = $data["type"];
-        $this -> text = $data["text"] ?? null;
-        $this -> hasCloseButton = $data["hasCloseButton"] ?? true;
-        $this -> buttons = null;
+        $this->type = $data["type"];
+        $this->text = $data["text"] ?? null;
+        $this->hasCloseButton = $data["hasCloseButton"] ?? true;
+        $this->buttons = null;
         // TODO: Buttons
     }
 
@@ -55,9 +55,9 @@ class MAlert {
      */
     public static function fromData($data) {
         return new self([
-            "type" => MAlert::parseInnerTubeType($data -> type),
-            "hasCloseButton" => (isset($data -> dismissButton)),
-            "text" => TemplateFunctions::getText($data -> text)
+            "type" => MAlert::parseInnerTubeType($data->type),
+            "hasCloseButton" => (isset($data->dismissButton)),
+            "text" => TemplateFunctions::getText($data->text)
         ]);
     }
 

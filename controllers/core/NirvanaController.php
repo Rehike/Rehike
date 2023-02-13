@@ -53,11 +53,11 @@ abstract class NirvanaController extends HitchhikerController
         $yt->appbar = new Appbar();
         $yt->page = (object)[];
 
-        if ($this -> useTemplate) {
-            $yt -> masthead = new Masthead(true);
-            $yt -> footer = new Footer();
+        if ($this->useTemplate) {
+            $yt->masthead = new Masthead(true);
+            $yt->footer = new Footer();
         }
-        $yt -> footer = new Footer();
+        $yt->footer = new Footer();
 
         // Request appbar guide fragments if the page has the
         // guide enabled, the request is not SPF, and the guide

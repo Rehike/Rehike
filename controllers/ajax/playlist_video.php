@@ -80,7 +80,7 @@ return new class extends AjaxController {
         ]);
         $ytdata = json_decode($response);
 
-        if ($ytdata -> status = "STATUS_SUCCEEDED") {
+        if ($ytdata->status = "STATUS_SUCCEEDED") {
             http_response_code(200);
             echo json_encode((object) []);
         } else {
@@ -108,7 +108,7 @@ return new class extends AjaxController {
         ]);
         $ytdata = json_decode($response);
 
-        if ($ytdata -> status = "STATUS_SUCCEEDED") {
+        if ($ytdata->status = "STATUS_SUCCEEDED") {
             http_response_code(200);
             echo json_encode((object) []);
         } else {

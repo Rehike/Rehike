@@ -8,7 +8,7 @@ class MNonGitNotice extends MNotice
     {
         $strings = i18n::getNamespace('rehike/version');
 
-        $this -> text = $strings->nonGitNotice;
-        $this -> description = $strings->nonGitExtended;
+        $this->text = $strings->nonGitNotice;
+        $this->description = $strings->nonGitExtended;
     }
 }

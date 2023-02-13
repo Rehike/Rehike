@@ -108,7 +108,7 @@ abstract class HitchhikerController
      */
     public function get(&$yt, &$template, $request)
     {
-        header("Content-Type: " .  $this -> contentType);
+        header("Content-Type: " .  $this->contentType);
         $this->yt = &$yt;
         $this->init($yt, $template);
         $this->initPlayer($yt);
@@ -138,7 +138,7 @@ abstract class HitchhikerController
      */
     public function post(&$yt, &$template, $request)
     {
-        header("Content-Type: " .  $this -> contentType);
+        header("Content-Type: " .  $this->contentType);
         $this->yt = &$yt;
         $this->init($yt, $template);
 
@@ -291,9 +291,9 @@ abstract class HitchhikerController
         $yt->useModularCore = false;
         $yt->page = (object)[];
 
-        if ($this -> useTemplate) {
-            $yt -> masthead = new Masthead(false);
-            $yt -> footer = new Footer();
+        if ($this->useTemplate) {
+            $yt->masthead = new Masthead(false);
+            $yt->footer = new Footer();
         }
     }
 

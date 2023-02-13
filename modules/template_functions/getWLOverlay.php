@@ -17,16 +17,16 @@
  */
 \Rehike\TemplateFunctions::register("getWLOverlay", function($array)
 {
-    if (!isset($array -> thumbnailOverlays )) return null;
+    if (!isset($array->thumbnailOverlays )) return null;
 
-    foreach ($array -> thumbnailOverlays as $index => $contents)
+    foreach ($array->thumbnailOverlays as $index => $contents)
     {
-        if (isset($contents -> thumbnailOverlayToggleButtonRenderer) &&
-            "WATCH_LATER" == @$contents -> thumbnailOverlayToggleButtonRenderer 
-            -> untoggledIcon -> iconType
+        if (isset($contents->thumbnailOverlayToggleButtonRenderer) &&
+            "WATCH_LATER" == @$contents->thumbnailOverlayToggleButtonRenderer 
+           ->untoggledIcon->iconType
         )
         {
-            return $contents -> thumbnailOverlayToggleButtonRenderer;
+            return $contents->thumbnailOverlayToggleButtonRenderer;
         }
     }
     

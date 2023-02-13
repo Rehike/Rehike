@@ -23,22 +23,22 @@ class ResultsController extends NirvanaController {
             die();
         }
         
-        $this -> useJsModule("www/results");
+        $this->useJsModule("www/results");
 
         $i18n = &i18n::newNamespace("results");
         $i18n->registerFromFolder("i18n/results");
         
-        $yt -> masthead -> searchbox -> query = $_GET["search_query"] ?? null;
-        self::$query = &$yt -> masthead -> searchbox -> query;
+        $yt->masthead->searchbox->query = $_GET["search_query"] ?? null;
+        self::$query = &$yt->masthead->searchbox->query;
         // used for filters
-        $yt -> params = $_GET["sp"] ?? null;
-        self::$param = &$yt -> params;
+        $yt->params = $_GET["sp"] ?? null;
+        self::$param = &$yt->params;
 
         $resultsIndex = self::getPaginatorIndex($yt->params);
 
         $response = Request::innertubeRequest("search", (object) [
             "query" => self::$query,
-            "params" => $yt -> params
+            "params" => $yt->params
         ]);
         $ytdata = json_decode($response);
 
@@ -46,7 +46,7 @@ class ResultsController extends NirvanaController {
 
         $paginatorInfo = self::getPaginatorInfo($resultsCount, $resultsIndex);
 
-        $yt -> page = ResultsModel::bake($ytdata, $paginatorInfo, self::$query);
+        $yt->page = ResultsModel::bake($ytdata, $paginatorInfo, self::$query);
     }
 
     public static function getPaginatorIndex($sp) {
