@@ -105,11 +105,9 @@ class MHeader
 
     public function addTabs($tabs, $partSelect = false)
     {
-        for ($i = 0; $i < count($tabs); $i++)
+        for ($i = 0; $i < count($tabs); $tab = $tabs[$i] ?? null, $i++)
         {
-            if (isset($tabs[$i])) $tab = $tabs[$i];
-            else continue;
-
+            if (is_null($tab)) continue;
             if (@$tab->hidden || !isset($tab->tabRenderer->title)) array_splice($tabs, --$i, 1);
         }
         
