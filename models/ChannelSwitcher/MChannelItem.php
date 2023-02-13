@@ -15,7 +15,7 @@ class MChannelItem
     public string $subscriberCountText;
 
     
-    public function __construct(object $data)
+    public function __construct(object $data, ?string $next)
     {
         $i18n = i18n::getNamespace("channel_switcher");
 
@@ -39,6 +39,12 @@ class MChannelItem
             {
                 $this->url = $token->accountSigninToken->signinUrl;
             }
+        }
+
+        // Apply next URL param to switch links
+        if (!is_null($next))
+        {
+            $this->url = preg_replace("/(?<=\?|&)next=(.*?)(?=&|$)/", "next=$next", $this->url);
         }
     }
 }

@@ -12,7 +12,7 @@ use Rehike\i18n;
 */
 class ChannelSwitcherModel
 {
-    public static function bake(?array $channels, ?object $switcher)
+    public static function bake(?array $channels, ?object $switcher, ?string $next)
     {
         $response = (object) [];
         $response->channels = [];
@@ -28,7 +28,7 @@ class ChannelSwitcherModel
             if (isset($channel->accountItemRenderer))
             {
                 $response->channels[] = (object) [ 
-                    "accountItemRenderer" => new MChannelItem($channel->accountItemRenderer)
+                    "accountItemRenderer" => new MChannelItem($channel->accountItemRenderer, $next)
                 ];
             }
             elseif (isset($channel->buttonRenderer))

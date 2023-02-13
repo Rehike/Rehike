@@ -31,7 +31,13 @@ return new class extends HitchhikerController
 
         $yt->channels = $channels;
 
-        $yt->page = ChannelSwitcherModel::bake($channels, $switcher);
+        $next = null;
+        if (isset($request->params->next))
+        {
+            $next = $request->params->next;
+        }
+
+        $yt->page = ChannelSwitcherModel::bake($channels, $switcher, $next);
 
     }
 };

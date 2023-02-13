@@ -24,7 +24,18 @@ Router::funnel([
     "/new",
     "/supported_browsers",
     "/getAccountSwitcherEndpoint",
-    "/channel_image_upload/*"
+    "/channel_image_upload/*",
+    "/account",
+    "/account_notifications",
+    "/account_playback",
+    "/account_privacy",
+    "/account_sharing",
+    "/account_billing",
+    "/account_advanced",
+    "/account_transfer_channel",
+    "/features",
+    "/testtube",
+    "/t/terms"
 ]);
 
 Router::redirect([
