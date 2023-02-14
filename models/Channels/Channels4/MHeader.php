@@ -110,24 +110,29 @@ class MHeader
 
         foreach ($tabs as &$tab)
         {
-            if (!isset($tab->tabRenderer->title)
-            ||  @$tab->hidden)
+            if (isset($tab->tabRenderer))
             {
-                continue;
+                if (!isset($tab->tabRenderer->title))
+                {
+                    continue;
+                }
+
+                if (@$tab->tabRenderer->selected)
+                {
+                    $tab->tabRenderer->status = $partSelect ? MAppbarNavItem::StatusPartiallySelected : MAppbarNavItem::StatusSelected;
+                }
+                else
+                {
+                    $tab->tabRenderer->status = MAppbarNavItem::StatusUnselected;
+                }
+
+                unset($tab->tabRenderer->selected);
             }
 
-            if (@$tab->tabRenderer->selected)
+            if (!@$tab->hidden)
             {
-                $tab->tabRenderer->status = $partSelect ? MAppbarNavItem::StatusPartiallySelected : MAppbarNavItem::StatusSelected;
+                $this->tabs[] = $tab;
             }
-            else
-            {
-                $tab->tabRenderer->status = MAppbarNavItem::StatusUnselected;
-            }
-
-            unset($tab->tabRenderer->selected);
-
-            $this->tabs[] = $tab;
         }
     }
 
