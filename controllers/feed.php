@@ -129,7 +129,9 @@ return new class extends \Rehike\Controller\core\NirvanaController {
 
         $data = $response->getJson();
 
-        $yt->page->content = RichShelfUtils::reformatResponse($data);
+        $yt->page->content = (object) [
+            "sectionListRenderer" => InnertubeBrowseConverter::sectionListRenderer(RichShelfUtils::reformatResponse($data)->sectionListRenderer)
+        ];
     });
     }
 

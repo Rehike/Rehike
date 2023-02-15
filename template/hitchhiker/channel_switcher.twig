@@ -1,0 +1,107 @@
+{% extends "core.twig" %}
+{% import "core/macros.twig" as core %}
+
+{% block head_css %}
+{{ core.css("www-channelswitcher")}}
+{% endblock %}
+
+{% set leftAlignPage = true %}
+
+{% block content %}
+<div id="channel-switcher-content">
+    <div class="channel-switcher-header">
+        <p>
+            <span class="channel-switcher-caption"><b>{{ yt.page.headerTextPrefix }}</b>{{ yt.page.email }}</span>
+        </p>
+        <p class="channel-switcher-brand-account-info">
+            <a href="https://support.google.com/youtube/?p=manage_channels&amp;hl=en" target="_blank">
+                {{ yt.page.learnMoreLinkText }}
+            </a>
+        </p>
+    </div>
+    <div>
+        <ul id="ytcc-existing-channels" class="channels-container">
+            {%- for item in yt.page.channels -%}
+            {% if item.createChannelItemRenderer %}
+                {% set this = item.createChannelItemRenderer %}
+                <li class="channel-switcher-button">
+                    <a href="https://www.youtube.com/create_channel?action_create_new_channel_redirect=true" class="yt-uix-button yt-uix-sessionlink yt-uix-button-default yt-uix-button-size-default" data-sessionlink="ei=tnxJX_yECoLDiwSr6ajwDQ">
+                        <span class="yt-uix-button-content"> 
+                            <div class="yt-valign-container">
+                                <div class="page-picture create-channel-icon"></div>
+                                <div class="create-channel-text">
+                                    {{ this.text }}
+                                </div>
+                            </div>
+                        </span>
+                    </a>
+                </li>
+            {% elseif item.accountItemRenderer %}
+            {% set this = item.accountItemRenderer %}
+            <li class="channel-switcher-button {{ this.selected ? "selected" }}" data-uchannelId="{{ this.ucid }}">
+                <div class="highlight">
+                    <a href="{{ this.url }}" class="yt-uix-button yt-uix-sessionlink yt-uix-button-default yt-uix-button-size-default" data-sessionlink="ei=tnxJX_yECoLDiwSr6ajwDQ">
+                        <span class="yt-uix-button-content">  
+                            <div class="yt-valign-container">
+                                <div class="page-picture">
+                                    <span class="video-thumb  yt-thumb yt-thumb-56">
+                                        <span class="yt-thumb-square">
+                                            <span class="yt-thumb-clip">
+                                                <img alt="" aria-hidden="true" data-ytimg="1" height="56" onload=";window.__ytRIL &amp;&amp; __ytRIL(this)" src="{{ this.avatar }}" width="56">
+                                                <span class="vertical-align"></span>
+                                            </span>
+                                        </span>
+                                    </span>
+                                </div>
+                                <div class="page-info">
+                                    <div class="page-info-name">
+                                        {{ this.title }}
+                                    </div>
+                                    <div class="page-info-text">
+                                        {{ this.subscriberCountText }}
+                                    </div>
+                                    <div class="page-info-text">
+                
+                                    </div>
+                                </div>
+                            </div>
+                        </span>
+                    </a>
+                </div>
+            </li>
+            {% endif %}
+            {%- endfor -%}
+        </ul>
+    </div>
+</div>
+<div class="yt-dialog hid" id="add-new-channel-lb">
+    <div class="yt-dialog-base">
+        <span class="yt-dialog-align"></span>
+        <div class="yt-dialog-fg" role="dialog">
+            <div class="yt-dialog-fg-content">
+                <div class="yt-dialog-header">
+                    <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-default yt-dialog-dismiss yt-dialog-close" type="button" onclick="return!1" data-action="close"><span class="yt-uix-button-content">Close</span></button>
+                    <h2 class="yt-dialog-title" role="alert">__title__</h2>
+                </div>
+                <div class="yt-dialog-loading">
+                    <div class="yt-dialog-waiting-content">
+                        <p class="yt-spinner"><span class="yt-spinner-img yt-sprite" title="Loading icon"></span><span class="yt-spinner-message">Loading...</span></p>
+                    </div>
+                </div>
+                <div class="yt-dialog-content">
+                    <div id="add-new-channel-dialog"></div>
+                </div>
+                <div class="yt-dialog-working">
+                    <div class="yt-dialog-working-overlay"></div>
+                    <div class="yt-dialog-working-bubble">
+                        <div class="yt-dialog-waiting-content">
+                            <p class="yt-spinner"><span class="yt-spinner-img yt-sprite" title="Loading icon"></span><span class="yt-spinner-message">Working...</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="yt-dialog-focus-trap" tabindex="0"></div>
+        </div>
+    </div>
+</div>
+{% endblock %}

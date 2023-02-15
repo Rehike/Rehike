@@ -5,14 +5,15 @@ use Rehike\i18n;
 use Rehike\Model\Share\MShareTabBar;
 
 class ShareBoxModel {
-    public static function bake($videoId, $title) {
+    public static function bake($videoId, $title, $listId) {
         $response = (object) [];
         $i18n = i18n::newNamespace("share");
         $i18n->registerFromFolder("i18n/share");
 
-        $shortUrl = "https://youtu.be/" . $videoId;
+        $shortUrl = "https://youtu.be/" . ($listId ? "$videoId?list=$listId" : $videoId);
         $response->shortUrl = $shortUrl;
         $response->videoId = $videoId;
+        $response->startStr = $i18n->get("startAt");
 
         $tabs = new MShareTabBar([
             (object) [

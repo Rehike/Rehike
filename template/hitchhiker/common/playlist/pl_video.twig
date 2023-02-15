@@ -12,7 +12,7 @@
                     <span class="yt-thumb-default">
                         <span class="yt-thumb-clip">
                             {{ img({
-                                src: rehike.getThumb(this, 72),
+                                src: rehike.getThumb(this.thumbnail, 72),
                                 ytImg: true,
                                 onload: ";window.__ytRIL && __ytRIL(this)",
                                 delayLoad: true,
@@ -31,7 +31,7 @@
         <div class="pl-video-owner">
             {% set byline = this.shortBylineText %}
             {{ rehike.config.appearance.usernamePrepends ? yt.msgs.usernamePrepend }}
-            <a href="{{ getEndpoint(byline) }}" class="spf-link" data-ytid="{{ byline.navigationEndpoint.browseEndpoint.browseId }}" data-name="playlist">{{ rehike.getText(byline) }}</a>
+            <a href="{{ rehike.getUrl(byline.runs[0]) }}" class="spf-link" data-ytid="{{ byline.navigationEndpoint.browseEndpoint.browseId }}" data-name="playlist">{{ rehike.getText(byline) }}</a>
         </div>
         <div class="pl-video-bottom-standalone-badge"></div>
     </td>

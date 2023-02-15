@@ -53,7 +53,7 @@ class ExtractUtils {
         $i18n = i18n::getNamespace("main/regex");
 
         $a = self::isolateCount($subCount, $i18n->get("subscriberCountIsolator"));
-        if ($a != $i18n->get("subscriberCountZero")) {
+        if ($a != $i18n->get("countZero")) {
             return $a;
         } else {
             return '0';
@@ -76,7 +76,7 @@ class ExtractUtils {
         $i18n = i18n::getNamespace("main/regex");
         
         $a = self::isolateCount($viewCount, $i18n->get("viewCountIsolator"));
-        if ($a != 'No') {
+        if ($a != $i18n->get("countZero")) {
             return $a;
         } else {
             return '0';

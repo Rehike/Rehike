@@ -5,12 +5,13 @@ use Rehike\Model\Channels\Channels4\MChannelAboutMetadata;
 use Rehike\Model\Channels\Channels4\BrandedPageV2\MSubnav;
 use Rehike\Model\Channels\Channels4\Sidebar\MRelatedChannels;
 use Rehike\Model\Browse\InnertubeBrowseConverter;
+use Rehike\Model\Channels\Channels4\MSubConfirmationDialog;
 use Rehike\Model\Common\MAlert;
 
 class Channels4Model
 {
     private static $baseUrl;
-    public static $currentTab = null;
+    private static $currentTab = null;
     public static $yt;
 
     private static $videosSort;
@@ -33,8 +34,12 @@ class Channels4Model
         {
             $response += ["header" => new Channels4\MHeader($header, self::getBaseUrl())];
         }
+        elseif ($header = @$data->header->carouselHeaderRenderer)
+        {
+            $response += ["header" => new Channels4\MCarouselHeader($header, self::getBaseUrl())];
+        }
 
-        if (isset($data->contents->twoColumnBrowseResultsRenderer->tabs))
+        if (isset($response["header"]) && isset($data->contents->twoColumnBrowseResultsRenderer->tabs))
         {
             // Init appbar
             $yt->appbar->addNav();
@@ -80,17 +85,20 @@ class Channels4Model
                         // duplicate tab renderer.
                         $tabR = &$tabs[$i];
 
-                        $tabEndpoint = $tabR->tabRenderer->endpoint->commandMetadata->webCommandMetadata->url;
+                        $tabEndpoint = $tabR->tabRenderer->endpoint->commandMetadata->webCommandMetadata->url ?? null;
 
-                        if (stripos($tabEndpoint, "/videos"))
+                        if (!is_null($tabEndpoint))
                         {
-                            $videosTab = &$tabR;
-                        }
-                        else if (stripos($tabEndpoint, "/streams") || stripos($tabEndpoint, "/shorts"))
-                        {
-                            $tabR->hidden = true;
+                            if (stripos($tabEndpoint, "/videos"))
+                            {
+                                $videosTab = &$tabR;
+                            }
+                            else if (stripos($tabEndpoint, "/streams") || stripos($tabEndpoint, "/shorts"))
+                            {
+                                $tabR->hidden = true;
 
-                            if (@$tabR->tabRenderer->selected) $videosTab->tabRenderer->selected = true;
+                                if (@$tabR->tabRenderer->selected) $videosTab->tabRenderer->selected = true;
+                            }
                         }
                     }
                 }
@@ -99,34 +107,34 @@ class Channels4Model
 
                 foreach ($tabs as $tab) if (@$tab->tabRenderer)
                 {
-                    $tabEndpoint = $tab->tabRenderer->endpoint->commandMetadata->webCommandMetadata->url;
+                    $tabEndpoint = $tab->tabRenderer->endpoint->commandMetadata->webCommandMetadata->url ?? null;
 
-                    if (!@$tab->hidden && isset($yt->appbar->nav))
+                    if (!is_null($tabEndpoint))
                     {
-                        $yt->appbar->nav->addItem(
-                            $tab->tabRenderer->title,
-                            $tabEndpoint,
-                            @$tab->tabRenderer->status
-                        );
+                        if (!@$tab->hidden && isset($yt->appbar->nav))
+                        {
+                            $yt->appbar->nav->addItem(
+                                $tab->tabRenderer->title,
+                                $tabEndpoint,
+                                @$tab->tabRenderer->status
+                            );
+                        }
                     }
 
-                    if (@$tab->tabRenderer->status > 0)
+                    if (@$tab->tabRenderer->status > 0
+                    ||  @$tab->tabRenderer->selected)
                     {
-                        $baseUrl = self::$baseUrl;
-                        self::$currentTab = str_replace("$baseUrl/", "", $tabEndpoint);
                         $currentTabContents = &$tab->tabRenderer->content;
                     }
                 }
                 elseif (@$tab->expandableTabRenderer)
                 {
                     if (@$tab->expandableTabRenderer->selected) {
-                        $baseUrl = self::$baseUrl;
-                        self::$currentTab = str_replace("$baseUrl/", "", $tabEndpoint);
                         $currentTabContents = &$tab->expandableTabRenderer->content;
                     }
                 }
 
-                if (isset($yt->appbar->nav))
+                if (isset($yt->appbar->nav->items[0]))
                 {
                     $yt->appbar->nav->items[0]->title = $response["header"]->getTitle();
                 }
@@ -164,6 +172,11 @@ class Channels4Model
                 self::initSecondaryColumn($response);
                 $response["secondaryContent"]->items = $sidebarData;
             }
+        }
+
+        if (@$yt->subConfirmation && !is_null($response["header"]->title))
+        {
+            $response += ["subConfirmationDialog" => new MSubConfirmationDialog($response["header"])];
         }
 
         $response += ["content" => self::getTabContents($currentTabContents)];

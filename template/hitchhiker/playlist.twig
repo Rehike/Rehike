@@ -126,8 +126,8 @@ not-fixed-width-tab-widescreen
             {%- set header = yt.page.header -%}
             <div id="pl-header" class="branded-page-box clearfix" data-all-playlists-url="{{ getUrl(header.ownerEndpoint) }}/playlists">
                 <div class="pl-header-thumb" style="height: 126px;">
-                    <img src="{{ rehike.getThumb(header.playlistHeaderBanner.heroPlaylistThumbnailRenderer, 126) }}" height="126px">
-                    <a href="{{ getUrl(plh) }}" class="pl-header-play-all-overlay yt-valign spf-link">► {{ rehike.getText(header.playlistHeaderBanner.heroPlaylistThumbnailRenderer.thumbnailOverlays.thumbnailOverlayHoverTextRenderer.text) }}</a>
+                    <img src="{{ rehike.getThumb(header.playlistHeaderBanner.heroPlaylistThumbnailRenderer.thumbnail, 126) }}" height="126px">
+                    <a href="{{ rehike.getUrl(plh) }}" class="pl-header-play-all-overlay yt-valign spf-link">► {{ getText(header.playlistHeaderBanner.heroPlaylistThumbnailRenderer.thumbnailOverlays.thumbnailOverlayHoverTextRenderer.text) }}</a>
                 </div>
                 <div class="pl-header-content">
                     <h1 class="pl-header-title" tabindex="0">{{ rehike.getText(header.title) }}</h1>

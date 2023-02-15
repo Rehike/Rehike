@@ -4,6 +4,8 @@ namespace Rehike\Util;
 use Rehike\Network;
 use YukisCoffee\CoffeeRequest\Promise;
 
+use function Rehike\Async\async;
+
 /**
  * General utilties for channels.
  * 
@@ -11,68 +13,75 @@ use YukisCoffee\CoffeeRequest\Promise;
  * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
-class ChannelUtils {
+class ChannelUtils
+{
     /**
      * Get a channel's UCID from an internal request URL.
      * 
-     * @return Promise<string>
+     * @return Promise<?string>
      */
-    public static function getUcid($request): Promise/*<string>*/ {
-        if (in_array($request->path[0], ["channel", "user", "c"])) {
-            switch($request->path[0]) {
-                case "channel":
-                    return new Promise(function ($resolve) use ($request) {
+    public static function getUcid($request): Promise/*<?string>*/
+    {
+        return async(function() use (&$request) {
+            if (in_array($request->path[0], ["channel", "user", "c"]))
+            {
+                switch($request->path[0])
+                {
+                    case "channel":
                         $ucid = $request->path[1] ?? "";
-
                         if (substr($ucid, 0, 2) == "UC")
                         {
-                            $resolve($ucid);
+                            return $ucid;
                         }
                         else
                         {
-                            $resolve("");
+                            return "";
                         }
-                    });
-                    break;
-                case "user":
-                case "c":
-                    return self::handleNameUrl(
-                        $request->path[0] . "/" . $request->path[1]
-                    );
-                    break;
+                        break;
+                    case "user":
+                    case "c":
+                        return yield self::getUcidFromUrl(explode("?", $_SERVER["REQUEST_URI"])[0]);
+                        break;
+                }
             }
-        } else {
-            return self::handleNameUrl($request->path[0]);
-        }
 
-        return "";
+            return yield self::getUcidFromUrl(explode("?", $_SERVER["REQUEST_URI"])[0]);
+        });
     }
 
     /**
-     * Handle a named URL (anything other than UCID really).
+     * Get a channel's UCID from a URL.
      * 
-     * This queries InnerTube to get the UCID for the URL. Otherwise an
-     * empty string will be returned.
-     * 
-     * @return Promise<string>
+     * @return Promise<?string>
      */
-    public static function handleNameUrl(string $uri): Promise/*<string>*/
+    private static function getUcidFromUrl(string $url): Promise/*<?string>*/
     {
-        return new Promise(function ($resolve, $reject) use ($uri) {
-            Network::innertubeRequest(
+        return async(function() use (&$url) {
+            $response = (yield Network::innertubeRequest(
                 action: "navigation/resolve_url",
-                body: [
-                    "url" => "https://www.youtube.com/" . $uri
-                ]
-            )->then(function ($response) use ($resolve) {
-                $ytdata = $response->getJson();
-
-                if (isset($ytdata->endpoint->browseEndpoint->browseId)) {
-                    $resolve($ytdata->endpoint->browseEndpoint->browseId);
-                } else {
-                    $resolve("");
-                }
-            });
+                body: [ "url" => "https://www.youtube.com" . $url ]
+            ))->getJson();
+    
+            if (isset($response->endpoint->browseEndpoint->browseId))
+            {
+                return $response->endpoint->browseEndpoint->browseId;
+            }
+            // For some handles, resolve_url returns a classic channel
+            // URL (e.g. https://www.youtube.com/jawed). For every case
+            // that this happens, you can just make another resolve_url
+            // request, and it will actually give you the UCID of the
+            // channel.
+            else if (isset($response->endpoint->urlEndpoint->url))
+            {
+                $response2 = (yield Network::innertubeRequest(
+                    action: "navigation/resolve_url",
+                    body: [ "url" => $response->endpoint->urlEndpoint->url ]
+                ))->getJson();
+    
+                return $response2->endpoint->browseEndpoint->browseId ?? null;
+            }
+    
+            return null;
         });
     }
 }

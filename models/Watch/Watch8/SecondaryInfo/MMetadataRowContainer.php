@@ -13,6 +13,8 @@ class MMetadataRowContainer
 
     public function __construct(&$rows, $dataHost)
     {
+        $i18n = i18n::getNamespace("watch/secondary");
+
         $this->items = $rows;
         
         // Configuration
@@ -58,23 +60,38 @@ class MMetadataRowContainer
             // Find the rows and go through them
             if (isset($item->carouselLockups)) // For some reason they don't exist on some videos.
             foreach (@$item->carouselLockups as $lockup)
-            foreach (@$lockup->carouselLockupRenderer->infoRows as $row)
             {
-                $data = @$row->infoRowRenderer;
-                $element = isset($data->expandedMetadata) ? "expandedMetadata" : "defaultMetadata"; 
+                // Add song title from the lockup if it exists
+                if (isset($lockup->carouselLockupRenderer->videoLockup))
+                {
+                    $title = $i18n->metadataSong;
 
-                // WHY IS THE FUCKING TITLE HARDCODED UPPERCASE
-                // I AM GOING TO FUCKING KILL MYSELF
-                // love taniko
-                $title = ucfirst(strtolower(TemplateFunctions::getText(@$data->title)));
+                    $content = TemplateFunctions::getText($lockup->carouselLockupRenderer->videoLockup->compactVideoRenderer->title);
+                    $href = TemplateFunctions::getUrl($lockup->carouselLockupRenderer->videoLockup->compactVideoRenderer);
+                    if ("" == $href) $href = null;
 
-                $content = TemplateFunctions::getText(@$data->{$element});
-                $href = TemplateFunctions::getEndpoint(@$data->{$element}->runs[0]);
-                if ("" == $href) $href = null;
+                    $musicItems[] = self::createSimpleField($title, $content, $href);
+                }
 
-                $musicItems[] = self::createSimpleField($title, $content, $href);
-                $this->items += $musicItems;
+                foreach (@$lockup->carouselLockupRenderer->infoRows as $row)
+                {
+                    $data = @$row->infoRowRenderer;
+                    $element = isset($data->expandedMetadata) ? "expandedMetadata" : "defaultMetadata"; 
+
+                    // WHY IS THE FUCKING TITLE HARDCODED UPPERCASE
+                    // I AM GOING TO FUCKING KILL MYSELF
+                    // love taniko
+                    $title = ucfirst(strtolower(TemplateFunctions::getText(@$data->title)));
+
+                    $content = TemplateFunctions::getText(@$data->{$element});
+                    $href = TemplateFunctions::getUrl(@$data->{$element}->runs[0]);
+                    if ("" == $href) $href = null;
+
+                    $musicItems[] = self::createSimpleField($title, $content, $href);
+                }
             }
+
+            $this->items += $musicItems;
         }
 
         // If specified, add a license field for standard.
@@ -108,8 +125,7 @@ class MMetadataRowContainer
     protected function getCategoryField($dataHost)
     {
         $i18n = i18n::getNamespace("watch/secondary");
-
-        $title = $i18n->metadataCategory; // TODO: i18n
+        $title = $i18n->metadataCategory;
 
         $category = @$dataHost::$yt->playerResponse->microformat
             ->playerMicroformatRenderer->category
@@ -125,8 +141,8 @@ class MMetadataRowContainer
     {
         $i18n = i18n::getNamespace("watch/secondary");
 
-        $title = $i18n->metadataLicense;
-        $text = $i18n->metadataLicenseStandard;
+        $title = $i18n -> metadataLicense;
+        $text = $i18n -> metadataLicenseStandard;
 
         return self::createSimpleField($title, $text);
     }

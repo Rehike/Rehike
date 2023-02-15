@@ -16,7 +16,7 @@ class MAccountPickerSettingsButton extends MButton {
         $this->navigationEndpoint = (object) [
             "commandMetadata" => (object) [
                 "webCommandMetadata" => (object) [
-                    "url" => "/account"
+                    "url" => "/rehike/config"
                 ]
             ]
         ];

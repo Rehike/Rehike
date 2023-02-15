@@ -47,7 +47,7 @@
                         {% set bylineUrl = getUrl(byline.runs[0]) %}
                         {% if bylineUrl %}
                             {{ rehike.config.appearance.usernamePrepends ? yt.msgs.usernamePrepend }}
-                            <a href="{{ getUrl(byline.runs[0]) }}" class="spf-link">{{ rehike.getText(byline) }}</a>
+                            <a href="{{ bylineUrl }}" class="spf-link">{{ rehike.getText(byline) }}</a>
                             {% if info.ownerBadges %}
                                 <span title="{{ yt.msgs.verified }}" class="yt-uix-tooltip yt-channel-title-icon-verified yt-sprite"></span>
                             {% endif %}

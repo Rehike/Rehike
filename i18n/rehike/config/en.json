@@ -1,5 +1,5 @@
 {
-    "title": "Rehike configuration",
+    "title": "Rehike settings",
     "saveChanges": "Save changes",
     "saveChangesSuccess": "Successfully updated configuration!",
     "saveChangesFailure": "Failed to update configuration!",
@@ -51,6 +51,10 @@
             },
             "watchSidebarDates": {
                 "title": "Show upload date on watch page recommendations",
+                "subtitle": "Unlike Polymer, Hitchhiker didn't show these by default."
+            },
+            "watchSidebarVerification": {
+                "title": "Show verification badges on watch page recommendations",
                 "subtitle": "Unlike Polymer, Hitchhiker didn't show these by default."
             },
             "teaserReplies": {
