@@ -9,12 +9,12 @@
     $metas = [];
 
     foreach($VALID_METAS as $meta) {
-        if (isset($renderer->{$meta})
+        if (isset($renderer -> {$meta})
         &&  (
-            isset($renderer->{$meta}->simpleText) ||
-            isset($renderer->{$meta}->runs)
+            isset($renderer -> {$meta} -> simpleText) ||
+            isset($renderer -> {$meta} -> runs)
         )) {
-            $metas[] = $renderer->{$meta};
+            $metas[] = $renderer -> {$meta};
         }
     }
 

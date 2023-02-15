@@ -17,27 +17,27 @@ return new class extends NirvanaController {
             die();
         }
 
-        $yt->videoId = $request->params->v;
+        $yt -> videoId = $request -> params -> v;
 
         // Generate LC (local comment) param
-        if (isset($request->params->lc)) {
+        if (isset($request -> params -> lc)) {
             $param = new NextRequestParams();
             
             // I don't know if this is needed, but I want to include it
             // anyways.
-            $param->setUnknownThing(new UnknownThing(["a" => 0]));
+            $param -> setUnknownThing(new UnknownThing(["a" => 0]));
 
-            $param->setLinkedCommentId($request->params->lc);
+            $param -> setLinkedCommentId($request -> params -> lc);
 
-            $lcParams = Base64Url::encode($param->serializeToString());
+            $lcParams = Base64Url::encode($param -> serializeToString());
         }
 
         $videoResponse = Request::innertubeRequest("next", (object) [
-            "videoId" => $yt->videoId,
+            "videoId" => $yt -> videoId,
             "params" => $lcParams ?? null
         ]);
         $videoData = json_decode($videoResponse);
 
-        $yt->page = AllCommentsModel::bake($yt, $videoData);
+        $yt -> page = AllCommentsModel::bake($yt, $videoData);
     }
 };

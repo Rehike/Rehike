@@ -103,7 +103,7 @@ class Watch8Subcontroller
         $origResults = &WatchBase::$secondaryResults;
         $response = [];
         $i18n = i18n::newNamespace("watch/sec_results");
-        $i18n->registerFromFolder("i18n/watch");
+        $i18n -> registerFromFolder("i18n/watch");
 
         if (isset($origResults->results))
         {
@@ -146,9 +146,9 @@ class Watch8Subcontroller
                     // Move autoplay video to its own object
                     $compactAutoplayRenderer = (object)[
                         "contents" => [ $recomsList[$autoplayIndex] ],
-                        "infoText" => $i18n->autoplayInfoText,
-                        "title" => $i18n->autoplayTitle,
-                        "toggleDesc" => $i18n->autoplayToggleDesc,
+                        "infoText" => $i18n -> autoplayInfoText,
+                        "title" => $i18n -> autoplayTitle,
+                        "toggleDesc" => $i18n -> autoplayToggleDesc,
                         "checked" => PrefUtils::autoplayEnabled($pref)
                     ];
                     $response += ["compactAutoplayRenderer" => $compactAutoplayRenderer];

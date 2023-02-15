@@ -23,15 +23,15 @@ class MCommentVoteButton extends MButton {
     public $a11yLabel;
 
     public function __construct($data) {
-        $this->a11yLabel = $data["a11yLabel"] ?? null;
-        $this->icon = (object) [];
+        $this -> a11yLabel = $data["a11yLabel"] ?? null;
+        $this -> icon = (object) [];
 
-        $this->class[] = "sprite-" . $data["type"];
-        $this->class[] = "i-a-v-sprite-" . $data["type"];
+        $this -> class[] = "sprite-" . $data["type"];
+        $this -> class[] = "i-a-v-sprite-" . $data["type"];
 
-        $this->attributes["action-type"] = $data["type"];
-        $this->attributes["action"] = $data["action"];
-        $this->accessibility = (object) [
+        $this -> attributes["action-type"] = $data["type"];
+        $this -> attributes["action"] = $data["action"];
+        $this -> accessibility = (object) [
             "accessibilityData" => (object) [
                 "checked" => $data["checked"] ? "true" : "false"
             ]
@@ -39,10 +39,10 @@ class MCommentVoteButton extends MButton {
     }
 
     public static function fromData($data) {
-        $type = strtolower(@$data->defaultIcon->iconType) ?? null;
-        $checked = $data->isToggled ?? false;
-        $action = $checked ? $data->toggledServiceEndpoint->performCommentActionEndpoint->action : $data->defaultServiceEndpoint->performCommentActionEndpoint->action ?? null;
-        $a11yLabel = $checked ? $data->toggledTooltip : $data->defaultTooltip ?? null;
+        $type = strtolower(@$data -> defaultIcon -> iconType) ?? null;
+        $checked = $data -> isToggled ?? false;
+        $action = $checked ? $data -> toggledServiceEndpoint -> performCommentActionEndpoint -> action : $data -> defaultServiceEndpoint -> performCommentActionEndpoint -> action ?? null;
+        $a11yLabel = $checked ? $data -> toggledTooltip : $data -> defaultTooltip ?? null;
 
         return new self([
             "type" => $type,

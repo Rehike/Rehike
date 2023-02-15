@@ -17,15 +17,15 @@
  */
 \Rehike\TemplateFunctions::register("getThumbnailOverlay", function($array, $name)
 {
-    if (!isset($array->thumbnailOverlays )) return null;
+    if (!isset($array -> thumbnailOverlays )) return null;
 
     // Iterate the array and figure out the thumbnail overlay
-    foreach ($array->thumbnailOverlays as $index => $contents)
+    foreach ($array -> thumbnailOverlays as $index => $contents)
     {
         // InnerTube API formats thumbnail overlays as
         // keys within an object. Fortunately, this is pretty
         // easy to check within PHP.
-        if (isset($contents->$name)) return $contents->$name;
+        if (isset($contents -> $name)) return $contents -> $name;
     }
     
     // Return null if the index doesn't exist.

@@ -99,7 +99,7 @@ class i18n
      * @return string[]
      */
     public function getStrings() {
-        return $this->strings;
+        return $this -> strings;
     }
 
     /**

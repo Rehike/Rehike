@@ -184,61 +184,61 @@ class Converter
         : "/rehike/static/best_of_youtube/%s.jpg";
 
         $response = (object) [];
-        $response->formattedTitle = (object) [
-            "simpleText" => $strings->bestOfYouTubeTitle
+        $response -> formattedTitle = (object) [
+            "simpleText" => $strings -> bestOfYouTubeTitle
         ];
 
         $items = [];
 
         $items[] = self::bakeGuideItem(
             "/channel/UC-9-kyTW8ZkZNDHQJ6FgpwQ",
-            $strings->bestOfYouTubeMusic,
+            $strings -> bestOfYouTubeMusic,
             sprintf($format, "music")
         );
 
         $items[] = self::bakeGuideItem(
             "/channel/UCEgdi0XIXXZ-qJOFPf4JSKw",
-            $strings->bestOfYouTubeSports,
+            $strings -> bestOfYouTubeSports,
             sprintf($format, "sports")
         );
 
         $items[] = self::bakeGuideItem(
             "/gaming",
-            $strings->bestOfYouTubeGaming,
+            $strings -> bestOfYouTubeGaming,
             sprintf($format, "gaming")
         );
 
         $items[] = self::bakeGuideItem(
             "/channel/UClgRkhTL3_hImCAmdLfDE4g",
-            $strings->bestOfYouTubeMoviesTv,
+            $strings -> bestOfYouTubeMoviesTv,
             sprintf($format, "movies_tv")
         );
         
         $items[] = self::bakeGuideItem(
             "/channel/UCYfdidRxbB8Qhf0Nx7ioOYw",
-            $strings->bestOfYouTubeNews,
+            $strings -> bestOfYouTubeNews,
             sprintf($format, "news")
         );
 
         $items[] = self::bakeGuideItem(
             "/channel/UC4R8DWoMoI7CAwX8_LjQHig",
-            $strings->bestOfYouTubeLive,
+            $strings -> bestOfYouTubeLive,
             sprintf($format, "live")
         );
 
         $items[] = self::bakeGuideItem(
             "/channel/UCBR8-60-B28hp2BmDPdntcQ",
-            $strings->bestOfYouTubeSpotlight,
+            $strings -> bestOfYouTubeSpotlight,
             sprintf($format, "spotlight")
         );
 
         $items[] = self::bakeGuideItem(
             "/channel/UCzuqhhs6NWbgTzMuM09WKDQ",
-            $strings->bestOfYouTube360,
+            $strings -> bestOfYouTube360,
             sprintf($format, "360")
         );
 
-        $response->items = $items;
+        $response -> items = $items;
 
         return (object) [
             "guideSectionRenderer" => $response
@@ -473,15 +473,15 @@ class Converter
         ? "/rehike/static/best_of_youtube/%s_old.jpg"
         : "/rehike/static/best_of_youtube/%s.jpg";
 
-        $response->formattedTitle = (object) [
-            "simpleText" => $i18n->subscriptions,
+        $response -> formattedTitle = (object) [
+            "simpleText" => $i18n -> subscriptions,
             "navigationEndpoint" => NavigationEndpoint::createEndpoint("/feed/channels")
         ];
 
-        $response->button = new MButton([
+        $response -> button = new MButton([
             "style" => "STYLE_PRIMARY",
             "text" => (object) [
-                "simpleText" => $i18n->subscriptionsPromoButton
+                "simpleText" => $i18n -> subscriptionsPromoButton
             ],
             "icon" => (object) [
                 "iconType" => "PLUS"
@@ -489,36 +489,36 @@ class Converter
             "navigationEndpoint" => NavigationEndpoint::createEndpoint("/feed/guide_builder")
         ]);
 
-        $response->tooltip = (object) [
+        $response -> tooltip = (object) [
             "text" => (object) [
-                "simpleText" => $i18n->subscriptionsPromoTooltip
+                "simpleText" => $i18n -> subscriptionsPromoTooltip
             ],
             "navigationEndpoint" => NavigationEndpoint::createEndpoint("/feed/guide_builder")
         ];
 
-        $response->items =  [];
+        $response -> items =  [];
 
-        $response->items[] = self::bakeGuideItem(
+        $response -> items[] = self::bakeGuideItem(
             "/channel/UCF0pVplsI8R5kcAqgtoRqoA",
-            $i18n->bestOfYouTubePopularOnYouTube,
+            $i18n -> bestOfYouTubePopularOnYouTube,
             sprintf($format, "popular_on_youtube")
         );
 
-        $response->items[] = self::bakeGuideItem(
+        $response -> items[] = self::bakeGuideItem(
             "/channel/UC-9-kyTW8ZkZNDHQJ6FgpwQ",
-            $i18n->bestOfYouTubeMusic,
+            $i18n -> bestOfYouTubeMusic,
             sprintf($format, "music")
         );
 
-        $response->items[] = self::bakeGuideItem(
+        $response -> items[] = self::bakeGuideItem(
             "/channel/UCEgdi0XIXXZ-qJOFPf4JSKw",
-            $i18n->bestOfYouTubeSports,
+            $i18n -> bestOfYouTubeSports,
             sprintf($format, "sports")
         );
 
-        $response->items[] = self::bakeGuideItem(
+        $response -> items[] = self::bakeGuideItem(
             "/gaming",
-            $i18n->bestOfYouTubeGaming,
+            $i18n -> bestOfYouTubeGaming,
             sprintf($format, "gaming")
         );
 

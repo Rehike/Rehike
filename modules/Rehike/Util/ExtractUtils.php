@@ -34,8 +34,8 @@ class ExtractUtils {
     public static function isolateLikeCnt(?string $likeCount): string {
         $i18n = i18n::getNamespace("main/regex");
 
-        $a = self::isolateCount($likeCount, $i18n->get("likeCountIsolator"));
-        if ($a != $i18n->get("likeTextDisabled")) {
+        $a = self::isolateCount($likeCount, $i18n -> get("likeCountIsolator"));
+        if ($a != $i18n -> get("likeTextDisabled")) {
             return $a;
         } else {
             return '';
@@ -97,9 +97,9 @@ class ExtractUtils {
         $misc = i18n::getNamespace("main/misc");
 
         if (is_object($date)) $date = $date->simpleText;
-        if (!preg_match($i18n->get("nonPublishCheck"), $date)) {
+        if (!preg_match($i18n -> get("nonPublishCheck"), $date)) {
             $string = $isPrivate ? "dateTextPrivate" : "dateTextPublic";
-            return $misc->get($string, $date);
+            return $misc -> get($string, $date);
         } else {
             return $date;
         }

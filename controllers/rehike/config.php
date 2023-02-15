@@ -12,12 +12,12 @@ return new class extends \Rehike\Controller\core\NirvanaController {
     ];
 
     public function onGet(&$yt, $request) {
-        $tab = $request->path[2] ?? self::DEFAULT_TAB;
+        $tab = $request -> path[2] ?? self::DEFAULT_TAB;
 
         if (!in_array($tab, self::VALID_TABS)) {
             header("Location: /rehike/config/" . self::DEFAULT_TAB);
         }
 
-        $yt->page = ConfigModel::bake($tab, $request->params->status ?? null);
+        $yt -> page = ConfigModel::bake($tab, $request -> params -> status ?? null);
     }
 };

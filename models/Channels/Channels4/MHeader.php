@@ -44,8 +44,8 @@ class MHeader
         if ($a = @$header->banner)
         {
             $this->banner = (object) [
-                "image" => $a->thumbnails[0]->url ?? null,
-                "hdImage" => $a->thumbnails[3]->url ?? null
+                "image" => $a -> thumbnails[0] -> url ?? null,
+                "hdImage" => $a -> thumbnails[3] -> url ?? null
             ];
             $this->banner->isCustom = true;
         }

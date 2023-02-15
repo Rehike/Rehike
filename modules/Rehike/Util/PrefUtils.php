@@ -19,7 +19,7 @@ class PrefUtils {
         $temp = explode("&", $pref);
         foreach ($temp as $value) {
             $temp2 = explode("=", $value);
-            $response->{$temp2[0]} = $temp2[1];
+            $response -> {$temp2[0]} = $temp2[1];
         }
 
         return $response;
@@ -32,7 +32,7 @@ class PrefUtils {
      * @return bool
      */
     public static function autoplayEnabled($pref) {
-        if (isset($pref->f5) && substr($pref->f5, 0, 1) == "3") {
+        if (isset($pref -> f5) && substr($pref -> f5, 0, 1) == "3") {
             return false;
         }
         return true;

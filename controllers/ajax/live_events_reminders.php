@@ -26,7 +26,7 @@ return new class extends \Rehike\Controller\core\AjaxController {
                 break;
         }
 
-        if (isset($ytdata->errors)) {
+        if (isset($ytdata -> errors)) {
             self::error();
         } else {
             http_response_code(200);
@@ -42,19 +42,19 @@ return new class extends \Rehike\Controller\core\AjaxController {
      */
     private static function setReminder(&$ytdata, $request) {
         $params = new EventReminderRequestParams();
-        if (!isset($request->params->vid)) {
+        if (!isset($request -> params -> vid)) {
            self::error();
         }
-        $params->setVideoId($request->params->vid);
+        $params -> setVideoId($request -> params -> vid);
 
         $thing = new UnknownThing();
-        $thing->setUnknownValue(0);
-        $thing->setUnknownValue2(0);
+        $thing -> setUnknownValue(0);
+        $thing -> setUnknownValue2(0);
 
-        $params->setUnknownThing($thing);
+        $params -> setUnknownThing($thing);
 
         Request::queueInnertubeRequest("main", "notification/add_upcoming_event_reminder", (object) [
-            "params" => Base64Url::encode($params->serializeToString())
+            "params" => Base64Url::encode($params -> serializeToString())
         ]);
         $ytdata = json_decode(Request::getResponses()["main"]);
     }
@@ -67,19 +67,19 @@ return new class extends \Rehike\Controller\core\AjaxController {
      */
     private static function removeReminder(&$ytdata, $request) {
         $params = new EventReminderRequestParams();
-        if (!isset($request->params->vid)) {
+        if (!isset($request -> params -> vid)) {
            self::error();
         }
-        $params->setVideoId($request->params->vid);
+        $params -> setVideoId($request -> params -> vid);
 
         $thing = new UnknownThing();
-        $thing->setUnknownValue(0);
-        $thing->setUnknownValue2(0);
+        $thing -> setUnknownValue(0);
+        $thing -> setUnknownValue2(0);
 
-        $params->setUnknownThing($thing);
+        $params -> setUnknownThing($thing);
 
         Request::queueInnertubeRequest("main", "notification/remove_upcoming_event_reminder", (object) [
-            "params" => Base64Url::encode($params->serializeToString())
+            "params" => Base64Url::encode($params -> serializeToString())
         ]);
         $ytdata = json_decode(Request::getResponses()["main"]);
     }

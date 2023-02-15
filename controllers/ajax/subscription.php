@@ -20,7 +20,7 @@ return new class extends AjaxController {
                 $ytdata = self::removeSubscriptions();
                 break;
             case "get_subscription_preferences_overlay":
-                $this->useTemplate = true;
+                $this -> useTemplate = true;
                 self::getSubscriptionPreferencesOverlay($yt, $request);
                 break;
             default:
@@ -28,10 +28,10 @@ return new class extends AjaxController {
                 break;
         }
 
-        if (!$this->useTemplate) {
+        if (!$this -> useTemplate) {
             if (is_null($ytdata)) self::error();
 
-            if (!isset($ytdata->error)) {
+            if (!isset($ytdata -> error)) {
                 http_response_code(200);
                 echo json_encode((object) [
                     "response" => "SUCCESS"
@@ -82,11 +82,11 @@ return new class extends AjaxController {
             "browseId" => $_POST["c"] ?? ""
         ]);
         $ytdata = json_decode($response);
-        $header = $ytdata->header->c4TabbedHeaderRenderer ?? null;
-        $yt->page = new MSubscriptionPreferencesOverlay([
-            "title" => $header->title ?? "",
+        $header = $ytdata -> header -> c4TabbedHeaderRenderer ?? null;
+        $yt -> page = new MSubscriptionPreferencesOverlay([
+            "title" => $header -> title ?? "",
             // Make sure to turn on word wrap @_@
-            "options" => $header->subscribeButton->subscribeButtonRenderer->notificationPreferenceButton->subscriptionNotificationToggleButtonRenderer->command->commandExecutorCommand->commands[0]->openPopupAction->popup->menuPopupRenderer->items ?? []
+            "options" => $header -> subscribeButton -> subscribeButtonRenderer -> notificationPreferenceButton -> subscriptionNotificationToggleButtonRenderer -> command -> commandExecutorCommand -> commands[0] -> openPopupAction -> popup -> menuPopupRenderer -> items ?? []
         ]);
     }
 };

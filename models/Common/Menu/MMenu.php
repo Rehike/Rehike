@@ -16,10 +16,10 @@ class MMenu {
 
     public function __construct($data) {
         foreach ($data["items"] as $item) {
-            $this->items[] = new MMenuItem($item);
+            $this -> items[] = new MMenuItem($item);
         }
-        $this->containerClass = $data["containerClass"];
-        $this->menuId = $data["menuId"];
-        $this->menuClass = $data["menuClass"];
+        $this -> containerClass = $data["containerClass"];
+        $this -> menuId = $data["menuId"];
+        $this -> menuClass = $data["menuClass"];
     }
 }

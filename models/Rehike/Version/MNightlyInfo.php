@@ -21,29 +21,29 @@ class MNightlyInfo
         if ($branch = @$data["branch"])
         {
 			$this->headingText = $strings->subheaderNightlyInfo;
-            $this->branch = $branch;
+            $this -> branch = $branch;
         }
 
         if ($hash = @$data["currentHash"])
         {
-            $this->commitHash = self::trimHash($hash);
-            $this->fullCommitHash = $hash;
+            $this -> commitHash = self::trimHash($hash);
+            $this -> fullCommitHash = $hash;
         }
         else if ($hash = @$data["previousHash"])
         {
-            $this->commitHash = self::trimHash($hash);
-            $this->fullCommitHash = $hash;
-            $this->isPreviousHash = true;
+            $this -> commitHash = self::trimHash($hash);
+            $this -> fullCommitHash = $hash;
+            $this -> isPreviousHash = true;
         }
 
         if ($name = @$data["subject"])
         {
-            $this->commitName = $name;
+            $this -> commitName = $name;
         }
 
         if ($time = @$data["time"])
         {
-            $this->commitDateTime = $strings->get("getFormattedDate")($time);
+            $this -> commitDateTime = $strings->get("getFormattedDate")($time);
         }
 
         if (Controller::GH_ENABLED && @$this->fullCommitHash)

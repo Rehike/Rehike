@@ -35,10 +35,10 @@ if (isset($_COOKIE['VISITOR_INFO1_LIVE'])) {
     $visitor = $_COOKIE['VISITOR_INFO1_LIVE'];
 } else {
     $coffee = new \YukisCoffee\CoffeeRequest\CoffeeRequest;
-    $response = $coffee->request("https://www.youtube.com/");
+    $response = $coffee -> request("https://www.youtube.com/");
     preg_match("/ytcfg\.set\(({.*?})\);/", $response, $matches);
     $ytcfg = json_decode(@$matches[1]);
-    $visitor = $ytcfg->INNERTUBE_CONTEXT->client->visitorData ?? "";
+    $visitor = $ytcfg -> INNERTUBE_CONTEXT -> client -> visitorData ?? "";
     $visitor = \Rehike\Util\Base64Url::decode($visitor);
     $visitor = substr($visitor, 2);
     $visitor = explode("(", $visitor)[0];

@@ -33,11 +33,11 @@ return new class extends NirvanaController {
         // It's about time I fix that lol
         if ("1" == @$_COOKIE['wide']) 
         {
-            $yt->theaterMode = $_COOKIE['wide'];
+            $yt -> theaterMode = $_COOKIE['wide'];
         } 
         else 
         {
-            $yt->theaterMode = "0";
+            $yt -> theaterMode = "0";
             $_COOKIE['wide'] = "0";
         }
 
@@ -153,7 +153,7 @@ return new class extends NirvanaController {
 
         // end request
 
-        $yt->page = \Rehike\Model\Watch\WatchModel::bake($yt, $ytdata, $yt->videoId, $dislikesData);
+        $yt->page = \Rehike\Model\Watch\WatchModel::bake($yt, $ytdata, $yt -> videoId, $dislikesData);
 
         $yt->rawWatchNextResponse = $response;
     }

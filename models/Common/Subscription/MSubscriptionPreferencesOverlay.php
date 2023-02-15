@@ -21,30 +21,30 @@ class MSubscriptionPreferencesOverlay {
     public function __construct($data) {
         $i18n = i18n::getNamespace("main/misc");
 
-        $this->title = $i18n->notificationPrefsTitle($data["title"]);
-        $this->saveButton = new MButton([
+        $this -> title = $i18n -> notificationPrefsTitle($data["title"]);
+        $this -> saveButton = new MButton([
             "style" => "STYLE_PRIMARY",
             "size" => "SIZE_DEFAULT",
             "text" => (object) [
-                "simpleText" => $i18n->btnSave
+                "simpleText" => $i18n -> btnSave
             ],
             "class" => [
                 "overlay-confirmation-preferences-update-frequency",
                 "yt-uix-overlay-close"
             ]
         ]);
-        $this->cancelButton = new MButton([
+        $this -> cancelButton = new MButton([
             "style" => "STYLE_DEFAULT",
             "size" => "SIZE_DEFAULT",
             "text" => (object) [
-                "simpleText" => $i18n->btnCancel
+                "simpleText" => $i18n -> btnCancel
             ],
             "class" => ["yt-uix-overlay-close"]
         ]);
 
-        $this->options = [];
+        $this -> options = [];
         foreach ($data["options"] as $option) {
-            $this->options[] = MSubscriptionPreference::fromData($option);
+            $this -> options[] = MSubscriptionPreference::fromData($option);
         }
     }
 }
@@ -63,20 +63,20 @@ class MSubscriptionPreference {
     public $class;
 
     public function __construct($data) {
-        $this->label = $data["label"] ?? "";
-        $this->checked = $data["checked"] ?? false;
-        $this->params = $data["params"] ?? false;
-        $this->class = $data["class"] ?? false;
+        $this -> label = $data["label"] ?? "";
+        $this -> checked = $data["checked"] ?? false;
+        $this -> params = $data["params"] ?? false;
+        $this -> class = $data["class"] ?? false;
     }
 
     public static function fromData($data) {
-        $item = $data->menuServiceItemRenderer ?? null;
+        $item = $data -> menuServiceItemRenderer ?? null;
         return new self([
-            "label" => TemplateFunctions::getText($item->text) ?? "",
-            "checked" => $item->isSelected ?? false,
-            "params" => $item->serviceEndpoint->modifyChannelNotificationPreferenceEndpoint->params ?? "",
+            "label" => TemplateFunctions::getText($item -> text) ?? "",
+            "checked" => $item -> isSelected ?? false,
+            "params" => $item -> serviceEndpoint -> modifyChannelNotificationPreferenceEndpoint -> params ?? "",
             "class" => (function() use ($item) {
-                switch ($item->icon->iconType) {
+                switch ($item -> icon -> iconType) {
                     case "NOTIFICATIONS_ACTIVE":
                         return "receive-all-updates";
                     case "NOTIFICATIONS_NONE":

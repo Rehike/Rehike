@@ -30,7 +30,7 @@ i18n::newNamespace("main/guide")->registerFromFolder("i18n/guide");
 // i18n for templates
 $msgs = i18n::newNamespace("main/global");
 $msgs->registerFromFolder("i18n/global");
-$yt->msgs = $msgs->getStrings()[$msgs->getLanguage()];
+$yt -> msgs = $msgs -> getStrings()[$msgs -> getLanguage()];
 
 // Controller V2 init
 ControllerV2::registerStateVariable($yt);

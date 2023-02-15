@@ -61,7 +61,7 @@ class WatchModel
         self::$useRyd = self::shouldUseRyd();
         self::destructureData($data->contents);
         self::$subController = self::getSubcontroller();
-        self::$engagementPanels = $data->engagementPanels ?? null;
+        self::$engagementPanels = $data -> engagementPanels ?? null;
 
         self::$isKidsVideo = self::getIsKidsVideo(self::$secondaryInfo);
         self::$isLive = self::getIsLive(self::$primaryInfo);
@@ -257,7 +257,7 @@ class WatchModel
     {
         if (!SignIn::isSignedIn()) return false;
         if ($ucid = SignIn::getInfo()["ucid"]) {
-            if ($ucid == @$secondaryInfo->owner->videoOwnerRenderer->navigationEndpoint->browseEndpoint->browseId) {
+            if ($ucid == @$secondaryInfo -> owner -> videoOwnerRenderer -> navigationEndpoint -> browseEndpoint -> browseId) {
                 return true;
             } else {
                 return false;

@@ -16,7 +16,7 @@ return new class extends AjaxController {
         if (SignIn::isSignedIn() && $cache = Cacher::getCache()) {
             $id = AuthManager::getUniqueSessionCookie();
 
-            if ($menu = @$cache->responseCache->{$id}->menu) {
+            if ($menu = @$cache -> responseCache -> {$id} -> menu) {
                 $ytdata = $menu;
             }
         }
@@ -30,6 +30,6 @@ return new class extends AjaxController {
             $ytdata = json_decode($response);
         }
 
-        $yt->page = PickerModel::bake($ytdata, $action);
+        $yt -> page = PickerModel::bake($ytdata, $action);
     }
 };

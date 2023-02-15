@@ -108,7 +108,7 @@ class SimpleFunnel {
 
         // Set up response and add body
         $response = (object) [];
-        $response->body = curl_exec($ch);
+        $response -> body = curl_exec($ch);
 
         // Remove illegal response headers
         foreach ($headers as $name => $value) {
@@ -118,8 +118,8 @@ class SimpleFunnel {
         }
 
         // Add headers and HTTP status
-        $response->headers = $headers;
-        $response->status = curl_getinfo($ch, CURLINFO_RESPONSE_CODE);
+        $response -> headers = $headers;
+        $response -> status = curl_getinfo($ch, CURLINFO_RESPONSE_CODE);
 
         return $response;
     }
@@ -131,29 +131,29 @@ class SimpleFunnel {
      */
     public static function output(object $funnelData): void {
         // Output any errors
-        if (isset($funnelData->error)) {
+        if (isset($funnelData -> error)) {
             http_response_code(500);
             echo("
             <title>SimpleFunnel Error</title>
             <style>body>*{margin:8px 0}</style>
             <h2>An error has occured in SimpleFunnel</h2>
-            <p><b>Error</b>: " . $funnelData->error . "</p>
+            <p><b>Error</b>: " . $funnelData -> error . "</p>
             <small><i>Please report this to the GitHub.</i></small>
             ");
             return;
         }
 
-        if (!isset($funnelData->body)) return;
+        if (!isset($funnelData -> body)) return;
 
-        http_response_code($funnelData->status);
+        http_response_code($funnelData -> status);
 
         // Set headers
-        foreach($funnelData->headers as $name => $value) {
+        foreach($funnelData -> headers as $name => $value) {
             // Hack because the header function fucking sucks
             $val = $value[0];
             header("$name: $val");
         }
-        echo($funnelData->body);
+        echo($funnelData -> body);
         die();
     }
     
