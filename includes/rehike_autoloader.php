@@ -15,11 +15,11 @@ function YcRehikeAutoloader($class)
     $filename = str_replace("\\", "/", $class);
 
     // Scan the file system for the requested module.
-    if (file_exists("modules/{$filename}.php"))
+    if (YcFileExists("modules/{$filename}.php"))
     {
         require "modules/{$filename}.php";
     }
-    else if (file_exists("modules/generated/{$filename}.php"))
+    else if (YcFileExists("modules/generated/{$filename}.php"))
     {
         require "modules/generated/{$filename}.php";
     }
@@ -42,6 +42,20 @@ function YcRehikeAutoloader($class)
     {
         $class::__initStatic();
     }
+}
+
+/**
+ * Checks if a file exists, relative to the document root.
+ * 
+ * This is required because PHP's default behaviour may, but doesn't
+ * always, resort to the document root. This is a safer function as a result.
+ * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
+ * @author The Rehike Maintainers
+ */
+function YcFileExists(string $filename): bool
+{
+    return file_exists($_SERVER["DOCUMENT_ROOT"] . "/" . $filename);
 }
 
 spl_autoload_register('YcRehikeAutoloader');

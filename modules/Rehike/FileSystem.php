@@ -171,7 +171,9 @@ class FileSystem
 
     public static function fileExists($filename)
     {
-        return \file_exists($filename);
+        return \file_exists($filename) ||
+               \file_exists($_SERVER["DOCUMENT_ROOT"] . "/" . $filename)
+        ;
     }
 
     public static function mkdir($dirname, $mode = 0777, $recursive = false)

@@ -15,6 +15,8 @@ use Rehike\Util\ChannelUtils;
 
 use \Rehike\Model\Channels\Channels4Model as Channels4;
 
+use function Rehike\Async\async;
+
 class channel extends NirvanaController {
     public $template = "channel";
 
@@ -43,6 +45,11 @@ class channel extends NirvanaController {
         "lad"
     ];
 
+    public const VIDEO_TABS = [
+        "videos",
+        "streams"
+    ];
+
     public function onPost(&$yt, $request) {
         http_response_code(404);
         $this->template = "error/404";
@@ -50,18 +57,16 @@ class channel extends NirvanaController {
 
     public function onGet(&$yt, $request)
     {
-        $this->useJsModule("www/channels");
+        async(function() use (&$yt, $request) {
+            $this->useJsModule("www/channels");
 
-        // Init i18n
-        $i18n = &i18n::newNamespace("channels");
-        $i18n->registerFromFolder("i18n/channels");
+            // Init i18n
+            i18n::newNamespace("channels")->registerFromFolder("i18n/channels");
 
-        // BUG (kirasicecreamm): ChannelUtils::getUcid is hardcoded
-        // to look at the path property of the input object.
-        // This is bad design.
-        ChannelUtils::getUcid($request)->then(function ($ucid) 
-            use ($yt, $request) 
-        {
+            // BUG (kirasicecreamm): ChannelUtils::getUcid is hardcoded
+            // to look at the path property of the input object.
+            // This is bad design.
+            $ucid = yield ChannelUtils::getUcid($request);
             $yt->ucid = $ucid;
 
             if ($ucid == "") {
@@ -95,9 +100,15 @@ class channel extends NirvanaController {
             $yt->tab = $tab;
 
             // Configure request params
-            $params = new BrowseRequestParams();
-            $params->setTab($tab);
-
+            if ("featured" != $tab ||
+                isset($request->params->shelf_id) ||
+                isset($request->params->view) ||
+                (isset($request->params->sort) && !in_array($tab, ["videos", "streams", "shorts"])))
+            {
+                $params = new BrowseRequestParams();
+                $params->setTab($tab);
+            }
+            
             if (isset($request->params->shelf_id)) {
                 $params->setShelfId((int) $request->params->shelf_id);
             }
@@ -106,26 +117,24 @@ class channel extends NirvanaController {
                 $params->setView((int) $request->params->view);
             }
 
-            switch ($request->path[0]) {
-                case "c":
-                case "user":
-                case "channel":
-                    $baseUrl = "/" . $request->path[0] . "/" . $request->path[1];
-                    break;
-                default:
-                    $baseUrl = "/" . $request->path[0];
-                    break;
+            if (isset($request->params->sort) && !in_array($tab, ["videos", "streams", "shorts"]))
+            {
+                $id = array_search($request->params->sort, self::SORT_MAP);
+                if (is_int($id))
+                {
+                    $params->setSort($id);
+                }
             }
 
-            Channels4::registerBaseUrl($baseUrl);
-
-            // Perform InnerTube request
+            // Compose InnerTube requests for later.
             $channelRequest = Network::innertubeRequest(
                 action: "browse",
                 body: [
                     "browseId" => $ucid,
-                    "params" => Base64Url::encode($params->serializeToString()),
-                    "query" => $request->params->query ?? null 
+                    "params" => isset($params)
+                        ? Base64Url::encode($params->serializeToString())
+                        : null,
+                    "query" => $request->params->query ?? null
                 ]
             );
 
@@ -146,23 +155,105 @@ class channel extends NirvanaController {
                 $sidebarRequest = new Promise(fn($r) => $r());
             }
 
-            Promise::all([
-                "channel" => $channelRequest,
-                "sidebar" => $sidebarRequest
-            ])->then(function (array $responses) use ($yt) {
-                $channel = $responses["channel"]->getJson();
-                
-                if ($responses["sidebar"] instanceof Response)
-                {
-                    $sidebar = $responses["sidebar"]->getJson();
-                }
-                else
-                {
-                    $sidebar = $channel;
-                }
+            // Run the channel and sidebar requests at the same time and store them in different
+            // variables.
+            [$channelResponse, $sidebarResponse] = yield Promise::all($channelRequest, $sidebarRequest);
 
-                $yt->page = Channels4::bake($yt, $channel, $sidebar);
-            });
+            $page = $channelResponse->getJson();
+
+            $yt->response = $page;
+
+            // Get content for current sort if it
+            // is not recently uploaded (default)
+            $yt->videosSort = 0;
+            if (in_array($tab, self::VIDEO_TABS) && isset($request->params->sort))
+            {
+                // Get index of sort name
+                $sort = array_search($request->params->sort, self::VIDEO_TAB_SORT_INDICES);
+                $yt->videosSort = $sort;
+                if ($sort > 0)
+                {
+                    $tabs = &$page->contents->twoColumnBrowseResultsRenderer->tabs;
+
+                    foreach ($tabs as &$tab)
+                    {
+                        if (@$tab->tabRenderer->selected)
+                        {
+                            $grid = &$tab->tabRenderer->content->richGridRenderer ?? null;
+                            break;
+                        } 
+                    }
+
+                    if (isset($grid))
+                    {
+                        $ctoken = $grid->header->feedFilterChipBarRenderer->contents[$sort]
+                            ->chipCloudChipRenderer->navigationEndpoint->continuationCommand
+                            ->token ?? null;
+
+                        if (isset($ctoken))
+                        {
+                            $yt->showSort = true;
+
+                            $sort = yield Network::innertubeRequest(
+                                action: "browse",
+                                body: [
+                                    "continuation" => $ctoken
+                                ]
+                            );
+
+                            $newContents = $sort->getJson();
+                            $newContents = json_decode($newContents);
+                            $newContents = $newContents
+                                ->onResponseReceivedActions[1]
+                                ->reloadContinuationItemsCommand
+                                ->continuationItems ?? null;
+
+                            if (isset($newContents) && is_array($newContents))
+                            {
+                                $grid->contents = $newContents;
+                            }
+                        }
+                    }
+                }
+            }
+
+            $yt->subConfirmation = false;
+
+            if (isset($request->params->sub_confirmation))
+            {
+                if ($request->params->sub_confirmation == "1")
+                {
+                    $yt->subConfirmation = true;
+                }
+            }
+
+            switch ($request->path[0]) {
+                case "c":
+                case "user":
+                case "channel":
+                    $baseUrl = "/" . $request->path[0] . "/" . $request->path[1];
+                    break;
+                default:
+                    $baseUrl = "/" . $request->path[0];
+                    break;
+            }
+
+            Channels4::registerBaseUrl($baseUrl);
+            Channels4::registerCurrentTab($tab);
+
+            // Handle the sidebar
+            $sidebar = null;
+
+            if (isset($sidebarResponse))
+            {
+                $sidebar = $sidebarResponse->getJson();
+            }
+            else if ("featured" == $tab)
+            {
+                $sidebar = $page;
+            }
+
+            $yt->page = Channels4::bake($yt, $page, $sidebar);
         });
     }
 

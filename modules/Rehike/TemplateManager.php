@@ -33,7 +33,9 @@ class TemplateManager
         $viewsDir = Constants\VIEWS_DIR;
 
         self::$twig = new \Twig\Environment(
-            new \Twig\Loader\FilesystemLoader($viewsDir)
+            new \Twig\Loader\FilesystemLoader(
+                $_SERVER["DOCUMENT_ROOT"] . "/" . $viewsDir
+            )
         );
 
         ControllerV2::registerTemplateVariable(self::$template);
