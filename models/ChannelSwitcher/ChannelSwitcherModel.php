@@ -2,6 +2,7 @@
 namespace Rehike\Model\ChannelSwitcher;
 
 use Rehike\TemplateFunctions as TF;
+use Rehike\Util\ParsingUtils;
 use Rehike\i18n;
 
 // TODO: video counts, which can be done like so:
@@ -39,7 +40,7 @@ class ChannelSwitcherModel
             }
         }
 
-        $response->email = TF::getText(
+        $response->email = ParsingUtils::getText(
             @$switcher->data->actions[0]->getMultiPageMenuAction
             ->menu->multiPageMenuRenderer->sections[0]
             ->accountSectionListRenderer->header->googleAccountHeaderRenderer->email

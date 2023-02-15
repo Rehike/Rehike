@@ -50,6 +50,31 @@ class Network
     }
 
     /**
+     * Make a first-party (youtube.com) URL request.
+     * 
+     * Unlike the standard function, this will forward the user's YouTube authentication data.
+     * Do not use this function for foreign requests.
+     * 
+     * This is used occassionally for non-InnerTube APIs that still need access to the user's
+     * account, i.e. /getAccountSwitcherEndpoint.
+     * 
+     * @return Promise<Response>
+     */
+    public static function urlRequestFirstParty(string $url, array $opts = []): Promise/*<Response>*/
+    {
+        if (isset($opts["headers"]))
+        {
+            $opts["headers"] += self::$innertubeHeaders;
+        }
+        else
+        {
+            $opts["headers"] = self::$innertubeHeaders;
+        }
+
+        return self::urlRequest($url, $opts);
+    }
+
+    /**
      * Make a InnerTube request.
      * 
      * @return Promise<Response>

@@ -1,10 +1,10 @@
 {
-	"previousHash": "928fb4d39b872b5b42846ea8e6caf1356418aedf",
-	"currentRevisionId": 744,
-	"subject": "Fix config not loading properly in new bootloader",
-	"body": "Fix config not loading properly in new bootloader",
+	"previousHash": "9bbbb29918882978d46e54ad34096c75d262b9af",
+	"currentRevisionId": 787,
+	"subject": "Last minute fix to account_switcher",
+	"body": "Last minute fix to account_switcher",
 	"branch": "dev-0.7-asynchike-main",
 	"committerName": "Taniko Yamamoto",
 	"committerEmail": "99076687+YukisCoffee@users.noreply.github.com",
-	"time": 1672776676
+	"time": 1676500225
 }

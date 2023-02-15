@@ -67,36 +67,22 @@ class ParsingUtils
      * This will work on anything from video renderers to avatar images
      * for users.
      */
-    public static function getThumb(object $obj, int $height = 0): ?string
+    public static function getThumb(object $container, int $height = 0): ?string
     {
-        // Try to guess where the thumbnails are located within the
-        // provided object.
-        if (isset($obj->thumbnail->thumbnails))
-        {
-            $thumbs = $obj->thumbnail->thumbnails;
-        }
-        else if (isset($obj->thumbnails))
-        {
-            $thumbs = $obj->thumbnails;
-        }
+        // We no longer support other access methods.
+        if (!isset($container->thumbnails)) return null;
 
-        // If there are no thumbnails, return null so further code can
-        // handle the case.
-        if (!isset($thumbs)) return null;
-
-        // Select the best thumbnail to use.
-        if ($height != 0)
+        $thumbs = &$container->thumbnails;
+        $thumb = null;
+        foreach ($thumbs as $ithumb)
         {
-            // Get the closest approximate thumbnail size.
-            for ($i = 0; $i < count($thumbs); $i++)
+            if (isset($ithumb->height) && $ithumb->height >= $height)
             {
-                if ($thumbs[$i]->height >= $height)
-                {
-                    $thumb = $thumbs[$i];
-                }
+                $thumb = $ithumb;
             }
         }
-        else
+
+        if (is_null($thumb))
         {
             // If there's no height specified, then use the largest one.
             $thumb = $thumbs[array_key_last($thumbs)];
