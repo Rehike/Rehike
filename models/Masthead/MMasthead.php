@@ -307,6 +307,7 @@ class MNotificationClickcard {
         "yt-notification-inbox-clickcard"
     ];
     public $cardId = "yt-masthead-notifications-clickcard";
+    public $content;
 
     public function __construct() {
         $i18n = i18n::getNamespace("masthead");

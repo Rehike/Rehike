@@ -34,6 +34,13 @@ class MDialogHeader
     public $helpLink;
 
     /**
+     * History button (unused)
+     * 
+     * @var MHistoryButton
+     */
+    public $historyButton;
+
+    /**
      * Create a new dialog header.
      * 
      * @param bool $condensed Is the debugger condensed?

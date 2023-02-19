@@ -1,6 +1,7 @@
 <?php
 namespace Rehike\Model\Common\Menu;
 
+#[\AllowDynamicProperties]
 class MMenuItem {
     /** @var string */
     public $label;
