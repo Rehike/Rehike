@@ -13,6 +13,7 @@ class MNightlyInfo
     public $isPreviousHash = false;
     public $commitName;
     public $commitDateTime;
+    public $ghButton;
 
     public function __construct(&$data)
     {
