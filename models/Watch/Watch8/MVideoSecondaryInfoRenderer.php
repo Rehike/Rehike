@@ -3,6 +3,7 @@ namespace Rehike\Model\Watch\Watch8;
 
 use Rehike\Util\ExtractUtils;
 use Rehike\Model\Traits\Runs;
+use Rehike\Util\ImageUtils;
 use Rehike\TemplateFunctions;
 use Rehike\i18n;
 
@@ -49,30 +50,65 @@ class MMetadataRowContainer
 {
     use Runs;
 
-    public $items;
+    public $items = [];
 
     public function __construct(&$rows, $dataHost)
     {
         $i18n = i18n::getNamespace("watch/secondary");
-
-        $this->items = $rows;
         
         // Configuration
         $addLicense = true;
 
-        // If no rows, then create an empty array
-        if (null == $this->items)
+        if (!is_null($rows))
         {
-            $this->items = [];
-        }
-        else foreach ($this->items as $item)
-        {
-            if ($runs = @$item->metadataRowRenderer->contents[0]->runs) foreach ($runs as $run)
+            $this->items = $rows;
+
+            foreach ($this->items as $index => $item)
+            foreach ($item as $type => $data)
             {
-                $url = @$run->navigationEndpoint->commandMetadata->webCommandMetadata->url;
-                if ($url && preg_match("/\/t\/creative_commons/", $url))
+                // if ($runs = @$item->metadataRowRenderer->contents[0]->runs) foreach ($runs as $run)
+                // {
+                //     $url = @$run->navigationEndpoint->commandMetadata->webCommandMetadata->url;
+                //     if ($url && preg_match("/\/t\/creative_commons/", $url))
+                //     {
+                //         $addLicense = false;
+                //     }
+                // }
+
+                switch ($type)
                 {
-                    $addLicense = false;
+                    case "metadataRowRenderer":
+                        $url = "";
+                        if ($url = @$data->contents[0]->runs->navigationEndpoint->commandMetadata->webCommandMetadata->url
+                        &&  str_contains($url, "/t/creative_commons/"))
+                            $addLicense = false;
+                            break;
+                    case "richMetadataRowRenderer":
+                        // Very very icky, we don't want this.
+                        array_splice($this->items, $index, 1);
+
+                        $richItems = [];
+
+                        foreach ($data->contents as $row)
+                        {
+                            $row = $row->richMetadataRenderer ?? null;
+                            if (!is_null($row) && $row->style == "RICH_METADATA_RENDERER_STYLE_BOX_ART")
+                            {
+                                $richItems[] = (object) [
+                                    "richMetadataRowRenderer" => (object) [
+                                        "label" => (object) [
+                                            "simpleText" => $i18n->metadataGame
+                                        ],
+                                        "title" => $row->title,
+                                        "subtitle" => $row->subtitle,
+                                        "callToAction" => $row->callToAction,
+                                        "navigationEndpoint" => $row->endpoint,
+                                        "thumbnail" => $row->thumbnail
+                                    ]
+                                ];
+                            }
+                        }
+                        break;
                 }
             }
         }
@@ -140,6 +176,11 @@ class MMetadataRowContainer
 
         // Add category option
         array_unshift($this->items, self::getCategoryField($dataHost));
+
+        // Add rich items (game in gaming video)
+        if (isset($richItems) && count($richItems) > 0)
+        foreach ($richItems as $item)
+            array_unshift($this->items, $item);
     }
 
     protected function createSimpleField($title, $text, $href = null)

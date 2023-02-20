@@ -35,7 +35,7 @@ class MHeader
         // Add the avatar if it exists
         if ($a = @$header->avatar)
         {
-            $this->thumbnail = ImageUtils::changeGgphtImageSize($a->thumbnails[0]->url, 100);
+            $this->thumbnail = ImageUtils::changeSize($a->thumbnails[0]->url, 100);
         }
 
         $this->url = $baseUrl;

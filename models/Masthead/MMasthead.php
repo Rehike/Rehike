@@ -359,7 +359,7 @@ class MAccountPickerButton extends MButton {
         $i18n = i18n::getNamespace("masthead");
         $signInInfo = (object) SignIn::getInfo();
         $this->thumb = new MThumbSquare([
-            "image" => ImageUtils::changeGgphtImageSize($signInInfo->activeChannel["photo"], 27),
+            "image" => ImageUtils::changeSize($signInInfo->activeChannel["photo"], 27),
             "size" => 27,
             "delayload" => true
         ]);
@@ -412,7 +412,7 @@ class MAccountPickerClickcard {
                 ]
             ],
             "thumb" => new MThumbSquare([
-                "image" => ImageUtils::changeGgphtImageSize($activeChannel["photo"], 64),
+                "image" => ImageUtils::changeSize($activeChannel["photo"], 64),
                 "size" => 64,
                 "delayload" => true
             ])

@@ -1,10 +1,10 @@
 {
-	"previousHash": "9f5d94eb966b31ba9c2bc2704e024d9bd6c49c33",
-	"currentRevisionId": 776,
-	"subject": "Improvements to version page",
-	"body": "Improvements to version page",
+	"previousHash": "aabe96a02179dbc08c9318a80897c5bc39dd62f0",
+	"currentRevisionId": 777,
+	"subject": "Add game to video description (Fix #253)",
+	"body": "Add game to video description (Fix #253)",
 	"branch": "master",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1676885879
+	"time": 1676917495
 }
