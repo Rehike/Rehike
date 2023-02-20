@@ -1,10 +1,10 @@
 {
-	"previousHash": "9b50016f8ce50a5b43d1a7ac945b1fce9aabd600",
-	"currentRevisionId": 773,
-	"subject": "why doesnt that work",
-	"body": "why doesnt that work",
+	"previousHash": "542e048c6253182e6a9303a3fe5f6e07f4a1c9d8",
+	"currentRevisionId": 774,
+	"subject": "should work now",
+	"body": "should work now",
 	"branch": "master",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1676883184
+	"time": 1676883278
 }

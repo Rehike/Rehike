@@ -13,6 +13,7 @@ body:
         4. It doesn't stray too far from the vanilla Hitchhiker experience.
         5. It isn't a stylistic change that can be done with CSS.
   - type: textarea
-    label: Describe the feature
-    description: Describe the feature you would like to be added to Rehike. Please attach images and archive links if you have any.
-    placeholder: Describe
+    attributes:
+      label: Describe the feature
+      description: Describe the feature you would like to be added to Rehike. Please attach images and archive links if you have any.
+      placeholder: Describe
