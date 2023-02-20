@@ -1,0 +1,44 @@
+name: Bug report
+description: Something isn't working right.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting a bug in Rehike! However, before you continue, you must make sure of all of these things.
+        
+        1. You are running at least **PHP 8.0**.
+        2. The bug is not related to Fiddler, or any other proxy. Please see [this guide](https://github.com/Rehike/Rehike/issues/226) for the new method of installing Rehike.
+        3. This bug has not been reported before. **Also check closed issues.**
+        4. Make sure Rehike is fully up to date! [How do I update Rehike?](https://github.com/Rehike/Rehike/wiki/Update-Rehike)
+  - type: dropdown
+    attributes:
+      label: Rehike version
+      description: What version of Rehike are you using?
+      multiple: false
+      options:
+        - 0.5
+        - 0.7
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: Operating system
+      description: What operating system and what version of it are you using?
+      placeholder: e.g. Windows NT 6.3 build 9600 (Windows 8.1 Professional Edition) AMD64
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: PHP version
+      description: What version of PHP is Rehike running on?
+      placeholder: e.g. 8.2.0
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: What's going on?
+      description: Describe the bug. Be sure to include any screenshots, videos, stack traces, whatever details you can. Be sure to enclose your stack traces in two sets of three backticks, as to not mention other issues.
+      placeholder: Describe the bug
+    validations:
+      required: true
