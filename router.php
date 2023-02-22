@@ -35,7 +35,8 @@ Router::funnel([
     "/account_transfer_channel",
     "/features",
     "/testtube",
-    "/t/terms"
+    "/t/terms",
+    "/iframe_api"
 ]);
 
 Router::redirect([

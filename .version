@@ -1,10 +1,10 @@
 {
-	"previousHash": "aabe96a02179dbc08c9318a80897c5bc39dd62f0",
-	"currentRevisionId": 777,
-	"subject": "Add game to video description (Fix #253)",
-	"body": "Add game to video description (Fix #253)",
+	"previousHash": "c2e0ffc17492d22096e8b655a7c4a684ef53701e",
+	"currentRevisionId": 778,
+	"subject": "Fix sites that use the IFrame API (Steam Workshop)",
+	"body": "Fix sites that use the IFrame API (Steam Workshop)",
 	"branch": "master",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1676917495
+	"time": 1677034042
 }
