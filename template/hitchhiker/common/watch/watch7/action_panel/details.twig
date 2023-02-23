@@ -81,14 +81,18 @@
                                             {{ getText(item.title) }}
                                         </a>
                                     </li>
+                                    {% if item.subtitle %}
                                     <li>
                                         {{ getText(item.subtitle) }}
                                     </li>
+                                    {% endif %}
+                                    {% if item.callToAction %}
                                     <li>
                                         <a href="{{ url }}" data-url="{{ url }}" {{ attr }}>
                                             {{ getText(item.callToAction) }}
                                         </a>
                                     </li>
+                                    {% endif %}
                                 </ul>
                             </li>
                         {%- endif -%}

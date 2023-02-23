@@ -100,10 +100,10 @@ class MMetadataRowContainer
                                             "simpleText" => $i18n->metadataGame
                                         ],
                                         "title" => $row->title,
-                                        "subtitle" => $row->subtitle,
-                                        "callToAction" => $row->callToAction,
+                                        "subtitle" => $row->subtitle ?? null,
+                                        "callToAction" => $row->callToAction ?? null,
                                         "navigationEndpoint" => $row->endpoint,
-                                        "thumbnail" => $row->thumbnail
+                                        "thumbnail" => $row->thumbnail ?? null
                                     ]
                                 ];
                             }
