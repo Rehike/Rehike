@@ -1,10 +1,10 @@
 {
-	"previousHash": "8e1b3021b4b46105513e18f9e43e5d67f46062e2",
-	"currentRevisionId": 780,
-	"subject": "Add support for attributed description format (Fix #133)",
-	"body": "Add support for attributed description format (Fix #133)",
+	"previousHash": "cdabdd0d951ef3df06905172777efbc1bb34c1d6",
+	"currentRevisionId": 781,
+	"subject": "Backport channel link fix from 0.7 (Fix #257)",
+	"body": "Backport channel link fix from 0.7 (Fix #257)",
 	"branch": "master",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1677208909
+	"time": 1677213579
 }

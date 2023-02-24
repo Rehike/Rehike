@@ -122,15 +122,22 @@ class MVideoSecondaryInfoRenderer
             ];
         }
 
-        // Fix video link text
+        // Fix link text
         foreach ($runs as &$run)
         {
+            // Video links
             if (isset($run->navigationEndpoint->watchEndpoint))
             {
                 $run->text = substr(
                     "https://www.youtube.com" . $run->navigationEndpoint->commandMetadata->webCommandMetadata->url,
                     0, 37
                 ) . "...";
+            }
+            // Channel links
+            elseif (isset($run->navigationEndpoint->browseEndpoint))
+            {
+                $count = 1; // This has to be a variable for some reason
+                $run->text = str_replace("\xc2\xa0", "", str_replace("/", "", $run->text, $count));
             }
         }
 
