@@ -14,6 +14,7 @@ class MAccountPickerClickcard {
         "yt-masthead-account-picker-card",
     ];
     public $class = "yt-masthead-account-picker";
+    public $content;
 
     public function __construct() {
         $i18n = i18n::getNamespace("masthead");
@@ -45,7 +46,7 @@ class MAccountPickerClickcard {
                 ]
             ],
             "thumb" => new MThumbSquare([
-                "image" => ImageUtils::changeGgphtImageSize($activeChannel["photo"], 64),
+                "image" => ImageUtils::changeSize($activeChannel["photo"], 64),
                 "size" => 64,
                 "delayload" => true
             ])

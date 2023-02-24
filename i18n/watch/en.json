@@ -32,5 +32,6 @@
     "metadataLicense": "License",
     "metadataLicenseStandard": "Standard YouTube License",
     "metadataCategory": "Category",
-    "metadataSong": "Song"
+    "metadataSong": "Song",
+    "metadataGame": "Game"
 }

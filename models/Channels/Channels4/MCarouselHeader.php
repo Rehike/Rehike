@@ -32,7 +32,7 @@ class MCarouselHeader extends MHeader
 
                 if (isset($header->avatar))
                 {
-                    $this->thumbnail = ImageUtils::changeGgphtImageSize($header->avatar->thumbnails[0]->url, 100);
+                    $this->thumbnail = ImageUtils::changeSize($header->avatar->thumbnails[0]->url, 100);
                 }
 
                 if (isset($header->subscribeButton->subscribeButtonRenderer))

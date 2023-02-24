@@ -17,6 +17,9 @@ class MSubscriptionActions
     /** @var MSubscriberCount */
     public $subscriberCountRenderer;
 
+    public $unsubConfirmDialog;
+    public $subscriptionPreferencesButton;
+
     public function __construct($opts)
     {
         $i18n = i18n::getNamespace("main/misc");

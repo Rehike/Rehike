@@ -9,7 +9,7 @@ class MMetadataRowContainer
 {
     use Runs;
 
-    public $items;
+    public $items = [];
 
     public function __construct(&$rows, $dataHost)
     {
@@ -20,19 +20,47 @@ class MMetadataRowContainer
         // Configuration
         $addLicense = true;
 
-        // If no rows, then create an empty array
-        if (null == $this->items)
+        if (!is_null($rows))
         {
-            $this->items = [];
-        }
-        else foreach ($this->items as $item)
-        {
-            if ($runs = @$item->metadataRowRenderer->contents[0]->runs) foreach ($runs as $run)
+            $this->items = $rows;
+
+            foreach ($this->items as $index => $item)
+            foreach ($item as $type => $data)
             {
-                $url = @$run->navigationEndpoint->commandMetadata->webCommandMetadata->url;
-                if ($url && preg_match("/\/t\/creative_commons/", $url))
+                switch ($type)
                 {
-                    $addLicense = false;
+                    case "metadataRowRenderer":
+                        $url = "";
+                        if ($url = @$data->contents[0]->runs->navigationEndpoint->commandMetadata->webCommandMetadata->url
+                        &&  str_contains($url, "/t/creative_commons/"))
+                            $addLicense = false;
+                            break;
+                    case "richMetadataRowRenderer":
+                        // Very very icky, we don't want this.
+                        array_splice($this->items, $index, 1);
+
+                        $richItems = [];
+
+                        foreach ($data->contents as $row)
+                        {
+                            $row = $row->richMetadataRenderer ?? null;
+                            if (!is_null($row) && $row->style == "RICH_METADATA_RENDERER_STYLE_BOX_ART")
+                            {
+                                $richItems[] = (object) [
+                                    "richMetadataRowRenderer" => (object) [
+                                        "label" => (object) [
+                                            "simpleText" => $i18n->metadataGame
+                                        ],
+                                        "title" => $row->title,
+                                        "subtitle" => $row->subtitle ?? null,
+                                        "callToAction" => $row->callToAction ?? null,
+                                        "navigationEndpoint" => $row->endpoint,
+                                        "thumbnail" => $row->thumbnail ?? null
+                                    ]
+                                ];
+                            }
+                        }
+                        break;
                 }
             }
         }
@@ -43,9 +71,9 @@ class MMetadataRowContainer
          * So enjoy this mess
          */
         // Check if engagement panels exist.
-        if (isset($dataHost::$response->engagementPanels))
+        if (isset($dataHost::$engagementPanels))
         // Go through the panels
-        foreach ($dataHost::$response->engagementPanels as $panel)
+        foreach ($dataHost::$engagementPanels as $panel)
         // Check the name of the current panel
         foreach ($panel->engagementPanelSectionListRenderer->content as $name => $content)
         if ("structuredDescriptionContentRenderer" == $name)
@@ -100,6 +128,11 @@ class MMetadataRowContainer
 
         // Add category option
         array_unshift($this->items, self::getCategoryField($dataHost));
+
+        // Add rich items (game in gaming video)
+        if (isset($richItems) && count($richItems) > 0)
+        foreach ($richItems as $item)
+            array_unshift($this->items, $item);
     }
 
     protected function createSimpleField($title, $text, $href = null)

@@ -96,7 +96,7 @@ class YtApp extends stdClass
 
     /**
      * Determines if the current page should use the revamped module system
-     * used by YouTube from 2014-.
+     * used by YouTube since 2014.
      * 
      * This is set by page-specific controllers.
      */

@@ -1,0 +1,19 @@
+name: Feature request
+description: Request a new or missing feature for Rehike.
+labels: [enhancement]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for requesting a feature in Rehike! However, before you continue, please make sure of all these things.
+
+        1. You are running the latest version of Rehike. You don't want to request a feature that already exists!
+        2. This feature has not been requested before.
+        3. It doesn't use any shady third-party API. We use Return YouTube Dislike because it used and trusted by many.
+        4. It doesn't stray too far from the vanilla Hitchhiker experience.
+        5. It isn't a stylistic change that can be done with CSS.
+  - type: textarea
+    attributes:
+      label: Describe the feature
+      description: Describe the feature you would like to be added to Rehike. Please attach images and archive links if you have any.
+      placeholder: Describe

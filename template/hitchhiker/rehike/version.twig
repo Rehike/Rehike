@@ -158,7 +158,6 @@ Rehike Version - {{ parent() }}
 
 		#rehike-info-nightly .commit-button
 		{
-			height: 20px;
 			margin-top: 4px;
 		}
 
@@ -207,6 +206,23 @@ Rehike Version - {{ parent() }}
 			margin-top: 8px;
 			margin-left: 5px;
 		}
+
+		#rehike-info-extra
+		{
+			border-top: 1px solid #e2e2e2;
+			margin-bottom: 4px;
+		}
+
+		#rehike-info-extra h1 {
+			margin-top: 6px;
+		}
+
+		.extra-info
+		{
+			border-collapse: separate;
+			border-spacing: 8px 4px;
+			margin-left: -8px;
+		}
 	</style>
     {% set page = yt.page %}
     <div id="rehike-version" class="yt-card">
@@ -233,6 +249,26 @@ Rehike Version - {{ parent() }}
 					</span>
 				</div>
 			{%- endif -%}
+			{%- if page.extraInfo -%}
+				{% set info = page.extraInfo %}
+				<div id="rehike-info-extra">
+					<h1>{{ info.headingText }}</h1>
+					<table class="extra-info">
+						<tbody>
+							{% for item in info.info %}
+							<tr>
+								<td>
+									<b>{{ item[0] }}</b>
+								</td>
+								<td>
+									{{ item[1] }}
+								</td>
+							</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			{%- endif -%}
             {%- if page.nightlyInfo -%}
                 {% set info = page.nightlyInfo %}
                 <div id="rehike-info-nightly">
@@ -245,7 +281,7 @@ Rehike Version - {{ parent() }}
 						<span class="commit-hash yt-uix-tooltip" title="{{ info.fullCommitHash }}" data-full-hash="{{ info.fullCommitHash }}" data-tooltip-show-delay="600">{{ info.commitHash }}</span>
                         <span class="commit-time">{{ info.commitDateTime }}</span>
 						{% if info.ghButton %}
-							<a href="{{ info.ghButton.endpoint }}" target="_blank" class="commit-button yt-uix-button yt-uix-button-default">{{ info.ghButton.label }}</a>
+							<a href="{{ info.ghButton.endpoint }}" target="_blank" class="commit-button yt-uix-button yt-uix-button-default yt-uix-button-size-small">{{ info.ghButton.label }}</a>
 						{% endif %}
 						{% endapply %}
                     </div>

@@ -12,6 +12,7 @@ class MVersionPage
     public $nightlyInfo;
     public $failedNotice;
     public $nonGitNotice;
+    public $extraInfo;
 
     protected $isNightly = false;
 
@@ -45,5 +46,7 @@ class MVersionPage
         {
             $this->nonGitNotice = new MNonGitNotice();
         }
+
+        $this->extraInfo = new MExtraInfo();
     }
 }

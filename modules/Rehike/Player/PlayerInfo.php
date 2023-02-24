@@ -35,6 +35,13 @@ class PlayerInfo
     public $signatureTimestamp;
 
     /**
+     * The URL of the player's embed JS module.
+     * 
+     * @var string
+     */
+    public $embedJsUrl;
+
+    /**
      * PHP does not have native object casting (whyyyyyyyyy)
      * 
      * I stole most of this from a Stack Overflow function:

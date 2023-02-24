@@ -32,30 +32,70 @@
             <div id="watch-description-extras">
                 <ul class="watch-extras-section">
                     {% for item in secondaryInfo.metadataRowContainer.items %}
-                    {%- if item.metadataRowRenderer -%}
-                    {% set item = item.metadataRowRenderer %}
-                        <li class="watch-meta-item yt-uix-expander-body">
-                            <h4 class="title">{{ rehike.getText(item.title) }}</h4>
-                            <ul class="content watch-info-tag-list">
-                                <li>
-                                    {% if item.contents[0].runs %}
-                                        {% for run in item.contents[0].runs %}
-                                            {% if run.navigationEndpoint %}
-                                            {% set href = getUrl(run) %}
-                                            <a{{ (href|first == "/") ? " class=\"spf-link\"" }} href="{{ href }}">
+                        {%- if item.metadataRowRenderer -%}
+                            {% set item = item.metadataRowRenderer %}
+                            <li class="watch-meta-item yt-uix-expander-body">
+                                <h4 class="title">{{ getText(item.title) }}</h4>
+                                <ul class="content watch-info-tag-list">
+                                    {% for content in item.contents %}
+                                        <li>
+                                            {% if content.runs %}
+                                                {% for run in content.runs %}
+                                                    {% if run.navigationEndpoint %}
+                                                    {% set href = getUrl(run) %}
+                                                        <a{{ (href|first == "/") ? " class=\"spf-link\"" }} href="{{ href }}">
+                                                    {% endif %}
+                                                            {{ run.text }}
+                                                    {% if run.navigationEndpoint %}
+                                                        </a>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            {% elseif content.simpleText %}
+                                                {% if content.navigationEndpoint %}
+                                                    {% set href = getUrl(simpleText) %}
+                                                    <a{{ (href|first == "/") ? " class=\"spf-link\"" }} href="{{ href }}">
+                                                {% endif %}
+                                                        {{ content.simpleText }}
+                                                {% if content.navigationEndpoint %}
+                                                    </a>
+                                                {% endif %}
                                             {% endif %}
-                                            {{ run.text }}
-                                            {% if run.navigationEndpoint %}
-                                            </a>
-                                            {% endif %}
-                                        {% endfor %}
-                                    {% elseif item.contents[0].simpleText %}
-                                        {{ item.contents[0].simpleText }}
-                                    {% endif %} 
-                                </li>
-                            </ul>
-                        </li>
-                    {%- endif -%}
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                        {%- elseif item.richMetadataRowRenderer -%}
+                            {% set item = item.richMetadataRowRenderer %}
+                            <li class="watch-meta-item has-image">
+                                {% set url = getUrl(item) %}
+                                {% set attr = (href|first == "/") ? 'class="spf-link"' : 'target="_blank"' %}
+                                <h4 class="title">{{ getText(item.label) }}</h4>
+                                <span class="metadata-row-image">
+                                    <a href="{{ url }}" data-url="{{ url }}" {{ attr }}>
+                                        <img src="{{ getThumb(item.thumbnail, 55) }}">
+                                    </a>
+                                </span>
+                                <ul class="content watch-info-tag-list">
+                                    <li>
+                                        <a href="{{ url }}" data-url="{{ url }}" {{ attr }}>
+                                            {{ getText(item.title) }}
+                                        </a>
+                                    </li>
+                                    {% if item.subtitle %}
+                                    <li>
+                                        {{ getText(item.subtitle) }}
+                                    </li>
+                                    {% endif %}
+                                    {% if item.callToAction %}
+                                    <li>
+                                        <a href="{{ url }}" data-url="{{ url }}" {{ attr }}>
+                                            {{ getText(item.callToAction) }}
+                                        </a>
+                                    </li>
+                                    {% endif %}
+                                </ul>
+                            </li>
+                        {%- endif -%}
                     {% endfor %}
                 </ul>
             </div>
