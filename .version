@@ -1,10 +1,10 @@
 {
-	"previousHash": "0ce8c5ad873b91208f60abef644c579958a7c150",
-	"currentRevisionId": 779,
-	"subject": "Fix undefined property error",
-	"body": "Fix undefined property error",
+	"previousHash": "8e1b3021b4b46105513e18f9e43e5d67f46062e2",
+	"currentRevisionId": 780,
+	"subject": "Add support for attributed description format (Fix #133)",
+	"body": "Add support for attributed description format (Fix #133)",
 	"branch": "master",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1677189307
+	"time": 1677208909
 }
