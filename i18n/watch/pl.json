@@ -28,5 +28,10 @@
     "creatorBarCards": "Karty",
     "creatorBarSubtitles": "Napisy",
     "creatorBarAnalytics": "Analityka",
-    "creatorBarVideoManager": "Menedżer filmów"
+    "creatorBarVideoManager": "Menedżer filmów",
+    "metadataLicense": "Licencja",
+    "metadataLicenseStandard": "Standardowa licencja YouTube",
+    "metadataCategory": "Kategoria",
+    "metadataSong": "Utwór",
+    "metadataGame": "Gra"
 }
