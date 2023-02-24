@@ -3,4 +3,22 @@
     "tabEmbed": "Umieść na stronie",
     "tabEmail": "Wyślij e-mailem",
     "serviceTooltip": "Udostępnij w serwisie %s. Strona otworzy się w nowym oknie."
+    "startAt": "Rozpocznij od:",
+
+    "sharePlaylist": "Udostępnij na playliście od  ",
+    "currentVideo": "bieżący film",
+    "startPlaylist": "początek playlisty",
+    "embedCode": "Kod umieszczania",
+    "preview": "Podgląd:",
+    "videoSize": "Rozmiar filmu:",
+    "customSize": "Niestandardowy rozmiar",
+    "showRelated": "Po zakończeniu odtwarzania pokaż polecane filmy",
+    "showControls": "Pokaż elementy sterujące odtwarzacza",
+    "showInfo": "Pokaż tytuł filmu i działania odtwarzacza",
+    "delayedCookies": "Włącz rozszerzony tryb prywatności",
+    "legalNotice": "Wyświetlanie filmów YouTube na swojej stronie oznacza zgodę na ",
+    "legalNoticeLink": "warunki korzystania z interfejsu YouTube API.",
+
+    "playlistNonexistent": "Ta playlista nie istnieje.",
+    "playlistNoVideos": "Ta playlista nie zawiera żadnych filmów."
 }
