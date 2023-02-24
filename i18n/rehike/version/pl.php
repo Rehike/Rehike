@@ -19,7 +19,7 @@ return [
     "noDotVersionNotice" => "Brakuje pliku .version lub jest on uszkodzony.",
     "noNewVersions" => "Brak dostępnych nowych wersji.",
     "oneNewVersion" => "Dostępna 1 nowa wersja.",
-    "varNewVersions" => "Dostępne %s nowe wersje.",
+    "varNewVersions" => "Dostępne %s nowych wersji.",
     "unknownNewVersions" => "Ta wersja jest krytycznie przestarzała.",
     "headingVersionInfo" => "Informacje o wersji",
     "viewOnGithub" => "Zobacz na GitHubie",
