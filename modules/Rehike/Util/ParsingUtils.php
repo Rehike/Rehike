@@ -88,6 +88,10 @@ class ParsingUtils
             $thumb = $thumbs[array_key_last($thumbs)];
         }
 
+        // We need to check that the width and height are above 0, because
+        // sometimes InnerTube thumbnails have the height set to 0 (for
+        // instance, live stream thumbnails in the notifications menu), and
+        // that will cause a division by zero error.
         if (
             isset($thumb->width) &&
             isset($thumb->height) &&
@@ -106,11 +110,20 @@ class ParsingUtils
             }
             else
             {
-                // In the case that the thumbnail isn't 16:9, it's
-                // probably a Short. In this case, the sqp parameter
-                // should be removed from the thumbnail.
+                // In the case that the thumbnail isn't 16:9, it's probably a
+                // Short. In this case, the sqp parameter, which is used to 
+                // resize and crop thumbnails should be removed from the
+                // thumbnail.
                 return preg_replace("/\?sqp=.*/", "", $thumb->url);
             }
         }
+        // If the width or height is 0, just return the URL. It is very likely
+        // that the thumbnail is already in the correct format.
+        else
+        {
+            return $thumb->url;
+        }
+
+        return null;
     }
 }
