@@ -1,10 +1,10 @@
 {
-	"previousHash": "ffca01be64821cac67f2efd094b90eb002937234",
-	"currentRevisionId": 788,
-	"subject": "Port 0.5 features, few other things",
-	"body": "Port 0.5 features, few other things",
+	"previousHash": "080347e1aabc397ba5f4554a201a765c71a864ec",
+	"currentRevisionId": 789,
+	"subject": "Fix null + array error",
+	"body": "Fix null + array error",
 	"branch": "dev-0.7-asynchike-main",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1677213513
+	"time": 1677361359
 }

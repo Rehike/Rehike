@@ -14,8 +14,6 @@ class MMetadataRowContainer
     public function __construct(&$rows, $dataHost)
     {
         $i18n = i18n::getNamespace("watch/secondary");
-
-        $this->items = $rows;
         
         // Configuration
         $addLicense = true;
