@@ -1,10 +1,10 @@
 {
-	"previousHash": "080347e1aabc397ba5f4554a201a765c71a864ec",
-	"currentRevisionId": 789,
-	"subject": "Fix null + array error",
-	"body": "Fix null + array error",
+	"previousHash": "8b768708aa71c2c3790d5423c21426fb42b6f816",
+	"currentRevisionId": 790,
+	"subject": "That above zero check existed for a reason",
+	"body": "That above zero check existed for a reason",
 	"branch": "dev-0.7-asynchike-main",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1677361359
+	"time": 1677361505
 }

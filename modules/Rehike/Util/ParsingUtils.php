@@ -88,7 +88,12 @@ class ParsingUtils
             $thumb = $thumbs[array_key_last($thumbs)];
         }
 
-        if (isset($thumb->width) && isset($thumb->height))
+        if (
+            isset($thumb->width) &&
+            isset($thumb->height) &&
+            $thumb->width > 0 &&
+            $thumb->height > 0
+        )
         {
             $ratio = $thumb->width / $thumb->height;
 
