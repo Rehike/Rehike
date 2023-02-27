@@ -8,6 +8,7 @@ use \Rehike\Model\Watch\Watch7\MCreatorBar;
 use \Rehike\i18n;
 use \Rehike\Util\PrefUtils;
 use \Rehike\Signin\API as SignIn;
+use \Rehike\Model\Browse\InnertubeBrowseConverter;
 
 /**
  * Implements the watch8 subcontroller for the watch model
@@ -130,6 +131,8 @@ class Watch8Subcontroller
             {
                 return null;
             }
+
+            InnertubeBrowseConverter::generalLockupConverter($recomsList);
 
             if (self::shouldUseAutoplay($data))
             {

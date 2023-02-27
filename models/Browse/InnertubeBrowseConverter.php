@@ -11,7 +11,7 @@ use Rehike\Model\Common\Subscription\MSubscriptionActions;
 
 class InnertubeBrowseConverter
 {
-    protected static function generalLockupConverter($items, $context)
+    public static function generalLockupConverter($items, $context = [])
     {
         foreach ($items as &$item) foreach ($item as $name => &$content)
         {
@@ -23,6 +23,7 @@ class InnertubeBrowseConverter
                     break;
                 case "videoRenderer":
                 case "gridVideoRenderer":
+                case "compactVideoRenderer":
                     $content = self::videoRenderer($content, $context);
                     break;
             }
@@ -204,7 +205,26 @@ class InnertubeBrowseConverter
 
     public static function videoRenderer($data, $context = [])
     {
-        $i18n = i18n::getNamespace("main/regex");
+        $regex = i18n::getNamespace("main/regex");
+
+        if (i18n::namespaceExists("browse/converter"))
+        {
+            $i18n = i18n::getNamespace("browse/converter");
+        }
+        else 
+        {
+            $i18n = i18n::newNamespace("browse/converter");
+            $i18n->registerFromFolder("i18n/browse");
+        }
+
+        if (isset($data->badges))
+        foreach ($data->badges as $badge) foreach ($badge as &$content)
+        {
+            if ($content->style == "BADGE_STYLE_TYPE_LIVE_NOW")
+            {
+                $content->label = $i18n->liveBadge;
+            }
+        }
 
         if (isset($data->thumbnailOverlays))
         foreach ($data->thumbnailOverlays as $index => &$overlay) foreach ($overlay as $name => &$content)
@@ -220,7 +240,7 @@ class InnertubeBrowseConverter
 
                             $data->badges[] = (object) [
                                 "metadataBadgeRenderer" => (object) [
-                                    "label" => TF::getText($content->text),
+                                    "label" => $i18n->liveBadge,
                                     "style" => "BADGE_STYLE_TYPE_LIVE_NOW"
                                 ]
                             ];
@@ -231,7 +251,7 @@ class InnertubeBrowseConverter
                             $content->style = "DEFAULT";
                             $atitle = $data->title->accessibility->accessibilityData->label;
 
-                            preg_match($i18n->videoTimeIsolator, $atitle, $matches);
+                            preg_match($regex->videoTimeIsolator, $atitle, $matches);
 
                             $text = null;
                             if (!isset($matches[0]))
@@ -240,7 +260,7 @@ class InnertubeBrowseConverter
                             }
                             else
                             {
-                                $time = (int) preg_replace($i18n->secondsIsolator, "", $matches[0]);
+                                $time = (int) preg_replace($regex->secondsIsolator, "", $matches[0]);
 
                                 if ($time < 10)
                                 {

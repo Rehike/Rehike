@@ -1,10 +1,10 @@
 {
-	"previousHash": "e5dacccf16791c76392109519eb52da90e93b22f",
-	"currentRevisionId": 791,
-	"subject": "Fix bugs with getThumb",
-	"body": "Fix bugs with getThumb",
+	"previousHash": "166be89da88d0bbbb7d1366e14ec079147c4bba7",
+	"currentRevisionId": 792,
+	"subject": ""LIVE" -> "LIVE NOW"",
+	"body": ""LIVE" -> "LIVE NOW"",
 	"branch": "dev-0.7-asynchike-main",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1677362217
+	"time": 1677470165
 }
