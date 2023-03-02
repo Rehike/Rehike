@@ -137,7 +137,7 @@ class SimpleFunnel {
 
         http_response_code($funnelData->status);
         foreach($funnelData->headers as $name => $value)
-        if (!in_array($name, $illegalResponseHeaders)) {
+        if (!in_array($name, self::$illegalResponseHeaders)) {
             header("$name: $value");
         }
         echo($funnelData->getText());
