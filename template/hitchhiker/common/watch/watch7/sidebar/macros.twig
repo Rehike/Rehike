@@ -58,7 +58,7 @@
     </a>
     {% else %}
     <div class="content-wrapper">
-        <a href="{{ rehike.getUrl(info) }}" class="content-link spf-link" title="{{ rehike.getText(info.title) }}">
+        <a href="{{ getUrl(info) }}" class="content-link spf-link" title="{{ rehike.getText(info.title) }}">
             <span dir="ltr" class="title" aria-describedby="description-id-{{ a11yId }}">
                 {{ rehike.getText(info.title) }}
             </span>
