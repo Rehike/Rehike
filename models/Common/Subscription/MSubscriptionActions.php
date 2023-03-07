@@ -17,6 +17,9 @@ class MSubscriptionActions
     /** @var MSubscriberCount */
     public $subscriberCountRenderer;
 
+    public $unsubConfirmDialog;
+    public $subscriptionPreferencesButton;
+
     public function __construct($opts)
     {
         $i18n = i18n::getNamespace("main/misc");
@@ -32,9 +35,9 @@ class MSubscriptionActions
             "branded" => "true",
             "channelExternalId" => "",
             "params" => "",
-            "subscribeText" => $i18n -> get("subscribeText"),
-            "subscribedText" => $i18n -> get("subscribedText"),
-            "unsubscribeText" => $i18n -> get("unsubscribeText"),
+            "subscribeText" => $i18n->get("subscribeText"),
+            "subscribedText" => $i18n->get("subscribedText"),
+            "unsubscribeText" => $i18n->get("unsubscribeText"),
             "tooltip" => null,
             "unsubConfirmDialog" => null,
             "notificationStateId" => 3,
@@ -43,16 +46,16 @@ class MSubscriptionActions
 
         $this->unsubConfirmDialog = $opts["unsubConfirmDialog"];
 
-        if ($a = @$this -> unsubConfirmDialog -> confirmButton -> buttonRenderer) {
-            $a -> class = [
+        if ($a = @$this->unsubConfirmDialog->confirmButton->buttonRenderer) {
+            $a->class = [
                 "overlay-confirmation-unsubscribe-button",
                 "yt-uix-overlay-close"
             ];
         }
 
-        if ($a = @$this -> unsubConfirmDialog -> cancelButton -> buttonRenderer) {
-            $a -> class = ["yt-uix-overlay-close"];
-            $a -> style = "STYLE_DEFAULT";
+        if ($a = @$this->unsubConfirmDialog->cancelButton->buttonRenderer) {
+            $a->class = ["yt-uix-overlay-close"];
+            $a->style = "STYLE_DEFAULT";
         }
 
         if ($opts["showCount"])
@@ -91,14 +94,14 @@ class MSubscriptionActions
             "branded" => $branded,
             "longText" => $count,
             "shortText" => $count,
-            "isSubscribed" => $data -> subscribed ?? false,
-            "channelExternalId" => $data -> channelId ?? "",
-            "params" => $data -> onSubscribeEndpoints[0] -> subscribeEndpoint -> params ?? null,
-            "subscribeText" => TemplateFunctions::getText($data -> unsubscribedButtonText ?? null),
-            "subscribedText" => TemplateFunctions::getText($data -> subscribedButtonText ?? null),
-            "unsubscribeText" => TemplateFunctions::getText($data -> unsubscribeButtonText ?? null),
-            "unsubConfirmDialog" => $data -> onUnsubscribeEndpoints[0] -> signalServiceEndpoint -> actions[0] -> openPopupAction -> popup -> confirmDialogRenderer ?? null,
-            "notificationStateId" => $data -> notificationPreferenceButton -> subscriptionNotificationToggleButtonRenderer -> currentStateId ?? 3
+            "isSubscribed" => $data->subscribed ?? false,
+            "channelExternalId" => $data->channelId ?? "",
+            "params" => $data->onSubscribeEndpoints[0]->subscribeEndpoint->params ?? null,
+            "subscribeText" => TemplateFunctions::getText($data->unsubscribedButtonText ?? null),
+            "subscribedText" => TemplateFunctions::getText($data->subscribedButtonText ?? null),
+            "unsubscribeText" => TemplateFunctions::getText($data->unsubscribeButtonText ?? null),
+            "unsubConfirmDialog" => $data->onUnsubscribeEndpoints[0]->signalServiceEndpoint->actions[0]->openPopupAction->popup->confirmDialogRenderer ?? null,
+            "notificationStateId" => $data->notificationPreferenceButton->subscriptionNotificationToggleButtonRenderer->currentStateId ?? 3
         ]);
     }
 
@@ -112,7 +115,7 @@ class MSubscriptionActions
             "longText" => $count,
             "shortText" => $count,
             "branded" => $branded,
-            "tooltip" => $i18n -> selfSubscribeTooltip
+            "tooltip" => $i18n->selfSubscribeTooltip
         ]);
     }
 

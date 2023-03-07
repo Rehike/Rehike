@@ -9,7 +9,7 @@ class MFailedNotice extends MNotice
     {
         $strings = i18n::getNamespace('rehike/version');
 
-        $this -> text = $strings->failedNotice;
-        $this -> description = $strings->noDotVersionNotice;
+        $this->text = $strings->failedNotice;
+        $this->description = $strings->noDotVersionNotice;
     }
 }

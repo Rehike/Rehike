@@ -11,7 +11,7 @@ use Rehike\Model\Common\Subscription\MSubscriptionActions;
 
 class InnertubeBrowseConverter
 {
-    protected static function generalLockupConverter(&$items, $context)
+    protected static function generalLockupConverter($items, $context)
     {
         foreach ($items as &$item) foreach ($item as $name => &$content)
         {
@@ -21,8 +21,14 @@ class InnertubeBrowseConverter
                 case "gridChannelRenderer":
                     $content = self::channelRenderer($content, $context);
                     break;
+                case "videoRenderer":
+                case "gridVideoRenderer":
+                    $content = self::videoRenderer($content, $context);
+                    break;
             }
         }
+
+        return $items;
     }
 
     /**
@@ -30,11 +36,11 @@ class InnertubeBrowseConverter
      * 
      * This is, for the most part, supported natively. This
      * method exists in order to streamline replacement of children
-     * of grid renderers that may actually need to be modified.
+     * of grid renderers that may actually need to be modified.title
      */
     public static function gridRenderer($data, $context = [])
     {
-        self::generalLockupConverter($data->items, $context);
+        $data->items = self::generalLockupConverter($data->items, $context);
 
         return $data;
     }
@@ -47,13 +53,15 @@ class InnertubeBrowseConverter
      */
     public static function shelfRenderer($data, $context = [])
     {
-        if (isset($data->content->horizontalListRenderer))
+        foreach ($data->content as $name => &$value)
         {
-            self::generalLockupConverter($data->content->horizontalListRenderer->items, $context);
-        }
-        else if (isset($data->content->expandedShelfContentsRenderer))
-        {
-            self::generalLockupConverter($data->content->expandedShelfContentsRenderer->items, $context);
+            switch ($name)
+            {
+                case "horizontalListRenderer":
+                case "expandedShelfContentsRenderer":
+                    $value->items = self::generalLockupConverter($value->items, $context);
+                    break;
+            }
         }
 
         return $data;
@@ -67,7 +75,7 @@ class InnertubeBrowseConverter
      */
     public static function itemSectionRenderer($data, $context = [])
     {
-        foreach ($data -> contents as &$content) foreach ($content as $name => &$value)
+        foreach ($data->contents as &$content) foreach ($content as $name => &$value)
         {
             switch ($name)
             {
@@ -77,6 +85,10 @@ class InnertubeBrowseConverter
                 case "channelRenderer":
                 case "gridChannelRenderer":
                     $value = self::channelRenderer($value, $context);
+                    break;
+                case "videoRenderer":
+                case "gridVideoRenderer":
+                    $value = self::videoRenderer($value, $context);
                     break;
             }
         }
@@ -111,7 +123,7 @@ class InnertubeBrowseConverter
             $i18n = i18n::getNamespace("browse/converter");
         } else {
             $i18n = i18n::newNamespace("browse/converter");
-            $i18n -> registerFromFolder("i18n/browse");
+            $i18n->registerFromFolder("i18n/browse");
         }
 
         if (@$context["channelRendererNoSubscribeCount"])
@@ -147,12 +159,12 @@ class InnertubeBrowseConverter
             $subscribeButtonBranded = false;
 
         if (@$context["channelRendererChannelBadge"]) {
-            if (!isset($data -> badges)) {
-                $data -> badges = [];
+            if (!isset($data->badges)) {
+                $data->badges = [];
             }
-            $data -> badges[] = (object) [
+            $data->badges[] = (object) [
                 "metadataBadgeRenderer" => (object) [
-                    "label" => $i18n -> channelBadge,
+                    "label" => $i18n->channelBadge,
                     "style" => "BADGE_STYLE_TYPE_SIMPLE"
                 ]
             ];
@@ -190,6 +202,69 @@ class InnertubeBrowseConverter
         return $data;
     }
 
+    public static function videoRenderer($data, $context = [])
+    {
+        $i18n = i18n::getNamespace("main/regex");
+
+        if (isset($data->thumbnailOverlays))
+        foreach ($data->thumbnailOverlays as $index => &$overlay) foreach ($overlay as $name => &$content)
+        {
+            switch ($name)
+            {
+                case "thumbnailOverlayTimeStatusRenderer":
+                    switch ($content->style)
+                    {
+                        case "LIVE":
+                            if (!isset($data->badges))
+                            $data->badges = [];
+
+                            $data->badges[] = (object) [
+                                "metadataBadgeRenderer" => (object) [
+                                    "label" => TF::getText($content->text),
+                                    "style" => "BADGE_STYLE_TYPE_LIVE_NOW"
+                                ]
+                            ];
+
+                            array_splice($data->thumbnailOverlays, $index);
+                            break;
+                        case "SHORTS":
+                            $content->style = "DEFAULT";
+                            $atitle = $data->title->accessibility->accessibilityData->label;
+
+                            preg_match($i18n->videoTimeIsolator, $atitle, $matches);
+
+                            $text = null;
+                            if (!isset($matches[0]))
+                            {
+                                $text = "1:00";
+                            }
+                            else
+                            {
+                                $time = (int) preg_replace($i18n->secondsIsolator, "", $matches[0]);
+
+                                if ($time < 10)
+                                {
+                                    $text = "0:0$time";
+                                }
+                                else
+                                {
+                                    $text = "0:$time";
+                                }
+                            }
+
+                            $content->text = (object) [
+                                "simpleText" => $text
+                            ];
+
+                            break;
+                    }
+                    break;
+            }
+        }
+
+        return $data;
+    }
+
     /**
      * Convert a rich grid renderer to regular grid renderer
      */
@@ -221,6 +296,15 @@ class InnertubeBrowseConverter
      */
     public static function richItemRenderer($data, $context = [])
     {
+        if (@$context["richGridConvertItemsToGrid"])
+        {
+            foreach ($data->content as $name => $value)
+            {
+                $data->{"grid" . ucfirst($name)} = $value;
+                unset($data->{$name});
+            }
+        }
+        
         return $data->content;
     }
 }

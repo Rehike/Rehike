@@ -78,7 +78,7 @@
                   {% include 'common/appbar/appbar_guide.twig' %}
                {% endblock %}
                <div class="alerts-wrapper">
-                  <div id="alerts" class="content-alignment">
+                  <div id="alerts" class="{{ not leftAlignPage ? "content-alignment" }}">
                      {% block alerts %}{% endblock %}
                      {%- for item in yt.page.alerts -%}
                      {{ alert.render(item) }}
@@ -89,7 +89,7 @@
                {% block header %}{% endblock %}
                </div>
                {% include 'player/core.twig' %}
-               <div id="content" class="  content-alignment" role="main">
+               <div id="content" class="  {{ not leftAlignPage ? "content-alignment" }}" role="main">
                   {% block content %}{% endblock %}
                </div>
             </div>

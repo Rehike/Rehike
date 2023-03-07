@@ -12,6 +12,7 @@ class MVersionPage
     public $nightlyInfo;
     public $failedNotice;
     public $nonGitNotice;
+    public $extraInfo;
 
     protected $isNightly = false;
 
@@ -19,8 +20,8 @@ class MVersionPage
     {
         $strings = i18n::getNamespace('rehike/version');
 
-        $this -> headingText = $strings->headingVersionInfo;
-        $this -> brandName = $strings->brandName;
+        $this->headingText = $strings->headingVersionInfo;
+        $this->brandName = $strings->brandName;
 
         if (@$data["semanticVersion"])
         {
@@ -29,21 +30,23 @@ class MVersionPage
 
         if (!@$data["isRelease"] && null != $data)
         {
-            $this -> nightlyNotice = new MNightlyNotice();
-            $this -> nightlyInfo = new MNightlyInfo($data);
-            $this -> isNightly = true;
+            $this->nightlyNotice = new MNightlyNotice();
+            $this->nightlyInfo = new MNightlyInfo($data);
+            $this->isNightly = true;
         }
 
         if (null == $data)
         {
-            $this -> failedNotice = new MFailedNotice();
+            $this->failedNotice = new MFailedNotice();
 			unset($this->brandName);
 			return;
         }
 
         if (!@$data["supportsDotGit"])
         {
-            $this -> nonGitNotice = new MNonGitNotice();
+            $this->nonGitNotice = new MNonGitNotice();
         }
+
+        $this->extraInfo = new MExtraInfo();
     }
 }

@@ -109,8 +109,46 @@ not-fixed-width-tab-widescreen
     {% endblock %}
 
     {%- block branded_page_primary_column_content -%}
-        {% from "/common/browse/main.twig" import render as browse %}
+        {% from "common/uix/button.twig" import render as button %}
+        {% from "common/browse/main.twig" import render as browse %}
+        {% from "common/thumb.twig" import render as thumb %}
+        {% from "common/uix/subscription_button.twig" import render as subscription_button %}
         {{ browse(yt.page.content) }}
+        {% if yt.page.subConfirmationDialog %}
+        {% set dialog = yt.page.subConfirmationDialog %}
+        <div class="yt-uix-overlay">
+            <div class="yt-dialog hid">
+                <div class="yt-dialog-base">
+                    <span class="yt-dialog-align"></span>
+                    <div class="yt-dialog-fg" role="dialog">
+                        <div class="yt-dialog-fg-content">
+                            <div class="yt-dialog-header">
+                                {{ button(dialog.closeButton) }}
+                                <h2 class="yt-dialog-title" role="alert">{{ dialog.header }}</h2>
+                            </div>
+                            <div class="yt-dialog-content">
+                                <div class="subscription-confirmation-dialog">
+                                    <span class="subscription-confirmation-thumb">
+                                        {{ thumb({
+                                            type: "square",
+                                            width: 60,
+                                            height: 60,
+                                            image: dialog.avatar
+                                        }) }}
+                                    </span>
+                                    <span class="subscription-confirmation-display-name">
+                                        {{ dialog.displayName }}
+                                    </span>
+                                    <br>
+                                    {{ subscription_button(dialog.subscribeButton) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
     {%- endblock -%}
 
     {%- block branded_page_secondary_column_content -%}

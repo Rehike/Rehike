@@ -1,10 +1,10 @@
 {
-	"previousHash": "0608c2d21dd2621f5e098804380607d2455c7781",
-	"currentRevisionId": 742,
-	"subject": "Fuck",
-	"body": "Fuck",
+	"previousHash": "cdabdd0d951ef3df06905172777efbc1bb34c1d6",
+	"currentRevisionId": 781,
+	"subject": "Backport channel link fix from 0.7 (Fix #257)",
+	"body": "Backport channel link fix from 0.7 (Fix #257)",
 	"branch": "master",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1675570606
+	"time": 1677213579
 }

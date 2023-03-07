@@ -50,7 +50,7 @@
             {% include 'common/pageframe/masthead.twig' %}     
          </div>
          {% endblock %}
-         <div id="alerts" class="content-alignment">
+         <div id="alerts" class="{{ not leftAlignPage ? "content-alignment" }}">
             {% block alerts %}{% endblock %}
             {%- for item in yt.page.alerts -%}
             {{ alert.render(item) }}
@@ -64,7 +64,7 @@
                         {% include 'common/pageframe/guide.twig' %}
                     {% endblock %}
                 {% endif %}
-                <div id="content" class="content-alignment">
+                <div id="content" class="{{ not leftAlignPage ? "content-alignment" }}">
                     {% block content %}{% endblock %}
                 </div>
             </div>

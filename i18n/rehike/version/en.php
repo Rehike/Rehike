@@ -22,5 +22,8 @@ return [
     "varNewVersions" => "%s new versions available.",
     "unknownNewVersions" => "This version is critically out of date.",
     "headingVersionInfo" => "Version information",
-    "viewOnGithub" => "View on GitHub"
+    "viewOnGithub" => "View on GitHub",
+    "extraInfo" => "Extra information",
+    "operatingSystem" => "Operating system",
+    "phpVersion" => "PHP version"
 ];

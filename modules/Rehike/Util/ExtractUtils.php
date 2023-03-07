@@ -34,8 +34,8 @@ class ExtractUtils {
     public static function isolateLikeCnt(?string $likeCount): string {
         $i18n = i18n::getNamespace("main/regex");
 
-        $a = self::isolateCount($likeCount, $i18n -> get("likeCountIsolator"));
-        if ($a != $i18n -> get("likeTextDisabled")) {
+        $a = self::isolateCount($likeCount, $i18n->get("likeCountIsolator"));
+        if ($a != $i18n->get("likeTextDisabled")) {
             return $a;
         } else {
             return '';
@@ -52,8 +52,8 @@ class ExtractUtils {
     public static function isolateSubCnt(?string $subCount): string {
         $i18n = i18n::getNamespace("main/regex");
 
-        $a = self::isolateCount($subCount, $i18n -> get("subscriberCountIsolator"));
-        if ($a != $i18n -> get("subscriberCountZero")) {
+        $a = self::isolateCount($subCount, $i18n->get("subscriberCountIsolator"));
+        if ($a != $i18n->get("countZero")) {
             return $a;
         } else {
             return '0';
@@ -75,8 +75,8 @@ class ExtractUtils {
     public static function isolateViewCnt(?string $viewCount): string {
         $i18n = i18n::getNamespace("main/regex");
         
-        $a = self::isolateCount($viewCount, $i18n -> get("viewCountIsolator"));
-        if ($a != 'No') {
+        $a = self::isolateCount($viewCount, $i18n->get("viewCountIsolator"));
+        if ($a != $i18n->get("countZero")) {
             return $a;
         } else {
             return '0';
@@ -97,9 +97,9 @@ class ExtractUtils {
         $misc = i18n::getNamespace("main/misc");
 
         if (is_object($date)) $date = $date->simpleText;
-        if (!preg_match($i18n -> get("nonPublishCheck"), $date)) {
+        if (!preg_match($i18n->get("nonPublishCheck"), $date)) {
             $string = $isPrivate ? "dateTextPrivate" : "dateTextPublic";
-            return $misc -> get($string, $date);
+            return $misc->get($string, $date);
         } else {
             return $date;
         }

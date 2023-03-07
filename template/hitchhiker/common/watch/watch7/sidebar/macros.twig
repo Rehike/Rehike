@@ -22,7 +22,7 @@
 {% import "common/thumbnail_overlays.twig" as overlays %}
 {% from "core/html/img.twig" import img %}
 {% from "common/uix/badge_list.twig" import render as badge_list %}
-<li class="video-list-item related-list-item {{ data.type == "video" ? "show-video-time" }} related-list-item-compact-{{ data.type }}">
+<li class="video-list-item related-list-item related-list-item-compact-{{ data.type }}">
     {# playlist html structure is entirely different #}
     {% if data != null %}
     {% if data.type == "playlist" or data.type == "radio" %}
@@ -73,6 +73,9 @@
                 <span>by </span>
                 {% endif %}
                 <span>{{ getText(author) }}</span>
+                {% if yt.config.appearance.watchSidebarVerification and info.ownerBadges %}
+                    <span title="{{ yt.msgs.verified }}" class="yt-uix-tooltip yt-channel-title-icon-verified yt-sprite"></span>
+                {% endif %}
             </span>
             {% endif %}
             {% if info.viewCountText %}
@@ -102,9 +105,10 @@
                         "data-mouseover-src": getThumb(info.richThumbnail.movingThumbnailRenderer.movingThumbnailDetails)
                     }
                 }) }}
+                {{ overlays.time(info.thumbnailOverlays) }}
             </span>
         </a>
-        {{ overlays.render(data) }}
+        {{ overlays.render(info.thumbnailOverlays, false) }}
     </div>
     {% endif %}
 </li>

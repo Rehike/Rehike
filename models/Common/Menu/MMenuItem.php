@@ -1,6 +1,7 @@
 <?php
 namespace Rehike\Model\Common\Menu;
 
+#[\AllowDynamicProperties]
 class MMenuItem {
     /** @var string */
     public $label;
@@ -13,7 +14,7 @@ class MMenuItem {
 
     public function __construct($data) {
         foreach ($data as $key => $val) {
-            $this -> {$key} = $val;
+            $this->{$key} = $val;
         }
     }
 }

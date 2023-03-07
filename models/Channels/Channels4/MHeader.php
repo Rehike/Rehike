@@ -13,12 +13,13 @@ class MHeader
     public $title;
     public $badges;
     public $thumbnail;
+    public $url;
     public $banner;
     public $headerLinks;
     public $tabs;
-    public $subscriptionButtons;
+    public $subscriptionButton;
 
-    private $subscriptionCount;
+    protected $subscriptionCount;
 
     public function __construct($header, $baseUrl)
     {
@@ -34,17 +35,17 @@ class MHeader
         // Add the avatar if it exists
         if ($a = @$header->avatar)
         {
-            $this->thumbnail = $a;
-            $this->thumbnail->thumbnails[0]->url = ImageUtils::changeGgphtImageSize($this->thumbnail->thumbnails[0]->url, 100);
-            $this->thumbnail->href = $baseUrl;
+            $this->thumbnail = ImageUtils::changeSize($a->thumbnails[0]->url, 100);
         }
+
+        $this->url = $baseUrl;
 
         // Add the banner if it exists
         if ($a = @$header->banner)
         {
             $this->banner = (object) [
-                "image" => $a -> thumbnails[0] -> url ?? null,
-                "hdImage" => $a -> thumbnails[3] -> url ?? null
+                "image" => $a->thumbnails[0]->url ?? null,
+                "hdImage" => $a->thumbnails[3]->url ?? null
             ];
             $this->banner->isCustom = true;
         }
@@ -62,10 +63,11 @@ class MHeader
         if ($a = @$header->badges)
             $this->badges = $a;
 
+
+        $count = "";
         // Add the subscription button
         if ($a = @$header->subscribeButton->subscribeButtonRenderer)
         {
-            $count = "";
 
             if (isset($header->subscriberCountText))
             {
@@ -104,19 +106,34 @@ class MHeader
 
     public function addTabs($tabs, $partSelect = false)
     {
-        for ($i = 0; $i < count($tabs); $tab = $tabs[$i], $i++)
-        {
-            if (@$tab->hidden) array_splice($tabs, --$i, 1);
-        }
-        
-        foreach ($tabs as &$tab)
-        if (@$tab -> tabRenderer -> selected)
-        {
-            $tab -> tabRenderer -> status = $partSelect ? MAppbarNavItem::StatusPartiallySelected : MAppbarNavItem::StatusSelected;
-            unset($tab -> tabRenderer -> selected);
-        }
+        $this->tabs = [];
 
-        $this->tabs = $tabs;
+        foreach ($tabs as &$tab)
+        {
+            if (isset($tab->tabRenderer))
+            {
+                if (!isset($tab->tabRenderer->title))
+                {
+                    continue;
+                }
+
+                if (@$tab->tabRenderer->selected)
+                {
+                    $tab->tabRenderer->status = $partSelect ? MAppbarNavItem::StatusPartiallySelected : MAppbarNavItem::StatusSelected;
+                }
+                else
+                {
+                    $tab->tabRenderer->status = MAppbarNavItem::StatusUnselected;
+                }
+
+                unset($tab->tabRenderer->selected);
+            }
+
+            if (!@$tab->hidden)
+            {
+                $this->tabs[] = $tab;
+            }
+        }
     }
 
     public function getTitle()
@@ -126,7 +143,7 @@ class MHeader
 
     public function getThumbnail()
     {
-        return $this->thumbnail->thumbnails[0]->url ?? "";
+        return $this->thumbnail;
     }
 
     public function getSubscriptionCount()

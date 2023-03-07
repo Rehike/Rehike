@@ -10,5 +10,6 @@
     "backstageViewAllCommentsPlural": "View all %s comments",
     "videoSortPopular": "Most popular",
     "videoSortOldest": "Date added (oldest)",
-    "videoSortNewest": "Date added (newest)"
+    "videoSortNewest": "Date added (newest)",
+    "subscriptionConfirmationHeader": "Confirm Channel Subscription"
 }

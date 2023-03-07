@@ -17,5 +17,6 @@
     "shelfsliderNext": "Next",
     "shelfsliderPrev": "Previous",
     "transcriptTitle": "Transcript",
-    "transcriptFail": "The interactive transcript could not be loaded."
+    "transcriptFail": "The interactive transcript could not be loaded.",
+    "close": "Close"
 }

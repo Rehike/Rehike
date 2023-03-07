@@ -22,10 +22,21 @@ Router::funnel([
     "/howyoutubeworks/*",
     "/create_channel",
     "/new",
-    "/channel_switcher",
     "/supported_browsers",
     "/getAccountSwitcherEndpoint",
-    "/channel_image_upload/*"
+    "/channel_image_upload/*",
+    "/account",
+    "/account_notifications",
+    "/account_playback",
+    "/account_privacy",
+    "/account_sharing",
+    "/account_billing",
+    "/account_advanced",
+    "/account_transfer_channel",
+    "/features",
+    "/testtube",
+    "/t/terms",
+    "/iframe_api"
 ]);
 
 Router::redirect([
@@ -34,8 +45,8 @@ Router::redirect([
     "/hashtag/(*)" => "/results?search_query=$1",
     "/feed/what_to_watch/**" => "/",
     "/source/(*)" => function($request) {
-        if (isset($request -> path[1]))
-            return "/attribution?v=" . $request -> path[1];
+        if (isset($request->path[1]))
+            return "/attribution?v=" . $request->path[1];
         else
             return "/attribution";
     },
@@ -45,7 +56,11 @@ Router::redirect([
     },
     "/feed/library" => "/profile",
     "/subscription_manager" => "/feed/channels",
-    "/rehike/settings" => "/rehike/config"
+    "/rehike/settings" => "/rehike/config",
+    "/subscription_center?(*)" => function($request) {
+        if ($user = @$request->params->add_user)
+            return "/user/$user?sub_confirmation=1";
+    }
 ]);
 
 Router::get([
@@ -72,6 +87,7 @@ Router::get([
     "/share_ajax" => "ajax/share",
     "/attribution" => "attribution",
     "/profile" => "profile",
+    "/channel_switcher" => "channel_switcher",
     "/rehike/config" => "rehike/config",
     "/rehike/config/**" => "rehike/config",
     "default" => "channel"

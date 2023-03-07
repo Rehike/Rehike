@@ -1,5 +1,5 @@
 {
-    "title": "Konfiguracja Rehike",
+    "title": "Ustawienia Rehike",
     "saveChanges": "Zapisz zmiany",
     "saveChangesSuccess": "Konfiguracja została pomyślnie zaktualizowana!",
     "saveChangesFailure": "Nie udało się zaktualizować konfiguracji!",
@@ -51,6 +51,10 @@
             },
             "watchSidebarDates": {
                 "title": "Pokaż datę przesłania na stronie oglądania w proponowanych",
+                "subtitle": "W przeciwieństwie do Polymera, Hitchhiker nie pokazywał ich domyślnie."
+            },
+            "watchSidebarVerification": {
+                "title": "Pokaż odznaki weryfikacji na stronie oglądania w proponowanych",
                 "subtitle": "W przeciwieństwie do Polymera, Hitchhiker nie pokazywał ich domyślnie."
             },
             "teaserReplies": {

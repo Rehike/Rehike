@@ -58,13 +58,13 @@ abstract class CoffeeException extends \Exception implements ICoffeeException
     public static function from($exception)
     {
         $ceInstance = new static(
-            $exception -> getMessage(),
-            $exception -> getCode()
+            $exception->getMessage(),
+            $exception->getCode()
         );
 
-        $ceInstance -> _setFile( $exception -> getFile() );
-        $ceInstance -> _setLine( $exception -> getLine() );
-        $ceInstance -> _setTrace( $exception -> getTrace() );
+        $ceInstance->_setFile( $exception->getFile() );
+        $ceInstance->_setLine( $exception->getLine() );
+        $ceInstance->_setTrace( $exception->getTrace() );
 
         return $ceInstance;
     }

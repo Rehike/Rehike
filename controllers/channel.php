@@ -48,7 +48,7 @@ class channel extends NirvanaController {
 
     public function onPost(&$yt, $request) {
         http_response_code(404);
-        $this -> template = "error/404";
+        $this->template = "error/404";
     }
 
     public function onGet(&$yt, $request)
@@ -56,8 +56,7 @@ class channel extends NirvanaController {
         $this->useJsModule("www/channels");
 
         // Init i18n
-        $i18n = &i18n::newNamespace("channels");
-        $i18n->registerFromFolder("i18n/channels");
+        i18n::newNamespace("channels")->registerFromFolder("i18n/channels");
 
         // BUG (kirasicecreamm): ChannelUtils::getUcid is hardcoded
         // to look at the path property of the input object.
@@ -67,8 +66,8 @@ class channel extends NirvanaController {
 
         if ($ucid == "") {
             http_response_code(404);
-            $this -> spfIdListeners = [];
-            $this -> template = "error/404";
+            $this->spfIdListeners = [];
+            $this->template = "error/404";
         }
 
         // Register the endpoint in the request
@@ -76,9 +75,9 @@ class channel extends NirvanaController {
 
         // Get the requested tab
         $tab = "featured";
-        if (!in_array($request -> path[0], ["channel", "user", "c"])) {
+        if (!in_array($request->path[0], ["channel", "user", "c"])) {
             if (isset($request->path[1]) && "" != @$request->path[1]) {
-                $tab = strtolower($request -> path[1]);
+                $tab = strtolower($request->path[1]);
             }
         } elseif (isset($request->path[2]) && "" != @$request->path[2]) {
             $tab = strtolower($request->path[2]);
@@ -96,15 +95,21 @@ class channel extends NirvanaController {
         $yt->tab = $tab;
 
         // Configure request params
-        $params = new BrowseRequestParams();
-        $params->setTab($tab);
-
-        if (isset($request -> params -> shelf_id)) {
-            $params->setShelfId((int) $request -> params -> shelf_id);
+        if ("featured" != $tab ||
+            isset($request->params->shelf_id) ||
+            isset($request->params->view) ||
+            (isset($request->params->sort) && !in_array($tab, ["videos", "streams", "shorts"])))
+        {
+            $params = new BrowseRequestParams();
+            $params->setTab($tab);
+        }
+        
+        if (isset($request->params->shelf_id)) {
+            $params->setShelfId((int) $request->params->shelf_id);
         }
 
-        if (isset($request -> params -> view)) {
-            $params->setView((int) $request -> params -> view);
+        if (isset($request->params->view)) {
+            $params->setView((int) $request->params->view);
         }
 
         if (isset($request->params->sort) && !in_array($tab, ["videos", "streams", "shorts"]))
@@ -119,8 +124,8 @@ class channel extends NirvanaController {
         // Perform InnerTube request
         Request::queueInnertubeRequest("main", "browse", (object)[
             "browseId" => $ucid,
-            "params" => Base64Url::encode($params->serializeToString()),
-            "query" => $request -> params -> query ?? null 
+            "params" => isset($params) ? Base64Url::encode($params->serializeToString()) : null,
+            "query" => $request->params->query ?? null 
         ]);
 
         if (
@@ -185,7 +190,12 @@ class channel extends NirvanaController {
             }
         }
 
-        
+        $yt->subConfirmation = false;
+
+        if (isset($request->params->sub_confirmation))
+        if ($request->params->sub_confirmation == "1")
+            $yt->subConfirmation = true;
+
         switch ($request->path[0]) {
             case "c":
             case "user":
@@ -198,6 +208,7 @@ class channel extends NirvanaController {
         }
 
         Channels4::registerBaseUrl($baseUrl);
+        Channels4::registerCurrentTab($tab);
 
         // Handle the sidebar
         $sidebar = null;

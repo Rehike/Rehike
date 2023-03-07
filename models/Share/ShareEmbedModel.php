@@ -11,7 +11,7 @@ class ShareEmbedModel {
 
         $response = (object) [];
         $i18n = i18n::newNamespace("share");
-        $i18n -> registerFromFolder("i18n/share");
+        $i18n->registerFromFolder("i18n/share");
 
 
         $alternateUrls = [];
@@ -21,22 +21,22 @@ class ShareEmbedModel {
 
 
 
-            $playlistHost = $listData -> contents -> twoColumnBrowseResultsRenderer -> tabs[0] -> tabRenderer -> content ?? null;
+            $playlistHost = $listData->contents->twoColumnBrowseResultsRenderer->tabs[0]->tabRenderer->content ?? null;
             
-            if (!isset($playlistHost -> sectionListRenderer)) {
+            if (!isset($playlistHost->sectionListRenderer)) {
                 return (object) [
                     "alerts" => [
                         new MAlert([
                             "type" => MAlert::TypeError,
-                            "text" => $i18n -> playlistNonexistent
+                            "text" => $i18n->playlistNonexistent
                         ])
                     ]
                 ];
             }
 
             
-            $listId = $listData -> header -> playlistHeaderRenderer -> playlistId;
-            $videoList = $playlistHost -> sectionListRenderer -> contents[0] -> itemSectionRenderer -> contents[0] -> playlistVideoListRenderer -> contents;
+            $listId = $listData->header->playlistHeaderRenderer->playlistId;
+            $videoList = $playlistHost->sectionListRenderer->contents[0]->itemSectionRenderer->contents[0]->playlistVideoListRenderer->contents;
 
 
             if (count($videoList) <= 0) {
@@ -44,7 +44,7 @@ class ShareEmbedModel {
                     "alerts" => [
                         new MAlert([
                             "type" => MAlert::TypeError,
-                            "text" => $i18n -> playlistNoVideos
+                            "text" => $i18n->playlistNoVideos
                         ])
                     ]
                 ];
@@ -79,8 +79,8 @@ class ShareEmbedModel {
 
 
         
-        $response -> alternateUrls = $alternateUrls;
-        $response -> strs = $i18n;
+        $response->alternateUrls = $alternateUrls;
+        $response->strs = $i18n;
 
 
 
@@ -107,7 +107,7 @@ class ShareEmbedModel {
             ],
             (object) [
                 "name" => "default",
-                "text" => $i18n -> get("customSize")
+                "text" => $i18n->get("customSize")
             ]
         ];
 
@@ -115,29 +115,29 @@ class ShareEmbedModel {
         $options = [
             (object) [
                 "name" => "show-related",
-                "text" => $i18n -> get("showRelated"),
+                "text" => $i18n->get("showRelated"),
                 "active" => true
             ],
             (object) [
                 "name" => "show-controls",
-                "text" => $i18n -> get("showControls"),
+                "text" => $i18n->get("showControls"),
                 "active" => true
             ],
             (object) [
                 "name" => "show-info",
-                "text" => $i18n -> get("showInfo"),
+                "text" => $i18n->get("showInfo"),
                 "active" => true
             ],
             (object) [
                 "name" => "delayed-cookies",
-                "text" => $i18n -> get("delayedCookies"),
+                "text" => $i18n->get("delayedCookies"),
                 "url" => "http://www.google.com/support/youtube/bin/answer.py?answer=171780&expand=PrivacyEnhancedMode#privacy",
                 "active" => false
             ]
         ];
 
-        $response -> options = $options;
-        $response -> sizes = $sizes;
+        $response->options = $options;
+        $response->sizes = $sizes;
 
         return $response;
 

@@ -1,4 +1,4 @@
-{% macro render(data) %}
+{% macro renderOLD(data) %}
 {% from "common/uix/watch_later_button.twig" import render as watch_later %}
 {% set info = data.info %}
 {% if getVideoTime(info) != null %}
@@ -14,9 +14,35 @@
 {% endif %}
 {% endmacro %}
 
-{% macro playlist(data, useSpan = false) %}
+{% macro render(overlays, includeTime = true) %}
+    {% for overlay in overlays %}
+        {% if overlay.thumbnailOverlayTimeStatusRenderer and includeTime %}
+            <span class="video-time">
+                {{ getText(overlay.thumbnailOverlayTimeStatusRenderer.text) }}
+            </span>
+        {% elseif overlay.thumbnailOverlayToggleButtonRenderer.untoggledIcon.iconType == "WATCH_LATER" %}
+            {% from "common/uix/watch_later_button.twig" import render as watch_later %}
+            {{ watch_later(overlay.thumbnailOverlayToggleButtonRenderer) }}
+        {% elseif overlay.thumbnailOverlayResumePlaybackRenderer %}
+            <span class="resume-playback-background"></span>
+            <span class="resume-playback-progress-bar" style="width:{{ overlay.thumbnailOverlayResumePlaybackRenderer.percentDurationWatched }}%"></span>
+        {% endif %}
+    {% endfor %}
+{% endmacro %}
+
+{% macro time(overlays) %}
+    {% for overlay in overlays %}
+        {% if overlay.thumbnailOverlayTimeStatusRenderer %}
+            <span class="video-time">
+                {{ getText(overlay.thumbnailOverlayTimeStatusRenderer.text) }}
+            </span>
+        {% endif %}
+    {% endfor %}
+{% endmacro %}
+
+{% macro playlist(data, span = false) %}
 {% set info = data.info %}
-<{{ useSpan ? "span" : "div" }} class="sidebar">
+<{{ span ? "span" : "div" }} class="sidebar">
     <span class="yt-pl-sidebar-content yt-valign">
         <span class="yt-valign-container">
             <span class="formatted-video-count-label">
@@ -37,12 +63,12 @@
             <span class="yt-pl-icon {{ data.type == "radio" ? "yt-pl-icon-mix" }} yt-pl-icon-reg yt-sprite"></span>
         </span>
     </span>
-</{{ useSpan ? "span" : "div" }}>
-<{{ useSpan ? "span" : "div" }} class="yt-pl-thumb-overlay">
+</{{ span ? "span" : "div" }}>
+<{{ span ? "span" : "div" }} class="yt-pl-thumb-overlay">
     <span class="yt-pl-thumb-overlay-content">
         {% set overlay = getThumbnailOverlay(info, "thumbnailOverlayHoverTextRenderer") %}
         <span class="play-icon yt-sprite"></span>
         <span class="yt-pl-thumb-overlay-text">{{ getText(overlay.text) }}</span>
     </span>
-</{{ useSpan ? "span" : "div" }}>
+</{{ span ? "span" : "div" }}>
 {% endmacro %}
