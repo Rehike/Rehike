@@ -31,7 +31,7 @@
         <div class="pl-video-owner">
             {% set byline = this.shortBylineText %}
             {{ rehike.config.appearance.usernamePrepends ? yt.msgs.usernamePrepend }}
-            <a href="{{ rehike.getUrl(byline.runs[0]) }}" class="spf-link" data-ytid="{{ byline.navigationEndpoint.browseEndpoint.browseId }}" data-name="playlist">{{ rehike.getText(byline) }}</a>
+            <a href="{{ getUrl(byline.runs[0]) }}" class="spf-link" data-ytid="{{ byline.navigationEndpoint.browseEndpoint.browseId }}" data-name="playlist">{{ rehike.getText(byline) }}</a>
         </div>
         <div class="pl-video-bottom-standalone-badge"></div>
     </td>

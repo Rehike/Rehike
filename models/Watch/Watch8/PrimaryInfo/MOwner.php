@@ -36,6 +36,14 @@ class MOwner
      */
     public $subscriptionButtonRenderer;
 
+
+    /**
+     * Defines the channel settings button
+     * 
+     * @var MButton
+     */
+    public $channelSettingsButtonRenderer;
+
     public function __construct($dataHost)
     {
         $secInfo = &$dataHost::$secondaryInfo;

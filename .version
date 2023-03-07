@@ -1,10 +1,10 @@
 {
-	"previousHash": "bed90e4aaf83b42d7508c89d5b29cc7b7be29df8",
-	"currentRevisionId": 794,
-	"subject": "??????",
-	"body": "??????",
+	"previousHash": "9a6bc3aec74a3809b5f619d8a9f8d407d59a59c9",
+	"currentRevisionId": 795,
+	"subject": "Fix errors and references to nonexistent rehike.getUrl",
+	"body": "Fix errors and references to nonexistent rehike.getUrl",
 	"branch": "dev-0.7-asynchike-main",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1677890316
+	"time": 1678152901
 }
