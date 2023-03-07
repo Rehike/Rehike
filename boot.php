@@ -51,7 +51,10 @@ if (isset($_COOKIE["PREF"])) {
    for ($i = 0; $i < count($PREF); $i++) {
       $option = explode("=", $PREF[$i]);
       $title = $option[0];
-      $yt->PREF->$title = $option[1];
+      if (isset($option[1]))
+      {
+         $yt->PREF->$title = $option[1];
+      }
    }
 } else {
    $yt->PREF = (object) [
