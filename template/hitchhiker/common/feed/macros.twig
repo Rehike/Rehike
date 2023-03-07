@@ -22,7 +22,7 @@
             </div>
             <div class="yt-lockup-content">
                 <h3 class="yt-lockup-title">
-                    <a class="yt-uix-tile-link yt-ui-ellipsis yt-ui-ellipsis-6  spf-link " href="{{ this.navigationEndpoint.getCommentsFromInboxCommand ? "/watch?v=" ~ this.navigationEndpoint.getCommentsFromInboxCommand.videoId ~ "&lc=" ~ this.navigationEndpoint.getCommentsFromInboxCommand.linkedCommentId : getUrl(this) }}" title="{{ rehike.getText(this.shortMessage) }}">{{ rehike.getText(this.shortMessage) }}</a>
+                    <a class="yt-uix-tile-link yt-ui-ellipsis yt-ui-ellipsis-6  spf-link " href="{{ this.navigationEndpoint.getCommentsFromInboxCommand ? "/watch?v=" ~ this.navigationEndpoint.getCommentsFromInboxCommand.videoId ~ "&lc=" ~ this.navigationEndpoint.getCommentsFromInboxCommand.linkedCommentId : rehike.getUrl(this) }}" title="{{ rehike.getText(this.shortMessage) }}">{{ rehike.getText(this.shortMessage) }}</a>
                     <span class="accessible-description" id="description-id-{{ random(10000, 99999) }}"> - Notification</span>
                 </h3>
                 <ul class="yt-lockup-byline">

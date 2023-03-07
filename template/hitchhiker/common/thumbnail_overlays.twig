@@ -18,7 +18,7 @@
     {% for overlay in overlays %}
         {% if overlay.thumbnailOverlayTimeStatusRenderer and includeTime %}
             <span class="video-time">
-                {{ getText(overlay.thumbnailOverlayTimeStatusRenderer.text) }}
+                {{ rehike.getText(overlay.thumbnailOverlayTimeStatusRenderer.text) }}
             </span>
         {% elseif overlay.thumbnailOverlayToggleButtonRenderer.untoggledIcon.iconType == "WATCH_LATER" %}
             {% from "common/uix/watch_later_button.twig" import render as watch_later %}
@@ -34,7 +34,7 @@
     {% for overlay in overlays %}
         {% if overlay.thumbnailOverlayTimeStatusRenderer %}
             <span class="video-time">
-                {{ getText(overlay.thumbnailOverlayTimeStatusRenderer.text) }}
+                {{ rehike.getText(overlay.thumbnailOverlayTimeStatusRenderer.text) }}
             </span>
         {% endif %}
     {% endfor %}

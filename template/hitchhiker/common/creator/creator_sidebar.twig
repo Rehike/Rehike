@@ -20,7 +20,7 @@
 
 {% macro item(data) %}
 <li class="creator-sidebar-item spf-link {{ data.isSelected ? "selected" }}">
-    <a href="{{ getUrl(data) }}" class="creator-sidebar-item-link">
+    <a href="{{ rehike.getUrl(data) }}" class="creator-sidebar-item-link">
         {{ rehike.getText(data.title) }}
     </a>
 </li>

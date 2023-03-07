@@ -124,16 +124,16 @@ not-fixed-width-tab-widescreen
             {%- from "common/uix/button.twig" import render as button -%}
             {%- if yt.page.header -%}
             {%- set header = yt.page.header -%}
-            <div id="pl-header" class="branded-page-box clearfix" data-all-playlists-url="{{ getUrl(header.ownerEndpoint) }}/playlists">
+            <div id="pl-header" class="branded-page-box clearfix" data-all-playlists-url="{{ rehike.getUrl(header.ownerEndpoint) }}/playlists">
                 <div class="pl-header-thumb" style="height: 126px;">
                     <img src="{{ rehike.getThumb(header.playlistHeaderBanner.heroPlaylistThumbnailRenderer.thumbnail, 126) }}" height="126px">
-                    <a href="{{ getUrl(plh) }}" class="pl-header-play-all-overlay yt-valign spf-link">► {{ getText(header.playlistHeaderBanner.heroPlaylistThumbnailRenderer.thumbnailOverlays.thumbnailOverlayHoverTextRenderer.text) }}</a>
+                    <a href="{{ rehike.getUrl(plh) }}" class="pl-header-play-all-overlay yt-valign spf-link">► {{ rehike.getText(header.playlistHeaderBanner.heroPlaylistThumbnailRenderer.thumbnailOverlays.thumbnailOverlayHoverTextRenderer.text) }}</a>
                 </div>
                 <div class="pl-header-content">
                     <h1 class="pl-header-title" tabindex="0">{{ rehike.getText(header.title) }}</h1>
                     <ul class="pl-header-details">
                         <li>
-                            <a href="{{ getUrl(header.ownerEndpoint) }}" class="spf-link">
+                            <a href="{{ rehike.getUrl(header.ownerEndpoint) }}" class="spf-link">
                                 {{ rehike.getText(header.ownerText) }}
                             </a>
                         </li>

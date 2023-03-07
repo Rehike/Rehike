@@ -107,7 +107,7 @@
                             <button class="show-search epic-nav-item secondary-nav" title="{{ item.title }}">
                                 <span class="epic-nav-item-heading-icon search-icon yt-sprite"></span>
                             </button>
-                            <form class="search-form epic-nav-item secondary-nav" action="{{ getUrl(item.endpoint) }}" method="get">
+                            <form class="search-form epic-nav-item secondary-nav" action="{{ rehike.getUrl(item.endpoint) }}" method="get">
                                 <span class=" yt-uix-form-input-container yt-uix-form-input-text-container">
                                     <input class="yt-uix-form-input-text search-field" name="query" id="channels-search-field" type="text" value="{{ item.expandedText }}" placeholder="{{ item.title }}" maxlength="100" autocomplete="off">
                                 </span>

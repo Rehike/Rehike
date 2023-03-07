@@ -34,7 +34,7 @@
 
 {% macro comment(comment, isReply) %}
 <div class="comment-renderer {{ comment.isLiked ? "liked" }}   "  data-visibility-types="12" data-cid="{{ comment.commentId }}">
-   <a href="{{ getUrl(comment.authorEndpoint) }}" class="spf-link ">
+   <a href="{{ rehike.getUrl(comment.authorEndpoint) }}" class="spf-link ">
       {% set thumbnailSize = (comment.isReply or isReply) ? '32' : '48' %}
       <span class="video-thumb comment-author-thumbnail yt-thumb yt-thumb-{{ thumbnailSize }}">
          <span class="yt-thumb-square">
@@ -53,7 +53,7 @@
       {% endif %}
       <div class="comment-renderer-header">
          {{ _self.channelLink(comment) }}
-         <span class="comment-renderer-time" tabindex="0"><a href="{{ getUrl(comment.publishedTimeText.runs[0]) }}" class="spf-link ">{{ rehike.getText(comment.publishedTimeText) }}</a>
+         <span class="comment-renderer-time" tabindex="0"><a href="{{ rehike.getUrl(comment.publishedTimeText.runs[0]) }}" class="spf-link ">{{ rehike.getText(comment.publishedTimeText) }}</a>
          </span>
          {%- if comment.linkedCommentBadge -%}
             <span class="comment-renderer-linked-comment">{{ comment.linkedCommentBadge.metadataBadgeRenderer.label }}</span>
@@ -150,7 +150,7 @@
 {%- macro textContent(content) -%}
 {%- for run in content.runs -%}
    {%- if run.navigationEndpoint -%}{%- apply spaceless -%}
-      {%- set href = getUrl(run) -%}
+      {%- set href = rehike.getUrl(run) -%}
       {%- set spf = (href|first == "/") -%}
       <a href="{{ href }}" class=" {{ spf ? 'spf-link' }}" target="_blank">{{ run.text|spaceless }}</a>
    {%- endapply -%}{%- elseif run.emoji.isCustomEmoji -%}

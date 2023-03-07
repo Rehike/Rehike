@@ -24,7 +24,7 @@
              <span id="eow-title" class="watch-title" dir="ltr" title="{{ rehike.getText(info.title) }}">
              {% for run in info.title.runs %}
                 {% if run.navigationEndpoint %}
-                <a {{ getUrl(run)|first == "/" ? 'class="spf-link" ' }}href="{{ getUrl(run) }}">
+                <a {{ rehike.getUrl(run)|first == "/" ? 'class="spf-link" ' }}href="{{ rehike.getUrl(run) }}">
                 {% endif %}
                 {{ run.text }}
                 {% if run.navigationEndpoint %}

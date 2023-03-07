@@ -22,7 +22,7 @@
                 {% if playlist.shortBylineText %}
                     {% set author = playlist.shortBylineText.runs.0 %}
                     <li class="author-attribution">
-                        {{ rehike.config.appearance.usernamePrepends ? yt.msgs.usernamePrepend }}<a href="{{ getUrl(author) }}" class="spf-link">{{ author.text }}</a>
+                        {{ rehike.config.appearance.usernamePrepends ? yt.msgs.usernamePrepend }}<a href="{{ rehike.getUrl(author) }}" class="spf-link">{{ author.text }}</a>
                     </li>
                 {% endif %}
                 {% if playlist.videoCountText %}

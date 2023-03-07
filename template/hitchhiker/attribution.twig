@@ -85,9 +85,9 @@
                     {%- if rehike.config.appearance.usernamePrepends -%}
                     <span class="username-prepend">{{ yt.msgs.usernamePrepend }}</span>
                     {%- endif -%}
-                    <a href="{{ getUrl(video.author) }}" class="yt-user-name" aria-label="{{ video.authorA11yLabel }}">{{ rehike.getText(video.author) }}</a>
+                    <a href="{{ rehike.getUrl(video.author) }}" class="yt-user-name" aria-label="{{ video.authorA11yLabel }}">{{ rehike.getText(video.author) }}</a>
                 </span>
-                <a href="{{ getUrl(video.attrLink) }}" class="attribution-link">{{ rehike.getText(video.attrLink) }}</a>
+                <a href="{{ rehike.getUrl(video.attrLink) }}" class="attribution-link">{{ rehike.getText(video.attrLink) }}</a>
             </p>
         </div>
         {%- endfor -%}

@@ -7,7 +7,7 @@
     <td class="pl-video-index"></td>
     <td class="pl-video-thumbnail">
         <span class="pl-video-thumb ux-thumb-wrap contains-addto">
-            <a href="{{ getUrl(this) }}" class="spf-link" aria-hidden="true">
+            <a href="{{ rehike.getUrl(this) }}" class="spf-link" aria-hidden="true">
                 <span class="video-thumb yt-thumb yt-thumb-72">
                     <span class="yt-thumb-default">
                         <span class="yt-thumb-clip">
@@ -27,11 +27,11 @@
         </span>
     </td>
     <td class="pl-video-title">
-        <a href="{{ getUrl(this) }}" class="pl-video-title-link yt-uix-tile-link spf-link">{{ rehike.getText(this.title) }}</a>
+        <a href="{{ rehike.getUrl(this) }}" class="pl-video-title-link yt-uix-tile-link spf-link">{{ rehike.getText(this.title) }}</a>
         <div class="pl-video-owner">
             {% set byline = this.shortBylineText %}
             {{ rehike.config.appearance.usernamePrepends ? yt.msgs.usernamePrepend }}
-            <a href="{{ getUrl(byline.runs[0]) }}" class="spf-link" data-ytid="{{ byline.navigationEndpoint.browseEndpoint.browseId }}" data-name="playlist">{{ rehike.getText(byline) }}</a>
+            <a href="{{ rehike.getUrl(byline.runs[0]) }}" class="spf-link" data-ytid="{{ byline.navigationEndpoint.browseEndpoint.browseId }}" data-name="playlist">{{ rehike.getText(byline) }}</a>
         </div>
         <div class="pl-video-bottom-standalone-badge"></div>
     </td>

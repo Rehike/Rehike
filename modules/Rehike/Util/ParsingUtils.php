@@ -61,6 +61,14 @@ class ParsingUtils
         return null;
     }
 
+    public static function getUrl(object $source): ?string
+    {
+        return @$source->navigationEndpoint->commandMetadata->webCommandMetadata->url
+            ?? @$source->navigationEndpoint->confirmDialogEndpoint->content->confirmDialogRenderer->confirmButton->buttonRenderer->command->urlEndpoint->url
+            ?? @$source->commandMetadata->webCommandMetadata->url
+            ?? null;
+    }
+
     /**
      * Get the thumbnail of an InnerTube API response field.
      * 

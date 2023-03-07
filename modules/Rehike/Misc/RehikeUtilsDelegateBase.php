@@ -48,6 +48,14 @@ abstract class RehikeUtilsDelegateBase extends stdClass
     }
 
     /**
+     * Alias for ParsingUtils::getUrl() for templating use.
+     */
+    public static function getUrl(object $source): string
+    {
+        return ParsingUtils::getUrl($source) ?? "";
+    }
+
+    /**
      * Alias for ParsingUtils::getThumb() for templating use.
      */
     public static function getThumb(?object $obj, int $height = 0): string

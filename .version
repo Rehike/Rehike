@@ -1,10 +1,10 @@
 {
-	"previousHash": "9a6bc3aec74a3809b5f619d8a9f8d407d59a59c9",
-	"currentRevisionId": 795,
-	"subject": "Fix errors and references to nonexistent rehike.getUrl",
-	"body": "Fix errors and references to nonexistent rehike.getUrl",
+	"previousHash": "e81050a2a5cbf4bbe08a5dac84ac27df493dc296",
+	"currentRevisionId": 796,
+	"subject": "Fix few things, move away from template functions a bit more",
+	"body": "Fix few things, move away from template functions a bit more",
 	"branch": "dev-0.7-asynchike-main",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1678152901
+	"time": 1678162063
 }

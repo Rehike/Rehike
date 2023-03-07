@@ -3,7 +3,7 @@
 {% import "common/thumbnail_overlays.twig" as overlays %}
 {% from "core/html/img.twig" import img %}
 <div class="yt-lockup-thumbnail {{ data.type == "playlist" or data.type == "radio" ? "yt-pl-thumb" }} {{ getWLOverlay(info) != null ? "contains-addto" }}">
-    <a href="{{ getUrl(info) }}" class=" spf-link {{ data.type == "playlist" or data.type == "radio" ? "yt-pl-thumb-link" }}" aria-hidden="true">
+    <a href="{{ rehike.getUrl(info) }}" class=" spf-link {{ data.type == "playlist" or data.type == "radio" ? "yt-pl-thumb-link" }}" aria-hidden="true">
         <div class="yt-thumb video-thumb {{data.type == "video" and rehike.config.appearance.movingThumbnails ? "yt-uix-mouseover-img-wrap" }}">
             <span class="yt-thumb-simple">
                 {{ img({
