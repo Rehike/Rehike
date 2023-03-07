@@ -61,7 +61,7 @@ class ParsingUtils
         return null;
     }
 
-    public static function getUrl(object|array $source): ?string
+    public static function getUrl(mixed $source): ?string
     {
         return @$source->navigationEndpoint->commandMetadata->webCommandMetadata->url
             ?? @$source->navigationEndpoint->confirmDialogEndpoint->content->confirmDialogRenderer->confirmButton->buttonRenderer->command->urlEndpoint->url

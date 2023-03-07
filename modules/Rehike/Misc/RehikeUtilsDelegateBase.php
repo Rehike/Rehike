@@ -50,7 +50,7 @@ abstract class RehikeUtilsDelegateBase extends stdClass
     /**
      * Alias for ParsingUtils::getUrl() for templating use.
      */
-    public static function getUrl(object|array $source): string
+    public static function getUrl(mixed $source): string
     {
         return ParsingUtils::getUrl($source) ?? "";
     }
