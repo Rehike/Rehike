@@ -58,6 +58,7 @@ class InnertubeBrowseConverter
         {
             switch ($name)
             {
+                case "verticalListRenderer":
                 case "horizontalListRenderer":
                 case "expandedShelfContentsRenderer":
                     $value->items = self::generalLockupConverter($value->items, $context);
