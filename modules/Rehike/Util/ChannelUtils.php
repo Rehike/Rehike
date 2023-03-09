@@ -59,7 +59,8 @@ class ChannelUtils
         return async(function() use (&$url) {
             $response = (yield Network::innertubeRequest(
                 action: "navigation/resolve_url",
-                body: [ "url" => "https://www.youtube.com" . $url ]
+                body: [ "url" => "https://www.youtube.com" . $url ],
+                ignoreErrors: true // Required for the 404 page instead of uncaught exception.
             ))->getJson();
     
             if (isset($response->endpoint->browseEndpoint->browseId))
@@ -75,7 +76,8 @@ class ChannelUtils
             {
                 $response2 = (yield Network::innertubeRequest(
                     action: "navigation/resolve_url",
-                    body: [ "url" => $response->endpoint->urlEndpoint->url ]
+                    body: [ "url" => $response->endpoint->urlEndpoint->url ],
+                    ignoreErrors: true
                 ))->getJson();
     
                 return $response2->endpoint->browseEndpoint->browseId ?? null;

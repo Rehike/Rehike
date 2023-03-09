@@ -69,10 +69,13 @@ class channel extends NirvanaController {
             $ucid = yield ChannelUtils::getUcid($request);
             $yt->ucid = $ucid;
 
-            if ($ucid == "") {
+            if ($ucid == "")
+            {
                 http_response_code(404);
                 $this->spfIdListeners = [];
                 $this->template = "error/404";
+                
+                return;
             }
 
             // Register the endpoint in the request

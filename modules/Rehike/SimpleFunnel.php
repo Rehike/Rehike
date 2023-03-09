@@ -2,24 +2,29 @@
 namespace Rehike;
 
 use YukisCoffee\CoffeeRequest\CoffeeRequest;
+use YukisCoffee\CoffeeRequest\Promise;
+use YukisCoffee\CoffeeRequest\Network\Request;
+use YukisCoffee\CoffeeRequest\Network\Response;
+use YukisCoffee\CoffeeRequest\Network\ResponseHeaders;
 
 /**
- * A simple tool to funnel requests from a certain domain,
- * while ignoring any proxies active
+ * A simple tool to funnel requests from a certain domain, while ignoring any
+ * proxies active
  * 
- * @author Aubrey P. <aubyomori@gmail.com>
- * @author Taniko Y. <kirasicecreamm@gmail.com>
+ * @author Aubrey Pankow <aubyomori@gmail.com>
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  */
-class SimpleFunnel {
+class SimpleFunnel
+{
     /**
-     * Hostname for funnelCurrentPage
+     * Hostname for funnelCurrentPage.
      * 
      * @var string
      */
-    public static $hostname = "www.youtube.com";
+    private static $hostname = "www.youtube.com";
 
     /**
-     * Remove these request headers
+     * Remove these request headers.
      * LOWERCASE ONLY
      * 
      * @var string[]
@@ -33,9 +38,10 @@ class SimpleFunnel {
     ];
 
     /**
-     * Remove these response headers
+     * Remove these response headers.
      * LOWERCASE ONLY
      * 
+     * @internal
      * @var string[]
      */
     public static $illegalResponseHeaders = [
@@ -47,13 +53,15 @@ class SimpleFunnel {
      * Funnel a response through.
      * 
      * @param array $opts  Options such as headers and request method
-     * @return object
+     * @return Promise<SimpleFunnelResponse>
      */
-    public static function funnel(array $opts): void {
+    public static function funnel(array $opts): Promise/*<SimpleFunnelResponse>*/
+    {
         // Required fields
         if (!isset($opts["host"])) self::output((object) [
             "error" => "No hostname specified"
         ]);
+
         if (!isset($opts["uri"])) self::output((object) [
             "error" => "No URI specified"
         ]);
@@ -66,17 +74,10 @@ class SimpleFunnel {
             "headers" => []
         ];
 
-        $illegalRequestHeaders = [
-            "Accept",
-            "Accept-Encoding",
-            "Host",
-            "Origin",
-            "Referer"
-        ];
-
         $headers = [];
+
         foreach ($opts["headers"] as $key => $val) {
-            if (!in_array($key, $illegalRequestHeaders)) {
+            if (!in_array(strtolower($key), self::$illegalRequestHeaders)) {
                 $headers[$key] = $val;
             }
         }
@@ -100,26 +101,30 @@ class SimpleFunnel {
             $params["body"] = $opts["body"];
         }
 
+        $wrappedResponse = new Promise/*<Response>*/;
+
         $request = CoffeeRequest::request($url, $params);
 
-        $request->then(function($response) {
-            // header("Content-Type: text/plain");
-            // var_dump($response);
-            // die();
-
-            self::output($response);
+        $request->then(function($response) use ($wrappedResponse) {
+            $wrappedResponse->resolve(SimpleFunnelResponse::fromResponse($response));
         });
 
         CoffeeRequest::run();
+
+        return $wrappedResponse;
     }
 
     /**
      * Output a funnel response onto the page.
      * 
+     * Only used for echoing errors now.
+     * 
      * @param object $funnelData
      */
-    public static function output(object $funnelData): void {
-        if (isset($funnelData->error)) {
+    public static function output(object $funnelData): void
+    {
+        if (isset($funnelData->error))
+        {
             http_response_code(500);
             echo("
             <title>SimpleFunnel Error</title>
@@ -130,28 +135,20 @@ class SimpleFunnel {
             ");
             return;
         }
-
-        $illegalResponseHeaders = [
-            "content-encoding"
-        ];
-
-        http_response_code($funnelData->status);
-        foreach($funnelData->headers as $name => $value)
-        if (!in_array($name, self::$illegalResponseHeaders)) {
-            header("$name: $value");
+        else
+        {
+            throw new \Exception("Outputting non-errors with SimpleFunnel is deprecated.");
         }
-        echo($funnelData->getText());
-        die();
     }
     
     /**
      * Funnel a page with the current data.
      * 
-     * @param  bool $output  Whether or not to output the page
-     * @return object|void
+     * @return Promise<SimpleFunnelResponse>
      */
-    public static function funnelCurrentPage(bool $output = false) {
-        self::funnel([
+    public static function funnelCurrentPage(): Promise/*<SimpleFunnelResponse>*/
+    {
+        return self::funnel([
             "method" => $_SERVER["REQUEST_METHOD"],
             "host" => self::$hostname,
             "uri" => $_SERVER["REQUEST_URI"],
@@ -159,5 +156,57 @@ class SimpleFunnel {
             "body" => file_get_contents("php://input"),
             "headers" => getallheaders()
         ]);
+    }
+}
+
+/**
+ * A custom class that represents a SimpleFunnel response.
+ * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
+ */
+class SimpleFunnelResponse extends Response
+{
+    public static function fromResponse(Response $response): self
+    {
+        return new self(
+            source: $response->sourceRequest,
+            status: $response->status,
+            content: $response->getText(),
+            headers: self::processResponseHeaders($response->headers)
+        );
+    }
+
+    /**
+     * Output the response of the page.
+     */
+    public function output(): void
+    {
+        http_response_code($this->status);
+
+        foreach($this->headers as $name => $value)
+        {
+            header("$name: $value");
+        }
+        
+        echo($this->getText());
+        exit();
+    }
+
+    /**
+     * Process the response headers and remove illegal headers.
+     */
+    private static function processResponseHeaders(ResponseHeaders $headers): array
+    {
+        $result = [];
+
+        foreach ($headers as $name => $value)
+        {
+            if (!in_array(strtolower($name), SimpleFunnel::$illegalResponseHeaders))
+            {
+                $result[$name] = $value;
+            }
+        }
+
+        return $result;
     }
 }

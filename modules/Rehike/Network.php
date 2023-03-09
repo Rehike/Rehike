@@ -83,7 +83,8 @@ class Network
         string $action, 
         array $body = [],
         string $clientName = "WEB", 
-        string $clientVersion = "2.20221104.02.00"
+        string $clientVersion = "2.20221104.02.00",
+        bool $ignoreErrors = false
     ): Promise/*<Response>*/
     {
         $host = self::INNERTUBE_API_HOST;
@@ -100,7 +101,8 @@ class Network
                  $clientName, 
                  $clientVersion,
                  $host,
-                 $key)
+                 $key,
+                 $ignoreErrors)
         {
             CoffeeRequest::request(
                 "{$host}/youtubei/v1/{$action}?key={$key}",
@@ -114,8 +116,8 @@ class Network
                     "onError" => "ignore",
                     "dnsOverride" => self::DNS_OVERRIDE_HOST
                 ]
-            )->then(function ($response) use ($resolve, $reject) {
-                if (200 == $response->status)
+            )->then(function ($response) use ($resolve, $reject, $ignoreErrors) {
+                if ( (200 == $response->status) || (true == $ignoreErrors) )
                 {
                     $resolve($response);
                 }

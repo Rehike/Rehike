@@ -109,7 +109,9 @@ class AsyncFunction
         }
         else
         {
-            // Warn the user.
+            throw new \Exception(
+                "An async function must take in a Promise."
+            );
         }
     }
 
