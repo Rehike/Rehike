@@ -1,10 +1,10 @@
 {
-	"previousHash": "15524d0832c66f5fe851bf74f5c5a3f0cce2333b",
-	"currentRevisionId": 801,
-	"subject": "I don't know and I don't care at this point",
-	"body": "I don't know and I don't care at this point",
+	"previousHash": "67ff3b704a47189c185baeeb5676b3aa426ba6a8",
+	"currentRevisionId": 802,
+	"subject": "Fix title in lockup template",
+	"body": "Fix title in lockup template",
 	"branch": "dev-0.7-asynchike-main",
-	"committerName": "Taniko Yamamoto",
-	"committerEmail": "99076687+YukisCoffee@users.noreply.github.com",
-	"time": 1678327888
+	"committerName": "aubymori",
+	"committerEmail": "aubyomori@gmail.com",
+	"time": 1678643792
 }

@@ -31,7 +31,7 @@
                     </span>
                     {% endif %}
                     <h3 class="yt-lockup-title {{ info.menu ? "contains-action-menu" }}">
-                        <a href="{{ rehike.rehike.getUrl(info) }}" class="spf-link yt-uix-tile-link yt-ui-ellipsis yt-ui-ellipsis-2" title="{{ rehike.getText(info.title) }}">
+                        <a href="{{ rehike.getUrl(info) }}" class="spf-link yt-uix-tile-link yt-ui-ellipsis yt-ui-ellipsis-2" title="{{ rehike.getText(info.title) }}">
                             {{ rehike.getText(info.title) }}
                             {% if data.type == "channel" and info.ownerBadges %}
                                 <span title="{{ yt.msgs.verified }}" class="yt-uix-tooltip yt-channel-title-icon-verified yt-sprite"></span>
