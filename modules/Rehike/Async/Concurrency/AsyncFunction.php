@@ -39,6 +39,11 @@ class AsyncFunction
      */
     private Promise $ownPromise;
 
+    public static function __initStatic()
+    {
+        \YukisCoffee\CoffeeRequest\Debugging\PromiseStackTrace::registerSkippedFile(__FILE__);
+    }
+
     public function __construct(Generator $g)
     {
         $this->generator = $g;

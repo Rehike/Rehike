@@ -2,6 +2,7 @@
 namespace YukisCoffee\CoffeeRequest;
 
 use YukisCoffee\CoffeeRequest\Util\IFulfillableEvent;
+use YukisCoffee\CoffeeRequest\Debugging\PromiseStackTrace;
 
 use Generator;
 use const E_USER_WARNING;
@@ -140,3 +141,5 @@ abstract class Event implements IFulfillableEvent
         }
     }
 }
+
+PromiseStackTrace::registerSkippedFile(__FILE__);

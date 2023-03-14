@@ -2,6 +2,7 @@
 namespace YukisCoffee\CoffeeRequest;
 
 use YukisCoffee\CoffeeRequest\Exception\GeneralException;
+use YukisCoffee\CoffeeRequest\Debugging\PromiseStackTrace;
 
 use Exception;
 use Generator;
@@ -75,6 +76,8 @@ abstract class PromiseEvent/*<T>*/ extends Event
         }
 
         return new class($p, $cb, $res, $rej) extends PromiseEvent/*<T>*/ {
+            private $promise;
+            
             /**
              * Callback hack.
              * 
@@ -151,3 +154,5 @@ abstract class PromiseEvent/*<T>*/ extends Event
         };
     }
 }
+
+PromiseStackTrace::registerSkippedFile(__FILE__);

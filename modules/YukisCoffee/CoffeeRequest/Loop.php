@@ -5,6 +5,7 @@ use YukisCoffee\CoffeeRequest\Exception\GeneralException;
 use YukisCoffee\CoffeeRequest\Util\IFulfillableEvent;
 use YukisCoffee\CoffeeRequest\Util\NullEvent;
 use YukisCoffee\CoffeeRequest\Util\QueuedPromiseResolver;
+use YukisCoffee\CoffeeRequest\Debugging\PromiseStackTrace;
 
 /**
  * Implements the CoffeeRequest event loop.
@@ -249,3 +250,5 @@ final class Loop
         self::$queuedPromises = [];
     }
 }
+
+PromiseStackTrace::registerSkippedFile(__FILE__);
