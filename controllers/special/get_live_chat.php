@@ -5,29 +5,31 @@ use function Rehike\Async\async;
 use Rehike\SimpleFunnel;
 use Rehike\SimpleFunnelResponse;
 use YukisCoffee\CoffeeRequest\Network\Response;
+use Rehike\Controller\Core\HitchhikerController;
 
-return new class
+return new class extends HitchhikerController
 {
     public const YTCFG_REGEX = "/ytcfg\.set\(({.*?})\);/";
+    public $useTemplate = false;
 
-    public function get(&$yt, $request)
+    public function onGet(&$yt, $request)
     {
         return async(function() use (&$yt, &$request) {
             $chatData = yield SimpleFunnel::funnelCurrentPage();
-            $chatHtml = &$chatData->body;
+            $chatHtml = $chatData->getText();
 
             $matches = [];
             preg_match(self::YTCFG_REGEX, $chatHtml, $matches);
 
             if (!isset($matches[1]))
-                self::error();
+                self::error("Could not find ytcfg");
 
             $ytcfg = json_decode($matches[1]);
             // Store the original ytcfg to replace in the HTML
             $oytcfg = $matches[1];
 
             if (is_null($ytcfg))
-                self::error();
+                self::error("Could not decode ytcfg");
 
             // Force light mode
             $ytcfg->LIVE_CHAT_ALLOW_DARK_MODE = false;
@@ -46,26 +48,30 @@ return new class
             $exps->kevlar_watch_color_update = false;
             $exps->web_sheets_ui_refresh = false;
 
+            
+
             $chatHtml = str_replace($oytcfg, json_encode($ytcfg), $chatHtml);
 
-            // echo hack
-            $headersArr = [];
-            foreach ($chatData->headers as $name => $value) $headersArr[$name] = $value;
+            // PHP doesn't let you cast objects (like: (array) $chatData->headers)
+            // and the Response constructor does not accept ResponseHeaders for
+            // the headers so we must convert it manually
+            $headers = [];
+            foreach ($chatData->headers as $name => $value) $headers[$name] = $value;
             SimpleFunnelResponse::fromResponse(
                 new Response(
                     $chatData->sourceRequest, 
                     $chatData->status,
                     $chatHtml,
-                    $headersArr
+                    $headers
                 )
             )->output();
         });
     }
 
-    public static function error()
+    public static function error(string $msg): void
     {
         http_response_code(400);
-        echo "[Rehike] Fatal error while attempting to load live chat";
+        echo "[Rehike] Fatal error while attempting to load live chat: $msg";
         die();
     }
 };

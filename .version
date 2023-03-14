@@ -1,10 +1,10 @@
 {
-	"previousHash": "67ff3b704a47189c185baeeb5676b3aa426ba6a8",
-	"currentRevisionId": 802,
-	"subject": "Fix title in lockup template",
-	"body": "Fix title in lockup template",
+	"previousHash": "2c249fbbdcfcb11721a6d2131bb3f1b3c8a467ed",
+	"currentRevisionId": 803,
+	"subject": "Fix get_live_chat",
+	"body": "Fix get_live_chat",
 	"branch": "dev-0.7-asynchike-main",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1678643792
+	"time": 1678758496
 }
