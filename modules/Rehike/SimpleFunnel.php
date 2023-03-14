@@ -58,13 +58,11 @@ class SimpleFunnel
     public static function funnel(array $opts): Promise/*<SimpleFunnelResponse>*/
     {
         // Required fields
-        if (!isset($opts["host"])) self::output((object) [
-            "error" => "No hostname specified"
-        ]);
+        if (!isset($opts["host"])) 
+            self::error("No hostname specified");
 
-        if (!isset($opts["uri"])) self::output((object) [
-            "error" => "No URI specified"
-        ]);
+        if (!isset($opts["uri"]))
+            self::error("No URI specified");
 
         // Default options
         $opts += [
@@ -115,30 +113,19 @@ class SimpleFunnel
     }
 
     /**
-     * Output a funnel response onto the page.
-     * 
-     * Only used for echoing errors now.
-     * 
-     * @param object $funnelData
+     * Output an error.
      */
-    public static function output(object $funnelData): void
+    private static function error(string $message): void
     {
-        if (isset($funnelData->error))
-        {
-            http_response_code(500);
-            echo("
-            <title>SimpleFunnel Error</title>
-            <style>body>*{margin:8px 0}</style>
-            <h2>An error has occured in SimpleFunnel</h2>
-            <p><b>Error</b>: " . $funnelData->error . "</p>
-            <small><i>Please report this to the GitHub.</i></small>
-            ");
-            return;
-        }
-        else
-        {
-            throw new \Exception("Outputting non-errors with SimpleFunnel is deprecated.");
-        }
+        http_response_code(500);
+        echo("
+        <title>SimpleFunnel Error</title>
+        <style>body>*{margin:8px 0}</style>
+        <h2>An error has occured in SimpleFunnel</h2>
+        <p><b>Error</b>: " . $message . "</p>
+        <small><i>Please report this to the GitHub.</i></small>
+        ");
+        return;
     }
     
     /**
