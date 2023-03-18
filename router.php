@@ -41,7 +41,8 @@ Router::funnel([
     "/testtube",
     "/t/terms",
     "/iframe_api",
-    "/signin_prompt"
+    "/signin_prompt",
+    "/post/*"
 ]);
 
 Router::redirect([
