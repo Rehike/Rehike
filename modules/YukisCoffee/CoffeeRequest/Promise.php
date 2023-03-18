@@ -5,6 +5,8 @@ use YukisCoffee\CoffeeRequest\Enum\PromiseStatus;
 use YukisCoffee\CoffeeRequest\Exception\UncaughtPromiseException;
 use YukisCoffee\CoffeeRequest\Util\PromiseAllBase;
 use YukisCoffee\CoffeeRequest\Util\QueuedPromiseResolver;
+use YukisCoffee\CoffeeRequest\Util\PromiseResolutionTracker;
+use YukisCoffee\CoffeeRequest\Debugging\PromiseStackTrace;
 
 use Exception;
 use ReflectionFunction;
@@ -50,6 +52,16 @@ class Promise/*<T>*/
      */
     public Exception $reason;
 
+    /**
+     * The stack trace of the Promise at its creation.
+     */
+    public PromiseStackTrace $creationTrace;
+
+    /**
+     * The stack trace of the Promise as of the last update.
+     */
+    public PromiseStackTrace $latestTrace;
+
     /** 
      * Callbacks to be ran when the promise is resolved.
      * 
@@ -81,6 +93,11 @@ class Promise/*<T>*/
      * @var callable<Exception>|null[]
      */
     private array $catches = [];
+
+    /**
+     * Requires the Promise to be resolved before the script ends.
+     */
+    private bool $throwOnUnresolved = true;
 
     /**
      * Used for keeping track of the current Promise callback level.
@@ -122,6 +139,9 @@ class Promise/*<T>*/
                 $cb($this->getResolveApi(), $this->getRejectApi());
             }
         }
+
+        $this->creationTrace = new PromiseStackTrace;
+        $this->latestTrace = &$this->creationTrace;
     }
 
     /**
@@ -169,6 +189,13 @@ class Promise/*<T>*/
             self::$promiseCallbackLevel--;
         }
 
+        $this->latestTrace = new PromiseStackTrace;
+
+        if ($this->throwOnUnresolved)
+        {
+            PromiseResolutionTracker::registerPendingPromise($this);
+        }
+
         return $this;
     }
 
@@ -190,6 +217,8 @@ class Promise/*<T>*/
             $cb($this->reason);
             self::$promiseCallbackLevel--;
         }
+
+        $this->latestTrace = new PromiseStackTrace;
 
         return $this;
     }
@@ -255,6 +284,11 @@ class Promise/*<T>*/
                     $result->then($this->thens[$i]);
                 }
             }
+        }
+
+        if ($this->throwOnUnresolved)
+        {
+            PromiseResolutionTracker::unregisterPendingPromise($this);
         }
 
         $this->setStatus(PromiseStatus::RESOLVED);
@@ -388,3 +422,5 @@ class Promise/*<T>*/
         return count($this->thens) - 1;
     }
 }
+
+PromiseStackTrace::registerSkippedFile(__FILE__);

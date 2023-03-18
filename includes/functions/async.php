@@ -1,6 +1,8 @@
 <?php
 namespace Rehike\Async;
 
+const ASYNC_FUNCTION_FILE = __FILE__;
+
 /**
  * Declares an async function.
  * 

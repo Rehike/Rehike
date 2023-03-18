@@ -24,6 +24,12 @@ use Generator;
  */
 class Concurrency
 {
+    public static function __initStatic()
+    {
+        \YukisCoffee\CoffeeRequest\Debugging\PromiseStackTrace::registerSkippedFile(__FILE__);
+        \YukisCoffee\CoffeeRequest\Debugging\PromiseStackTrace::registerSkippedFile(ASYNC_FUNCTION_FILE);
+    }
+
     /**
      * Declares an async function.
      * 
