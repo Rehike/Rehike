@@ -48,6 +48,7 @@ Router::funnel([
 Router::redirect([
     "/watch/(*)" => "/watch?v=$1",
     "/shorts/(*)" => "/watch?v=$1",
+    "/live/(*)" => "/watch?v=$1",
     "/hashtag/(*)" => "/results?search_query=$1",
     "/feed/what_to_watch/**" => "/",
     "/source/(*)" => function($request) {
