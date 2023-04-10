@@ -178,11 +178,13 @@ class channel extends NirvanaController {
                 {
                     $tabs = &$page->contents->twoColumnBrowseResultsRenderer->tabs;
 
-                    foreach ($tabs as &$tab)
+                    // Do NOT call this $tab. It will override the previous $tab
+                    // and cause an object to be registered as the current tab.
+                    foreach ($tabs as &$tabR)
                     {
-                        if (@$tab->tabRenderer->selected)
+                        if (@$tabR->tabRenderer->selected)
                         {
-                            $grid = &$tab->tabRenderer->content->richGridRenderer ?? null;
+                            $grid = &$tabR->tabRenderer->content->richGridRenderer ?? null;
                             break;
                         } 
                     }
@@ -195,8 +197,6 @@ class channel extends NirvanaController {
 
                         if (isset($ctoken))
                         {
-                            $yt->showSort = true;
-
                             $sort = yield Network::innertubeRequest(
                                 action: "browse",
                                 body: [
@@ -205,7 +205,6 @@ class channel extends NirvanaController {
                             );
 
                             $newContents = $sort->getJson();
-                            $newContents = json_decode($newContents);
                             $newContents = $newContents
                                 ->onResponseReceivedActions[1]
                                 ->reloadContinuationItemsCommand

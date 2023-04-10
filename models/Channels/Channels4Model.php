@@ -11,21 +11,18 @@ use Rehike\Model\Common\MAlert;
 class Channels4Model
 {
     private static $baseUrl;
-    private static $currentTab = null;
+    private static string $currentTab = "featured";
     public static $yt;
 
-    private static $videosSort;
+    private static int $videosSort;
 
     private static $subscriptionCount = "";
-
-    public static $showSort;
 
     public static function bake(&$yt, $data, $sidebarData = null)
     {
         self::$yt = &$yt;
 
-        self::$videosSort = $yt->videosSort ?? null;
-        self::$showSort = $yt->showSort ?? false;
+        self::$videosSort = $yt->videosSort ?? 0;
 
         // Declare the response array.
         $response = [];
@@ -213,11 +210,11 @@ class Channels4Model
         }
         else if ($a = @$content->sectionListRenderer->contents[0]->itemSectionRenderer->contents[0]->gridRenderer)
         {
-        return self::handleGridTab($a, $content);
+            return self::handleGridTab($a, $content);
         }
         else if ($a = @$content->richGridRenderer)
         {
-            return self::handleGridTab(InnertubeBrowseConverter::richGridRenderer($a), $content, self::$videosSort, true);
+            return self::handleGridTab(InnertubeBrowseConverter::richGridRenderer($a), $content, true);
         }
         else if (($a = @$content->sectionListRenderer->contents[0]->itemSectionRenderer) && (isset($a->contents[0]->backstagePostThreadRenderer)))
         {
@@ -244,20 +241,16 @@ class Channels4Model
         }
     }
 
-    public static function handleGridTab($data, $parentTab, $sort = null, $rich = false)
+    public static function handleGridTab($data, $parentTab, $rich = false)
     {
-        $currentTab = self::$currentTab;
-
         $response = [];
 
-        switch ($currentTab)
+        switch (self::$currentTab)
         {
             case "videos":
             case "streams":
-                if ($subnav = @$parentTab->sectionListRenderer->subMenu->channelSubMenuRenderer || $rich)
+                if ($rich)
                 {
-                    $subnav = $subnav ?? null;
-
                     $response += [
                         "brandedPageV2SubnavRenderer" => MSubnav::bakeVideos()
                     ];
@@ -274,7 +267,7 @@ class Channels4Model
                 }
         }
 
-        if ($rich && isset($_GET["flow"]) && "list" == $_GET["flow"])
+        if ($rich && @$_GET["flow"] == "list")
         {
             $response += [
                 "items" => $data->items
@@ -357,7 +350,7 @@ class Channels4Model
         return null;
     }
 
-    public static function registerCurrentTab($currentTab)
+    public static function registerCurrentTab(string $currentTab): void
     {
         self::$currentTab = $currentTab;
     }
