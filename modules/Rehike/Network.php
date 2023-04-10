@@ -83,7 +83,7 @@ class Network
         string $action, 
         array $body = [],
         string $clientName = "WEB", 
-        string $clientVersion = "2.20221104.02.00",
+        string $clientVersion = "2.20230331.00.00",
         bool $ignoreErrors = false
     ): Promise/*<Response>*/
     {

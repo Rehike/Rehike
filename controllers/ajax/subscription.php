@@ -32,7 +32,7 @@ return new class extends AjaxController {
             case "get_subscription_preferences_overlay":
                 $this->useTemplate = true;
                 $this->template = 
-                    "ajax/subscription/get_subscription_preference_overlay"
+                    "ajax/subscription/get_subscription_preferences_overlay"
                 ;
                 self::getPreferencesOverlay($yt, $request);
                 return; // This takes control of everything from here.

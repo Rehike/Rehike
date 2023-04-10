@@ -3,44 +3,38 @@ namespace Rehike\Model\Common\Subscription;
 
 use Rehike\TemplateFunctions;
 
-class MSubscriptionPreference {
-    /** @var string */
-    public $label;
+class MSubscriptionPreference
+{
+    public string $label;
 
-    /** @var bool; */
-    public $checked;
+    public bool $checked;
 
-    /** @var string */
-    public $params;
+    public string $params;
 
-    /** @var string */
-    public $class;
+    public string $class;
 
-    public function __construct($data) {
+    public function __construct(array $data) 
+    {
         $this->label = $data["label"] ?? "";
         $this->checked = $data["checked"] ?? false;
         $this->params = $data["params"] ?? false;
         $this->class = $data["class"] ?? false;
     }
 
-    public static function fromData($data) {
+    public static function fromData(object $data): self
+    {
         $item = $data->menuServiceItemRenderer ?? null;
         return new self([
             "label" => TemplateFunctions::getText($item->text) ?? "",
             "checked" => $item->isSelected ?? false,
             "params" => $item->serviceEndpoint->modifyChannelNotificationPreferenceEndpoint->params ?? "",
-            "class" => (function() use ($item) {
-                switch ($item->icon->iconType) {
-                    case "NOTIFICATIONS_ACTIVE":
-                        return "receive-all-updates";
-                    case "NOTIFICATIONS_NONE":
-                        return "receive-highlight-updates";
-                    case "NOTIFICATIONS_OFF":
-                        return "receive-no-updates";
-                    default:
-                        return "";
-                }
-            })()
+            "class" => match ($item->icon->iconType)
+            {
+                "NOTIFICATIONS_ACTIVE" => "receive-all-updates",
+                "NOTIFICATIONS_NONE" => "receive-highlight-updates",
+                "NOTIFICATIONS_OFF" => "receive-no-updates",
+                default => ""
+            }
         ]);
     }
 }
