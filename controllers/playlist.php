@@ -8,27 +8,34 @@ use \Rehike\Util\Base64Url;
 use \Rehike\Network;
 use \Rehike\i18n;
 
-return new class extends NirvanaController {
+use function Rehike\Async\async;
+
+return new class extends NirvanaController
+{
     public $template = "playlist";
 
-    public function onGet(&$yt, $request) {
-        if (!isset($request->params->list)) {
-            header("Location: /oops");
-        }
+    public function onGet(&$yt, $request)
+    {
+        return async(function() use (&$yt, $request) {
+            if (!isset($request->params->list))
+            {
+                header("Location: /oops");
+            }
 
-        // The playlist ID is stored in the URL parameter ?list=...
-        $yt->playlistId = $request->params->list;
+            // The playlist ID is stored in the URL parameter ?list=...
+            $yt->playlistId = $request->params->list;
 
-        // Internally, all playlist IDs are prefixed with VL, followed by
-        // their canonical prefix (PL, RD, LL, UU, etc.).
-        $this->setEndpoint("browse", "VL" . $yt->playlistId);
+            // Internally, all playlist IDs are prefixed with VL, followed by
+            // their canonical prefix (PL, RD, LL, UU, etc.).
+            $this->setEndpoint("browse", "VL" . $yt->playlistId);
 
-        Network::innertubeRequest(
-            action: "browse",
-            body: [
-                "browseId" => "VL" . $yt->playlistId
-            ]
-        )->then(function ($response) use ($yt) {
+            $response = yield Network::innertubeRequest(
+                action: "browse",
+                body: [
+                    "browseId" => "VL" . $yt->playlistId
+                ]
+            );
+
             $ytdata = $response->getJson();
 
             $yt->page = PlaylistModel::bake($ytdata);
@@ -38,16 +45,16 @@ return new class extends NirvanaController {
             $yt->ucid = $ytdata->header->playlistHeaderRenderer 
                 ->ownerEndpoint->browseEndpoint->browseId ?? null;
 
-            if (isset($yt->ucid)) {
+            if (isset($yt->ucid))
+            {
                 // Init i18n for channel model
-                $i18n = &i18n::newNamespace("channels");
-                $i18n->registerFromFolder("i18n/channels");
+                i18n::newNamespace("channels")->registerFromFolder("i18n/channels");
 
                 $params = new BrowseRequestParams();
                 $params->setTab("playlists");
                 $yt->partiallySelectTabs = true;
 
-                return Network::innertubeRequest(
+                $channelResponse = yield Network::innertubeRequest(
                     action: "browse", 
                     body: [
                         "browseId" => $yt->ucid,
@@ -56,15 +63,15 @@ return new class extends NirvanaController {
                         )
                     ]
                 );
-            }
-        })->then(function ($channelResponse) use ($yt) {
-            // If there's a channel response, then use it.
-            // Otherwise this then is never executed.
-            $channelData = $channelResponse->getJson();
 
-            // TODO: Inefficient procedure, should render header directly.
-            $channelModel = Channels4Model::bake($yt, $channelData);
-            $yt->page->channelHeader = $channelModel->header ?? null;
+                // If there's a channel response, then use it.
+                // Otherwise this then is never executed.
+                $channelData = $channelResponse->getJson();
+
+                // TODO: Inefficient procedure, should render header directly.
+                $channelModel = Channels4Model::bake($yt, $channelData);
+                $yt->page->channelHeader = $channelModel->header ?? null;
+            }
         });
     }
 };
