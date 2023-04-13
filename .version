@@ -1,10 +1,10 @@
 {
-	"previousHash": "0d2426cf17106a0309802a1016aea244e47d94c8",
-	"currentRevisionId": 820,
-	"subject": "Fix player unavailable not showing",
-	"body": "Fix player unavailable not showing",
+	"previousHash": "5e7214c18a5c6ffa463d9b29fd916c435866c58a",
+	"currentRevisionId": 821,
+	"subject": "Fix playlist links in description",
+	"body": "Fix playlist links in description",
 	"branch": "dev-0.7-asynchike-main",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1681425508
+	"time": 1681427670
 }

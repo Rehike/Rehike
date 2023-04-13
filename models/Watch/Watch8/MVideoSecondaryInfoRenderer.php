@@ -132,8 +132,16 @@ class MVideoSecondaryInfoRenderer
             // Channel links
             elseif (isset($run->navigationEndpoint->browseEndpoint))
             {
-                $count = 1; // This has to be a variable for some reason
-                $run->text = str_replace("\xc2\xa0", "", str_replace("/", "", $run->text, $count));
+                switch (substr($run->navigationEndpoint->browseEndpoint->browseId, 0, 2))
+                {
+                    case "UC":
+                        $count = 1; // This has to be a variable for some reason
+                        $run->text = str_replace("\xc2\xa0", "", str_replace("/", "", $run->text, $count));
+                        break;
+                    default:
+                        $run->text = self::truncate("https://www.youtube.com" . $run->navigationEndpoint->commandMetadata->webCommandMetadata->url);
+                        break;
+                }
             }
             // Weird fake channel links
             else if (str_contains($run->text, "\xc2\xa0"))
