@@ -12,25 +12,19 @@ class MAlert {
 
     /**
      * What type the alert should be rendered in.
-     * 
-     * @var string
      */
-    public $type = self::TypeInformation;
+    public string $type = self::TypeInformation;
 
     /**
      * Text displayed inside the alert.
-     * 
-     * @var string
      */
-    public $content = "";
+    public string $text = "";
 
     /**
      * Whether or not to render a close button
      * on the right side of the alert.
-     * 
-     * @var boolean
      */
-    public $hasCloseButton = true;
+    public bool $hasCloseButton = true;
 
     /**
      * Buttons to be shown on the right of the alert.

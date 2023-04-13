@@ -109,9 +109,9 @@ class ParsingUtils
         {
             $ratio = $thumb->width / $thumb->height;
 
-            // 16:9 is 1.777 repeating. I believe the imprecise equation
-            // here is done for some edge cases like 1366:768, which is
-            // only approximately 16:9 but would still be regarded as such.
+            // 16:9 is 1.777 repeating. The imprecise equation here is done
+            // for some edge cases like 1366:768, which is only approximately
+            // 16:9 but would still be regarded as such.
             if ($ratio >= 1.7 && $ratio < 1.8)
             {
                 return $thumb->url;

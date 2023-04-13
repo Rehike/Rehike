@@ -124,43 +124,30 @@ not-fixed-width-tab-widescreen
             {%- from "common/uix/button.twig" import render as button -%}
             {%- if yt.page.header -%}
             {%- set header = yt.page.header -%}
-            <div id="pl-header" class="branded-page-box clearfix" data-all-playlists-url="{{ rehike.getUrl(header.ownerEndpoint) }}/playlists">
+            <div id="pl-header" class="branded-page-box clearfix" data-all-playlists-url="{{ header.thumbnail.allPlaylistsUrl }}">
                 <div class="pl-header-thumb" style="height: 126px;">
-                    <img src="{{ rehike.getThumb(header.playlistHeaderBanner.heroPlaylistThumbnailRenderer.thumbnail, 126) }}" height="126px">
-                    <a href="{{ rehike.getUrl(plh) }}" class="pl-header-play-all-overlay yt-valign spf-link">► {{ rehike.getText(header.playlistHeaderBanner.heroPlaylistThumbnailRenderer.thumbnailOverlays.thumbnailOverlayHoverTextRenderer.text) }}</a>
+                    <img src="{{ header.thumbnail.thumbnail }}" height="126px">
+                    <a href="{{ header.thumbnail.url }}" class="pl-header-play-all-overlay yt-valign spf-link">► {{ header.thumbnail.playAllText }}</a>
                 </div>
                 <div class="pl-header-content">
-                    <h1 class="pl-header-title" tabindex="0">{{ rehike.getText(header.title) }}</h1>
+                    <h1 class="pl-header-title" tabindex="0">{{ header.title }}</h1>
                     <ul class="pl-header-details">
+                        {% for detail in header.details %}
                         <li>
-                            <a href="{{ rehike.getUrl(header.ownerEndpoint) }}" class="spf-link">
-                                {{ rehike.getText(header.ownerText) }}
+                            {% if detail.navigationEndpoint %}
+                            <a class="spf-link" href="{{ rehike.getUrl(detail) }}">
+                            {% endif %}
+                                {{ getText(detail) }}
+                            {% if detail.navigationEndpoint %}
                             </a>
+                            {% endif %}
                         </li>
-                        {%- if header.numVideosText -%}
-                        <li>{{ rehike.getText(header.numVideosText) }}</li>
-                        {%- endif -%}
-                        {%- if header.viewCountText -%}
-                        <li>{{ rehike.getText(header.viewCountText) }}</li>
-                        {%- endif -%}
-                        {%- if header.byline[1] -%}
-                        <li>{{ rehike.getText(header.byline[1].playlistBylineRenderer.text) }}</li>
-                        {%- endif -%}
+                        {% endfor %}
                     </ul>
                     <div class="playlist-actions">
-                        {%- if header.playButton.buttonRenderer -%}
-                        {{ button({
-                            style: "STYLE_DEFAULT",
-                            size: "SIZE_DEFAULT",
-                            text: header.playButton.buttonRenderer.text,
-                            navigationEndpoint: header.playButton.buttonRenderer.navigationEndpoint,
-                            icon: true,
-                            class: [
-                                "playlist-play-all",
-                                "play-all-icon-btn"
-                            ]
-                        }) }}
-                        {%- endif -%}
+                        {% for action in header.actions %}
+                            {{ button(action) }}
+                        {% endfor %}
                     </div>
                 </div>
             </div>

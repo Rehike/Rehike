@@ -2,7 +2,6 @@
 namespace Rehike\Model\Playlist;
 
 use \Rehike\Model\Common\MAlert;
-use \Rehike\TemplateFunctions;
 use \Rehike\i18n;
 
 class PlaylistModel {
@@ -11,7 +10,7 @@ class PlaylistModel {
         $i18n->registerFromFolder("i18n/playlist");
         $response = (object) [];
 
-        $contentContainer = $dataHost->contents->twoColumnBrowseResultsRenderer->tabs[0] ->tabRenderer->content ?? null;
+        $contentContainer = $dataHost->contents->twoColumnBrowseResultsRenderer->tabs[0]->tabRenderer->content ?? null;
 
         if (!isset($contentContainer->sectionListRenderer)) {
             return (object) [
@@ -24,19 +23,16 @@ class PlaylistModel {
             ];
         }
 
-        $response->videoList = $contentContainer->sectionListRenderer->contents[0] ->itemSectionRenderer->contents[0] ->playlistVideoListRenderer->contents;
+        $response->videoList = $contentContainer->sectionListRenderer->contents[0]->itemSectionRenderer->contents[0]->playlistVideoListRenderer->contents;
+        $response->header = new MPlaylistHeader($dataHost->header->playlistHeaderRenderer);
 
-        $response->header = $dataHost->header->playlistHeaderRenderer ?? null;
-        $header = &$response->header;
-        $header->actions = [];
-
-        $response -> alerts = [];
+        $response->alerts = [];
         if (isset($dataHost->alerts)) foreach ($dataHost->alerts as $alert) {
             $alert = $alert->alertWithButtonRenderer
                   ?? $alert->alertRenderer
                   ?? null;
 
-            $response -> alerts[] = MAlert::fromData($alert);
+            $response->alerts[] = MAlert::fromData($alert);
         } 
 
         return $response;
