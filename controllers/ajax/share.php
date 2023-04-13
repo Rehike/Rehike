@@ -11,8 +11,8 @@ use function Rehike\Async\async;
 
 return new class extends AjaxController 
 {
-    private string $videoId;
-    private string $listId;
+    private ?string $videoId;
+    private ?string $listId;
 
     public function onGet(&$yt, $request) 
     {
