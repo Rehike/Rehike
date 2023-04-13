@@ -191,7 +191,7 @@ class Promise/*<T>*/
 
         $this->latestTrace = new PromiseStackTrace;
 
-        if ($this->throwOnUnresolved)
+        if (count($this->thens) == 1 && $this->throwOnUnresolved)
         {
             PromiseResolutionTracker::registerPendingPromise($this);
         }
