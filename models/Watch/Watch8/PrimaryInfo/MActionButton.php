@@ -99,7 +99,7 @@ class MActionButton extends MButton
      */
     public static function buildAddtoButton($videoId)
     {
-        $i18n = i18n::getNamespace("watch/primary");
+        $i18n = i18n::getNamespace("watch");
 
         $buttonCfg = [
             "label" => $i18n->get("actionAddTo"),
@@ -150,7 +150,7 @@ class MActionButton extends MButton
      */
     public static function buildShareButton()
     {
-        $i18n = i18n::getNamespace("watch/primary");
+        $i18n = i18n::getNamespace("watch");
 
         return new self([
             "label" => $i18n->actionShare,
@@ -168,7 +168,7 @@ class MActionButton extends MButton
      */
     public static function buildReportButton()
     {
-        $i18n = i18n::getNamespace("watch/primary");
+        $i18n = i18n::getNamespace("watch");
 
         $buttonCfg = [
             "label" => $i18n->actionReport,
@@ -202,7 +202,7 @@ class MActionButton extends MButton
      */
     public static function buildMoreButton()
     {
-        $i18n = i18n::getNamespace("watch/primary");
+        $i18n = i18n::getNamespace("watch");
 
         return new self([
             "label" => $i18n->actionMore,

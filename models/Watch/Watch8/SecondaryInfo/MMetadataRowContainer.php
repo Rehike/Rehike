@@ -13,7 +13,7 @@ class MMetadataRowContainer
 
     public function __construct(&$rows, $dataHost)
     {
-        $i18n = i18n::getNamespace("watch/secondary");
+        $i18n = i18n::getNamespace("watch");
         
         // Configuration
         $addLicense = true;
@@ -155,7 +155,7 @@ class MMetadataRowContainer
 
     protected function getCategoryField($dataHost)
     {
-        $i18n = i18n::getNamespace("watch/secondary");
+        $i18n = i18n::getNamespace("watch");
         $title = $i18n->metadataCategory;
 
         $category = @$dataHost::$yt->playerResponse->microformat
@@ -170,7 +170,7 @@ class MMetadataRowContainer
 
     protected function getLicenseField()
     {
-        $i18n = i18n::getNamespace("watch/secondary");
+        $i18n = i18n::getNamespace("watch");
 
         $title = $i18n -> metadataLicense;
         $text = $i18n -> metadataLicenseStandard;

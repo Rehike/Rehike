@@ -49,8 +49,6 @@ class MVideoPrimaryInfoRenderer
     public function __construct($dataHost, $videoId)
     {
         $info = &$dataHost::$primaryInfo ?? null;
-        $i18n = i18n::newNamespace("watch/primary");
-        $i18n->registerFromFolder("i18n/watch");
 
         if (!is_null($info))
         {

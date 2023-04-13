@@ -11,6 +11,7 @@ use Rehike\Util\Base64Url;
 use Rehike\ConfigManager\ConfigManager;
 use Rehike\Util\WatchUtils;
 use Rehike\Util\ExtractUtils;
+use Rehike\i18n;
 
 use Rehike\Model\Watch\WatchModel;
 
@@ -31,6 +32,8 @@ return new class extends NirvanaController {
     public function onGet(&$yt, $request)
     {
         $this->useJsModule("www/watch");
+
+        i18n::newNamespace("watch")->registerFromFolder("i18n/watch");
 
         // invalid request redirect
         if (!isset($_GET['v'])) {

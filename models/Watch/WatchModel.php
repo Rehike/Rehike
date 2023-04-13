@@ -95,7 +95,7 @@ class WatchModel
             "results" => self::bakeResults($data, $videoId),
             "secondaryResults" => self::bakeSecondaryResults($data),
             "title" => self::$title,
-            "playlist" => self::bakePlaylist($data),
+            "playlist" => self::bakePlaylist(),
             "liveChat" => self::$liveChat
         ];
     }
@@ -203,13 +203,10 @@ class WatchModel
      * Bake playlist
      * 
      * Call gets passed to subcontroller for handling.
-     * 
-     * @param object $data from watch results response
-     * @return object
      */
-    public static function bakePlaylist(&$data)
+    public static function bakePlaylist(): ?object
     {
-        return self::$subController::bakePlaylist($data);
+        return self::$subController::bakePlaylist();
     }
 
     /**

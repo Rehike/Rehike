@@ -33,5 +33,7 @@
     "metadataLicenseStandard": "Standard YouTube License",
     "metadataCategory": "Category",
     "metadataSong": "Song",
-    "metadataGame": "Game"
+    "metadataGame": "Game",
+    "playlistVideosSingular": "1 video",
+    "playlistVideosPlural": "%s videos"
 }

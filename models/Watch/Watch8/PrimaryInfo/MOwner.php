@@ -48,7 +48,7 @@ class MOwner
     {
         $secInfo = &$dataHost::$secondaryInfo;
         $info = $secInfo->owner->videoOwnerRenderer;
-        $i18n = i18n::getNamespace("watch/primary");
+        $i18n = i18n::getNamespace("watch");
 
         $signInInfo = (object) SignIn::getInfo();
         $hasChannel = SignIn::isSignedIn() && isset($signInInfo->ucid);

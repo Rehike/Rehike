@@ -30,8 +30,6 @@ class MVideoSecondaryInfoRenderer
             $info = &$dataHost::$secondaryInfo;
             $primaryInfo = &$dataHost::$primaryInfo;
 
-            i18n::newNamespace("watch/secondary") ->registerFromFolder("i18n/watch");
-
             // Legacy (COMPETENT) description
             if (isset($info->description))
             {

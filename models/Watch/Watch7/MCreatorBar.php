@@ -16,8 +16,7 @@ class MCreatorBar {
      * @var string $vid   Video ID.
      */
     public function __construct($vid) {
-        $i18n = i18n::newNamespace("watch/creator_bar");
-        $i18n->registerFromFolder("i18n/watch");
+        $i18n = i18n::getNamespace("watch");
         $ucid = SignIn::getInfo()["ucid"];
 
         $this->navButtons[] = new MButton([

@@ -11,7 +11,7 @@ class MActionPanelOverflowMenu extends MMenu {
     public $menuId = "action-panel-overflow-menu";
 
     public function __construct() {
-        $i18n = i18n::getNamespace("watch/primary");
+        $i18n = i18n::getNamespace("watch");
 
         $reportCfg = [
             "label" => $i18n->actionReport,

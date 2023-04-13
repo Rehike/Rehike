@@ -103,8 +103,7 @@ class Watch8Subcontroller
         // Get data from the reference in the datahost
         $origResults = &WatchBase::$secondaryResults;
         $response = [];
-        $i18n = i18n::newNamespace("watch/sec_results");
-        $i18n->registerFromFolder("i18n/watch");
+        $i18n = i18n::getNamespace("watch");
 
         if (isset($origResults->results))
         {
@@ -174,13 +173,11 @@ class Watch8Subcontroller
      * 
      * This checks if the playlist is present and returns
      * the playlist data if so.
-     * 
-     * @param object $data
-     * @return object
      */
-    public static function bakePlaylist(&$data)
+    public static function bakePlaylist(): ?object
     {
         $playlist = &WatchBase::$playlist;
+        $i18n = i18n::getNamespace("watch");
 
         // Return null if there is no playlist, this
         // makes the templater ignore it.
@@ -202,14 +199,14 @@ class Watch8Subcontroller
 
                 if ("1" == $videoCount)
                 {
-                    $videoCount = "1 video";
+                    $videoCount = $i18n->playlistVideosSingular;
                 }
                 else
                 {
-                    $videoCount .= " videos";
+                    $videoCount = $i18n->playlistVideosPlural($videoCount);
                 }
 
-                $out->videoCountText = (object)[
+                $out->videoCountText = (object) [
                     "currentIndex" => $curIndex,
                     "videoCount" => $videoCount
                 ];
@@ -219,6 +216,8 @@ class Watch8Subcontroller
             //  let's just catch two cases with one"
             // Copied from Daylin's implementation again
             $playlistId = &WatchBase::$yt->playlistId;
+
+            $out->isMix = substr($playlistId, 0, 2) == "RD";
 
             $curIndexInt = &$list->localCurrentIndex;
             $prevIndexInt = $curIndexInt - 1;

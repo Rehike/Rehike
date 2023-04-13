@@ -15,15 +15,25 @@
             </span>
         </div>
         <div class="playlist-info">
+
+            {% if playlist.isMix %}
+                <span class="playlist-mix-icon yt-sprite"></span>
+            {% endif %}
             <h3 class="playlist-title">
                 <a href="/playlist?list={{ playlist.playlistId }}" class="spf-link">{{ playlist.title }}</a>
             </h3>
             <ul class="playlist-details">
                 {% if playlist.shortBylineText %}
+                    {% if playlist.shortBylineText.runs.0 %}
                     {% set author = playlist.shortBylineText.runs.0 %}
                     <li class="author-attribution">
                         {{ rehike.config.appearance.usernamePrepends ? yt.msgs.usernamePrepend }}<a href="{{ rehike.getUrl(author) }}" class="spf-link">{{ author.text }}</a>
                     </li>
+                    {% else %}
+                    <li class="author-attribution">
+                        {{ rehike.config.appearance.usernamePrepends ? yt.msgs.usernamePrepend }}{{ playlist.shortBylineText.simpleText }}
+                    </li>
+                    {% endif %}
                 {% endif %}
                 {% if playlist.videoCountText %}
                     <li class="playlist-progress">

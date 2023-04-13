@@ -5,7 +5,7 @@
     {% set thumbnail = data.thumbnail.thumbnails.0.url %}
     <li class="yt-uix-scroller-scroll-unit  {{ data.selected ? ' currently-playing' }}" data-video-id="{{ data.videoId }}" data-innertube-clicktracking="{{ data.trackingParams }}" data-index="{{ iteration - 1 }}" data-thumbnail-url="{{ thumbnail }}" data-video-username="{{ byline }}" data-video-title="{{ title }}">
         <span class="index">
-        {{ rehike.getText(data.indexText) }}
+            {{ data.indexText ? rehike.getText(data.indexText) : "&nbsp;"|raw }}
         </span>
         <a href="{{ href }}" class=" spf-link  playlist-video clearfix        spf-link ">
             <span class="video-thumb  yt-thumb yt-thumb-72">

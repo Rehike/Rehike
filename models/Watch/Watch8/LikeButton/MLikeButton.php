@@ -12,7 +12,7 @@ class MLikeButton extends MAbstractLikeButton
 {
     public function __construct($likeCount, $a11y, $isLiked, $videoId, $active = false)
     {
-        $i18n = i18n::getNamespace("watch/primary");
+        $i18n = i18n::getNamespace("watch");
 
         if ($active && is_numeric($likeCount)) $likeCount++;
 
