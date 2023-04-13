@@ -1,10 +1,10 @@
 {
-	"previousHash": "c5af0d38fcdf0b7d1044038f0f10c64f57b881c7",
-	"currentRevisionId": 807,
-	"subject": "Merge branch 'dev-0.7-asynchike-main' of https://github.com/Rehike/Rehike into dev-0.7-asynchike-main",
-	"body": "Merge branch 'dev-0.7-asynchike-main' of https://github.com/Rehike/Rehike into dev-0.7-asynchike-main",
+	"previousHash": "cb22e3c0bc413695e8fec1aa57b9ea155fd8bbd3",
+	"currentRevisionId": 818,
+	"subject": "Fix list continuations showing up as grid",
+	"body": "Fix list continuations showing up as grid",
 	"branch": "dev-0.7-asynchike-main",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1679122744
+	"time": 1681424667
 }

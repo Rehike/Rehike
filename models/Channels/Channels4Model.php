@@ -7,6 +7,8 @@ use Rehike\Model\Channels\Channels4\Sidebar\MRelatedChannels;
 use Rehike\Model\Browse\InnertubeBrowseConverter;
 use Rehike\Model\Channels\Channels4\MSubConfirmationDialog;
 use Rehike\Model\Common\MAlert;
+use Rehike\Util\Base64Url;
+use Com\Youtube\Innertube\Helpers\VideosContinuationWrapper;
 
 class Channels4Model
 {
@@ -269,6 +271,18 @@ class Channels4Model
 
         if ($rich && @$_GET["flow"] == "list")
         {
+            if (isset($data->items[count($data->items) - 1]->continuationItemRenderer))
+            {
+                $token = &$data->items[count($data->items) - 1]->continuationItemRenderer->continuationEndpoint->continuationCommand->token;
+                $contWrapper = new VideosContinuationWrapper();
+                $contWrapper->setContinuation(
+                    $token
+                );
+                $contWrapper->setList(true);
+
+                $token = Base64Url::encode($contWrapper->serializeToString());
+            }
+
             $response += [
                 "items" => $data->items
             ];

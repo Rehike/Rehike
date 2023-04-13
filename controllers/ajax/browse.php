@@ -3,6 +3,10 @@ namespace Rehike\Controller\ajax;
 
 use Rehike\Network;
 use Rehike\Util\RichShelfUtils;
+use Rehike\Util\Base64Url;
+use Com\Youtube\Innertube\Helpers\VideosContinuationWrapper;
+
+use function Rehike\Async\async;
 
 /**
  * Controller for browse AJAX requests.
@@ -19,14 +23,27 @@ return new class extends \Rehike\Controller\core\AjaxController {
     }
 
     public function onPost(&$yt, $request) {
-        if (!isset($request->params->continuation)) self::error();
+        return async(function() use (&$yt, $request) {
+            if (!isset($request->params->continuation)) self::error();
+            $continuation = $request->params->continuation;
+            $list = false;
 
-        Network::innertubeRequest(
-            action: "browse",
-            body: [
-                "continuation" => $request->params->continuation
-            ]
-        )->then(function ($response) use ($yt, $request) {
+            $contWrapper = new VideosContinuationWrapper();
+            $contWrapper->mergeFromString(Base64Url::decode($continuation));
+
+            if ($contWrapper->getContinuation() != "")
+            {
+                $continuation = $contWrapper->getContinuation();
+                $list = $contWrapper->getList();
+            }
+
+            $response = yield Network::innertubeRequest(
+                action: "browse",
+                body: [
+                    "continuation" => $continuation
+                ]
+            
+            );
             $ytdata = $response->getJson();
 
             if (isset($ytdata->onResponseReceivedActions)) {
@@ -36,13 +53,23 @@ return new class extends \Rehike\Controller\core\AjaxController {
                         foreach ($action->appendContinuationItemsAction->continuationItems as &$item) {
                             switch (true) {
                                 case isset($item->continuationItemRenderer):
-                                    $yt->page->continuation = $item->continuationItemRenderer->continuationEndpoint->continuationCommand->token;
+                                    if (!$list)
+                                    {
+                                        $yt->page->continuation = $item->continuationItemRenderer->continuationEndpoint->continuationCommand->token;
+                                    }
+                                    else
+                                    {
+                                        $nContWrapper = new VideosContinuationWrapper();
+                                        $nContWrapper->setContinuation($yt->page->continuation = $item->continuationItemRenderer->continuationEndpoint->continuationCommand->token);
+                                        $nContWrapper->setList(true);
+                                        $yt->page->continuation = Base64Url::encode($nContWrapper->serializeToString());
+                                    }
                                     break;
                                 case isset($item->richItemRenderer):
-                                    $item = RichShelfUtils::reformatShelfItem($item);
+                                    $item = RichShelfUtils::reformatShelfItem($item, $list);
                                     break;
                                 case isset($item->richSectionRenderer->content->richShelfRenderer):
-                                    $item = RichShelfUtils::reformatShelf($item);
+                                    $item = RichShelfUtils::reformatShelf($item, $list);
                                     break;
                             }
                         }
