@@ -22,6 +22,10 @@ class RichShelfUtils {
         if (isset($item->richSectionRenderer->content->richShelfRenderer)) {
             $contents[] = self::reformatShelf($item);
         }
+        else
+        {
+            $contents[] = $item;
+        }
         
         return (object) [
             "sectionListRenderer" => (object) [
