@@ -183,16 +183,16 @@ return new class extends NirvanaController {
             // the Hitchhiker-era rules.
             $this->removeAds($playerResponse);
 
+             // Push these over to the global object.
+             $yt->playerResponse = $playerResponse;
+             $yt->watchNextResponse = $nextResponse;
+
             $yt->page = WatchModel::bake(
                 yt:      $yt,
                 data:    $nextResponse,
                 videoId: $yt->videoId,
                 rydData: $rydResponse
             );
-
-            // Push these over to the global object.
-            $yt->playerResponse = $playerResponse;
-            $yt->watchNextResponse = $nextResponse;
         });
     }
 
