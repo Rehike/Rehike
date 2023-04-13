@@ -92,6 +92,9 @@ class InnertubeBrowseConverter
                 case "gridVideoRenderer":
                     $value = self::videoRenderer($value, $context);
                     break;
+                case "channelFeaturedContentRenderer":
+                    $value->items = self::generalLockupConverter($value->items, $context);
+                    break;
             }
         }
 
