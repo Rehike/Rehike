@@ -138,6 +138,8 @@ class MVideoSecondaryInfoRenderer
                         $count = 1; // This has to be a variable for some reason
                         $run->text = str_replace("\xc2\xa0", "", str_replace("/", "", $run->text, $count));
                         break;
+                    case "FE":
+                        break;
                     default:
                         $run->text = self::truncate("https://www.youtube.com" . $run->navigationEndpoint->commandMetadata->webCommandMetadata->url);
                         break;
