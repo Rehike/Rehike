@@ -1,10 +1,10 @@
 {
-	"previousHash": "f5d2d0b644855053e363b4f83fbfcf8280f3f224",
-	"currentRevisionId": 822,
-	"subject": "Fix hashtags in description",
-	"body": "Fix hashtags in description",
+	"previousHash": "6d324185bb42cce0693d6d0511c129da92c5bc63",
+	"currentRevisionId": 823,
+	"subject": "Fix weird description thing",
+	"body": "Fix weird description thing",
 	"branch": "dev-0.7-asynchike-main",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1681514079
+	"time": 1681533031
 }

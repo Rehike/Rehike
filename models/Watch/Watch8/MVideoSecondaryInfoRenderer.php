@@ -122,6 +122,7 @@ class MVideoSecondaryInfoRenderer
 
         // Fix link text
         foreach ($runs as &$run)
+        if (isset($run->navigationEndpoint))
         {
             // Video links
             if (isset($run->navigationEndpoint->watchEndpoint)
@@ -160,8 +161,9 @@ class MVideoSecondaryInfoRenderer
     /**
      * Truncate link texts
      */
-    private static function truncate(string $string): string
+    private static function truncate(?string $string): ?string
     {
+        if (is_null($string)) return null;
         if (strlen($string) <= 37)
         {
             return $string;
