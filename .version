@@ -1,10 +1,10 @@
 {
-	"previousHash": "6d324185bb42cce0693d6d0511c129da92c5bc63",
-	"currentRevisionId": 823,
-	"subject": "Fix weird description thing",
-	"body": "Fix weird description thing",
+	"previousHash": "036274b2c6135a2ae2e680cf5ffd6c0ba756d53a",
+	"currentRevisionId": 824,
+	"subject": "Remove config prop general.teaserReplies",
+	"body": "Remove config prop general.teaserReplies",
 	"branch": "dev-0.7-asynchike-main",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1681533031
+	"time": 1681684752
 }

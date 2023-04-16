@@ -57,10 +57,6 @@
                 "title": "Show verification badges on watch page recommendations",
                 "subtitle": "Unlike Polymer, Hitchhiker didn't show these by default."
             },
-            "teaserReplies": {
-                "title": "Show the first two replies of each comment",
-                "subtitle": "Used before 2016. This may slow the time comments take to load. Use at your own discretion."
-            },
             "oldBestOfYouTubeIcons": {
                 "title": "Old red icons in \"Best of YouTube\" guide section",
                 "subtitle": "Show the old red topic channel icons, rather than the black ones used today."
