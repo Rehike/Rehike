@@ -138,6 +138,11 @@ class MVideoSecondaryInfoRenderer
                     case "UC":
                         $count = 1; // This has to be a variable for some reason
                         $run->text = str_replace("\xc2\xa0", "", str_replace("/", "", $run->text, $count));
+                        // Add @ if it isn't there
+                        if (substr($run->text, 0, 1) != "@")
+                        {
+                            $run->text = "@" . $run->text;
+                        }
                         break;
                     case "FE":
                         break;

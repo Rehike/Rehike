@@ -1,10 +1,10 @@
 {
-	"previousHash": "036274b2c6135a2ae2e680cf5ffd6c0ba756d53a",
-	"currentRevisionId": 824,
-	"subject": "Remove config prop general.teaserReplies",
-	"body": "Remove config prop general.teaserReplies",
+	"previousHash": "0f7cfec74dd87c548dad5040e57d12201ade48a4",
+	"currentRevisionId": 825,
+	"subject": "Add @ on channel links if it isn't there",
+	"body": "Add @ on channel links if it isn't there",
 	"branch": "dev-0.7-asynchike-main",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1681684752
+	"time": 1681702630
 }
