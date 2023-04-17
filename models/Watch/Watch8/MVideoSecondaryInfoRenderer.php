@@ -3,10 +3,7 @@ namespace Rehike\Model\Watch\Watch8;
 
 use Rehike\Util\ExtractUtils;
 use Rehike\i18n;
-
-use Rehike\Model\Watch\Watch8\{
-    SecondaryInfo\MMetadataRowContainer
-};
+use Rehike\Model\Watch\Watch8\SecondaryInfo\MMetadataRowContainer;
 
 /**
  * Implement the model used by the video's secondary info renderer.
