@@ -69,6 +69,14 @@ class Request
      */
     public int $onError = RequestErrorPolicy::THROW;
 
+    /**
+     * If specified, sets the user agent of the request.
+     * 
+     * If not specified, the user agent of the browser requesting the current
+     * page will be used instead.
+     */
+    public string $userAgent = "";
+
     public function __construct(string $url, array $opts)
     {
         $this->initPromise();
@@ -116,6 +124,9 @@ class Request
                 break;
             case "onError":
                 $this->onError = self::handleOnErrorOpt($value);
+                break;
+            case "userAgent":
+                $this->userAgent = $value;
                 break;
         }
     }

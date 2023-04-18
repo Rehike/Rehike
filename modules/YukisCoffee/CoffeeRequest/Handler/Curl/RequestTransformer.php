@@ -77,6 +77,10 @@ class RequestTransformer
         // Headers:
         $target[CURLOPT_HTTPHEADER] = self::convertHeaders($request->headers);
 
+        // User agent:
+        $target[CURLOPT_USERAGENT] =
+        ($request->userAgent == "") ? $_SERVER["HTTP_USER_AGENT"] : $request->userAgent;
+
         // Post body:
         if ("POST" == $request->method && isset($request->body))
         {

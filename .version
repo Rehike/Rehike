@@ -1,10 +1,10 @@
 {
-	"previousHash": "e94eaf5777da99a8c582b1842534560b5410a147",
-	"currentRevisionId": 826,
-	"subject": "Tiny include formatting fix",
-	"body": "Tiny include formatting fix",
+	"previousHash": "14694bddd053344caa50ea38db405d12509401fc",
+	"currentRevisionId": 827,
+	"subject": "Fix animated thumbnails not appearing",
+	"body": "Fix animated thumbnails not appearing",
 	"branch": "dev-0.7-asynchike-main",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1681763229
+	"time": 1681858322
 }

@@ -202,8 +202,7 @@ class Network
             "dnsOverride" => self::DNS_OVERRIDE_HOST,
             "headers" => [
                 "Cookie" => self::getCurrentRequestCookie()
-            ],
-            "User-Agent" => $_SERVER['HTTP_USER_AGENT']  ?? ""
+            ]
         ];
     }
 
