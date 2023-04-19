@@ -38,7 +38,7 @@ body:
   - type: textarea
     attributes:
       label: What's going on?
-      description: Describe the bug. Be sure to include any screenshots, videos, stack traces, whatever details you can. Be sure to enclose your stack traces in two sets of three backticks, as to not mention other issues.
+      description: Describe the bug. Be sure to include any screenshots, videos, stack traces, whatever details you can. **ENCLOSE YOUR STACK TRACE IN CODE BLOCKS! WE DO NOT WANT YOU MENTIONING ALL THE OTHER ISSUES!**
       placeholder: Describe the bug
     validations:
       required: true

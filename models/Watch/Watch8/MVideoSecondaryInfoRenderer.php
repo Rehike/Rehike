@@ -71,7 +71,7 @@ class MVideoSecondaryInfoRenderer
      * 
      * @param object $description  videoSecondaryInfoRenderer.attributedDescription
      */
-    public static function convertDescription(object $description): object
+    private static function convertDescription(object $description): object
     {
         // If there's no links
         if (!isset($description->commandRuns))
@@ -93,7 +93,7 @@ class MVideoSecondaryInfoRenderer
         foreach ($description->commandRuns as $run)
         {
             // Text from before the link
-            $beforeText = mb_substr($description->content, $start, $run->startIndex - $start, "utf-8");
+            $beforeText = self::telegram_substr($description->content, $start, $run->startIndex - $start);
 
             if (!empty($beforeText))
             {
@@ -103,7 +103,7 @@ class MVideoSecondaryInfoRenderer
             }
 
             // Add the actual link
-            $text = mb_substr($description->content, $run->startIndex, $run->length, "utf-8");
+            $text = self::telegram_substr($description->content, $run->startIndex, $run->length);
             $endpoint = $run->onTap->innertubeCommand;
             $runs[] = (object) [
                 "text" => $text,
@@ -114,7 +114,7 @@ class MVideoSecondaryInfoRenderer
         }
 
         // Add the text after the last link
-        $lastText = mb_substr($description->content, $start, null, "utf-8");
+        $lastText = self::telegram_substr($description->content, $start, null);
         if (!empty($lastText))
         {
             $runs[] = (object) [
@@ -124,26 +124,79 @@ class MVideoSecondaryInfoRenderer
 
         // Fix link text
         foreach ($runs as &$run)
+        if (isset($run->navigationEndpoint))
         {
             // Video links
-            if (isset($run->navigationEndpoint->watchEndpoint))
+            if (isset($run->navigationEndpoint->watchEndpoint)
+            &&  !preg_match("/^([0-9]{1,2}(:)?)+$/", $run->text)) // Prevent replacing timestamps
             {
-                $run->text = substr(
-                    "https://www.youtube.com" . $run->navigationEndpoint->commandMetadata->webCommandMetadata->url,
-                    0, 37
-                ) . "...";
+                $run->text = self::truncate("https://www.youtube.com" . $run->navigationEndpoint->commandMetadata->webCommandMetadata->url);
             }
             // Channel links
             elseif (isset($run->navigationEndpoint->browseEndpoint))
             {
-                $count = 1; // This has to be a variable for some reason
-                $run->text = str_replace("\xc2\xa0", "", str_replace("/", "", $run->text, $count));
+                switch (substr($run->navigationEndpoint->browseEndpoint->browseId, 0, 2))
+                {
+                    case "UC":
+                        $count = 1; // This has to be a variable for some reason
+                        $run->text = str_replace("\xc2\xa0", "", str_replace("/", "", $run->text, $count));
+                        // Add @ if it isn't there
+                        if (substr($run->text, 0, 1) != "@")
+                        {
+                            $run->text = "@" . $run->text;
+                        }
+                        break;
+                    case "FE":
+                        break;
+                    default:
+                        $run->text = self::truncate("https://www.youtube.com" . $run->navigationEndpoint->commandMetadata->webCommandMetadata->url);
+                        break;
+                }
+            }
+            // Weird fake channel links
+            else if (str_contains($run->text, "\xc2\xa0"))
+            {
+                $run->text = self::truncate($run->navigationEndpoint->commandMetadata->webCommandMetadata->url);
             }
         }
 
         return (object) [
             "runs" => $runs
         ];
+    }
+
+    /**
+     * Truncate link texts
+     */
+    private static function truncate(?string $string): ?string
+    {
+        if (is_null($string)) return null;
+        if (strlen($string) <= 37)
+        {
+            return $string;
+        }
+        else
+        {
+            return substr($string, 0, 37) . "...";
+        }
+    }
+
+    // FUCKING THANK YOU SO MUCH
+    // THIS FIXED EMOJI PROBLEM
+    // https://stackoverflow.com/a/66878985
+    private static function telegram_substr($str, $offset, $length) {
+        $bmp = [];
+        for( $i = 0; $i < mb_strlen($str); $i++ )
+        {
+            $mb_substr = mb_substr($str, $i, 1);
+            $mb_ord = mb_ord($mb_substr);
+            $bmp[] = $mb_substr;
+            if ($mb_ord > 0xFFFF)
+            {
+                $bmp[] = "";
+            }
+        }
+        return implode("", array_slice($bmp, $offset, $length));
     }
 }
 
