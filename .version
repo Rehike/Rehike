@@ -1,10 +1,10 @@
 {
-	"previousHash": "14694bddd053344caa50ea38db405d12509401fc",
-	"currentRevisionId": 827,
-	"subject": "Fix animated thumbnails not appearing",
-	"body": "Fix animated thumbnails not appearing",
+	"previousHash": "9d207e37d0e6d6cdce0fc4d98a15f769d07f401f",
+	"currentRevisionId": 828,
+	"subject": "All comments page",
+	"body": "All comments page",
 	"branch": "dev-0.7-asynchike-main",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1681858322
+	"time": 1681963139
 }

@@ -153,7 +153,8 @@ class CommentThread
         $context->isReply = $isReply;
         if (isset($context->voteCount)) self::addLikeCount($context);
 
-        if ($data = self::$dataApiData[$context->commentId]) {
+        if (isset(self::$dataApiData[$context->commentId])) {
+            $data = self::$dataApiData[$context->commentId];
             $context->authorText = (object) [
                 "simpleText" => $data->authorDisplayName
             ];
@@ -228,27 +229,6 @@ class CommentThread
                         $viewText = $i18n->viewSingular;
                     }
                 }
-
-                // if ($teaser) {
-                //     foreach ($context ->contents as $content) {
-                //         if ($ctoken = $content->continuationItemRenderer->continuationEndpoint->continuationCommand->token) {
-                //             Request::queueInnertubeRequest("replies", "next", (object) [
-                //                 "continuation" => $ctoken
-                //             ]);
-                //             $data = json_decode(Request::getResponses()["replies"]);
-                //             foreach ($data->onResponseReceivedEndpoints as $endpoint) {
-                //                 if (isset($endpoint->appendContinuationItemsAction)) {
-                //                     $items = $endpoint->appendContinuationItemsAction->continuationItems;
-                //                     array_splice($items, 2);
-                //                     if (!isset($context->teaserContents)) {
-                //                         $context->teaserContents = [];
-                //                     }
-                //                     $context->teaserContents += $items;
-                //                 }
-                //             }
-                //         }
-                //     }
-                // }
 
                 $hideText = ($replyCount > 1) ? $i18n->hideMulti($replyCount) : $i18n->hideSingular;
             }

@@ -6,6 +6,7 @@ use Rehike\Model\Comments\CommentThread;
 use Rehike\Model\Comments\CommentsHeader;
 use Rehike\Model\Appbar\MAppbar as Appbar;
 use Rehike\Network;
+use Rehike\ConfigManager\ConfigManager;
 
 /**
  * Watch fragments ajax controller
@@ -70,7 +71,10 @@ class AjaxWatchFragments2Controller extends AjaxController {
         )->then(function($response) use (&$yt) {
             $ytdata = $response->getJson();
 
-            $yt->commentsRenderer->headerRenderer = CommentsHeader::fromData($ytdata->onResponseReceivedEndpoints[0]->reloadContinuationItemsCommand->continuationItems[0]->commentsHeaderRenderer);
+            $yt->commentsRenderer->headerRenderer = CommentsHeader::fromData(
+                data: $ytdata->onResponseReceivedEndpoints[0]->reloadContinuationItemsCommand->continuationItems[0]->commentsHeaderRenderer,
+                id: ConfigManager::getConfigProp("appearance.allCommentsLink") ? $_GET["v"] : null
+            );
 
             /**
              * Comments Threads Rewrite

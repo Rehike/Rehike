@@ -2,9 +2,15 @@
 <div class="comments-header-renderer   "
 
     data-visibility-types="12">
+    {% if data.commentsCountEndpoint %}
+    <a href="{{ rehike.getUrl(data.commentsCountEndpoint) }}" class="spf-link comment-section-header-renderer">
+    {% endif %}
     <h2 class="comment-section-header-renderer" tabindex="0">
         <b>{{ data.title }}</b>{% if data.commentsCountText %} • {{data.commentsCountText}}{% endif %}
     </h2>
+    {% if data.commentsCountEndpoint %}
+    </a>
+    {% endif %}
     <div class="comment-simplebox-renderer  {{ not yt.signin.isSignedIn ? "" }}">
         <span class="video-thumb comment-author-thumbnail yt-thumb yt-thumb-48">
         <span class="yt-thumb-square">

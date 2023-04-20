@@ -60,6 +60,10 @@
             "oldBestOfYouTubeIcons": {
                 "title": "Old red icons in \"Best of YouTube\" guide section",
                 "subtitle": "Show the old red topic channel icons, rather than the black ones used today."
+            },
+            "allCommentsLink": {
+                "title": "Link to All comments page on video comments",
+                "subtitle": "When enabled, you can click the \"Comments\" header text to go to a page that will show you only the comments."
             }
         },
         "advanced": {

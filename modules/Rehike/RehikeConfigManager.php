@@ -28,7 +28,8 @@ class RehikeConfigManager extends ConfigManager
             "cssFixes" => true,
             "watchSidebarDates" => false,
             "watchSidebarVerification" => false,
-            "oldBestOfYouTubeIcons" => false
+            "oldBestOfYouTubeIcons" => false,
+            "allCommentsLink" => false
         ],
         "advanced" => [
             "enableDebugger" => false
@@ -52,7 +53,8 @@ class RehikeConfigManager extends ConfigManager
             "cssFixes" => "bool",
             "watchSidebarDates" => "bool",
             "watchSidebarVerification" => "bool",
-            "oldBestOfYouTubeIcons" => "bool"
+            "oldBestOfYouTubeIcons" => "bool",
+            "allCommentsLink" => "bool"
         ],
         "advanced" => [
             "enableDebugger" => "bool"
