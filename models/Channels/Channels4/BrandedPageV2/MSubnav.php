@@ -35,34 +35,68 @@ class MSubnav
         $i->rightButtons[] = self::getFlowButton($flow);
 
         // Process uploads view
-        $i->leftButtons[] = self::getViewButton();
+        self::getViewButton($i);
 
         return $i;
     }
 
-    public static function getViewButton()
+    public static function getViewButton(self &$instance): void
     {
         $i18n = &i18n::getNamespace("channels");
 
-        $baseUrl = Channels4Model::getBaseUrl();
-        
-        $options = [];
-
-        $uploadsText = $title = $i18n->viewUploads;
-        $streamsText = $title = $i18n->viewLiveStreams;
-
-        if ("streams" == Channels4Model::getCurrentTab())
+        if (count(Channels4Model::$extraVideoTabs) == 0)
         {
-            $activeText = $streamsText;
-            $options += [$uploadsText => "$baseUrl/videos"];
+            $instance->title = match(Channels4Model::getCurrentTab())
+            {
+                "videos" => $i18n->viewUploads,
+                "streams" => $i18n->viewLiveStreams
+            };
         }
         else
         {
-            $activeText = $uploadsText;
-            $options += [$streamsText => "$baseUrl/streams"];
-        }
+            $baseUrl = Channels4Model::getBaseUrl();
 
-        return new MSubnavMenuButton("view", $activeText, $options);
+            \Rehike\ControllerV2\Core::$state->test = Channels4Model::$extraVideoTabs;
+        
+            $options = [];
+    
+            $uploadsText = $i18n->viewUploads;
+            $streamsText = $i18n->viewLiveStreams;
+            $shortsText = $i18n->viewShorts;
+    
+            if ("streams" == Channels4Model::getCurrentTab())
+            {
+                $activeText = $streamsText;
+                $options += [$uploadsText => "$baseUrl/videos"];
+                if (in_array("shorts", Channels4Model::$extraVideoTabs))
+                {
+                    $options += [$shortsText => "$baseUrl/shorts"];
+                }
+            }
+            else if ("shorts" == Channels4Model::getCurrentTab())
+            {
+                $activeText = $shortsText;
+                $options += [$uploadsText => "$baseUrl/videos"];
+                if (in_array("streams", Channels4Model::$extraVideoTabs))
+                {
+                    $options += [$streamsText => "$baseUrl/streams"];
+                }
+            }
+            else
+            {
+                $activeText = $uploadsText;
+                if (in_array("streams", Channels4Model::$extraVideoTabs))
+                {
+                    $options += [$streamsText => "$baseUrl/streams"];
+                }
+                if (in_array("shorts", Channels4Model::$extraVideoTabs))
+                {
+                    $options += [$shortsText => "$baseUrl/shorts"];
+                }
+            }
+    
+            $instance->leftButtons[] = new MSubnavMenuButton("view", $activeText, $options);
+        }        
     }
 
     public static function getSortButton($sort) {

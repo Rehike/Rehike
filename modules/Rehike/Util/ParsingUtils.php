@@ -112,17 +112,25 @@ class ParsingUtils
             // 16:9 is 1.777 repeating. The imprecise equation here is done
             // for some edge cases like 1366:768, which is only approximately
             // 16:9 but would still be regarded as such.
-            if ($ratio >= 1.7 && $ratio < 1.8)
+            //
+            // There is also an isOriginalAspectRatio variable that indicates
+            // if the thumbnail is not 16:9 and that the URL is a link to the
+            // image in its original aspect ratio (would be stretched).
+            $isShort = !($ratio >= 1.7 && $ratio < 1.8) || $container->isOriginalAspectRatio;
+
+            // If the video is a Short, we want to remove the sqp param to 
+            // remove any cropping. We also want to switch the oar2 thumb
+            // type for hqdefault, since oar2 contains cropping by default.
+            // With an ideal i.ytimg.com server, we could use maxresdefault.
+            // However, not every thumbnail has a maxresdefault/hq720 variant.
+            if ($isShort)
             {
-                return $thumb->url;
+                $url = preg_replace("/\?sqp=.*/", "", $thumb->url);
+                return str_replace("oar2", "hqdefault", $url);
             }
             else
             {
-                // In the case that the thumbnail isn't 16:9, it's probably a
-                // Short. In this case, the sqp parameter, which is used to 
-                // resize and crop thumbnails should be removed from the
-                // thumbnail.
-                return preg_replace("/\?sqp=.*/", "", $thumb->url);
+                return $thumb->url;
             }
         }
         // If the width or height is 0, just return the URL. It is very likely

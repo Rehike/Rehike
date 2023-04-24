@@ -20,6 +20,11 @@ class Channels4Model
 
     private static $subscriptionCount = "";
 
+    /** @var string[] */
+    public static array $extraVideoTabs = [];
+
+    private static object $currentTabContents;
+
     public static function bake(&$yt, $data, $sidebarData = null)
     {
         self::$yt = &$yt;
@@ -51,8 +56,6 @@ class Channels4Model
             );
         }
 
-        $currentTabContents = null;
-
         if ($alerts = @$data->alerts)
         {
             $response += ["alerts" => []];
@@ -65,84 +68,16 @@ class Channels4Model
             }
         }
 
-        // If we have twoColumnBrowseResultsRenderer with tabs,
-        // process them (add navigation and store a reference)
-        if ($tabs = @$data->contents->twoColumnBrowseResultsRenderer->tabs)
-        {
-            if (isset($response["header"]))
-            {
-                /** @var object */
-                $videosTab = null;
-
-                // Splice "live" tab as this should be cascaded into videos.
-                for ($i = 0; $i < count($tabs); $i++)
-                {
-                    if (isset($tabs[$i]->tabRenderer))
-                    {
-                        // Do NOT call this $tab. It will break the logic for
-                        // god only fucking knows why and you'll get some sorta
-                        // duplicate tab renderer.
-                        $tabR = &$tabs[$i];
-
-                        $tabEndpoint = $tabR->tabRenderer->endpoint->commandMetadata->webCommandMetadata->url ?? null;
-
-                        if (!is_null($tabEndpoint))
-                        {
-                            if (stripos($tabEndpoint, "/videos"))
-                            {
-                                $videosTab = &$tabR;
-                            }
-                            else if (stripos($tabEndpoint, "/streams") || stripos($tabEndpoint, "/shorts"))
-                            {
-                                $tabR->hidden = true;
-
-                                if (@$tabR->tabRenderer->selected) $videosTab->tabRenderer->selected = true;
-                            }
-                        }
-                    }
-                }
-                
-                $response["header"]->addTabs($tabs, ($yt->partiallySelectTabs ?? false));
-
-                foreach ($tabs as $tab) if (@$tab->tabRenderer)
-                {
-                    $tabEndpoint = $tab->tabRenderer->endpoint->commandMetadata->webCommandMetadata->url ?? null;
-
-                    if (!is_null($tabEndpoint))
-                    {
-                        if (!@$tab->hidden && isset($yt->appbar->nav))
-                        {
-                            $yt->appbar->nav->addItem(
-                                $tab->tabRenderer->title,
-                                $tabEndpoint,
-                                @$tab->tabRenderer->status
-                            );
-                        }
-                    }
-
-                    if (@$tab->tabRenderer->status > 0
-                    ||  @$tab->tabRenderer->selected)
-                    {
-                        $currentTabContents = &$tab->tabRenderer->content;
-                    }
-                }
-                elseif (@$tab->expandableTabRenderer)
-                {
-                    if (@$tab->expandableTabRenderer->selected) {
-                        $currentTabContents = &$tab->expandableTabRenderer->content;
-                    }
-                }
-
-                if (isset($yt->appbar->nav->items[0]))
-                {
-                    $yt->appbar->nav->items[0]->title = $response["header"]->getTitle();
-                }
-            }
-        }
-
-        // If we have a header, set the page title from it.
+        // If we have a header, do some header specific stuff.
         if (isset($response["header"]))
         {
+            // If we have twoColumnBrowseResultsRenderer with tabs,
+            // process them (add navigation and store a reference)
+            if ($tabsR = @$data->contents->twoColumnBrowseResultsRenderer->tabs)
+            {
+                self::processAndAddTabs($yt, $tabsR, $response["header"]);
+            }
+
             $response += [
                 "title" => $response["header"]->getTitle()
             ];
@@ -178,12 +113,90 @@ class Channels4Model
             $response += ["subConfirmationDialog" => new MSubConfirmationDialog($response["header"])];
         }
 
-        $response += ["content" => self::getTabContents($currentTabContents)];
+        $response += ["content" => self::getTabContents(self::$currentTabContents)];
 
         $response += ["baseUrl" => self::$baseUrl];
 
         // Send the response array
         return (object)$response;
+    }
+
+    /**
+     * Process channel tabs and add them to the header.
+     * 
+     * @param object $yt                 Global state variable.
+     * @param object[] $tabs             Array of tabs to process and add.
+     * @param MHeader $header            Header to add the tabs to.
+     */
+    public static function processAndAddTabs(object &$yt, array $tabs, Channels4\MHeader &$header): void
+    {
+        /** @var object */
+        $videosTab = null;
+
+        // Splice "live" tab as this should be cascaded into videos.
+        for ($i = 0; $i < count($tabs); $i++)
+        {
+            if (isset($tabs[$i]->tabRenderer))
+            {
+                // Do NOT call this $tab. It will break the logic for
+                // god only fucking knows why and you'll get some sorta
+                // duplicate tab renderer.
+                $tabR = &$tabs[$i];
+
+                $tabEndpoint = $tabR->tabRenderer->endpoint->commandMetadata->webCommandMetadata->url ?? null;
+
+                if (!is_null($tabEndpoint))
+                {
+                    if (stripos($tabEndpoint, "/videos"))
+                    {
+                        $videosTab = &$tabR;
+                    }
+                    else if (stripos($tabEndpoint, "/streams") || stripos($tabEndpoint, "/shorts"))
+                    {
+                        self::$extraVideoTabs[] = substr($tabEndpoint, strrpos($tabEndpoint, "/") + 1);
+                        $tabR->hidden = true;
+
+                        if (@$tabR->tabRenderer->selected) $videosTab->tabRenderer->selected = true;
+                    }
+                }
+            }
+        }
+        
+        $header->addTabs($tabs, ($yt->partiallySelectTabs ?? false));
+
+        foreach ($tabs as $tab) if (@$tab->tabRenderer)
+        {
+            $tabEndpoint = $tab->tabRenderer->endpoint->commandMetadata->webCommandMetadata->url ?? null;
+
+            if (!is_null($tabEndpoint))
+            {
+                if (!@$tab->hidden && isset($yt->appbar->nav))
+                {
+                    $yt->appbar->nav->addItem(
+                        $tab->tabRenderer->title,
+                        $tabEndpoint,
+                        @$tab->tabRenderer->status
+                    );
+                }
+            }
+
+            if (@$tab->tabRenderer->status > 0
+            ||  @$tab->tabRenderer->selected)
+            {
+                self::$currentTabContents = &$tab->tabRenderer->content;
+            }
+        }
+        elseif (@$tab->expandableTabRenderer)
+        {
+            if (@$tab->expandableTabRenderer->selected) {
+                self::$currentTabContents = &$tab->expandableTabRenderer->content;
+            }
+        }
+
+        if (isset($yt->appbar->nav->items[0]))
+        {
+            $yt->appbar->nav->items[0]->title = $header->getTitle();
+        }
     }
     
     public static function initSecondaryColumn(&$response)
@@ -251,6 +264,7 @@ class Channels4Model
         {
             case "videos":
             case "streams":
+            case "shorts":
                 if ($rich)
                 {
                     $response += [
@@ -284,7 +298,9 @@ class Channels4Model
             }
 
             $response += [
-                "items" => $data->items
+                "items" => InnertubeBrowseConverter::generalLockupConverter($data->items, [
+                    "listView" => true
+                ])
             ];
         }
         else

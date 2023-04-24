@@ -4,9 +4,12 @@ use \Com\Youtube\Innertube\Request\BrowseRequestParams;
 use \Rehike\Controller\core\NirvanaController;
 use \Rehike\Model\Playlist\PlaylistModel;
 use \Rehike\Model\Channels\Channels4Model;
+use \Rehike\Model\Channels\Channels4\MHeader;
+use \Rehike\Model\Channels\Channels4\MCarouselHeader;
 use \Rehike\Util\Base64Url;
 use \Rehike\Network;
 use \Rehike\i18n;
+use Rehike\Util\ChannelUtils;
 
 use function Rehike\Async\async;
 
@@ -68,9 +71,35 @@ return new class extends NirvanaController
                 // Otherwise this then is never executed.
                 $channelData = $channelResponse->getJson();
 
-                // TODO: Inefficient procedure, should render header directly.
-                $channelModel = Channels4Model::bake($yt, $channelData);
-                $yt->page->channelHeader = $channelModel->header ?? null;
+                if ($header = @$channelData->header->c4TabbedHeaderRenderer)
+                {
+                    $yt->page->channelHeader = new MHeader($header, "/channel/$yt->ucid");
+                }
+                elseif ($header = @$channelData->header->carouselHeaderRenderer)
+                {
+                    $yt->page->channelHeader = new MCarouselHeader($header, "/channel/$yt->ucid");
+                }
+
+                if (isset($yt->page->channelHeader))
+                {
+                    $header = &$yt->page->channelHeader;
+                    $yt->appbar->addNav();
+
+                    $yt->appbar->nav->addOwner(
+                        $header->getTitle(),
+                        "/channel/$yt->ucid",
+                        $header->thumbnail ?? "",
+                    );
+                }
+
+                if ($tabs = @$channelData->contents->twoColumnBrowseResultsRenderer->tabs)
+                {
+                    Channels4Model::processAndAddTabs(
+                        $yt,
+                        $tabs,
+                        $yt->page->channelHeader
+                    );
+                }
             }
         });
     }

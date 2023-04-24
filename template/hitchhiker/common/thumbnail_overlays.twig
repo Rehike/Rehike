@@ -14,7 +14,7 @@
 {% endif %}
 {% endmacro %}
 
-{% macro render(overlays, includeTime = true) %}
+{% macro render(overlays, id, includeTime = true) %}
     {% for overlay in overlays %}
         {% if overlay.thumbnailOverlayTimeStatusRenderer and includeTime %}
             <span class="video-time">
@@ -22,7 +22,7 @@
             </span>
         {% elseif overlay.thumbnailOverlayToggleButtonRenderer.untoggledIcon.iconType == "WATCH_LATER" %}
             {% from "common/uix/watch_later_button.twig" import render as watch_later %}
-            {{ watch_later(overlay.thumbnailOverlayToggleButtonRenderer) }}
+            {{ watch_later(overlay.thumbnailOverlayToggleButtonRenderer, id) }}
         {% elseif overlay.thumbnailOverlayResumePlaybackRenderer %}
             <span class="resume-playback-background"></span>
             <span class="resume-playback-progress-bar" style="width:{{ overlay.thumbnailOverlayResumePlaybackRenderer.percentDurationWatched }}%"></span>

@@ -4,6 +4,7 @@ namespace Rehike\Controller\ajax;
 use Rehike\Network;
 use Rehike\Util\RichShelfUtils;
 use Rehike\Util\Base64Url;
+use Rehike\Model\Browse\InnertubeBrowseConverter;
 use Com\Youtube\Innertube\Helpers\VideosContinuationWrapper;
 
 use function Rehike\Async\async;
@@ -15,22 +16,26 @@ use function Rehike\Async\async;
  * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
-return new class extends \Rehike\Controller\core\AjaxController {
+return new class extends \Rehike\Controller\core\AjaxController
+{
     public $template = "ajax/browse";
 
-    public function onGet(&$yt, $request) {
+    public function onGet(&$yt, $request)
+    {
         return $this->onPost($yt, $request);
     }
 
-    public function onPost(&$yt, $request) {
-        return async(function() use (&$yt, $request) {
+    public function onPost(&$yt, $request)
+    {
+        return async(function() use (&$yt, $request)
+        {
             if (!isset($request->params->continuation)) self::error();
             $continuation = $request->params->continuation;
-            $list = false;
 
             $contWrapper = new VideosContinuationWrapper();
             $contWrapper->mergeFromString(Base64Url::decode($continuation));
 
+            $list = false;
             if ($contWrapper->getContinuation() != "")
             {
                 $continuation = $contWrapper->getContinuation();
@@ -46,12 +51,16 @@ return new class extends \Rehike\Controller\core\AjaxController {
             );
             $ytdata = $response->getJson();
 
-            if (isset($ytdata->onResponseReceivedActions)) {
-                foreach ($ytdata->onResponseReceivedActions as $action) {
-                    if (isset($action->appendContinuationItemsAction)) {
-                        
-                        foreach ($action->appendContinuationItemsAction->continuationItems as &$item) {
-                            switch (true) {
+            if (isset($ytdata->onResponseReceivedActions))
+            {
+                foreach ($ytdata->onResponseReceivedActions as $action)
+                {
+                    if (isset($action->appendContinuationItemsAction))
+                    {
+                        foreach ($action->appendContinuationItemsAction->continuationItems as &$item)
+                        {
+                            switch (true)
+                            {
                                 case isset($item->continuationItemRenderer):
                                     if (!$list)
                                     {
@@ -76,9 +85,19 @@ return new class extends \Rehike\Controller\core\AjaxController {
                         $yt->page->items = $action->appendContinuationItemsAction->continuationItems;
                     }
                 }
-            } else {
+            }
+            else
+            {
                 self::error();
             }
+
+            $yt->page->items =
+            InnertubeBrowseConverter::generalLockupConverter(
+                $yt->page->items,
+                [
+                    "listView" => $list
+                ]
+            );
     
             $yt->page->target = $request->params->target_id;
             $yt->page->response = $ytdata;

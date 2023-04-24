@@ -23,6 +23,6 @@
         {{ overlays.playlist(data, false) }}
         {% endif %}
     </a>
-    {{ overlays.render(info.thumbnailOverlays) }}
+    {{ overlays.render(info.thumbnailOverlays, info.videoId) }}
 </div>
 {% endmacro %}

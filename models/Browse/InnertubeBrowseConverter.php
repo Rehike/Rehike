@@ -26,6 +26,12 @@ class InnertubeBrowseConverter
                 case "compactVideoRenderer":
                     $content = self::videoRenderer($content, $context);
                     break;
+                case "reelItemRenderer":
+                    $list = $context["listView"] ?? false;
+                    $item->{$list ? "videoRenderer" : "gridVideoRenderer"}
+                    = self::reelItemRenderer($content, $context);
+                    unset($item->reelItemRenderer);
+                    break;
             }
         }
 
@@ -330,5 +336,13 @@ class InnertubeBrowseConverter
         }
         
         return $data->content;
+    }
+
+    public static function reelItemRenderer(object $data, array $context = []): object
+    {
+        $data->title = $data->headline;
+        unset($data->headline);
+
+        return $data;
     }
 }
