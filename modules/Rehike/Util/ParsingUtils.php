@@ -116,7 +116,7 @@ class ParsingUtils
             // There is also an isOriginalAspectRatio variable that indicates
             // if the thumbnail is not 16:9 and that the URL is a link to the
             // image in its original aspect ratio (would be stretched).
-            $isShort = !($ratio >= 1.7 && $ratio < 1.8) || $container->isOriginalAspectRatio;
+            $isShort = !($ratio >= 1.7 && $ratio < 1.8) || @$container->isOriginalAspectRatio;
 
             // If the video is a Short, we want to remove the sqp param to 
             // remove any cropping. We also want to switch the oar2 thumb
