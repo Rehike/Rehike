@@ -1,10 +1,10 @@
 {
-	"previousHash": "d2d4320284cbe7f795ba9125df6e85df2999b356",
-	"currentRevisionId": 830,
-	"subject": "Fix small error",
-	"body": "Fix small error",
+	"previousHash": "c51db9b0324fe1781e2c75a2b15b75d87f97527a",
+	"currentRevisionId": 831,
+	"subject": "Channels: Fix terminated channel pages",
+	"body": "Channels: Fix terminated channel pages",
 	"branch": "dev-0.7-asynchike-main",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1682302191
+	"time": 1682385688
 }

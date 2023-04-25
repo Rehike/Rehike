@@ -23,7 +23,7 @@ class Channels4Model
     /** @var string[] */
     public static array $extraVideoTabs = [];
 
-    private static object $currentTabContents;
+    private static ?object $currentTabContents = null;
 
     public static function bake(&$yt, $data, $sidebarData = null)
     {
@@ -113,7 +113,10 @@ class Channels4Model
             $response += ["subConfirmationDialog" => new MSubConfirmationDialog($response["header"])];
         }
 
-        $response += ["content" => self::getTabContents(self::$currentTabContents)];
+        if (!is_null(self::$currentTabContents))
+        {
+            $response += ["content" => self::getTabContents(self::$currentTabContents)];
+        }
 
         $response += ["baseUrl" => self::$baseUrl];
 
