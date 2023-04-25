@@ -8,6 +8,8 @@ use Rehike\Model\Browse\InnertubeBrowseConverter;
 use Rehike\Model\Channels\Channels4\MSubConfirmationDialog;
 use Rehike\Model\Common\MAlert;
 use Rehike\Util\Base64Url;
+use Rehike\Util\ParsingUtils;
+use Rehike\i18n;
 use Com\Youtube\Innertube\Helpers\VideosContinuationWrapper;
 
 class Channels4Model
@@ -27,6 +29,8 @@ class Channels4Model
 
     public static function bake(&$yt, $data, $sidebarData = null)
     {
+        $i18n = i18n::getNamespace("channels");
+
         self::$yt = &$yt;
 
         self::$videosSort = $yt->videosSort ?? 0;
@@ -64,7 +68,20 @@ class Channels4Model
                 $alert = $alert->alertWithButtonRenderer
                   ?? $alert->alertRenderer
                   ?? null;
-                $response["alerts"][] = MAlert::fromData($alert);
+                if (
+                    ParsingUtils::getText($alert->text) == $i18n->nonexistent
+                &&  isset($response["header"])
+                )
+                {
+                    $response["header"]->nonexistentMessage =
+                    ParsingUtils::getText($alert->text);
+                }
+                else
+                {
+                    $response["alerts"][] = MAlert::fromData($alert, [
+                        "forceCloseButton" => true
+                    ]);
+                }
             }
         }
 

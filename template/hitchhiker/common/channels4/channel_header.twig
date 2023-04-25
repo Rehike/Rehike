@@ -19,6 +19,11 @@
             }
         </style>
         <div id="c4-header-bg-container" class="c4-visible-on-hover-container {{ header.banner.isCustom ? "has-custom-banner" }}">
+            {% if header.nonexistentMessage %}
+            <div class="banner-message channel-empty-message">
+                <h2>{{ header.nonexistentMessage }}</h2>
+            </div>
+            {% else %}
             <div class="hd-banner">
                 <div class="hd-banner-image "></div>
             </div>
@@ -49,6 +54,7 @@
                 </ul>
                 {% endif %}
             </div>
+            {% endif %}
 
             <a class="channel-header-profile-image-container spf-link" href="{{ header.url }}">
             <img class="channel-header-profile-image" src="{{ header.thumbnail }}" title="{{ header.title.text }}" alt="{{ header.title.text }}">

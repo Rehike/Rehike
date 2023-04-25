@@ -18,6 +18,7 @@ class MHeader
     public $headerLinks;
     public $tabs;
     public $subscriptionButton;
+    public $nonexistentMessage;
 
     protected $subscriptionCount;
 

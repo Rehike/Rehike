@@ -11,5 +11,6 @@
     "videoSortPopular": "Most popular",
     "videoSortOldest": "Date added (oldest)",
     "videoSortNewest": "Date added (newest)",
-    "subscriptionConfirmationHeader": "Confirm Channel Subscription"
+    "subscriptionConfirmationHeader": "Confirm Channel Subscription",
+    "nonexistent": "This channel does not exist."
 }
