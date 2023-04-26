@@ -31,7 +31,9 @@
 {%- macro list(contents) -%}
     <ol id="playlist-autoscroll-list" class="playlist-videos-list yt-uix-scroller yt-viewport" data-scroll-action="yt.www.watch.lists.loadThumbnails">
         {%- for video in contents -%}
+        {% if video.playlistPanelVideoRenderer %}
             {{ _self.item(video.playlistPanelVideoRenderer, loop.index) }}
+        {% endif %}
         {%- endfor -%}
     </ol>
 {%- endmacro -%}
