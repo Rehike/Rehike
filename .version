@@ -1,10 +1,10 @@
 {
-	"previousHash": "8f89e042a2e01d1f3ff4bf1059c7499c20806942",
-	"currentRevisionId": 833,
-	"subject": "I HATE TWIG I HATE TWIG I HATE TWIG I HATE TWIG I HATE TWIG I HATE TWIG I HATE TWIG I HATE TWIG",
-	"body": "I HATE TWIG I HATE TWIG I HATE TWIG I HATE TWIG I HATE TWIG I HATE TWIG I HATE TWIG I HATE TWIG",
+	"previousHash": "82363852baedb67a95d87115c1e0f1153c49cdf6",
+	"currentRevisionId": 834,
+	"subject": "Fix channel shorts load more, playlist play all text",
+	"body": "Fix channel shorts load more, playlist play all text",
 	"branch": "dev-0.7-asynchike-main",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1682481517
+	"time": 1682777573
 }

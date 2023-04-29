@@ -27,6 +27,7 @@ class InnertubeBrowseConverter
                     $content = self::videoRenderer($content, $context);
                     break;
                 case "reelItemRenderer":
+                case "gridReelItemRenderer":
                     $list = $context["listView"] ?? false;
                     $item->{$list ? "videoRenderer" : "gridVideoRenderer"}
                     = self::reelItemRenderer($content, $context);

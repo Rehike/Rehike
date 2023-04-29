@@ -64,4 +64,12 @@ abstract class RehikeUtilsDelegateBase extends stdClass
         
         return ParsingUtils::getThumb($obj, $height) ?? "//i.ytimg.com/";
     }
+
+    /**
+     * Alias for ParsingUtils::getThumbnailOverlay() for templating use.
+     */
+    public static function getThumbnailOverlay(object $array, string $name): ?object
+    {
+        return ParsingUtils::getThumbnailOverlay($array, $name);
+    }
 }
