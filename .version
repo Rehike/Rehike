@@ -1,10 +1,10 @@
 {
-	"previousHash": "82363852baedb67a95d87115c1e0f1153c49cdf6",
-	"currentRevisionId": 834,
-	"subject": "Fix channel shorts load more, playlist play all text",
-	"body": "Fix channel shorts load more, playlist play all text",
+	"previousHash": "f756289c996b4a1dc47ee26fb8459bef38d359a5",
+	"currentRevisionId": 835,
+	"subject": "Fix for "For you" sort taking over.",
+	"body": "Fix for "For you" sort taking over.",
 	"branch": "dev-0.7-asynchike-main",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1682777573
+	"time": 1683682098
 }

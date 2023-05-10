@@ -1,14 +1,18 @@
 <?php
 namespace Rehike\Model\Watch\Watch8;
 
-use \Rehike\Model\Watch\WatchModel as WatchBase;
-use \Rehike\Model\Watch\Watch7\MVideoDiscussionRenderer;
-use \Rehike\Model\Watch\Watch7\MVideoDiscussionNotice;
-use \Rehike\Model\Watch\Watch7\MCreatorBar;
-use \Rehike\i18n;
-use \Rehike\Util\PrefUtils;
-use \Rehike\Signin\API as SignIn;
-use \Rehike\Model\Browse\InnertubeBrowseConverter;
+use Rehike\Model\Watch\WatchModel as WatchBase;
+use Rehike\Model\Watch\Watch7\MVideoDiscussionRenderer;
+use Rehike\Model\Watch\Watch7\MVideoDiscussionNotice;
+use Rehike\Model\Watch\Watch7\MCreatorBar;
+use Rehike\i18n;
+use Rehike\Util\PrefUtils;
+use Rehike\Signin\API as SignIn;
+use Rehike\Model\Browse\InnertubeBrowseConverter;
+use Rehike\Model\Common\MButton;
+use Rehike\Model\Traits\NavigationEndpoint;
+
+use function PHPSTORM_META\map;
 
 /**
  * Implements the watch8 subcontroller for the watch model
@@ -225,10 +229,10 @@ class Watch8Subcontroller
 
             if ($prevIndexInt < 0)
             {
-                $prevIndexInt = count($list->contents ?? [0]) - 1;
+                $prevIndexInt = count($list->contents) - 1;
             }
 
-            if ($nextIndexInt > count($list->contents ?? [0]) - 1)
+            if ($nextIndexInt > count($list->contents) - 1)
             {
                 $nextIndexInt = 0;
             }
@@ -245,21 +249,40 @@ class Watch8Subcontroller
             ;
             $nextUrl = "/watch?v={$nextId}&index={$nextIndexIntPlus}&list={$playlistId}";
 
-            // Push those to output
-            $out->previousVideo = [
-                "id" => $prevId,
-                "url" => $prevUrl
-            ];
-
-            /*
-             * FIX (kirasicecreamm): Taniko, you're a fucking idiot.
-             * 
-             * (rename the variable next time lol)
-             */
-            $out->nextVideo = [
-                "id" => $nextId,
-                "url" => $nextUrl
-            ];
+            // Previous and next buttons
+            // These are hidden, but the JS uses them, and there is also CSS
+            // themes that unhide these buttons.
+            $out->behaviorControls = [];
+            $out->behaviorControls[] = new MButton([
+                "size" => "SIZE_DEFAULT",
+                "style" => "STYLE_OPACITY",
+                "tooltip" => $i18n->playlistPrevVideo,
+                "navigationEndpoint" => NavigationEndpoint::createEndpoint($prevUrl),
+                "icon" => (object) [
+                    "iconType" => "WATCH_APPBAR_PLAY_PREV"
+                ],
+                "class" => [
+                    "hid",
+                    "prev-playlist-list-item",
+                    "yt-uix-tooltip-masked",
+                    "yt-uix-button-player-controls"
+                ]
+            ]);
+            $out->behaviorControls[] = new MButton([
+                "size" => "SIZE_DEFAULT",
+                "style" => "STYLE_OPACITY",
+                "tooltip" => $i18n->playlistNextVideo,
+                "navigationEndpoint" => NavigationEndpoint::createEndpoint($nextUrl),
+                "icon" => (object) [
+                    "iconType" => "WATCH_APPBAR_PLAY_NEXT"
+                ],
+                "class" => [
+                    "hid",
+                    "next-playlist-list-item",
+                    "yt-uix-tooltip-masked",
+                    "yt-uix-button-player-controls"
+                ]
+            ]);
         }
 
         return $out;

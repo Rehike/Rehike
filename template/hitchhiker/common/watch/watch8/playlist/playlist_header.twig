@@ -1,3 +1,4 @@
+{% from "common/uix/button.twig" import render as button %}
 {% set playlist = yt.page.playlist %}
 <div class="playlist-header">
     <div class="playlist-header-content" data-loop-auto-clicktracking="CBYQ0TkiEwiZ0smi4d7ZAhU4H34KHf9DCpwo-B0yCGF1dG9wbGF5SMynl6LS1_rxtgE" data-normal-auto-clicktracking="CBYQ0TkiEwiZ0smi4d7ZAhU4H34KHf9DCpwo-B0yCGF1dG9wbGF5SMynl6LS1_rxtgE" data-list-author="" data-shareable="True" data-list-title="{{ playlist.title }}" data-loop_shuffle-auto-clicktracking="CBYQ0TkiEwiZ0smi4d7ZAhU4H34KHf9DCpwo-B0yCGF1dG9wbGF5SMynl6LS1_rxtgE" data-full-list-id="{{ playlist.playlistId }}" data-shuffle-auto-clicktracking="CBYQ0TkiEwiZ0smi4d7ZAhU4H34KHf9DCpwo-B0yCGF1dG9wbGF5SMynl6LS1_rxtgE" data-initial-loop-state="false">
@@ -49,8 +50,9 @@
             <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-player-controls yt-uix-button-empty yt-uix-button-has-icon shuffle-playlist yt-uix-button-opacity yt-uix-tooltip yt-uix-tooltip" type="button" onclick=";return false;" title="Shuffle" data-button-toggle="true"><span class="yt-uix-button-icon-wrapper"><span class="yt-uix-button-icon yt-uix-button-icon-watch-appbar-shuffle-video-list yt-sprite"></span></span></button>
         </div>
         <div class="playlist-behavior-controls">
-            <a  href="{{ playlist.previousVideo.url }}" class="yt-uix-button  hid prev-playlist-list-item yt-uix-button-opacity yt-uix-tooltip yt-uix-tooltip-masked spf-link  yt-uix-button-player-controls yt-uix-button-size-default yt-uix-button-has-icon yt-uix-tooltip yt-uix-button-empty" data-normal-prev-clicktracking="CBYQ0TkiEwiZ0smi4d7ZAhU4H34KHf9DCpwo-B0yB2JmX3ByZXZIzKeXotLX-vG2AQ" data-shuffle-prev-clicktracking="" data-loop-prev-clicktracking="CBYQ0TkiEwiZ0smi4d7ZAhU4H34KHf9DCpwo-B0yB2JmX3ByZXZIzKeXotLX-vG2AQ" data-loop_shuffle-prev-clicktracking="CBYQ0TkiEwiZ0smi4d7ZAhU4H34KHf9DCpwo-B0yB2JmX3ByZXZIzKeXotLX-vG2AQ" title="Previous video"><span class="yt-uix-button-icon-wrapper"><span class="yt-uix-button-icon yt-uix-button-icon-watch-appbar-play-prev yt-sprite"></span></span></a>
-            <a  href="{{ playlist.nextVideo.url }}" class="yt-uix-button  hid next-playlist-list-item yt-uix-button-opacity yt-uix-tooltip spf-link  yt-uix-button-player-controls yt-uix-button-size-default yt-uix-button-has-icon yt-uix-tooltip yt-uix-button-empty" data-shuffle-next-clicktracking="CBYQ0TkiEwiZ0smi4d7ZAhU4H34KHf9DCpwo-B0yB2JmX25leHRIzKeXotLX-vG2AQ" data-normal-next-clicktracking="CBYQ0TkiEwiZ0smi4d7ZAhU4H34KHf9DCpwo-B0yB2JmX25leHRIzKeXotLX-vG2AQ" data-loop_shuffle-next-clicktracking="CBYQ0TkiEwiZ0smi4d7ZAhU4H34KHf9DCpwo-B0yB2JmX25leHRIzKeXotLX-vG2AQ" data-loop-next-clicktracking="CBYQ0TkiEwiZ0smi4d7ZAhU4H34KHf9DCpwo-B0yB2JmX25leHRIzKeXotLX-vG2AQ" title="Next video"><span class="yt-uix-button-icon-wrapper"><span class="yt-uix-button-icon yt-uix-button-icon-watch-appbar-play-next yt-sprite"></span></span></a>
+            {% for control in playlist.behaviorControls %}
+                {{ button(control) }}
+            {% endfor %}
         </div>
     </div>
 </div>

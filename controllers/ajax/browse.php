@@ -95,7 +95,8 @@ return new class extends \Rehike\Controller\core\AjaxController
             InnertubeBrowseConverter::generalLockupConverter(
                 $yt->page->items,
                 [
-                    "listView" => $list
+                    "listView" => $list,
+                    "channelRendererUnbrandedSubscribeButton" => true
                 ]
             );
     

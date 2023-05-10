@@ -35,5 +35,8 @@
     "metadataSong": "Song",
     "metadataGame": "Game",
     "playlistVideosSingular": "1 video",
-    "playlistVideosPlural": "%s videos"
+    "playlistVideosPlural": "%s videos",
+    "playlistSave": "Save to Playlists",
+    "playlistPrevVideo": "Previous video",
+    "playlistNextVideo": "Next video"
 }

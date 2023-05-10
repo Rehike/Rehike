@@ -67,6 +67,8 @@ Router::redirect([
     "/subscription_center?(*)" => function($request) {
         if ($user = @$request->params->add_user)
             return "/user/$user?sub_confirmation=1";
+        else if ($user = @$request->params->add_user_id)
+            return "/channel/$user?sub_confirmation=1";
     }
 ]);
 
