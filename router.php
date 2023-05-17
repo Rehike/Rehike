@@ -36,7 +36,8 @@ Router::funnel([
     "/features",
     "/testtube",
     "/t/terms",
-    "/iframe_api"
+    "/iframe_api",
+    "/feeds/*"
 ]);
 
 Router::redirect([
