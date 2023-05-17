@@ -42,7 +42,8 @@ Router::funnel([
     "/t/terms",
     "/iframe_api",
     "/signin_prompt",
-    "/post/*"
+    "/post/*",
+    "/feeds/*"
 ]);
 
 Router::redirect([
