@@ -1,10 +1,10 @@
 {
-	"previousHash": "d514dfc4d65337bd317d294d08ef8f7b8511ba3c",
-	"currentRevisionId": 838,
-	"subject": "Merge branch 'dev-0.7-asynchike-main' of https://github.com/Rehike/Rehike into dev-0.7-asynchike-main",
-	"body": "Merge branch 'dev-0.7-asynchike-main' of https://github.com/Rehike/Rehike into dev-0.7-asynchike-main",
+	"previousHash": "c5c56924103dc2d9b1ccc50baf735701ad36adf1",
+	"currentRevisionId": 839,
+	"subject": "Fix for when RYD API is down",
+	"body": "Fix for when RYD API is down",
 	"branch": "dev-0.7-asynchike-main",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1684682805
+	"time": 1684710610
 }

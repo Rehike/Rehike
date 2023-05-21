@@ -14,6 +14,7 @@ use Rehike\Util\ExtractUtils;
 use Rehike\i18n;
 
 use Rehike\Model\Watch\WatchModel;
+use YukisCoffee\CoffeeRequest\Exception\GeneralException;
 
 /**
  * Controller for the watch page.
@@ -176,7 +177,15 @@ return new class extends NirvanaController {
         ])->then(function ($responses) use ($yt) {
             $nextResponse = $responses["next"]->getJson();
             $playerResponse = $responses["player"]->getJson();
-            $rydResponse = $responses["ryd"]->getJson();
+            
+            try
+            {
+                $rydResponse = $responses["ryd"]->getJson();
+            }
+            catch (GeneralException $e)
+            {
+                $rydResponse = (object) [];
+            }
 
             // This may not be needed any longer, but manually removing ads
             // has been historically required as adblockers no longer have

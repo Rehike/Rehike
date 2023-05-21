@@ -46,10 +46,9 @@ class MLikeButtonRenderer
             $likeCountInt = (int)str_replace(",", "", $likeCount);
 
         // Account for RYD API data if it exists
-        if ($dataHost::$useRyd && "" !== $likeCount)
+        $rydData = &$dataHost::$rydData;
+        if ($dataHost::$useRyd && "" !== $likeCount && isset($rydData->dislikes))
         {
-            $rydData = &$dataHost::$rydData;
-
             $dislikeCountInt = (int)$rydData->dislikes;
 
             $this->sparkbars = new MSparkbars($likeCountInt, $dislikeCountInt);
