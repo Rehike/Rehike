@@ -106,6 +106,7 @@ Router::post([
     "/watch_fragments2_ajax" => "ajax/watch_fragments2",
     "/related_ajax" => "ajax/related",
     "/playlist_video_ajax" => "ajax/playlist_video",
+    "/playlist_ajax" => "ajax/playlist",
     "/subscription_ajax" => "ajax/subscription",
     "/service_ajax" => "ajax/service",
     "/comment_service_ajax" => "ajax/comment_service",

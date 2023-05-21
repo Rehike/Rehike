@@ -11,6 +11,7 @@ use Rehike\Signin\API as SignIn;
 use Rehike\Model\Browse\InnertubeBrowseConverter;
 use Rehike\Model\Common\MButton;
 use Rehike\Model\Traits\NavigationEndpoint;
+use Rehike\Model\Clickcard\MSigninClickcard;
 
 use function PHPSTORM_META\map;
 
@@ -283,6 +284,43 @@ class Watch8Subcontroller
                     "yt-uix-button-player-controls"
                 ]
             ]);
+
+            $isSaved = $out->menu->menuRenderer->items[0]->toggleMenuServiceItemRenderer->isToggled ?? false;
+
+            $out->saveButton = new MButton([
+                "size" => "SIZE_DEFAULT",
+                "style" => "STYLE_OPACITY",
+                "id" => "gh-playlist-save",
+                "icon" => (object) [],
+                "class" => [
+                    "yt-uix-button-player-controls",
+                    "yt-uix-playlistlike",
+                    "watch-playlist-like",
+                    $isSaved ? "yt-uix-button-toggled" : ""
+                ],
+                "tooltip" => $isSaved ? $i18n->playlistUnsave : $i18n->playlistSave,
+                "attributes" => [
+                    "like-label" => "",
+                    "playlist-id" => $out->playlistId,
+                    "unlike-label" => "",
+                    "unlike-tooltip" => $i18n->playlistUnsave,
+                    "like-tooltip" => $i18n->playlistSave,
+                    "toggle-class" => "yt-uix-button-toggled",
+                    "token" => "dummy"
+                ]
+            ]);
+
+            if (!SignIn::isSignedIn())
+            {
+                $out->saveButton->clickcard = new MSigninClickcard(
+                    $i18n->clickcardPlaylistSignIn,
+                    "",
+                    [
+                        "text" => $i18n->clickcardSignIn,
+                        "href" => "https://accounts.google.com/ServiceLogin?continue=https%3A%2F%2Fwww.youtube.com%2Fsignin%3Fnext%3D%252F%253Faction_handle_signin%3Dtrue%26feature%3D__FEATURE__%26hl%3Den%26app%3Ddesktop&passive=true&hl=en&uilel=3&service=youtube"
+                    ]
+                );
+            }
         }
 
         return $out;

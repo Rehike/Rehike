@@ -13,6 +13,7 @@
     "actionLikeTooltipActive": "Unlike",
     "actionDislikeTooltip": "I dislike this",
     "clickcardSignIn": "Sign in",
+    "clickcardPlaylistSignIn": "Sign in to YouTube",
     "addToClickcardHeading": "Want to watch this video again later?",
     "addToClickcardTip": "Sign in to add this video to a playlist.",
     "reportClickcardHeading": "Need to report the video?",
@@ -37,6 +38,7 @@
     "playlistVideosSingular": "1 video",
     "playlistVideosPlural": "%s videos",
     "playlistSave": "Save to Playlists",
+    "playlistUnsave": "Remove",
     "playlistPrevVideo": "Previous video",
     "playlistNextVideo": "Next video"
 }

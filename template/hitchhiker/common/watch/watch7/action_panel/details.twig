@@ -3,7 +3,7 @@
 {%- if (snippet.navigationEndpoint) -%}
     {%- set href = rehike.getUrl(snippet) -%}
     {%- set spf = (href|first == "/") -%}
-    {% if snippet.navigationEndpoint.watchEndpoint.videoId == yt.videoId %}
+    {% if snippet.navigationEndpoint.watchEndpoint and snippet.navigationEndpoint.watchEndpoint.videoId == yt.videoId %}
     <a href="#" onclick="yt.www.watch.player.seekTo({{ snippet.navigationEndpoint.watchEndpoint.startTimeSeconds }});return false;">
     {% else %}
     <a href="{{ href }}" class=" {{ spf ? 'spf-link' }} " target="_blank">

@@ -62,7 +62,7 @@ return new class extends AjaxController {
             echo json_encode((object) [
                 "errors" => [
                     (object) [
-                        "Specify an action!"
+                        "Specify an action."
                     ]
                 ]
             ]);

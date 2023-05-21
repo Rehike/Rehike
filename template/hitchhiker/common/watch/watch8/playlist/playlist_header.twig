@@ -3,7 +3,7 @@
 <div class="playlist-header">
     <div class="playlist-header-content" data-loop-auto-clicktracking="CBYQ0TkiEwiZ0smi4d7ZAhU4H34KHf9DCpwo-B0yCGF1dG9wbGF5SMynl6LS1_rxtgE" data-normal-auto-clicktracking="CBYQ0TkiEwiZ0smi4d7ZAhU4H34KHf9DCpwo-B0yCGF1dG9wbGF5SMynl6LS1_rxtgE" data-list-author="" data-shareable="True" data-list-title="{{ playlist.title }}" data-loop_shuffle-auto-clicktracking="CBYQ0TkiEwiZ0smi4d7ZAhU4H34KHf9DCpwo-B0yCGF1dG9wbGF5SMynl6LS1_rxtgE" data-full-list-id="{{ playlist.playlistId }}" data-shuffle-auto-clicktracking="CBYQ0TkiEwiZ0smi4d7ZAhU4H34KHf9DCpwo-B0yCGF1dG9wbGF5SMynl6LS1_rxtgE" data-initial-loop-state="false">
         <div class="appbar-playlist-controls clearfix">
-            <span class="yt-uix-clickcard">
+            {# <span class="yt-uix-clickcard">
                 <span class="yt-uix-clickcard-target" data-position="bottomright" data-orientation="vertical">
                 <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-player-controls yt-uix-button-empty yt-uix-button-has-icon no-icon-markup yt-uix-playlistlike watch-playlist-like yt-uix-button-opacity yt-uix-tooltip" type="button" onclick=";return false;" id="gh-playlist-save" aria-label="Save to Playlists" title="Save to Playlists" data-like-label="" data-playlist-id="{{ playlist.playlistId }}" data-unlike-label="" data-unlike-tooltip="Remove" data-like-tooltip="Save to Playlists" data-toggle-class="yt-uix-button-toggled" data-token="QUFFLUhqbVVlR1ZYZUVPZ1E0dnZ2U3lObzI3U3R1ajRId3xBQ3Jtc0tsMDhmX1JMZlh0dzB2MFBRQ2lEZy1DdlVtWFdxLXA3N0l3SUpYYUZ0blRpckVZaWMtbTlScXE4T2RHaG1mYWd2SnRtQWg0eXJfUC1fZFNvazNaY3ZOZ053TjZIZDBhNi14ZDhNS29FY1dCOERxX0gxWUh5aHpreUZZOVhjMU5BRllpY1N6SktLNk9vYzJZZXJ0dUpkSUc1TW8xZkE="></button>
                 </span>
@@ -13,7 +13,8 @@
                     </div>
                     <a  href="https://accounts.google.com/ServiceLogin?passive=true&amp;uilel=3&amp;hl=en&amp;continue=https%3A%2F%2Fwww.youtube.com%2Fsignin%3Fnext%3D%252Fwatch%253Fv%253DtuPqvSRF08w%2526list%253DFLNaqshw8BAQ12nPRixBy4AA%26action_handle_signin%3Dtrue%26hl%3Den%26app%3Ddesktop%26feature%3D__FEATURE__&amp;service=youtube" class="yt-uix-button  signin-button  yt-uix-button-primary yt-uix-button-size-default"><span class="yt-uix-button-content">Sign in</span></a>
                 </div>
-            </span>
+            </span> #}
+            {{ button(playlist.saveButton) }}
         </div>
         <div class="playlist-info">
 
