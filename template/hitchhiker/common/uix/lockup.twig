@@ -145,7 +145,7 @@
 <div class="yt-lockup-meta">
     <ul class="yt-lockup-meta-info">
         <li>
-            <a href="{{ rehike.getUrl(info.viewPlaylistText.runs[0]) }}" class="spf-link">{{ rehike.getText(info.viewPlaylistText) }}{% if data.type == "playlist" %} ({{ rehike.getText(info.videoCountText) }}){% endif %}</a>
+            <a href="{{ info.viewPlaylistText.runs[0].navigationEndpoint ? rehike.getUrl(info.viewPlaylistText.runs[0]) : "/playlist?list=" ~ info.playlistId }}" class="spf-link">{{ info.viewPlaylistText ? rehike.getText(info.viewPlaylistText) : yt.msgs.viewFullPlaylist }}{% if data.type == "playlist" %} ({{ rehike.getText(info.videoCountText) }}){% endif %}</a>
         </li>
     </ul>
 </div>

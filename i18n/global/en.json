@@ -18,5 +18,6 @@
     "shelfsliderPrev": "Previous",
     "transcriptTitle": "Transcript",
     "transcriptFail": "The interactive transcript could not be loaded.",
-    "close": "Close"
+    "close": "Close",
+    "viewFullPlaylist": "View full playlist"
 }

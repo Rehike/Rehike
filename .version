@@ -1,10 +1,10 @@
 {
-	"previousHash": "c5c56924103dc2d9b1ccc50baf735701ad36adf1",
-	"currentRevisionId": 839,
-	"subject": "Fix for when RYD API is down",
-	"body": "Fix for when RYD API is down",
+	"previousHash": "685bdb6c5e0e53ac1e4afd078fe0a30b59f3bc79",
+	"currentRevisionId": 840,
+	"subject": "Fix modern playlist renderers seen in "Releases" channel tab",
+	"body": "Fix modern playlist renderers seen in "Releases" channel tab",
 	"branch": "dev-0.7-asynchike-main",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1684710610
+	"time": 1684975380
 }
