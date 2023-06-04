@@ -1,6 +1,7 @@
 <?php
 use Rehike\Controller\core\AjaxController;
 use \Rehike\Network;
+use SpfPhp\SpfPhp;
 
 /**
  * Controller for AJAX feeds.
@@ -63,30 +64,21 @@ return new class extends AjaxController {
                     ->ctoken) ?? null;
             });
         } else {
-            $this->spfIdListeners = [
-                "yt-masthead-notifications-content"
-            ];
-
-            Network::innertubeRequest(
-                action: "notification/get_notification_menu",
-                body: [
-                    "notificationsMenuRequestType" => "NOTIFICATIONS_MENU_REQUEST_TYPE_INBOX"
-                ]
-            )->then(function ($response) use ($yt) {
-                $ytdata = $response->getJson();
-
-                $yt->notifSections = $ytdata->actions[0]->openPopupAction
-                    ->popup->multiPageMenuRenderer->sections;
-            });
+            $this->getNotifications($yt, $request);
         }
     }
 
     public function onPost(&$yt, $request) {
         if (!@$yt->signin["isSignedIn"]) self::error();
 
+        $this->getNotifications($yt, $request);
+    }
+
+    private function getNotifications(&$yt, $request): void
+    {
         $this->spfIdListeners = [
             "yt-masthead-notifications-content"
-        ];
+        ]; 
 
         Network::innertubeRequest(
             action: "notification/get_notification_menu",

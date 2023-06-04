@@ -1,10 +1,10 @@
 {
-	"previousHash": "685bdb6c5e0e53ac1e4afd078fe0a30b59f3bc79",
-	"currentRevisionId": 840,
-	"subject": "Fix modern playlist renderers seen in "Releases" channel tab",
-	"body": "Fix modern playlist renderers seen in "Releases" channel tab",
+	"previousHash": "cd791ac15f093f4dbdfa4ad320cab5ec59bff10e",
+	"currentRevisionId": 841,
+	"subject": "improve a bit",
+	"body": "improve a bit",
 	"branch": "dev-0.7-asynchike-main",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1684975380
+	"time": 1685906460
 }
