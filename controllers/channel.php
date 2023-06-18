@@ -169,57 +169,51 @@ class channel extends NirvanaController {
             // Get content for current sort if it
             // is not recently uploaded (default)
             $yt->videosSort = 0;
-            if (in_array($tab, self::VIDEO_TABS))
+            if (in_array($tab, self::VIDEO_TABS) && isset($request->params->sort))
             {
                 // Get index of sort name
-                $sort = array_search($request->params->sort ?? "dd", self::VIDEO_TAB_SORT_INDICES);
+                $sort = array_search($request->params->sort, self::VIDEO_TAB_SORT_INDICES);
                 $yt->videosSort = $sort;
-                $tabs = &$page->contents->twoColumnBrowseResultsRenderer->tabs;
-
-                // Do NOT call this $tab. It will override the previous $tab
-                // and cause an object to be registered as the current tab.
-                $grid = (object) [];
-                foreach ($tabs as &$tabR)
+                if ($sort > 0)
                 {
-                    if (@$tabR->tabRenderer->selected)
+                    $tabs = &$page->contents->twoColumnBrowseResultsRenderer->tabs;
+
+                    // Do NOT call this $tab. It will override the previous $tab
+                    // and cause an object to be registered as the current tab.
+                    foreach ($tabs as &$tabR)
                     {
-                        $grid = &$tabR->tabRenderer->content->richGridRenderer ?? null;
-                        break;
-                    } 
-                }
-
-                $chips = $grid->header->feedFilterChipBarRenderer->contents ?? null;
-
-                // There are two possibilities here.
-                // 
-                // 1. There is a defined sort parameter.
-                // 2. There is no defined sort parameter, and the third chip
-                //    (For you) is selected. That's no good, so we request
-                //    Latest to put in its place!
-                if ((isset($request->params->sort) && isset($grid))
-                ||  (isset($grid) && !isset($request->params->sort) && @$chips[2]->chipCloudChipRenderer->isSelected))
-                {
-                    $ctoken = $chips[$sort]->chipCloudChipRenderer
-                    ->navigationEndpoint->continuationCommand->token ?? null;
-
-                    if (isset($ctoken))
-                    {
-                        $sort = yield Network::innertubeRequest(
-                            action: "browse",
-                            body: [
-                                "continuation" => $ctoken
-                            ]
-                        );
-
-                        $newContents = $sort->getJson();
-                        $newContents = $newContents
-                            ->onResponseReceivedActions[1]
-                            ->reloadContinuationItemsCommand
-                            ->continuationItems ?? null;
-
-                        if (isset($newContents) && is_array($newContents))
+                        if (@$tabR->tabRenderer->selected)
                         {
-                            $grid->contents = $newContents;
+                            $grid = &$tabR->tabRenderer->content->richGridRenderer ?? null;
+                            break;
+                        } 
+                    }
+
+                    if (isset($grid))
+                    {
+                        $ctoken = $grid->header->feedFilterChipBarRenderer->contents[$sort]
+                            ->chipCloudChipRenderer->navigationEndpoint->continuationCommand
+                            ->token ?? null;
+
+                        if (isset($ctoken))
+                        {
+                            $sort = yield Network::innertubeRequest(
+                                action: "browse",
+                                body: [
+                                    "continuation" => $ctoken
+                                ]
+                            );
+
+                            $newContents = $sort->getJson();
+                            $newContents = $newContents
+                                ->onResponseReceivedActions[1]
+                                ->reloadContinuationItemsCommand
+                                ->continuationItems ?? null;
+
+                            if (isset($newContents) && is_array($newContents))
+                            {
+                                $grid->contents = $newContents;
+                            }
                         }
                     }
                 }
