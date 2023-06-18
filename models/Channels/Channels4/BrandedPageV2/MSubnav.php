@@ -49,7 +49,8 @@ class MSubnav
             $instance->title = match(Channels4Model::getCurrentTab())
             {
                 "videos" => $i18n->viewUploads,
-                "streams" => $i18n->viewLiveStreams
+                "streams" => $i18n->viewLiveStreams,
+                "shorts" => $i18n->viewShorts
             };
         }
         else
@@ -107,20 +108,30 @@ class MSubnav
 
         $options = [];
         
-        $newestText = $i18n->videoSortNewest;
         $popularText = $i18n->videoSortPopular;
+        $newestText = $i18n->videoSortNewest;
+        $oldestText = $i18n->videoSortOldest;
 
         switch ($sort)
         {
             case 0:
                 $activeText = $newestText;
                 $options += [
-                    $popularText => "$baseUrl/$tab?sort=p&flow=$flow"
+                    $popularText => "$baseUrl/$tab?sort=p&flow=$flow",
+                    $oldestText => "$baseUrl/$tab?sort=da&flow=$flow"
                 ];
                 break;
             case 1:
                 $activeText = $popularText;
                 $options += [
+                    $oldestText => "$baseUrl/$tab?sort=da&flow=$flow",
+                    $newestText => "$baseUrl/$tab?sort=dd&flow=$flow"
+                ];
+                break;
+            case 2:
+                $activeText = $oldestText;
+                $options += [
+                    $popularText = "$baseUrl/$tab?sort=p&flow=$flow",
                     $newestText => "$baseUrl/$tab?sort=dd&flow=$flow"
                 ];
                 break;
@@ -140,17 +151,14 @@ class MSubnav
         $gridText = $i18n->flowGrid;
         $listText = $i18n->flowList;
 
-        $sort = "dd";
-        switch (Channels4Model::getVideosSort()) {
-            case 0:
-                $sort = "dd";
-                break;
-            case 1;
-                $sort = "p";
-                break;
-        }
+        $sort = match (Channels4Model::getVideosSort()) {
+            0 => "dd",
+            1 => "p",
+            2 => "da",
+            default => "dd"
+        };
 
-        $tab = ("streams" == Channels4Model::getCurrentTab()) ? "streams" : "videos";
+        $tab = Channels4Model::getCurrentTab();
 
         $options = [];
 

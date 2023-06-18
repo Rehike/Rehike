@@ -33,7 +33,8 @@ class channel extends NirvanaController {
     // Indices of which cloud chip corresponds to each sort option
     public const VIDEO_TAB_SORT_INDICES = [
         "dd",
-        "p"
+        "p",
+        "da"
     ];
 
     // Sort map for regular tabs that still use the old sorting backend
