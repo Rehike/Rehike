@@ -1,10 +1,10 @@
 {
-	"previousHash": "d1eb51f2238a8cc61e61fa88d920efa4fa80eff3",
-	"currentRevisionId": 844,
-	"subject": "Fix bug where user was unable to like/dislike videos",
-	"body": "Fix bug where user was unable to like/dislike videos",
+	"previousHash": "8034c3ab56bfb5fdf57a72626d27f3254c06e331",
+	"currentRevisionId": 845,
+	"subject": "Fix #300",
+	"body": "Fix #300",
 	"branch": "dev-0.7-asynchike-main",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1687123613
+	"time": 1687123772
 }

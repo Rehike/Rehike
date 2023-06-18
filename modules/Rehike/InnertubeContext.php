@@ -76,6 +76,7 @@ class InnertubeContext
     public static function genVisitorData($visitor)
     {
         // Generate visitorData string
+        if (is_null($visitor)) return "";
         
         $date = time();
         
