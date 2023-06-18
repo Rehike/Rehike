@@ -36,7 +36,7 @@ return new class extends AjaxController {
         $videoId = $_POST["id"];
 
         Network::innertubeRequest(
-            action: $action,
+            action: "like/$action",
             body: [
                 "target" => [
                     "videoId" => $videoId
