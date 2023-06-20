@@ -131,7 +131,7 @@ class MSubnav
             case 2:
                 $activeText = $oldestText;
                 $options += [
-                    $popularText = "$baseUrl/$tab?sort=p&flow=$flow",
+                    $popularText => "$baseUrl/$tab?sort=p&flow=$flow",
                     $newestText => "$baseUrl/$tab?sort=dd&flow=$flow"
                 ];
                 break;

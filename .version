@@ -1,10 +1,10 @@
 {
-	"previousHash": "8034c3ab56bfb5fdf57a72626d27f3254c06e331",
-	"currentRevisionId": 845,
-	"subject": "Fix #300",
-	"body": "Fix #300",
+	"previousHash": "b8a44661499141bd73380ed4277f00082f3f513b",
+	"currentRevisionId": 846,
+	"subject": "Fix most popular text when oldest sort is selected",
+	"body": "Fix most popular text when oldest sort is selected",
 	"branch": "dev-0.7-asynchike-main",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1687123772
+	"time": 1687235577
 }
