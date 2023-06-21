@@ -64,12 +64,30 @@ return new class extends AjaxController {
 
             $data = $ytdata->actions[1] ->createCommentAction->contents 
                 ->commentThreadRenderer ?? null;
-            
-            if (null != $data) {
-                $yt->page = CommentThread::commentThreadRenderer($data);
-            } else {
-                self::error();
+
+            $cids = [];
+            $cids[] = $data->comment->commentRenderer->authorEndpoint->browseEndpoint->browseId;
+
+            foreach ($data->comment->commentRenderer->contentText->runs as $run)
+            {
+                if ($a = @$run->navigationEndpoint->browseEndpoint->browseId)
+                {
+                    if (!in_array($a, $cids))
+                    $cids[] = $a;
+                }
             }
+            
+            CommentThread::populateDataApiData($cids)
+            ->then(function() use (&$yt, $data) {
+                if (null != $data)
+                {
+                    $yt->page = CommentThread::commentThreadRenderer($data);
+                }
+                else
+                {
+                    self::error();
+                }
+            });
         });
     }
 
@@ -101,12 +119,30 @@ return new class extends AjaxController {
 
             $data = $ytdata->actions[1] ->createCommentReplyAction 
                 ->contents->commentRenderer ?? null;
-            
-            if (null != $data) {
-                $yt->page = CommentThread::commentRenderer($data, true);
-            } else {
-                self::error();
-            }
+
+                $cids = [];
+                $cids[] = $data->authorEndpoint->browseEndpoint->browseId;
+    
+                foreach ($data->contentText->runs as $run)
+                {
+                    if ($a = @$run->navigationEndpoint->browseEndpoint->browseId)
+                    {
+                        if (!in_array($a, $cids))
+                        $cids[] = $a;
+                    }
+                }
+
+            CommentThread::populateDataApiData($cids)
+            ->then(function() use (&$yt, $data) {
+                if (null != $data)
+                {
+                    $yt->page = CommentThread::commentRenderer($data, true);
+                }
+                else
+                {
+                    self::error();
+                }
+            });
         });
     }
 

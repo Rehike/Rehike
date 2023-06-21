@@ -3,8 +3,6 @@
     "viewMulti": "View %s replies",
     "viewSingularOwner": "View reply from %s",
     "viewMultiOwner": "View %s replies from %s and others",
-    "viewMultiTeaser": "View all %s replies",
-    "viewMultiTeaserOwner": "View all %s replies from %s and others",
     "hideSingular": "Hide reply",
     "hideMulti": "Hide %s replies",
     "replyCountIsolator": "/( replies)|( reply)/i",

@@ -9,6 +9,8 @@ use \Rehike\i18n;
 use \Rehike\ConfigManager\ConfigManager;
 use \Rehike\Network;
 
+use function \Rehike\Async\async;
+
 class CommentThread
 {
     // Excepted structure is very similar to the InnerTube
@@ -22,6 +24,32 @@ class CommentThread
 
     public static $dataApiData = [];
 
+    /**
+     * Populate self::$dataApiData with channel data.
+     * 
+     * @param string[] $cids  List of channel IDs to get display names for.
+     */
+    public static function populateDataApiData(array $cids)
+    {
+        return async(function() use ($cids) {
+            $response = yield Network::dataApiRequest(
+                action: "channels",
+                params: [
+                    "part" => "id,snippet",
+                    "id" => implode(",", $cids)
+                ]
+            );
+            $data = $response->getJson();
+
+            foreach ($data->items as $item)
+            {
+                self::$dataApiData += [
+                    $item->id => $item->snippet
+                ];
+            }
+        });
+    }
+
     public static function bakeComments($context): Promise
     {
         return new Promise(function ($resolve, $reject) use ($context) {
@@ -32,28 +60,27 @@ class CommentThread
             
             $out = ["commentThreads" => []];
 
-            $commentIds = [];
-            foreach($context as $comment) {
-                if ($a = (@$comment->commentThreadRenderer->comment->commentRenderer->commentId)) {
-                    $commentIds[] = $a;
+            $cids = [];
+            foreach($context as $comment)
+            {
+                if ($a = (@$comment->commentThreadRenderer->comment->commentRenderer->authorEndpoint->browseEndpoint->browseId))
+                {
+                    if (!in_array($a, $cids))
+                    $cids[] = $a;
+                }
+
+                foreach ($comment->commentThreadRenderer->comment->commentRenderer->contentText->runs as $run)
+                {
+                    if ($a = @$run->navigationEndpoint->browseEndpoint->browseId)
+                    {
+                        if (!in_array($a, $cids))
+                        $cids[] = $a;
+                    }
                 }
             }
 
-            Network::dataApiRequest(
-                action: "comments",
-                params: [
-                    "part" => "id,snippet",
-                    "id" => implode(",", $commentIds)
-                ]
-            )->then(function ($response) use (&$context, &$out, $resolve) {
-                $data = $response->getJson();
-
-                foreach ($data->items as $item) {
-                    self::$dataApiData += [
-                        $item->id => $item->snippet
-                    ];
-                }
-                
+            self::populateDataApiData($cids)
+            ->then(function() use (&$context, &$out, $resolve) {
                 if (@$context)
                 {
                     for ($i = 0, $count = count($context); $i < $count; $i++) {
@@ -85,41 +112,39 @@ class CommentThread
             // Top level function
             // $context = (Array containing all commentRenderer items)
 
-            $items = @$context->continuationItems;
+            $context = @$context->continuationItems;
 
             $out = ["comments" => [], "repliesTargetId" => str_replace("comment-replies-item-", "", $context->targetId)];
 
-            $commentIds = [];
-            foreach($context as $comment) {
-                if ($a = $comment->commentRenderer->commentId) {
-                    $commentIds[] = $a;
+            $cids = [];
+            foreach($context as $comment)
+            {
+                if ($a = $comment->commentRenderer->authorEndpoint->browseEndpoint->browseId) 
+                {
+                    $cids[] = $a;
+                }
+
+                foreach ($comment->commentThreadRenderer->comment->commentRenderer->contentText->runs as $run)
+                {
+                    if ($a = @$run->navigationEndpoint->browseEndpoint->browseId)
+                    {
+                        if (!in_array($a, $cids))
+                        $cids[] = $a;
+                    }
                 }
             }
 
-            Network::dataApiRequest(
-                action: "comments",
-                params: [
-                    "part" => "id,snippet",
-                    "id" => implode(",", $commentIds)
-                ]
-            )->then(function ($response) use (&$items, &$out, $resolve) {
-                $data = $response->getJson();
-
-                foreach ($data->items as $item) {
-                    self::$dataApiData += [
-                        $item->id => $item->snippet
-                    ];
-                }
-        
-                if ($items) for ($i = 0, $count = count($items); $i < $count; $i++)
+            self::populateDataApiData($cids)
+            ->then(function() use (&$context, &$out, $resolve) {        
+                if ($context) for ($i = 0, $count = count($context); $i < $count; $i++)
                 {
-                    if (isset($items[$i]->commentRenderer))
+                    if (isset($context[$i]->commentRenderer))
                     {
-                        $out["comments"][] = self::commentRenderer($items[$i]->commentRenderer, true);
+                        $out["comments"][] = self::commentRenderer($context[$i]->commentRenderer, true);
                     }
-                    else if ($count -1 == $i && isset($items[$i]->continuationItemRenderer))
+                    else if ($count -1 == $i && isset($context[$i]->continuationItemRenderer))
                     {
-                        $out += ["repliesContinuationRenderer" => self::repliesContinuationRenderer($items[$i]->continuationItemRenderer)];
+                        $out += ["repliesContinuationRenderer" => self::repliesContinuationRenderer($context[$i]->continuationItemRenderer)];
                     }
                 }
 
@@ -153,16 +178,24 @@ class CommentThread
         $context->isReply = $isReply;
         if (isset($context->voteCount)) self::addLikeCount($context);
 
-        if (isset(self::$dataApiData[$context->commentId])) {
-            $data = self::$dataApiData[$context->commentId];
+        if ($data = @self::$dataApiData[$context->authorEndpoint->browseEndpoint->browseId]) {
             $context->authorText = (object) [
-                "simpleText" => $data->authorDisplayName
+                "simpleText" => $data->title
             ];
         }
 
-        // Eliminate surrounding spaces on channel mention
+        // Eliminate surrounding spaces on channel mention and correct mentions
         foreach ($context->contentText->runs as &$run) {
             $run->text = str_replace("\u{00A0}", "", $run->text);
+
+            if ($ucid = @$run->navigationEndpoint->browseEndpoint->browseId)
+            {
+                if (substr($ucid, 0, 2) == "UC"
+                &&  isset(self::$dataApiData[$ucid]))
+                {
+                    $run->text = "@" . self::$dataApiData[$ucid]->title;
+                }
+            }
         }
 
         $context->likeButton = VoteButton::fromData(PropertyAtPath::get($context, self::LIKE_BUTTON_PATH));
