@@ -231,7 +231,8 @@ class InnertubeBrowseConverter
         if (isset($data->badges))
         foreach ($data->badges as $badge) foreach ($badge as &$content)
         {
-            if ($content->style == "BADGE_STYLE_TYPE_LIVE_NOW")
+            if ($content->style == "BADGE_STYLE_TYPE_LIVE_NOW"
+            &&  $content->label == $i18n->liveBadgeOriginal)
             {
                 $content->label = $i18n->liveBadge;
             }
