@@ -73,7 +73,7 @@ class CommentThread
         $out = ["comments" => [], "repliesTargetId" => str_replace("comment-replies-item-", "", $context->targetId)];
 
         $commentIds = [];
-        foreach($context as $comment) {
+        foreach($items as $comment) {
             if ($a = $comment->commentRenderer->commentId) {
                 $commentIds[] = $a;
             }
