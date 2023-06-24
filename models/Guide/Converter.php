@@ -125,7 +125,7 @@ class Converter
         $response[] = $homeItem;
 
         // My channel item (if signed in)
-        if ($signedIn && isset($signinInfo->ucid))
+        if ($signedIn && isset($signinInfo->ucid) && @$signinInfo->ucid != "")
         {
             $response[] = self::bakeGuideItem(
                 "/channel/{$signinInfo->ucid}",
