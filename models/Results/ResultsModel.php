@@ -28,6 +28,21 @@ class ResultsModel {
         $response = (object) [];
         $contents = $data->contents->twoColumnSearchResultsRenderer->primaryContents->sectionListRenderer;
         $submenu = &$contents->subMenu->searchSubMenuRenderer;
+
+        if ($filters = @$data->header->searchHeaderRenderer->searchFilterButton->buttonRenderer)
+        {
+            $submenu->button = (object) [
+                "toggleButtonRenderer" => $filters
+            ];
+    
+            $submenu->groups = $filters->command->openPopupAction->popup->searchFilterOptionsDialogRenderer->groups;
+    
+            $filters = &$submenu->button->toggleButtonRenderer;
+    
+            unset($filters->command);
+            $filters->defaultText = $filters->text;
+            unset($filters->text);
+        }
         
         $submenu -> resultCountText = self::getResultsCount($data) > 1
             ? $i18n -> resultCountPlural(number_format(self::getResultsCount($data)))
