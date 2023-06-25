@@ -1,10 +1,10 @@
 {
-	"previousHash": "cd3891f2ed18da679783fe728218f40b330f0c45",
-	"currentRevisionId": 849,
-	"subject": "Fix my channel item appearing on accounts without channels",
-	"body": "Fix my channel item appearing on accounts without channels",
+	"previousHash": "3af22110b466364dd213f35163d38f57aa38ba11",
+	"currentRevisionId": 850,
+	"subject": "Partially fix subscriptions.",
+	"body": "Partially fix subscriptions.",
 	"branch": "dev-0.7-asynchike-main",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1687572186
+	"time": 1687660753
 }

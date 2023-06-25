@@ -26,6 +26,9 @@ class InnertubeBrowseConverter
                 case "compactVideoRenderer":
                     $content = self::videoRenderer($content, $context);
                     break;
+                case "richItemRenderer":
+                    $content = self::richItemRenderer($content, $context);
+                    break;
                 case "reelItemRenderer":
                 case "gridReelItemRenderer":
                     $list = $context["listView"] ?? false;
@@ -324,16 +327,17 @@ class InnertubeBrowseConverter
     /**
      * Convert a rich item renderer to its canonical type.
      * 
-     * @return array
+     * @return object
      */
     public static function richItemRenderer($data, $context = [])
     {
-        if (@$context["richGridConvertItemsToGrid"])
+        if (!@$context["listView"])
         {
             foreach ($data->content as $name => $value)
             {
-                $data->{"grid" . ucfirst($name)} = $value;
-                unset($data->{$name});
+                return (object) [
+                    "grid" . ucfirst($name) => $value
+                ];
             }
         }
         

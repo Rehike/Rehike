@@ -16,11 +16,12 @@ class VideosContinuationWrapper
         }
         $pool->internalAddGeneratedFile(
             '
-‹
-!videos_continuation_wrapper.protocom.youtube.innertube.helpers"?
+¡
+!videos_continuation_wrapper.protocom.youtube.innertube.helpers"U
 VideosContinuationWrapper
 continuation (	
-list (bproto3'
+list (
+wrap_in_grid (bproto3'
         , true);
 
         static::$is_initialized = true;

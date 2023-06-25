@@ -1,16 +1,17 @@
 <?php
 namespace Rehike\Controller;
 
+use Com\Youtube\Innertube\Helpers\VideosContinuationWrapper;
 use Rehike\Network;
 use Rehike\Util\WebV2Shelves;
 use Rehike\Util\RichShelfUtils;
 use Rehike\Model\Feed\MFeedAppbarNav;
 use Rehike\Signin\API as SignIn;
-use Rehike\TemplateFunctions;
 use \Com\Youtube\Innertube\Request\BrowseRequestParams;
 use \Rehike\Util\Base64Url;
 use \Rehike\Model\History\HistoryModel;
 use \Rehike\Model\Browse\InnertubeBrowseConverter;
+use \Rehike\Util\ParsingUtils;
 
 use function Rehike\Async\async;
 
@@ -76,6 +77,9 @@ return new class extends \Rehike\Controller\core\NirvanaController {
             case "FEwhat_to_watch":
                 self::whatToWatch($yt);
                 break;
+            case "FEsubscriptions":
+                self::subscriptions($yt, $request);
+                break;
             default:
                 self::miscFeeds($yt, $request, $feedId);
                 break;
@@ -88,7 +92,7 @@ return new class extends \Rehike\Controller\core\NirvanaController {
      * Internally, the homepage is known as FEwhat_to_watch, which corresponds
      * with its older name "What to Watch".
      */
-    public static function whatToWatch(&$yt) {
+    private static function whatToWatch(&$yt) {
     return async(function() use ($yt) 
     {
         // The copyright text in the description only appeared if the
@@ -138,7 +142,7 @@ return new class extends \Rehike\Controller\core\NirvanaController {
     /**
      * History feed.
      */
-    public static function history(&$yt, $request) {
+    private static function history(&$yt, $request) {
         $params = new BrowseRequestParams();
         if (isset($request->params->bp))
             $params->mergeFromString(Base64Url::decode($request->params->bp));
@@ -162,7 +166,7 @@ return new class extends \Rehike\Controller\core\NirvanaController {
      * 
      * Don't even try to make sense of this.
      */
-    public static function miscFeeds(&$yt, $request, $feedId) {
+    private static function miscFeeds(&$yt, $request, $feedId) {
         $params = new BrowseRequestParams();
         if (isset($request->params->bp))
             $params->mergeFromString(Base64Url::decode($request->params->bp));
@@ -199,8 +203,118 @@ return new class extends \Rehike\Controller\core\NirvanaController {
             foreach ($ytdata->header as $header)
             if (isset($header->title))
             if (isset($header->title->runs)
-            or isset($header->title->simpleText))
-                $yt->page->title = TemplateFunctions::getText($header->title);
+            || isset($header->title->simpleText))
+                $yt->page->title = ParsingUtils::getText($header->title);
+            else
+                $yt->page->title = $header->title;
+        });
+    }
+
+    /**
+     * Subscriptions feed.
+     * 
+     * Now a separate function due to the rich grid update.
+     * 
+     * For anyone who is about to read or edit this function, I am sincerely
+     * sorry, and I wish you the best of luck. You're going to need it.
+     */
+    private static function subscriptions(&$yt, $request)
+    {
+        $list = ((int)@$request->params->flow == 2);
+
+        Network::innertubeRequest(
+            action: "browse",
+            body: [
+                "browseId" => "FEsubscriptions"
+            ]
+        )->then(function($response) use (&$yt, $list) {
+            $ytdata = $response->getJson();
+
+            $rcontents = $ytdata->contents->twoColumnBrowseResultsRenderer->tabs[0]->tabRenderer->content->richGridRenderer->contents;
+
+            $contents = [
+                (object) [
+                    "shelfRenderer" => $rcontents[0]->richSectionRenderer->content->shelfRenderer
+                ]
+            ];
+            $menu = &$contents[0]->shelfRenderer->menu->menuRenderer->topLevelButtons;
+
+            // Fix the state of the shelf menu accordingly
+            if ($list)
+            {
+                foreach ($menu as $button)
+                {
+                    $button->buttonRenderer->isSelected = !$button->buttonRenderer->isSelected;
+                }
+            }
+
+            // Snip the shelf off the array so we can work on the videos themselves
+            array_shift($rcontents);
+
+            foreach ($rcontents as $i => $content)
+            if (isset($content->richItemRenderer))
+            {
+                if ($list)
+                {
+                    if ($i == 0)
+                    {
+                        $contents[0]->shelfRenderer->content = (object) [
+                            "expandedShelfContentsRenderer" => (object) [
+                                "items" => [
+                                    InnertubeBrowseConverter::richItemRenderer($content->richItemRenderer, [
+                                        "listView" => $list
+                                    ])
+                                ]
+                            ]
+                        ];
+                    }
+                    else
+                    {
+                        $contents[] = InnertubeBrowseConverter::richItemRenderer($content->richItemRenderer, [
+                            "listView" => $list
+                        ]);
+                    }
+                }
+                
+            }
+            $contents = InnertubeBrowseConverter::generalLockupConverter($contents);
+
+            $yt->page->content = (object) [
+                "sectionListRenderer" => (object) [
+                    "contents" => [
+                        (object) [
+                            "itemSectionRenderer" => (object) [
+                                "contents" => $contents
+                            ]
+                        ]
+                    ]
+                ]
+            ];
+
+            if ($cont = @$rcontents[count($rcontents)]->continuationItemRenderer)
+            {
+                
+                $ctoken = &$cont->continuationEndpoint->continuationCommand->token;
+                $contw = new VideosContinuationWrapper();
+                $contw->setContinuation($ctoken);
+                $contw->setList($list);
+                $contw->setWrapInGrid(!$list);
+
+                $ctoken = Base64Url::encode($contw->serializeToString());
+
+                $yt->page->content->sectionListRenderer->contents[] = (object) [
+                    "continuationItemRenderer" => $cont
+                ];
+            }
+
+            $yt->test = $rcontents;
+
+            if (isset($ytdata->header))
+            foreach ($ytdata->header as $header)
+            if (isset($header->title))
+            if (isset($header->title->runs)
+            || isset($header->title->simpleText))
+                $yt->page->title = ParsingUtils::getText($header->title);
             else
                 $yt->page->title = $header->title;
         });

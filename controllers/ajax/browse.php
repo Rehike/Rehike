@@ -36,10 +36,12 @@ return new class extends \Rehike\Controller\core\AjaxController
             $contWrapper->mergeFromString(Base64Url::decode($continuation));
 
             $list = false;
+            $wrap = false;
             if ($contWrapper->getContinuation() != "")
             {
                 $continuation = $contWrapper->getContinuation();
                 $list = $contWrapper->getList();
+                $wrap = $contWrapper->getWrapInGrid();
             }
 
             $response = yield Network::innertubeRequest(
@@ -62,7 +64,7 @@ return new class extends \Rehike\Controller\core\AjaxController
                             switch (true)
                             {
                                 case isset($item->continuationItemRenderer):
-                                    if (!$list)
+                                    if (!$list && !$wrap)
                                     {
                                         $yt->page->continuation = $item->continuationItemRenderer->continuationEndpoint->continuationCommand->token;
                                     }
@@ -70,7 +72,8 @@ return new class extends \Rehike\Controller\core\AjaxController
                                     {
                                         $nContWrapper = new VideosContinuationWrapper();
                                         $nContWrapper->setContinuation($yt->page->continuation = $item->continuationItemRenderer->continuationEndpoint->continuationCommand->token);
-                                        $nContWrapper->setList(true);
+                                        $nContWrapper->setList($list);
+                                        $nContWrapper->setWrapInGrid($wrap);
                                         $yt->page->continuation = Base64Url::encode($nContWrapper->serializeToString());
                                     }
                                     break;
@@ -99,6 +102,21 @@ return new class extends \Rehike\Controller\core\AjaxController
                     "channelRendererUnbrandedSubscribeButton" => true
                 ]
             );
+
+            if ($wrap)
+            {
+                $yt->page->items = [
+                    (object) [
+                        "shelfRenderer" => (object) [
+                            "content" => (object) [
+                                "gridRenderer" => (object) [
+                                    "contents" => $yt->page->items
+                                ]
+                            ]
+                        ]
+                    ]
+                ];
+            }
     
             $yt->page->target = $request->params->target_id;
             $yt->page->response = $ytdata;

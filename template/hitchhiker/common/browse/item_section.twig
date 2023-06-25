@@ -5,8 +5,8 @@
     {% set rid = generateRid() %}
     <ol id="item-section-{{ rid }}" class="item-section">
         {%- for item in data.contents -%}
-                {%- if item.shelfRenderer -%}
-                    {{ shelf(item.shelfRenderer) }}
+            {%- if item.shelfRenderer -%}
+                {{ shelf(item.shelfRenderer) }}
                 {%- elseif item.messageRenderer -%}
                 <li>
                     <p class="display-message">
@@ -65,6 +65,13 @@
                             </div>
                         </div>
                     </li>
+                {%- 
+                    elseif item.gridVideoRenderer                  
+                        or item.gridPlaylistRenderer
+                        or item.gridRadioRenderer
+                        or item.gridChannelRenderer
+                -%}
+                <li class="channels-content-item yt-shelf-grid-item {{ item.gridChannelRenderer ? "channel-shelf-item" }}">{{ lockup.grid(item) }}</li>
             {%- endif %}
         {%- endfor -%}
     </ol>

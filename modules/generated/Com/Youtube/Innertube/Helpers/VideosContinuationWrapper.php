@@ -21,6 +21,10 @@ class VideosContinuationWrapper extends \Google\Protobuf\Internal\Message
      * Generated from protobuf field <code>bool list = 2;</code>
      */
     protected $list = false;
+    /**
+     * Generated from protobuf field <code>bool wrap_in_grid = 3;</code>
+     */
+    protected $wrap_in_grid = false;
 
     /**
      * Constructor.
@@ -30,6 +34,7 @@ class VideosContinuationWrapper extends \Google\Protobuf\Internal\Message
      *
      *     @type string $continuation
      *     @type bool $list
+     *     @type bool $wrap_in_grid
      * }
      */
     public function __construct($data = NULL) {
@@ -77,6 +82,28 @@ class VideosContinuationWrapper extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkBool($var);
         $this->list = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>bool wrap_in_grid = 3;</code>
+     * @return bool
+     */
+    public function getWrapInGrid()
+    {
+        return $this->wrap_in_grid;
+    }
+
+    /**
+     * Generated from protobuf field <code>bool wrap_in_grid = 3;</code>
+     * @param bool $var
+     * @return $this
+     */
+    public function setWrapInGrid($var)
+    {
+        GPBUtil::checkBool($var);
+        $this->wrap_in_grid = $var;
 
         return $this;
     }

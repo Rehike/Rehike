@@ -4,7 +4,7 @@
             {{ _self.title(data) }}
             {%- if data.content.horizontalListRenderer -%}
                 {{ _self.compact(data.content.horizontalListRenderer) }}
-            {# Why the fuck is this different than horizontaListRenderer??? #}
+            {# Why the fuck is this different than horizontalListRenderer??? #}
             {%- elseif data.content.horizontalMovieListRenderer -%}
                 {{ _self.compact(data.content.horizontalMovieListRenderer) }}
             {%- elseif data.content.expandedShelfContentsRenderer -%}
@@ -127,7 +127,9 @@
                 {% from "common/uix/button.twig" import render as button %}
                 {% for button in data.menu.menuRenderer.topLevelButtons %}
                 {% set btn = button.buttonRenderer %}
+                <li class="yt-uix-menu-top-level-button yt-uix-menu-top-level-flow-button">
                 {{ button(btn, (btn.style == "STYLE_OPACITY" and btn.isSelected) ? "blue-text" : null) }}
+                </li>
                 {% endfor %}
             </ul>
             {% endif %}
