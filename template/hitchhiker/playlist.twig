@@ -125,10 +125,12 @@ not-fixed-width-tab-widescreen
             {%- if yt.page.header -%}
             {%- set header = yt.page.header -%}
             <div id="pl-header" class="branded-page-box clearfix" data-all-playlists-url="{{ header.thumbnail.allPlaylistsUrl }}">
+                {% if header.thumbnail %}
                 <div class="pl-header-thumb" style="height: 126px;">
                     <img src="{{ header.thumbnail.thumbnail }}" height="126px">
                     <a href="{{ header.thumbnail.url }}" class="pl-header-play-all-overlay yt-valign spf-link">► {{ header.thumbnail.playAllText }}</a>
                 </div>
+                {% endif %}
                 <div class="pl-header-content">
                     <h1 class="pl-header-title" tabindex="0">{{ header.title }}</h1>
                     <ul class="pl-header-details">

@@ -23,12 +23,15 @@ class MPlaylistHeader
         
         // Thumbnail
         $thumbnail = $data->playlistHeaderBanner->heroPlaylistThumbnailRenderer;
-        $this->thumbnail = new MPlaylistHeaderThumbnail(
-            ParsingUtils::getThumb($thumbnail->thumbnail, 126),
-            ParsingUtils::getUrl($thumbnail->onTap),
-            ParsingUtils::getText($thumbnail->thumbnailOverlays->thumbnailOverlayHoverTextRenderer->text),
-            ParsingUtils::getUrl($data->ownerEndpoint) . "/playlists"
-        );
+        if (isset($thumbnail->thumbnail))
+        {
+            $this->thumbnail = new MPlaylistHeaderThumbnail(
+                ParsingUtils::getThumb($thumbnail->thumbnail, 126),
+                ParsingUtils::getUrl($thumbnail->onTap),
+                ParsingUtils::getText($thumbnail->thumbnailOverlays->thumbnailOverlayHoverTextRenderer->text),
+                ParsingUtils::getUrl($data->ownerEndpoint) . "/playlists"
+            );
+        }
 
         // Details (author, views, etc.)
         $this->details[] = (object) [
@@ -43,14 +46,17 @@ class MPlaylistHeader
         }
 
         // Actions (play all, share, save)
-        $this->actions[] = new MButton([
-            "text" => $data->playButton->buttonRenderer->text,
-            "navigationEndpoint" => $data->playButton->buttonRenderer->navigationEndpoint,
-            "icon" => true,
-            "class" => [
-                "playlist-play-all",
-                "play-all-icon-btn"
-            ]
-        ]);
+        if (isset($data->playButton->buttonRenderer))
+        {
+            $this->actions[] = new MButton([
+                "text" => $data->playButton->buttonRenderer->text,
+                "navigationEndpoint" => $data->playButton->buttonRenderer->navigationEndpoint,
+                "icon" => true,
+                "class" => [
+                    "playlist-play-all",
+                    "play-all-icon-btn"
+                ]
+            ]);
+        }
     }
 }

@@ -1,10 +1,10 @@
 {
-	"previousHash": "4c8cae8dddd6c2562700ff873b11ee629d47d88c",
-	"currentRevisionId": 853,
-	"subject": "fix that",
-	"body": "fix that",
+	"previousHash": "ac373bb46315e413f42a8008d07c102101e19133",
+	"currentRevisionId": 854,
+	"subject": "Fix for #298",
+	"body": "Fix for #298",
 	"branch": "dev-0.7-asynchike-main",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1687808942
+	"time": 1687823476
 }
