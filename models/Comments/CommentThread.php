@@ -63,18 +63,41 @@ class CommentThread
             $cids = [];
             foreach($context as $comment)
             {
-                if ($a = (@$comment->commentThreadRenderer->comment->commentRenderer->authorEndpoint->browseEndpoint->browseId))
+                $commentr = $comment->commentThreadRenderer->comment->commentRenderer;
+
+                if ($a = (@$commentr->authorEndpoint->browseEndpoint->browseId))
                 {
                     if (!in_array($a, $cids))
                     $cids[] = $a;
                 }
 
-                foreach ($comment->commentThreadRenderer->comment->commentRenderer->contentText->runs as $run)
+                foreach ($commentr->contentText->runs as $run)
                 {
                     if ($a = @$run->navigationEndpoint->browseEndpoint->browseId)
                     {
                         if (!in_array($a, $cids))
                         $cids[] = $a;
+                    }
+                }
+
+                if (isset($comment->commentThreadRenderer->replies->commentRepliesRenderer->teaserContents))
+                foreach($comment->commentThreadRenderer->replies->commentRepliesRenderer->teaserContents as $teaser)
+                {
+                    $teaser = $teaser->commentRenderer;
+
+                    if ($a = (@$teaser->authorEndpoint->browseEndpoint->browseId))
+                    {
+                        if (!in_array($a, $cids))
+                        $cids[] = $a;
+                    }
+
+                    foreach ($teaser->contentText->runs as $run)
+                    {
+                        if ($a = @$run->navigationEndpoint->browseEndpoint->browseId)
+                        {
+                            if (!in_array($a, $cids))
+                            $cids[] = $a;
+                        }
                     }
                 }
             }

@@ -1,10 +1,10 @@
 {
-	"previousHash": "2d4a868f0bdce04bbe5ee666ac88916e09cbcf3b",
-	"currentRevisionId": 851,
-	"subject": "Fix search filters",
-	"body": "Fix search filters",
+	"previousHash": "79e93b71313bfa9dd088f0be719c331a7dcaa5fb",
+	"currentRevisionId": 852,
+	"subject": "Fix display name on teaser replies",
+	"body": "Fix display name on teaser replies",
 	"branch": "dev-0.7-asynchike-main",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1687668963
+	"time": 1687800967
 }
