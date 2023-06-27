@@ -16,9 +16,15 @@
        {% endif %}
        <div id="watch-headline-title">
             <h1 class="watch-title-container">
-                {% if info.badges[0].metadataBadgeRenderer.icon.iconType == "PRIVACY_UNLISTED" %}
+                {# {% if info.badges[0].metadataBadgeRenderer.icon.iconType == "PRIVACY_UNLISTED" %}
                 <span id="watch-privacy-icon" class="yt-uix-tooltip yt-uix-tooltip-reverse unlisted" title="This video is unlisted. Only those with the link can see it." tabindex="0" data-tooltip-text="This video is unlisted. Only those with the link can see it." aria-labelledby="yt-uix-tooltip41-arialabel">
                 <span class="privacy-icon yt-sprite"></span>
+                </span>
+                {% endif %} #}
+
+                {% if info.privacyBadge %}
+                <span id="watch-privacy-icon" class="yt-uix-tooltip yt-uix-tooltip-reverse {{ info.privacyBadge.privacy }}" title="{{ info.privacyBadge.tooltip }}" tabindex="0">
+                    <span class="privacy-icon yt-sprite"></span>
                 </span>
                 {% endif %}
                 {# apply spaceless doesn't work here for no fucking reason so i had to purge the formatting, sorry #}

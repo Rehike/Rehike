@@ -12,6 +12,7 @@ use Rehike\Model\Watch\Watch8\{
     PrimaryInfo\MOwner,
     PrimaryInfo\MSuperTitle
 };
+use Rehike\Model\Watch\Watch8\PrimaryInfo\MPrivacyBadge;
 
 /**
  * Implement the model for the primary info renderer.
@@ -33,8 +34,7 @@ class MVideoPrimaryInfoRenderer
     /** @var object[] */
     public $superTitle;
 
-    /** @var mixed */
-    public $badges;
+    public MPrivacyBadge $privacyBadge;
 
     /** @var MOwner */
     public $owner;
@@ -61,10 +61,20 @@ class MVideoPrimaryInfoRenderer
             $this->viewCount = (true === ConfigManager::getConfigProp("appearance.noViewsText"))
             ? ExtractUtils::isolateViewCnt(TemplateFunctions::getText($info->viewCount->videoViewCountRenderer->viewCount))
             : TemplateFunctions::getText($info->viewCount->videoViewCountRenderer->viewCount) ?? null;
-            $this->badges = $info->badges ?? null;
             $this->superTitle = isset($info->superTitleLink) ? new MSuperTitle($info->superTitleLink) : null;
             $this->likeButtonRenderer = new MLikeButtonRenderer($dataHost, $info->videoActions->menuRenderer, $videoId);
             $this->owner = new MOwner($dataHost);
+
+            foreach ($info->badges as $badge)
+            {
+                if ($icon = @$badge->metadataBadgeRenderer->icon->iconType)
+                {
+                    if (str_starts_with($icon, "PRIVACY_"))
+                    {
+                        $this->privacyBadge = new MPrivacyBadge($icon);
+                    }
+                }
+            }
 
             // Create action butttons
             $orderedButtonQueue = [];

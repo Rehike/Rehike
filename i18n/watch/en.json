@@ -40,5 +40,7 @@
     "playlistSave": "Save to Playlists",
     "playlistUnsave": "Remove",
     "playlistPrevVideo": "Previous video",
-    "playlistNextVideo": "Next video"
+    "playlistNextVideo": "Next video",
+    "privacyUnlisted": "This video is unlisted. Only those with the link can see it.",
+    "privacyPrivate": "This video is private. Only those with access can see it."
 }

@@ -1,10 +1,10 @@
 {
-	"previousHash": "7c113a86aee42beb84beb3155296d983390b7551",
-	"currentRevisionId": 937,
-	"subject": "pl.json updates",
-	"body": "pl.json updates",
+	"previousHash": "6491cfda227c9577b8ba2b1c073d3d8c8fa65af3",
+	"currentRevisionId": 938,
+	"subject": "Rework privacy badge, now shows private too",
+	"body": "Rework privacy badge, now shows private too",
 	"branch": "master",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1687895220
+	"time": 1687896949
 }
