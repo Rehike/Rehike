@@ -1,4 +1,5 @@
 {
     "nonexistent": "Ta playlista nie istnieje.",
-    "playAll": "Odtwarzaj wszystko"
+    "unsupported": "Ten typ playlisty nie jest obsługiwany.",
+    "playAll": "Odtwórz wszystkie"
 }

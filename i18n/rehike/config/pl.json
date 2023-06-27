@@ -53,9 +53,17 @@
                 "title": "Pokaż datę przesłania na stronie oglądania w proponowanych",
                 "subtitle": "W przeciwieństwie do Polymera, Hitchhiker nie pokazywał ich domyślnie."
             },
+            "watchSidebarVerification": {
+                "title": "Pokaż odznakę weryfikacji na stronie oglądania w proponowanych",
+                "subtitle": "W przeciwieństwie do Polymera, Hitchhiker nie pokazywał ich domyślnie."
+            },
             "oldBestOfYouTubeIcons": {
                 "title": "Stare czerwone ikony w sekcji \"Najlepsze w YouTube\"",
                 "subtitle": "Pokaż stare czerwone ikony kanałów tematycznych, a nie czarne używane obecnie."
+            },
+            "allCommentsLink": {
+                "title": "Link do strony Wszystkie komentarze w komentarzach filmu",
+                "subtitle": "Po włączeniu tej opcji można kliknąć nagłówek \"Komentarze\", aby przejść do strony, na której wyświetlane są tylko komentarze."
             }
         },
         "advanced": {
