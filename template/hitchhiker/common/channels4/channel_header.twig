@@ -1,5 +1,17 @@
-{% macro render(header) %}
+{% macro render(header, secondary) %}
 <div class="branded-page-v2-header channel-header yt-card">
+    {% if secondary %}
+    <div class="secondary-header-contents">
+        {% for link in secondary.links %}
+        <a href="{{ link.url }}" class="secondary-header-action" role="menuitem" target="_blank">
+            {% if link.icon %}
+            <span class="header-action-icon {{ link.icon }}-icon yt-sprite"></span>
+            {% endif %}
+            <span class="nav-text">{{ link.text }}</span>
+        </a>
+        {% endfor %}
+    </div>
+    {% endif %}
     <div id="gh-banner">
         <style>
             #c4-header-bg-container {

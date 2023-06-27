@@ -12,6 +12,7 @@ use Rehike\Util\Base64Url;
 use Rehike\i18n;
 use Rehike\Util\ExtractUtils;
 use Rehike\Util\ChannelUtils;
+use Rehike\Signin\API as SignIn;
 
 use \Rehike\Model\Channels\Channels4Model as Channels4;
 
@@ -78,13 +79,67 @@ class channel extends NirvanaController {
 
             $yt->ucid = $ucid;
 
-            if ($ucid == "")
+            if ($ucid == "" || is_null($ucid))
             {
                 http_response_code(404);
                 $this->spfIdListeners = [];
                 $this->template = "error/404";
                 
                 return;
+            }
+
+            // If user is signed in and channel owner, get data for the
+            // secondary channel header.
+            $ownerData = null;
+            if (SignIn::isSignedIn())
+            {
+                $info = SignIn::getInfo();
+                if (@$info["ucid"] == $ucid)
+                {
+                    $analytics = yield Network::innertubeRequest(
+                        action: "analytics_data/get_screen",
+                        body: [
+                            "desktopState" => [
+                                "tabId" => "ANALYTICS_TAB_ID_OVERVIEW"
+                            ],
+                            "fetchingType" => "FETCHING_TYPE_FOREGROUND",
+                            "screenConfig" => [
+                                "currency" => "USD", // Irrelevant, don't change this
+                                "entity" => [
+                                    "channelId" => $ucid
+                                ],
+                                "timePeriod" => [
+                                    "timePeriodType" => "ANALYTICS_TIME_PERIOD_TYPE_LIFETIME"
+                                ],
+                                "timeZoneOffsetSecs" => -18000 // This shouldn't matter, so again, don't change
+                            ]
+                        ]
+                    );
+
+                    $adata = $analytics->getJson();
+
+                    if (isset($adata->cards))
+                    {
+                        $ownerData = (object) [];
+                        foreach ($adata->cards as $card)
+                        {
+                            // Views
+                            if ($a = @$card->keyMetricCardData->keyMetricTabs)
+                            foreach ($a as $tabA)
+                            {
+                                if ($b = @$tabA->primaryContent)
+                                if ($b->metric == "VIEWS")
+                                {
+                                    $ownerData->views = $b->total;
+                                }
+                            }
+                            elseif ($a = @$card->latestActivityCardData->lifetimeSubsData->metricColumns[0]->counts->values[0])
+                            {
+                                $ownerData->subscribers = $a;
+                            }
+                        }
+                    }
+                }
             }
 
             // Register the endpoint in the request
@@ -264,7 +319,12 @@ class channel extends NirvanaController {
                 $sidebar = $page;
             }
 
-            $yt->page = Channels4::bake($yt, $page, $sidebar);
+            $yt->page = Channels4::bake(
+                yt: $yt,
+                data: $page,
+                sidebarData: $sidebar,
+                ownerData: $ownerData
+            );
         });
     }
 

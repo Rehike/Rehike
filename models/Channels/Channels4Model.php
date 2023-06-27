@@ -27,7 +27,7 @@ class Channels4Model
 
     private static ?object $currentTabContents = null;
 
-    public static function bake(&$yt, $data, $sidebarData = null)
+    public static function bake(&$yt, $data, $sidebarData = null, $ownerData = null)
     {
         $i18n = i18n::getNamespace("channels");
 
@@ -103,6 +103,11 @@ class Channels4Model
             self::$subscriptionCount = $response["header"]->getSubscriptionCount();
         }
 
+        if (!is_null($ownerData))
+        {
+            $response["secondaryHeader"] = new Channels4\MSecondaryHeader($ownerData);
+        }
+        
         // If we have a sidebar, go through it
         if ($sidebarShelves = @$sidebarData->contents->twoColumnBrowseResultsRenderer->tabs[0]
             ->tabRenderer->content->sectionListRenderer->contents)

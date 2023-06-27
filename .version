@@ -1,10 +1,10 @@
 {
-	"previousHash": "af8c11195b339ab307f6c3d857302d423339f6d9",
-	"currentRevisionId": 940,
-	"subject": "YouTube Studio links now open in a new tab",
-	"body": "YouTube Studio links now open in a new tab",
+	"previousHash": "624309c63c5e787124a296b2b28b33485efe41f4",
+	"currentRevisionId": 941,
+	"subject": "Secondary channel header",
+	"body": "Secondary channel header",
 	"branch": "master",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1687901216
+	"time": 1687904294
 }
