@@ -2,6 +2,7 @@
 {%- import "common/uix/lockup.twig" as lockup -%}
 {%- from "common/playlist/pl_video.twig" import render as pl_video -%}
 {
+    "test": {{ yt.FUCK|json_encode|raw }},
     {%- if yt.page.continuation -%}
     {%- import "common/uix/load_more_button.twig" as load_more -%}
     "load_more_widget_html": {{ load_more.render(yt.page.continuation, yt.page.target)|json_encode|raw }},
@@ -16,16 +17,25 @@
             or item.gridPlaylistRenderer
             or item.gridRadioRenderer
             or item.gridChannelRenderer -%}
-        <li class="channels-content-item yt-shelf-grid-item">
+        <li class="channels-content-item yt-shelf-grid-item {{ item.gridChannelRenderer ? "channel-shelf-item" }}">
             {{ lockup.grid(item) }}
         </li>
     {%- elseif item.videoRenderer
             or item.playlistRenderer
             or item.radioRenderer
             or item.channelRenderer -%}
-        <li class="expanded-shelf-content-item-wrapper">
-            <div class="expanded-shelf-content-item">
-                {{ lockup.tile(item) }}
+        <li class="feed-item-container yt-section-hover-container browse-list-item-container branded-page-box vve-check ">
+            <div class="feed-item-dismissable ">
+                <div class="feed-item-main feed-item-no-author">
+                    <div class="feed-item-main-content">
+                        {{ lockup.tile(item) }}
+                    </div>
+                </div>
+            </div>
+            <div class="feed-item-dismissal-notices">
+                <div class="feed-item-dismissal feed-item-dismissal-hide hid">
+                    This item has been hidden
+                </div>
             </div>
         </li>
     {%- elseif item.playlistVideoRenderer -%}

@@ -35,34 +35,69 @@ class MSubnav
         $i->rightButtons[] = self::getFlowButton($flow);
 
         // Process uploads view
-        $i->leftButtons[] = self::getViewButton();
+        self::getViewButton($i);
 
         return $i;
     }
 
-    public static function getViewButton()
+    public static function getViewButton(self &$instance): void
     {
         $i18n = &i18n::getNamespace("channels");
 
-        $baseUrl = Channels4Model::getBaseUrl();
-        
-        $options = [];
-
-        $uploadsText = $title = $i18n->viewUploads;
-        $streamsText = $title = $i18n->viewLiveStreams;
-
-        if ("streams" == Channels4Model::getCurrentTab())
+        if (count(Channels4Model::$extraVideoTabs) == 0)
         {
-            $activeText = $streamsText;
-            $options += [$uploadsText => "$baseUrl/videos"];
+            $instance->title = match(Channels4Model::getCurrentTab())
+            {
+                "videos" => $i18n->viewUploads,
+                "streams" => $i18n->viewLiveStreams,
+                "shorts" => $i18n->viewShorts
+            };
         }
         else
         {
-            $activeText = $uploadsText;
-            $options += [$streamsText => "$baseUrl/streams"];
-        }
+            $baseUrl = Channels4Model::getBaseUrl();
 
-        return new MSubnavMenuButton("view", $activeText, $options);
+            \Rehike\ControllerV2\Core::$state->test = Channels4Model::$extraVideoTabs;
+        
+            $options = [];
+    
+            $uploadsText = $i18n->viewUploads;
+            $streamsText = $i18n->viewLiveStreams;
+            $shortsText = $i18n->viewShorts;
+    
+            if ("streams" == Channels4Model::getCurrentTab())
+            {
+                $activeText = $streamsText;
+                $options += [$uploadsText => "$baseUrl/videos"];
+                if (in_array("shorts", Channels4Model::$extraVideoTabs))
+                {
+                    $options += [$shortsText => "$baseUrl/shorts"];
+                }
+            }
+            else if ("shorts" == Channels4Model::getCurrentTab())
+            {
+                $activeText = $shortsText;
+                $options += [$uploadsText => "$baseUrl/videos"];
+                if (in_array("streams", Channels4Model::$extraVideoTabs))
+                {
+                    $options += [$streamsText => "$baseUrl/streams"];
+                }
+            }
+            else
+            {
+                $activeText = $uploadsText;
+                if (in_array("streams", Channels4Model::$extraVideoTabs))
+                {
+                    $options += [$streamsText => "$baseUrl/streams"];
+                }
+                if (in_array("shorts", Channels4Model::$extraVideoTabs))
+                {
+                    $options += [$shortsText => "$baseUrl/shorts"];
+                }
+            }
+    
+            $instance->leftButtons[] = new MSubnavMenuButton("view", $activeText, $options);
+        }        
     }
 
     public static function getSortButton($sort) {
@@ -73,20 +108,30 @@ class MSubnav
 
         $options = [];
         
-        $newestText = $i18n->videoSortNewest;
         $popularText = $i18n->videoSortPopular;
+        $newestText = $i18n->videoSortNewest;
+        $oldestText = $i18n->videoSortOldest;
 
         switch ($sort)
         {
             case 0:
                 $activeText = $newestText;
                 $options += [
-                    $popularText => "$baseUrl/$tab?sort=p&flow=$flow"
+                    $popularText => "$baseUrl/$tab?sort=p&flow=$flow",
+                    $oldestText => "$baseUrl/$tab?sort=da&flow=$flow"
                 ];
                 break;
             case 1:
                 $activeText = $popularText;
                 $options += [
+                    $oldestText => "$baseUrl/$tab?sort=da&flow=$flow",
+                    $newestText => "$baseUrl/$tab?sort=dd&flow=$flow"
+                ];
+                break;
+            case 2:
+                $activeText = $oldestText;
+                $options += [
+                    $popularText => "$baseUrl/$tab?sort=p&flow=$flow",
                     $newestText => "$baseUrl/$tab?sort=dd&flow=$flow"
                 ];
                 break;
@@ -106,17 +151,14 @@ class MSubnav
         $gridText = $i18n->flowGrid;
         $listText = $i18n->flowList;
 
-        $sort = "dd";
-        switch (Channels4Model::getVideosSort()) {
-            case 0:
-                $sort = "dd";
-                break;
-            case 1;
-                $sort = "p";
-                break;
-        }
+        $sort = match (Channels4Model::getVideosSort()) {
+            0 => "dd",
+            1 => "p",
+            2 => "da",
+            default => "dd"
+        };
 
-        $tab = ("streams" == Channels4Model::getCurrentTab()) ? "streams" : "videos";
+        $tab = Channels4Model::getCurrentTab();
 
         $options = [];
 

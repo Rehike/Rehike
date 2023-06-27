@@ -1,80 +1,193 @@
 <?php
 namespace YukisCoffee\CoffeeRequest;
 
+use YukisCoffee\CoffeeRequest\Network\Request;
+use YukisCoffee\CoffeeRequest\Network\Response;
+use YukisCoffee\CoffeeRequest\Handler\NetworkHandler;
+use YukisCoffee\CoffeeRequest\Handler\NetworkHandlerFactory;
+use YukisCoffee\CoffeeRequest\Exception\GeneralException;
+
 /**
- * Static wrapper for CoffeeRequestInstance (the new main code as of version 2.0).
+ * A simple asynchronous request library for PHP.
  * 
- * This only exists to maintain compatibility with legacy v1.0 code. Please use that.
+ * The CoffeeRequest API should be very familiar to JavaScript developers,
+ * as the main API mirrors fetch and internal APIs mirror JavaScript's
+ * Events system and Promises API.
  * 
- * Slowly, this will probably be deprecated. When the time comes, CoffeeRequestInstance
- * may be removed. As such, do not directly construct CoffeeRequestInstance.
+ * **Currently not for production release!**
+ * Use only in Rehike 0.7 "asynchike" development releases.
  * 
  * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
+ * @version 3.0 BETA
  */
-class CoffeeRequest
+final class CoffeeRequest
 {
-    protected static $staticWrapper;
-    protected $instanceWrapper;
+    /** 
+     * The current version number.
+     * 
+     * @see getVersion()
+     * @var string
+     */
+    private const VERSION = "3.0";
 
-    public static function __initStatic()
+    /** 
+     * Stores references to all currently running requests.
+     * 
+     * @var Request[] 
+     */
+    private static array $requests = [];
+
+    /**
+     * Keeps track of the number of running requests. The requests array
+     * is only formally cleared when all active requests are finished.
+     */
+    private static int $activeRequests = 0;
+
+    /**
+     * Stores a reference to the currently used network handler.
+     */
+    private static NetworkHandler $handler;
+
+    /**
+     * A list of resolution definitions.
+     */
+    private static array $resolve = [];
+
+    // Disable instances
+    private function __construct() {}
+
+    /**
+     * Initialise the request manager.
+     * 
+     * @internal
+     */
+    public static function _init(): void
     {
-        CoffeeRequest::_staticWrapperInit();
+        self::setNetworkHandler(NetworkHandlerFactory::getBest());
     }
 
-    // Behaviour for all method calls
-    protected static function _methodCallWrapper(&$actor, $name, $args)
+    /**
+     * Set the network handler/driver.
+     */
+    public static function setNetworkHandler(NetworkHandler $handler): void
     {
-        $reflection = new \ReflectionClass($actor);
-
-        if ($reflection->hasMethod($name) && $reflection->getMethod($name)->isPublic())
+        if (isset(self::$handler))
         {
-            return $actor->{$name}(...$args);
+            try
+            {
+                Loop::removeEvent(self::$handler);
+            }
+            catch (GeneralException $e) {} // do nothing & hope for the best
+        }
+
+        self::$handler = $handler;
+    }
+
+    /**
+     * Send a network request.
+     * 
+     * The network request API provided by CoffeeRequest is very
+     * reminiscent of JavaScript's fetch API.
+     * 
+     * @param  mixed[] $opts
+     * @return Promise<Response>
+     */
+    public static function request(
+            string $url, 
+            array $opts = []
+    ): Promise/*<Response>*/
+    {
+        $request = new Request($url, $opts);
+
+        if (self::$handler->isFulfilled())
+        {
+            self::$handler->restartManager();
+        }
+
+        self::addRequest($request);
+
+        Loop::addEventIfNotAdded(self::$handler);
+
+        self::$handler->addRequest($request);
+
+        return $request->getPromise();
+    }
+
+    /**
+     * Run the event loop.
+     */
+    public static function run(): void
+    {
+        Loop::run();
+    }
+
+    /**
+     * Await all currently registered requests.
+     * 
+     * @return Promise<Response[]>
+     */
+    public static function awaitAll(): Promise/*<array>*/
+    {
+        // wrong $requests type, 
+        // needs to be Promise<Response>[] not Response[]!!
+        return Promise::all(self::$requests);
+    }
+
+    /**
+     * Get the version of CoffeeRequest.
+     */
+    public static function getVersion(): string
+    {
+        return self::VERSION;
+    }
+
+    public static function getResolve(): array
+    {
+        return self::$resolve;
+    }
+
+    public static function setResolve(array $a): void
+    {
+        self::$resolve = $a;
+    }
+
+    /**
+     * Report a finished request and decrement the internal counter.
+     * 
+     * It's too expensive to take in a finished request and remove its
+     * reference for the array, so we keep track of the number of running
+     * Requests and cleanup only when it can be guaranteed to have no
+     * ramifications.
+     * 
+     * @internal
+     */
+    public static function reportFinishedRequest(): void
+    {
+        if (self::$activeRequests > 1)
+        {
+            self::$activeRequests--;
         }
         else
         {
-            trigger_error("Method does not exist or is invisible.", E_USER_ERROR);
+            self::cleanup();
         }
     }
 
-    // These act as static links to all properties of the instance class.
-    public static $requestsMaxAttempts;
-    public static $defaultOptions;
-    public static $defaultHeaders;
-    public static $requestQueue;
-
-    public static function _staticWrapperInit()
+    private static function addRequest(Request $request): void
     {
-        self::$staticWrapper = new CoffeeRequestInstance("do not access this directly!");
-
-        self::$requestsMaxAttempts = &self::$staticWrapper->requestsMaxAttempts;
-        self::$defaultOptions = &self::$staticWrapper->defaultOptions;
-        self::$defaultHeaders = &self::$staticWrapper->defaultHeaders;
-        self::$requestQueue = &self::$staticWrapper->requestQueue;
+        self::$requests[] = $request;
+        self::$activeRequests++;
     }
 
-    public static function __callStatic($name, $args)
+    /**
+     * Clean up when possible.
+     */
+    private static function cleanup(): void
     {
-        return self::_methodCallWrapper(self::$staticWrapper, $name, $args);
-    }
-
-    // Also allow this to be used as a "link" for CoffeeRequestInstance
-    public function __construct()
-    {
-        $this->instanceWrapper = new CoffeeRequestInstance("do not access this directly!");
-    }
-
-    public function __call($name, $args)
-    {
-        return self::_methodCallWrapper($this->instanceWrapper, $name, $args);
-    }
-
-    public function &__get($variable)
-    {
-        return $this->instanceWrapper->{$variable};
-    }
-
-    public function __set($variable, $value)
-    {
-        $this->instanceWrapper->{$variable} = $value;
+        self::$activeRequests = 0;
+        self::$requests = [];
+        self::$handler->clearRequests();
     }
 }
+
+CoffeeRequest::_init();

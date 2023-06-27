@@ -3,20 +3,16 @@ namespace Rehike\Model\Common\Subscription;
 
 use Rehike\Model\Common\MButton;
 use Rehike\i18n;
-use Rehike\TemplateFunctions;
 
 class MSubscriptionPreferencesOverlay {
-    /** @var string */
-    public $title;
+    public string $title;
 
-    /** @var object[] */
-    public $options;
+    /** @var MSubscriptionPreference[] */
+    public array $options = [];
 
-    /** @var MButton */
-    public $saveButton;
+    public MButton $saveButton;
 
-    /** @var MButton */
-    public $cancelButton;
+    public MButton $cancelButton;
 
     public function __construct($data) {
         $i18n = i18n::getNamespace("main/misc");
@@ -42,51 +38,11 @@ class MSubscriptionPreferencesOverlay {
             "class" => ["yt-uix-overlay-close"]
         ]);
 
-        $this->options = [];
-        foreach ($data["options"] as $option) {
+        foreach ($data["options"] as $option)
+        if ($option->menuServiceItemRenderer->icon->iconType != "PERSON_MINUS")
+        // ^ Filter out "Unsubscribe" item
+        {
             $this->options[] = MSubscriptionPreference::fromData($option);
         }
-    }
-}
-
-class MSubscriptionPreference {
-    /** @var string */
-    public $label;
-
-    /** @var bool; */
-    public $checked;
-
-    /** @var string */
-    public $params;
-
-    /** @var string */
-    public $class;
-
-    public function __construct($data) {
-        $this->label = $data["label"] ?? "";
-        $this->checked = $data["checked"] ?? false;
-        $this->params = $data["params"] ?? false;
-        $this->class = $data["class"] ?? false;
-    }
-
-    public static function fromData($data) {
-        $item = $data->menuServiceItemRenderer ?? null;
-        return new self([
-            "label" => TemplateFunctions::getText($item->text) ?? "",
-            "checked" => $item->isSelected ?? false,
-            "params" => $item->serviceEndpoint->modifyChannelNotificationPreferenceEndpoint->params ?? "",
-            "class" => (function() use ($item) {
-                switch ($item->icon->iconType) {
-                    case "NOTIFICATIONS_ACTIVE":
-                        return "receive-all-updates";
-                    case "NOTIFICATIONS_NONE":
-                        return "receive-highlight-updates";
-                    case "NOTIFICATIONS_OFF":
-                        return "receive-no-updates";
-                    default:
-                        return "";
-                }
-            })()
-        ]);
     }
 }

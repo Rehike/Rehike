@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c6c07f36cc4469881b4e081d2191a157",
+    "content-hash": "994f621e455707b10608bc5b87bcf330",
     "packages": [
         {
             "name": "google/protobuf",
-            "version": "v3.21.7",
+            "version": "v3.21.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/protocolbuffers/protobuf-php.git",
-                "reference": "56505903b395c5d38cbf4c8575bfef4f4c9d4c30"
+                "reference": "8f8dc48540aed2c96eb3febcc4816f1321f66b85"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/protocolbuffers/protobuf-php/zipball/56505903b395c5d38cbf4c8575bfef4f4c9d4c30",
-                "reference": "56505903b395c5d38cbf4c8575bfef4f4c9d4c30",
+                "url": "https://api.github.com/repos/protocolbuffers/protobuf-php/zipball/8f8dc48540aed2c96eb3febcc4816f1321f66b85",
+                "reference": "8f8dc48540aed2c96eb3febcc4816f1321f66b85",
                 "shasum": ""
             },
             "require": {
@@ -46,9 +46,9 @@
                 "proto"
             ],
             "support": {
-                "source": "https://github.com/protocolbuffers/protobuf-php/tree/v3.21.7"
+                "source": "https://github.com/protocolbuffers/protobuf-php/tree/v3.21.11"
             },
-            "time": "2022-09-29T21:58:56+00:00"
+            "time": "2022-12-08T06:36:59+00:00"
         },
         {
             "name": "rehike/spfphp",
@@ -588,5 +588,5 @@
     "prefer-lowest": false,
     "platform": [],
     "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.2.0"
 }

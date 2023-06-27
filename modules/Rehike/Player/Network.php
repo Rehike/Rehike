@@ -1,6 +1,9 @@
 <?php
 namespace Rehike\Player;
 
+use YukisCoffee\CoffeeRequest\CoffeeRequest;
+use YukisCoffee\CoffeeRequest\Enum\PromiseStatus;
+
 /**
  * A wrapper class for networking. 
  * 
@@ -54,7 +57,15 @@ class Network
      */
     protected static function coffeeRequest($url)
     {
-        return self::$coffeeRequest->request($url);
+        $p = CoffeeRequest::request($url);
+
+        do
+        {
+            CoffeeRequest::run();
+        }
+        while (PromiseStatus::PENDING == $p->status);
+
+        return $p->result;
     }
 
     /**
@@ -95,7 +106,6 @@ class Network
         if (self::coffeeAvailable())
         {
             self::$mode = "coffee";
-            self::$coffeeRequest = new \YukisCoffee\CoffeeRequest\CoffeeRequest;
         }
         else
         {

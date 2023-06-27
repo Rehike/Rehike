@@ -4,7 +4,7 @@ namespace Rehike\ControllerV2;
 use Rehike\ControllerV2\Util\GlobToRegexp;
 use Rehike\SimpleFunnel;
 
-include_once "modules/polyfill/fnmatch.php";
+include_once "includes/polyfill/fnmatch.php";
 
 /**
  * Implements the Controller V2 router.
@@ -122,7 +122,7 @@ class Router
 
             if (\fnmatch($name, explode("?", $_SERVER["REQUEST_URI"])[0]))
             {
-                SimpleFunnel::funnelCurrentPage(true);
+                SimpleFunnel::funnelCurrentPage()->then(fn($r) => $r->output());
             }
         }
     }

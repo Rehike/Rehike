@@ -44,7 +44,7 @@
                 </span>
             </div>
             <p>
-                <span class="video-title">{{ getText(yt.page.header.video.title) }}</span>
+                <span class="video-title">{{ rehike.getText(yt.page.header.video.title) }}</span>
             </p>
         </div>
     </div>
@@ -80,14 +80,14 @@
                 </span>
             </div>
             <p>
-                <a href="/watch?v={{ video.videoId }}" class="video-title">{{ getText(video.title) }}</a>
+                <a href="/watch?v={{ video.videoId }}" class="video-title">{{ rehike.getText(video.title) }}</a>
                 <span class="video-username">
-                    {%- if yt.config.appearance.usernamePrepends -%}
+                    {%- if rehike.config.appearance.usernamePrepends -%}
                     <span class="username-prepend">{{ yt.msgs.usernamePrepend }}</span>
                     {%- endif -%}
-                    <a href="{{ getUrl(video.author) }}" class="yt-user-name" aria-label="{{ video.authorA11yLabel }}">{{ getText(video.author) }}</a>
+                    <a href="{{ rehike.getUrl(video.author) }}" class="yt-user-name" aria-label="{{ video.authorA11yLabel }}">{{ rehike.getText(video.author) }}</a>
                 </span>
-                <a href="{{ getUrl(video.attrLink) }}" class="attribution-link">{{ getText(video.attrLink) }}</a>
+                <a href="{{ rehike.getUrl(video.attrLink) }}" class="attribution-link">{{ rehike.getText(video.attrLink) }}</a>
             </p>
         </div>
         {%- endfor -%}

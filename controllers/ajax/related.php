@@ -2,7 +2,7 @@
 namespace Rehike\Controller\ajax;
 
 use Rehike\Controller\core\AjaxController;
-use Rehike\Request;
+use Rehike\Network;
 
 /**
  * Related (watch) ajax controller
@@ -32,15 +32,20 @@ class AjaxRelatedController extends AjaxController {
             die('{"name":"other"}');
         }
 
-        $response = Request::innertubeRequest(
-            "next",
-            (object) [
+        Network::innertubeRequest(
+            action: "next",
+            body: [
                 "continuation" => $_GET["continuation"]
             ]
-        );
-        $ytdata = json_decode($response);
-        
-        $yt->page->items = $ytdata->onResponseReceivedEndpoints[0]->appendContinuationItemsAction->continuationItems;
+        )->then(function ($response) use ($yt) {
+            $ytdata = $response->getJson();
+
+            $yt->page->items = $ytdata
+                ->onResponseReceivedEndpoints[0]
+                ->appendContinuationItemsAction
+                ->continuationItems
+            ;
+        });
     }
 }
 

@@ -12,7 +12,7 @@
                     {%- if text.runs -%}
                         {%- for run in text.runs -%}
                             {%- if run.navigationEndpoint -%}
-                                <a href="{{ getUrl(run) }}">{{ run.text }}</a>
+                                <a href="{{ rehike.getUrl(run) }}">{{ run.text }}</a>
                             {%- else -%}
                                 {{ run.text }}
                             {%- endif -%}

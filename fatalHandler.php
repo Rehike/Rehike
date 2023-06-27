@@ -47,7 +47,11 @@ $buildFatalPage = function ($e, $simple = false) use ($yt) {
       header('Content-Type: text/html');
       echo "<h1>Rehike pre-init error occurred</h1>";
       echo "<h2>Here are the details:</h2>";
-      echo "<p>$errInfo->message</p>";
+      echo "<pre>$errInfo->message</pre>";
+      echo "<h2>Stack trace</h2>";
+      echo "<pre>";
+      echo (new Exception())->getTraceAsString();
+      echo "</pre>";
       echo "<h2>Technical details</h2>";
       echo "<pre>";
       echo json_encode($errInfo, JSON_PRETTY_PRINT);

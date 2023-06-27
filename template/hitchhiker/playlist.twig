@@ -20,11 +20,11 @@
 {% set enableSnapScaling = true %}
 
 {%- block title -%}
-{% if yt.page.header.title %}
-{{ getText(yt.page.header.title) }} - {{ parent() }}
-{% else %}
-{{ parent() }}
-{% endif %}
+    {%- if yt.page.header.title -%}
+        {{ rehike.getText(yt.page.header.title) }} - {{ parent() }}
+    {%- else -%}
+        {{ parent() }}
+    {%- endif -%}
 {%- endblock -%}
 
 {% block foot_scripts %}
@@ -124,43 +124,32 @@ not-fixed-width-tab-widescreen
             {%- from "common/uix/button.twig" import render as button -%}
             {%- if yt.page.header -%}
             {%- set header = yt.page.header -%}
-            <div id="pl-header" class="branded-page-box clearfix" data-all-playlists-url="{{ getUrl(header.ownerEndpoint) }}/playlists">
+            <div id="pl-header" class="branded-page-box clearfix" data-all-playlists-url="{{ header.thumbnail.allPlaylistsUrl }}">
+                {% if header.thumbnail %}
                 <div class="pl-header-thumb" style="height: 126px;">
-                    <img src="{{ getThumb(header.playlistHeaderBanner.heroPlaylistThumbnailRenderer.thumbnail, 126) }}" height="126px">
-                    <a href="{{ getUrl(plh) }}" class="pl-header-play-all-overlay yt-valign spf-link">► {{ getText(header.playlistHeaderBanner.heroPlaylistThumbnailRenderer.thumbnailOverlays.thumbnailOverlayHoverTextRenderer.text) }}</a>
+                    <img src="{{ header.thumbnail.thumbnail }}" height="126px">
+                    <a href="{{ header.thumbnail.url }}" class="pl-header-play-all-overlay yt-valign spf-link">► {{ header.thumbnail.playAllText }}</a>
                 </div>
+                {% endif %}
                 <div class="pl-header-content">
-                    <h1 class="pl-header-title" tabindex="0">{{ getText(header.title) }}</h1>
+                    <h1 class="pl-header-title" tabindex="0">{{ header.title }}</h1>
                     <ul class="pl-header-details">
+                        {% for detail in header.details %}
                         <li>
-                            <a href="{{ getUrl(header.ownerEndpoint) }}" class="spf-link">
-                                {{ getText(header.ownerText) }}
+                            {% if detail.navigationEndpoint %}
+                            <a class="spf-link" href="{{ rehike.getUrl(detail) }}">
+                            {% endif %}
+                                {{ getText(detail) }}
+                            {% if detail.navigationEndpoint %}
                             </a>
+                            {% endif %}
                         </li>
-                        {%- if header.numVideosText -%}
-                        <li>{{ getText(header.numVideosText) }}</li>
-                        {%- endif -%}
-                        {%- if header.viewCountText -%}
-                        <li>{{ getText(header.viewCountText) }}</li>
-                        {%- endif -%}
-                        {%- if header.byline[1] -%}
-                        <li>{{ getText(header.byline[1].playlistBylineRenderer.text) }}</li>
-                        {%- endif -%}
+                        {% endfor %}
                     </ul>
                     <div class="playlist-actions">
-                        {%- if header.playButton.buttonRenderer -%}
-                        {{ button({
-                            style: "STYLE_DEFAULT",
-                            size: "SIZE_DEFAULT",
-                            text: header.playButton.buttonRenderer.text,
-                            navigationEndpoint: header.playButton.buttonRenderer.navigationEndpoint,
-                            icon: true,
-                            class: [
-                                "playlist-play-all",
-                                "play-all-icon-btn"
-                            ]
-                        }) }}
-                        {%- endif -%}
+                        {% for action in header.actions %}
+                            {{ button(action) }}
+                        {% endfor %}
                     </div>
                 </div>
             </div>

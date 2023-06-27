@@ -1,7 +1,7 @@
 <?php
 namespace Rehike\Model\ChannelSwitcher;
 
-use Rehike\TemplateFunctions;
+use Rehike\Util\ParsingUtils;
 
 class MCreateChannelItem
 {
@@ -9,6 +9,6 @@ class MCreateChannelItem
 
     public function __construct(object $data)
     {
-        $this->text = TemplateFunctions::getText($data->text);
+        $this->text = ParsingUtils::getText($data->text);
     }
 }

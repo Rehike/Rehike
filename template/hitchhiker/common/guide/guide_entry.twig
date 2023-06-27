@@ -3,7 +3,7 @@
 {% set serialisedEndpoint = serialiseEndpoint(item.navigationEndpoint) %}
 {% set selected = (serialisedEndpoint == serialiseEndpoint(yt.currentEndpoint)) %}
 <li id="{{ externalId }}-guide-item" class="guide-channel guide-notification-item overflowable-list-item" role="menuitem">
-    <a href="{{ item.hrefOverride ?? getUrl(item) }}" class="guide-item {{ selected ? "guide-item-selected" }}  yt-valign spf-link" title="{{ item.titleOverride ?? getText(item.formattedTitle) }}"
+    <a href="{{ item.hrefOverride ?? rehike.getUrl(item) }}" class="guide-item {{ selected ? "guide-item-selected" }}  yt-valign spf-link" title="{{ item.titleOverride ?? rehike.getText(item.formattedTitle) }}"
     data-external-id="{{ externalId }}"
     data-serialized-endpoint="{{ serialisedEndpoint }}">
         <span class="yt-valign-container">
@@ -19,11 +19,11 @@
                 </span>
             </span>
             {% elseif item.icon %}
-            <span class="thumb guide-{{ const2class(item.icon.iconType) }}-icon yt-sprite"></span>
+            <span class="thumb guide-{{ rehike.casing.constantToHyphen(item.icon.iconType) }}-icon yt-sprite"></span>
             {% endif %}
             {% set hasCount = item.badges.liveBroadcasting or item.badges.count %}
             <span class="display-name {{ not hasCount ? "no-count" }}">
-                <span>{{ item.titleOverride ?? getText(item.formattedTitle) }}</span>
+                <span>{{ item.titleOverride ?? rehike.getText(item.formattedTitle) }}</span>
             </span>
         </span>
         {% if item.badges.liveBroadcasting %}

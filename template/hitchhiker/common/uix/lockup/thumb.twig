@@ -3,18 +3,18 @@
 {% import "common/thumbnail_overlays.twig" as overlays %}
 {% from "core/html/img.twig" import img %}
 <div class="yt-lockup-thumbnail {{ data.type == "playlist" or data.type == "radio" ? "yt-pl-thumb" }} {{ getWLOverlay(info) != null ? "contains-addto" }}">
-    <a href="{{ getUrl(info) }}" class=" spf-link {{ data.type == "playlist" or data.type == "radio" ? "yt-pl-thumb-link" }}" aria-hidden="true">
-        <div class="yt-thumb video-thumb {{data.type == "video" and yt.config.appearance.movingThumbnails ? "yt-uix-mouseover-img-wrap" }}">
+    <a href="{{ rehike.getUrl(info) }}" class=" spf-link {{ data.type == "playlist" or data.type == "radio" ? "yt-pl-thumb-link" }}" aria-hidden="true">
+        <div class="yt-thumb video-thumb {{data.type == "video" and rehike.config.appearance.movingThumbnails ? "yt-uix-mouseover-img-wrap" }}">
             <span class="yt-thumb-simple">
                 {{ img({
-                    src: getThumb(data.thumbArray, y),
+                    src: rehike.getThumb(data.thumbArray, y),
                     width: x,
                     height: y,
                     ytImg: 1,
                     delayLoad: true,
                     onload: ";window.__ytRIL && __ytRIL(this)",
                     customAttributes: {
-                        "data-mouseover-src": getThumb(info.richThumbnail.movingThumbnailRenderer.movingThumbnailDetails)
+                        "data-mouseover-src": rehike.getThumb(info.richThumbnail.movingThumbnailRenderer.movingThumbnailDetails)
                     }
                 }) }}
             </span>
@@ -23,6 +23,6 @@
         {{ overlays.playlist(data, false) }}
         {% endif %}
     </a>
-    {{ overlays.render(info.thumbnailOverlays) }}
+    {{ overlays.render(info.thumbnailOverlays, info.videoId) }}
 </div>
 {% endmacro %}

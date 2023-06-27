@@ -2,17 +2,17 @@
 {%- from "core/html/img.twig" import img -%}
 {%- if data.playlistVideoRenderer -%}
 {%- set this = data.playlistVideoRenderer -%}
-<tr class="pl-video yt-uix-tile" data-video-id="{{ this.videoId }}" data-set-video-id="" data-title="{{ getText(this.title) }}">
+<tr class="pl-video yt-uix-tile" data-video-id="{{ this.videoId }}" data-set-video-id="" data-title="{{ rehike.getText(this.title) }}">
     <td class="pl-video-handle"></td>
     <td class="pl-video-index"></td>
     <td class="pl-video-thumbnail">
         <span class="pl-video-thumb ux-thumb-wrap contains-addto">
-            <a href="{{ getUrl(this) }}" class="spf-link" aria-hidden="true">
+            <a href="{{ rehike.getUrl(this) }}" class="spf-link" aria-hidden="true">
                 <span class="video-thumb yt-thumb yt-thumb-72">
                     <span class="yt-thumb-default">
                         <span class="yt-thumb-clip">
                             {{ img({
-                                src: getThumb(this.thumbnail, 72),
+                                src: rehike.getThumb(this.thumbnail, 72),
                                 ytImg: true,
                                 onload: ";window.__ytRIL && __ytRIL(this)",
                                 delayLoad: true,
@@ -27,11 +27,11 @@
         </span>
     </td>
     <td class="pl-video-title">
-        <a href="{{ getUrl(this) }}" class="pl-video-title-link yt-uix-tile-link spf-link">{{ getText(this.title) }}</a>
+        <a href="{{ rehike.getUrl(this) }}" class="pl-video-title-link yt-uix-tile-link spf-link">{{ rehike.getText(this.title) }}</a>
         <div class="pl-video-owner">
             {% set byline = this.shortBylineText %}
-            {{ yt.config.appearance.usernamePrepends ? yt.msgs.usernamePrepend }}
-            <a href="{{ getUrl(byline.runs[0]) }}" class="spf-link" data-ytid="{{ byline.navigationEndpoint.browseEndpoint.browseId }}" data-name="playlist">{{ getText(byline) }}</a>
+            {{ rehike.config.appearance.usernamePrepends ? yt.msgs.usernamePrepend }}
+            <a href="{{ rehike.getUrl(byline.runs[0]) }}" class="spf-link" data-ytid="{{ byline.navigationEndpoint.browseEndpoint.browseId }}" data-name="playlist">{{ rehike.getText(byline) }}</a>
         </div>
         <div class="pl-video-bottom-standalone-badge"></div>
     </td>
@@ -40,7 +40,7 @@
     <td class="pl-video-time">
         <div class="more-menu-wrapper">
             <div class="timestamp">
-                <span aria-label="{{ this.lengthText.accessibility.accessibilityData.label }}">{{ getText(this.lengthText) }}</span>
+                <span aria-label="{{ this.lengthText.accessibility.accessibilityData.label }}">{{ rehike.getText(this.lengthText) }}</span>
             </div>
             <div class="pl-video-edit-options"></div>
         </div>

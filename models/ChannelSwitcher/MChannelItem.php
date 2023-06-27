@@ -1,8 +1,8 @@
 <?php
-
 namespace Rehike\Model\ChannelSwitcher;
 
 use Rehike\i18n;
+use Rehike\Util\ParsingUtils;
 use Rehike\TemplateFunctions as TF;
 
 class MChannelItem
@@ -20,12 +20,12 @@ class MChannelItem
         $i18n = i18n::getNamespace("channel_switcher");
 
         $this->selected = $data->isSelected;
-        $this->avatar = TF::getThumb($data->accountPhoto, 56);
-        $this->title = TF::getText(@$data->accountName);
+        $this->avatar = ParsingUtils::getThumb($data->accountPhoto, 56);
+        $this->title = ParsingUtils::getText(@$data->accountName);
 
         $this->subscriberCountText = $data->hasChannel
-        ? TF::getText(@$data->accountByline)
-        : $i18n->ownerAccountNoChannel;
+            ? ParsingUtils::getText(@$data->accountByline)
+            : $i18n->ownerAccountNoChannel;
 
         $tokenRoot = $data->serviceEndpoint->selectActiveIdentityEndpoint->supportedTokens;
 

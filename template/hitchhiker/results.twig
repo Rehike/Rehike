@@ -51,7 +51,7 @@
                         <ol id="item-section-{{ generateRid() }}" class="item-section">
                             {%- if yt.page.content.header.textHeaderRenderer -%}
                             <li class="safety-mode-message">
-                                {{ getText(yt.page.content.header.textHeaderRenderer.title) }}
+                                {{ rehike.getText(yt.page.content.header.textHeaderRenderer.title) }}
                             </li>
                             {%- endif -%}
                             {%- for item in this.contents -%}
@@ -61,7 +61,7 @@
                                     or item.channelRenderer
                                 -%}
                                 <li>
-                                    {{ yt.config.appearance.largeSearchResults
+                                    {{ rehike.config.appearance.largeSearchResults
                                     ? lockup.tile(item, 246, 138)
                                     : lockup.tile(item)
                                     }}
@@ -73,7 +73,7 @@
                                         <div class="feed-item-dismissible">
                                             <div class="shelf-title-table">
                                                 <div class="shelf-title-row">
-                                                    <h2 class="branded-page-module-title shelf-title-cell">{{ getText(shelf.title) }}</h2>
+                                                    <h2 class="branded-page-module-title shelf-title-cell">{{ rehike.getText(shelf.title) }}</h2>
                                                 </div>
                                             </div>
                                             <div class="vertical-shelf">
@@ -83,7 +83,7 @@
                                                         {%- for video in list.items -%}
                                                                                                             {# sic lmao #}
                                                         <li{{ loop.index > list.collapsedItemCount ? ' class="collapsable"'  }}>
-                                                            {{ yt.config.appearance.largeSearchResults
+                                                            {{ rehike.config.appearance.largeSearchResults
                                                             ? lockup.tile(video, 246, 138)
                                                             : lockup.tile(video)
                                                             }}
@@ -109,10 +109,10 @@
                                 {%- set list = item.horizontalCardListRenderer -%}
                                 <li>
                                     <div class="search-refinements">
-                                        <h3>{{ getText(list.header.richListHeaderRenderer.title) }}</h3>
+                                        <h3>{{ rehike.getText(list.header.richListHeaderRenderer.title) }}</h3>
                                         {%- for refinement in list.cards -%}
                                         <div class="search-refinement">
-                                            <a href="{{ getUrl(refinement.searchRefinementCardRenderer.searchEndpoint) }}" class="spf-link">{{ getText(refinement.searchRefinementCardRenderer.query) }}</a>
+                                            <a href="{{ rehike.getUrl(refinement.searchRefinementCardRenderer.searchEndpoint) }}" class="spf-link">{{ rehike.getText(refinement.searchRefinementCardRenderer.query) }}</a>
                                         </div>
                                         {%- endfor -%}
                                     </div>
@@ -121,9 +121,9 @@
                                 {%- set dym = item.didYouMeanRenderer -%}
                                 <li class="spell-correction spell-correction-dym">
                                     <span class="spell-correction-corrected">
-                                        {{ getText(dym.didYouMean) }}
+                                        {{ rehike.getText(dym.didYouMean) }}
                                     </span>
-                                    <a href="{{ getUrl(dym.correctedQueryEndpoint) }}" class="spell-correction-corrected-query spf-link">
+                                    <a href="{{ rehike.getUrl(dym.correctedQueryEndpoint) }}" class="spell-correction-corrected-query spf-link">
                                         {%- for run in dym.correctedQuery.runs -%}
                                         {{ run.italics ? "<i>" }}{{ run.text }}{{ run.italics ? "</i>" }}
                                         {%- endfor -%}
@@ -133,21 +133,21 @@
                                 {%- set srf = item.showingResultsForRenderer -%}
                                 <li class="spell-correction">
                                     <span class="spell-correction-corrected">
-                                        {{ getText(srf.showingResultsFor) }}
+                                        {{ rehike.getText(srf.showingResultsFor) }}
                                     </span>
-                                    <a href="{{ getUrl(srf.correctedQueryEndpoint) }}" class="spell-correction-corrected-query spf-link">
+                                    <a href="{{ rehike.getUrl(srf.correctedQueryEndpoint) }}" class="spell-correction-corrected-query spf-link">
                                         {%- for run in srf.correctedQuery.runs -%}
                                         {{ run.italics ? "<i>" }}{{ run.text }}{{ run.italics ? "</i>" }}
                                         {%- endfor -%}
                                     </a>
-                                    <span>{{ getText(srf.searchInsteadFor) }}</span>
-                                    <a href="{{ getUrl(srf.originalQueryEndpoint) }}" class="spf-link">
-                                        {{ getText(srf.originalQuery) }}
+                                    <span>{{ rehike.getText(srf.searchInsteadFor) }}</span>
+                                    <a href="{{ rehike.getUrl(srf.originalQueryEndpoint) }}" class="spf-link">
+                                        {{ rehike.getText(srf.originalQuery) }}
                                     </a>
                                 </li>
                                 {%- elseif item.backgroundPromoRenderer -%}
                                 <p class="display-message">
-                                    {{ getText(item.backgroundPromoRenderer.title) }}
+                                    {{ rehike.getText(item.backgroundPromoRenderer.title) }}
                                 </p>
                                 {%- endif -%}
                             {%- endfor -%}

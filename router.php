@@ -2,10 +2,14 @@
 use Rehike\ControllerV2\Router;
 use Rehike\SimpleFunnel;
 
+// ?enable_polymer can be used as a passthrough to Polymer. This allows the
+// user to bypass Rehike without disabling the Rehike server.
 if (isset($_GET["enable_polymer"]) && $_GET["enable_polymer"] == "1") {
-    SimpleFunnel::funnelCurrentPage(true);
+    SimpleFunnel::funnelCurrentPage()->then(fn($r) => $r->output());
 }
 
+// Passed through the Rehike server. These simply request the YouTube server
+// directly.
 Router::funnel([
     "/api/*",
     "/youtubei/*",
@@ -37,12 +41,15 @@ Router::funnel([
     "/testtube",
     "/t/terms",
     "/iframe_api",
+    "/signin_prompt",
+    "/post/*",
     "/feeds/*"
 ]);
 
 Router::redirect([
     "/watch/(*)" => "/watch?v=$1",
     "/shorts/(*)" => "/watch?v=$1",
+    "/live/(*)" => "/watch?v=$1",
     "/hashtag/(*)" => "/results?search_query=$1",
     "/feed/what_to_watch/**" => "/",
     "/source/(*)" => function($request) {
@@ -61,13 +68,14 @@ Router::redirect([
     "/subscription_center?(*)" => function($request) {
         if ($user = @$request->params->add_user)
             return "/user/$user?sub_confirmation=1";
+        else if ($user = @$request->params->add_user_id)
+            return "/channel/$user?sub_confirmation=1";
     }
 ]);
 
 Router::get([
     "/" => "feed",
     "/feed/**" => "feed",
-    "/debug_browse" => "debug_browse",
     "/watch" => "watch",
     "/user/**" => "channel",
     "/channel/**" => "channel",
@@ -78,8 +86,6 @@ Router::get([
     "/results" => "results",
     "/playlist" => "playlist",
     "/oops" => "oops",
-    "/forcefatal" => "forcefatal",
-    "/all_comments" => "all_comments",
     "/related_ajax" => "ajax/related",
     "/browse_ajax" => "ajax/browse",
     "/addto_ajax" => "ajax/addto",
@@ -91,6 +97,7 @@ Router::get([
     "/channel_switcher" => "channel_switcher",
     "/rehike/config" => "rehike/config",
     "/rehike/config/**" => "rehike/config",
+    "/all_comments" => "all_comments",
     "default" => "channel"
 ]);
 
@@ -100,6 +107,7 @@ Router::post([
     "/watch_fragments2_ajax" => "ajax/watch_fragments2",
     "/related_ajax" => "ajax/related",
     "/playlist_video_ajax" => "ajax/playlist_video",
+    "/playlist_ajax" => "ajax/playlist",
     "/subscription_ajax" => "ajax/subscription",
     "/service_ajax" => "ajax/service",
     "/comment_service_ajax" => "ajax/comment_service",

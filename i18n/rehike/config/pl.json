@@ -1,5 +1,5 @@
 {
-    "title": "Ustawienia Rehike",
+    "title": "Konfiguracja Rehike",
     "saveChanges": "Zapisz zmiany",
     "saveChangesSuccess": "Konfiguracja została pomyślnie zaktualizowana!",
     "saveChangesFailure": "Nie udało się zaktualizować konfiguracji!",
@@ -52,14 +52,6 @@
             "watchSidebarDates": {
                 "title": "Pokaż datę przesłania na stronie oglądania w proponowanych",
                 "subtitle": "W przeciwieństwie do Polymera, Hitchhiker nie pokazywał ich domyślnie."
-            },
-            "watchSidebarVerification": {
-                "title": "Pokaż odznaki weryfikacji na stronie oglądania w proponowanych",
-                "subtitle": "W przeciwieństwie do Polymera, Hitchhiker nie pokazywał ich domyślnie."
-            },
-            "teaserReplies": {
-                "title": "Pokaż dwie pierwsze odpowiedzi na każdy komentarz",
-                "subtitle": "Używane przed 2016 r. Może to spowolnić czas wczytywania komentarzy. Używaj według własnego uznania."
             },
             "oldBestOfYouTubeIcons": {
                 "title": "Stare czerwone ikony w sekcji \"Najlepsze w YouTube\"",

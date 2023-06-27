@@ -21,14 +21,14 @@
     {% if title.runs %}
         {%- for run in title.runs -%}
             {% if run.navigationEndpoint %}
-            <a href="{{ getUrl(run) }}" class="spf-link " data-ytid="{{ run.navigationEndpoint.browseEndpoint.browseId }}"  data-name="g-personal">{{ run.text }}</a>
+            <a href="{{ rehike.getUrl(run) }}" class="spf-link " data-ytid="{{ run.navigationEndpoint.browseEndpoint.browseId }}"  data-name="g-personal">{{ run.text }}</a>
             {% else %}
             {{ run.text }}
             {% endif %}
         {%- endfor -%}
     {% elseif title.simpleText %}
         {% if title.navigationEndpoint %}
-        <a href="{{ getUrl(title) }}" class="spf-link " data-ytid="{{ title.navigationEndpoint.browseEndpoint.browseId }}"  data-name="g-personal">{{ title.simpleText }}</a>
+        <a href="{{ rehike.getUrl(title) }}" class="spf-link " data-ytid="{{ title.navigationEndpoint.browseEndpoint.browseId }}"  data-name="g-personal">{{ title.simpleText }}</a>
         {% else %}
         {{ title.simpleText }}
         {% endif %}

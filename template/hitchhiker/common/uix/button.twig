@@ -17,12 +17,12 @@
 {%- endmacro -%}
 
 {%- macro _buttonWrapper(data, styleOverride, id) -%}
-    {%- set hasUrl = getUrl(data) != "" -%}
+    {%- set hasUrl = rehike.getUrl(data) != "" -%}
     <{{ hasUrl ? "a" : "button" }} 
         {% if data.href %}
         href="{{ data.href }}"
         {% elseif hasUrl %}
-        href="{{ getUrl(data) }}"
+        href="{{ rehike.getUrl(data) }}"
         {% endif %}
         class="yt-uix-button 
         yt-uix-button-size-{{ resolveSize(data.size) }} 

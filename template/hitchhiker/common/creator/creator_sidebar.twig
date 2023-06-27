@@ -4,7 +4,7 @@
         {% if section.creatorSidebarSectionRenderer %}
             {% set this = section.creatorSidebarSectionRenderer %}
             <li id="creator-sidebar-section-id-{{ this.targetId }}" class="creator-sidebar-section {{ this.isSelected ? "selected" }}">
-                <h3>{{ getText(this.title) }}</h3>
+                <h3>{{ rehike.getText(this.title) }}</h3>
                 <ul class="creator-sidebar-submenu">
                     {% for item in this.items %}
                         {% if item.creatorSidebarItemRenderer %}
@@ -20,8 +20,8 @@
 
 {% macro item(data) %}
 <li class="creator-sidebar-item spf-link {{ data.isSelected ? "selected" }}">
-    <a href="{{ getUrl(data) }}" class="creator-sidebar-item-link">
-        {{ getText(data.title) }}
+    <a href="{{ rehike.getUrl(data) }}" class="creator-sidebar-item-link">
+        {{ rehike.getText(data.title) }}
     </a>
 </li>
 {% endmacro %}

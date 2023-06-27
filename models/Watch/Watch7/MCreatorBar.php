@@ -16,8 +16,7 @@ class MCreatorBar {
      * @var string $vid   Video ID.
      */
     public function __construct($vid) {
-        $i18n = i18n::newNamespace("watch/creator_bar");
-        $i18n->registerFromFolder("i18n/watch");
+        $i18n = i18n::getNamespace("watch");
         $ucid = SignIn::getInfo()["ucid"];
 
         $this->navButtons[] = new MButton([
@@ -80,23 +79,5 @@ class MCreatorBar {
             "icon" => "CAPTIONS",
             "url" => "//studio.youtube.com/video/$vid/translations"
         ]);
-    }
-}
-
-class MCreatorBarEditButton extends MButton {
-    public $style = "STYLE_TEXT_DARK";
-
-    public function __construct($data) {
-        $this->itemTooltip = $data["tooltip"];
-        $this->icon = (object) [
-            "iconType" => $data["icon"]
-        ];
-        $this->navigationEndpoint = (object) [
-            "commandMetadata" => (object) [
-                "webCommandMetadata" => (object) [
-                    "url" => $data["url"]
-                ]
-            ]
-        ];
     }
 }

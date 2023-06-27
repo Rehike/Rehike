@@ -1,2 +1,3 @@
 cache/**
 config.json
+.vscode/**

@@ -14,15 +14,15 @@
 {% endif %}
 {% endmacro %}
 
-{% macro render(overlays, includeTime = true) %}
+{% macro render(overlays, id, includeTime = true) %}
     {% for overlay in overlays %}
         {% if overlay.thumbnailOverlayTimeStatusRenderer and includeTime %}
             <span class="video-time">
-                {{ getText(overlay.thumbnailOverlayTimeStatusRenderer.text) }}
+                {{ rehike.getText(overlay.thumbnailOverlayTimeStatusRenderer.text) }}
             </span>
         {% elseif overlay.thumbnailOverlayToggleButtonRenderer.untoggledIcon.iconType == "WATCH_LATER" %}
             {% from "common/uix/watch_later_button.twig" import render as watch_later %}
-            {{ watch_later(overlay.thumbnailOverlayToggleButtonRenderer) }}
+            {{ watch_later(overlay.thumbnailOverlayToggleButtonRenderer, id) }}
         {% elseif overlay.thumbnailOverlayResumePlaybackRenderer %}
             <span class="resume-playback-background"></span>
             <span class="resume-playback-progress-bar" style="width:{{ overlay.thumbnailOverlayResumePlaybackRenderer.percentDurationWatched }}%"></span>
@@ -34,7 +34,7 @@
     {% for overlay in overlays %}
         {% if overlay.thumbnailOverlayTimeStatusRenderer %}
             <span class="video-time">
-                {{ getText(overlay.thumbnailOverlayTimeStatusRenderer.text) }}
+                {{ rehike.getText(overlay.thumbnailOverlayTimeStatusRenderer.text) }}
             </span>
         {% endif %}
     {% endfor %}
@@ -66,9 +66,9 @@
 </{{ span ? "span" : "div" }}>
 <{{ span ? "span" : "div" }} class="yt-pl-thumb-overlay">
     <span class="yt-pl-thumb-overlay-content">
-        {% set overlay = getThumbnailOverlay(info, "thumbnailOverlayHoverTextRenderer") %}
+        {% set overlay = rehike.getThumbnailOverlay(info, "thumbnailOverlayHoverTextRenderer") %}
         <span class="play-icon yt-sprite"></span>
-        <span class="yt-pl-thumb-overlay-text">{{ getText(overlay.text) }}</span>
+        <span class="yt-pl-thumb-overlay-text">{{ rehike.getText(overlay.text) }}</span>
     </span>
 </{{ span ? "span" : "div" }}>
 {% endmacro %}

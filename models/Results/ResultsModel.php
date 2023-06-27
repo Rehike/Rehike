@@ -28,9 +28,25 @@ class ResultsModel {
         $response = (object) [];
         $contents = $data->contents->twoColumnSearchResultsRenderer->primaryContents->sectionListRenderer;
         $submenu = &$contents->subMenu->searchSubMenuRenderer;
-        $submenu->resultCountText = self::getResultsCount($data) > 1
-        ? $i18n->resultCountPlural(number_format(self::getResultsCount($data)))
-        : $i18n->resultCountSingular(number_format(self::getResultsCount($data)));
+
+        if ($filters = @$data->header->searchHeaderRenderer->searchFilterButton->buttonRenderer)
+        {
+            $submenu->button = (object) [
+                "toggleButtonRenderer" => $filters
+            ];
+    
+            $submenu->groups = $filters->command->openPopupAction->popup->searchFilterOptionsDialogRenderer->groups;
+    
+            $filters = &$submenu->button->toggleButtonRenderer;
+    
+            unset($filters->command);
+            $filters->defaultText = $filters->text;
+            unset($filters->text);
+        }
+        
+        $submenu -> resultCountText = self::getResultsCount($data) > 1
+            ? $i18n -> resultCountPlural(number_format(self::getResultsCount($data)))
+            : $i18n -> resultCountSingular(number_format(self::getResultsCount($data)));
 
         $filterCrumbs = [];
         if (isset($submenu->groups))
@@ -57,8 +73,8 @@ class ResultsModel {
         }
 
         for ($i = 0; $i < count($contents->contents); $i++)
-        if (isset($contents->contents[$i]->itemSectionRenderer))
-        foreach($contents->contents[$i]->itemSectionRenderer->contents as $item2)
+        if (isset($contents->contents[$i] ->itemSectionRenderer))
+        foreach($contents->contents[$i] ->itemSectionRenderer->contents as $item2)
         if (isset($item2->promotedSparklesTextSearchRenderer)) {
             array_splice($contents->contents, $i, 1);
         }

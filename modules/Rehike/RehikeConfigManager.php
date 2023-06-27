@@ -28,8 +28,8 @@ class RehikeConfigManager extends ConfigManager
             "cssFixes" => true,
             "watchSidebarDates" => false,
             "watchSidebarVerification" => false,
-            "teaserReplies" => false,
-            "oldBestOfYouTubeIcons" => false
+            "oldBestOfYouTubeIcons" => false,
+            "allCommentsLink" => false
         ],
         "advanced" => [
             "enableDebugger" => false
@@ -53,8 +53,8 @@ class RehikeConfigManager extends ConfigManager
             "cssFixes" => "bool",
             "watchSidebarDates" => "bool",
             "watchSidebarVerification" => "bool",
-            "teaserReplies" => "bool",
-            "oldBestOfYouTubeIcons" => "bool"
+            "oldBestOfYouTubeIcons" => "bool",
+            "allCommentsLink" => "bool"
         ],
         "advanced" => [
             "enableDebugger" => "bool"
@@ -64,9 +64,9 @@ class RehikeConfigManager extends ConfigManager
         ]
     ];
 
-    // Old config compatability map
+    // Old config compatibility map
     // These are PropertyAtPath (JS-style) paths
-    public static $compatabilityMap = [
+    public static $compatibilityMap = [
         "useRingoBranding" => "appearance.modernLogo",
         "uploadMenuType" => "appearance.uploadButtonType",
         "versionInFooter" => "appearance.showVersionInFooter",
@@ -83,7 +83,8 @@ class RehikeConfigManager extends ConfigManager
         "guideOnWatchPage" => "REMOVE",
         "useWebV2HomeEndpoint" => "REMOVE",
         "useGridHomeStyle" => "REMOVE",
-        "accountPickerYtStudio" => "REMOVE"
+        "accountPickerYtStudio" => "REMOVE",
+        "general.teaserReplies" => "REMOVE"
     ];
     
     /**
@@ -126,7 +127,7 @@ class RehikeConfigManager extends ConfigManager
             }
         }
 
-        foreach (self::$compatabilityMap as $key => $value) {
+        foreach (self::$compatibilityMap as $key => $value) {
             try {
                 if ($value == "REMOVE") {
                     PropertyAtPath::unset(self::$config, $key);

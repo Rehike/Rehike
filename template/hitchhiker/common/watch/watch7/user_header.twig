@@ -3,14 +3,14 @@
     <span class="video-thumb  yt-thumb yt-thumb-48">
         <span class="yt-thumb-square">
             <span class="yt-thumb-clip">
-                <img data-ytimg="1" width="48" height="48" data-thumb="{{ owner.thumbnail.thumbnails.0.url }}" alt="{{ getText(owner.title) }}" src="{{ PIXEL }}" onload=";window.__ytRIL &amp;&amp; __ytRIL(this)">
+                <img data-ytimg="1" width="48" height="48" data-thumb="{{ owner.thumbnail.thumbnails.0.url }}" alt="{{ rehike.getText(owner.title) }}" src="{{ PIXEL }}" onload=";window.__ytRIL &amp;&amp; __ytRIL(this)">
                 <span class="vertical-align"></span>
             </span>
         </span>
     </span>
     </a>
     <div class="yt-user-info">
-    <a href="{{ owner.navigationEndpoint.browseEndpoint.canonicalBaseUrl }}" class="       spf-link ">{{ getText(owner.title) }}</a>
+    <a href="{{ owner.navigationEndpoint.browseEndpoint.canonicalBaseUrl }}" class="       spf-link ">{{ rehike.getText(owner.title) }}</a>
     {% if owner.badges %}
     <span data-tooltip-text="{{ yt.msgs.verified }}" class="yt-channel-title-icon-verified yt-uix-tooltip yt-sprite" aria-label="{{ yt.msgs.verified }}"></span>
     {% endif %}

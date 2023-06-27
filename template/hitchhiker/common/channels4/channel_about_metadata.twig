@@ -21,7 +21,7 @@
         </div>
         <div class="about-description branded-page-box-padding">
             <pre>
-                {{ getText(data.description) }}
+                {{ rehike.getText(data.description) }}
             </pre>
         </div>
         {% endif %}
@@ -65,7 +65,7 @@
 <li class="channel-links-item">
     <a href="{{ info.navigationEndpoint.commandMetadata.webCommandMetadata.url }}" class="about-channel-link">
         <img src="{{ info.icon.thumbnails[0].url }}" alt="" class="about-channel-link-icon" width="16" height="16" alt="{{ this.commandMetadata.webCommandMetadata.url }}">
-        <span class="about-channel-link-text">{{ getText(info.title) }}</span>
+        <span class="about-channel-link-text">{{ rehike.getText(info.title) }}</span>
     </a>
 </li>
 {% endmacro %}

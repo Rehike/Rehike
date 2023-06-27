@@ -1,3 +1,9 @@
+# Branch information - `dev-0.7-asynchike-main`
+
+This is our development branch for Rehike 0.7, which reworks much of Rehike's internal to work with asynchronous requests. Along with that, there will be numerous other codebase cleanups.
+
+As this is a major update, many things will shift around in this branch. Don't expect compatibility with `master`, and don't main it.
+
 # Rehike
 
 <p align="center">

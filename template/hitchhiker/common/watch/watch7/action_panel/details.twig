@@ -1,9 +1,9 @@
 {% macro description(data) %}
 {%- for snippet in data.runs -%}
 {%- if (snippet.navigationEndpoint) -%}
-    {%- set href = getUrl(snippet) -%}
+    {%- set href = rehike.getUrl(snippet) -%}
     {%- set spf = (href|first == "/") -%}
-    {% if snippet.navigationEndpoint.watchEndpoint.videoId == yt.videoId %}
+    {% if snippet.navigationEndpoint.watchEndpoint and snippet.navigationEndpoint.watchEndpoint.videoId == yt.videoId %}
     <a href="#" onclick="yt.www.watch.player.seekTo({{ snippet.navigationEndpoint.watchEndpoint.startTimeSeconds }});return false;">
     {% else %}
     <a href="{{ href }}" class=" {{ spf ? 'spf-link' }} " target="_blank">
@@ -35,14 +35,14 @@
                         {%- if item.metadataRowRenderer -%}
                             {% set item = item.metadataRowRenderer %}
                             <li class="watch-meta-item yt-uix-expander-body">
-                                <h4 class="title">{{ getText(item.title) }}</h4>
+                                <h4 class="title">{{ rehike.getText(item.title) }}</h4>
                                 <ul class="content watch-info-tag-list">
                                     {% for content in item.contents %}
                                         <li>
                                             {% if content.runs %}
                                                 {% for run in content.runs %}
                                                     {% if run.navigationEndpoint %}
-                                                    {% set href = getUrl(run) %}
+                                                    {% set href = rehike.getUrl(run) %}
                                                         <a{{ (href|first == "/") ? " class=\"spf-link\"" }} href="{{ href }}">
                                                     {% endif %}
                                                             {{ run.text }}
@@ -52,7 +52,7 @@
                                                 {% endfor %}
                                             {% elseif content.simpleText %}
                                                 {% if content.navigationEndpoint %}
-                                                    {% set href = getUrl(simpleText) %}
+                                                    {% set href = rehike.getUrl(simpleText) %}
                                                     <a{{ (href|first == "/") ? " class=\"spf-link\"" }} href="{{ href }}">
                                                 {% endif %}
                                                         {{ content.simpleText }}
@@ -67,9 +67,9 @@
                         {%- elseif item.richMetadataRowRenderer -%}
                             {% set item = item.richMetadataRowRenderer %}
                             <li class="watch-meta-item has-image">
-                                {% set url = getUrl(item) %}
+                                {% set url = rehike.getUrl(item) %}
                                 {% set attr = (href|first == "/") ? 'class="spf-link"' : 'target="_blank"' %}
-                                <h4 class="title">{{ getText(item.label) }}</h4>
+                                <h4 class="title">{{ rehike.getText(item.label) }}</h4>
                                 <span class="metadata-row-image">
                                     <a href="{{ url }}" data-url="{{ url }}" {{ attr }}>
                                         <img src="{{ getThumb(item.thumbnail, 55) }}">
@@ -78,18 +78,18 @@
                                 <ul class="content watch-info-tag-list">
                                     <li>
                                         <a href="{{ url }}" data-url="{{ url }}" {{ attr }}>
-                                            {{ getText(item.title) }}
+                                            {{ rehike.getText(item.title) }}
                                         </a>
                                     </li>
                                     {% if item.subtitle %}
                                     <li>
-                                        {{ getText(item.subtitle) }}
+                                        {{ rehike.getText(item.subtitle) }}
                                     </li>
                                     {% endif %}
                                     {% if item.callToAction %}
                                     <li>
                                         <a href="{{ url }}" data-url="{{ url }}" {{ attr }}>
-                                            {{ getText(item.callToAction) }}
+                                            {{ rehike.getText(item.callToAction) }}
                                         </a>
                                     </li>
                                     {% endif %}

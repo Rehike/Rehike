@@ -1,8 +1,12 @@
 <?php
 namespace Rehike\Signin;
 
-use \YukisCoffee\CoffeeRequest\CoffeeRequest;
-use \Rehike\Request;
+use YukisCoffee\CoffeeRequest\CoffeeRequest;
+use YukisCoffee\CoffeeRequest\Promise;
+use YukisCoffee\CoffeeRequest\Network\Request;
+use YukisCoffee\CoffeeRequest\Network\Response;
+
+use Rehike\Network;
 use Rehike\FileSystem as FS;
 
 /**
@@ -87,7 +91,7 @@ class AuthManager
 
         if (self::shouldAuth())
         {
-            Request::useAuth();
+            Network::useAuthService();
 
             $data = self::getSigninData();
 
@@ -174,7 +178,7 @@ class AuthManager
                     $data->switcher
                 );
 
-                Request::authUseGaiaId();
+                Network::useAuthGaiaId();
 
                 self::processMenuData(self::$info, $data->menu);
 
@@ -194,31 +198,34 @@ class AuthManager
      */
     public static function requestSigninData()
     {
-        // Temporarily switch the request namespace
-        $previousNamespace = Request::getNamespace();
+        /** @var string */
+        $switcher = null;
+        /** @var string */
+        $menu = null;
 
-        // Perform the necessary request
-        Request::setNamespace("rehike.signin_temp_ns");
-
-        // These must be separate in order to account for GAIA id.
-        Request::queueUrlRequest("switcher", "https://www.youtube.com/getAccountSwitcherEndpoint");
-        $switcher = Request::getResponses()["switcher"];
+        $info = null;
         
-        $info = self::processSwitcherData($switcher);
-        
-        Request::authUseGaiaId();
-        
-        // Then the account menu request can work
-        // also hack i can't be fucked to fix the other code
-        Request::queueInnertubeRequest("menu", "account/account_menu", (object)[
-            "deviceTheme" => "DEVICE_THEME_SUPPORTED",
-            "userInterfaceTheme" => "USER_INTERFACE_THEME_DARK"
-        ]);
-        $menu = Request::getResponses()["menu"];
+        Network::urlRequest(
+            "https://www.youtube.com/getAccountSwitcherEndpoint",
+            Network::getDefaultYoutubeOpts()
+        )->then(function($response) use (&$switcher, &$info) {
+            $switcher = $response->getText();
 
-        // Reset the request namespace now that I'm done!
-        Request::setNamespace($previousNamespace);
+            $info = self::processSwitcherData($switcher);
 
+            Network::useAuthGaiaId();
+
+            return Network::innertubeRequest("account/account_menu", [
+                "deviceTheme" => "DEVICE_THEME_SUPPORTED",
+                "userInterfaceTheme" => "USER_INTERFACE_THEME_DARK"
+            ]);
+        })->then(function($response) use (&$menu) {
+            $menu = $response->getText();
+        });
+
+        // This call blocks the thread until the requests are done.
+        Network::run();
+        
         self::processMenuData($info, $menu);
 
         $responses = [

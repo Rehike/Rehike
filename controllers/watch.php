@@ -4,23 +4,37 @@ use Rehike\Controller\core\NirvanaController;
 use Com\Youtube\Innertube\Request\NextRequestParams;
 use Com\Youtube\Innertube\Request\NextRequestParams\UnknownThing;
 
-use Rehike\Request;
+use Rehike\Network;
+use Rehike\Async\Promise;
+
 use Rehike\Util\Base64Url;
 use Rehike\ConfigManager\ConfigManager;
 use Rehike\Util\WatchUtils;
 use Rehike\Util\ExtractUtils;
+use Rehike\i18n;
 
-//
-// export
-//
+use Rehike\Model\Watch\WatchModel;
+use YukisCoffee\CoffeeRequest\Exception\GeneralException;
+
+/**
+ * Controller for the watch page.
+ * 
+ * @author Aubrey Pankow <aubyomori@gmail.com>
+ * @author Daylin Cooper <dcoop2004@gmail.com>
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
+ * @author The Rehike Maintainers
+ */
 return new class extends NirvanaController {
     public $template = 'watch';
     
+    // Watch should only load the guide after everything else is done.
     protected $delayLoadGuide = true;
 
     public function onGet(&$yt, $request)
     {
         $this->useJsModule("www/watch");
+
+        i18n::newNamespace("watch")->registerFromFolder("i18n/watch");
 
         // invalid request redirect
         if (!isset($_GET['v'])) {
@@ -28,9 +42,9 @@ return new class extends NirvanaController {
             die();
         }
 
-        // Somewhere along the way, we removed this code
-        // during a codebase clean up and never reimplemented it.
-        // It's about time I fix that lol
+        /*
+         * Set theater mode state.
+         */
         if ("1" == @$_COOKIE['wide']) 
         {
             $yt->theaterMode = $_COOKIE['wide'];
@@ -44,22 +58,37 @@ return new class extends NirvanaController {
         // begin request
         $yt->videoId = $request->params->v;
         $yt->playlistId = $request->params->list ?? null;
+
+        // What the fuck.
         $yt->playlistIndex = (string) ((int) ($request->params->index ?? '1'));
 
+        // ?!?!?!?!?!?!?!?!?!?!?!?!?!?!?!?!?!?!?!?!?!?
         if (0 == $yt->playlistIndex) $yt->playlistIndex = 1;
 
+        // Used by InnerTube in some cases for player-specific parameters.
         $yt->playerParams = $request->params->pp ?? null;
 
-        $watchRequestParams = [
+        // Common parameters to be used for both the next API and player API.
+        $sharedRequestParams = [
             'videoId' => $yt->videoId
         ];
 
-        // Required for LC link implementation
+        // Defines parameters to be sent only to the next (watch data) API.
+        // Required for LC link implementation.
         $nextOnlyParams = [];
 
         $lc = $request->params->lc ?? $request->params->google_comment_id ?? null;
 
-        // Generate LC (linked comment) param
+        /*
+         * Generate LC (linked comment) param.
+         * 
+         * This is handled by InnerTube as a next parameter, which is base64-
+         * encoded as with similar params. As such, it needs to be encoded like
+         * any other protobuf/base64 parameter (ugly).
+         * 
+         * LC itself simply modifies the comment continuation that's provided
+         * to link to a specific comment.
+         */
         if (isset($lc))
         {
             $param = new NextRequestParams();
@@ -76,8 +105,8 @@ return new class extends NirvanaController {
         }
 
         if (!is_null($yt->playlistId)) {
-            $watchRequestParams['playlistId'] = $yt->playlistId;
-            $watchRequestParams['playlistIndex'] = $yt->playlistIndex;
+            $sharedRequestParams['playlistId'] = $yt->playlistId;
+            $sharedRequestParams['playlistIndex'] = $yt->playlistIndex;
         }
 
         // TODO (kirasicecreamm): Clean up this algo, make better
@@ -95,14 +124,18 @@ return new class extends NirvanaController {
             }
         }
 
-        Request::queueInnertubeRequest(
-            "watch", "next", (object)(
-                $watchRequestParams + $nextOnlyParams
-            )
+        // Makes the main watch request.
+        $nextRequest = Network::innertubeRequest(
+            "next",
+            $sharedRequestParams + $nextOnlyParams
         );
 
-        Request::queueInnertubeRequest(
-            "player", "player", (object) ([
+        // Unlike Polymer, Hitchhiker had all of the player data already
+        // available in the initial response. So an additional player request
+        // is used.
+        $playerRequest = Network::innertubeRequest(
+            "player",
+            [
                 "playbackContext" => [
                     'contentPlaybackContext' => (object) [
                         'autoCaptionsDefaultOn' => false,
@@ -117,10 +150,8 @@ return new class extends NirvanaController {
                 ],
                 "startTimeSecs" => $startTime ?? 0,
                 "params" => $yt->playerParams
-            ] + $watchRequestParams)
+            ] + $sharedRequestParams
         );
-
-        $dislikesData = null;
 
         /**
          * Determine whether or not to use the Return YouTube Dislike
@@ -128,36 +159,61 @@ return new class extends NirvanaController {
          */
         if (true === ConfigManager::getConfigProp("appearance.useRyd"))
         {
-            $ch = curl_init("https://returnyoutubedislikeapi.com/votes?videoId=" . $yt->videoId);
-            curl_setopt_array($ch, [
-                CURLOPT_HEADER => 0,
-                CURLOPT_RETURNTRANSFER => 1
-            ]);
+            $rydUrl = "https://returnyoutubedislikeapi.com/votes?videoId=" . $yt->videoId;
 
-            $rydResponse = curl_exec($ch);
-            curl_close($ch);
-            $dislikesData = json_decode($rydResponse);
+            $rydRequest = Network::urlRequest($rydUrl);
+        }
+        else
+        {
+            // If RYD is disabled, then send a void Promise that instantly
+            // resolves itself.
+            $rydRequest = new Promise(fn($r) => $r());
         }
 
-        $responses = Request::getResponses();
+        Promise::all([
+            "next"   => $nextRequest,
+            "player" => $playerRequest,
+            "ryd"    => $rydRequest
+        ])->then(function ($responses) use ($yt) {
+            $nextResponse = $responses["next"]->getJson();
+            $playerResponse = $responses["player"]->getJson();
+            
+            try
+            {
+                $rydResponse = $responses["ryd"]->getJson();
+            }
+            catch (GeneralException $e)
+            {
+                $rydResponse = (object) [];
+            }
 
-        $response = $responses["watch"];
-        $presponse = $responses["player"];
+            // This may not be needed any longer, but manually removing ads
+            // has been historically required as adblockers no longer have
+            // the Hitchhiker-era rules.
+            $this->removeAds($playerResponse);
 
-        $ytdata = json_decode($response);
-        $playerResponse = json_decode($presponse);
-        $yt->playerResponse = $playerResponse;
-        // remove ads lol
-        if (isset($yt->playerResponse->playerAds)) unset($yt->playerResponse->playerAds);
-        if (isset($yt->playerResponse->adPlacements)) unset($yt->playerResponse->adPlacements);
+             // Push these over to the global object.
+             $yt->playerResponse = $playerResponse;
+             $yt->watchNextResponse = $nextResponse;
 
-        // end request
-
-        $yt->page = \Rehike\Model\Watch\WatchModel::bake($yt, $ytdata, $yt->videoId, $dislikesData);
-
-        $yt->rawWatchNextResponse = $response;
+            $yt->page = WatchModel::bake(
+                yt:      $yt,
+                data:    $nextResponse,
+                videoId: $yt->videoId,
+                rydData: $rydResponse
+            );
+        });
     }
 
+    /**
+     * Handles SPF requests.
+     * 
+     * Specifically, this binds the player data to the SPF data in order to
+     * refresh the player on the client-side.
+     * 
+     * @param $data  SPF data.
+     * @return void  (Modifies $data.)
+     */
     public function handleSpfData(&$data)
     {
         $yt = &$this->yt;
@@ -173,7 +229,7 @@ return new class extends NirvanaController {
             ];
 
             $data->data->swfcfg->args->raw_player_response = $yt->playerResponse;
-            $data->data->swfcfg->args->raw_watch_next_response = json_decode($yt->rawWatchNextResponse);
+            $data->data->swfcfg->args->raw_watch_next_response = $yt->watchNextResponse;
     
             if (isset($yt->page->playlist)) {
                 $data->data->swfcfg->args->is_listed = '1';
@@ -181,5 +237,17 @@ return new class extends NirvanaController {
                 $data->data->swfcfg->args->videoId = $yt->videoId;
             }
         }
+    }
+
+    /**
+     * Remove ads from a player response if they exist.
+     */
+    protected function removeAds(object $playerResponse): void
+    {
+        if (isset($playerResponse->playerAds))
+            unset($playerResponse->playerAds);
+
+        if (isset($playerResponse->adPlacements))
+            unset($playerResponse->adPlacements);
     }
 };

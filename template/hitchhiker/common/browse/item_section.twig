@@ -5,8 +5,8 @@
     {% set rid = generateRid() %}
     <ol id="item-section-{{ rid }}" class="item-section">
         {%- for item in data.contents -%}
-                {%- if item.shelfRenderer -%}
-                    {{ shelf(item.shelfRenderer) }}
+            {%- if item.shelfRenderer -%}
+                {{ shelf(item.shelfRenderer) }}
                 {%- elseif item.messageRenderer -%}
                 <li>
                     <p class="display-message">
@@ -14,7 +14,7 @@
                         {%- if text.runs -%}
                             {%- for run in text.runs -%}
                                 {%- if run.navigationEndpoint -%}
-                                    <a href="{{ getUrl(run) }}">{{ run.text }}</a>
+                                    <a href="{{ rehike.getUrl(run) }}">{{ run.text }}</a>
                                 {%- else -%}
                                     {{ run.text }}
                                 {%- endif -%}
@@ -34,15 +34,13 @@
                         <div class="yt-uix-slider yt-section-hover-container" data-disabled-slider-buttons="true">
                             <div class="yt-uix-slider-body">
                                 <ul class="yt-uix-slider-list">
-                                    {%- for content in item.channelFeaturedContentRenderer.items -%}
-                                        {{ lockup.tile(content, 288, 162, {
-                                            type: "li",
-                                            class: [
-                                                "featured-content-item",
-                                                "fluid"
-                                            ]
-                                        }) }}
-                                    {%- endfor -%}
+                                    {{ lockup.tile(item.channelFeaturedContentRenderer.items[0], 288, 162, {
+                                        type: "li",
+                                        class: [
+                                            "featured-content-item",
+                                            "fluid"
+                                        ]
+                                    }) }}
                                 </ul>
                             </div>
                         </div>
@@ -67,6 +65,13 @@
                             </div>
                         </div>
                     </li>
+                {%- 
+                    elseif item.gridVideoRenderer                  
+                        or item.gridPlaylistRenderer
+                        or item.gridRadioRenderer
+                        or item.gridChannelRenderer
+                -%}
+                <li class="channels-content-item yt-shelf-grid-item {{ item.gridChannelRenderer ? "channel-shelf-item" }}">{{ lockup.grid(item) }}</li>
             {%- endif %}
         {%- endfor -%}
     </ol>

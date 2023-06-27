@@ -9,9 +9,9 @@ use Rehike\Model\Common\MAlert;
 class ConfigModel {
     public static function bake($tab, $status = null) {
         $response = (object) [];
-        $i18n = i18n::newNamespace("rehike/config")->registerFromFolder("i18n/rehike/config");
+        $i18n = i18n::newNamespace("rehike/config") ->registerFromFolder("i18n/rehike/config");
         $tabs = (object) $i18n->tabs;
-        $props = json_decode(json_encode($i18n->props))->{$tab};
+        $props = json_decode(json_encode($i18n->props)) ->{$tab};
 
         $response->tab = $tab;
 
@@ -52,7 +52,7 @@ class ConfigModel {
 
         foreach ($tabs as $name => $text) {
             $response->sidebar->creatorSidebarRenderer->sections[0]
-           ->creatorSidebarSectionRenderer->items[] = 
+            ->creatorSidebarSectionRenderer->items[] = 
             self::buildCreatorSidebarItem(
                 $text,
                 "/rehike/config/{$name}",
@@ -66,13 +66,13 @@ class ConfigModel {
         ];
 
         $contents = &$response->content->contents;
-        foreach (ConfigManager::getConfig()->{$tab} as $option => $value) {
+        foreach (ConfigManager::getConfig() ->{$tab} as $option => $value) {
             switch (ConfigManager::getConfigType("{$tab}.{$option}")) {
                 case "bool":
                     $contents[] = (object) [
                         "checkboxRenderer" => (object) [
-                            "title" => $props->{$option}->title ?? null,
-                            "subtitle" => $props->{$option}->subtitle ?? null,
+                            "title" => $props->{$option} ->title ?? null,
+                            "subtitle" => $props->{$option} ->subtitle ?? null,
                             "checked" => $value ? true : false,
                             "name" => "$tab.$option",
                         ]
@@ -82,7 +82,7 @@ class ConfigModel {
                     $values = [];
                     $selectedValue = null;
 
-                    foreach ($props->{$option}->values as $name => $text) {
+                    foreach ($props->{$option} ->values as $name => $text) {
                         $values[] = (object) [
                             "text" => $text,
                             "value" => $name,
@@ -94,7 +94,7 @@ class ConfigModel {
 
                     $contents[] = (object) [
                         "selectRenderer" => (object) [
-                            "label" => $props->{$option}->title,
+                            "label" => $props->{$option} ->title,
                             "name" => "$tab.$option",
                             "values" => $values,
                             "selectedValue" => $selectedValue

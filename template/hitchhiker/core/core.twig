@@ -32,7 +32,7 @@
       {{ core.css('www-guide') }}
       <title>{% block title %}YouTube{% endblock %}</title>
       {% include 'core/meta.twig' %}
-      {%- if yt.config.appearance.modernLogo -%}
+      {%- if rehike.config.appearance.modernLogo -%}
         {% include 'experiment/ringo/ringo.twig' %}
       {% endif %}
       {% include "core/rehike_custom_css.twig" %}

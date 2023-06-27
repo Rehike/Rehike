@@ -7,25 +7,33 @@ use Rehike\Model\Channels\Channels4\Sidebar\MRelatedChannels;
 use Rehike\Model\Browse\InnertubeBrowseConverter;
 use Rehike\Model\Channels\Channels4\MSubConfirmationDialog;
 use Rehike\Model\Common\MAlert;
+use Rehike\Util\Base64Url;
+use Rehike\Util\ParsingUtils;
+use Rehike\i18n;
+use Com\Youtube\Innertube\Helpers\VideosContinuationWrapper;
 
 class Channels4Model
 {
     private static $baseUrl;
-    private static $currentTab = null;
+    private static string $currentTab = "featured";
     public static $yt;
 
-    private static $videosSort;
+    private static int $videosSort;
 
     private static $subscriptionCount = "";
 
-    public static $showSort;
+    /** @var string[] */
+    public static array $extraVideoTabs = [];
+
+    private static ?object $currentTabContents = null;
 
     public static function bake(&$yt, $data, $sidebarData = null)
     {
+        $i18n = i18n::getNamespace("channels");
+
         self::$yt = &$yt;
 
-        self::$videosSort = $yt->videosSort ?? null;
-        self::$showSort = $yt->showSort ?? false;
+        self::$videosSort = $yt->videosSort ?? 0;
 
         // Declare the response array.
         $response = [];
@@ -52,8 +60,6 @@ class Channels4Model
             );
         }
 
-        $currentTabContents = null;
-
         if ($alerts = @$data->alerts)
         {
             $response += ["alerts" => []];
@@ -62,88 +68,33 @@ class Channels4Model
                 $alert = $alert->alertWithButtonRenderer
                   ?? $alert->alertRenderer
                   ?? null;
-                $response["alerts"][] = MAlert::fromData($alert);
-            }
-        }
-
-        // If we have twoColumnBrowseResultsRenderer with tabs,
-        // process them (add navigation and store a reference)
-        if ($tabs = @$data->contents->twoColumnBrowseResultsRenderer->tabs)
-        {
-            if (isset($response["header"]))
-            {
-                /** @var object */
-                $videosTab = null;
-
-                // Splice "live" tab as this should be cascaded into videos.
-                for ($i = 0; $i < count($tabs); $i++)
+                if (
+                    ParsingUtils::getText($alert->text) == $i18n->nonexistent
+                &&  isset($response["header"])
+                )
                 {
-                    if (isset($tabs[$i]->tabRenderer))
-                    {
-                        // Do NOT call this $tab. It will break the logic for
-                        // god only fucking knows why and you'll get some sorta
-                        // duplicate tab renderer.
-                        $tabR = &$tabs[$i];
-
-                        $tabEndpoint = $tabR->tabRenderer->endpoint->commandMetadata->webCommandMetadata->url ?? null;
-
-                        if (!is_null($tabEndpoint))
-                        {
-                            if (stripos($tabEndpoint, "/videos"))
-                            {
-                                $videosTab = &$tabR;
-                            }
-                            else if (stripos($tabEndpoint, "/streams") || stripos($tabEndpoint, "/shorts"))
-                            {
-                                $tabR->hidden = true;
-
-                                if (@$tabR->tabRenderer->selected) $videosTab->tabRenderer->selected = true;
-                            }
-                        }
-                    }
+                    $response["header"]->nonexistentMessage =
+                    ParsingUtils::getText($alert->text);
                 }
-                
-                $response["header"]->addTabs($tabs, ($yt->partiallySelectTabs ?? false));
-
-                foreach ($tabs as $tab) if (@$tab->tabRenderer)
+                else
                 {
-                    $tabEndpoint = $tab->tabRenderer->endpoint->commandMetadata->webCommandMetadata->url ?? null;
-
-                    if (!is_null($tabEndpoint))
-                    {
-                        if (!@$tab->hidden && isset($yt->appbar->nav))
-                        {
-                            $yt->appbar->nav->addItem(
-                                $tab->tabRenderer->title,
-                                $tabEndpoint,
-                                @$tab->tabRenderer->status
-                            );
-                        }
-                    }
-
-                    if (@$tab->tabRenderer->status > 0
-                    ||  @$tab->tabRenderer->selected)
-                    {
-                        $currentTabContents = &$tab->tabRenderer->content;
-                    }
-                }
-                elseif (@$tab->expandableTabRenderer)
-                {
-                    if (@$tab->expandableTabRenderer->selected) {
-                        $currentTabContents = &$tab->expandableTabRenderer->content;
-                    }
-                }
-
-                if (isset($yt->appbar->nav->items[0]))
-                {
-                    $yt->appbar->nav->items[0]->title = $response["header"]->getTitle();
+                    $response["alerts"][] = MAlert::fromData($alert, [
+                        "forceCloseButton" => true
+                    ]);
                 }
             }
         }
 
-        // If we have a header, set the page title from it.
+        // If we have a header, do some header specific stuff.
         if (isset($response["header"]))
         {
+            // If we have twoColumnBrowseResultsRenderer with tabs,
+            // process them (add navigation and store a reference)
+            if ($tabsR = @$data->contents->twoColumnBrowseResultsRenderer->tabs)
+            {
+                self::processAndAddTabs($yt, $tabsR, $response["header"]);
+            }
+
             $response += [
                 "title" => $response["header"]->getTitle()
             ];
@@ -179,12 +130,93 @@ class Channels4Model
             $response += ["subConfirmationDialog" => new MSubConfirmationDialog($response["header"])];
         }
 
-        $response += ["content" => self::getTabContents($currentTabContents)];
+        if (!is_null(self::$currentTabContents))
+        {
+            $response += ["content" => self::getTabContents(self::$currentTabContents)];
+        }
 
         $response += ["baseUrl" => self::$baseUrl];
 
         // Send the response array
         return (object)$response;
+    }
+
+    /**
+     * Process channel tabs and add them to the header.
+     * 
+     * @param object $yt                 Global state variable.
+     * @param object[] $tabs             Array of tabs to process and add.
+     * @param MHeader $header            Header to add the tabs to.
+     */
+    public static function processAndAddTabs(object &$yt, array $tabs, Channels4\MHeader &$header): void
+    {
+        /** @var object */
+        $videosTab = null;
+
+        // Splice "live" tab as this should be cascaded into videos.
+        for ($i = 0; $i < count($tabs); $i++)
+        {
+            if (isset($tabs[$i]->tabRenderer))
+            {
+                // Do NOT call this $tab. It will break the logic for
+                // god only fucking knows why and you'll get some sorta
+                // duplicate tab renderer.
+                $tabR = &$tabs[$i];
+
+                $tabEndpoint = $tabR->tabRenderer->endpoint->commandMetadata->webCommandMetadata->url ?? null;
+
+                if (!is_null($tabEndpoint))
+                {
+                    if (stripos($tabEndpoint, "/videos"))
+                    {
+                        $videosTab = &$tabR;
+                    }
+                    else if (stripos($tabEndpoint, "/streams") || stripos($tabEndpoint, "/shorts"))
+                    {
+                        self::$extraVideoTabs[] = substr($tabEndpoint, strrpos($tabEndpoint, "/") + 1);
+                        $tabR->hidden = true;
+
+                        if (@$tabR->tabRenderer->selected) $videosTab->tabRenderer->selected = true;
+                    }
+                }
+            }
+        }
+        
+        $header->addTabs($tabs, ($yt->partiallySelectTabs ?? false));
+
+        foreach ($tabs as $tab) if (@$tab->tabRenderer)
+        {
+            $tabEndpoint = $tab->tabRenderer->endpoint->commandMetadata->webCommandMetadata->url ?? null;
+
+            if (!is_null($tabEndpoint))
+            {
+                if (!@$tab->hidden && isset($yt->appbar->nav))
+                {
+                    $yt->appbar->nav->addItem(
+                        $tab->tabRenderer->title,
+                        $tabEndpoint,
+                        @$tab->tabRenderer->status
+                    );
+                }
+            }
+
+            if (@$tab->tabRenderer->status > 0
+            ||  @$tab->tabRenderer->selected)
+            {
+                self::$currentTabContents = &$tab->tabRenderer->content;
+            }
+        }
+        elseif (@$tab->expandableTabRenderer)
+        {
+            if (@$tab->expandableTabRenderer->selected) {
+                self::$currentTabContents = &$tab->expandableTabRenderer->content;
+            }
+        }
+
+        if (isset($yt->appbar->nav->items[0]))
+        {
+            $yt->appbar->nav->items[0]->title = $header->getTitle();
+        }
     }
     
     public static function initSecondaryColumn(&$response)
@@ -213,11 +245,11 @@ class Channels4Model
         }
         else if ($a = @$content->sectionListRenderer->contents[0]->itemSectionRenderer->contents[0]->gridRenderer)
         {
-        return self::handleGridTab($a, $content);
+            return self::handleGridTab($a, $content);
         }
         else if ($a = @$content->richGridRenderer)
         {
-            return self::handleGridTab(InnertubeBrowseConverter::richGridRenderer($a), $content, self::$videosSort, true);
+            return self::handleGridTab(InnertubeBrowseConverter::richGridRenderer($a), $content, true);
         }
         else if (($a = @$content->sectionListRenderer->contents[0]->itemSectionRenderer) && (isset($a->contents[0]->backstagePostThreadRenderer)))
         {
@@ -244,20 +276,17 @@ class Channels4Model
         }
     }
 
-    public static function handleGridTab($data, $parentTab, $sort = null, $rich = false)
+    public static function handleGridTab($data, $parentTab, $rich = false)
     {
-        $currentTab = self::$currentTab;
-
         $response = [];
 
-        switch ($currentTab)
+        switch (self::$currentTab)
         {
             case "videos":
             case "streams":
-                if ($subnav = @$parentTab->sectionListRenderer->subMenu->channelSubMenuRenderer || $rich)
+            case "shorts":
+                if ($rich)
                 {
-                    $subnav = $subnav ?? null;
-
                     $response += [
                         "brandedPageV2SubnavRenderer" => MSubnav::bakeVideos()
                     ];
@@ -274,10 +303,24 @@ class Channels4Model
                 }
         }
 
-        if ($rich && isset($_GET["flow"]) && "list" == $_GET["flow"])
+        if ($rich && @$_GET["flow"] == "list")
         {
+            if (isset($data->items[count($data->items) - 1]->continuationItemRenderer))
+            {
+                $token = &$data->items[count($data->items) - 1]->continuationItemRenderer->continuationEndpoint->continuationCommand->token;
+                $contWrapper = new VideosContinuationWrapper();
+                $contWrapper->setContinuation(
+                    $token
+                );
+                $contWrapper->setList(true);
+
+                $token = Base64Url::encode($contWrapper->serializeToString());
+            }
+
             $response += [
-                "items" => $data->items
+                "items" => InnertubeBrowseConverter::generalLockupConverter($data->items, [
+                    "listView" => true
+                ])
             ];
         }
         else
@@ -357,7 +400,7 @@ class Channels4Model
         return null;
     }
 
-    public static function registerCurrentTab($currentTab)
+    public static function registerCurrentTab(string $currentTab): void
     {
         self::$currentTab = $currentTab;
     }

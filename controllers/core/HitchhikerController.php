@@ -2,7 +2,8 @@
 namespace Rehike\Controller\core;
 
 use Rehike\TemplateManager;
-use Rehike\Request;
+use Rehike\Network;
+use Rehike\Async\Promise;
 use Rehike\SecurityChecker;
 use Rehike\Player\PlayerCore;
 use SpfPhp\SpfPhp;
@@ -115,6 +116,8 @@ abstract class HitchhikerController
 
         $this->onGet($yt, $request);
 
+        Network::run();
+
         $this->postInit($yt, $template);
 
         if ($this->useTemplate) $this->doGeneralRender();
@@ -144,6 +147,8 @@ abstract class HitchhikerController
 
         $this->onPost($yt, $request);
 
+        Network::run();
+
         $this->postInit($yt, $template);
 
         if ($this->useTemplate) $this->doGeneralRender();
@@ -171,52 +176,18 @@ abstract class HitchhikerController
      * 
      * @return object
      */
-    public function getPageGuide()
+    public function getPageGuide(): Promise
     {
-        $response = Request::innertubeRequest("guide", (object)[]);
-
-        $guide = json_decode($response);
-
-        return Guide::fromData($guide);
-    }
-
-    protected static $hasAsyncGuideRequest = false;
-
-    /**
-     * Asynchronously request the guide so that it can be worked
-     * with later.
-     * 
-     * This provides a more optimal implementation of the above
-     * function.
-     * 
-     * @return void
-     */
-    public function getGuideAsync()
-    {
-        self::$hasAsyncGuideRequest = true;
-
-        Request::queueInnertubeRequest("_guide", "guide", (object)[]);
-    }
-
-    public function hasAsyncGuideRequest()
-    {
-        return self::$hasAsyncGuideRequest;
-    }
-
-    /**
-     * Get the result of the asynchronous guide request.
-     * 
-     * @return object
-     */
-    public function getGuideAsyncResult()
-    {
-        $guide = Request::getResponses()["_guide"] ?? null;
-
-        if (is_null($guide)) return null;
-
-        return Guide::fromData(
-            json_decode($guide)
-        );
+        return new Promise(function ($resolve) {
+            Network::innertubeRequest("guide")->then(function ($response) 
+                    use ($resolve) 
+            {
+                $data = $response->getJson();
+                $guide = Guide::fromData($data);
+                
+                $resolve($guide);
+            });
+        });
     }
 
     /**

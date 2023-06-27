@@ -2,7 +2,7 @@
 namespace Rehike\Model\Common;
 
 use Rehike\Model\Common\MButton;
-use Rehike\TemplateFunctions;
+use Rehike\Util\ParsingUtils;
 
 class MAlert {
     const TypeInformation = "info";
@@ -12,25 +12,19 @@ class MAlert {
 
     /**
      * What type the alert should be rendered in.
-     * 
-     * @var string
      */
-    public $type = self::TypeInformation;
+    public string $type = self::TypeInformation;
 
     /**
      * Text displayed inside the alert.
-     * 
-     * @var string
      */
-    public $content = "";
+    public string $text = "";
 
     /**
      * Whether or not to render a close button
      * on the right side of the alert.
-     * 
-     * @var boolean
      */
-    public $hasCloseButton = true;
+    public bool $hasCloseButton = true;
 
     /**
      * Buttons to be shown on the right of the alert.
@@ -43,21 +37,20 @@ class MAlert {
         $this->type = $data["type"];
         $this->text = $data["text"] ?? null;
         $this->hasCloseButton = $data["hasCloseButton"] ?? true;
-        $this->buttons = null;
-        // TODO: Buttons
     }
 
     /**
      * Build an alert from InnerTube data.
      * 
-     * @param object $data  Data.
+     * @param  object $data   Data.
+     * @param  array  $flags  Special flags.
      * @return MAlert
      */
-    public static function fromData($data) {
+    public static function fromData(object $data, array $flags = []): self {
         return new self([
             "type" => MAlert::parseInnerTubeType($data->type),
-            "hasCloseButton" => (isset($data->dismissButton)),
-            "text" => TemplateFunctions::getText($data->text)
+            "hasCloseButton" => (isset($data->dismissButton) || @$flags["forceCloseButton"]),
+            "text" => ParsingUtils::getText($data->text)
         ]);
     }
 

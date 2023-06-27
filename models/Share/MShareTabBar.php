@@ -12,12 +12,12 @@ class MShareTabBar {
             $this->tabs[] = new MButton([
                 "style" => "STYLE_TEXT",
                 "text" => (object) [
-                    "simpleText" => $tabs[$i]->text ?? ""
+                    "simpleText" => $tabs[$i] ->text ?? ""
                 ],
                 "class" => [
-                    "share-panel-" . $tabs[$i]->type,
+                    "share-panel-" . $tabs[$i] ->type,
                     "yt-card-title",
-                    $tabs[$i]->active ? "yt-uix-button-toggled" : ""
+                    $tabs[$i] ->active ? "yt-uix-button-toggled" : ""
                 ],
                 "attributes" => [
                     "button-toggle" => "true"

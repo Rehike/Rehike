@@ -35,7 +35,7 @@ class PlayerInfo
     public $signatureTimestamp;
 
     /**
-     * THe URL of the player's embed JS module.
+     * The URL of the player's embed JS module.
      * 
      * @var string
      */

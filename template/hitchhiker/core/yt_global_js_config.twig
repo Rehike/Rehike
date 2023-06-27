@@ -82,13 +82,13 @@
         'EXPERIMENT_FLAGS': {% include 'core/experiment_flags.json' %},
         {% if not (defaultGuideVisibility or yt.spf) %}
             'GUIDE_DELAY_LOAD': true,
-            'GUIDE_DELAYLOADED_CSS': {{ core.cssPath('www-guide')|json_encode|raw }},
+            'GUIDE_DELAYLOADED_CSS': {{ rehike.resource.cssPath('www-guide')|json_encode|raw }},
         {% endif %}
         'GUIDED_HELP_PARAMS': {
             "logged_in": "0",
             "context": "yt_web_w2w"
         },
-        'HIGH_CONTRAST_MODE_CSS': {{ core.cssPath('www-highcontrastmode')|json_encode|raw }},
+        'HIGH_CONTRAST_MODE_CSS': {{ rehike.resource.cssPath('www-highcontrastmode')|json_encode|raw }},
         'PREFETCH_CSS_RESOURCES': ["\//s.ytimg.com/yts\/cssbin\/player-vflk34Vc2\/www-player.css"],
         'PREFETCH_JS_RESOURCES': ["\//s.ytimg.com/yts\/jsbin\/www-pagead-id-vflikUYq3\/www-pagead-id.js", "\//s.ytimg.com/yts\/jsbin\/player-vflHFWD7-\/en_US\/base.js"],
         'PREFETCH_LINKS': false,

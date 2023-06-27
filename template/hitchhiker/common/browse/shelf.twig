@@ -4,7 +4,7 @@
             {{ _self.title(data) }}
             {%- if data.content.horizontalListRenderer -%}
                 {{ _self.compact(data.content.horizontalListRenderer) }}
-            {# Why the fuck is this different than horizontaListRenderer??? #}
+            {# Why the fuck is this different than horizontalListRenderer??? #}
             {%- elseif data.content.horizontalMovieListRenderer -%}
                 {{ _self.compact(data.content.horizontalMovieListRenderer) }}
             {%- elseif data.content.expandedShelfContentsRenderer -%}
@@ -72,8 +72,8 @@
             </ul>
         {% if data.isCollapsible %}
             <div class="yt-uix-expander-head">
-                <span class="multirow-shelf-expander">{{ getText(data.showMoreText) }}</span>
-                <span class="multirow-shelf-collapser">{{ getText(data.showFewerText) }}</span>
+                <span class="multirow-shelf-expander">{{ rehike.getText(data.showMoreText) }}</span>
+                <span class="multirow-shelf-collapser">{{ rehike.getText(data.showFewerText) }}</span>
             </div>
         </div>
         {% endif %}
@@ -97,13 +97,13 @@
                         delayLoad: true,
                         ytImg: 1,
                         ariaHidden: "false",
-                        src: getThumb(data.thumbnail)
+                        src: rehike.getThumb(data.thumbnail)
                     })}}
                 </span>
             </div>
         </div>
         {% endif %}
-        <span class="branded-page-module-title-text">{{ getText(data.title) }}</span>
+        <span class="branded-page-module-title-text">{{ rehike.getText(data.title) }}</span>
         {% if data.endpoint %}
         </a>
         {% endif %}
@@ -112,12 +112,12 @@
         {% endif %}
         {%- if data.titleAnnotation -%}
         <span class="shelf-annotation shelf-title-annotation">
-        {{ getText(data.titleAnnotation) }}
+        {{ rehike.getText(data.titleAnnotation) }}
         </span>
         {% endif %}
     </h2>
     {% if data.subtitle %}
-    <div class="shelf-description yt-ui-ellipsis yt-ui-ellipsis-2">{{ getText(data.subtitle) }}</div>
+    <div class="shelf-description yt-ui-ellipsis yt-ui-ellipsis-2">{{ rehike.getText(data.subtitle) }}</div>
     {% endif %}
     <div class="menu-container shelf-title-cell">
         {% if data.menu %}
@@ -127,7 +127,9 @@
                 {% from "common/uix/button.twig" import render as button %}
                 {% for button in data.menu.menuRenderer.topLevelButtons %}
                 {% set btn = button.buttonRenderer %}
+                <li class="yt-uix-menu-top-level-button yt-uix-menu-top-level-flow-button">
                 {{ button(btn, (btn.style == "STYLE_OPACITY" and btn.isSelected) ? "blue-text" : null) }}
+                </li>
                 {% endfor %}
             </ul>
             {% endif %}

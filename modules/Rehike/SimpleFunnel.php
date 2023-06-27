@@ -1,22 +1,30 @@
 <?php
 namespace Rehike;
 
+use YukisCoffee\CoffeeRequest\CoffeeRequest;
+use YukisCoffee\CoffeeRequest\Promise;
+use YukisCoffee\CoffeeRequest\Network\Request;
+use YukisCoffee\CoffeeRequest\Network\Response;
+use YukisCoffee\CoffeeRequest\Network\ResponseHeaders;
+
 /**
- * A simple tool to funnel requests from a certain domain,
- * while ignoring any proxies active
+ * A simple tool to funnel requests from a certain domain, while ignoring any
+ * proxies active
  * 
- * @author Aubrey P. <aubyomori@gmail.com>
+ * @author Aubrey Pankow <aubyomori@gmail.com>
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  */
-class SimpleFunnel {
+class SimpleFunnel
+{
     /**
-     * Hostname for funnelCurrentPage
+     * Hostname for funnelCurrentPage.
      * 
      * @var string
      */
-    public static $hostname = "www.youtube.com";
+    private static $hostname = "www.youtube.com";
 
     /**
-     * Remove these request headers
+     * Remove these request headers.
      * LOWERCASE ONLY
      * 
      * @var string[]
@@ -30,9 +38,10 @@ class SimpleFunnel {
     ];
 
     /**
-     * Remove these response headers
+     * Remove these response headers.
      * LOWERCASE ONLY
      * 
+     * @internal
      * @var string[]
      */
     public static $illegalResponseHeaders = [
@@ -44,16 +53,16 @@ class SimpleFunnel {
      * Funnel a response through.
      * 
      * @param array $opts  Options such as headers and request method
-     * @return object
+     * @return Promise<SimpleFunnelResponse>
      */
-    public static function funnel(array $opts): object {
+    public static function funnel(array $opts): Promise/*<SimpleFunnelResponse>*/
+    {
         // Required fields
-        if (!isset($opts["host"])) return (object) [
-            "error" => "No hostname specified"
-        ];
-        if (!isset($opts["uri"])) return (object) [
-            "error" => "No URI specified"
-        ];
+        if (!isset($opts["host"])) 
+            self::error("No hostname specified");
+
+        if (!isset($opts["uri"]))
+            self::error("No URI specified");
 
         // Default options
         $opts += [
@@ -63,108 +72,70 @@ class SimpleFunnel {
             "headers" => []
         ];
 
-        // Parse headers
         $headers = [];
-        foreach ($opts["headers"] as $name => $value) {
-            if (!in_array(strtolower($name), self::$illegalRequestHeaders)) {
-                $headers[] = "$name: $value";
+
+        foreach ($opts["headers"] as $key => $val) {
+            if (!in_array(strtolower($key), self::$illegalRequestHeaders)) {
+                $headers[$key] = $val;
             }
         }
 
-        // Set origin and referer to prevent CORS issues
+        $headers["Host"] = $opts["host"];
         $headers["Origin"] = "https://" . $opts["host"];
         $headers["Referer"] = "https://" . $opts["host"] . $opts["uri"];
 
         // Set up cURL and perform the request
         $url = "https://" . $opts["host"] . $opts["uri"];
-        $ch = curl_init($url);
-        curl_setopt_array($ch, [
-            CURLOPT_CUSTOMREQUEST => $opts["method"],
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_HEADER => false,
-            CURLOPT_VERBOSE => true,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_USERAGENT => $opts["useragent"],
-            CURLOPT_HTTPHEADER => $headers,
-            CURLOPT_POSTFIELDS => $opts["body"],
-            CURLOPT_ENCODING => "",
-            CURLOPT_RESOLVE => \YukisCoffee\CoffeeRequest\CoffeeRequestInstance::$resolve,
-            CURLOPT_HEADERFUNCTION =>
-            // This function allows us to get the headers easily
-            function($curl, $header) use (&$headers) {
-                $len = strlen($header);
-                $header = explode(':', $header, 2);
-                if (count($header) < 2) // ignore invalid headers
-                    return $len;
-            
-                $headers[trim($header[0])][] = trim($header[1]);
-                
-                return $len;
-            }
-        ]);
 
-        // Initialize array for the header function defined above
-        $headers = [];
+        // Set up the request.
+        $params = [
+            "method" => $opts["method"],
+            "headers" => $headers,
+            "redirect" => "manual",
+        ];
 
-        // Set up response and add body
-        $response = (object) [];
-        $response->body = curl_exec($ch);
-
-        // Remove illegal response headers
-        foreach ($headers as $name => $value) {
-            if (in_array(strtolower($name), self::$illegalResponseHeaders)) {
-                unset($headers[$name]);
-            }
+        if ("POST" == $params["method"])
+        {
+            $params["body"] = $opts["body"];
         }
 
-        // Add headers and HTTP status
-        $response->headers = $headers;
-        $response->status = curl_getinfo($ch, CURLINFO_RESPONSE_CODE);
+        $wrappedResponse = new Promise/*<Response>*/;
 
-        return $response;
+        $request = CoffeeRequest::request($url, $params);
+
+        $request->then(function($response) use ($wrappedResponse) {
+            $wrappedResponse->resolve(SimpleFunnelResponse::fromResponse($response));
+        });
+
+        CoffeeRequest::run();
+
+        return $wrappedResponse;
     }
 
     /**
-     * Output a funnel response onto the page.
-     * 
-     * @param object $funnelData
+     * Output an error.
      */
-    public static function output(object $funnelData): void {
-        // Output any errors
-        if (isset($funnelData->error)) {
-            http_response_code(500);
-            echo("
-            <title>SimpleFunnel Error</title>
-            <style>body>*{margin:8px 0}</style>
-            <h2>An error has occured in SimpleFunnel</h2>
-            <p><b>Error</b>: " . $funnelData->error . "</p>
-            <small><i>Please report this to the GitHub.</i></small>
-            ");
-            return;
-        }
-
-        if (!isset($funnelData->body)) return;
-
-        http_response_code($funnelData->status);
-
-        // Set headers
-        foreach($funnelData->headers as $name => $value) {
-            // Hack because the header function fucking sucks
-            $val = $value[0];
-            header("$name: $val");
-        }
-        echo($funnelData->body);
-        die();
+    private static function error(string $message): void
+    {
+        http_response_code(500);
+        echo("
+        <title>SimpleFunnel Error</title>
+        <style>body>*{margin:8px 0}</style>
+        <h2>An error has occured in SimpleFunnel</h2>
+        <p><b>Error</b>: " . $message . "</p>
+        <small><i>Please report this to the GitHub.</i></small>
+        ");
+        return;
     }
     
     /**
      * Funnel a page with the current data.
      * 
-     * @param  bool $output  Whether or not to output the page
-     * @return object|void
+     * @return Promise<SimpleFunnelResponse>
      */
-    public static function funnelCurrentPage(bool $output = false): ?object {
-        $response = self::funnel([
+    public static function funnelCurrentPage(): Promise/*<SimpleFunnelResponse>*/
+    {
+        return self::funnel([
             "method" => $_SERVER["REQUEST_METHOD"],
             "host" => self::$hostname,
             "uri" => $_SERVER["REQUEST_URI"],
@@ -172,12 +143,57 @@ class SimpleFunnel {
             "body" => file_get_contents("php://input"),
             "headers" => getallheaders()
         ]);
+    }
+}
 
-        if ($output) {
-            self::output($response);
-            return null;
-        } else {
-            return $response;
+/**
+ * A custom class that represents a SimpleFunnel response.
+ * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
+ */
+class SimpleFunnelResponse extends Response
+{
+    public static function fromResponse(Response $response): self
+    {
+        return new self(
+            source: $response->sourceRequest,
+            status: $response->status,
+            content: $response->getText(),
+            headers: self::processResponseHeaders($response->headers)
+        );
+    }
+
+    /**
+     * Output the response of the page.
+     */
+    public function output(): void
+    {
+        http_response_code($this->status);
+
+        foreach($this->headers as $name => $value)
+        {
+            header("$name: $value");
         }
+        
+        echo($this->getText());
+        exit();
+    }
+
+    /**
+     * Process the response headers and remove illegal headers.
+     */
+    private static function processResponseHeaders(ResponseHeaders $headers): array
+    {
+        $result = [];
+
+        foreach ($headers as $name => $value)
+        {
+            if (!in_array(strtolower($name), SimpleFunnel::$illegalResponseHeaders))
+            {
+                $result[$name] = $value;
+            }
+        }
+
+        return $result;
     }
 }

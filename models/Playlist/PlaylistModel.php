@@ -2,7 +2,6 @@
 namespace Rehike\Model\Playlist;
 
 use \Rehike\Model\Common\MAlert;
-use \Rehike\TemplateFunctions;
 use \Rehike\i18n;
 
 class PlaylistModel {
@@ -24,20 +23,39 @@ class PlaylistModel {
             ];
         }
 
-        $response->videoList = $contentContainer->sectionListRenderer->contents[0]->itemSectionRenderer->contents[0]->playlistVideoListRenderer->contents;
+        if ($videoList = @$contentContainer->sectionListRenderer->contents[0]->itemSectionRenderer->contents[0]->playlistVideoListRenderer->contents)
+        {
+            $response->videoList = $videoList;
+        }
+        if ($header = @$dataHost->header->playlistHeaderRenderer)
+        {
+            $response->header = new MPlaylistHeader($header);
+        }
 
-        $response->header = $dataHost->header->playlistHeaderRenderer ?? null;
-        $header = &$response->header;
-        $header->actions = [];
+        
+        if (isset($dataHost->alerts)) 
+        {
+            $response->alerts = [];
+            foreach ($dataHost->alerts as $alert) {
+                $alert = $alert->alertWithButtonRenderer
+                      ?? $alert->alertRenderer
+                      ?? null;
+    
+                $response->alerts[] = MAlert::fromData($alert);
+            } 
+        }
 
-        $response->alerts = [];
-        if (isset($dataHost->alerts)) foreach ($dataHost->alerts as $alert) {
-            $alert = $alert->alertWithButtonRenderer
-                  ?? $alert->alertRenderer
-                  ?? null;
-
-            $response->alerts[] = MAlert::fromData($alert);
-        } 
+        if ($response == (object) [])
+        {
+            return (object) [
+                "alerts" => [
+                    new MAlert([
+                        "type" => MAlert::TypeError,
+                        "text" => $i18n->unsupported
+                    ])
+                ]
+            ];
+        }
 
         return $response;
     }

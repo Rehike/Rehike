@@ -1,34 +1,47 @@
 <?php
 use \Rehike\Controller\core\AjaxController;
-use \Rehike\Request;
+use \Rehike\Network;
+use \Rehike\Async\Promise;
 use \Rehike\Model\Common\Subscription\MSubscriptionPreferencesOverlay;
 
+/**
+ * Controller for subscription actions.
+ * 
+ * This includes subscribing, unsubscribing, and getting subscription
+ * preferences.
+ * 
+ * @author Aubrey Pankow <aubyomori@gmail.com>
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
+ * @author The Rehike Maintainers
+ */
 return new class extends AjaxController {
+    // These are used by the preferences overlay response.
     public $useTemplate = false;
-    public $template = "ajax/subscription/get_subscription_preferences_overlay";
-
-    public $ytdata;
+    public $template = "";
 
     public function onPost(&$yt, $request) {
         $action = self::findAction();
 
         switch ($action) {
             case "create_subscription_to_channel":
-                $ytdata = self::createSubscriptionToChannel();
+                $request = self::createSubscriptionToChannel();
                 break;
             case "remove_subscriptions":
-                $ytdata = self::removeSubscriptions();
+                $request = self::removeSubscriptions();
                 break;
             case "get_subscription_preferences_overlay":
                 $this->useTemplate = true;
-                self::getSubscriptionPreferencesOverlay($yt, $request);
-                break;
+                $this->template = 
+                    "ajax/subscription/get_subscription_preferences_overlay"
+                ;
+                self::getPreferencesOverlay($yt, $request);
+                return; // This takes control of everything from here.
             default:
                 self::error();
                 break;
         }
 
-        if (!$this->useTemplate) {
+        $request->then(function ($ytdata) {
             if (is_null($ytdata)) self::error();
 
             if (!isset($ytdata->error)) {
@@ -37,7 +50,7 @@ return new class extends AjaxController {
                     "response" => "SUCCESS"
                 ]);
             } else self::error();
-        }
+        });
     }
 
     /**
@@ -46,14 +59,20 @@ return new class extends AjaxController {
      * @param object          $yt      Template data.
      * @param RequestMetadata $request Request data.
      */
-    private static function createSubscriptionToChannel() {
-        $response = Request::innertubeRequest("subscription/subscribe", (object) [
-            "channelIds" => [
-                $_GET["c"] ?? null
-            ],
-            "params" => $_POST["params"] ?? null
-        ]);
-        return json_decode($response);
+    private static function createSubscriptionToChannel(): Promise {
+        return new Promise(function ($resolve) {
+            Network::innertubeRequest(
+                action: "subscription/subscribe",
+                body: [
+                    "channelIds" => [
+                        $_GET["c"] ?? null
+                    ],
+                    "params" => $_POST["params"] ?? null
+                ]
+            )->then(function ($response) use ($resolve) {
+                $resolve( $response->getJson() );
+            });
+        });
     }
 
     /**
@@ -62,13 +81,19 @@ return new class extends AjaxController {
      * @param object          $yt      Template data.
      * @param RequestMetadata $request Request data.
      */
-    private static function removeSubscriptions() {
-        $response = Request::innertubeRequest("subscription/unsubscribe", (object) [
-            "channelIds" => [
-                $_GET["c"] ?? null
-            ]
-        ]);
-        return json_decode($response);
+    private static function removeSubscriptions(): Promise {
+        return new Promise(function ($resolve) {
+            Network::innertubeRequest(
+                action: "subscription/unsubscribe",
+                body: [
+                    "channelIds" => [
+                        $_GET["c"] ?? null
+                    ]
+                ]
+            )->then(function ($response) use ($resolve) {
+                $resolve( $response->getJson() );
+            });
+        });
     }
 
     /**
@@ -77,16 +102,31 @@ return new class extends AjaxController {
      * @param object           $yt       Template data.
      * @param RequestMetadata  $request  Request data.
      */
-    private static function getSubscriptionPreferencesOverlay(&$yt, $request) {
-        $response = Request::innertubeRequest("browse", (object) [
-            "browseId" => $_POST["c"] ?? ""
-        ]);
-        $ytdata = json_decode($response);
-        $header = $ytdata->header->c4TabbedHeaderRenderer ?? null;
-        $yt->page = new MSubscriptionPreferencesOverlay([
-            "title" => $header->title ?? "",
-            // Make sure to turn on word wrap @_@
-            "options" => $header->subscribeButton->subscribeButtonRenderer->notificationPreferenceButton->subscriptionNotificationToggleButtonRenderer->command->commandExecutorCommand->commands[0]->openPopupAction->popup->menuPopupRenderer->items ?? []
-        ]);
+    private static function getPreferencesOverlay(&$yt, 
+                                                  $request): void {
+        Network::innertubeRequest(
+            action: "browse",
+            body: [
+                "browseId" => $_POST["c"] ?? ""
+            ]
+        )->then(function ($response) use ($yt) {
+            $ytdata = $response->getJson();
+            $header = $ytdata->header->c4TabbedHeaderRenderer ?? null;
+            $yt->page = new MSubscriptionPreferencesOverlay([
+                "title" => $header->title ?? "",
+                "options" => ($header 
+                    ->subscribeButton 
+                    ->subscribeButtonRenderer 
+                    ->notificationPreferenceButton 
+                    ->subscriptionNotificationToggleButtonRenderer 
+                    ->command 
+                    ->commandExecutorCommand 
+                    ->commands[0] 
+                    ->openPopupAction 
+                    ->popup 
+                    ->menuPopupRenderer 
+                    ->items) ?? []
+            ]);
+        });
     }
 };

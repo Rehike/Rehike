@@ -2,9 +2,11 @@
 namespace Rehike\Controller;
 
 use Rehike\Controller\core\HitchhikerController;
-use Rehike\Request;
+use Rehike\Network;
 use Rehike\Signin\API as SignIn;
 use \Rehike\Model\ChannelSwitcher\ChannelSwitcherModel;
+
+use function Rehike\Async\async;
 
 // TODO: send "X-Goog-AuthUser" header in innertube request
 return new class extends HitchhikerController
@@ -13,31 +15,37 @@ return new class extends HitchhikerController
 
     public function onGet(&$yt, $request)
     {
-        if (!SignIn::isSignedIn())
-        {
-            header("Location: https://accounts.google.com/v3/signin/identifier?dsh=S369128673%3A1675950960460363&continue=https%3A%2F%2Fwww.youtube.com%2Fsignin%3Faction_handle_signin%3Dtrue%26app%3Ddesktop%26hl%3Den%26next%3Dhttps%253A%252F%252Fwww.youtube.com%252Fchannel_switcher%26feature%3Dredirect_login&hl=en&passive=true&service=youtube&uilel=3&flowName=GlifWebSignIn&flowEntry=ServiceLogin&ifkv=AWnogHdTaLSFWkbPzHGsk61TYFu3C76VEZLMz1uTSkocGsIfWWBDd8s0xL3geNfwrIMQ3RiPfuGgGg");
-        }
+        async(function() use (&$yt, &$request) {
+            if (!SignIn::isSignedIn())
+            {
+                header("Location: https://accounts.google.com/v3/signin/identifier?dsh=S369128673%3A1675950960460363&continue=https%3A%2F%2Fwww.youtube.com%2Fsignin%3Faction_handle_signin%3Dtrue%26app%3Ddesktop%26hl%3Den%26next%3Dhttps%253A%252F%252Fwww.youtube.com%252Fchannel_switcher%26feature%3Dredirect_login&hl=en&passive=true&service=youtube&uilel=3&flowName=GlifWebSignIn&flowEntry=ServiceLogin&ifkv=AWnogHdTaLSFWkbPzHGsk61TYFu3C76VEZLMz1uTSkocGsIfWWBDd8s0xL3geNfwrIMQ3RiPfuGgGg");
+            }
 
-        Request::queueInnertubeRequest("channels", "account/accounts_list", (object) [
-            "requestType" => "ACCOUNTS_LIST_REQUEST_TYPE_CHANNEL_SWITCHER",
-            "callCircumstance" => "SWITCHING_USERS_FULL"
-        ]);
-        $ytdata = json_decode(Request::getResponses()["channels"]);
-        $channels = $ytdata->actions[0]->updateChannelSwitcherPageAction->page->channelSwitcherPageRenderer->contents ?? null;
+            $ytdata = (yield Network::innertubeRequest(
+                action: "account/accounts_list",
+                body: [
+                    "requestType" => "ACCOUNTS_LIST_REQUEST_TYPE_CHANNEL_SWITCHER",
+                    "callCircumstance" => "SWITCHING_USERS_FULL"
+                ]
+            ))->getJson();
 
-        // TODO: Get from cache
-        Request::queueUrlRequest("switcher", "https://www.youtube.com/getAccountSwitcherEndpoint");
-        $switcher = json_decode(substr(Request::getResponses()["switcher"], 4));
+            $channels = $ytdata->actions[0]->updateChannelSwitcherPageAction->page->channelSwitcherPageRenderer->contents ?? null;
 
-        $yt->channels = $channels;
+            // TODO: Get from cache
+            $switcherOriginal = (yield Network::urlRequestFirstParty(
+                "https://www.youtube.com/getAccountSwitcherEndpoint",
+            ))->getText();
+            $switcher = json_decode(substr($switcherOriginal, 4));
 
-        $next = null;
-        if (isset($request->params->next))
-        {
-            $next = $request->params->next;
-        }
+            $yt->channels = $channels;
 
-        $yt->page = ChannelSwitcherModel::bake($channels, $switcher, $next);
+            $next = null;
+            if (isset($request->params->next))
+            {
+                $next = $request->params->next;
+            }
 
+            $yt->page = ChannelSwitcherModel::bake($channels, $switcher, $next);
+        });
     }
 };

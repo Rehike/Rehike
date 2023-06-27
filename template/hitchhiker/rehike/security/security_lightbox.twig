@@ -13,7 +13,7 @@
                      <div id="rehike-security-notice-text">
                         {%- for run in data.message -%}
                             {%- if run.navigationEndpoint -%}
-                                <a href="{{ getUrl(run) }}">{{ run.text }}</a>
+                                <a href="{{ rehike.getUrl(run) }}">{{ run.text }}</a>
                             {%- else -%}
                                 {{ run.text }}
                             {%- endif -%}
