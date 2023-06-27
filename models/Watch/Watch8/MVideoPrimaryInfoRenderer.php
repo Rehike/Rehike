@@ -65,6 +65,7 @@ class MVideoPrimaryInfoRenderer
             $this->likeButtonRenderer = new MLikeButtonRenderer($dataHost, $info->videoActions->menuRenderer, $videoId);
             $this->owner = new MOwner($dataHost);
 
+            if (isset($info->badges))
             foreach ($info->badges as $badge)
             {
                 if ($icon = @$badge->metadataBadgeRenderer->icon->iconType)

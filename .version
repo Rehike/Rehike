@@ -1,10 +1,10 @@
 {
-	"previousHash": "6491cfda227c9577b8ba2b1c073d3d8c8fa65af3",
-	"currentRevisionId": 938,
-	"subject": "Rework privacy badge, now shows private too",
-	"body": "Rework privacy badge, now shows private too",
+	"previousHash": "5264412a40932b192a74ba631f700ee74eda599c",
+	"currentRevisionId": 939,
+	"subject": "Fix undefined property "badges" error",
+	"body": "Fix undefined property "badges" error",
 	"branch": "master",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1687896949
+	"time": 1687899822
 }
