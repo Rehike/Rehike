@@ -3,6 +3,7 @@ namespace Rehike\Util;
 
 use Rehike\Network;
 use YukisCoffee\CoffeeRequest\Promise;
+use Rehike\Signin\API as SignIn;
 
 use function Rehike\Async\async;
 
@@ -46,6 +47,66 @@ class ChannelUtils
             }
 
             return yield self::getUcidFromUrl(explode("?", $_SERVER["REQUEST_URI"])[0]);
+        });
+    }
+
+    // If user is signed in and channel owner, get data for the
+    // secondary channel header.
+    public static function getOwnerData(string $ucid): ?object
+    {
+        return async(function() use ($ucid) {
+            $ownerData = null;
+            if (SignIn::isSignedIn())
+            {
+                $info = SignIn::getInfo();
+                if (@$info["ucid"] == $ucid)
+                {
+                    $analytics = yield Network::innertubeRequest(
+                        action: "analytics_data/get_screen",
+                        body: [
+                            "desktopState" => [
+                                "tabId" => "ANALYTICS_TAB_ID_OVERVIEW"
+                            ],
+                            "fetchingType" => "FETCHING_TYPE_FOREGROUND",
+                            "screenConfig" => [
+                                "currency" => "USD", // Irrelevant, don't change this
+                                "entity" => [
+                                    "channelId" => $ucid
+                                ],
+                                "timePeriod" => [
+                                    "timePeriodType" => "ANALYTICS_TIME_PERIOD_TYPE_LIFETIME"
+                                ],
+                                "timeZoneOffsetSecs" => -18000 // This shouldn't matter, so again, don't change
+                            ]
+                        ]
+                    );
+
+                    $adata = $analytics->getJson();
+
+                    if (isset($adata->cards))
+                    {
+                        $ownerData = (object) [];
+                        foreach ($adata->cards as $card)
+                        {
+                            // Views
+                            if ($a = @$card->keyMetricCardData->keyMetricTabs)
+                            foreach ($a as $tabA)
+                            {
+                                if ($b = @$tabA->primaryContent)
+                                if ($b->metric == "VIEWS")
+                                {
+                                    $ownerData->views = $b->total;
+                                }
+                            }
+                            elseif ($a = @$card->latestActivityCardData->lifetimeSubsData->metricColumns[0]->counts->values[0])
+                            {
+                                $ownerData->subscribers = $a;
+                            }
+                        }
+                    }
+                }
+            }
+            return $ownerData;
         });
     }
 

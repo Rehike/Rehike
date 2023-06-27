@@ -6,6 +6,7 @@ use \Rehike\Model\Playlist\PlaylistModel;
 use \Rehike\Model\Channels\Channels4Model;
 use \Rehike\Model\Channels\Channels4\MHeader;
 use \Rehike\Model\Channels\Channels4\MCarouselHeader;
+use \Rehike\Model\Channels\Channels4\MSecondaryHeader;
 use \Rehike\Util\Base64Url;
 use \Rehike\Network;
 use \Rehike\i18n;
@@ -78,6 +79,15 @@ return new class extends NirvanaController
                 elseif ($header = @$channelData->header->carouselHeaderRenderer)
                 {
                     $yt->page->channelHeader = new MCarouselHeader($header, "/channel/$yt->ucid");
+                }
+
+                // If user is signed in and channel owner, get data for the
+                // secondary channel header.
+                $ownerData = yield ChannelUtils::getOwnerData($yt->ucid);
+
+                if (!is_null($ownerData))
+                {
+                    $yt->page->secondaryHeader = new MSecondaryHeader($ownerData);
                 }
 
                 if (isset($yt->page->channelHeader))

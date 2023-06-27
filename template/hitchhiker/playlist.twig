@@ -89,6 +89,9 @@
 
 {%- block head_css -%}
 {{ core.css('www-home-c4') }}
+{% if yt.page.secondaryHeader %}
+{{ core.css("www-channels4edit") }}
+{% endif %}
 {% endblock %}
 
 {%- block page_class -%}
@@ -115,7 +118,7 @@ not-fixed-width-tab-widescreen
         {%- block branded_page_top_row -%}
             {% from "/common/channels4/channel_header.twig" import render as channel_header %}
             {% if yt.page.channelHeader %}
-            {{ channel_header(yt.page.channelHeader) }}
+            {{ channel_header(yt.page.channelHeader, yt.page.secondaryHeader) }}
             {% endif %}
         {% endblock %}
 
