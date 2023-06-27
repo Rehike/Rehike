@@ -29,6 +29,9 @@ class MCreatorBar {
                         "url" => "//studio.youtube.com/video/$vid/analytics/tab-overview/period-default"
                     ]
                 ]
+            ],
+            "customAttributes" => [
+                "target" => "_blank"
             ]
         ]);
         $this->navButtons[] = new MButton([
@@ -41,6 +44,9 @@ class MCreatorBar {
                         "url" => "//studio.youtube.com/channel/$ucid/videos/upload"
                     ]
                 ]
+            ],
+            "customAttributes" => [
+                "target" => "_blank"
             ]
         ]);
 

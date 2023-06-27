@@ -34,10 +34,14 @@ class MAccountPickerStudioButton extends MButton {
             $this->navigationEndpoint = (object) [
                 "commandMetadata" => (object) [
                     "webCommandMetadata" => (object) [
-                        "url" => "//studio.youtube.com/"
+                        "url" => "//www.youtube.com/create_channel"
                     ]
                 ]
             ];
         }
+
+        $this->customAttributes = [
+            "target" => "_blank"
+        ];
     }
 }

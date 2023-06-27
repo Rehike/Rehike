@@ -18,5 +18,8 @@ class MCreatorBarEditButton extends MButton {
                 ]
             ]
         ];
+        $this->customAttributes = [
+            "target" => "_blank"
+        ];
     }
 }

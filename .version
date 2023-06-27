@@ -1,10 +1,10 @@
 {
-	"previousHash": "5264412a40932b192a74ba631f700ee74eda599c",
-	"currentRevisionId": 939,
-	"subject": "Fix undefined property "badges" error",
-	"body": "Fix undefined property "badges" error",
+	"previousHash": "af8c11195b339ab307f6c3d857302d423339f6d9",
+	"currentRevisionId": 940,
+	"subject": "YouTube Studio links now open in a new tab",
+	"body": "YouTube Studio links now open in a new tab",
 	"branch": "master",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1687899822
+	"time": 1687901216
 }

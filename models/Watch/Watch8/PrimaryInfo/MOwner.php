@@ -89,6 +89,9 @@ class MOwner
                     ],
                     "class" => [
                         "channel-settings-link"
+                    ],
+                    "customAttributes" => [
+                        "target" => "_blank"
                     ]
                 ]);
             }
