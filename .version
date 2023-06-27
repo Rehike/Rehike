@@ -1,10 +1,10 @@
 {
-	"previousHash": "4129e8cc2953cb5d4e33d8883a37455dc2b9ad82",
-	"currentRevisionId": 921,
-	"subject": "Remove branch information in README",
-	"body": "Remove branch information in README",
+	"previousHash": "7c113a86aee42beb84beb3155296d983390b7551",
+	"currentRevisionId": 937,
+	"subject": "pl.json updates",
+	"body": "pl.json updates",
 	"branch": "master",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1687895134
+	"time": 1687895220
 }

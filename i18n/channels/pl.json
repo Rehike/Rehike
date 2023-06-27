@@ -8,8 +8,9 @@
     "seeAll": "Zobacz wszystko",
     "backstageViewAllCommentsSingular": "Pokaż 1 komentarz",
     "backstageViewAllCommentsPlural": "Pokaż wszystkie %s komentarze",
-    "videoSortPopular": "Najpopularniejsze",
+    "videoSortPopular": "Najbardziej popularne",
     "videoSortOldest": "Data dodania (najstarsze)",
     "videoSortNewest": "Data dodania (najnowsze)",
-    "subscriptionConfirmationHeader": "Potwierdź subskrypcję kanału"
+    "subscriptionConfirmationHeader": "Potwierdź subskrypcję kanału",
+    "nonexistent": "Ten kanał nie istnieje."
 }
