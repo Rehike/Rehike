@@ -44,6 +44,17 @@
 // This is responsible for early imports and starting the Rehike session.
 //
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+require_once("min_php_version.php");
+
+$curver = explode(".", phpversion());
+foreach (MIN_PHP_VERSION as $i => $v)
+{
+    if (isset($curver[$i]) && $curver[$i] < $v)
+    {
+        require "old_php_error.php";
+        exit();
+    }
+}
 
 ob_start();
 set_include_path($_SERVER['DOCUMENT_ROOT']);
