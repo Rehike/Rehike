@@ -1,10 +1,10 @@
 {
-	"previousHash": "c9009d3bd1e65d9aa963d97af10298b56d95ef6d",
-	"currentRevisionId": 920,
-	"subject": "merge 0.7",
-	"body": "merge 0.7",
+	"previousHash": "4129e8cc2953cb5d4e33d8883a37455dc2b9ad82",
+	"currentRevisionId": 921,
+	"subject": "Remove branch information in README",
+	"body": "Remove branch information in README",
 	"branch": "master",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1687894943
+	"time": 1687895134
 }
