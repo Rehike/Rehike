@@ -67,7 +67,15 @@ class channel extends NirvanaController {
             // BUG (kirasicecreamm): ChannelUtils::getUcid is hardcoded
             // to look at the path property of the input object.
             // This is bad design.
-            $ucid = yield ChannelUtils::getUcid($request);
+            if ($request->path[0] != "channel")
+            {
+                $ucid = yield ChannelUtils::getUcid($request);
+            }
+            else
+            {
+                $ucid = $request->path[1];
+            }
+
             $yt->ucid = $ucid;
 
             if ($ucid == "")

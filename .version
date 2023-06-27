@@ -1,10 +1,10 @@
 {
-	"previousHash": "ac373bb46315e413f42a8008d07c102101e19133",
-	"currentRevisionId": 854,
-	"subject": "Fix for #298",
-	"body": "Fix for #298",
+	"previousHash": "c699d75dae831e72899704160d70ea3f8e750432",
+	"currentRevisionId": 855,
+	"subject": "Fix unresolved promise on SPF navigation to channel via /channel/ link",
+	"body": "Fix unresolved promise on SPF navigation to channel via /channel/ link",
 	"branch": "dev-0.7-asynchike-main",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1687823476
+	"time": 1687893444
 }
