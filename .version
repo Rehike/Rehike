@@ -1,10 +1,10 @@
 {
-	"previousHash": "e3005120eeb373e3fadc82fea77d983f4f054a2a",
-	"currentRevisionId": 944,
-	"subject": "Fix undefined property hasChannel",
-	"body": "Fix undefined property hasChannel",
+	"previousHash": "4d48215a7223c4b8501644d2c924d9aad4f685cc",
+	"currentRevisionId": 953,
+	"subject": "Merge branch 'master' of https://github.com/Rehike/Rehike",
+	"body": "Merge branch 'master' of https://github.com/Rehike/Rehike",
 	"branch": "master",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1687912243
+	"time": 1687971386
 }
