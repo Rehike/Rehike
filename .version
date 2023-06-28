@@ -1,10 +1,10 @@
 {
-	"previousHash": "5eb9e82bdb19f5f3530a931dfa2f10bc69ff990e",
-	"currentRevisionId": 943,
-	"subject": "Fix non-owned channels not working",
-	"body": "Fix non-owned channels not working",
+	"previousHash": "e3005120eeb373e3fadc82fea77d983f4f054a2a",
+	"currentRevisionId": 944,
+	"subject": "Fix undefined property hasChannel",
+	"body": "Fix undefined property hasChannel",
 	"branch": "master",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1687911278
+	"time": 1687912243
 }

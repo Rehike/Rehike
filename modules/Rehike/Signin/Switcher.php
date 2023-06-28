@@ -120,7 +120,7 @@ class Switcher
                 "photo" => $account->accountPhoto->thumbnails[0]->url,
                 "byline" => $account->accountByline->simpleText,
                 "selected" => $account->isSelected,
-                "hasChannel" => $account->hasChannel,
+                "hasChannel" => $account->hasChannel ?? false,
                 "gaiaId" => $gaiaId ?? "",
                 "switchUrl" => $switchUrl ?? ""
             ];
