@@ -350,9 +350,6 @@ class CommentThread
         }
     }
 
-    /**
-     * TODO (kirasicecreamm): i18n
-     */
     public static function getLikeCountFromLabel($label)
     {
         $i18n = i18n::getNamespace("comments");

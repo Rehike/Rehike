@@ -1,10 +1,10 @@
 {
-	"previousHash": "4d48215a7223c4b8501644d2c924d9aad4f685cc",
-	"currentRevisionId": 953,
-	"subject": "Merge branch 'master' of https://github.com/Rehike/Rehike",
-	"body": "Merge branch 'master' of https://github.com/Rehike/Rehike",
+	"previousHash": "26bf9c878dc80a2396efa7a30015cf0ee6145d41",
+	"currentRevisionId": 954,
+	"subject": "Remove unnecessary comment",
+	"body": "Remove unnecessary comment",
 	"branch": "master",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1687971386
+	"time": 1687971445
 }
