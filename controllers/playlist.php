@@ -11,6 +11,7 @@ use \Rehike\Util\Base64Url;
 use \Rehike\Network;
 use \Rehike\i18n;
 use Rehike\Util\ChannelUtils;
+use Rehike\Signin\API as SignIn;
 
 use function Rehike\Async\async;
 
@@ -83,7 +84,12 @@ return new class extends NirvanaController
 
                 // If user is signed in and channel owner, get data for the
                 // secondary channel header.
-                $ownerData = yield ChannelUtils::getOwnerData($yt->ucid);
+                $ownerData = null;
+                if ($yt->ucid == @SignIn::getInfo()["ucid"])
+                {
+                    $ownerData = yield ChannelUtils::getOwnerData($yt->ucid);
+                }
+
 
                 if (!is_null($ownerData))
                 {

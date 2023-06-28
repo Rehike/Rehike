@@ -90,7 +90,11 @@ class channel extends NirvanaController {
 
             // If user is signed in and channel owner, get data for the
             // secondary channel header.
-            $ownerData = yield ChannelUtils::getOwnerData($ucid);
+            $ownerData = null;
+            if ($ucid == @SignIn::getInfo()["ucid"])
+            {
+                $ownerData = yield ChannelUtils::getOwnerData($ucid);
+            }
 
             // Register the endpoint in the request
             $this->setEndpoint("browse", $ucid);

@@ -1,10 +1,10 @@
 {
-	"previousHash": "d1a1c5ec91219a6beb4e38a9215f4c1064588c7a",
-	"currentRevisionId": 942,
-	"subject": "Secondary header on playlist page",
-	"body": "Secondary header on playlist page",
+	"previousHash": "5eb9e82bdb19f5f3530a931dfa2f10bc69ff990e",
+	"currentRevisionId": 943,
+	"subject": "Fix non-owned channels not working",
+	"body": "Fix non-owned channels not working",
 	"branch": "master",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1687904762
+	"time": 1687911278
 }
