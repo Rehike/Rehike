@@ -1,5 +1,5 @@
 {
-    "likeCountIsolator": "/(ten film podoba się mnie i jeszcze )|( innym osobom)|( jednej osobie)/",
+    "likeCountIsolator": "/(ten film podoba się mnie i jeszcze )|\u00A0|( innym osobom)|( jednej osobie)/",
     "likeTextDisabled": "To mi się podoba",
     "countZero": "Brak",
     "subscriberCountIsolator": "/(subskrybentów)|(subskrybent)/",
