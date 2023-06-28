@@ -14,13 +14,13 @@
     "actionDislikeTooltip": "To mi się nie podoba",
     "clickcardSignIn": "Zaloguj się",
     "clickcardPlaylistSignIn": "Zaloguj się do YouTube",
-    "addToClickcardHeading": "Chcesz obejrzeć ten film ponownie później?",
-    "addToClickcardTip": "Zaloguj się, aby dodać ten film do playlisty.",
+    "addToClickcardHeading": "Czy chcesz obejrzeć ten film jeszcze raz później?",
+    "addToClickcardTip": "Zaloguj się, by dodać go do playlisty.",
     "reportClickcardHeading": "Chcesz zgłosić ten film?",
-    "reportClickcardTip": "Zaloguj się, aby zgłosić nieodpowiednią treść.",
-    "likeClickcardHeading": "Podoba ci się ten film?",
-    "dislikeClickcardHeading": "Nie podoba ci się ten film?",
-    "voteClickcardTip": "Zaloguj się, aby Twoja opinia się liczyła.",
+    "reportClickcardTip": "Zaloguj się, aby zgłosić nieodpowiednie treści.",
+    "likeClickcardHeading": "Podoba Ci się ten film?",
+    "dislikeClickcardHeading": "Nie podoba Ci się ten film?",
+    "voteClickcardTip": "Zaloguj się, żeby Twoja opinia została wzięta pod uwagę.",
     "channelSettings": "Ustawienia kanału",
     "creatorBarInfo": "Informacje i ustawienia",
     "creatorBarEnhancements": "Ulepszenia",
@@ -40,5 +40,7 @@
     "playlistSave": "Zapisz do playlist",
     "playlistUnsave": "Usuń",
     "playlistPrevVideo": "Poprzedni film",
-    "playlistNextVideo": "Następny film"
+    "playlistNextVideo": "Następny film",
+    "privacyUnlisted": "Ten film jest niepubliczny. Mogą go obejrzeć tylko użytkownicy, którzy mają do niego link.",
+    "privacyPrivate": "Ten film jest prywatny. Mogą go obejrzeć tylko wybrani użytkownicy."
 }
