@@ -355,6 +355,7 @@ class CommentThread
      */
     public static function getLikeCountFromLabel($label)
     {
-        return preg_replace("/(Like this )|(comment)|(reply)|( along with )|(,)|( other person)|(other people)/", "", $label);
+        $i18n = i18n::getNamespace("comments");
+        return preg_replace($i18n->likeCountIsolator, "", $label);
     }
 }
