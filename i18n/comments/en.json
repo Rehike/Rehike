@@ -7,5 +7,5 @@
     "hideMulti": "Hide %s replies",
     "replyCountIsolator": "/( replies)|( reply)/i",
     "oldReplyTextRegex": "/View /",
-    "likeCountIsolator": "/(Like this )|(comment)|(reply)|( along with )|(,)|( other person)|(other people)/"
+    "likeCountIsolator": "/(Like this )|(comment)|(reply)|( along with )|(,)|( other person)|( other people)/"
 }

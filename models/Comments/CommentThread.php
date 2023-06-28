@@ -339,20 +339,28 @@ class CommentThread
 
         if (@$context->isLiked) {
             $context->voteCount = [
-                "indifferentText" => (string)--$count,
+                "indifferentText" => (string)($count - 1),
                 "likedText" => (string)$count
             ];
         } else {
             $context->voteCount = [
                 "indifferentText" => (string)$count,
-                "likedText" => (string)++$count
+                "likedText" => (string)($count + 1)
             ];
         }
     }
 
     public static function getLikeCountFromLabel($label)
     {
-        $i18n = i18n::getNamespace("comments");
+        if (i18n::namespaceExists("comments"))
+        {
+            $i18n = i18n::getNamespace("comments");
+        }
+        else
+        {
+            $i18n = i18n::newNamespace("comments");
+            $i18n->registerFromFolder("i18n/comments");
+        }
         return preg_replace($i18n->likeCountIsolator, "", $label);
     }
 }
