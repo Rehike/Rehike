@@ -12,7 +12,9 @@ class MSuperTitle
 
     public function __construct($superTitleLink)
     {
-        foreach ($superTitleLink->runs as $run) if (" " != $run->text)
+        if (isset($superTitleLink->runs))
+        foreach ($superTitleLink->runs as $run)
+        if (" " != $run->text)
         {
             $this->items[] = (object)[
                 "text" => $run->text,
