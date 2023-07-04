@@ -17,7 +17,6 @@ body:
       description: What version of Rehike are you using?
       multiple: false
       options:
-        - 0.5
         - 0.7
     validations:
       required: true
