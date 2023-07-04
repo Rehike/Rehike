@@ -1,9 +1,11 @@
 <?php
 namespace Rehike\Util;
 
+use Rehike\Exception\Network\InnertubeFailedRequestException;
 use Rehike\Network;
 use YukisCoffee\CoffeeRequest\Promise;
 use Rehike\Signin\API as SignIn;
+use YukisCoffee\CoffeeRequest\Exception\GeneralException;
 
 use function Rehike\Async\async;
 
@@ -78,10 +80,18 @@ class ChannelUtils
                                 ],
                                 "timeZoneOffsetSecs" => -18000 // This shouldn't matter, so again, don't change
                             ]
-                        ]
+                        ],
+                        ignoreErrors: true
                     );
 
-                    $adata = $analytics->getJson();
+                    try
+                    {
+                        $adata = $analytics->getJson();
+                    }
+                    catch (GeneralException $e) 
+                    {
+                        return null;
+                    }
 
                     if (isset($adata->cards))
                     {
