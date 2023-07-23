@@ -1,10 +1,10 @@
 {
-	"previousHash": "6a373a54c5f74713fa3935c45e91b421d5e2e21e",
-	"currentRevisionId": 960,
-	"subject": "Remove 0.5 from bug report template",
-	"body": "Remove 0.5 from bug report template",
+	"previousHash": "d7779f510c5667151833b10382bc88734d212178",
+	"currentRevisionId": 961,
+	"subject": "More specific Data API params",
+	"body": "More specific Data API params",
 	"branch": "master",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1688506116
+	"time": 1690096760
 }

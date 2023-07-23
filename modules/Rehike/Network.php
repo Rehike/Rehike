@@ -157,7 +157,13 @@ class Network
         }
 
         $headers = [
-            "X-Origin" => "https://explorer.apis.google.com/",
+            "X-Origin" => "https://explorer.apis.google.com",
+            "X-Referer" => "https://explorer.apis.google.com",
+            "X-Requested-With" => "XMLHttpRequest",
+            "X-Client-Data" => "CKe1yQEIkrbJAQiktskBCKmdygEIoO/KAQiSocsBCIWgzQEI+LHNAQjatM0BCNy9zQEIu77NAQj+v80BCOfBzQEIssPNAQjuxM0BCI3FzQEIwcXNARiNp80B",
+            "X-Clientdetails" => "appVersion=5.0%20(Windows%20NT%2010.0%3B%20Win64%3B%20x64)%20AppleWebKit%2F537.36%20(KHTML%2C%20like%20Gecko)%20Chrome%2F115.0.0.0%20Safari%2F537.36&platform=Win32&userAgent=Mozilla%2F5.0%20(Windows%20NT%2010.0%3B%20Win64%3B%20x64)%20AppleWebKit%2F537.36%20(KHTML%2C%20like%20Gecko)%20Chrome%2F115.0.0.0%20Safari%2F537.36",
+            "X-Javascript-User-Agent" => "apix/3.0.0 google-api-javascript-client/1.1.0",
+            "Referer" => "https://content-youtube.googleapis.com/static/proxy.html?usegapi=1&jsh=m%3B%2F_%2Fscs%2Fabc-static%2F_%2Fjs%2Fk%3Dgapi.lb.en.5o5-TAFr18s.O%2Fd%3D1%2Frs%3DAHpOoo_qgszOsFrBH7bZ1Rmfwa9Mc03wLQ%2Fm%3D__features__",
             "Accept" => "application/json",
             "User-Agent" => $_SERVER["HTTP_USER_AGENT"] 
                 ?? "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:107.0) Gecko/20100101 Firefox/107.0"
