@@ -119,8 +119,14 @@ class Promise/*<T>*/
      * 
      * @param ?callable<void> $a
      */
-    public function __construct(?callable/*<void>*/ $cb = null)
+    public function __construct(
+            ?callable/*<void>*/ $cb = null, 
+            ?array $options = null
+    )
     {
+        $isCritical = 
+            isset($options["critical"]) ? $options["critical"] : true;
+
         if (isset($cb))
         {
             $reflection = new ReflectionFunction($cb);
@@ -139,6 +145,8 @@ class Promise/*<T>*/
                 $cb($this->getResolveApi(), $this->getRejectApi());
             }
         }
+
+        $this->throwOnUnresolved = $isCritical;
 
         $this->creationTrace = new PromiseStackTrace;
         $this->latestTrace = &$this->creationTrace;
@@ -191,7 +199,10 @@ class Promise/*<T>*/
 
         $this->latestTrace = new PromiseStackTrace;
 
-        if (count($this->thens) == 1 && $this->throwOnUnresolved)
+        if (
+            count($this->thens) == 1 && $this->throwOnUnresolved &&
+            $this->status == PromiseStatus::PENDING
+        )
         {
             PromiseResolutionTracker::registerPendingPromise($this);
         }
@@ -370,7 +381,7 @@ class Promise/*<T>*/
      * 
      * @internal
      */
-    protected function getAnonymousApi(string $name): callable/*<mixed>*/
+    protected function getInternalApi(string $name): callable/*<mixed>*/
     {
         return function (...$args) use ($name) {
             $this->{$name}(...$args);
@@ -384,7 +395,7 @@ class Promise/*<T>*/
      */
     protected function getResolveApi(): callable/*<mixed>*/
     {
-        return $this->getAnonymousApi("resolve");
+        return $this->getInternalApi("resolve");
     }
 
     /**
@@ -394,7 +405,7 @@ class Promise/*<T>*/
      */
     protected function getRejectApi(): callable/*<string|Exception>*/
     {
-        return $this->getAnonymousApi("reject");
+        return $this->getInternalApi("reject");
     }
 
     /**

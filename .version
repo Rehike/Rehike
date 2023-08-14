@@ -1,10 +1,10 @@
 {
-	"previousHash": "d7779f510c5667151833b10382bc88734d212178",
-	"currentRevisionId": 961,
-	"subject": "More specific Data API params",
-	"body": "More specific Data API params",
+	"previousHash": "a0af81da8b90af6aafa0103fa97f3bb67afc339f",
+	"currentRevisionId": 963,
+	"subject": "Improve Promises API",
+	"body": "Improve Promises API",
 	"branch": "master",
-	"committerName": "aubymori",
-	"committerEmail": "aubyomori@gmail.com",
-	"time": 1690096760
+	"committerName": "Taniko Yamamoto",
+	"committerEmail": "99076687+YukisCoffee@users.noreply.github.com",
+	"time": 1692053517
 }
