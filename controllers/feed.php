@@ -32,7 +32,7 @@ use function Rehike\Async\async;
  * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
-return new class extends \Rehike\Controller\Core\NirvanaController {
+return new class extends \Rehike\Controller\core\NirvanaController {
     public $template = "feed";
 
     /**

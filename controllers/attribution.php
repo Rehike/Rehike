@@ -1,7 +1,7 @@
 <?php
 namespace Rehike\Controller;
 
-use Rehike\Controller\Core\HitchhikerController;
+use Rehike\Controller\core\HitchhikerController;
 use Rehike\Network;
 use Rehike\Model\Attribution\AttributionModel;
 

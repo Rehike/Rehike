@@ -1,5 +1,5 @@
 <?php
-use \Rehike\Controller\Core\HitchhikerController;
+use \Rehike\Controller\core\HitchhikerController;
 
 /**
  * Controller for the oops (error) page.

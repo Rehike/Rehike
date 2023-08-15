@@ -1,10 +1,10 @@
 {
-	"previousHash": "c2f4cc4482349eac44f3339dbdebf2cbbf046e72",
-	"currentRevisionId": 971,
-	"subject": "Normalize core controller path names.",
-	"body": "Normalize core controller path names.",
+	"previousHash": "1d1ca10da5fc76028e3a237d533cfee99305ff4c",
+	"currentRevisionId": 972,
+	"subject": "Revert "Normalize core controller path names."",
+	"body": "Revert "Normalize core controller path names."",
 	"branch": "master",
 	"committerName": "Taniko Yamamoto",
 	"committerEmail": "99076687+YukisCoffee@users.noreply.github.com",
-	"time": 1692138524
+	"time": 1692138740
 }

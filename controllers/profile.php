@@ -16,7 +16,7 @@ use Rehike\Signin\API as SignIn;
  * @author Aubrey Pankow <aubyomori@gmail.com>
  * @author The Rehike Maintainers
  */
-return new class extends \Rehike\Controller\Core\HitchhikerController {
+return new class extends \Rehike\Controller\core\HitchhikerController {
     // Doesn't have a corresponding page as this redirects the user.
     public $useTemplate = false;
 

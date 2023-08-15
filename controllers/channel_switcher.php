@@ -1,7 +1,7 @@
 <?php
 namespace Rehike\Controller;
 
-use Rehike\Controller\Core\HitchhikerController;
+use Rehike\Controller\core\HitchhikerController;
 use Rehike\Network;
 use Rehike\Signin\API as SignIn;
 use \Rehike\Model\ChannelSwitcher\ChannelSwitcherModel;
