@@ -1,7 +1,7 @@
 <?php
 use \Com\Youtube\Innertube\Request\BrowseRequestParams;
 
-use \Rehike\Controller\core\NirvanaController;
+use \Rehike\Controller\Core\NirvanaController;
 use \Rehike\Model\Playlist\PlaylistModel;
 use \Rehike\Model\Channels\Channels4Model;
 use \Rehike\Model\Channels\Channels4\MHeader;

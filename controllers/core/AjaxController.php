@@ -1,7 +1,7 @@
 <?php
-namespace Rehike\Controller\core;
+namespace Rehike\Controller\Core;
 
-use \Rehike\Controller\core\NirvanaController;
+use \Rehike\Controller\Core\NirvanaController;
 
 /**
  * Defines a general AJAX endpoint controller.

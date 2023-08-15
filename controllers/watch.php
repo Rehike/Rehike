@@ -1,5 +1,5 @@
 <?php
-use Rehike\Controller\core\NirvanaController;
+use Rehike\Controller\Core\NirvanaController;
 
 use Com\Youtube\Innertube\Request\NextRequestParams;
 use Com\Youtube\Innertube\Request\NextRequestParams\UnknownThing;

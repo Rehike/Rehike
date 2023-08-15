@@ -1,5 +1,5 @@
 <?php
-use Rehike\Controller\core\NirvanaController;
+use Rehike\Controller\Core\NirvanaController;
 use Rehike\Model\AllComments\AllCommentsModel;
 use Rehike\Network;
 

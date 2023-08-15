@@ -1,10 +1,10 @@
 {
-	"previousHash": "10549469d01b92782ee7f0cf313e4eb0b8a83947",
-	"currentRevisionId": 970,
-	"subject": "Fix live chat on non-Windows operating systems",
-	"body": "Fix live chat on non-Windows operating systems",
+	"previousHash": "c2f4cc4482349eac44f3339dbdebf2cbbf046e72",
+	"currentRevisionId": 971,
+	"subject": "Normalize core controller path names.",
+	"body": "Normalize core controller path names.",
 	"branch": "master",
 	"committerName": "Taniko Yamamoto",
 	"committerEmail": "99076687+YukisCoffee@users.noreply.github.com",
-	"time": 1692137628
+	"time": 1692138524
 }

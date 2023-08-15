@@ -1,7 +1,7 @@
 <?php
 namespace Rehike\Controller;
 
-use Rehike\Controller\core\NirvanaController;
+use Rehike\Controller\Core\NirvanaController;
 
 use \Com\Youtube\Innertube\Request\BrowseRequestParams;
 
