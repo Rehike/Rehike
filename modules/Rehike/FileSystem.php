@@ -78,6 +78,16 @@ class FileSystem
     }
 
     /**
+     * Get a "rehike://" URL which anonymises the path the user stored their
+     * Rehike installation. This is useful for logging purposes.
+     */
+    public static function getRehikeRelativePath(string $path): string
+    {
+        $path = self::unwindows($path);
+        return str_replace($_SERVER["DOCUMENT_ROOT"] . "/", "rehike://", $path);
+    }
+
+    /**
      * Write a file.
      * 
      * @param $path of the file to write to.

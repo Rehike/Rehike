@@ -12,6 +12,20 @@ namespace Rehike\Constants;
  * Thank you.
  */
 
+/**
+ * Enables GitHub integration with some Rehike features.
+ * 
+ * @var bool
+ */
+const GH_ENABLED = true;
+
+/**
+ * Specifies the GitHub repository to link to.
+ * 
+ * @var string
+ */
+const GH_REPO = "Rehike/Rehike";
+
 /** 
  * The current version of Rehike.
  * 
