@@ -8,6 +8,7 @@ return new class extends \Rehike\Controller\core\NirvanaController {
 
     const VALID_TABS = [
         "appearance",
+        "experiments",
         "advanced"
     ];
 

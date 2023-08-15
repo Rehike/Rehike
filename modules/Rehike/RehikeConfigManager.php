@@ -31,6 +31,9 @@ class RehikeConfigManager extends ConfigManager
             "oldBestOfYouTubeIcons" => false,
             "allCommentsLink" => false
         ],
+        "experiments" => [
+            "useSignInV2" => true
+        ],
         "advanced" => [
             "enableDebugger" => false
         ],
@@ -55,6 +58,9 @@ class RehikeConfigManager extends ConfigManager
             "watchSidebarVerification" => "bool",
             "oldBestOfYouTubeIcons" => "bool",
             "allCommentsLink" => "bool"
+        ],
+        "experiments" => [
+            "useSignInV2" => "bool"
         ],
         "advanced" => [
             "enableDebugger" => "bool"

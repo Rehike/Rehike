@@ -5,6 +5,7 @@
     "saveChangesFailure": "Failed to update configuration!",
     "tabs": {
         "appearance": "Appearance",
+        "experiments": "Experiments",
         "advanced": "Advanced"
     },
     "props": {
@@ -64,6 +65,12 @@
             "allCommentsLink": {
                 "title": "Link to All comments page on video comments",
                 "subtitle": "When enabled, you can click the \"Comments\" header text to go to a page that will show you only the comments."
+            }
+        },
+        "experiments": {
+            "useSignInV2": {
+                "title": "Use sign in V2",
+                "subtitle": "Use the experimental new rewrite of the sign in rewrite. This option should be available for the duration of V2's development, after which it will become the default and the legacy one will be removed."
             }
         },
         "advanced": {

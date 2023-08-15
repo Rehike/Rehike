@@ -6,7 +6,8 @@ use Rehike\{
     TemplateManager,
     ControllerV2\Core as ControllerV2,
     Debugger\Debugger,
-    Signin\AuthManager
+    Signin\AuthManager,
+    RehikeConfigManager
 };
 
 /**
@@ -37,6 +38,13 @@ final class YtStateManager
         TemplateManager::registerGlobalState($yt);
         ControllerV2::registerStateVariable($yt);
         Debugger::init($yt);
-        AuthManager::use($yt);
+
+        /*
+         * TODO: This should be removed when V1 is deprecated.
+         */
+        if (RehikeConfigManager::getConfigProp("experiments.useSignInV2") !== true)
+        {
+            AuthManager::use($yt);
+        }
     }
 }
