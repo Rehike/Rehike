@@ -1,10 +1,10 @@
 {
-	"previousHash": "9dc24246b2bfc67c5ad481daaa91cba7a508cb6e",
-	"currentRevisionId": 969,
-	"subject": "SignInV2 should be disabled by default",
-	"body": "SignInV2 should be disabled by default",
+	"previousHash": "10549469d01b92782ee7f0cf313e4eb0b8a83947",
+	"currentRevisionId": 970,
+	"subject": "Fix live chat on non-Windows operating systems",
+	"body": "Fix live chat on non-Windows operating systems",
 	"branch": "master",
 	"committerName": "Taniko Yamamoto",
 	"committerEmail": "99076687+YukisCoffee@users.noreply.github.com",
-	"time": 1692073918
+	"time": 1692137628
 }
