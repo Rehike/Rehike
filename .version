@@ -1,10 +1,10 @@
 {
-	"previousHash": "ceb39af8b6fea152110cf7f787aa75ba29cf5799",
-	"currentRevisionId": 967,
-	"subject": "Major fatal error handler improvements",
-	"body": "Major fatal error handler improvements",
+	"previousHash": "9dc24246b2bfc67c5ad481daaa91cba7a508cb6e",
+	"currentRevisionId": 969,
+	"subject": "SignInV2 should be disabled by default",
+	"body": "SignInV2 should be disabled by default",
 	"branch": "master",
 	"committerName": "Taniko Yamamoto",
 	"committerEmail": "99076687+YukisCoffee@users.noreply.github.com",
-	"time": 1692067417
+	"time": 1692073918
 }
