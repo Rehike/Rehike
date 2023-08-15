@@ -23,7 +23,9 @@ final class PromiseResolutionTracker
     private static int $pendingPromiseCount = 0;
     private static array $pendingPromises = [];
 
-    public static function initialize()
+    private static bool $isEnabled = true;
+
+    public static function initialize(): void
     {
         $shutdownFunction = Closure::fromCallable(self::class."::handleShutdown");
 
@@ -42,6 +44,16 @@ final class PromiseResolutionTracker
                 $this->shutdownFunction->__invoke();
             }
         };
+    }
+
+    public static function disable(): void
+    {
+        self::$isEnabled = false;
+    }
+
+    public static function enable(): void
+    {
+        self::$isEnabled = true;
     }
 
     public static function registerPendingPromise(Promise $promise): void
@@ -71,6 +83,9 @@ final class PromiseResolutionTracker
 
     private static function handleShutdown(): void
     {
+        if (!self::$isEnabled)
+            return;
+
         if (self::$pendingPromiseCount > 0)
         {
             // Prevent it from overtaking other errors:
