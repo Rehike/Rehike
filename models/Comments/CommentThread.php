@@ -135,9 +135,33 @@ class CommentThread
             // Top level function
             // $context = (Array containing all commentRenderer items)
 
+            /*
+             * WHY THE FUCK did you think it'd be a good idea to rename this variable from:
+             *    $items = @$context->continuationItems;
+             * to the less clear and infinitely more confusing:
+             *    $context = @$context->continuationItems;
+             * IGNORING pre-existing use of the original variable, and overriding it entirely,
+             * thus breaking reply continuations for MONTHS?
+             * 
+             * For the record, the distinction was used for setting the target ID, which is required
+             * for subsequent continautions. You can see this... IN THE VERY NEXT FUCKING LINE AFTER
+             * THE DECLARATION OF THE VARIABLE THAT YOU RENAMED.
+             * 
+             * It was supposed to read the target ID of the top-level context (i.e. the $context ARGUMENT
+             * TO THIS FUNCTION), but since the variable name now points to a DIFFERENT thing, it attempted
+             * to read the targetId property from an object ON WHICH IT DOESN'T EXIST. As such, this variable
+             * would become NULL and the templater would receive bad data for the continuation item (see
+             * common/comments/replies_list.twig), so all reply continuations but the very first (show more
+             * replies) simply stop working, even if the response seems to be perfectly legal (because it is).
+             * 
+             * Also see pre-rename: https://github.com/Rehike/Rehike/blob/a0c3783673be075ca13c75fda20c627be66f5630/models/Comments/CommentThread.php#L84-L90
+             */
+            $topLevelContext = $context;
             $context = @$context->continuationItems;
 
-            $out = ["comments" => [], "repliesTargetId" => str_replace("comment-replies-item-", "", $context->targetId)];
+            // REPLIES TARGET ID MUST BE SET OR CONTINUATIONS WILL BREAK
+            // DO NOT CHANGE CODE AFFECTING IT UNLESS YOU VERIFY CONTINUATIONS STILL WORK
+            $out = ["comments" => [], "repliesTargetId" => str_replace("comment-replies-item-", "", $topLevelContext->targetId)];
 
             $cids = [];
             foreach($context as $comment)
