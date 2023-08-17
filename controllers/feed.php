@@ -109,7 +109,7 @@ return new class extends \Rehike\Controller\core\NirvanaController {
                 "browseId" => "FEwhat_to_watch"
             ],
             clientName: "ANDROID",
-            clientVersion: "17.14.33"
+            clientVersion: "18.22.36"
         );
 
         $ytdata = $response->getJson();
