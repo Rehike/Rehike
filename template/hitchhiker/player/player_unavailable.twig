@@ -9,7 +9,19 @@
         {%- if yt.playerUnavailable.subreason.watch7PlayerAgeGateContent -%}
             {% set agegate = yt.playerUnavailable.subreason.watch7PlayerAgeGateContent %}
             <div id="watch7-player-age-gate-content">
-                <p>{{ agegate.message }}</p>
+                <p>
+                    {% if agegate.message.runs %}
+                        {%- for run in agegate.message.runs -%}
+                            {%- if run.navigationEndpoint -%}
+                                <a href="{{ rehike.getUrl(run) }}">{{ run.text }}</a>
+                            {%- else -%}
+                                {{ run.text }}
+                            {%- endif -%}
+                        {%- endfor -%}
+                    {% else %}
+                        {{ agegate.message }}
+                    {% endif %}
+                </p>
                 <p></p>
                 {% from "common/uix/button.twig" import render as button %}
                 {{ button(agegate.button) }}

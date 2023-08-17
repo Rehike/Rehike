@@ -73,6 +73,13 @@ return new class extends NirvanaController {
             'videoId' => $yt->videoId
         ];
 
+        // Content restriction
+        if (isset($_GET["has_verified"]) && $_GET["has_verified"] == "1" || $_GET["has_verified"] == true)
+        {
+            $sharedRequestParams += ["racyCheckOk" => true];
+            $sharedRequestParams += ["contentCheckOk" => true];
+        }
+
         // Defines parameters to be sent only to the next (watch data) API.
         // Required for LC link implementation.
         $nextOnlyParams = [];

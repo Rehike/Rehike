@@ -5,6 +5,7 @@ use Rehike\ConfigManager\ConfigManager;
 use Rehike\Signin\API as SignIn;
 
 use Rehike\Model\Watch\AgeGate\MPlayerAgeGate;
+use Rehike\Model\Watch\AgeGate\MPlayerContentGate;
 
 /**
  * Implements all logic pertaining to the generation of watch
@@ -72,19 +73,35 @@ class WatchModel
         // Get player error
         if ($error = @$yt->playerResponse->playabilityStatus->errorScreen->playerErrorMessageRenderer)
         {
-            $yt->playerUnavailable = $error;
-
-            if (!isset($yt->playerUnavailable->subreason))
-            {
-                $yt->playerUnavailable->subreason = (object)[
-                    "simpleText" => "Sorry about that."
-                ];
-            }
+            $status = $yt->playerResponse->playabilityStatus->status ?? "";
 
             // If it's age restriction, show that
-            if ("LOGIN_REQUIRED" == @$yt->playerResponse->playabilityStatus->status)
+            if ("LOGIN_REQUIRED" == $status)
             {
                 $yt->playerUnavailable = new MPlayerAgeGate();
+            }
+            else if ("AGE_CHECK_REQUIRED" == $status)
+            {
+                $yt->playerUnavailable = new MPlayerAgeGate($error);
+            }
+            else if ("CONTENT_CHECK_REQUIRED" == $status)
+            {
+                /*
+                 * Content that requires a content check (i.e. suicide-related)
+                 * does not require the user to be signed in.
+                 */
+                $yt->playerUnavailable = new MPlayerContentGate($error);
+            }
+            else
+            {
+                $yt->playerUnavailable = $error;
+
+                if (!isset($yt->playerUnavailable->subreason))
+                {
+                    $yt->playerUnavailable->subreason = (object)[
+                        "simpleText" => "Sorry about that."
+                    ];
+                }
             }
         }
 
