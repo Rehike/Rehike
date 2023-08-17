@@ -1,10 +1,10 @@
 {
-	"previousHash": "ceb39af8b6fea152110cf7f787aa75ba29cf5799",
-	"currentRevisionId": 967,
-	"subject": "Major fatal error handler improvements",
-	"body": "Major fatal error handler improvements",
+	"previousHash": "1d1ca10da5fc76028e3a237d533cfee99305ff4c",
+	"currentRevisionId": 972,
+	"subject": "Revert "Normalize core controller path names."",
+	"body": "Revert "Normalize core controller path names."",
 	"branch": "master",
 	"committerName": "Taniko Yamamoto",
 	"committerEmail": "99076687+YukisCoffee@users.noreply.github.com",
-	"time": 1692067417
+	"time": 1692138740
 }

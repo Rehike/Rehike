@@ -5,7 +5,7 @@ use function Rehike\Async\async;
 use Rehike\SimpleFunnel;
 use Rehike\SimpleFunnelResponse;
 use YukisCoffee\CoffeeRequest\Network\Response;
-use Rehike\Controller\Core\HitchhikerController;
+use Rehike\Controller\core\HitchhikerController;
 
 return new class extends HitchhikerController
 {

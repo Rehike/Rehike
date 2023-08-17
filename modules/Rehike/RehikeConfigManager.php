@@ -32,7 +32,7 @@ class RehikeConfigManager extends ConfigManager
             "allCommentsLink" => false
         ],
         "experiments" => [
-            "useSignInV2" => true
+            "useSignInV2" => false
         ],
         "advanced" => [
             "enableDebugger" => false
