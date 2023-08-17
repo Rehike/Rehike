@@ -11,6 +11,7 @@ use \Com\Youtube\Innertube\Request\BrowseRequestParams;
 use \Rehike\Util\Base64Url;
 use \Rehike\Model\History\HistoryModel;
 use \Rehike\Model\Browse\InnertubeBrowseConverter;
+use Rehike\RehikeConfigManager;
 use \Rehike\Util\ParsingUtils;
 
 use function Rehike\Async\async;
@@ -102,6 +103,15 @@ return new class extends \Rehike\Controller\core\NirvanaController {
         // The homepage also had the searchbox in the masthead autofocus.
         $yt->masthead->searchbox->autofocus = true;
 
+        if ($a = RehikeConfigManager::getConfigProp("experiments.disableSignInOnHome"))
+        {
+            $useAuthentication = !(bool)$a;
+        }
+        else
+        {
+            $useAuthentication = true;
+        }
+
         // Initial Android request to get continuation
         $response = yield Network::innertubeRequest(
             action: "browse",
@@ -109,7 +119,8 @@ return new class extends \Rehike\Controller\core\NirvanaController {
                 "browseId" => "FEwhat_to_watch"
             ],
             clientName: "ANDROID",
-            clientVersion: "18.22.36"
+            clientVersion: "18.22.36",
+            useAuthentication: $useAuthentication
         );
 
         $ytdata = $response->getJson();
@@ -128,7 +139,8 @@ return new class extends \Rehike\Controller\core\NirvanaController {
             action: "browse",
             body: [
                 "continuation" => $newContinuation
-            ]
+            ],
+            useAuthentication: $useAuthentication
         );
 
         $data = $response->getJson();

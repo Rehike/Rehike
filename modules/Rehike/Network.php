@@ -84,7 +84,8 @@ class Network
         array $body = [],
         string $clientName = "WEB", 
         string $clientVersion = "2.20230331.00.00",
-        bool $ignoreErrors = false
+        bool $ignoreErrors = false,
+        bool $useAuthentication = true
     ): Promise/*<Response>*/
     {
         $host = self::INNERTUBE_API_HOST;
@@ -95,6 +96,16 @@ class Network
             $clientName, $clientVersion
         ));
 
+        $requestHeaders = [
+            "Content-Type" => "application/json",
+            "X-Goog-Visitor-Id" => InnertubeContext::genVisitorData(ContextManager::$visitorData)
+        ];
+
+        if ($useAuthentication)
+        {
+            $requestHeaders += self::$innertubeHeaders;
+        }
+
         return new Promise(function ($resolve, $reject)
             use ($action, 
                  $body, 
@@ -102,15 +113,13 @@ class Network
                  $clientVersion,
                  $host,
                  $key,
-                 $ignoreErrors)
+                 $ignoreErrors,
+                 $requestHeaders)
         {
             CoffeeRequest::request(
                 "{$host}/youtubei/v1/{$action}?key={$key}",
                 [
-                    "headers" => ([
-                        "Content-Type" => "application/json",
-                        "X-Goog-Visitor-Id" => InnertubeContext::genVisitorData(ContextManager::$visitorData)
-                    ] + self::$innertubeHeaders),
+                    "headers" => $requestHeaders,
                     "method" => "POST",
                     "body" => json_encode($body),
                     "onError" => "ignore",

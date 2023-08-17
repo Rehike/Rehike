@@ -32,7 +32,8 @@ class RehikeConfigManager extends ConfigManager
             "allCommentsLink" => false
         ],
         "experiments" => [
-            "useSignInV2" => false
+            "useSignInV2" => false,
+            "disableSignInOnHome" => false
         ],
         "advanced" => [
             "enableDebugger" => false
@@ -60,7 +61,8 @@ class RehikeConfigManager extends ConfigManager
             "allCommentsLink" => "bool"
         ],
         "experiments" => [
-            "useSignInV2" => "bool"
+            "useSignInV2" => "bool",
+            "disableSignInOnHome" => "bool"
         ],
         "advanced" => [
             "enableDebugger" => "bool"

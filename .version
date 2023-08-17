@@ -1,10 +1,10 @@
 {
-	"previousHash": "1d1ca10da5fc76028e3a237d533cfee99305ff4c",
-	"currentRevisionId": 972,
-	"subject": "Revert "Normalize core controller path names."",
-	"body": "Revert "Normalize core controller path names."",
+	"previousHash": "da4f9365626a39d557bb25683aee6bb325746478",
+	"currentRevisionId": 978,
+	"subject": "Add experiment to force signed out homepage",
+	"body": "Add experiment to force signed out homepage",
 	"branch": "master",
 	"committerName": "Taniko Yamamoto",
 	"committerEmail": "99076687+YukisCoffee@users.noreply.github.com",
-	"time": 1692138740
+	"time": 1692312322
 }
