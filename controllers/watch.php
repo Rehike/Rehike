@@ -74,7 +74,7 @@ return new class extends NirvanaController {
         ];
 
         // Content restriction
-        if (isset($_GET["has_verified"]) && $_GET["has_verified"] == "1" || $_GET["has_verified"] == true)
+        if (isset($_GET["has_verified"]) && ($_GET["has_verified"] == "1" || $_GET["has_verified"] == true))
         {
             $sharedRequestParams += ["racyCheckOk" => true];
             $sharedRequestParams += ["contentCheckOk" => true];
