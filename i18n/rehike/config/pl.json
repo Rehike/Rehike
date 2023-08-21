@@ -5,6 +5,7 @@
     "saveChangesFailure": "Nie udało się zaktualizować konfiguracji!",
     "tabs": {
         "appearance": "Wygląd",
+        "experiments": "Eksperymenty",
         "advanced": "Zaawansowane"
     },
     "props": {
@@ -64,6 +65,16 @@
             "allCommentsLink": {
                 "title": "Link do strony Wszystkie komentarze w komentarzach filmu",
                 "subtitle": "Po włączeniu tej opcji można kliknąć nagłówek \"Komentarze\", aby przejść do strony, na której wyświetlane są tylko komentarze."
+            }
+        },
+        "experiments": {
+            "useSignInV2": {
+                "title": "Użyj logowania V2",
+                "subtitle": "Użyj eksperymentalnego nowego przepisywania logowania. Ta opcja powinna być dostępna na czas rozwoju V2, po czym stanie się domyślna, a starsza zostanie usunięta."
+            },
+            "disableSignInOnHome": {
+                "title": "Wyłącz uwierzytelnione żądania strony głównej",
+                "subtitle": "Sprawia, że strona główna jest wylogowana. Jest to obejście blokowania dostępu do strony głównej przez YouTube, jeśli historia oglądania jest wyłączona (18.08.2023)."
             }
         },
         "advanced": {
