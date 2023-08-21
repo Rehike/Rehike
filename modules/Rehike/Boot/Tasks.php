@@ -99,7 +99,13 @@ final class Tasks
         else
         {
             // Hacky algo to get it from the server:
-            $request = Network::urlRequest("https://www.youtube.com");
+            $request = Network::urlRequest(
+                "https://www.youtube.com",
+                [
+                    // Force Chrome user agent to ensure we don't get an "Update your browser" message
+                    "userAgent" => "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36"
+                ]
+            );
             $response = Concurrency::awaitSync($request);
 
             // Find the configuration set property that contains the visitor
