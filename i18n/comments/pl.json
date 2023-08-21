@@ -8,6 +8,6 @@
     "hideSingular": "Ukryj odpowiedź",
     "hideMulti": "Ukryj %s odpowiedzi",
     "replyCountIsolator": "/( odpowiedzi)|( odpowiedź)/i",
-    "oldReplyTextRegex": "/Zobacz /"
+    "oldReplyTextRegex": "/Zobacz /",
     "likeCountIsolator": "/(Polub ten )|(Polub tę )|(komentarz)|(odpowiedź)|( \u0028)|(tak jak jeszcze )|(\u00A0)|( osób)|( osoby)|(\u0029)/"
 }
