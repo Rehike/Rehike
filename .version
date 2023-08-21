@@ -1,10 +1,10 @@
 {
-	"previousHash": "da4f9365626a39d557bb25683aee6bb325746478",
-	"currentRevisionId": 978,
-	"subject": "Add experiment to force signed out homepage",
-	"body": "Add experiment to force signed out homepage",
+	"previousHash": "0389e773e0e1dbf46d93c5df92988dd3b198e705",
+	"currentRevisionId": 980,
+	"subject": "Add /img/* to router funnel list This is used to provide images on the "Unsupported browser" page",
+	"body": "Add /img/* to router funnel list This is used to provide images on the "Unsupported browser" page",
 	"branch": "master",
-	"committerName": "Taniko Yamamoto",
-	"committerEmail": "99076687+YukisCoffee@users.noreply.github.com",
-	"time": 1692312322
+	"committerName": "aubymori",
+	"committerEmail": "aubyomori@gmail.com",
+	"time": 1692589657
 }
