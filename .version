@@ -1,10 +1,10 @@
 {
-	"previousHash": "0389e773e0e1dbf46d93c5df92988dd3b198e705",
-	"currentRevisionId": 980,
-	"subject": "Add /img/* to router funnel list This is used to provide images on the "Unsupported browser" page",
-	"body": "Add /img/* to router funnel list This is used to provide images on the "Unsupported browser" page",
+	"previousHash": "7094b049b741b526f5072aef904bdcb45c398146",
+	"currentRevisionId": 981,
+	"subject": "Fix "Live stream currently offline" Previously, it said "Published on Live stream currently offline"",
+	"body": "Fix "Live stream currently offline" Previously, it said "Published on Live stream currently offline"",
 	"branch": "master",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1692589657
+	"time": 1692675034
 }
