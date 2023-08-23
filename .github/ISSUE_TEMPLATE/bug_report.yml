@@ -5,6 +5,8 @@ body:
   - type: markdown
     attributes:
       value: |
+        # THIS FORM IS NOT FOR QUESTIONS! [MAKE A NEW DISCUSSION](https://github.com/Rehike/Rehike/discussions/new/choose) TO ASK A QUESTION!
+
         Thanks for reporting a bug in Rehike! However, before you continue, you must make sure of all of these things.
         
         1. You are running at least **PHP 8.0**.
