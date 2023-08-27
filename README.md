@@ -1,7 +1,8 @@
 # Rehike
 
 <p align="center">
-    <img src="branding/banner.png" alt="Rehike branding image">
+    <img src="branding/banner.png" alt="Rehike branding image"><br>
+    <i><a href="https://discord.gg/rqBJ9EXDTH">Discord</a></i>
 </p>
 
 Rehike is a custom web frontend server for YouTube.

@@ -8,10 +8,7 @@ use Rehike\SignInV2\{
 
 /**
  * Parses and retrieves information from the account switcher, requested at
- * /getAccountSwitcherEndpoint.
- * 
- * This class stores temporary, transitional copies of the data while it forms
- * the standardized class.
+ * /getAccountSwitcherEndpoint and outputs it into the session info builder.
  * 
  * @author Daylin Cooper <dcoop2004@gmail.com>
  * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
@@ -19,6 +16,11 @@ use Rehike\SignInV2\{
  */
 class SwitcherParser
 {
+    /**
+     * A reference to the builder to which we are to supply information.
+     */
+    private SessionInfoBuilder $builder;
+
     /**
      * The account switcher response, JSON decoded.
      */
@@ -38,25 +40,7 @@ class SwitcherParser
      * Stores temporary state about the current Google Account, which is fed
      * to the builder.
      */
-    private array $googleAccountInfo = [
-        "email" => null,
-        "name" => null
-    ];
-
-    /**
-     * Stores temporary state about the currently used YouTube channel.
-     * 
-     * This schema is also used for all children of the $channels array.
-     */
-    private array $currentChannelInfo = [
-        "name" => null,
-        "photo" => null,
-        "byline" => null,
-        "selected" => null,
-        "hasChannel" => null,
-        "gaiaId" => null,
-        "switchUrl" => null
-    ];
+    private array $googleAccounts = [];
 
     /**
      * Stores temporary state for all other channels that can be accessed by
@@ -67,8 +51,38 @@ class SwitcherParser
      */
     private array $channels = [];
 
-    public function __construct(object $response)
+    /**
+     * Creates an array structure following the internal Google Account info
+     * schema used by the parser.
+     */
+    protected static function createGoogleAccountInfo(): array
     {
+        return [
+            "email" => null,
+            "name" => null
+        ];
+    }
+    
+    /**
+     * Creates an array structure following the internal channel info schema
+     * used by the parser.
+     */
+    protected static function createChannelInfo(): array
+    {
+        return [
+            "name" => null,
+            "photo" => null,
+            "byline" => null,
+            "selected" => null,
+            "hasChannel" => null,
+            "gaiaId" => null,
+            "switchUrl" => null
+        ];
+    }
+
+    public function __construct(SessionInfoBuilder $builder, object $response)
+    {
+        $this->builder = $builder;
         $this->response = $response;
     }
 
@@ -85,25 +99,6 @@ class SwitcherParser
         return $this;
     }
 
-    /**
-     * Forward all current data in this class to the info builder.
-     */
-    public function outputToBuilder(SessionInfoBuilder $builder): void
-    {
-        if ($this->hasParsed)
-        {
-            $builder->setDisplayName($this->googleAccountInfo["name"]);
-            $builder->setEmailAddress($this->googleAccountInfo["email"]);
-        }
-        else
-        {
-            throw new UnfinishedParsingException(
-                "Cannot output unparsed SwitcherParser data to builder. " .
-                "Run the parser and try again."
-            );
-        }
-    }
-
     // ========================================================================
 
     /**
@@ -116,24 +111,28 @@ class SwitcherParser
     protected function getMainRenderer(): array
     {
         return $this->response->data->actions[0]->getMultiPageMenuAction
-            ->menu->multiPageMenuRenderer->sections;//[0]
-            //->accountSectionListRenderer;
+            ->menu->multiPageMenuRenderer->sections;
     }
 
     /**
-     * Parse the available Google Accounts in the respopnse and set class
+     * Parse the available Google Accounts in the response and set class
      * properties accordingly.
      */
     protected function retrieveAccounts(): void
     {
+        $mainRenderer = $this->getMainRenderer();
 
+        foreach ($mainRenderer as $i => $account)
+        {
+
+        }
     }
 
     /**
      * Get the account header renderer, which contains certain information
      * about the currently used Google Account.
      */
-    protected function getAccountHeaderRenderer(): object
+    protected function getAccountHeaderRenderer(object $accSection): object
     {
         return $this->getMainRenderer()->header->googleAccountHeaderRenderer;
     }
@@ -142,9 +141,9 @@ class SwitcherParser
      * Get the root rendererer of all available YouTube channels on a given
      * account.
      */
-    protected function getChannelItemsRenderer(): object
+    protected function getChannelItemsRenderer(object $acc): array
     {
-        return $this->getMainRenderer()->contents;
+        return $acc->contents ?? [];
     }
 
     /**
@@ -163,9 +162,9 @@ class SwitcherParser
      * Parse all of the channels listed in the response and set class
      * properties accordingly.
      */
-    protected function retrieveChannels(): void
+    protected function retrieveChannelsForAccount(object $acc): void
     {
-        $items = $this->getChannelItemsRenderer();
+        $items = $this->getChannelItemsRenderer($acc);
 
         foreach ($items as $item)
         {
@@ -175,7 +174,7 @@ class SwitcherParser
 
                 if ($channelInfo["selected"])
                 {
-                    $this->currentChannelInfo = $channelInfo;
+                    // TODO (kirasicecreamm) !!
                 }
 
                 $this->channels[] = $channelInfo;

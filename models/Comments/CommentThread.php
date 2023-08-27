@@ -231,16 +231,14 @@ class CommentThread
             ];
         }
 
-        // Eliminate surrounding spaces on channel mention and correct mentions
+        // Correct mentions
         foreach ($context->contentText->runs as &$run) {
-            $run->text = str_replace("\u{00A0}", "", $run->text);
-
             if ($ucid = @$run->navigationEndpoint->browseEndpoint->browseId)
             {
                 if (substr($ucid, 0, 2) == "UC"
                 &&  isset(self::$dataApiData[$ucid]))
                 {
-                    $run->text = "@" . self::$dataApiData[$ucid]->title;
+                    $run->text = "\u{00A0}@" . self::$dataApiData[$ucid]->title . "\u{00A0}";
                 }
             }
         }

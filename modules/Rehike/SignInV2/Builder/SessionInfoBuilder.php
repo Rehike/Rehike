@@ -2,6 +2,7 @@
 namespace Rehike\SignInV2\Builder;
 
 use Rehike\SignInV2\Info\SessionInfo;
+use Rehike\SignInV2\Exception\BuilderException;
 
 /**
  * Builds a session info object using data that is collected elsewhere.
@@ -10,17 +11,19 @@ use Rehike\SignInV2\Info\SessionInfo;
  * than the final class. Temporary state can be stored here.
  * 
  * @author Daylin Cooper <dcoop2004@gmail.com>
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class SessionInfoBuilder
 {
-    private string $displayName;
-    private string $emailAddress;
+    private array $googleAccounts = [];
     
     private int $sessionErrors;
 
     public function build(): SessionInfo
     {
+        $googleAccounts = $this->recursiveBuildGoogleAccounts();
+
         return new SessionInfo(
             isSignedIn: false
         );
@@ -31,23 +34,34 @@ class SessionInfoBuilder
         $this->sessionErrors |= $error;
     }
 
-    public function getDisplayName(): ?string
+    public function insertGoogleAccount(): GoogleAccountInfoBuilder
     {
-        return $this->displayName ?? null;
+        $instance = new GoogleAccountInfoBuilder($this);
+        $this->googleAccounts[] = $instance;
+        return $instance;
     }
 
-    public function setDisplayName(string $newName): void
+    private function recursiveBuildGoogleAccounts(): array
     {
-        $this->displayName = $newName;
-    }
+        $result = [];
 
-    public function getEmailAddress(): ?string
-    {
-        return $this->emailAddress ?? null;
-    }
+        foreach ($this->googleAccounts as $i => $acc)
+        {
+            try
+            {
+                $result[] = $acc->build();
+            }
+            catch (BuilderException $e)
+            {
+                // TODO (kirasicecreamm): Better global error handling?
+                trigger_error(
+                    "Failed to build information class for Google Account at " .
+                    "index $i.",
+                    E_USER_WARNING
+                );
+            }
+        }
 
-    public function setEmailAddress(string $newEmail): void
-    {
-        $this->emailAddress = $newEmail;
+        return $result;
     }
 }
