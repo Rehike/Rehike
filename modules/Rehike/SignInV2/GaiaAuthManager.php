@@ -84,8 +84,14 @@ class GaiaAuthManager
             {
                 $accSwitcher = yield self::requestAccountSwitcherData();
 
-                $switcherParser = new SwitcherParser($accSwitcher);
-                $switcherParser->outputToBuilder($infoBuilder);
+                // If the user is signed out, then do not process further.
+                if (null == $accSwitcher)
+                {
+                    return $infoBuilder->build();
+                }
+
+                $switcherParser = new SwitcherParser($infoBuilder, $accSwitcher);
+                $switcherParser->parse();
 
                 return $infoBuilder->build();
             }
@@ -98,25 +104,40 @@ class GaiaAuthManager
     }
 
     /**
-     * Requests account switcher data from the server for parsing.'
+     * Requests account switcher data from the server for parsing.
      * 
      * As this is not a standard InnerTube endpoint, it features a JSON buster
      * that must be removed or it will break the JSON parser.
      * 
-     * @return Promise<object>
+     * @return Promise<?object> Account switcher data if signed in, null if signed out.
      */
-    private static function requestAccountSwitcherData(): Promise/*<object>*/
+    private static function requestAccountSwitcherData(): Promise/*<?object>*/
     {
         return async(function() {
+            // We don't want the request to follow the location of this request,
+            // since this will redirect to the Google Account sign in page if
+            // the user is not signed in, and throw an exception.
             $response = yield Network::urlRequestFirstParty(
                 "https://www.youtube.com/getAccountSwitcherEndpoint",
-                Network::getDefaultYoutubeOpts()
+                Network::getDefaultYoutubeOpts() + [
+                    "redirect" => "manual"
+                ]
             );
 
-            $object = json_decode(
+            // 3xx status means redirect. If we get redirected, simply assume
+            // that the user is not signed in.
+            if ($response->status > 299 && $response->status < 400)
+            {
+                return null;
+            }
+
+            // Remove the JSON buster.
+            $object = @json_decode(
                 substr($response->getText(), 4)
             );
 
+            // If any other failure status is returned by the server, or if the
+            // data we received is invalid, then throw an exception.
             if ($response->status != 200 || !is_object($object))
             {
                 throw new FailedSwitcherRequestException(

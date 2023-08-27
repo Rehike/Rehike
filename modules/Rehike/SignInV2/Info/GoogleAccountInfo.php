@@ -5,6 +5,7 @@ namespace Rehike\SignInV2\Info;
  * Used to store and retrieve information about a Google Account.
  * 
  * @author Daylin Cooper <dcoop2004@gmail.com>
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class GoogleAccountInfo
@@ -26,6 +27,12 @@ class GoogleAccountInfo
     protected string $gaiaId;
 
     /**
+     * The user session index for this account, used when multiple Google Accounts are
+     * accessible.
+     */
+    protected int $authUserId;
+
+    /**
      * The email address associated with this Google Account.
      */
     private string $accountEmail;
@@ -36,14 +43,16 @@ class GoogleAccountInfo
     protected string $avatarUrl;
 
     public function __construct(
-        ?string $displayName = null,
-        string $gaiaId,
-        string $accountEmail,
-        string $avatarUrl
+            ?string $displayName = null,
+            string $gaiaId,
+            int $authUserId,
+            string $accountEmail,
+            string $avatarUrl
     )
     {
         $this->displayName = $displayName;
         $this->gaiaId = $gaiaId;
+        $this->authUserId = $authUserId;
         $this->accountEmail = $accountEmail;
         $this->avatarUrl = $avatarUrl;
     }
@@ -55,6 +64,15 @@ class GoogleAccountInfo
     public function getDisplayName(): ?string
     {
         return $this->displayName;
+    }
+
+    /**
+     * Get the user session index for this account, used when multiple Google 
+     * Accounts are accessible.
+     */
+    public function getAuthUserId(): int
+    {
+        return $this->authUserId;
     }
 
     /**

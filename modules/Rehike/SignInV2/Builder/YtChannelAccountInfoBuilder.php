@@ -8,24 +8,33 @@ use Rehike\SignInV2\Info\GoogleAccountInfo;
  * Builder for the YtChannelAccountInfo class.
  * 
  * @author Daylin Cooper <dcoop2004@gmail.com>
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class YtChannelAccountInfoBuilder
 {
-    private GoogleAccountInfo $ownerAccount;
+    private GoogleAccountInfoBuilder $parent;
+
+    private GoogleAccountInfoBuilder $ownerAccount;
     private string $ucid;
+
+    public function __construct(GoogleAccountInfoBuilder $parent)
+    {
+        $this->parent = $parent;
+        $this->setOwnerAccount($parent);
+    }
 
     public function build(): YtChannelAccountInfo
     {
         return new YtChannelAccountInfo();
     }
 
-    public function getOwnerAccount(): GoogleAccountInfo
+    public function getOwnerAccount(): GoogleAccountInfoBuilder
     {
         return $this->ownerAccount;
     }
 
-    public function setOwnerAccount(GoogleAccountInfo $instance): void
+    public function setOwnerAccount(GoogleAccountInfoBuilder $instance): void
     {
         $this->ownerAccount = $instance;
     }

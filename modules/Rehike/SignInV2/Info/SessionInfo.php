@@ -6,6 +6,7 @@ namespace Rehike\SignInV2\Info;
  * class for accessing data about the user session in the PHP world.
  * 
  * @author Daylin Cooper <dcoop2004@gmail.com>
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class SessionInfo
@@ -16,12 +17,9 @@ class SessionInfo
     protected bool $isSignedIn = false;
 
     /**
-     * Stores information about the currently signed in Google Account.
-     * 
-     * TODO(ev): SessionInfo doesn't account for multiple Google Accounts at
-     * all, which is a major issue. This MUST be added at some point!!!!
+     * Stores information about all accessible Google Accounts.
      */
-    protected GoogleAccountInfo $googleAccount;
+    protected array $googleAccounts = [];
 
     /**
      * Stores information about the currently used YouTube channel.
@@ -45,17 +43,17 @@ class SessionInfo
     protected int $sessionErrors = 0;
 
     public function __construct(
-        bool $isSignedIn,
-        GoogleAccountInfo $googleAccount = null,
-        YtChannelAccountInfo $activeChannel = null,
-        array $otherAccounts = [],
-        array $sessionErrors = []
+            bool $isSignedIn,
+            array $googleAccounts = null,
+            YtChannelAccountInfo $activeChannel = null,
+            array $otherAccounts = [],
+            array $sessionErrors = []
     )
     {
-        $this->isSignedIn = $isSignedIn && $googleAccount != null;
+        $this->isSignedIn = $isSignedIn && !empty($googleAccounts);
 
-        if ($googleAccount != null)
-            $this->googleAccount = $googleAccount;
+        if (!empty($googleAccounts))
+            $this->googleAccounts = $googleAccounts;
 
         if ($activeChannel != null)
             $this->activeChannel = $activeChannel;
@@ -73,11 +71,19 @@ class SessionInfo
     }
 
     /**
+     * Get information about all accessible Google Accounts.
+     */
+    public function getGoogleAccounts(): array
+    {
+        return $this->googleAccounts;
+    }
+
+    /**
      * Gets information about the currently signed in Google Account.
      */
-    public function getGoogleAccount(): GoogleAccountInfo
+    public function getCurrentGoogleAccount(): GoogleAccountInfo
     {
-        return $this->googleAccount;
+        return $this->activeChannel->getOwnerAccount();
     }
 
     /**

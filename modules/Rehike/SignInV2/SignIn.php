@@ -11,6 +11,6 @@ class SignIn
 {
     public static function isSignedIn(): bool
     {
-        
+        return false;
     }
 }
