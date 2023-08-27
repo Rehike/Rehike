@@ -26,14 +26,8 @@ class MVideoSecondaryInfoRenderer
         {
             $info = &$dataHost::$secondaryInfo;
             $primaryInfo = &$dataHost::$primaryInfo;
-
-            // Legacy (COMPETENT) description
-            if (isset($info->description))
-            {
-                $this->description = $info->description;
-            }
-            // "Modern" (RETARDED) description
-            elseif (isset($info->attributedDescription))
+            
+            if (isset($info->attributedDescription))
             {
                 $this->description = self::convertDescription($info->attributedDescription);
             }
@@ -88,7 +82,7 @@ class MVideoSecondaryInfoRenderer
         foreach ($description->commandRuns as $run)
         {
             // Text from before the link
-            $beforeText = self::telegram_substr($description->content, $start, $run->startIndex - $start);
+            $beforeText = self::mb_substr_ex($description->content, $start, $run->startIndex - $start);
 
             if (!empty($beforeText))
             {
@@ -98,7 +92,7 @@ class MVideoSecondaryInfoRenderer
             }
 
             // Add the actual link
-            $text = self::telegram_substr($description->content, $run->startIndex, $run->length);
+            $text = self::mb_substr_ex($description->content, $run->startIndex, $run->length);
             $endpoint = $run->onTap->innertubeCommand;
             $runs[] = (object) [
                 "text" => $text,
@@ -109,7 +103,7 @@ class MVideoSecondaryInfoRenderer
         }
 
         // Add the text after the last link
-        $lastText = self::telegram_substr($description->content, $start, null);
+        $lastText = self::mb_substr_ex($description->content, $start, null);
         if (!empty($lastText))
         {
             $runs[] = (object) [
@@ -125,7 +119,10 @@ class MVideoSecondaryInfoRenderer
             if (isset($run->navigationEndpoint->watchEndpoint)
             &&  !preg_match("/^([0-9]{1,2}(:)?)+$/", $run->text)) // Prevent replacing timestamps
             {
-                $run->text = self::truncate("https://www.youtube.com" . $run->navigationEndpoint->commandMetadata->webCommandMetadata->url);
+                $run->text = self::truncate(
+                    $run->navigationEndpoint->commandMetadata->webCommandMetadata->url,
+                    true
+                );
             }
             // Channel links
             elseif (isset($run->navigationEndpoint->browseEndpoint))
@@ -144,7 +141,10 @@ class MVideoSecondaryInfoRenderer
                     case "FE":
                         break;
                     default:
-                        $run->text = self::truncate("https://www.youtube.com" . $run->navigationEndpoint->commandMetadata->webCommandMetadata->url);
+                        $run->text = self::truncate(
+                            $run->navigationEndpoint->commandMetadata->webCommandMetadata->url,
+                            true
+                        );
                         break;
                 }
             }
@@ -163,9 +163,10 @@ class MVideoSecondaryInfoRenderer
     /**
      * Truncate link texts
      */
-    private static function truncate(?string $string): ?string
+    private static function truncate(?string $string, bool $prefix = false): ?string
     {
         if (is_null($string)) return null;
+        if ($prefix) $string = "https://www.youtube.com" . $string;
         if (strlen($string) <= 37)
         {
             return $string;
@@ -179,7 +180,7 @@ class MVideoSecondaryInfoRenderer
     // FUCKING THANK YOU SO MUCH
     // THIS FIXED EMOJI PROBLEM
     // https://stackoverflow.com/a/66878985
-    private static function telegram_substr($str, $offset, $length) {
+    private static function mb_substr_ex($str, $offset, $length) {
         $bmp = [];
         for( $i = 0; $i < mb_strlen($str); $i++ )
         {
