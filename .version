@@ -1,10 +1,10 @@
 {
-	"previousHash": "a73fbcb70312743904bf1be511d6ceca254487fa",
-	"currentRevisionId": 985,
-	"subject": "Ukrainian translations",
-	"body": "Ukrainian translations",
+	"previousHash": "1a6386914ff52324d2c42f88fb1c516a54227556",
+	"currentRevisionId": 986,
+	"subject": "Update XHook and remove its fetch implementation It was causing videos to not play",
+	"body": "Update XHook and remove its fetch implementation It was causing videos to not play",
 	"branch": "master",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1693165353
+	"time": 1693362261
 }
