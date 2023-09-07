@@ -13,6 +13,7 @@ body:
         2. The bug is not related to Fiddler, or any other proxy. Please see [this guide](https://github.com/Rehike/Rehike/issues/226) for the new method of installing Rehike.
         3. This bug has not been reported before. **Also check closed issues.**
         4. Make sure Rehike is fully up to date! [How do I update Rehike?](https://github.com/Rehike/Rehike/wiki/Update-Rehike)
+        5. **Make sure your internet is working!** Errors relating to `\Rehike\Util\Nameserver` are most likely due to poor internet connection.
   - type: dropdown
     attributes:
       label: Rehike version

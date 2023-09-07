@@ -1,10 +1,10 @@
 {
-	"previousHash": "1a6386914ff52324d2c42f88fb1c516a54227556",
-	"currentRevisionId": 986,
-	"subject": "Update XHook and remove its fetch implementation It was causing videos to not play",
-	"body": "Update XHook and remove its fetch implementation It was causing videos to not play",
+	"previousHash": "0642d7f4a5909a178ebe2f5333d741888e998321",
+	"currentRevisionId": 987,
+	"subject": "Update bug report template",
+	"body": "Update bug report template",
 	"branch": "master",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1693362261
+	"time": 1694058759
 }
