@@ -108,7 +108,7 @@ class CommentThread
 
             self::populateDataApiData($cids)
             ->then(function() use (&$context, &$out, $resolve) {
-                if (@$context)
+                if (is_countable($context))
                 {
                     for ($i = 0, $count = count($context); $i < $count; $i++) {
                         if (isset($context[$i]->commentThreadRenderer))

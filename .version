@@ -1,10 +1,10 @@
 {
-	"previousHash": "be1b4056e12516c409f80822a4b98792c042ee6f",
-	"currentRevisionId": 988,
-	"subject": "Fix InnerTube Next comments change.",
-	"body": "Fix InnerTube Next comments change.",
+	"previousHash": "5bed7aec914e7831074ecb7dcc3b2c8f044e2373",
+	"currentRevisionId": 989,
+	"subject": "Fix count() error if Data API request failed (?)",
+	"body": "Fix count() error if Data API request failed (?)",
 	"branch": "master",
 	"committerName": "Taniko Yamamoto",
 	"committerEmail": "99076687+YukisCoffee@users.noreply.github.com",
-	"time": 1694764987
+	"time": 1694816971
 }
