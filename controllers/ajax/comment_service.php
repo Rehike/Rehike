@@ -170,11 +170,11 @@ return new class extends AjaxController {
             {
                 if ($a = $endpoint->appendContinuationItemsAction)
                 {
-                    $data = $a;
+                    $data = $a?->continuationItems;
                 } 
                 else if ($a = $endpoint->reloadContinuationItemsCommand) 
                 {
-                    $data = $a;
+                    $data = $a?->continuationItems;
                 }
             }
 

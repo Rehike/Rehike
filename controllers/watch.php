@@ -184,7 +184,7 @@ return new class extends NirvanaController {
         ])->then(function ($responses) use ($yt) {
             $nextResponse = $responses["next"]->getJson();
             $playerResponse = $responses["player"]->getJson();
-            
+
             try
             {
                 $rydResponse = $responses["ryd"]->getJson();
@@ -203,12 +203,14 @@ return new class extends NirvanaController {
              $yt->playerResponse = $playerResponse;
              $yt->watchNextResponse = $nextResponse;
 
-            $yt->page = WatchModel::bake(
+            WatchModel::bake(
                 yt:      $yt,
                 data:    $nextResponse,
                 videoId: $yt->videoId,
                 rydData: $rydResponse
-            );
+            )->then(function ($watchModelResult) use ($yt) {
+                $yt->page = $watchModelResult;
+            });
         });
     }
 

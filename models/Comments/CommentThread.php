@@ -53,16 +53,20 @@ class CommentThread
     public static function bakeComments($context): Promise
     {
         return new Promise(function ($resolve, $reject) use ($context) {
-            // Top-level function
-            // $context = continuation command
-
-            $context = $context->continuationItems;
-            
             $out = ["commentThreads" => []];
 
             $cids = [];
             foreach($context as $comment)
             {
+                // FIX (kirasicecreamm): This loop (which is for collecting comment creator
+                // UCIDS for requesting titles in Data API) didn't previously consider that
+                // there may be a continuation at the end of the data, for example. This
+                // fixes any warnings that may occur from that.
+                if (!isset($comment->commentThreadRenderer->comment->commentRenderer))
+                {
+                    continue;
+                }
+
                 $commentr = $comment->commentThreadRenderer->comment->commentRenderer;
 
                 if ($a = (@$commentr->authorEndpoint->browseEndpoint->browseId))

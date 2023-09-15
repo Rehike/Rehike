@@ -2,18 +2,21 @@
 namespace Rehike\Model\Watch\Watch8;
 
 use Rehike\Model\Watch\WatchModel as WatchBase;
-use Rehike\Model\Watch\Watch7\MVideoDiscussionRenderer;
+use Rehike\Model\Watch\Watch7\MVideoDiscussionDelayloadRenderer;
 use Rehike\Model\Watch\Watch7\MVideoDiscussionNotice;
 use Rehike\Model\Watch\Watch7\MCreatorBar;
 use Rehike\i18n;
+use Rehike\ConfigManager\ConfigManager;
 use Rehike\Util\PrefUtils;
 use Rehike\Signin\API as SignIn;
 use Rehike\Model\Browse\InnertubeBrowseConverter;
 use Rehike\Model\Common\MButton;
 use Rehike\Model\Traits\NavigationEndpoint;
 use Rehike\Model\Clickcard\MSigninClickcard;
+use Rehike\Model\Comments\CommentThread;
+use Rehike\Model\Comments\CommentsHeader;
 
-use function PHPSTORM_META\map;
+use function Rehike\Async\async;
 
 /**
  * Implements the watch8 subcontroller for the watch model
@@ -32,65 +35,95 @@ class Watch8Subcontroller
      */
     public static function bakeResults(&$data, $videoId)
     {
-        // Create references
-        $primaryInfo = &WatchBase::$primaryInfo;
-        $secondaryInfo = &WatchBase::$secondaryInfo;
-        $commentSection = &WatchBase::$commentSection;
+        return async(function () use (&$data, $videoId) {
+            // Create references
+            $primaryInfo = &WatchBase::$primaryInfo;
+            $secondaryInfo = &WatchBase::$secondaryInfo;
+            $commentSection = &WatchBase::$commentSection;
 
-        $results = [];
+            $results = [];
 
-        // Push creator bar if the video is yours
-        if (WatchBase::$isOwner) {
-            $results[] = (object) [
-                "videoCreatorBarRenderer" => new MCreatorBar($videoId)
+            // Push creator bar if the video is yours
+            if (WatchBase::$isOwner) {
+                $results[] = (object) [
+                    "videoCreatorBarRenderer" => new MCreatorBar($videoId)
+                ];
+            }
+
+            // Push primary info (if it exists)
+            if (!is_null($primaryInfo)) $results[] = (object)[
+                "videoPrimaryInfoRenderer" => new MVideoPrimaryInfoRenderer(WatchBase::class, $videoId)
             ];
-        }
 
-        // Push primary info (if it exists)
-        if (!is_null($primaryInfo)) $results[] = (object)[
-            "videoPrimaryInfoRenderer" => new MVideoPrimaryInfoRenderer(WatchBase::class, $videoId)
-        ];
+            // Push secondary info (if it exists)
+            if (!is_null($secondaryInfo)) $results[] = (object)[
+                "videoSecondaryInfoRenderer" => new MVideoSecondaryInfoRenderer(WatchBase::class)
+            ];
 
-        // Push secondary info (if it exists)
-        if (!is_null($secondaryInfo)) $results[] = (object)[
-            "videoSecondaryInfoRenderer" => new MVideoSecondaryInfoRenderer(WatchBase::class)
-        ];
-
-        // Push comments (if they exist)
-        if (!is_null($commentSection))
-        {
-            $content = @$commentSection->contents[0];
-
-            if (isset($content->continuationItemRenderer))
+            // Push comments (if they exist)
+            if (!is_null($commentSection))
             {
-                // If the comment section exists, create a video
-                // discussion renderer that contains its continuation.
+                // In order to determine the type of the comment section renderer,
+                // we compare the type of the first item. If it's not a special type,
+                // then we just parse the whole contents.
+                $commentContents = @$commentSection->contents;
+                $firstItem = @$commentContents[0];
 
-                $continuationToken = $content->continuationItemRenderer
-                    ->continuationEndpoint->continuationCommand->token;
-                
-                // Push the continuation token to yt global
-                WatchBase::$yt->commentsToken = $continuationToken;
+                // NOTICE (kirasicecreamm): As of 2023/09/15 or thereabout, comments
+                // may just be embedded in the response.
+                if (isset($firstItem->continuationItemRenderer))
+                {
+                    // If the comment section exists, create a video
+                    // discussion renderer that contains its continuation.
 
-                $results[] = (object)[
-                    "videoDiscussionRenderer" => new MVideoDiscussionRenderer(
-                        $continuationToken
-                    )
-                ];
+                    $continuationToken = $firstItem->continuationItemRenderer
+                        ->continuationEndpoint->continuationCommand->token;
+                    
+                    // Push the continuation token to yt global
+                    WatchBase::$yt->commentsToken = $continuationToken;
+
+                    $results[] = (object)[
+                        "videoDiscussionDelayloadRenderer" => new MVideoDiscussionDelayloadRenderer(
+                            $continuationToken
+                        )
+                    ];
+                }
+                else if (isset($firstItem->messageRenderer))
+                {
+                    // If the comment section renderer contains a message,
+                    // create a videoDiscussionNotice instead.
+                    $message = $firstItem->messageRenderer->text;
+
+                    $results[] = (object)[
+                        "videoDiscussionNotice" => new MVideoDiscussionNotice($message)
+                    ];
+                }
+                else if (isset($commentContents))
+                {
+                    // In this case, the comments are baked into the response rather
+                    // than delayloaded.
+                    $videoId = WatchBase::$yt->videoId ?? $_GET["v"];
+
+                    $headerRenderer = CommentsHeader::fromData(
+                        data: $commentSection?->header[0]?->commentsHeaderRenderer,
+                        id: ConfigManager::getConfigProp("appearance.allCommentsLink") ? $videoId : null
+                    );
+
+                    $contentsRenderer = yield CommentThread::bakeComments(
+                        $commentContents
+                    );
+
+                    $results[] = (object)[
+                        "videoDiscussionRenderer" => (object)[
+                            "headerRenderer" => $headerRenderer,
+                            "comments" => $contentsRenderer
+                        ]
+                    ];
+                }
             }
-            else if (isset($content->messageRenderer))
-            {
-                // If the comment section renderer contains a message,
-                // create a videoDiscussionNotice instead.
-                $message = $content->messageRenderer->text;
 
-                $results[] = (object)[
-                    "videoDiscussionNotice" => new MVideoDiscussionNotice($message)
-                ];
-            }
-        }
-
-        return $results;
+            return $results;
+        });
     }
 
     /**

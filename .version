@@ -1,10 +1,10 @@
 {
-	"previousHash": "0642d7f4a5909a178ebe2f5333d741888e998321",
-	"currentRevisionId": 987,
-	"subject": "Update bug report template",
-	"body": "Update bug report template",
+	"previousHash": "be1b4056e12516c409f80822a4b98792c042ee6f",
+	"currentRevisionId": 988,
+	"subject": "Fix InnerTube Next comments change.",
+	"body": "Fix InnerTube Next comments change.",
 	"branch": "master",
-	"committerName": "aubymori",
-	"committerEmail": "aubyomori@gmail.com",
-	"time": 1694058759
+	"committerName": "Taniko Yamamoto",
+	"committerEmail": "99076687+YukisCoffee@users.noreply.github.com",
+	"time": 1694764987
 }

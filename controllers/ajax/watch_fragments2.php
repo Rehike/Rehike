@@ -82,7 +82,7 @@ class AjaxWatchFragments2Controller extends AjaxController {
              */
             $_oct = $ytdata->onResponseReceivedEndpoints[1]->reloadContinuationItemsCommand; // original comment threads
 
-            CommentThread::bakeComments($_oct)->then(function ($value) use ($yt, $_oct) {
+            CommentThread::bakeComments($_oct->continuationItems)->then(function ($value) use ($yt) {
                 $yt->commentsRenderer->comments = $value;
             });
         });

@@ -218,10 +218,12 @@ video-{{ yt.videoId }} {{ (yt.theaterMode) ? 'watch-wide watch-stage-mode' }}
                   {% set secondaryInfo = result.videoSecondaryInfoRenderer %}
                   {% include '/common/watch/watch7/action_panel/details.twig' %}
                {%- endif -%}
-               {%- if result.videoDiscussionRenderer -%}
-                  {% include '/common/watch/watch_discussion_module.twig' %}
-               {%- endif -%}
-               {%- if result.videoDiscussionNotice -%}
+               {%- if result.videoDiscussionDelayloadRenderer -%}
+                  {% include '/common/watch/watch_discussion_delayload_module.twig' %}
+               {%- elseif result.videoDiscussionRenderer -%}
+                  {% from '/common/watch/watch_discussion_module.twig' import watch_discussion %}
+                  {{ watch_discussion(result.videoDiscussionRenderer) }}
+               {%- elseif result.videoDiscussionNotice -%}
                   {% from '/common/watch/watch_discussion_disabled.twig' import watch_discussion_disabled %}
                   {{ watch_discussion_disabled(result.videoDiscussionNotice.message) }}
                {%- endif -%}

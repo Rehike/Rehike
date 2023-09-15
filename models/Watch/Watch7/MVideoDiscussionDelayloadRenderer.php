@@ -2,12 +2,12 @@
 namespace Rehike\Model\Watch\Watch7;
 
 /**
- * Implements a model for the video discussion renderer.
+ * Implements a model for the video discussion renderer when delayloaded.
  * 
  * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
-class MVideoDiscussionRenderer
+class MVideoDiscussionDelayloadRenderer
 {
     public $continuation;
 
