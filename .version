@@ -1,10 +1,10 @@
 {
-	"previousHash": "5bed7aec914e7831074ecb7dcc3b2c8f044e2373",
-	"currentRevisionId": 989,
-	"subject": "Fix count() error if Data API request failed (?)",
-	"body": "Fix count() error if Data API request failed (?)",
+	"previousHash": "d41f36ad8cf800c2ee9d2f856d9e86af795f0b62",
+	"currentRevisionId": 990,
+	"subject": "Fix RYD error handling",
+	"body": "Fix RYD error handling",
 	"branch": "master",
 	"committerName": "Taniko Yamamoto",
 	"committerEmail": "99076687+YukisCoffee@users.noreply.github.com",
-	"time": 1694816971
+	"time": 1694822270
 }

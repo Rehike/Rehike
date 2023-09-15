@@ -187,7 +187,7 @@ return new class extends NirvanaController {
 
             try
             {
-                $rydResponse = $responses["ryd"]->getJson();
+                $rydResponse = $responses["ryd"]?->getJson() ?? (object)[];
             }
             catch (GeneralException $e)
             {
