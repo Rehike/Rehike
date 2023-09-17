@@ -41,6 +41,7 @@ class CommentThread
             );
             $data = $response->getJson();
 
+            if (isset($data->items))
             foreach ($data->items as $item)
             {
                 self::$dataApiData += [

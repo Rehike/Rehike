@@ -28,8 +28,7 @@ class RehikeConfigManager extends ConfigManager
             "cssFixes" => true,
             "watchSidebarDates" => false,
             "watchSidebarVerification" => false,
-            "oldBestOfYouTubeIcons" => false,
-            "allCommentsLink" => false
+            "oldBestOfYouTubeIcons" => false
         ],
         "experiments" => [
             "useSignInV2" => false,
@@ -57,8 +56,7 @@ class RehikeConfigManager extends ConfigManager
             "cssFixes" => "bool",
             "watchSidebarDates" => "bool",
             "watchSidebarVerification" => "bool",
-            "oldBestOfYouTubeIcons" => "bool",
-            "allCommentsLink" => "bool"
+            "oldBestOfYouTubeIcons" => "bool"
         ],
         "experiments" => [
             "useSignInV2" => "bool",
@@ -92,7 +90,8 @@ class RehikeConfigManager extends ConfigManager
         "useWebV2HomeEndpoint" => "REMOVE",
         "useGridHomeStyle" => "REMOVE",
         "accountPickerYtStudio" => "REMOVE",
-        "general.teaserReplies" => "REMOVE"
+        "general.teaserReplies" => "REMOVE",
+        "appearance.allCommentsLink" => "REMOVE"
     ];
     
     /**

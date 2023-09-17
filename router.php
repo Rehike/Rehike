@@ -103,7 +103,6 @@ Router::get([
     "/channel_switcher" => "channel_switcher",
     "/rehike/config" => "rehike/config",
     "/rehike/config/**" => "rehike/config",
-    "/all_comments" => "all_comments",
     "default" => "channel"
 ]);
 
