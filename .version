@@ -1,10 +1,10 @@
 {
-	"previousHash": "56470ca06e577f629a2789b196002a93c9635a2a",
-	"currentRevisionId": 991,
-	"subject": "Remove All comments page It is a pain in the ass to maintain and none of the developers use the feature",
-	"body": "Remove All comments page It is a pain in the ass to maintain and none of the developers use the feature",
+	"previousHash": "d3f5ed6ef0ec490bedc38be3ba9d0bd87616e89d",
+	"currentRevisionId": 992,
+	"subject": "Remove residual code for All comments page",
+	"body": "Remove residual code for All comments page",
 	"branch": "master",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1694967857
+	"time": 1694968029
 }

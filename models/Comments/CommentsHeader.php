@@ -2,7 +2,6 @@
 namespace Rehike\Model\Comments;
 
 use Rehike\TemplateFunctions;
-use Rehike\Model\Traits\NavigationEndpoint;
 
 class CommentsHeader {
     public $title;
@@ -12,15 +11,8 @@ class CommentsHeader {
     public $createParams;
     public $commentsCountEndpoint;
 
-    public static function fromData($data, $id = null) {
+    public static function fromData($data) {
         $new = new self();
-
-        if (!is_null($id))
-        {
-            $new->commentsCountEndpoint = NavigationEndpoint::createEndpoint(
-                "https://www.youtube.com/all_comments?v=$id"
-            );
-        }
 
         if ($a = @$data->titleText) {
             $new->title = TemplateFunctions::getText($data->titleText);

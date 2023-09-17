@@ -72,8 +72,7 @@ class AjaxWatchFragments2Controller extends AjaxController {
             $ytdata = $response->getJson();
 
             $yt->commentsRenderer->headerRenderer = CommentsHeader::fromData(
-                data: $ytdata->onResponseReceivedEndpoints[0]->reloadContinuationItemsCommand->continuationItems[0]->commentsHeaderRenderer,
-                id: ConfigManager::getConfigProp("appearance.allCommentsLink") ? $_GET["v"] : null
+                $ytdata->onResponseReceivedEndpoints[0]->reloadContinuationItemsCommand->continuationItems[0]->commentsHeaderRenderer
             );
 
             /**

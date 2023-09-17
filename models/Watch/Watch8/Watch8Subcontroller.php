@@ -105,8 +105,7 @@ class Watch8Subcontroller
                     $videoId = WatchBase::$yt->videoId ?? $_GET["v"];
 
                     $headerRenderer = CommentsHeader::fromData(
-                        data: $commentSection?->header[0]?->commentsHeaderRenderer,
-                        id: ConfigManager::getConfigProp("appearance.allCommentsLink") ? $videoId : null
+                        $commentSection?->header[0]?->commentsHeaderRenderer
                     );
 
                     $contentsRenderer = yield CommentThread::bakeComments(
