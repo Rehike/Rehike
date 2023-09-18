@@ -8,12 +8,17 @@ html, body
 body
 {
     margin: 0;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: Roboto, Arial, Helvetica, sans-serif;
     font-size: 13px;
     background: #f1f1f1;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+body, input, button, textarea, select
+{
+    font-family: Roboto, Arial, Helvetica, sans-serif;
 }
 
 #rehike-fatal-error
@@ -35,6 +40,34 @@ body
 .header h1
 {
     display: inline;
+}
+
+.fatal-actions-header
+{
+    font-weight: 500;
+}
+
+.fatal-button
+{
+    display: inline-block;
+    height: 28px;
+    border: solid 1px transparent;
+    padding: 0 10px;
+    outline: 0;
+    font-weight: 500;
+    font-size: 11px;
+    text-decoration: none;
+    white-space: nowrap;
+    word-wrap: normal;
+    line-height: normal;
+    vertical-align: middle;
+    cursor: pointer;
+    border-radius: 2px;
+    box-shadow: 0 1px 0 rgba(0,0,0,0.05);
+
+    border-color: #d3d3d3;
+    background: #f8f8f8;
+    color: #333;
 }
 
 <?php

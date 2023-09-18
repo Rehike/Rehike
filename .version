@@ -1,10 +1,10 @@
 {
-	"previousHash": "d3f5ed6ef0ec490bedc38be3ba9d0bd87616e89d",
-	"currentRevisionId": 992,
-	"subject": "Remove residual code for All comments page",
-	"body": "Remove residual code for All comments page",
+	"previousHash": "31ad74843ca9a8a051af4842b4ef54e31af9a57d",
+	"currentRevisionId": 993,
+	"subject": "Ability to soft-disable Rehike, sign-in improvements",
+	"body": "Ability to soft-disable Rehike, sign-in improvements",
 	"branch": "master",
-	"committerName": "aubymori",
-	"committerEmail": "aubyomori@gmail.com",
-	"time": 1694968029
+	"committerName": "Taniko Yamamoto",
+	"committerEmail": "99076687+YukisCoffee@users.noreply.github.com",
+	"time": 1695031203
 }

@@ -2,6 +2,7 @@
  * @fileoverview Implements the base JS for the Rehike config manager.
  * 
  * @author Daylin Cooper <dcoop2004@gmail.com>
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @version 1.0
  */
 
@@ -43,6 +44,12 @@ rehike.config.modifications_ = {};
 rehike.config.saveButton_ = null;
 
 /**
+ * @private
+ * @type {Element}
+ */
+rehike.config.disableRehikeButton_ = null;
+
+/**
  * Initialise the config manager.
  * 
  * @return {void}
@@ -64,8 +71,14 @@ rehike.config.init = function() {
     rebug.eventDelegate.add('click', 'rehike-config-save-button',
         rehike.config.submit_);
 
+    rebug.eventDelegate.add('click', 'rehike-config-disable-rehike-button',
+        rehike.config.disableRehike_);
+
     rehike.config.saveButton_ = document.querySelector(
         '.rehike-config-save-button');
+
+    rehike.config.disableRehikeButton_ = document.querySelector(
+        '.rehike-config-disable-rehike-button');
 };
 
 window.rehike = window.rehike || {};
@@ -120,19 +133,53 @@ rehike.config.modifyProp_ = function(prop, value) {
 /**
  * Submit the modified configuration and reload the page
  * to reflect the changes.
+ * 
+ * @param {?function} onLoadCb
  */
-rehike.config.submit_ = function() {
+rehike.config.submit_ = function(onLoadCb) {
     var json = JSON.stringify(rehike.config.modifications_);
 
     var xhr = new XMLHttpRequest();
     xhr.open('POST', '/rehike/update_config');
     xhr.onload = function() {
-        if (xhr.status == 200) {
-            location.reload();
+        if (xhr.status == 200)
+        {
+            if (typeof onLoadCb == "undefined")
+            {
+                location.reload();
+            }
+            else if (typeof onLoadCb == "function")
+            {
+                onLoadCb();
+            }
         }
     };
     xhr.setRequestHeader('Content-Type', 'application/json')
     xhr.send(json);
+};
+
+/**
+ * Handles the click events sent to the "Disable Rehike" button.
+ */
+rehike.config.disableRehike_ = function() {
+    var type = rehike.config.disableRehikeButton_.getAttribute(
+        "data-disable-rehike-action"
+    ) || "disable";
+
+    if ("enable" == type.toLowerCase())
+    {
+        rehike.config.modifications_ = {};
+        rehike.config.modifyProp_("hidden.disableRehike", false);
+        rehike.config.submit_();
+    }
+    else
+    {
+        rehike.config.modifications_ = {};
+        rehike.config.modifyProp_("hidden.disableRehike", true);
+        rehike.config.submit_(function() {
+            location.href = "/";
+        });
+    }
 };
 
 })();

@@ -17,7 +17,9 @@
 <html>
     <head>
         <title>Rehike fatal error</title>
+        <?php include "fatal_roboto.css.php" ?>
         <?php include "fatal.css.php" ?>
+        <?php include "fatal.js.php" ?>
     </head>
     <body>
         <div id="rehike-fatal-error">
@@ -37,6 +39,13 @@
                         </a>
                     </div>
                 <?php endif ?>
+
+                <div>
+                    <h3 class="fatal-actions-header">Actions</h3>
+                    <button class="fatal-button" onclick="window.location.reload()">Refresh page</button>
+                    <button class="fatal-button" onclick="fatalDisableRehikeOnce()">Disable Rehike (just this time)</button>
+                    <button class="fatal-button" onclick="fatalDisableRehike()">Disable Rehike (persistently)</button>
+                </div>
 
                 <?php if ($page instanceof UncaughtExceptionPage): ?>
                     <pre class="exception-log"><?= 

@@ -9,10 +9,14 @@ use Rehike\Player\PlayerCore;
 use SpfPhp\SpfPhp;
 use Rehike\ControllerV2\RequestMetadata;
 use Rehike\Debugger\Debugger;
+use Rehike\DisableRehike\DisableRehike;
 use Rehike\Model\Guide\MGuide as Guide;
 use Rehike\Model\Footer\MFooter as Footer;
 use Rehike\Model\Masthead\MMasthead as Masthead;
 use Rehike\Model\Rehike\Security\SecurityLightbox;
+use Rehike\RehikeConfigManager;
+use Rehike\i18n;
+use Rehike\Model\Common\MAlert;
 
 /**
  * Defines a general YouTube Hitchhiker controller.
@@ -287,6 +291,23 @@ abstract class HitchhikerController
         if (!SecurityChecker::isSecure() && !SpfPhp::isSpfRequested())
         {
             $yt->rehikeSecurityNotice = new SecurityLightbox();
+        }
+
+        if (RehikeConfigManager::getConfigProp("hidden.disableRehike") == true)
+        {
+            if (!isset($yt->page->alerts))
+                $yt->page->alerts = [];
+
+            if (!i18n::namespaceExists("disable_rehike"))
+                DisableRehike::initI18n();
+
+            $i18n = i18n::getNamespace("disable_rehike");
+            
+            $yt->page->alerts[] = new MAlert([
+                "type" => MAlert::TypeWarning,
+                "text" => $i18n->get("currentlyDisabledMessage"),
+                "hasCloseButton" => false
+            ]);
         }
     }
 

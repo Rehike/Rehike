@@ -33,8 +33,8 @@ class SimpleFunnel
         "accept",
         "accept-encoding",
         "host",
-        "origin",
-        "referer"
+        //"origin",
+        //"referer"
     ];
 
     /**
@@ -81,8 +81,8 @@ class SimpleFunnel
         }
 
         $headers["Host"] = $opts["host"];
-        $headers["Origin"] = "https://" . $opts["host"];
-        $headers["Referer"] = "https://" . $opts["host"] . $opts["uri"];
+        // $headers["Origin"] = "https://" . $opts["host"];
+        // $headers["Referer"] = "https://" . $opts["host"] . $opts["uri"];
 
         // Set up cURL and perform the request
         $url = "https://" . $opts["host"] . $opts["uri"];
@@ -110,6 +110,34 @@ class SimpleFunnel
         CoffeeRequest::run();
 
         return $wrappedResponse;
+    }
+
+    /**
+     * Convert a list of response headers to HTTP-compatible ones.
+     */
+    public static function responseHeadersToHttp(
+            ResponseHeaders $headers, 
+            bool $ignoreIllegal = true
+    ): array
+    {
+        $out = [];
+
+        foreach ($headers as $name => $value)
+        {
+            if (is_array($value))
+            {
+                foreach ($value as $childValue)
+                {
+                    $out[] = $name . ": " . $childValue;
+                }
+            }
+            else
+            {
+                $out[] = $name . ": " . $value;
+            }
+        }
+
+        return $out;
     }
 
     /**
@@ -170,9 +198,9 @@ class SimpleFunnelResponse extends Response
     {
         http_response_code($this->status);
 
-        foreach($this->headers as $name => $value)
+        foreach (SimpleFunnel::responseHeadersToHttp($this->headers) as $httpHeader)
         {
-            header("$name: $value");
+            header($httpHeader, false);
         }
         
         echo($this->getText());

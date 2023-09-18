@@ -15,6 +15,13 @@
             </li>
         {% endif %}
     {% endfor %}
+    {% for button in data.footButtons %}
+        {% set this = button.buttonRenderer %}
+        {% from "common/uix/button.twig" import render as button %}
+        <li class="rehike-creator-sidebar-foot-button">
+            {{ button(this) }}
+        </li>
+    {% endfor %}
 </ul>
 {% endmacro %}
 

@@ -2,17 +2,6 @@
 use Rehike\ControllerV2\Router;
 use Rehike\SimpleFunnel;
 
-// ?enable_polymer can be used as a passthrough to Polymer. This allows the
-// user to bypass Rehike without disabling the Rehike server.
-if (
-    isset($_GET["enable_polymer"]) && (
-        $_GET["enable_polymer"] == "1" ||
-        strtolower($_GET["enable_polymer"]) == "true"
-    )
-) {
-    SimpleFunnel::funnelCurrentPage()->then(fn($r) => $r->output());
-}
-
 // Passed through the Rehike server. These simply request the YouTube server
 // directly.
 Router::funnel([

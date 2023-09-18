@@ -2,7 +2,8 @@
 namespace Rehike\Boot;
 
 use Rehike\{
-    Debugger\Debugger
+    Debugger\Debugger,
+    DisableRehike\DisableRehike
 };
 
 /**
@@ -41,7 +42,19 @@ final class Bootloader
      */
     private static function postboot(): void
     {
-        require "router.php";
+        if (DisableRehike::shouldDisable())
+        {
+            DisableRehike::disableForSession();
+        }
+        else
+        {
+            if (DisableRehike::shouldPersistentlyEnableRehikeFromCurrentUrl())
+            {
+                DisableRehike::enableRehike();
+            }
+            
+            require "router.php";
+        }
     }
 
     /**

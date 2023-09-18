@@ -38,7 +38,8 @@ class RehikeConfigManager extends ConfigManager
             "enableDebugger" => false
         ],
         "hidden" => [
-            "securityIgnoreWindowsServerRunningAsSystem" => false
+            "securityIgnoreWindowsServerRunningAsSystem" => false,
+            "disableRehike" => false
         ]
     ];
 
@@ -66,7 +67,8 @@ class RehikeConfigManager extends ConfigManager
             "enableDebugger" => "bool"
         ],
         "hidden" => [
-            "securityIgnoreWindowsServerRunningAsSystem" => "bool"
+            "securityIgnoreWindowsServerRunningAsSystem" => "bool",
+            "disableRehike" => "bool"
         ]
     ];
 

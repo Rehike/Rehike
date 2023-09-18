@@ -1,0 +1,10 @@
+{
+    "disableRehike": "Disable Rehike",
+    "enableRehike": "Return to Rehike",
+    "rhSettingsEnableRehike": "Enable Rehike",
+    "disableRehikeInfoHeader": "Are you sure?",
+    "disableRehikeInfoDescription": "This will disable Rehike until you enable it again. You can enable Rehike in the account menu in the new YouTube interface, or by the URL parameter: ?enable_rehike=1",
+    "disableRehikeInfoCancel": "Cancel",
+    "disableRehikeInfoDisable": "Disable",
+    "currentlyDisabledMessage": "You currently have Rehike disabled. Functionality may be limited."
+}
