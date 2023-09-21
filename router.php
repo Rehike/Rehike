@@ -43,7 +43,12 @@ Router::funnel([
 
 Router::redirect([
     "/watch/(*)" => "/watch?v=$1",
-    "/shorts/(*)" => "/watch?v=$1",
+    "/shorts/(*)" => function($request) {
+        if (isset($request->path[1]))
+            return "/watch?v=" . $request->path[1];
+        else
+            return "/watch";
+    },
     "/live/(*)" => "/watch?v=$1",
     "/hashtag/(*)" => "/results?search_query=$1",
     "/feed/what_to_watch/**" => "/",

@@ -1,10 +1,10 @@
 {
-	"previousHash": "31ad74843ca9a8a051af4842b4ef54e31af9a57d",
-	"currentRevisionId": 993,
-	"subject": "Ability to soft-disable Rehike, sign-in improvements",
-	"body": "Ability to soft-disable Rehike, sign-in improvements",
+	"previousHash": "3ae4bc63beb51417856fd4e6c84751141ccab4a3",
+	"currentRevisionId": 994,
+	"subject": "Fix Shorts redirect for non-SPF",
+	"body": "Fix Shorts redirect for non-SPF",
 	"branch": "master",
-	"committerName": "Taniko Yamamoto",
-	"committerEmail": "99076687+YukisCoffee@users.noreply.github.com",
-	"time": 1695031203
+	"committerName": "aubymori",
+	"committerEmail": "aubyomori@gmail.com",
+	"time": 1695255714
 }
