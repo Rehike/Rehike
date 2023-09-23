@@ -58,6 +58,8 @@ class Cacher
                 return false;
             }
         }
+
+        return false;
     }
 
     /**
