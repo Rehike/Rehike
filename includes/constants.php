@@ -31,9 +31,10 @@ const GH_REPO = "Rehike/Rehike";
  * 
  * @var string
  */
-const VERSION = "0.7";
+const VERSION = "0.8.0";
 const VERSION_MAJOR_INT = 0;
-const VERSION_MINOR_INT = 7;
+const VERSION_MINOR_INT = 8;
+const VERSION_SUB_INT   = 0;
 
 /** 
  * The location of views (templates) relative to the root. 
