@@ -17,7 +17,7 @@ class ContextManager
      * The server uses this information to synchronise user data between 
      * sessions if the user is logged out.
      */
-    public static string $visitorData;
+    public static string $visitorData = "";
 
     /**
      * Host language.
