@@ -98,22 +98,28 @@ return new class extends \Rehike\Controller\core\AjaxController
             }
 
             $yt->page->items =
-            InnertubeBrowseConverter::generalLockupConverter(
-                $yt->page->items,
-                [
-                    "listView" => $list,
-                    "channelRendererUnbrandedSubscribeButton" => true
-                ]
-            );
+                InnertubeBrowseConverter::generalLockupConverter(
+                    $yt->page->items,
+                    [
+                        "listView" => $list,
+                        "channelRendererUnbrandedSubscribeButton" => true
+                    ]
+                );
 
             if ($wrap)
             {
                 $yt->page->items = [
-                    (object) [
-                        "shelfRenderer" => (object) [
-                            "content" => (object) [
-                                "gridRenderer" => (object) [
-                                    "contents" => $yt->page->items
+                    (object)[
+                        "itemSectionRenderer" => (object)[
+                            "contents" => [
+                                (object) [
+                                    "shelfRenderer" => (object) [
+                                        "content" => (object) [
+                                            "gridRenderer" => (object) [
+                                                "items" => $yt->page->items
+                                            ]
+                                        ]
+                                    ]
                                 ]
                             ]
                         ]

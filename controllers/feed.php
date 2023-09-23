@@ -253,6 +253,7 @@ return new class extends \Rehike\Controller\core\NirvanaController {
         )->then(function($response) use (&$yt, $list) {
             $ytdata = $response->getJson();
 
+            $rgr = $ytdata->contents->twoColumnBrowseResultsRenderer->tabs[0]->tabRenderer->content->richGridRenderer;
             $rcontents = $ytdata->contents->twoColumnBrowseResultsRenderer->tabs[0]->tabRenderer->content->richGridRenderer->contents;
 
             $contents = [
@@ -274,11 +275,12 @@ return new class extends \Rehike\Controller\core\NirvanaController {
             // Snip the shelf off the array so we can work on the videos themselves
             array_shift($rcontents);
 
-            foreach ($rcontents as $i => $content)
-            if (isset($content->richItemRenderer))
-            {
-                if ($list)
+            if ($list)
+            {    
+                foreach ($rcontents as $i => $content)
+                if (isset($content->richItemRenderer))
                 {
+                    
                     if ($i == 0)
                     {
                         $contents[0]->shelfRenderer->content = (object) [
@@ -298,9 +300,13 @@ return new class extends \Rehike\Controller\core\NirvanaController {
                         ]);
                     }
                 }
-                
             }
-            $contents = InnertubeBrowseConverter::generalLockupConverter($contents);
+            else
+            {
+                $contents[0]->shelfRenderer->content = (object)[
+                    "gridRenderer" => InnerTubeBrowseConverter::richGridRenderer($rgr)
+                ];
+            }
 
             $yt->page->content = (object) [
                 "sectionListRenderer" => (object) [
@@ -314,7 +320,7 @@ return new class extends \Rehike\Controller\core\NirvanaController {
                 ]
             ];
 
-            if ($cont = @$rcontents[count($rcontents)]->continuationItemRenderer)
+            if ($cont = @$rcontents[count($rcontents) - 1]->continuationItemRenderer)
             {
                 
                 $ctoken = &$cont->continuationEndpoint->continuationCommand->token;
@@ -331,6 +337,7 @@ return new class extends \Rehike\Controller\core\NirvanaController {
             }
 
             $yt->test = $rcontents;
+            $yt->test2 = $contents;
 
             if (isset($ytdata->header))
             foreach ($ytdata->header as $header)

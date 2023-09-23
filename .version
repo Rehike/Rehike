@@ -1,10 +1,10 @@
 {
-	"previousHash": "8b607e624208df7bb0c22e407e16cc178c20eb46",
-	"currentRevisionId": 998,
-	"subject": "Various bug fixes",
-	"body": "Various bug fixes",
+	"previousHash": "780dc8bdc3c3f419fe1d131dbd028dc39985f840",
+	"currentRevisionId": 999,
+	"subject": "Fix subscriptions",
+	"body": "Fix subscriptions",
 	"branch": "master",
 	"committerName": "Taniko Yamamoto",
 	"committerEmail": "99076687+YukisCoffee@users.noreply.github.com",
-	"time": 1695470723
+	"time": 1695473420
 }
