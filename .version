@@ -1,10 +1,10 @@
 {
-	"previousHash": "c1174e9a68fedfe2f668d22ee9c85bfa7e7d3e7a",
-	"currentRevisionId": 1000,
-	"subject": "Upgrade Rehike version to 0.8.0",
-	"body": "Upgrade Rehike version to 0.8.0",
+	"previousHash": "a7280ce61a05f4b7f1cc5543fc599724e3c71acf",
+	"currentRevisionId": 1002,
+	"subject": "sorry yet again",
+	"body": "sorry yet again",
 	"branch": "master",
 	"committerName": "Taniko Yamamoto",
 	"committerEmail": "99076687+YukisCoffee@users.noreply.github.com",
-	"time": 1695473469
+	"time": 1695475129
 }

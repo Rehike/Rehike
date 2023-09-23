@@ -122,9 +122,8 @@ class ConfigManager
      * config. If it isn't, this returns null.
      * 
      * @param string $path   Period-delimited path of the config
-     * @param string $value  New value
      */
-    public static function setConfigProp(string $path, string $value): void
+    public static function setConfigProp(string $path, mixed $value): void
     {
         try
         {

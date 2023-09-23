@@ -59,8 +59,8 @@ class MVideoPrimaryInfoRenderer
 
             if (isset($info->viewCount->videoViewCountRenderer))
             $this->viewCount = (true === ConfigManager::getConfigProp("appearance.noViewsText"))
-            ? ExtractUtils::isolateViewCnt(TemplateFunctions::getText($info->viewCount->videoViewCountRenderer->viewCount))
-            : TemplateFunctions::getText($info->viewCount->videoViewCountRenderer->viewCount) ?? null;
+                ? ExtractUtils::isolateViewCnt(TemplateFunctions::getText($info->viewCount->videoViewCountRenderer->viewCount))
+                : TemplateFunctions::getText($info->viewCount->videoViewCountRenderer->viewCount) ?? null;
             $this->superTitle = isset($info->superTitleLink) ? new MSuperTitle($info->superTitleLink) : null;
             $this->likeButtonRenderer = new MLikeButtonRenderer($dataHost, $info->videoActions->menuRenderer, $videoId);
             $this->owner = new MOwner($dataHost);
