@@ -17,34 +17,38 @@ class PropertyAtPathException extends CoffeeException {}
  * @author Aubrey Pankow <aubyomori@gmail.com>
  * @author The Rehike Maintainers
  */
-class PropertyAtPath {
+class PropertyAtPath
+{
     /**
      * Get the PHP pointer string needed
      * for other functions.
      * 
      * @param  object|array $base  Parent object/array,
      * @param  string       $path  JS-style period delimited path
-     * @return string
      */
-    public static function func(&$base, string $path): string {
+    public static function func(object|array &$base, string $path): string
+    {
         $tree = explode(".", $path);
 
-        if (is_object($base)) {
+        if (is_object($base))
+        {
             $tokenL = "->{'";
             $tokenR = "'}";
-        } else if (is_array($base)) {
+        }
+        else if (is_array($base))
+        {
             $tokenL = "['";
             $tokenR = "']";
-        } else {
-            throw new PropertyAtPathException("Argument \$base must of be of type object|array");
         }
 
         $func = '$base';
         $items = "";
-        foreach($tree as $i => $property) {
+        foreach($tree as $i => $property)
+        {
             $arrayCarry = "";
 
-            if (strpos($property, "[") > 0) {
+            if (strpos($property, "[") > 0)
+            {
                 $arrayWorker = explode("[", $property);
                 $property = $arrayWorker[0];
                 array_splice($arrayWorker, 0, 1);
@@ -63,11 +67,12 @@ class PropertyAtPath {
      * 
      * @param  object|array $base  Parent object/array,
      * @param  string       $path  JS-style period delimited path
-     * @return mixed
      */
-    public static function get(&$base, string $path) {
+    public static function get(object|array &$base, string $path): mixed
+    {
         $func = self::func($base, $path);
-        if (!@eval("return isset({$func});")) {
+        if (!@eval("return isset({$func});"))
+        {
             throw new PropertyAtPathException("Unknown property {$func}");
             return null;
         }
@@ -80,9 +85,9 @@ class PropertyAtPath {
      * @param  object|array $base  Parent object/array,
      * @param  string       $path  JS-style period delimited path
      * @param  mixed        $value Value to set the property to.
-     * @return void
      */
-    public static function set(&$base, string $path, $value): void {
+    public static function set(object|array &$base, string $path, mixed $value): void
+    {
         $func = self::func($base, $path);
         @eval("{$func} = \$value;");
     }
@@ -92,11 +97,12 @@ class PropertyAtPath {
      * 
      * @param  object|array $base  Parent object/array,
      * @param  string       $path  JS-style period delimited path
-     * @return void
      */
-    public static function unset(&$base, string $path): void {
+    public static function unset(object|array &$base, string $path): void
+    {
         $func = self::func($base, $path);
-        if (!@eval("return isset({$func});")) {
+        if (!@eval("return isset({$func});"))
+        {
             throw new PropertyAtPathException("Unknown property {$func}");
             return;
         }

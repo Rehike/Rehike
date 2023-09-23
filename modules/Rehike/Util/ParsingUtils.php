@@ -142,6 +142,7 @@ class ParsingUtils
 
         return null;
     }
+    
     /**
      * Helper function for finding thumbnail overlays.
      * 

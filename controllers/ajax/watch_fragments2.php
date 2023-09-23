@@ -1,6 +1,9 @@
 <?php
 namespace Rehike\Controller\ajax;
 
+use Rehike\YtApp;
+use Rehike\ControllerV2\RequestMetadata;
+
 use Rehike\Controller\core\AjaxController;
 use Rehike\Model\Comments\CommentThread;
 use Rehike\Model\Comments\CommentsHeader;
@@ -18,14 +21,16 @@ use Rehike\ConfigManager\ConfigManager;
  * 
  * @version 1.0.20220805
  */
-class AjaxWatchFragments2Controller extends AjaxController {
-    public $useTemplate = true;
+class AjaxWatchFragments2Controller extends AjaxController
+{
+    public bool $useTemplate = true;
 
     // 404 by default.
     // The real template will be set by subcontroller functions.
-    public $template = '404';
+    public string $template = '404';
 
-    public function onPost(&$yt, $request) {
+    public function onPost(YtApp $yt, RequestMetadata $request): void
+    {
         $fragsId = $_GET['frags'] ?? '';
         switch ($fragsId) {
             case 'comments':
@@ -40,7 +45,8 @@ class AjaxWatchFragments2Controller extends AjaxController {
         }
     }
 
-    private function getGuide(&$yt) {
+    private function getGuide(YtApp $yt): void
+    {
         $this->template = "common/appbar/appbar_guide";
         $this->spfIdListeners = [
             '@masthead_search<data-is-crosswalk>',
@@ -53,7 +59,8 @@ class AjaxWatchFragments2Controller extends AjaxController {
         });
     }
 
-    private function getComments(&$yt) {
+    private function getComments(YtApp &$yt): void
+    {
         $this->template = 'common/watch/watch_fragments2/comments';
         $yt->page = (object) [];
         $yt->commentsRenderer = (object) [

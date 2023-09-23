@@ -1,6 +1,9 @@
 <?php
 namespace Rehike\Controller\ajax;
 
+use Rehike\YtApp;
+use Rehike\ControllerV2\RequestMetadata;
+
 use Rehike\Network;
 use Rehike\Util\RichShelfUtils;
 use Rehike\Util\Base64Url;
@@ -18,16 +21,16 @@ use function Rehike\Async\async;
  */
 return new class extends \Rehike\Controller\core\AjaxController
 {
-    public $template = "ajax/browse";
+    public string $template = "ajax/browse";
 
-    public function onGet(&$yt, $request)
+    public function onGet(YtApp $yt, RequestMetadata $request): void
     {
-        return $this->onPost($yt, $request);
+        $this->onPost($yt, $request);
     }
 
-    public function onPost(&$yt, $request)
+    public function onPost(YtApp $yt, RequestMetadata $request): void
     {
-        return async(function() use (&$yt, $request)
+        async(function() use (&$yt, $request)
         {
             if (!isset($request->params->continuation)) self::error();
             $continuation = $request->params->continuation;

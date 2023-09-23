@@ -1,4 +1,9 @@
 <?php
+namespace Rehike\Controller\ajax;
+
+use Rehike\YtApp;
+use Rehike\ControllerV2\RequestMetadata;
+
 use \Rehike\Controller\core\AjaxController;
 use \Rehike\Model\Comments\CommentThread;
 use \Rehike\Network;
@@ -10,14 +15,17 @@ use \Rehike\Network;
  * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
-return new class extends AjaxController {
-    public function onPost(&$yt, $request) {
+return new class extends AjaxController
+{
+    public function onPost(YtApp $yt, RequestMetadata $request): void
+    {
         $action = self::findAction();
         if (!@$action) self::error();
 
         $yt->page = (object) [];
         
-        switch ($action) {
+        switch ($action)
+        {
             case "create_comment":
                 self::createComment($yt);
                 break;
@@ -41,7 +49,8 @@ return new class extends AjaxController {
      * 
      * @param $yt Template data.
      */
-    private function createComment(&$yt) {
+    private function createComment(YtApp $yt): void
+    {
         $this->template = "ajax/comment_service/create_comment";
 
         $content = $_POST["content"] ?? null;
@@ -96,7 +105,8 @@ return new class extends AjaxController {
      * 
      * @param $yt Template data.
      */
-    private function createCommentReply(&$yt) {
+    private function createCommentReply(YtApp $yt): void
+    {
         $this->template = "ajax/comment_service/create_comment_reply";
 
         $content = $_POST["content"] ?? null;
@@ -152,7 +162,8 @@ return new class extends AjaxController {
      * 
      * @param $yt Template data.
      */
-    private function getComments(&$yt) {
+    private function getComments(YtApp $yt): void
+    {
         $this->template = "ajax/comment_service/get_comments";
 
         $ctoken = $_POST["page_token"] ?? null;
@@ -198,7 +209,8 @@ return new class extends AjaxController {
      * 
      * @param $yt Template data.
      */
-    private function getCommentReplies(&$yt) {
+    private function getCommentReplies(YtApp $yt): void
+    {
         $this->template = "ajax/comment_service/get_comment_replies";
 
         $ctoken = $_POST["page_token"] ?? null;
@@ -212,8 +224,10 @@ return new class extends AjaxController {
         )->then(function ($response) use ($yt) {
             $ytdata = $response->getJson();
 
-            foreach ($ytdata->onResponseReceivedEndpoints as $endpoint) {
-                if ($a = $endpoint->appendContinuationItemsAction) {
+            foreach ($ytdata->onResponseReceivedEndpoints as $endpoint)
+            {
+                if ($a = $endpoint->appendContinuationItemsAction)
+                {
                     $data = $a;
                 }
             }
@@ -237,7 +251,8 @@ return new class extends AjaxController {
      * Perform a comment action
      * (Like, dislike, heart, etc.)
      */
-    private function performCommentAction() {
+    private function performCommentAction(): void
+    {
         $this->useTemplate = false;
 
         Network::innertubeRequest(
@@ -250,11 +265,14 @@ return new class extends AjaxController {
         )->then(function ($response) {
             $ytdata = $response->getJson();
 
-            if (@$ytdata->actionResults[0] ->status == "STATUS_SUCCEEDED") {
+            if (@$ytdata->actionResults[0] ->status == "STATUS_SUCCEEDED")
+            {
                 echo json_encode((object) [
                     "response" => "SUCCESS"
                 ]);
-            } else {
+            }
+            else
+            {
                 self::error();
             }
         });

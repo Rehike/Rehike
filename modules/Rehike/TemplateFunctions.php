@@ -19,9 +19,9 @@ class TemplateFunctions
      * 
      * @var callback[]
      */
-    protected static $registry = [];
+    protected static array $registry = [];
 
-    public static function __callStatic($name, $args)
+    public static function __callStatic(string $name, array $args): mixed
     {
         if ($function = @self::$registry[$name])
         {
@@ -39,7 +39,7 @@ class TemplateFunctions
      * @param string $name of the function
      * @param callback $function
      */
-    public static function register($name, $function)
+    public static function register(string $name, callable $function): void
     {
         self::$registry += [$name => $function];
 

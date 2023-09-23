@@ -11,20 +11,16 @@ class DotGit
 {
     /**
      * Determine if the version system can be used.
-     * 
-     * @return bool
      */
-    public static function canUse()
+    public static function canUse(): bool
     {
         return is_dir(".git");
     }
 
     /**
      * Get the active Git branch.
-     * 
-     * @return string
      */
-    public static function getBranch()
+    public static function getBranch(): string
     {
         $headFile = @file_get_contents(".git/HEAD");
 
@@ -35,10 +31,8 @@ class DotGit
 
     /**
      * Get the latest possible commit hash.
-     * 
-     * @return string
      */
-    public static function getCommit($branch)
+    public static function getCommit(string $branch): string
     {
         $branchFile = @file_get_contents(".git/refs/heads/{$branch}");
 
@@ -53,7 +47,7 @@ class DotGit
      * 
      * @return string[]
      */
-    public static function getInfo()
+    public static function getInfo(): array
     {
         if (!self::canUse()) return []; // Add nothing at all
 

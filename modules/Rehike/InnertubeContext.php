@@ -23,7 +23,7 @@ class InnertubeContext
      * @param int $int to convert
      * @return string uleb128 binary
      */
-    public static function int2uleb128($int)
+    public static function int2uleb128(int $int): string
     {
         // this is awful
         // i hate the person who wrot ethis
@@ -73,7 +73,7 @@ class InnertubeContext
      * @param string $visitor
      * @return string encoded visitor data
      */
-    public static function genVisitorData($visitor)
+    public static function genVisitorData(string $visitor): string
     {
         // Generate visitorData string
         if (is_null($visitor)) return "";
@@ -96,7 +96,13 @@ class InnertubeContext
      * 
      * @return object InnerTube context
      */
-    public static function generate($cname, $cver, $visitorData = null, $hl = 'en', $gl = 'US')
+    public static function generate(
+            string|int $cname, 
+            string $cver, 
+            ?string $visitorData = null, 
+            string $hl = "en", 
+            string $gl = "US"
+    ): object
     {
         if (is_null($visitorData)) $visitorData = ContextManager::$visitorData;
         return (object) [

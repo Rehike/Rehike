@@ -1,6 +1,9 @@
 <?php
 use \Com\Youtube\Innertube\Request\BrowseRequestParams;
 
+use Rehike\YtApp;
+use Rehike\ControllerV2\RequestMetadata;
+
 use \Rehike\Controller\core\NirvanaController;
 use \Rehike\Model\Playlist\PlaylistModel;
 use \Rehike\Model\Channels\Channels4Model;
@@ -17,11 +20,11 @@ use function Rehike\Async\async;
 
 return new class extends NirvanaController
 {
-    public $template = "playlist";
+    public string $template = "playlist";
 
-    public function onGet(&$yt, $request)
+    public function onGet(YtApp $yt, RequestMetadata $request): void
     {
-        return async(function() use (&$yt, $request) {
+        async(function() use (&$yt, $request) {
             if (!isset($request->params->list))
             {
                 header("Location: /oops");

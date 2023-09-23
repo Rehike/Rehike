@@ -10,41 +10,39 @@ use \Rehike\Model\Rehike\Debugger\{
     MLoadingTab
 };
 
+use stdClass;
+
 /**
  * Implements the Rehike debugger context.
+ * 
+ * This extends stdClass in order to support dynamic properties.
  * 
  * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
-class Context
+class Context extends stdClass
 {
     /** 
      * Properties used to build the dialog view.
-     * 
-     * @var MDialog 
      */
-    public $dialog = null;
+    public MDialog $dialog;
 
     /** 
      * Properties used to build the open button's view.
-     * 
-     * @var MOpenButton 
      */
-    public $openButton = null;
+    public MOpenButton $openButton;
 
     /** 
      * Reports if the debugger is in condensed mode (disabled generally).
-     * 
-     * @var bool 
      */
-    public $condensed = false;
+    public bool $condensed = false;
 
     /**
      * Get all tabs in the dialog.
      * 
      * @return MTab[]
      */
-    public function getTabs()
+    public function getTabs(): array
     {
         return $this->dialog->tabs;
     }
@@ -54,7 +52,7 @@ class Context
      * 
      * @return string[]
      */
-    public function getTabIds()
+    public function getTabIds(): array
     {
         $out = [];
 
@@ -71,7 +69,7 @@ class Context
      * 
      * @return string[]
      */
-    public function getJsHistoryTabIds()
+    public function getJsHistoryTabIds(): array
     {
         $out = [];
 

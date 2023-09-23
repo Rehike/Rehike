@@ -25,10 +25,8 @@ class Cacher
 {
     /**
      * Get the current cached contents.
-     * 
-     * @return string
      */
-    public static function get()
+    public static function get(): object
     {
         $root = PlayerCore::$cacheDestDir;
         $name = PlayerCore::$cacheDestName;
@@ -57,11 +55,8 @@ class Cacher
     /**
      * Create or update the cache file with the current
      * information.
-     * 
-     * @param object $object
-     * @return void
      */
-    public static function write($object)
+    public static function write(object $object): void
     {
         $root = PlayerCore::$cacheDestDir;
         $name = PlayerCore::$cacheDestName;
@@ -71,19 +66,15 @@ class Cacher
 
         try
         {
-            return self::writeJson($path, self::expireWrap($expire, $object));
+            self::writeJson($path, self::expireWrap($expire, $object));
         }
         catch (CacherException $e) { throw $e; }
     }
 
     /**
      * Wrap an object in an expirable container.
-     * 
-     * @param int $duration
-     * @param object $object
-     * @return object
      */
-    public static function expireWrap($duration, $object)
+    public static function expireWrap(int $duration, object $object): object
     {
         $expireTime = time() + $duration;
 
@@ -95,13 +86,8 @@ class Cacher
 
     /**
      * Serialise an object and write it to the path.
-     * 
-     * @param string $path
-     * @param object|array $object
-     * 
-     * @return void
      */
-    public static function writeJson($path, $object)
+    public static function writeJson(string $path, object|array $object): void
     {
         try
         {
@@ -110,22 +96,23 @@ class Cacher
 
             $object = json_encode($object, JSON_PRETTY_PRINT);
 
-            return self::writeRaw($path, $object);
+            self::writeRaw($path, $object);
         }
-        catch (CacherException $e) { throw $e; }
+        catch (CacherException $e)
+        { 
+            throw $e;
+        }
     }
 
     /**
      * Write a raw string to a file path.
-     * 
-     * @param string $path
-     * @param string $contents
-     * @param bool $recursive
-     * @param bool $append
-     * 
-     * @return void
      */
-    public static function writeRaw($path, $contents, $recursive = true, $append = false)
+    public static function writeRaw(
+            string $path, 
+            string $contents, 
+            bool $recursive = true, 
+            bool $append = false
+    ): void
     {
         // Make sure all folders leading to the path exist if the
         // recursive option is enabled.
@@ -158,11 +145,8 @@ class Cacher
 
     /**
      * Get the containing folder of a file path.
-     * 
-     * @param string $path
-     * @return string
      */
-    public static function getFolder($path)
+    public static function getFolder(string $path): string
     {
         // Convert the path to account for Windows separation.
         $path = str_replace("\\", "/", $path);
@@ -181,10 +165,12 @@ class Cacher
 
     /**
      * An error-checked mkdir wrapper.
-     * 
-     * @return void
      */
-    public static function mkdir($dirname, $mode = 0777, $recursive = false)
+    public static function mkdir(
+            string $dirname, 
+            int $mode = 0777, 
+            bool $recursive = false
+    ): void
     {
         $status = @\mkdir($dirname, $mode, $recursive);
 

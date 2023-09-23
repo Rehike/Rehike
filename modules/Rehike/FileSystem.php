@@ -19,11 +19,8 @@ class FileSystem
      * 
      * This returns everything past the first dot in the filename, so
      * formats like .tar.gz are supported.
-     * 
-     * @param string $filename
-     * @return string
      */
-    public static function getExtension($filename)
+    public static function getExtension(string $filename): string
     {
         // Ignore the first . (i.e. in ./)
         if ("." == $filename[0])
@@ -45,11 +42,8 @@ class FileSystem
 
     /**
      * Get the containing folder of a file path.
-     * 
-     * @param string $path
-     * @return string
      */
-    public static function getFolder($path)
+    public static function getFolder(string $path): string
     {
         // Convert the path to account for Windows separation.
         $path = self::unwindows($path);
@@ -68,11 +62,8 @@ class FileSystem
 
     /**
      * Un-Windows a path (convert \ to /)
-     * 
-     * @param string $path
-     * @return string
      */
-    public static function unwindows($path)
+    public static function unwindows(string $path): string
     {
         return str_replace("\\", "/", $path);
     }
@@ -96,7 +87,12 @@ class FileSystem
      * @param $append to the file instead of erasing it
      * @return void
      */
-    public static function writeFile($path, $contents, $recursive = true, $append = false)
+    public static function writeFile(
+            string $path, 
+            string $contents, 
+            bool $recursive = true, 
+            bool $append = false
+    ): void
     {
         // Make sure all folders leading to the path exist if the
         // recursive option is enabled.
@@ -131,7 +127,13 @@ class FileSystem
     // Alias operations
     //
 
-    public static function getFileContents($filename, $useIncludePath = true, $context = null, $offset = null, $length = null)
+    public static function getFileContents(
+            string $filename, 
+            bool $useIncludePath = true, 
+            /* resource */ $context = null, 
+            ?int $offset = null, 
+            ?int $length = null
+    ): string
     {
         /*
          * PATCH (kirasicecreamm): The file_get_contents API vaguely differs between
@@ -140,6 +142,8 @@ class FileSystem
          * This has been a source of odd crashing on what we could only just
          * trace to PHP 7.x, which we intend to continue supporting for the near
          * future.
+         * 
+         * TODO (kirasicecreamm): Revamp? We don't support PHP 7 any longer.
          */
         $fgcArgs = [
             $filename,
@@ -179,14 +183,17 @@ class FileSystem
         }
     }
 
-    public static function fileExists($filename)
+    public static function fileExists(string $filename): bool
     {
         return \file_exists($filename) ||
-               \file_exists($_SERVER["DOCUMENT_ROOT"] . "/" . $filename)
-        ;
+               \file_exists($_SERVER["DOCUMENT_ROOT"] . "/" . $filename);
     }
 
-    public static function mkdir($dirname, $mode = 0777, $recursive = false)
+    public static function mkdir(
+            string $dirname, 
+            int $mode = 0777, 
+            bool $recursive = false
+    ): void
     {
         $status = @\mkdir($dirname, $mode, $recursive);
 

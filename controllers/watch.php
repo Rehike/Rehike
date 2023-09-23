@@ -1,6 +1,9 @@
 <?php
 use Rehike\Controller\core\NirvanaController;
 
+use Rehike\YtApp;
+use Rehike\ControllerV2\RequestMetadata;
+
 use Com\Youtube\Innertube\Request\NextRequestParams;
 use Com\Youtube\Innertube\Request\NextRequestParams\UnknownThing;
 
@@ -25,19 +28,20 @@ use YukisCoffee\CoffeeRequest\Exception\GeneralException;
  * @author The Rehike Maintainers
  */
 return new class extends NirvanaController {
-    public $template = 'watch';
+    public string $template = 'watch';
     
     // Watch should only load the guide after everything else is done.
-    protected $delayLoadGuide = true;
+    protected bool $delayLoadGuide = true;
 
-    public function onGet(&$yt, $request)
+    public function onGet(YtApp $yt, RequestMetadata $request): void
     {
         $this->useJsModule("www/watch");
 
         i18n::newNamespace("watch")->registerFromFolder("i18n/watch");
 
         // invalid request redirect
-        if (!isset($_GET['v'])) {
+        if (!isset($_GET['v']))
+        {
             header('Location: /');
             die();
         }
@@ -111,22 +115,32 @@ return new class extends NirvanaController {
             ];
         }
 
-        if (!is_null($yt->playlistId)) {
+        if (!is_null($yt->playlistId))
+        {
             $sharedRequestParams['playlistId'] = $yt->playlistId;
             $sharedRequestParams['playlistIndex'] = $yt->playlistIndex;
         }
 
         // TODO (kirasicecreamm): Clean up this algo, make better
-        if (isset($request->params->t)) {
+        if (isset($request->params->t))
+        {
             preg_match_all("/\d{1,6}/", $request->params->t, $times);
             $times = $times[0];
-            if (count($times) == 1) { // before you whine "waaahh use case" I CAN'T IT BREAKS IT FOR NO FUCKING REASON, if you wanna make this better, go ahead
+            if (count($times) == 1)
+            {
+                // before you whine "waaahh use case" I CAN'T IT BREAKS IT FOR NO FUCKING REASON, if you wanna make this better, go ahead
                 $startTime = (int) $times[0];
-            } else if (count($times) == 2) {
+            } 
+            else if (count($times) == 2)
+            {
                 $startTime = ((int) $times[0] * 60) + (int) $times[0];
-            } else if (count($times) == 3) {
+            } 
+            else if (count($times) == 3)
+            {
                 $startTime = ((int) $times[0] * 3600) + ((int) $times[1] * 60) + (int) $times[2];
-            } else {
+            } 
+            else
+            {
                 $startTime = 0;
             }
         }
@@ -223,7 +237,7 @@ return new class extends NirvanaController {
      * @param $data  SPF data.
      * @return void  (Modifies $data.)
      */
-    public function handleSpfData(&$data)
+    public function handleSpfData(object $data): void
     {
         $yt = &$this->yt;
 

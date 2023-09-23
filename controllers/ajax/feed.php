@@ -1,4 +1,9 @@
 <?php
+namespace Rehike\Controller\ajax;
+
+use Rehike\YtApp;
+use Rehike\ControllerV2\RequestMetadata;
+
 use Rehike\Controller\core\AjaxController;
 use \Rehike\Network;
 use SpfPhp\SpfPhp;
@@ -11,15 +16,18 @@ use SpfPhp\SpfPhp;
  * @author Aubrey Pankow <aubyomori@gmail.com>
  * @author The Rehike Maintainers
  */
-return new class extends AjaxController {
-    public $template = "ajax/feed/get_notifications";
+return new class extends AjaxController
+{
+    public string $template = "ajax/feed/get_notifications";
 
-    public function onGet(&$yt, $request) {
+    public function onGet(YtApp $yt, RequestMetadata $request): void
+    {
         if (!@$yt->signin["isSignedIn"]) self::error();
 
         $action = self::findAction();
 
-        if (@$action == "get_unseen_notification_count") {
+        if (@$action == "get_unseen_notification_count")
+        {
             $this->useTemplate = false;
 
             Network::innertubeRequest(
@@ -36,10 +44,13 @@ return new class extends AjaxController {
                     "polling_timeout" => $updateAction->timeoutMs ?? 1800000
                 ]);
             });
-        } else if (@$action == "continuation") {
+        }
+        else if (@$action == "continuation")
+        {
             $this->template = "ajax/feed/continuation";
             
-            if (!@$request->params->continuation) {
+            if (!@$request->params->continuation)
+            {
                 echo json_encode((object) [
                     "errors" => [
                         "Specify a continuation"
@@ -63,18 +74,21 @@ return new class extends AjaxController {
                     ->getNotificationMenuEndpoint 
                     ->ctoken) ?? null;
             });
-        } else {
+        }
+        else
+        {
             $this->getNotifications($yt, $request);
         }
     }
 
-    public function onPost(&$yt, $request) {
+    public function onPost(YtApp $yt, RequestMetadata $request): void
+    {
         if (!@$yt->signin["isSignedIn"]) self::error();
 
         $this->getNotifications($yt, $request);
     }
 
-    private function getNotifications(&$yt, $request): void
+    private function getNotifications(YtApp $yt, RequestMetadata $request): void
     {
         $this->spfIdListeners = [
             "yt-masthead-notifications-content"

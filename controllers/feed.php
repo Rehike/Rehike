@@ -1,6 +1,11 @@
 <?php
 namespace Rehike\Controller;
 
+use Rehike\YtApp;
+use Rehike\ControllerV2\RequestMetadata;
+
+use Rehike\Async\Promise;
+
 use Com\Youtube\Innertube\Helpers\VideosContinuationWrapper;
 use Rehike\Network;
 use Rehike\Util\WebV2Shelves;
@@ -34,7 +39,7 @@ use function Rehike\Async\async;
  * @author The Rehike Maintainers
  */
 return new class extends \Rehike\Controller\core\NirvanaController {
-    public $template = "feed";
+    public string $template = "feed";
 
     /**
      * IDs of feeds to add the "common feed appbar" on.
@@ -60,17 +65,20 @@ return new class extends \Rehike\Controller\core\NirvanaController {
         "FEsubscriptions"
     ];
 
-    public function onGet(&$yt, $request) {
+    public function onGet(YtApp $yt, RequestMetadata $request): void
+    {
         $feedId = $request->path[1] ?? "what_to_watch";
         $feedId = "FE" . $feedId;
 
         $this->setEndpoint("browse", $feedId);
 
-        if (in_array($feedId, self::FEED_APPBAR_SUPPORTED_IDS)) {
+        if (in_array($feedId, self::FEED_APPBAR_SUPPORTED_IDS))
+        {
             $yt->appbar->nav = new MFeedAppbarNav($feedId);
         }
 
-        if (!SignIn::isSignedIn() && in_array($feedId, self::SIGNIN_REQUIRED_IDS)) {
+        if (!SignIn::isSignedIn() && in_array($feedId, self::SIGNIN_REQUIRED_IDS))
+        {
             header("Location: /");
         }
         
@@ -93,68 +101,69 @@ return new class extends \Rehike\Controller\core\NirvanaController {
      * Internally, the homepage is known as FEwhat_to_watch, which corresponds
      * with its older name "What to Watch".
      */
-    private static function whatToWatch(&$yt) {
-    return async(function() use ($yt) 
+    private static function whatToWatch(YtApp $yt): Promise
     {
-        // The copyright text in the description only appeared if the
-        // user originated from the homepage.
-        $yt->footer->enableCopyright = true;
+        return async(function() use ($yt) {
+            // The copyright text in the description only appeared if the
+            // user originated from the homepage.
+            $yt->footer->enableCopyright = true;
 
-        // The homepage also had the searchbox in the masthead autofocus.
-        $yt->masthead->searchbox->autofocus = true;
+            // The homepage also had the searchbox in the masthead autofocus.
+            $yt->masthead->searchbox->autofocus = true;
 
-        if ($a = RehikeConfigManager::getConfigProp("experiments.disableSignInOnHome"))
-        {
-            $useAuthentication = !(bool)$a;
-        }
-        else
-        {
-            $useAuthentication = true;
-        }
+            if ($a = RehikeConfigManager::getConfigProp("experiments.disableSignInOnHome"))
+            {
+                $useAuthentication = !(bool)$a;
+            }
+            else
+            {
+                $useAuthentication = true;
+            }
 
-        // Initial Android request to get continuation
-        $response = yield Network::innertubeRequest(
-            action: "browse",
-            body: [
-                "browseId" => "FEwhat_to_watch"
-            ],
-            clientName: "ANDROID",
-            clientVersion: "18.22.36",
-            useAuthentication: $useAuthentication
-        );
+            // Initial Android request to get continuation
+            $response = yield Network::innertubeRequest(
+                action: "browse",
+                body: [
+                    "browseId" => "FEwhat_to_watch"
+                ],
+                clientName: "ANDROID",
+                clientVersion: "18.22.36",
+                useAuthentication: $useAuthentication
+            );
 
-        $ytdata = $response->getJson();
+            $ytdata = $response->getJson();
 
-        // Why we need to write better InnerTube parsing tools:
-        foreach ($ytdata->contents->singleColumnBrowseResultsRenderer->tabs as $tab)
-        if (isset($tab->tabRenderer->content->sectionListRenderer))
-        foreach($tab->tabRenderer->content->sectionListRenderer->continuations as $cont)
-        if (isset($cont->reloadContinuationData))
-        $continuation = $cont->reloadContinuationData->continuation;
+            // Why we need to write better InnerTube parsing tools:
+            foreach ($ytdata->contents->singleColumnBrowseResultsRenderer->tabs as $tab)
+            if (isset($tab->tabRenderer->content->sectionListRenderer))
+            foreach($tab->tabRenderer->content->sectionListRenderer->continuations as $cont)
+            if (isset($cont->reloadContinuationData))
+            $continuation = $cont->reloadContinuationData->continuation;
 
-        $newContinuation = WebV2Shelves::continuationToWeb($continuation);
+            $newContinuation = WebV2Shelves::continuationToWeb($continuation);
 
-        // Thrown to next then
-        $response = yield Network::innertubeRequest(
-            action: "browse",
-            body: [
-                "continuation" => $newContinuation
-            ],
-            useAuthentication: $useAuthentication
-        );
+            // Thrown to next then
+            $response = yield Network::innertubeRequest(
+                action: "browse",
+                body: [
+                    "continuation" => $newContinuation
+                ],
+                useAuthentication: $useAuthentication
+            );
 
-        $data = $response->getJson();
+            $data = $response->getJson();
 
-        $yt->page->content = (object) [
-            "sectionListRenderer" => InnertubeBrowseConverter::sectionListRenderer(RichShelfUtils::reformatResponse($data)->sectionListRenderer)
-        ];
-    });
+            $yt->page->content = (object) [
+                "sectionListRenderer" => InnertubeBrowseConverter::sectionListRenderer(RichShelfUtils::reformatResponse($data)->sectionListRenderer)
+            ];
+        });
     }
 
     /**
      * History feed.
      */
-    private static function history(&$yt, $request) {
+    private static function history(YtApp $yt, RequestMetadata $request): void
+    {
         $params = new BrowseRequestParams();
         if (isset($request->params->bp))
             $params->mergeFromString(Base64Url::decode($request->params->bp));
@@ -178,7 +187,8 @@ return new class extends \Rehike\Controller\core\NirvanaController {
      * 
      * Don't even try to make sense of this.
      */
-    private static function miscFeeds(&$yt, $request, $feedId) {
+    private static function miscFeeds(YtApp $yt, RequestMetadata $request, string $feedId): void
+    {
         $params = new BrowseRequestParams();
         if (isset($request->params->bp))
             $params->mergeFromString(Base64Url::decode($request->params->bp));
@@ -203,7 +213,8 @@ return new class extends \Rehike\Controller\core\NirvanaController {
             if (isset($tab->tabRenderer->content))
                 $content = $tab->tabRenderer->content;
 
-            if (isset($content->sectionListRenderer)) {
+            if (isset($content->sectionListRenderer))
+            {
                 $content->sectionListRenderer = InnertubeBrowseConverter::sectionListRenderer($content->sectionListRenderer, [
                     "channelRendererUnbrandedSubscribeButton" => true
                 ]);
@@ -230,7 +241,7 @@ return new class extends \Rehike\Controller\core\NirvanaController {
      * For anyone who is about to read or edit this function, I am sincerely
      * sorry, and I wish you the best of luck. You're going to need it.
      */
-    private static function subscriptions(&$yt, $request)
+    private static function subscriptions(YtApp $yt, RequestMetadata $request): void
     {
         $list = ((int)@$request->params->flow == 2);
 

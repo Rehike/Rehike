@@ -1,6 +1,9 @@
 <?php
 namespace Rehike\Controller\Special;
 
+use Rehike\YtApp;
+use Rehike\ControllerV2\RequestMetadata;
+
 use function Rehike\Async\async;
 use Rehike\SimpleFunnel;
 use Rehike\SimpleFunnelResponse;
@@ -10,11 +13,11 @@ use Rehike\Controller\core\HitchhikerController;
 return new class extends HitchhikerController
 {
     public const YTCFG_REGEX = "/ytcfg\.set\(({.*?})\);/";
-    public $useTemplate = false;
+    public string $useTemplate = false;
 
-    public function onGet(&$yt, $request)
+    public function onGet(YtApp &$yt, RequestMetadata $request): void
     {
-        return async(function() use (&$yt, &$request) {
+        async(function() use (&$yt, &$request) {
             $chatData = yield SimpleFunnel::funnelCurrentPage();
             $chatHtml = $chatData->getText();
 

@@ -1,22 +1,25 @@
 <?php
 namespace Rehike\Controller\ajax;
 
+use Rehike\YtApp;
+use Rehike\ControllerV2\RequestMetadata;
+
 use \Rehike\Signin\API as SignIn;
 
 return new class extends \Rehike\Controller\core\AjaxController 
 {
-    public $template = "ajax/delegate_account";
+    public string $template = "ajax/delegate_account";
 
-    protected $spfIdListeners = [
+    protected array $spfIdListeners = [
         "yt-delegate-accounts"
     ];
 
-    public function onGet(&$yt, $request) 
+    public function onGet(YtApp $yt, RequestMetadata $request): void 
     {
-        return $this->onPost($yt, $request);
+        $this->onPost($yt, $request);
     }
 
-    public function onPost(&$yt, $request) 
+    public function onPost(YtApp $yt, RequestMetadata $request): void 
     {
         if (!SignIn::isSignedIn()) 
         {

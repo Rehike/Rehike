@@ -11,10 +11,8 @@ class DotVersion
 {
     /**
      * Determine if the version system can be used.
-     * 
-     * @return bool
      */
-    public static function canUse()
+    public static function canUse(): bool
     {
         return file_exists(".version");
     }
@@ -24,7 +22,7 @@ class DotVersion
      * 
      * @return string[]
      */
-    public static function getInfo()
+    public static function getInfo(): array
     {
         if (!self::canUse()) return []; // Add nothing
 

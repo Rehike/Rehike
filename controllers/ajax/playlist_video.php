@@ -1,4 +1,9 @@
 <?php
+namespace Rehike\Controller\ajax;
+
+use Rehike\YtApp;
+use Rehike\ControllerV2\RequestMetadata;
+
 use \Rehike\Controller\core\AjaxController;
 use \Rehike\Network;
 
@@ -9,25 +14,32 @@ use \Rehike\Network;
  * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
-return new class extends AjaxController {
-    public $useTemplate = false;
+return new class extends AjaxController
+{
+    public bool $useTemplate = false;
 
-    public function onPost(&$yt, $request) {
+    public function onPost(YtApp $yt, RequestMetadata $request): void
+    {
         $action = self::findAction();
 
-        if ($action == "add_to_watch_later_list") {
+        if ($action == "add_to_watch_later_list")
+        {
             self::validatePostVideoIds();
 
             $videoId = $_POST["video_ids"];
 
             self::addToPlaylist($videoId, "WL");
-        } else if ($action == "delete_from_watch_later_list") {
+        }
+        else if ($action == "delete_from_watch_later_list")
+        {
             self::validatePostVideoIds();
 
             $videoId = $_POST["video_ids"];
 
             self::removeFromPlaylist($videoId, "WL");
-        } else if ($action == "add_to_playlist") {
+        }
+        else if ($action == "add_to_playlist")
+        {
             self::validatePostVideoIds();
 
             $videoId = $_POST["video_ids"];
@@ -39,7 +51,9 @@ return new class extends AjaxController {
             // might go too fast and break everything.
             // Hence: very gross fix for a server-side bug
             sleep(3);
-        } else if ($action == "delete_from_playlist") {
+        }
+        else if ($action == "delete_from_playlist")
+        {
             self::validatePostVideoIds();
 
             $videoId = $_POST["video_ids"];
@@ -48,7 +62,9 @@ return new class extends AjaxController {
             self::removeFromPlaylist($videoId, $listId);
 
             sleep(3);
-        } else if (isset($action)) {
+        }
+        else if (isset($action))
+        {
             http_response_code(400);
             echo json_encode((object) [
                 "errors" => [
@@ -57,7 +73,9 @@ return new class extends AjaxController {
                     ]
                 ]
             ]);
-        } else {
+        }
+        else
+        {
             http_response_code(400);
             echo json_encode((object) [
                 "errors" => [
@@ -77,7 +95,8 @@ return new class extends AjaxController {
      */
     protected static function validatePostVideoIds(): void
     {
-        if(!isset($_POST["video_ids"])) {
+        if(!isset($_POST["video_ids"]))
+        {
             http_response_code(400);
             echo json_encode((object) [
                 "errors" => [
@@ -111,10 +130,13 @@ return new class extends AjaxController {
         )->then(function ($response) {
             $ytdata = $response->getJson();
 
-            if ($ytdata->status = "STATUS_SUCCEEDED") {
+            if ($ytdata->status = "STATUS_SUCCEEDED")
+            {
                 http_response_code(200);
                 echo json_encode((object) []);
-            } else {
+            }
+            else
+            {
                 http_response_code(400);
                 echo json_encode((object) [
                     "errors" => [
@@ -149,10 +171,13 @@ return new class extends AjaxController {
         )->then(function ($response) {
             $ytdata = $response->getJson();
 
-            if ($ytdata->status = "STATUS_SUCCEEDED") {
+            if ($ytdata->status = "STATUS_SUCCEEDED")
+            {
                 http_response_code(200);
                 echo json_encode((object) []);
-            } else {
+            }
+            else
+            {
                 http_response_code(400);
                 echo json_encode((object) [
                     "errors" => [

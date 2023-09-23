@@ -1,4 +1,9 @@
 <?php
+namespace Rehike\Controller\ajax;
+
+use Rehike\YtApp;
+use Rehike\ControllerV2\RequestMetadata;
+
 use \Rehike\Controller\core\AjaxController;
 use \Rehike\Network;
 use \Rehike\Async\Promise;
@@ -14,15 +19,18 @@ use \Rehike\Model\Common\Subscription\MSubscriptionPreferencesOverlay;
  * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
-return new class extends AjaxController {
+return new class extends AjaxController
+{
     // These are used by the preferences overlay response.
-    public $useTemplate = false;
-    public $template = "";
+    public bool $useTemplate = false;
+    public string $template = "";
 
-    public function onPost(&$yt, $request) {
+    public function onPost(YtApp $yt, RequestMetadata $request): void
+    {
         $action = self::findAction();
 
-        switch ($action) {
+        switch ($action)
+        {
             case "create_subscription_to_channel":
                 $request = self::createSubscriptionToChannel();
                 break;
@@ -32,8 +40,7 @@ return new class extends AjaxController {
             case "get_subscription_preferences_overlay":
                 $this->useTemplate = true;
                 $this->template = 
-                    "ajax/subscription/get_subscription_preferences_overlay"
-                ;
+                    "ajax/subscription/get_subscription_preferences_overlay";
                 self::getPreferencesOverlay($yt, $request);
                 return; // This takes control of everything from here.
             default:
@@ -44,22 +51,27 @@ return new class extends AjaxController {
         $request->then(function ($ytdata) {
             if (is_null($ytdata)) self::error();
 
-            if (!isset($ytdata->error)) {
+            if (!isset($ytdata->error))
+            {
                 http_response_code(200);
                 echo json_encode((object) [
                     "response" => "SUCCESS"
                 ]);
-            } else self::error();
+            }
+            else 
+            {
+                self::error();
+            }
         });
     }
 
     /**
      * Create a subscription to a channel.
      *
-     * @param object          $yt      Template data.
      * @param RequestMetadata $request Request data.
      */
-    private static function createSubscriptionToChannel(): Promise {
+    private static function createSubscriptionToChannel(): Promise
+    {
         return new Promise(function ($resolve) {
             Network::innertubeRequest(
                 action: "subscription/subscribe",
@@ -81,7 +93,8 @@ return new class extends AjaxController {
      * @param object          $yt      Template data.
      * @param RequestMetadata $request Request data.
      */
-    private static function removeSubscriptions(): Promise {
+    private static function removeSubscriptions(): Promise
+    {
         return new Promise(function ($resolve) {
             Network::innertubeRequest(
                 action: "subscription/unsubscribe",
@@ -99,11 +112,14 @@ return new class extends AjaxController {
     /**
      * Get the subscription preferences overlay.
      * 
-     * @param object           $yt       Template data.
+     * @param YtApp            $yt       Template data.
      * @param RequestMetadata  $request  Request data.
      */
-    private static function getPreferencesOverlay(&$yt, 
-                                                  $request): void {
+    private static function getPreferencesOverlay(
+            YtApp $yt, 
+            RequestMetadata $request
+    ): void
+    {
         Network::innertubeRequest(
             action: "browse",
             body: [

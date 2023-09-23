@@ -18,9 +18,9 @@ class Router
      * Configure router definitions for all GET requests.
      * 
      * @param string[] $defs
-     * @return mixed
+     * @return mixed|void
      */
-    public static function get($defs)
+    public static function get(array $defs)
     {
         if ("GET" == $_SERVER['REQUEST_METHOD'])
         return self::baseRequestMethod($defs, "get");
@@ -30,9 +30,9 @@ class Router
      * Configure router definitions for all POST requests.
      * 
      * @param string[] $defs
-     * @return mixed
+     * @return mixed|void
      */
-    public static function post($defs)
+    public static function post(array $defs)
     {
         if ("POST" == $_SERVER['REQUEST_METHOD'])
         return self::baseRequestMethod($defs, "post");
@@ -42,9 +42,8 @@ class Router
      * Configure router definitions for redirections.
      * 
      * @param string[]|callback[] $defs
-     * @return void
      */
-    public static function redirect($defs)
+    public static function redirect(array $defs): void
     {
         // Iteration the definitions tree and check the contents.
         foreach ($defs as $def => $redir)
@@ -98,9 +97,8 @@ class Router
      * as static resources and API access.
      * 
      * @param string[] $defs
-     * @return void
      */
-    public static function funnel($defs)
+    public static function funnel(array $defs): void
     {
         foreach ($defs as $index => $value)
         {
@@ -135,9 +133,12 @@ class Router
      * 
      * @param string[] $definitions
      * @param string $method
-     * @return mixed
+     * @return mixed|void
      */
-    protected static function baseRequestMethod($definitions, $method)
+    protected static function baseRequestMethod(
+            array $definitions, 
+            string $method
+    )
     {
         $bestMatch = null;
 
@@ -172,9 +173,12 @@ class Router
      * 
      * @param string|callable $pointer
      * @param string $method that now finally gets used by the module!
-     * @return mixed
+     * @return mixed|void
      */
-    protected static function pointerHandler($pointer, $method)
+    protected static function pointerHandler(
+            string|callable $pointer, 
+            string $method
+    )
     {
         /** @var GetControllerInstance $import */
         $import;

@@ -1,7 +1,9 @@
 <?php
 namespace Rehike\Controller\ajax;
 
+use Rehike\YtApp;
 use Rehike\ControllerV2\RequestMetadata;
+
 use Rehike\Network;
 use Rehike\Async\Promise;
 use Rehike\Util\Base64Url;
@@ -14,10 +16,12 @@ use Com\Youtube\Innertube\Request\EventReminderRequestParams\UnknownThing;
  * @author Aubrey Pankow <aubyomori@gmail.com>
  * @author The Rehike Maintainers
  */
-return new class extends \Rehike\Controller\core\AjaxController {
-    public $useTemplate = false;
+return new class extends \Rehike\Controller\core\AjaxController
+{
+    public bool $useTemplate = false;
 
-    public function onPost(&$yt, $request) {
+    public function onPost(YtApp $yt, RequestMetadata $request): void
+    {
         $action = self::findAction();
 
         switch ($action) {
@@ -33,9 +37,12 @@ return new class extends \Rehike\Controller\core\AjaxController {
         }
 
         $request->then(function ($ytdata) {
-            if (isset($ytdata->errors)) {
+            if (isset($ytdata->errors))
+            {
                 self::error();
-            } else {
+            }
+            else
+            {
                 http_response_code(200);
                 echo '{"response":"SUCCESS"}';
             }
@@ -45,11 +52,13 @@ return new class extends \Rehike\Controller\core\AjaxController {
     /**
      * Set a live event reminder.
      */
-    private static function setReminder(RequestMetadata $request): Promise {
+    private static function setReminder(RequestMetadata $request): Promise
+    {
         return new Promise(function ($resolve) use ($request) {
             $params = new EventReminderRequestParams();
 
-            if (!isset($request->params->vid)) {
+            if (!isset($request->params->vid))
+            {
                 self::error();
             }
 
@@ -75,11 +84,13 @@ return new class extends \Rehike\Controller\core\AjaxController {
     /**
      * Remove a live event reminder.
      */
-    private static function removeReminder(RequestMetadata $request): Promise {
+    private static function removeReminder(RequestMetadata $request): Promise
+    {
         return new Promise(function ($resolve) use ($request) {
             $params = new EventReminderRequestParams();
 
-            if (!isset($request->params->vid)) {
+            if (!isset($request->params->vid))
+            {
                 self::error();
             }
             

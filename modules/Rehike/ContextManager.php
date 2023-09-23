@@ -16,10 +16,8 @@ class ContextManager
      * 
      * The server uses this information to synchronise user data between 
      * sessions if the user is logged out.
-     * 
-     * @var string
      */
-    public static $visitorData;
+    public static string $visitorData;
 
     /**
      * Host language.
@@ -27,10 +25,8 @@ class ContextManager
      * When implemented, this can be synchronised with the "hl" parameter of
      * the PREF cookie or retrieved from an initial response. As such, we don't
      * need to be mindful of legal values.
-     * 
-     * @var string
      */
-    public static $hl = "en";
+    public static string $hl = "en";
 
     /**
      * Global location.

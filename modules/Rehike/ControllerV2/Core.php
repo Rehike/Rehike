@@ -32,7 +32,7 @@ class Core
      * 
      * @var object|array
      */
-    public static $state;
+    public static object|array $state;
 
     /** 
      * A reference to the global template file string.
@@ -47,16 +47,24 @@ class Core
      * 
      * @var string
      */
-    public static $template;
+    public static string $template;
 
-    /** Register a state reference. @see $state */
-    public static function registerStateVariable(&$state)
+    /**
+     * Register a state reference. 
+     * 
+     * @see $state 
+     */
+    public static function registerStateVariable(object|array &$state): void
     {
         self::$state = &$state;
     }
 
-    /** Register a template reference. @see $template */
-    public static function registerTemplateVariable(&$template)
+    /**
+     * Register a template reference. 
+     * 
+     * @see $template 
+     */
+    public static function registerTemplateVariable(string &$template): void
     {
         self::$template = &$template;
     }
@@ -71,7 +79,10 @@ class Core
      * 
      * @return GetControllerInstance
      */
-    public static function import($controllerName, $appendPhp = true)
+    public static function import(
+            string $controllerName, 
+            bool $appendPhp = true
+    ): GetControllerInstance
     {
         if (ControllerStore::hasController($controllerName))
         {
@@ -94,8 +105,8 @@ class Core
     /**
      * @see CallbackStore::setRedirectHandler
      */
-    public static function setRedirectHandler($cb)
+    public static function setRedirectHandler(callable $cb): void
     {
-        return CallbackStore::setRedirectHandler($cb);
+        CallbackStore::setRedirectHandler($cb);
     }
 }

@@ -11,26 +11,25 @@ namespace Rehike\ControllerV2;
 class ControllerStore
 {
     /** @var object[] */
-    protected static $items = [];
+    protected static array $items = [];
 
-    /** @return bool */
-    public static function hasController($name)
+    public static function hasController(string $name): bool
     {
         return isset(self::$items[$name]);
     }
 
-    /** @return object|null */
-    public static function getController($name)
+    public static function getController(string $name): ?object
     {
         return self::$items[$name] ?? null;
     }
 
     /**
      * Add a controller to the session cache.
-     * 
-     * @return void
      */
-    public static function registerController($name, $controllerImport)
+    public static function registerController(
+            string $name, 
+            object $controllerImport
+    ): void
     {
         self::$items += [$name => $controllerImport];
     }

@@ -17,7 +17,7 @@ class Switcher
      * @param string $response Raw response (not JSON decoded).
      * @return array Associative array of wrappers.
      */
-    public static function parseResponse($response)
+    public static function parseResponse(string $response): array
     {
         $response = json_decode(substr($response, 4, strlen($response)));
         $info =
@@ -36,7 +36,7 @@ class Switcher
      * @param object $data Decoded from the response.
      * @return array Associative array of parsed data.
      */
-    public static function getGoogAccInfo($data)
+    public static function getGoogAccInfo(object $data): array
     {
         $header = $data->data->actions[0]->getMultiPageMenuAction->
             menu->multiPageMenuRenderer->sections[0]->accountSectionListRenderer->
@@ -55,7 +55,7 @@ class Switcher
      * @param object $data Decoded from the response.
      * @return array Iterative array of channel information.
      */
-    public static function getChannels($data)
+    public static function getChannels(object $data): array
     {
         $items = $data->data->actions[0]->getMultiPageMenuAction->
             menu->multiPageMenuRenderer->sections[0]->accountSectionListRenderer->
@@ -78,7 +78,7 @@ class Switcher
      * @param object $data Decoded from the response.
      * @return ?array Channel item data
      */
-    public static function getActiveChannel($data)
+    public static function getActiveChannel(object $data): ?array
     {
         $channels = self::getChannels($data);
 
@@ -99,7 +99,7 @@ class Switcher
      * @param object $account From the original response.
      * @return array Parsed associative array.
      */
-    public static function accountItem($account)
+    public static function accountItem(object $account): array
     {
         if (isset($account->serviceEndpoint->selectActiveIdentityEndpoint->supportedTokens))
         foreach ($account->serviceEndpoint->selectActiveIdentityEndpoint->supportedTokens as $token)

@@ -16,7 +16,8 @@ use \Com\Google\Protos\Youtube\Api\Innertube\ContinuationWrapper;
  * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
-class WebV2Shelves {
+class WebV2Shelves
+{
     /**
      * Convert a shelves client continuation to a WEB-compatible one.
      * 
@@ -27,7 +28,8 @@ class WebV2Shelves {
      * @param string $continuation A continuation from a client with shelves, i.e. ANDROID, IOS, TVHTML5.
      * @return string A web continuation.
      */
-    public static function continuationToWeb(string $continuation): string {
+    public static function continuationToWeb(string $continuation): string
+    {
         $decoded = Base64Url::decode($continuation);
         $contWrapper = new ContinuationWrapper();
         $contTypeWrapper = new ContinuationTypeWrapper();

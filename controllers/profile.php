@@ -1,6 +1,9 @@
 <?php
 namespace Rehike\Controller;
 
+use Rehike\YtApp;
+use Rehike\ControllerV2\RequestMetadata;
+
 use Rehike\Network;
 use Rehike\Signin\API as SignIn;
 
@@ -16,12 +19,15 @@ use Rehike\Signin\API as SignIn;
  * @author Aubrey Pankow <aubyomori@gmail.com>
  * @author The Rehike Maintainers
  */
-return new class extends \Rehike\Controller\core\HitchhikerController {
+return new class extends \Rehike\Controller\core\HitchhikerController
+{
     // Doesn't have a corresponding page as this redirects the user.
-    public $useTemplate = false;
+    public bool $useTemplate = false;
 
-    public function onGet(&$yt, $request) {
-        if (!SignIn::isSignedIn()) {
+    public function onGet(YtApp $yt, RequestMetadata $request): void
+    {
+        if (!SignIn::isSignedIn())
+        {
             header("Location: /");
             exit();
         }
@@ -34,7 +40,8 @@ return new class extends \Rehike\Controller\core\HitchhikerController {
         )->then(function ($response) {
             $ytdata = $response->getJson();
 
-            if ($a = @$ytdata->endpoint->urlEndpoint->url) {
+            if ($a = @$ytdata->endpoint->urlEndpoint->url)
+            {
                 header("Location: " . str_replace("https://www.youtube.com", "", $a));
             }
         });

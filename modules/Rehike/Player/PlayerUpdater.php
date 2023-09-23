@@ -36,18 +36,14 @@ class PlayerUpdater
      * So the URL provided by default is that of "Me at the zoo", a
      * very important video in YouTube's history, one that receives
      * plenty of views, and one that's very likely never going anywhere.
-     * 
-     * @var string
      */
-    protected static $sourceUrl = "https://www.youtube.com/embed/jNQXAC9IVRw";
+    protected static string $sourceUrl = "https://www.youtube.com/embed/jNQXAC9IVRw";
 
     /**
      * Request all necessary player information for the latest
      * version.
-     * 
-     * @return object
      */
-    public static function requestPlayerInfo()
+    public static function requestPlayerInfo(): object
     {
         $html = self::requestAppHtml();
 
@@ -80,10 +76,8 @@ class PlayerUpdater
      * Since YouTube changed their static URL system circa 2020, these
      * assets are not stored permanently (i.e. these might expire mid-use
      * if the cache duration is too long).
-     * 
-     * @return string
      */
-    public static function requestAppHtml()
+    public static function requestAppHtml(): string
     {
         $response = Network::request(self::$sourceUrl);
 
@@ -93,22 +87,16 @@ class PlayerUpdater
     /**
      * Download the player application so that the
      * signature timestamp can be extracted from it.
-     * 
-     * @param string $playerUrl
-     * @return string
      */
-    public static function requestApplication($playerUrl)
+    public static function requestApplication(string $playerUrl): string
     {
         return Network::request($playerUrl);
     }
 
     /**
      * Extract the player application URL from a HTML response.
-     * 
-     * @param string $html
-     * @return string
      */
-    public static function extractApplicationUrl($html)
+    public static function extractApplicationUrl(string $html): string
     {
         $status = preg_match(PlayerCore::$playerJsRegex, $html, $matches);
 
@@ -124,11 +112,8 @@ class PlayerUpdater
 
     /**
      * Extract the URL of the player CSS from a HTML response.
-     * 
-     * @param string $html
-     * @return string
      */
-    public static function extractApplicationCss($html)
+    public static function extractApplicationCss(string $html): string
     {
         $status = preg_match(PlayerCore::$playerCssRegex, $html, $matches);
 
@@ -144,11 +129,8 @@ class PlayerUpdater
 
     /**
      * Extract the player embed JS URL from a HTML response.
-     * 
-     * @param string $html
-     * @return string
      */
-    public static function extractEmbedUrl($html)
+    public static function extractEmbedUrl(string $html): string
     {
         $status = preg_match(PlayerCore::$embedJsRegex, $html, $matches);
 
@@ -177,11 +159,8 @@ class PlayerUpdater
      * STS is synchronised between the player source code and the
      * InnerTube player API, making it necessary to also forward this
      * value to that if you're intending on using the API directly.
-     * 
-     * @param string $player  Source code of the player application.
-     * @return string
      */
-    public static function extractSts($player)
+    public static function extractSts(string $player): string
     {
         // Pretty lazy code here, but it works
         preg_match(PlayerCore::$stsRegex, $player, $matches);
@@ -203,9 +182,11 @@ class PlayerUpdater
      * 
      * @param string $url
      * @param string $base to prepend
-     * @return string
      */
-    public static function unrelativize($path, $base = "https://www.youtube.com")
+    public static function unrelativize(
+            string $path, 
+            string $base = "https://www.youtube.com"
+    ): string
     {
         if ("/" == $path[0])
         {

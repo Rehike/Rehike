@@ -9,24 +9,19 @@ use YukisCoffee\PropertyAtPath;
 class ConfigManager
 {
     /** @var array (because PHP limitations) */
-    public static $defaultConfig = [];
+    public static array $defaultConfig = [];
 
     /** @var array (because PHP limitation) */
-    public static $types = [];
+    public static array $types = [];
 
-    /** @var string */
-    protected static $file = 'config.json';
+    protected static string $file = 'config.json';
 
-    /** @var object|null */
-    protected static $config;
+    protected static object $config;
 
     /**
      * Dump a config file.
-     * 
-     * @abstract
-     * @return void
      */
-    protected static function dump($file, $cfg)
+    protected static function dump(string $file, string $cfg): void
     {
         try
         {
@@ -43,12 +38,10 @@ class ConfigManager
     /**
      * Dump the active config and override
      * the active file.
-     * 
-     * @return void
      */
-    public static function dumpConfig()
+    public static function dumpConfig(): void
     {
-        return static::dump(
+        static::dump(
             static::$file, 
             json_encode(static::$config, JSON_PRETTY_PRINT)
         );
@@ -57,12 +50,10 @@ class ConfigManager
     /**
      * Dump the default config and override or create
      * the active file.
-     * 
-     * @return void
      */
-    public static function dumpDefaultConfig()
+    public static function dumpDefaultConfig(): void
     {
-        return static::dump(
+        static::dump(
             static::$file, 
             json_encode((object) static::$defaultConfig, JSON_PRETTY_PRINT)
         );
@@ -70,13 +61,11 @@ class ConfigManager
 
     /**
      * Set the config location
-     * 
-     * @param string $filePath
-     * @return void
      */
-    public static function setConfigFile($filePath)
+    public static function setConfigFile(string $filePath): void
     {
-        if (!is_string($filePath)) throw new FilePathException("Type of file path must be string.");
+        if (!is_string($filePath))
+            throw new FilePathException("Type of file path must be string.");
 
         self::$file = $filePath;
     }
@@ -86,7 +75,7 @@ class ConfigManager
      * 
      * @return object
      */
-    public static function getConfig()
+    public static function getConfig(): object
     {
         return is_object(static::$config) ? static::$config : (object) static::$defaultConfig;
     }
@@ -96,7 +85,8 @@ class ConfigManager
      * 
      * @return object
      */
-    public static function getTypes() {
+    public static function getTypes(): object
+    {
         return json_decode(json_encode(static::$types));
     }
 
@@ -109,13 +99,16 @@ class ConfigManager
      * @param string $path  Period-delimited path of the config
      * @return mixed
      */
-    public static function getConfigProp($path)
+    public static function getConfigProp(string $path): mixed
     {
         $cfg = static::getConfig();
 
-        try {
+        try
+        {
             $value = PropertyAtPath::get($cfg, $path);
-        } catch (\YukisCoffee\PropertyAtPathException $e) {
+        }
+        catch (\YukisCoffee\PropertyAtPathException $e)
+        {
             return null;
         }
 
@@ -130,12 +123,15 @@ class ConfigManager
      * 
      * @param string $path   Period-delimited path of the config
      * @param string $value  New value
-     * @return void
      */
-    public static function setConfigProp($path, $value) {
-        try {
+    public static function setConfigProp(string $path, string $value): void
+    {
+        try
+        {
             PropertyAtPath::set(static::$config, $path, $value);
-        } catch (\YukisCoffee\PropertyAtPathException $e) {
+        }
+        catch (\YukisCoffee\PropertyAtPathException $e)
+        {
             return;
         }
     }
@@ -147,14 +143,17 @@ class ConfigManager
      * config. If it isn't, this returns null.
      * 
      * @param string $path  Period-delimited path of the config
-     * @return string
      */
-    public static function getConfigType($path) {
+    public static function getConfigType(string $path): ?string
+    {
         $types = static::getTypes();
 
-        try {
+        try
+        {
             $value = PropertyAtPath::get($types, $path);
-        } catch(\YukisCoffee\PropertyAtPathException $e) {
+        }
+        catch(\YukisCoffee\PropertyAtPathException $e)
+        {
             return null;
         }
 
@@ -167,7 +166,7 @@ class ConfigManager
      * 
      * @return object
      */
-    public static function loadConfig()
+    public static function loadConfig(): object
     {
         $file = self::$file;
         $object = \json_decode(file_get_contents($file));
@@ -175,7 +174,8 @@ class ConfigManager
         // Throw an exception if response type is not object
         // This is because PHP does not throw an exception if
         // json_decode fails.
-        if (!is_object($object)) throw new LoadConfigException("Failed to parse config file \"{$file}\"");
+        if (!is_object($object))
+            throw new LoadConfigException("Failed to parse config file \"{$file}\"");
 
         // Else, set the active config used to this.
         static::$config = $object;

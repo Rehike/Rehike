@@ -10,5 +10,5 @@ use \Rehike\Controller\core\HitchhikerController;
  * @author The Rehike Maintainers
  */
 return new class extends HitchhikerController {
-    public $template = "oops";
+    public string $template = "oops";
 };

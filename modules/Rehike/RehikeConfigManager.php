@@ -14,8 +14,7 @@ use YukisCoffee\PropertyAtPath;
  */
 class RehikeConfigManager extends ConfigManager
 {
-    public static $defaultConfig =
-    [
+    public static array $defaultConfig = [
         "appearance" => [
             "modernLogo" => true,
             "uploadButtonType" => "MENU",
@@ -43,8 +42,7 @@ class RehikeConfigManager extends ConfigManager
         ]
     ];
 
-    public static $types =
-    [
+    public static array $types = [
         "appearance" => [
             "modernLogo" => "bool",
             "uploadButtonType" => "enum",
@@ -74,7 +72,7 @@ class RehikeConfigManager extends ConfigManager
 
     // Old config compatibility map
     // These are PropertyAtPath (JS-style) paths
-    public static $compatibilityMap = [
+    public static array $compatibilityMap = [
         "useRingoBranding" => "appearance.modernLogo",
         "uploadMenuType" => "appearance.uploadButtonType",
         "versionInFooter" => "appearance.showVersionInFooter",
@@ -99,10 +97,8 @@ class RehikeConfigManager extends ConfigManager
     /**
      * If configuration doesn't exist upon
      * attempt to load it, save it
-     * 
-     * @return object
      */
-    public static function loadConfig()
+    public static function loadConfig(): object
     {
         if (!file_exists( self::$file ))
         {

@@ -9,9 +9,17 @@ namespace Rehike\ControllerV2;
  */
 class CallbackStore
 {
+    /**
+     * The redirect handler callback.
+     * 
+     * Classes in PHP cannot actually have members of type callable, so this is
+     * a hack:
+     * 
+     * @var callback
+     */
     public static $handleRedirect;
 
-    public static function setRedirectHandler($cb)
+    public static function setRedirectHandler(callable $cb): void
     {
         self::$handleRedirect = $cb;
     }

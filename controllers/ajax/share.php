@@ -1,4 +1,8 @@
 <?php
+namespace Rehike\Controller\ajax;
+
+use Rehike\YtApp;
+use Rehike\ControllerV2\RequestMetadata;
 
 use Rehike\Async\Promise;
 use \Rehike\Controller\core\AjaxController;
@@ -14,7 +18,7 @@ return new class extends AjaxController
     private ?string $videoId;
     private ?string $listId;
 
-    public function onGet(&$yt, $request) 
+    public function onGet(YtApp $yt, RequestMetadata $request): void 
     {
         $action = self::findAction();
 
@@ -37,7 +41,7 @@ return new class extends AjaxController
     /**
      * Get the share box.
      */
-    private function getShareBox(&$yt, $request): Promise/*<void>*/
+    private function getShareBox(YtApp $yt, RequestMetadata $request): Promise/*<void>*/
     {
         return async(function() use (&$yt, $request) {
             $this->template = "ajax/share/get_share_box";
@@ -50,7 +54,7 @@ return new class extends AjaxController
         });
     }
 
-    private function getEmbed(&$yt, $request): Promise/*<void>*/
+    private function getEmbed(YtApp $yt, RequestMetadata $request): Promise/*<void>*/
     {
         return async(function() use (&$yt, $request) {
             $this->template = "ajax/share/get_embed";

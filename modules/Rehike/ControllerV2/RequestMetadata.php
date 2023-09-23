@@ -15,27 +15,23 @@ use Rehike\DataArray;
  */
 class RequestMetadata
 {
-    /** @var string */
-    public $method;
+    public string $method;
 
     /** @var string[] */
-    public $path;
+    public array $path;
 
-    /** @var string */
-    public $rawPath;
+    public string $rawPath;
 
     /** @var string[] */
-    public $headers;
+    public DataArray $headers;
 
-    /** @var string[]|mixed */
-    public $params;
+    public DataArray $params;
 
-    /** @var mixed|null */
-    public $body;
+    public mixed $body;
 
     public function __construct()
     {
-        $this->method = $_SERVER['REQUEST_METHOD'];
+        $this->method = $_SERVER["REQUEST_METHOD"];
         $this->path = self::getPath();
         $this->rawPath = $_SERVER["REQUEST_URI"];
         $this->headers = self::getHeaders();
@@ -56,9 +52,9 @@ class RequestMetadata
      * Get the path name from the request and return it
      * as a split array.
      * 
-     * @return string
+     * @return string[]
      */
-    protected static function getPath()
+    protected static function getPath(): array
     {
         // Split the path first by "?" to remove params
         $path = explode("?", $_SERVER["REQUEST_URI"])[0];
@@ -80,7 +76,7 @@ class RequestMetadata
      * 
      * @return string[]
      */
-    protected static function getHeaders()
+    protected static function getHeaders(): DataArray
     {
         // Apache (only) has apache_request_headers
         // function:
@@ -138,7 +134,7 @@ class RequestMetadata
      * @param string $contentType
      * @return mixed
      */
-    protected static function getPostBody($contentType)
+    protected static function getPostBody(string $contentType): mixed
     {
         // $_POST is only used by x-www-form-urlencoded
         // and multipart/form content types. If this

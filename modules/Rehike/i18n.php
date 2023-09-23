@@ -14,38 +14,34 @@ class i18n
     /**
      * Declare the default language to be loaded in the case there is no
      * fallback.
-     *  
-     * @var string 
      */
-    protected static $defaultLanguage = "en";
+    protected static string $defaultLanguage = "en";
 
     /**
      * Declare the global language to be used as a default for all instances.
-     * 
-     * @var string
      */
-    protected static $globalLanguage = "en";
+    protected static string $globalLanguage = "en";
 
     /**
      * Store all namespaces (instances) so that they may be accessed globally.
      * 
      * @var i18n[]
      */
-    protected static $namespaces = [];
+    protected static array $namespaces = [];
 
     /** 
      * Declare an array that will contain all language strings.
      * 
      * @var string[] 
      */
-    protected $strings = [];
+    protected array $strings = [];
 
     /** 
      * The current language of the instance.
      * 
      * @var string 
      */
-    protected $language = "";
+    protected string $language = "";
 
     public function __construct()
     {
@@ -64,7 +60,7 @@ class i18n
      * 
      * @see __construct
      */
-    public static function &newNamespace($name)
+    public static function &newNamespace(string $name): self
     {
         $i = new static();
 
@@ -81,11 +77,8 @@ class i18n
      *     $variable = &getNamespace($name)
      * 
      * or you will encounter much confusion.
-     * 
-     * @param string $name
-     * @return i18n
      */
-    public static function &getNamespace($name)
+    public static function &getNamespace(string $name): self
     {
         if (!isset(self::$namespaces[$name]))
             trigger_error("Namespace $name does not exist", E_USER_WARNING);
@@ -98,16 +91,15 @@ class i18n
      * 
      * @return string[]
      */
-    public function getStrings() {
+    public function getStrings(): array
+    {
         return $this->strings;
     }
 
     /**
      * Determine if a namespace exists.
-     * 
-     * @return bool
      */
-    public static function namespaceExists($name)
+    public static function namespaceExists(string $name): bool
     {
         return isset(self::$namespaces[$name]);
     }
@@ -121,12 +113,8 @@ class i18n
      * use, such as registering functions, but it can cause more 
      * problems than it solves. It should always return an associative
      * array.
-     * 
-     * @param string $languageName
-     * @param string $filename
-     * @return i18n
      */
-    public function registerFromFile($languageName, $filename)
+    public function registerFromFile(string $languageName, string $filename): self
     {
         $supportedFileTypes = [
             "json",
@@ -178,11 +166,8 @@ class i18n
      * 
      * As this relies on the above function, it inherits the same
      * general functionality from it.
-     * 
-     * @param string $folderName
-     * @return i18n
      */
-    public function registerFromFolder($folderName)
+    public function registerFromFolder(string $folderName): self
     {
         foreach (glob("$folderName/*") as $file)
         {
@@ -203,9 +188,8 @@ class i18n
      * 
      * @param string $name
      * @param string[] $array of language strings
-     * @return i18n
      */
-    public function registerFromArray($name, $array)
+    public function registerFromArray(string $name, ?array $array): self
     {
         $this->strings += [$name => &$array];
 
@@ -213,31 +197,17 @@ class i18n
     }
 
     /**
-     * Legacy alias for registerFromArray.
-     * 
-     * @deprecated
-     * @see registerFromArray
-     */
-    public function register($name, $array)
-    {
-        trigger_error("i18n::register is deprecated. Use i18n::registerFromArray instead.", E_USER_DEPRECATED);
-        return self::registerFromArray($name, $array);
-    }
-
-    /**
      * Get a string definition by its ID.
      * 
      * @param string $id of the string
-     * @return string
      */
-    protected function getStringId($id)
+    protected function getStringId(string $id): string|array|callable|null
     {
         // Try the instance's registered definitions, then fallback to the
         // global default, and finally return null if nothing worked out.
         return @$this->strings[$this->language][$id]
             ?? @$this->strings[self::$defaultLanguage][$id]
-            ?? null
-        ;
+            ?? null;
     }
 
     /**
@@ -246,7 +216,7 @@ class i18n
      * @param string $id of the string
      * @param mixed[] $params
      */
-    public function get($id, ...$params)
+    public function get(string $id, mixed ...$params): string|array|callable|null
     {
         $string = self::getStringId($id);
 
@@ -260,13 +230,13 @@ class i18n
         }
     }
 
-    public function __get($id)
+    public function __get(string $id): string|array|callable|null
     {
         // Convert a magic instance getter to an ID (without further arguments)
         return $this->get($id);
     }
 
-    public function __call($id, $args)
+    public function __call(string $id, array $args): string|array|callable|null
     {
         // Convert a magic instance call to an ID (with arguments!)
         return $this->get($id, ...$args);
@@ -274,11 +244,8 @@ class i18n
 
     /**
      * Set the active language of an instance.
-     * 
-     * @param string $value
-     * @return void
      */
-    public function setLanguage($value)
+    public function setLanguage(string $value): void
     {
         $this->language = $value;
     }
@@ -288,28 +255,23 @@ class i18n
      * 
      * @return string
      */
-    public function getLanguage() {
+    public function getLanguage(): string
+    {
         return $this->language;
     }
 
     /**
      * Set the global language used by the system.
-     * 
-     * @param string $value
-     * @return void
      */
-    public static function setGlobalLanguage($value)
+    public static function setGlobalLanguage(string $value): void
     {
         self::$globalLanguage = $value;
     }
 
     /**
      * Set the default (fallback) language of the system.
-     * 
-     * @param string $value
-     * @return void
      */
-    public static function setDefaultLanguage($value)
+    public static function setDefaultLanguage(string $value): void
     {
         self::$defaultLanguage = $value;
     }

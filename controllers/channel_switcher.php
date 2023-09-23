@@ -1,6 +1,9 @@
 <?php
 namespace Rehike\Controller;
 
+use Rehike\YtApp;
+use Rehike\ControllerV2\RequestMetadata;
+
 use Rehike\Controller\core\HitchhikerController;
 use Rehike\Network;
 use Rehike\Signin\API as SignIn;
@@ -11,9 +14,9 @@ use function Rehike\Async\async;
 // TODO: send "X-Goog-AuthUser" header in innertube request
 return new class extends HitchhikerController
 {
-    public $template = "channel_switcher";
+    public string $template = "channel_switcher";
 
-    public function onGet(&$yt, $request)
+    public function onGet(YtApp $yt, RequestMetadata $request): void
     {
         async(function() use (&$yt, &$request) {
             if (!SignIn::isSignedIn())

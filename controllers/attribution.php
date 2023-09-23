@@ -1,6 +1,9 @@
 <?php
 namespace Rehike\Controller;
 
+use Rehike\YtApp;
+use Rehike\ControllerV2\RequestMetadata;
+
 use Rehike\Controller\core\HitchhikerController;
 use Rehike\Network;
 use Rehike\Model\Attribution\AttributionModel;
@@ -17,11 +20,14 @@ use Rehike\Model\Attribution\AttributionModel;
  * @author Aubrey Pankow <aubyomori@gmail.com>
  * @author The Rehike Maintainers
  */
-return new class extends HitchhikerController {
-    public $template = "attribution";
+return new class extends HitchhikerController
+{
+    public string $template = "attribution";
 
-    public function onGet(&$yt, $request) {
-        if (!isset($request->params->v)) {
+    public function onGet(YtApp $yt, RequestMetadata $request): void
+    {
+        if (!isset($request->params->v))
+        {
             $this->template = "oops";
             return;
         }
@@ -36,7 +42,8 @@ return new class extends HitchhikerController {
         )->then(function ($resolve) {
             $resolveData = $resolve->getJson();
 
-            if (!isset($resolveData->endpoint->browseEndpoint->params)) {
+            if (!isset($resolveData->endpoint->browseEndpoint->params))
+            {
                 $this->template = "oops";
                 return;
             }
@@ -47,7 +54,7 @@ return new class extends HitchhikerController {
                     "browseId" => "FEsfv_audio_pivot",
                     "params" => $resolveData->endpoint->browseEndpoint->params
                 ]
-                );
+            );
         })->then(function ($response) use ($yt, $videoId) {
             $ytdata = $response->getJson();
 

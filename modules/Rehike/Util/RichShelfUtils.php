@@ -8,11 +8,13 @@ namespace Rehike\Util;
  * @author Aubrey Pankow <aubyomori@gmail.com>
  * @author The Rehike Maintainers
  */
-class RichShelfUtils {
+class RichShelfUtils
+{
     /**
      * Reformat a base response.
      */
-    public static function reformatResponse($response) {
+    public static function reformatResponse(object $response): object
+    {
         if (!isset($response->onResponseReceivedActions)) return $response;
 
         $contents = [];
@@ -42,7 +44,8 @@ class RichShelfUtils {
      * @param bool $list Format in list form?
      * @return object Modified shelf.
      */
-    public static function reformatShelf($shelf, $list = false) {
+    public static function reformatShelf(object $shelf, bool $list = false): object
+    {
         if (!isset($shelf->richSectionRenderer->content->richShelfRenderer)) return $shelf;
 
         $richShelf = $shelf->richSectionRenderer->content->richShelfRenderer;
@@ -83,15 +86,20 @@ class RichShelfUtils {
      * @param bool $list Format in list form?
      * @return object $richItemRenderer->content
      */
-    public static function reformatShelfItem($item, $list = false) {
-        if (isset($item->richItemRenderer->content)) {
-            foreach ($item->richItemRenderer->content as $key => $val) {
+    public static function reformatShelfItem(object $item, bool $list = false): object
+    {
+        if (isset($item->richItemRenderer->content))
+        {
+            foreach ($item->richItemRenderer->content as $key => $val)
+            {
                 if (!$list) $key = "grid" . ucfirst($key);
                 return (object) [
                     $key => $val
                 ];
             }
-        } else {
+        }
+        else
+        {
             return $item;
         }
     }

@@ -1,7 +1,7 @@
 <?php
 namespace Rehike\Player;
 
-use Reflectionobject;
+use ReflectionObject;
 
 /**
  * Implements the player information schema.
@@ -13,44 +13,33 @@ class PlayerInfo
 {
     /**
      * The URL of the player's base JS module.
-     * 
-     * @var string
      */
-    public $baseJsUrl;
+    public string $baseJsUrl;
 
     /**
      * The URL of the player's base stylesheet, required
      * in order for it to display properly in a HTML document.
-     * 
-     * @var string
      */
-    public $baseCssUrl;
+    public string $baseCssUrl;
 
     /**
      * A valued used to protect video streams. This is required for
      * playback on the client.
-     * 
-     * @var int
      */
-    public $signatureTimestamp;
+    public int $signatureTimestamp;
 
     /**
      * The URL of the player's embed JS module.
-     * 
-     * @var string
      */
-    public $embedJsUrl;
+    public string $embedJsUrl;
 
     /**
      * PHP does not have native object casting (whyyyyyyyyy)
      * 
      * I stole most of this from a Stack Overflow function:
      * https://stackoverflow.com/a/9812023
-     * 
-     * @param object $obj
-     * @return PlayerInfo
      */
-    public static function from($obj)
+    public static function from(object $obj): PlayerInfo
     {
         $casted = new self();
 

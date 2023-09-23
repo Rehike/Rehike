@@ -7,17 +7,18 @@ namespace Rehike\Util;
  * @author Aubrey Pankow <aubymori@gmail.com>
  * @author The Rehike Maintainers
  */
-class PrefUtils {
+class PrefUtils
+{
     /**
      * Parse the PREF cookie.
-     * 
-     * @var string $pref  PREF cookie.
-     * @return object
      */
-    public static function parse($pref) {
+    public static function parse(string $pref): object
+    {
         $response = (object) [];
         $temp = explode("&", $pref);
-        foreach ($temp as $value) {
+
+        foreach ($temp as $value)
+        {
             $temp2 = explode("=", $value);
             $response->{$temp2[0]} = $temp2[1];
         }
@@ -29,12 +30,14 @@ class PrefUtils {
      * Is autoplay enabled?
      * 
      * @var object $pref  Parsed PREF value.
-     * @return bool
      */
-    public static function autoplayEnabled($pref) {
-        if (isset($pref->f5) && substr($pref->f5, 0, 1) == "3") {
+    public static function autoplayEnabled(object $pref): bool
+    {
+        if (isset($pref->f5) && substr($pref->f5, 0, 1) == "3")
+        {
             return false;
         }
+
         return true;
     }
 }

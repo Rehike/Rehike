@@ -17,14 +17,12 @@ class VersionController
      * 
      * @var mixed[]
      */
-    public static $versionInfo = [];
+    public static array $versionInfo = [];
 
     /**
      * Initialise the Version subsystem.
-     * 
-     * @return void
      */
-    public static function init()
+    public static function init(): bool
     {
         static $hasRun = false;
         if ($hasRun) return true;
@@ -51,10 +49,8 @@ class VersionController
 
     /**
      * Attempt to get all relevant information about the current version.
-     * 
-     * @return void
      */
-    public static function getVersion()
+    public static function getVersion(): string
     {
         $semanticVersion = \Rehike\Constants\VERSION;
 

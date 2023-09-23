@@ -33,18 +33,18 @@ use Rehike\Player\{
  * @author The Rehike Maintainers
  * 
  * @license Unlicense
- * @version 3.0
+ * @version 3.1
  */
 class PlayerCore extends Configurable
 {
-    static $playerJsRegex = "#/s/player/[a-zA-Z0-9/\-_.]*base.js#";
-    static $playerCssRegex = "#/s/player/[a-zA-Z0-9/\-_.]*(www-player|www-player-webp|player-rtl).css#";
-    static $embedJsRegex = "#/s/player/[a-zA-Z0-9/\-_.]*www-embed-player.js#";
-    static $stsRegex = "/signatureTimestamp:?\s*([0-9]*)/";
+    static string $playerJsRegex = "#/s/player/[a-zA-Z0-9/\-_.]*base.js#";
+    static string $playerCssRegex = "#/s/player/[a-zA-Z0-9/\-_.]*(www-player|www-player-webp|player-rtl).css#";
+    static string $embedJsRegex = "#/s/player/[a-zA-Z0-9/\-_.]*www-embed-player.js#";
+    static string $stsRegex = "/signatureTimestamp:?\s*([0-9]*)/";
 
-    static $cacheDestDir = "cache";
-    static $cacheDestName = "player_cache"; // .json
-    static $cacheMaxTime = 18000; // 5 hours in seconds
+    static string $cacheDestDir = "cache";
+    static string $cacheDestName = "player_cache"; // .json
+    static int $cacheMaxTime = 18000; // 5 hours in seconds
 
     /**
      * Set configuration from an array.
@@ -61,7 +61,7 @@ class PlayerCore extends Configurable
      * @param string[] $array
      * @return void
      */
-    public static function configure($array)
+    public static function configure(array $array): void
     {
         self::configFromArray($array);
     }
@@ -71,7 +71,7 @@ class PlayerCore extends Configurable
      * 
      * @return PlayerInfo
      */
-    public static function getInfo()
+    public static function getInfo(): PlayerInfo
     {
         // Try getting information from the cacher:
         try
@@ -96,7 +96,8 @@ class PlayerCore extends Configurable
             try
             {
                 Cacher::write($remoteInfo);
-            } catch (CacherException $e) {}
+            }
+            catch (CacherException $e) {}
 
             // If everything went right, then return the remote info:
             return PlayerInfo::from($remoteInfo);

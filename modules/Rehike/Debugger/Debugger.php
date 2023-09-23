@@ -4,6 +4,7 @@ namespace Rehike\Debugger;
 use \Rehike\RehikeConfigManager;
 use \Rehike\TemplateManager;
 use \Rehike\i18n;
+use \Rehike\YtApp;
 use \YukisCoffee\CoffeeException;
 
 use \Rehike\Model\Rehike\Debugger\{
@@ -30,17 +31,13 @@ class Debugger
 {
     /**
      * Stores the common context of this session's debugger.
-     * 
-     * @var Context
      */
-    protected static $context;
+    protected static Context $context;
 
     /**
      * Reference to the global context.
-     * 
-     * @var object
      */
-    protected static $yt;
+    protected static YtApp $yt;
 
     /**
      * Stores the result of getting the debugger's condensed status.
@@ -48,10 +45,8 @@ class Debugger
      * The debugger is condensed when it is disabled (it's not really ever
      * REALLY disabled because it's used for beautiful error message delivery
      * too).
-     * 
-     * @var bool
      */
-    public static $condensed = true;
+    public static bool $condensed = true;
 
     /**
      * Stores a log of all errors (not exceptions) that have occurred since
@@ -59,25 +54,20 @@ class Debugger
      *  
      * @var ErrorWrapper[] 
      */
-    protected static $errors = [];
+    protected static array $errors = [];
 
     /**
      * Get if the debugger is condensed.
-     * 
-     * @return bool
      */
-    public static function isCondensed()
+    public static function isCondensed(): bool
     {
         return self::$condensed;
     }
 
     /**
      * Initialise the debugger.
-     * 
-     * @param object $yt global state
-     * @return void
      */
-    public static function init(&$yt)
+    public static function init(YtApp $yt): void
     {
         self::refreshInternalCondensedStatus();
 
@@ -101,10 +91,8 @@ class Debugger
 
     /**
      * Runs right before a standard page shutdown.
-     * 
-     * @return void
      */
-    public static function shutdown()
+    public static function shutdown(): void
     {
         if (!in_array($_GET["rebug_get_info"] ?? "false", ["false", "0"]))
         {
@@ -115,7 +103,7 @@ class Debugger
     /**
      * Handle a page requested with ?rebug_get_info=1
      */
-    public static function handleGetInfo()
+    public static function handleGetInfo(): void
     {
         $headers = headers_list();
         
@@ -146,24 +134,20 @@ class Debugger
 
     /**
      * Get the internal context used by the debugger.
-     * 
-     * @return object
      */
-    public static function getInternalContext()
+    public static function getInternalContext(): Context
     {
         return self::$context;
     }
 
     /**
      * Setup the tabs available to the debugger session.
-     * 
-     * @param Dialog|FullPage $context
-     * @return void
      */
-    public static function setupTabs($context)
+    public static function setupTabs(Dialog $context): void
     {
         $i18n = &i18n::getNamespace("rebug");
 
+        /** @var ErrorTab */
         $errorTab = $context->addTab(
             ErrorTab::createTab(
                 $i18n->tabErrorTitle(number_format(self::getErrorCount())),
@@ -184,6 +168,7 @@ class Debugger
             );
             */
 
+            /** @var YtWalker */
             $ytWalker = $context->addTab(
                 YtWalker::createTab(
                     $i18n->tabYtWalkerTitle, "global_walker"
@@ -195,10 +180,8 @@ class Debugger
 
     /**
      * Expose the debugger to the templater.
-     * 
-     * @return void
      */
-    public static function expose()
+    public static function expose(): void
     {
         $i18n = &i18n::getNamespace("rebug");
 
@@ -215,10 +198,8 @@ class Debugger
 
     /**
      * Expose the debugger to an SPF response.
-     * 
-     * @return object
      */
-    public static function exposeSpf()
+    public static function exposeSpf(): object
     {
         self::expose();
 
@@ -259,43 +240,32 @@ class Debugger
 
     /**
      * Get the current error count.
-     * 
-     * @return int
      */
-    public static function getErrorCount()
+    public static function getErrorCount(): int
     {
         return count(self::$errors);
     }
 
     /**
      * Push an error to the debugger.
-     * 
-     * @param ErrorWrapper $err
-     * @return void
      */
-    public static function pushError($err)
+    public static function pushError(ErrorWrapper $err): void
     {
         self::$errors[] = $err;
     }
 
     /**
      * Add data to the context.
-     * 
-     * @param string $name
-     * @param mixed $value
-     * @return void
      */
-    public static function addContext($name, $value)
+    public static function addContext(string $name, mixed $value): void
     {
         self::$context->{$name} = $value;
     }
 
     /**
      * Initialise i18n
-     * 
-     * @return void
      */
-    protected static function setupI18n()
+    protected static function setupI18n(): void
     {
         $i18n = &i18n::newNamespace("rebug");
 
@@ -304,45 +274,36 @@ class Debugger
 
     /**
      * Refresh the condensed status.
-     * 
-     * @return void
      */
-    protected static function refreshInternalCondensedStatus()
+    protected static function refreshInternalCondensedStatus(): void
     {
         self::$condensed = RehikeConfigManager::getConfigProp("advanced.enableDebugger")
-        ? false
-        : true
-        ;
+            ? false
+            : true;
     }
 }
 
 /**
  * Handles all errors and logs them in the debugger.
- * 
- * @return void
  */
-function YcRehikeDebuggerErrorHandler($errno, $errstr, $errfile, $errline)
+function YcRehikeDebuggerErrorHandler(
+        int $errno, 
+        string $errstr, 
+        string $errfile, 
+        int $errline
+): bool
 {
     // Surpress @ operator
     $errorReporting = error_reporting();
-    if (
-        E_ALL != $errorReporting
-    )
+    
+    if (E_ALL != $errorReporting)
     {
         return false;
     }
 
-    switch ($errno)
-    {
-        case E_USER_ERROR:
-        case E_ERROR:
-            // Call the general fatal handler
-            \fatalHandler();
-            break;
-        default:
-            Debugger::pushError(
-                new ErrorWrapper($errno, $errstr, $errfile, $errline)
-            );
-            break;
-    }
+    Debugger::pushError(
+        new ErrorWrapper($errno, $errstr, $errfile, $errline)
+    );
+
+    return true;
 }

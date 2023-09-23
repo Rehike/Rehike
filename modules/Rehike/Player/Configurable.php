@@ -15,17 +15,17 @@ use BadMethodCallException;
  */
 abstract class Configurable
 {
-    public static function __callStatic($name, $args)
+    public static function __callStatic(string $name, mixed $args): mixed
     {
         if ("get" == substr($name, 0, 3))
         {
-            return self::_getBehaviour(
+            return self::_getBehavior(
                 self::_transformName("get", $name)
             );
         }
         else if ("set" == substr($name, 0, 3))
         {
-            return self::_setBehaviour(
+            return self::_setBehavior(
                 self::_transformName("set", $name),
                 $args[0]
             );
@@ -42,9 +42,8 @@ abstract class Configurable
      * Set a list of properties from an array.
      * 
      * @param string[] $arr
-     * @return void
      */
-    protected static function configFromArray($arr)
+    protected static function configFromArray(array $arr): void
     {
         $reflection = new ReflectionClass(get_called_class());
 
@@ -56,19 +55,15 @@ abstract class Configurable
         {
             if (!isset($props[$key])) continue;
 
-            self::_setBehaviour($key, $value);
+            self::_setBehavior($key, $value);
         }
     }
 
     /**
      * Transform property names for individual function
      * calls (getters/setters).
-     * 
-     * @param string $prefix
-     * @param string $name
-     * @return string
      */
-    private static function _transformName($prefix, $name)
+    private static function _transformName(string $prefix, string $name): string
     {
         $name = str_replace($prefix, "", $name, 1);
         $name = lcfirst($name);
@@ -77,28 +72,17 @@ abstract class Configurable
     }
 
     /**
-     * Implements the standard "getter" behaviour.
-     * 
-     * @param ReflectionClass $reflection
-     * @param string $name
-     * 
-     * @return mixed
+     * Implements the standard "getter" behavior.
      */
-    private static function _getBehaviour($name)
+    private static function _getBehavior(string $name): mixed
     {
         return static::$$name;
     }
 
     /**
-     * Implements the standard "setter" behaviour.
-     * 
-     * @param ReflectionClass $reflection
-     * @param string $name
-     * @param mixed $value
-     * 
-     * @return void
+     * Implements the standard "setter" behavior.
      */
-    private static function _setBehaviour($name, $value)
+    private static function _setBehavior(string $name, mixed $value): void
     {
         static::$$name = $value;
     }

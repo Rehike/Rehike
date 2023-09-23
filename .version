@@ -1,10 +1,10 @@
 {
-	"previousHash": "3ae4bc63beb51417856fd4e6c84751141ccab4a3",
-	"currentRevisionId": 994,
-	"subject": "Fix Shorts redirect for non-SPF",
-	"body": "Fix Shorts redirect for non-SPF",
+	"previousHash": "d2eedd1bdc792d1e32e1ab5c29b6c9a3466440c9",
+	"currentRevisionId": 995,
+	"subject": "Big code cleanup (made most things typed)",
+	"body": "Big code cleanup (made most things typed)",
 	"branch": "master",
-	"committerName": "aubymori",
-	"committerEmail": "aubyomori@gmail.com",
-	"time": 1695255714
+	"committerName": "Taniko Yamamoto",
+	"committerEmail": "99076687+YukisCoffee@users.noreply.github.com",
+	"time": 1695459017
 }

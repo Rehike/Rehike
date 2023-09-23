@@ -34,10 +34,8 @@ class Cacher
      * If the cache file is invalid, then this method will
      * return false, in order to allow assignment within an
      * if statement.
-     * 
-     * @return object|false
      */
-    public static function getCache()
+    public static function getCache(): object|false
     {
         if (FS::fileExists(self::CACHE_FILE))
         {
@@ -67,10 +65,8 @@ class Cacher
      * 
      * If the data is invalid, then this function will
      * return null.
-     * 
-     * @return object|null
      */
-    protected static function readCacheFile()
+    protected static function readCacheFile(): ?object
     {
         $content = FS::getFileContents(self::CACHE_FILE);
         $object = json_decode($content);
@@ -87,7 +83,7 @@ class Cacher
      * @param string[] $responses
      * @param bool $noCheck
      */
-    public static function writeCache($responses, $noCheck = false)
+    public static function writeCache(array $responses, bool $noCheck = false): void
     {
         if (!FS::fileExists(self::CACHE_FILE) || $noCheck)
         {
@@ -104,7 +100,7 @@ class Cacher
         }
         else
         {
-            return self::updateCache($responses);
+            self::updateCache($responses);
         }
     }
 
@@ -112,14 +108,13 @@ class Cacher
      * Update the cache in order to add new data.
      * 
      * @param string[] $addedResponses
-     * @return void
      */
-    public static function updateCache($addedResponses)
+    public static function updateCache(array $addedResponses): void
     {
         $data = self::readCacheFile();
         
         if (null == $data)
-            return self::writeCache($addedResponses, true);
+            self::writeCache($addedResponses, true);
 
         $session = AuthManager::getUniqueSessionCookie();
 

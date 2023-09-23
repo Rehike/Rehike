@@ -19,14 +19,13 @@ use Rehike\ControllerV2\Core as ControllerV2;
 class TemplateManager
 {
     // Must be an reference to the global Twig instance.
-    /** @var \Twig\Environment */
-    public static $twig;
+    public static \Twig\Environment $twig;
 
     /** @var string */
-    public static $template = "";
+    public static string $template = "";
 
     // Must be a reference to the global context variable.
-    public static $yt;
+    public static YtApp $yt;
 
     public static function __initStatic()
     {
@@ -47,9 +46,9 @@ class TemplateManager
      * @param object $yt (reference)
      * @return void
      */
-    public static function registerGlobalState(&$yt)
+    public static function registerGlobalState(YtApp $yt): void
     {
-        self::$yt = &$yt;
+        self::$yt = $yt;
         self::addGlobal("yt", $yt);
     }
 
@@ -58,7 +57,7 @@ class TemplateManager
      * 
      * @param array $vars to additionally pass
      */
-    public static function render($vars = [], $template = "")
+    public static function render(array $vars = [], string $template = ""): string
     {
         if (!is_array($vars) && !is_null($vars)) throw new \Exception("\$vars must be an array.");
 
@@ -71,50 +70,47 @@ class TemplateManager
 
     /**
      * Add a global variable to the templater.
-     * 
-     * @param string $name
-     * @param mixed $value
      */
-    public static function addGlobal($name, &$value)
+    public static function addGlobal(string $name, mixed &$value): void
     {
-        return self::$twig->addGlobal($name, $value);
+        self::$twig->addGlobal($name, $value);
     }
 
     /**
      * Add a function to the templater.
-     * 
-     * @param string|TwigFunction $name
-     * @param callback|null $callback
      */
-    public static function addFunction($name, $callback = null)
+    public static function addFunction(
+            string|TwigFunction $name, 
+            ?callable $callback = null
+    ): void
     {
         // $name here is a TwigFunction instance, this ordinarily
         // allows creating TwigFunctions on the fly instead.
         if ($name instanceof TwigFunction)
         {
-            return self::$twig->addFunction($name);
+            self::$twig->addFunction($name);
         }
 
-        return self::$twig->addFunction(
+        self::$twig->addFunction(
             new TwigFunction($name, $callback)
         );
     }
 
     /**
      * Add a filter to the templater.
-     * 
-     * @param string|TwigFilter $name
-     * @param callback|null $callback
      */
-    public static function addFilter($name, $callback = null)
+    public static function addFilter(
+            string|TwigFilter $name, 
+            ?callable $callback = null
+    ): void
     {
         // $name here is a TwigFilter instance, ditto above
         if ($name instanceof TwigFilter)
         {
-            return self::$twig->addFilter($name);
+            self::$twig->addFilter($name);
         }
 
-        return self::$twig->addFilter(
+        self::$twig->addFilter(
             new TwigFilter($name, $callback)
         );
     }

@@ -1,6 +1,9 @@
 <?php
 namespace Rehike\Controller;
 
+use Rehike\YtApp;
+use Rehike\ControllerV2\RequestMetadata;
+
 use Rehike\Controller\core\NirvanaController;
 use Rehike\Model\Results\ResultsModel;
 
@@ -23,15 +26,17 @@ use Rehike\Util\Base64Url;
  * @author The Rehike Maintainers
  */
 class ResultsController extends NirvanaController {
-    public $template = "results";
+    public string $template = "results";
 
     // No clue why these are static.
-    public static $query;
-    public static $param;
+    public static ?string $query;
+    public static ?string $param;
 
-    public function onGet(&$yt, $request) {
+    public function onGet(YtApp $yt, RequestMetadata $request): void
+    {
         // invalid request redirect
-        if (!isset($_GET["search_query"])) {
+        if (!isset($_GET["search_query"]))
+        {
             header("Location: /");
             die();
         }
@@ -88,26 +93,34 @@ class ResultsController extends NirvanaController {
      * after the first result.
      * 
      * @param $sp  Base64-encoded search parameter provided by the YT server.
-     * @return int
      */
-    public static function getPaginatorIndex($sp) {
-        if ($sp == null) {
+    public static function getPaginatorIndex(?string $sp): int {
+        if ($sp == null)
+        {
             return 0;
-        } else {
-            try {
+        }
+        else
+        {
+            try
+            {
                 $parsed = new SearchRequestParams();
                 $parsed->mergeFromString(
                     Base64Url::decode($sp)
                 );
 
-                if ($parsed->hasIndex()) {
+                if ($parsed->hasIndex())
+                {
                     $index = $parsed->getIndex();
-                } else {
+                }
+                else
+                {
                     $index = 0;
                 }
 
                 return $index;
-            } catch (\Throwable $e) {
+            }
+            catch (\Throwable $e)
+            {
                 return 0;
             }
         }
@@ -118,9 +131,9 @@ class ResultsController extends NirvanaController {
      * 
      * @param int $resultsCount  The number of results for the query.
      * @param int $index         Index at which to start the first result.
-     * @return object
      */
-    public static function getPaginatorInfo($resultsCount, $index) {
+    public static function getPaginatorInfo(int $resultsCount, int $index): object
+    {
         // youtube is 20 results/page
         $resultsPerPage = 20;
 
@@ -142,16 +155,22 @@ class ResultsController extends NirvanaController {
      * 
      * @return string  A modified search parameter that uses the page.
      */
-    public static function getPageParam($sp = null, $page = 1) {
+    public static function getPageParam(?string $sp = null, int $page = 1): string
+    {
         $parsed = new SearchRequestParams();
 
-        if ($sp == null) {
+        if ($sp == null)
+        {
             $parsed->setIndex(($page - 1) * 20);
             $parsed->setSomething("");
-        } else {
-            try {
+        }
+        else
+        {
+            try
+            {
                 $parsed->mergeFromString(Base64Url::decode($sp));
-            } catch (\Throwable $e) {} // consume any exeception
+            }
+            catch (\Throwable $e) {} // consume any exception
 
             $parsed->setIndex(($page - 1) * 20);
         }
@@ -167,7 +186,8 @@ class ResultsController extends NirvanaController {
      * 
      * @return string  URL for that page.
      */
-    public static function getPageParamUrl($sp = null, $page = 1) {
+    public static function getPageParamUrl(?string $sp = null, int $page = 1): string
+    {
         $query = urlencode(self::$query);
         $param = self::getPageParam($sp, $page);
 

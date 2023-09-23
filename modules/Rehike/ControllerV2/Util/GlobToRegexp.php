@@ -19,13 +19,8 @@ class GlobToRegexp
 
     /**
      * Convert a glob to a regex pattern.
-     * 
-     * @param string $pattern
-     * @param string $filename
-     * @param int $flags
-     * @return string
      */
-    public static function convert($pattern, $filename, $flags = 0)
+    public static function convert(string $pattern, string $filename, int $flags = 0): string
     {
         $regexFlags = "";
 
@@ -67,13 +62,8 @@ class GlobToRegexp
      * 
      * `match` is a reserved word as of PHP 8, so the method is called
      * doMatch instead.
-     * 
-     * @param string $pattern
-     * @param string $filename
-     * @param int $flags
-     * @return bool
      */
-    public static function doMatch($pattern, $filename, $flags = 0)
+    public static function doMatch(string $pattern, string $filename, int $flags = 0): bool
     {
         $regexPattern = GlobToRegexp::convert($pattern, $filename, $flags);
 

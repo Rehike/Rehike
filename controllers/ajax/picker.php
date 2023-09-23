@@ -1,4 +1,9 @@
 <?php
+namespace Rehike\Controller\ajax;
+
+use Rehike\YtApp;
+use Rehike\ControllerV2\RequestMetadata;
+
 use \Rehike\Controller\core\AjaxController;
 use \Rehike\Network;
 use \Rehike\Model\Picker\PickerModel;
@@ -13,9 +18,10 @@ use \Rehike\Signin\Cacher;
  * @author The Rehike Maintainers
  */
 return new class extends AjaxController {
-    public $template = "ajax/picker";
+    public string $template = "ajax/picker";
 
-    public function onGet(&$yt, $request) {
+    public function onGet(YtApp $yt, RequestMetadata $request): void
+    {
         $action = self::findAction();
 
         Network::innertubeRequest(

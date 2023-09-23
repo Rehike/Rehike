@@ -1,6 +1,9 @@
 <?php
 namespace Rehike\Controller\Version;
 
+use Rehike\YtApp;
+use Rehike\ControllerV2\RequestMetadata;
+
 use Rehike\Controller\core\HitchhikerController;
 use Rehike\Version\VersionController;
 use Rehike\i18n;
@@ -18,21 +21,15 @@ class RemoteGit
     /**
      * Attempt to retrieve remote GitHub information, either
      * through the GitHub API or a cached earlier download.
-     * 
-     * @param string $branch
-     * @return object|false
      */
-    public static function getInfo($branch)
+    public static function getInfo(string $branch): object|array|null
     {
         if (!GetVersionController::GH_ENABLED) return false; // Return false if GH access is not permitted.
 
         return self::useCache($branch) ?? self::useRemote($branch) ?? false;
     }
 
-    /**
-     * @return object|null
-     */
-    private static function useCache($branch)
+    private static function useCache(string $branch): object|array|null
     {
         $response = null;
 
@@ -67,7 +64,7 @@ class RemoteGit
      * @param string $encodedJson
      * @return bool status (false on failure, true on success)
      */
-    private static function storeCache($branch, $encodedJson)
+    private static function storeCache(string $branch, string $encodedJson): bool
     {
         $newLockContents = (object)[];
         $filename = "remote-git-{$branch}.json";
@@ -104,10 +101,7 @@ class RemoteGit
         return !$fileFailure;
     }
 
-    /**
-     * @return object|null
-     */
-    private static function useRemote($branch)
+    private static function useRemote(string $branch): object|array|null
     {
         $ch = curl_init(GetVersionController::GH_API_COMMITS . $branch);
         curl_setopt_array($ch, [
@@ -137,26 +131,26 @@ class RemoteGit
 
 class GetVersionController extends HitchhikerController
 {
-    public const GH_REPO = "Rehike/Rehike";
-    public const GH_ENABLED = true;
+    public const GH_REPO = \Rehike\Constants\GH_REPO;
+    public const GH_ENABLED = \Rehike\Constants\GH_ENABLED;
 
     public const GH_API_COMMITS = "https://api.github.com/repos/" . self::GH_REPO . "/commits?sha="; // sha= + branch
 
     /**
      * Reference to Rehike\Version\VersionController::$versionInfo
      */
-    public static $versionInfo;
+    public static array $versionInfo;
 
-    public $template = "rehike/version";
+    public string $template = "rehike/version";
 
-    public function onGet(&$yt, $request)
+    public function onGet(YtApp $yt, RequestMetadata $request): void
     {
         i18n::newNamespace("rehike/version")->registerFromFolder("i18n/rehike/version");
         
         $yt->page = (object)self::bake();
     }
 
-    public static function bake()
+    public static function bake(): MVersionPage
     {
         self::$versionInfo = &VersionController::$versionInfo;
 

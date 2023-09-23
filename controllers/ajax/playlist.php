@@ -1,4 +1,9 @@
 <?php
+namespace Rehike\Controller\ajax;
+
+use Rehike\YtApp;
+use Rehike\ControllerV2\RequestMetadata;
+
 use Rehike\Controller\core\AjaxController;
 use Rehike\Network;
 
@@ -15,9 +20,9 @@ use function Rehike\Async\async;
  */
 return new class extends AjaxController
 {
-    public $useTemplate = false;
+    public bool $useTemplate = false;
 
-    public function onPost(&$yt, $request)
+    public function onPost(YtApp $yt, RequestMetadata $request): void
     {
         $action = self::findAction();
 

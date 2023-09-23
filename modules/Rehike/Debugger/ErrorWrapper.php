@@ -9,12 +9,12 @@ namespace Rehike\Debugger;
  */
 class ErrorWrapper
 {
-    public $errno;
-    public $errstr;
-    public $errfile;
-    public $errline;
+    public int $errno;
+    public string $errstr;
+    public string $errfile;
+    public int $errline;
 
-    public function __construct($errno, $errstr, $errfile, $errline)
+    public function __construct(int $errno, string $errstr, string $errfile, int $errline)
     {
         $this->errno = $errno;
         $this->errstr = $errstr;

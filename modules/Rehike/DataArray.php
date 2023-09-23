@@ -20,14 +20,14 @@ class DataArray implements ArrayAccess, IteratorAggregate
      * 
      * @var array
      */
-    private $boundArray = [];
+    private array $boundArray = [];
 
-    public function __construct(&$baseArray)
+    public function __construct(array &$baseArray)
     {
         $this->boundArray = &$baseArray;
     }
 
-    public function __get($var)
+    public function __get(mixed $var)
     {
         $lowercaseName = strtolower($var);
 
@@ -61,48 +61,32 @@ class DataArray implements ArrayAccess, IteratorAggregate
         }
     }
 
-    public function __isset($var)
+    public function __isset(string $var): bool
     {
         return null != $this->__get($var);
     }
 
-    public function __set($a, $b)
+    public function __set(string $a, mixed $b): void
     {
         $this->offsetSet(null, null); // inherit warning
     }
 
-    /*
-     * Array access functions
-     * 
-     * In order to maintain compatibility with both PHP 7.x and
-     * PHP 8.1, the ReturnTypeWillChange attribute is required on all
-     * methods.
-     * 
-     * This is to avoid a conflict where PHP 8.1 requires strict type
-     * signatures on methods and PHP 7.x doesn't even support them at
-     * all.
-     */
-
-    #[ReturnTypeWillChange]
-    public function offsetExists($offset)
+    public function offsetExists(mixed $offset): bool
     {
         return isset($this->boundArray[$offset]);
     }
 
-    #[ReturnTypeWillChange]
-    public function offsetSet($offset, $value)
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         trigger_error("RequestMetadata->headers is read only.", E_USER_WARNING);
     }
 
-    #[ReturnTypeWillChange]
-    public function offsetUnset($offset)
+    public function offsetUnset(mixed $offset): void
     {
         $this->offsetSet(null, null); // inherit warning
     }
 
-    #[ReturnTypeWillChange]
-    public function offsetGet($offset)
+    public function offsetGet(mixed $offset): mixed
     {
         return isset($this->boundArray[$offset])
             ? $this->boundArray[$offset]
@@ -110,8 +94,7 @@ class DataArray implements ArrayAccess, IteratorAggregate
         ;
     }
 
-    #[ReturnTypeWillChange]
-    public function &getIterator()
+    public function getIterator(): ArrayIterator
     {
         return new ArrayIterator($this->boundArray);
     }

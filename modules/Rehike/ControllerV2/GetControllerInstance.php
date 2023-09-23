@@ -9,15 +9,17 @@ namespace Rehike\ControllerV2;
  */
 class GetControllerInstance
 {
-    /** @var string */
-    private $controllerName;
-    /** @var object */
-    private $boundController;
+    private string $controllerName;
+    private object $boundController;
     
-    /** Reference to shorten code. @var string */
+    /** 
+     * Reference to shorten code. 
+     * 
+     * @var string 
+     */
     const wrap = "_cv2WrappedCallControllerMethod";
 
-    public function __construct($name, $binding)
+    public function __construct(string $name, object $binding)
     {
         $this->controllerName = &$name;
         $this->boundController = &$binding;
@@ -31,9 +33,8 @@ class GetControllerInstance
      * 
      * @param string $name
      * @param mixed[] $args
-     * @return mixed
      */
-    protected function _cv2WrappedCallControllerMethod($name, $args)
+    protected function _cv2WrappedCallControllerMethod(string $name, array $args): mixed
     {
         // Check if the method exists in the bound controller
         if (method_exists($this->boundController, $name))
@@ -68,7 +69,7 @@ class GetControllerInstance
      * @param mixed[] $args
      * @return mixed
      */
-    public function __call($name, $args)
+    public function __call(string $name, array $args): mixed
     {
         return $this->{self::wrap}($name, $args);
     }

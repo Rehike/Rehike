@@ -11,10 +11,8 @@ class API
 {
     /**
      * Check if the current session is signed in.
-     * 
-     * @return bool
      */
-    public static function isSignedIn()
+    public static function isSignedIn(): bool
     {
         return AuthManager::$isSignedIn;
     }
@@ -22,7 +20,7 @@ class API
     /**
      * Get account information from the private AuthManager.
      */
-    public static function getInfo()
+    public static function getInfo(): ?array
     {
         return AuthManager::$info;
     }

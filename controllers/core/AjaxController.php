@@ -9,21 +9,26 @@ use \Rehike\Controller\core\NirvanaController;
  * @author Aubrey Pankow <aubyomori@gmail.com>
  * @author The Rehike Maintainers
  */
-abstract class AjaxController extends NirvanaController {
-    public $contentType = "application/json";
+abstract class AjaxController extends NirvanaController
+{
+    public string $contentType = "application/json";
 
     // Find action
     // Not used for watch_fragments or watch_fragments2 (electric boogaloo)
-    protected function findAction() {
-        foreach ($_GET as $key => $value) {
-            if (strpos($key, "action_") > -1) {
+    protected function findAction(): ?string
+    {
+        foreach ($_GET as $key => $value)
+        {
+            if (strpos($key, "action_") > -1)
+            {
                 return str_replace("action_", "", $key);
             }
         }
         return null;
     }
 
-    protected static function error() {
+    protected static function error(): void
+    {
         http_response_code(400);
         die('{"errors":[]}');
     }
