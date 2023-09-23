@@ -144,13 +144,13 @@ rehike.config.submit_ = function(onLoadCb) {
     xhr.onload = function() {
         if (xhr.status == 200)
         {
-            if (typeof onLoadCb == "undefined")
-            {
-                location.reload();
-            }
-            else if (typeof onLoadCb == "function")
+            if (typeof onLoadCb == "function")
             {
                 onLoadCb();
+            }
+            else
+            {
+                location.reload();
             }
         }
     };

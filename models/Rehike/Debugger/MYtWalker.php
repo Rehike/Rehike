@@ -205,6 +205,7 @@ class MYtWalker extends MTabContent
                 else
                 {
                     $value = "[ infinite cycle detected ]";
+                    return;
                 }
                 array_pop($parentStack);
             }
@@ -229,6 +230,7 @@ class MYtWalker extends MTabContent
                 else
                 {
                     $value = "[ infinite cycle detected ]";
+                    return;
                 }
                 array_pop($parentStack);
             }

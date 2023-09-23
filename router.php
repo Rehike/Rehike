@@ -38,7 +38,8 @@ Router::funnel([
     "/signin_prompt",
     "/post/*",
     "/feeds/*",
-    "/img/*"
+    "/img/*",
+    "/attribution_link*"
 ]);
 
 Router::redirect([
