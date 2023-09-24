@@ -13,7 +13,7 @@ use Rehike\Controller\core\HitchhikerController;
 return new class extends HitchhikerController
 {
     public const YTCFG_REGEX = "/ytcfg\.set\(({.*?})\);/";
-    public string $useTemplate = false;
+    public bool $useTemplate = false;
 
     public function onGet(YtApp &$yt, RequestMetadata $request): void
     {
