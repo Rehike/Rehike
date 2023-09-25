@@ -1,7 +1,7 @@
 {% macro render(continuation, target, autoload = false, endpoint = "browse_ajax") %}
 <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-default load-more-button yt-uix-load-more browse-items-load-more-button yt-uix-sessionlink yt-uix-load-more-error {{ autoload ? "scrolldetect" }}"
         aria-label="Load more" onclick=";return false;"
-        data-sessionlink-target="/{{ endpoint }}action_continuation=1&amp;continuation={{ continuation }}&amp;direct_render=1&amp;target_id={{ target }}"
+        data-sessionlink-target="/{{ endpoint }}?action_continuation=1&amp;continuation={{ continuation }}&amp;direct_render=1&amp;target_id={{ target }}"
         data-uix-load-more-href="/{{ endpoint }}?action_continuation=1&amp;continuation={{ continuation }}&amp;direct_render=1&amp;target_id={{ target }}"
         data-uix-load-more-target-id="{{ target }}">
     <span class="yt-uix-button-content">

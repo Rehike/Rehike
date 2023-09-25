@@ -15,7 +15,7 @@ return new class extends HitchhikerController
     public const YTCFG_REGEX = "/ytcfg\.set\(({.*?})\);/";
     public bool $useTemplate = false;
 
-    public function onGet(YtApp &$yt, RequestMetadata $request): void
+    public function onGet(YtApp $yt, RequestMetadata $request): void
     {
         async(function() use (&$yt, &$request) {
             $chatData = yield SimpleFunnel::funnelCurrentPage();
