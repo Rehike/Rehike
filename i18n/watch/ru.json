@@ -33,5 +33,13 @@
     "metadataLicenseStandard": "Standard YouTube License",
     "metadataCategory": "Категория",
     "metadataSong": "Звук",
-    "metadataGame": "Игра"
+    "metadataGame": "Игра",
+    "playlistVideosSingular": "1 видео",
+    "playlistVideosPlural": "%s видео",
+    "playlistSave": "Сохранить в плейлист",
+    "playlistUnsave": "Убрать",
+    "playlistPrevVideo": "Предыдущие видео",
+    "playlistNextVideo": "Следущие видео",
+    "privacyUnlisted": "Это видео c доступ по ссылке. Её могут смотреть только те, у кого есть ссылка.",
+    "privacyPrivate": "Это видео с ограниченным доступом. Его могут смотреть только те, у кого есть доступ."
 }

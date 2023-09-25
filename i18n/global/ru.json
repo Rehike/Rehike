@@ -17,5 +17,7 @@
     "shelfsliderNext": "Следущий",
     "shelfsliderPrev": "Предыдущий",
     "transcriptTitle": "Текст видео",
-    "transcriptFail": "Не удалось загрузить текст видео."
+    "transcriptFail": "Не удалось загрузить текст видео.",
+    "close": "Закрыть",
+    "viewFullPlaylist": "Посмотреть полный плейлист"
 }

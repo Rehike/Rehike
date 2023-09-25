@@ -1,3 +1,5 @@
 {
-    "channelBadge": "Канал"
+    "channelBadge": "Канал",
+	"liveBadge": "Прямая трансляция сейчас",
+    "liveBadgeOriginal": "ПРЯМАЯ ТРАНСЛЯЦИЯ"
 }
