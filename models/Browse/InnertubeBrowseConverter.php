@@ -297,6 +297,12 @@ class InnertubeBrowseConverter
             }
         }
 
+        // Swapped date/view count:
+        if (@$context["searchMetadataOrder"])
+        {
+            $data->dateBeforeViews = true;
+        }
+
         return $data;
     }
 

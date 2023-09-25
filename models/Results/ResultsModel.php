@@ -6,6 +6,8 @@ use Rehike\Util\ExtractUtils;
 use Rehike\TemplateFunctions;
 use Rehike\Model\Browse\InnertubeBrowseConverter;
 
+use Rehike\RehikeConfigManager as ConfigManager;
+
 class ResultsModel {
     static $yt;
     static $response;
@@ -21,7 +23,8 @@ class ResultsModel {
      * @param object $data           From search response
      * @param object $paginatorInfo  Info for paginated buttons at the bottom
      */
-    public static function bake($data, $paginatorInfo, $query) {
+    public static function bake($data, $paginatorInfo, $query)
+    {
         $i18n = i18n::newNamespace("results");
         $i18n->registerFromFolder("i18n/results");
 
@@ -54,12 +57,14 @@ class ResultsModel {
         if (isset($group->searchFilterGroupRenderer))
         foreach($group->searchFilterGroupRenderer->filters as $filter)
         if (@$filter->searchFilterRenderer->status == "FILTER_STATUS_SELECTED" 
-        && isset($filter->searchFilterRenderer->navigationEndpoint)) {
+        && isset($filter->searchFilterRenderer->navigationEndpoint))
+        {
             $filterCrumbs[] = $filter->searchFilterRenderer;
         }
         $submenu->filterCrumbs = $filterCrumbs;
 
-        if (count($filterCrumbs) > 0) {
+        if (count($filterCrumbs) > 0)
+        {
             $submenu->clearAll = (object) [
                 "simpleText" => $i18n->filtersClear,
                 "navigationEndpoint" => (object) [
@@ -75,27 +80,34 @@ class ResultsModel {
         for ($i = 0; $i < count($contents->contents); $i++)
         if (isset($contents->contents[$i] ->itemSectionRenderer))
         foreach($contents->contents[$i] ->itemSectionRenderer->contents as $item2)
-        if (isset($item2->promotedSparklesTextSearchRenderer)) {
+        if (isset($item2->promotedSparklesTextSearchRenderer))
+        {
             array_splice($contents->contents, $i, 1);
         }
 
         $response->content = InnerTubeBrowseConverter::sectionListRenderer($contents, [
             "channelRendererUnbrandedSubscribeButton" => true,
-            "channelRendererChannelBadge" => true
+            "channelRendererChannelBadge" => true,
+            "searchMetadataOrder" => false == ConfigManager::getConfigProp("appearance.swapSearchViewsAndDate")
         ]);
 
         // Paginator
-        if (isset($paginatorInfo->pagesCount) && $paginatorInfo->pagesCount > 1) {
+        if (isset($paginatorInfo->pagesCount) && $paginatorInfo->pagesCount > 1)
+        {
             $response->paginator = new MPaginator($paginatorInfo);
         }
 
         return $response;
     }
 
-    public static function getResultsCount($data) {
-        if (isset($data->estimatedResults)) {
+    public static function getResultsCount($data)
+    {
+        if (isset($data->estimatedResults))
+        {
             return (int) $data->estimatedResults;
-        } else {
+        }
+        else
+        {
             return 0;
         }
     }
