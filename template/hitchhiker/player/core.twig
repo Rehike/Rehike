@@ -108,3 +108,44 @@ ytplayer.load = function() {
       document.body.appendChild(a);
    }
 </script>
+{#
+   Space bar fix
+
+   Pressing space to pause the player on Hitchhiker would cause the page to scroll down as well, as YouTube's JS
+   never prevented that, which is the default behavior
+#}
+<script>
+   (() => {
+
+      function preventSpace(event) {
+         event = event || window.event;
+         let target = event.srcElement || event.target;
+
+         if (event.code !== 'Space' || event.keyCode !== 32) {
+            return;
+         }
+
+         const activeElem = document.activeElement;
+         const activeElemType = activeElem.tagName.toLowerCase();
+
+         if (activeElemType === "input" || activeElemType === "textarea" || activeElemType === "select" || activeElemType === "embed") {
+            return;
+         }
+         // check for "fake" inputs like comment box
+         if (activeElem.getAttribute('role') === 'textbox') {
+            return;
+         }
+         
+         event.preventDefault();
+      }
+
+      if (document.addEventListener) {
+         document.addEventListener("keypress", preventSpace, false);
+      } else if (document.attachEvent) {
+         document.attachEvent("onkeypress", preventSpace);
+      } else {
+         document.onkeypress = preventSpace;
+      }
+
+   })();
+</script>
