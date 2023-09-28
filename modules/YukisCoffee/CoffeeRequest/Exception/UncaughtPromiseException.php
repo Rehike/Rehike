@@ -31,6 +31,11 @@ class UncaughtPromiseException extends BaseException
             ?? "(in promise) " . $message;
     }
 
+    public function getOriginal(): Exception
+    {
+        return $this->original;
+    }
+
     public static function from(Exception $e): UncaughtPromiseException
     {
         $className = $e::class;

@@ -7,10 +7,13 @@ use Rehike\ErrorHandler\ErrorPage\{
     AbstractErrorPage,
     FatalErrorPage,
     UncaughtExceptionPage,
-    UnhandledPromisePage
+    UnhandledPromisePage,
+    InnertubeFailedRequestPage
 };
 
+use Rehike\Exception\Network\InnertubeFailedRequestException;
 use YukisCoffee\CoffeeRequest\Exception\UnhandledPromiseException;
+use YukisCoffee\CoffeeRequest\Exception\UncaughtPromiseException;
 
 /**
  * Implements a general error handler for Rehike.
@@ -40,6 +43,14 @@ final class ErrorHandler
             \YukisCoffee\CoffeeRequest\Util\PromiseResolutionTracker::disable();
         }
 
+        // Unpack uncaught promise exceptions in order to handle them too:
+        if ($e instanceof UncaughtPromiseException)
+        {
+            $promiseException = $e;
+            $e = $e->getOriginal();
+            $wasInPromise = true;
+        }
+
         /*
          * BUG (kirasicecreamm): Unhandled Promises are not compatible with the custom 
          * error page yet because they are triggered during the cleanup at the end of
@@ -50,6 +61,10 @@ final class ErrorHandler
         if ($e instanceof UnhandledPromiseException)
         {
             self::$pageModel = new UnhandledPromisePage($e);
+        }
+        else if ($e instanceof InnertubeFailedRequestException)
+        {
+            self::$pageModel = new InnertubeFailedRequestPage($e);
         }
         else
         {

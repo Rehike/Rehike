@@ -42,7 +42,7 @@ body, input, button, textarea, select
     display: inline;
 }
 
-.fatal-actions-header
+.fatal-actions-header, .failed-request-info-header
 {
     font-weight: 500;
 }
@@ -68,6 +68,16 @@ body, input, button, textarea, select
     border-color: #d3d3d3;
     background: #f8f8f8;
     color: #333;
+}
+
+.failed-request-info .section-title
+{
+    font-weight: 500;
+}
+
+.failed-request-text
+{
+    font-family: Consolas, monospace;
 }
 
 <?php

@@ -3,6 +3,7 @@
 
     use Rehike\ErrorHandler\ErrorHandler;
     use Rehike\ErrorHandler\ErrorPage\UncaughtExceptionPage;
+    use Rehike\ErrorHandler\ErrorPage\InnertubeFailedRequestPage;
     use Rehike\ErrorHandler\ErrorPage\FatalErrorPage;
 
     use const Rehike\Constants\GH_ENABLED;
@@ -46,6 +47,41 @@
                     <button class="fatal-button" onclick="fatalDisableRehikeOnce()">Disable Rehike (just this time)</button>
                     <button class="fatal-button" onclick="fatalDisableRehike()">Disable Rehike (persistently)</button>
                 </div>
+
+                <?php if ($page instanceof InnertubeFailedRequestPage): ?>
+                    <?php $e = $page->getInnertubeFailedException()->failedResponse ?>
+                    <h3 class="failed-request-info-header">
+                        Failed request information
+                    </h3>
+                    <ul class="failed-request-info">
+                        <li>
+                            <span class="section-title">
+                                Response status: 
+                            </span>
+                            <?= $e->status ?>
+                        </li>
+                        <li>
+                            <span class="section-title">
+                                Response content:
+                            </span>
+                            <div class="failed-request-text">
+                                <?= htmlspecialchars($e->getText()) ?>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="section-title">
+                                Response headers:
+                            </span>
+                            <ul class="response-headers-list">
+                                <?php foreach ($e->headers as $name => $value): ?>
+                                    <li>
+                                        <?= "$name: $value" ?>
+                                    </li>
+                                <?php endforeach ?>
+                            </ul>
+                        </li>
+                    </ul>
+                <?php endif ?>
 
                 <?php if ($page instanceof UncaughtExceptionPage): ?>
                     <pre class="exception-log"><?= 
