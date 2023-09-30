@@ -22,14 +22,14 @@ class RemoteGit
      * Attempt to retrieve remote GitHub information, either
      * through the GitHub API or a cached earlier download.
      */
-    public static function getInfo(string $branch): object|array|null
+    public static function getInfo(string $branch): mixed
     {
         if (!GetVersionController::GH_ENABLED) return false; // Return false if GH access is not permitted.
 
         return self::useCache($branch) ?? self::useRemote($branch) ?? false;
     }
 
-    private static function useCache(string $branch): object|array|null
+    private static function useCache(string $branch): mixed
     {
         $response = null;
 
@@ -64,7 +64,7 @@ class RemoteGit
      * @param string $encodedJson
      * @return bool status (false on failure, true on success)
      */
-    private static function storeCache(string $branch, string $encodedJson): bool
+    private static function storeCache(string $branch, string $encodedJson): mixed
     {
         $newLockContents = (object)[];
         $filename = "remote-git-{$branch}.json";
@@ -101,7 +101,7 @@ class RemoteGit
         return !$fileFailure;
     }
 
-    private static function useRemote(string $branch): object|array|null
+    private static function useRemote(string $branch): mixed
     {
         $ch = curl_init(GetVersionController::GH_API_COMMITS . $branch);
         curl_setopt_array($ch, [
