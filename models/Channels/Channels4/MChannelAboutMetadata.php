@@ -4,6 +4,7 @@ namespace Rehike\Model\Channels\Channels4;
 use Rehike\Util\ExtractUtils;
 use Rehike\i18n;
 use Rehike\TemplateFunctions as TF;
+use Rehike\Model\Traits\NavigationEndpoint;
 
 class MChannelAboutMetadata
 {
@@ -60,6 +61,57 @@ class MChannelAboutMetadata
 
         if (isset($data->primaryLinks))
             $this->primaryLinks = $data->primaryLinks;
+        else if (isset($data->links))
+            $this->primaryLinks = self::convertLinks($data->links);
+    }
+
+    /**
+     * The monkeys have done it AGAIN!
+     * This among the other new things from channel page use the same commandRuns
+     * bullshit that the description does. Fortunately, here it isn't actually
+     * used to split apart strings, so it's pretty painless to parse it.
+     * 
+     * Anyways, this function converts the new link format back to the old one.
+     * Icons and everything.
+     * 
+     * @param array $links  channelAboutFullMetaDataRenderer.links object
+     * @return array
+     */
+    private static function convertLinks(array $links): array
+    {
+        $out = [];
+        foreach ($links as $link)
+        {
+            $nlink = (object) [];
+            $link = $link->channelExternalLinkViewModel;
+
+            $nlink->title = (object) [
+                "simpleText" => $link->title->content
+            ];
+
+            $nlink->navigationEndpoint = $link->link->commandRuns[0]->onTap->innertubeCommand;
+
+            /**
+             * Google removed the icon markup, so we have to provide it ourself.
+             * Luckily, they provide a simple API for favicons, which just so
+             * happens to be the exact one which these actually used before the
+             * update.
+             */
+            $nlink->icon = (object) [
+                "thumbnails" => [
+                    (object) [
+                        "url" =>
+                        sprintf(
+                            "https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://%s&size=16",
+                            strstr($link->link->content, "/", true)
+                        )
+                    ]
+                ]
+            ];
+            
+            $out[] = $nlink;
+        }
+        return $out;
     }
 
     public static function getRichStat($text, $isolator)

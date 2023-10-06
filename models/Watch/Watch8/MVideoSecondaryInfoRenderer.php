@@ -2,6 +2,7 @@
 namespace Rehike\Model\Watch\Watch8;
 
 use Rehike\Util\ExtractUtils;
+use Rehike\Util\ParsingUtils;
 use Rehike\i18n;
 use Rehike\Model\Watch\Watch8\SecondaryInfo\MMetadataRowContainer;
 
@@ -29,7 +30,8 @@ class MVideoSecondaryInfoRenderer
             
             if (isset($info->attributedDescription))
             {
-                $this->description = self::convertDescription($info->attributedDescription);
+                $this->description = ParsingUtils::commandRunsToRuns($info->attributedDescription);
+                self::fixDescLinks($this->description->runs);
             }
             
             $this->defaultExpanded = $info->defaultExpanded ?? false;
@@ -45,73 +47,14 @@ class MVideoSecondaryInfoRenderer
         }
     }
 
-    
     /**
-     * Welp, the fucktards have done it again. The shitty description experiment is back,
-     * and it's just as painful as it was before. Do they even have any fucking idea what
-     * they're doing? The link color is fucking hardcoded blue for god's sake. There is
-     * no fucking way they can be serious about this. They have to be fucking with us at 
-     * this point. What a bunch of fucking retards.
-     *     - Love, Aubrey <3
+     * Fix description link text.
      * 
-     * Anyways, this function just converts it back to the standard runs format.
-     * 
-     * We use mb_substr with UTF-8 here, because the indices are set up for a JS environment.
-     * 
-     * @param object $description  videoSecondaryInfoRenderer.attributedDescription
+     * @param object $runs  runs object
+     * @param 
      */
-    private static function convertDescription(object $description): object
+    private static function fixDescLinks(array &$runs): void
     {
-        // If there's no links
-        if (!isset($description->commandRuns))
-        {
-            return (object) [
-                "runs" => [
-                    (object) [
-                        "text" => $description->content
-                    ]
-                ]
-            ];
-        }
-
-        $runs = [];
-
-        // Start at the beginning of the string
-        $start = 0;
-
-        foreach ($description->commandRuns as $run)
-        {
-            // Text from before the link
-            $beforeText = self::mb_substr_ex($description->content, $start, $run->startIndex - $start);
-
-            if (!empty($beforeText))
-            {
-                $runs[] = (object) [
-                    "text" => $beforeText
-                ];
-            }
-
-            // Add the actual link
-            $text = self::mb_substr_ex($description->content, $run->startIndex, $run->length);
-            $endpoint = $run->onTap->innertubeCommand;
-            $runs[] = (object) [
-                "text" => $text,
-                "navigationEndpoint" => $endpoint
-            ];
-
-            $start = $run->startIndex + $run->length;
-        }
-
-        // Add the text after the last link
-        $lastText = self::mb_substr_ex($description->content, $start, null);
-        if (!empty($lastText))
-        {
-            $runs[] = (object) [
-                "text" => $lastText
-            ];
-        }
-
-        // Fix link text
         foreach ($runs as &$run)
         if (isset($run->navigationEndpoint))
         {
@@ -154,14 +97,10 @@ class MVideoSecondaryInfoRenderer
                 $run->text = self::truncate($run->navigationEndpoint->commandMetadata->webCommandMetadata->url);
             }
         }
-
-        return (object) [
-            "runs" => $runs
-        ];
     }
 
     /**
-     * Truncate link texts
+     * Truncate a string for displaying as a description link.
      */
     private static function truncate(?string $string, bool $prefix = false): ?string
     {
@@ -175,23 +114,5 @@ class MVideoSecondaryInfoRenderer
         {
             return substr($string, 0, 37) . "...";
         }
-    }
-
-    // FUCKING THANK YOU SO MUCH
-    // THIS FIXED EMOJI PROBLEM
-    // https://stackoverflow.com/a/66878985
-    private static function mb_substr_ex($str, $offset, $length) {
-        $bmp = [];
-        for( $i = 0; $i < mb_strlen($str); $i++ )
-        {
-            $mb_substr = mb_substr($str, $i, 1);
-            $mb_ord = mb_ord($mb_substr);
-            $bmp[] = $mb_substr;
-            if ($mb_ord > 0xFFFF)
-            {
-                $bmp[] = "";
-            }
-        }
-        return implode("", array_slice($bmp, $offset, $length));
     }
 }

@@ -64,7 +64,7 @@
 {% macro aboutLink(info) %}
 <li class="channel-links-item">
     <a href="{{ info.navigationEndpoint.commandMetadata.webCommandMetadata.url }}" class="about-channel-link">
-        <img src="{{ info.icon.thumbnails[0].url }}" alt="" class="about-channel-link-icon" width="16" height="16" alt="{{ this.commandMetadata.webCommandMetadata.url }}">
+        <img src="{{ info.icon.thumbnails[0].url }}" alt="" class="about-channel-link-icon" width="16" height="16" alt="{{ info.navigationEndpoint.commandMetadata.webCommandMetadata.url }}">
         <span class="about-channel-link-text">{{ rehike.getText(info.title) }}</span>
     </a>
 </li>

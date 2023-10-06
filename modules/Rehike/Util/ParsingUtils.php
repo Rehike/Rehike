@@ -174,4 +174,108 @@ class ParsingUtils
         // Return null if the index doesn't exist.
         return null;
     }
+
+    /**
+     * Convert a commandRuns object to the conventional runs format.
+     * Does not support text formatting, only links.
+     * Was originally only for description on watch page.
+     * 
+     * Original comment:
+     * Welp, the fucktards have done it again. The shitty description experiment is back,
+     * and it's just as painful as it was before. Do they even have any fucking idea what
+     * they're doing? The link color is fucking hardcoded blue for god's sake. There is
+     * no fucking way they can be serious about this. They have to be fucking with us at 
+     * this point. What a bunch of fucking retards.
+     *     - Love, Aubrey <3
+     * 
+     * Anyways, this function just converts it back to the standard runs format.
+     * 
+     * We use mb_substr with UTF-8 here, because the indices are set up for a JS environment.
+     * 
+     * @param object $cruns     Object containing commandRuns
+     * 
+     * @return ?object
+     */
+    public static function commandRunsToRuns(object $cruns): ?object
+    {
+        // If there's no links
+        if (!isset($cruns->commandRuns))
+        {
+            return (object) [
+                "runs" => [
+                    (object) [
+                        "text" => $cruns->content
+                    ]
+                ]
+            ];
+        }
+
+        $runs = [];
+
+        // Start at the beginning of the string
+        $start = 0;
+
+        foreach ($cruns->commandRuns as $run)
+        {
+            // Text from before the link
+            $beforeText = self::mb_substr_ex($cruns->content, $start, $run->startIndex - $start);
+
+            if (!empty($beforeText))
+            {
+                $runs[] = (object) [
+                    "text" => $beforeText
+                ];
+            }
+
+            // Add the actual link
+            $text = self::mb_substr_ex($cruns->content, $run->startIndex, $run->length);
+            $endpoint = $run->onTap->innertubeCommand;
+            $runs[] = (object) [
+                "text" => $text,
+                "navigationEndpoint" => $endpoint
+            ];
+
+            $start = $run->startIndex + $run->length;
+        }
+
+        // Add the text after the last link
+        $lastText = self::mb_substr_ex($cruns->content, $start, null);
+        if (!empty($lastText))
+        {
+            $runs[] = (object) [
+                "text" => $lastText
+            ];
+        }
+
+        return (object) [
+            "runs" => $runs
+        ];
+    }
+
+    /**
+     * Custom mb_substr function for commandRunsToRuns.
+     * The default mb_substr will cause breakage with emojis.
+     * 
+     * @see   commandRunsToRuns()
+     * 
+     * @param string $str     String to crop.
+     * @param int    $offset  Zero-indexed offset to begin cropping at.
+     * @param ?int   $length  Length of the cropped string.
+     * 
+     * @return string
+     */
+    private static function mb_substr_ex(string $str, int $offset, ?int $length): string {
+        $bmp = [];
+        for($i = 0; $i < mb_strlen($str); $i++)
+        {
+            $mb_substr = mb_substr($str, $i, 1);
+            $mb_ord = mb_ord($mb_substr);
+            $bmp[] = $mb_substr;
+            if ($mb_ord > 0xFFFF)
+            {
+                $bmp[] = "";
+            }
+        }
+        return implode("", array_slice($bmp, $offset, $length));
+    }
 }
