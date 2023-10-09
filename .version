@@ -1,10 +1,10 @@
 {
-	"previousHash": "6471394de865dce138f6ece9d976dc702711cbe1",
-	"currentRevisionId": 1017,
-	"subject": "Fix channel icons, generalize command runs conversion function",
-	"body": "Fix channel icons, generalize command runs conversion function",
+	"previousHash": "b3e850089eeef5bbb8649efa842b0c5f313b269c",
+	"currentRevisionId": 1018,
+	"subject": "credit where it's due",
+	"body": "credit where it's due",
 	"branch": "master",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1696559287
+	"time": 1696892307
 }
