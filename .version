@@ -1,10 +1,10 @@
 {
-	"previousHash": "b3e850089eeef5bbb8649efa842b0c5f313b269c",
-	"currentRevisionId": 1018,
-	"subject": "credit where it's due",
-	"body": "credit where it's due",
+	"previousHash": "61be63cd23a18798757a442a873ccf5f0c73a37f",
+	"currentRevisionId": 1019,
+	"subject": "TEMP: Force player to use en-US",
+	"body": "TEMP: Force player to use en-US",
 	"branch": "master",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1696892307
+	"time": 1697149276
 }

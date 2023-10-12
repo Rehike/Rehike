@@ -36,8 +36,10 @@ class PlayerUpdater
      * So the URL provided by default is that of "Me at the zoo", a
      * very important video in YouTube's history, one that receives
      * plenty of views, and one that's very likely never going anywhere.
+     * 
+     * TEMP: Force player to be en-US. Should be removed with i18n v2.
      */
-    protected static string $sourceUrl = "https://www.youtube.com/embed/jNQXAC9IVRw";
+    protected static string $sourceUrl = "https://www.youtube.com/embed/jNQXAC9IVRw?hl=en&gl=US";
 
     /**
      * Request all necessary player information for the latest
