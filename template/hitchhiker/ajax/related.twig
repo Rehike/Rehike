@@ -1,8 +1,0 @@
-{% import "common/watch/watch7/sidebar/macros.twig" as sidebar %}
-<div id="watch-more-related">
-    {%- for item in yt.page.items -%}
-        {% if item.compactVideoRenderer %}
-            {{ sidebar.video_item(item) }}
-        {% endif %}
-    {% endfor %}
-</div>
