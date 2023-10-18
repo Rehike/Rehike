@@ -46,6 +46,16 @@ class WebV2Shelves
         $browseCont->mergeFromString($rawBrowseContinuation);
 
         // Now work in reverse to form a new continuation token.
+        
+        // Insanely evil hack to remove properties without rebuilding the protos
+        // because I don't have access to them. There are additional properties
+        // in newer continuations that break parsing.
+        // TODO: better solution
+		$action = $browseCont->getAction();
+		$a = unserialize(serialize($action));
+		$browseCont->discardUnknownFields();
+		$browseCont->setAction($a);
+
         $browseCont->clearReloadAction();
         $browseCont->setAppendAction(new BrowseContinuationAppendAction(["a" => 0]));
         $newBrowseContinuation = Base64Url::encode($browseCont->serializeToString());
