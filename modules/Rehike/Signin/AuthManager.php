@@ -249,7 +249,7 @@ class AuthManager
     /**
      * Get the UCID of the active channel.
      */
-    public static function getUcid(object $menu): string
+    public static function getUcid(object $menu): ?string
     {
         if ($items = @$menu->actions[0]->openPopupAction->popup
             ->multiPageMenuRenderer->sections[0]->multiPageMenuSectionRenderer
