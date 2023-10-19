@@ -1,10 +1,10 @@
 {
-	"previousHash": "61be63cd23a18798757a442a873ccf5f0c73a37f",
-	"currentRevisionId": 1019,
-	"subject": "TEMP: Force player to use en-US",
-	"body": "TEMP: Force player to use en-US",
+	"previousHash": "d03230cc71855c4f86257fff8ce01af82af333da",
+	"currentRevisionId": 1022,
+	"subject": "Merge branch 'master' of https://github.com/Rehike/Rehike",
+	"body": "Merge branch 'master' of https://github.com/Rehike/Rehike",
 	"branch": "master",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1697149276
+	"time": 1697756789
 }
