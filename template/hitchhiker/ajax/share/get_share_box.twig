@@ -52,9 +52,21 @@
         <div class="share-panel-embed-container hid">
             {{ action_panel.loading() }}
         </div>
-        <div class="share-panel-email-container hid" data-disabled="true">
-            <p class="display-message">This feature is not available right now. Check back later!</p>
-        </div>
+
+        {% if yt.signin.isSignedIn %}
+            <div class="share-panel-email-container hid">
+                {{ action_panel.loading() }}
+            </div>
+        {% else %}
+            <div class="share-panel-email-container hid" data-disabled="true">
+                <strong>
+                    <a href="https://accounts.google.com/ServiceLogin?uilel=3\u0026amp;hl=en\u0026amp;passive=true\u0026amp;service=youtube\u0026amp;continue=http%3A%2F%2Fwww.youtube.com%2Fsignin%3Faction_handle_signin%3Dtrue%26app%3Ddesktop%26feature%3Demail%26hl%3Den%26">Sign in</a> now.
+                </strong>
+            </div>
+        {% endif %}
+
+
+  </div>
     </div>
     {%- endapply -%}
 }
