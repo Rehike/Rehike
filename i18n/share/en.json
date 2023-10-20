@@ -20,5 +20,13 @@
     "legalNoticeLink": "YouTube API terms of service.",
 
     "playlistNonexistent": "That playlist does not exist.",
-    "playlistNoVideos": "That playlist does not contain any videos."
+    "playlistNoVideos": "That playlist does not contain any videos.",
+
+    "recipientsPlaceholder": "To",
+    "recipientsAlt": "Enter email addresses",
+    "optionalMessagePlaceholder": "Optional message",
+    "optionalMessageAlt": "Enter your email message (optional)",
+    "messagePreview": "Message preview:",
+    "emailShared": "  has shared a video with you on YouTube",
+    "sendEmail": "Send email"
 }

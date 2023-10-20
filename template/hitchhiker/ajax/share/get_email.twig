@@ -1,0 +1,53 @@
+{%- from "common/uix/button.twig" import render as button -%}
+{%- from "core/spinner.twig" import render as spinner -%}
+{
+  "email_html":
+{%- apply json_encode|raw -%}
+
+<div id="debug" class="hid">
+	{{ yt.page|json_encode }}
+</div>
+<form class="share-panel">
+	<div class="share-email">
+		{%- for email_form in yt.page.email_forms -%}
+			<div class="share-email-form section">
+				<span class="yt-uix-form-input-placeholder-container yt-uix-form-input-container yt-uix-form-input-textarea-container" title="{{ email_form.title }}">
+					<textarea class="yt-uix-form-input-textarea {{ email_form.class }}" name="" autocomplete="off" placeholder="{{ email_form.placeholder }}" rows="6"></textarea>
+				</span>
+			</div>
+		{%- endfor -%}
+
+
+		<label>{{ yt.page.strs.messagePreview }}</label>
+		<div class="share-email-preview-container section">
+			{# yt-uix-form-input-placeholder-container is used here for spacing below the element. Weird, I know. #}
+			<span class="share-email-preview-header yt-uix-form-input-placeholder-container">
+				<a href="https://www.youtube.com/channel/{{ yt.page.user_ucid }}">{{ yt.page.user_name }}</a>
+				{{ yt.page.strs.emailShared }}:
+			</span>
+            <br>
+
+
+			{# I don't know for sure if the share-email-preview-note element encompasses just the message 
+			after the title of the video, or the whole thing itself, but it's far more likely that it simply
+            encompasses the message after the title. #}
+			<span class="share-email-preview-body">
+				<b>
+					<a href="https://youtu.be/{{ yt.page.videoId }}?feature=shared">"{{ yt.page.title }}"</a>
+				</b>
+				—
+                {# Hacky style fix to fix the spacing between the video link and the message #}
+                <span class="share-email-preview-note" style="margin-left: 0px !important;">
+				    {{ yt.page.desc }}
+                </span>
+			</span>
+		</div>
+
+
+		{{ button(yt.page.send_email_btn) }}
+
+
+	</div>
+</form>
+{%- endapply -%}
+}
