@@ -3,21 +3,21 @@
 # These are exported to the templates at `yt.msg`.
 
 # Common aria (accessibility) labels
-loadingIconLabel: "Loading icon"
-actionMenuLabel: "Action menu."
+loadingIconLabel: "Значок загрузки"
+actionMenuLabel: "Меню действий."
 
 # Spinner (loading) text:
 loading: "Загрузка..."
 working: "Работаем..."
 
 # Generic close button text
-close: "Close"
+close: "Закрыть"
 
 showMore: "Ещё"
 showLess: "Свернуть"
 
-# General "load more" text
-loadMore: "Load more"
+# General "Загрузить ещё" text
+loadMore: "Загрузить ещё"
 
 # Duration accessibility strings (shown on watch)
 durationA11y: " - Продолжительность: %s."
@@ -31,11 +31,11 @@ verified: "Подтверждено"
 addToWatchLater: "Смотреть позже"
 addedToWatchLater: "Добавлен"
 addToWatchLaterError: "Ошибка"
-addToWatchQueue: "Watch Queue"
-addToWatchQueueAdded: "Added"
-addToWatchQueueError: "Error"
-addToTvQueue: "Queue"
-watchLaterSignIn: "%s Войдите %s чтобы добавить это в чтобы добавить это в Посмотреть позже"
+addToWatchQueue: "Очередь на просмотр"
+addToWatchQueueAdded: "Добавлено"
+addToWatchQueueError: "Ошибка"
+addToTvQueue: "Очередь"
+watchLaterSignIn: "%s Войдите %s чтобы добавить это в Смотреть позже"
 
 # Add to dialog strings:
 addToHeader: "Добавить в"
@@ -55,17 +55,17 @@ adsInstreamSkippable: "Video ad can be skipped."
 adsOverlayImpression: "Ad displayed."
 
 # Searchbox labels
-sboxSuggestionDismissedLabel: "Suggestion removed"
-sboxSuggestionDismissLabel: "Remove"
+sboxSuggestionDismissedLabel: "Предложение удалено"
+sboxSuggestionDismissLabel: "Убрать"
 
 # Misc:
-videoCountPlural: "%s videos"
-videoCountSingular: "1 video"
+videoCountPlural: "%s видео"
+videoCountSingular: "1 видео"
 commentPostFail: "Не удалось опубликовать комментарий."
-viewFullPlaylist: "View full playlist"
-mdxAutoplayOff: "Autoplay is off"
-mdxAutoplayOn: "Autoplay is on"
-sorryAboutThat: "Sorry about that."
+viewFullPlaylist: "Смотреть весь плейлист"
+mdxAutoplayOff: "Автовозпроизведение выключено" 
+mdxAutoplayOn: "Автовозпроизведение включено"
+sorryAboutThat: "Сожалеем об этом."
 browseUnsavedChanges: >
-  Some of the changes you have made to channel settings have not been saved
-  and will be lost if you navigate away from this page.
+  Некоторые изменения, внесенные в настройки канала, не были сохранены
+  и будут потеряны при переходе с этой страницы..
