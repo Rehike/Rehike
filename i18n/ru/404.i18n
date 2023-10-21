@@ -1,7 +1,7 @@
 # 404 error page messages
 
 title: "404 Not Found"
-p1: "This page isn't available. Sorry about that."
-p2: "Try searching for something else."
-youtubeHome: "YouTube Home"
-search: "Search"
+p1: "К сожалению, страница недоступна."
+p2: "Попробуйте выполнить поиск по другому запросу."
+youtubeHome: "Главная странца YouTube"
+search: "Введите запрос"

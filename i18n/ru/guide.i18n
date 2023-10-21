@@ -14,7 +14,7 @@ myChannel: "Мой канал"
 subscriptions: "Подписки"
 
 # Bottom section items:
-guideBuilderLabel: "Просмотр каналов"
+guideBuilderLabel: "Каталог каналов"
 manageSubscriptionsLabel: "Управление подписками"
 
 # Section names:
@@ -24,8 +24,8 @@ bestOfYouTubeTitle: "ЛУЧШЕЕ НА YOUTUBE"
 bestOfYouTubePopularOnYouTube: "Популярно на YouTube"
 bestOfYouTubeMusic: "Музыка"
 bestOfYouTubeSports: "Спорт"
-bestOfYouTubeGaming: "Гейминг"
-bestOfYouTubeMoviesTv: "Фильмы & Шоу"
+bestOfYouTubeGaming: "Компьютерные игры"
+bestOfYouTubeMoviesTv: "Кинозал и Телешоу"
 bestOfYouTubeNews: "Новости"
 bestOfYouTubeLive: "Прямые трансляции"
 bestOfYouTubeSpotlight: "В центре внимания"

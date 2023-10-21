@@ -1,7 +1,7 @@
 languageName: "Русский"
 writingDirection: ltr
 
-thousandsSeparator: ","
+thousandsSeparator: " "
 decimalSeparator: "."
 
 numberOfMonths: 12
@@ -9,9 +9,9 @@ daysInWeek: 7
 
 spaceOnLineBreak: true
 
-standardDateOrder: mdy
+standardDateOrder: dmy
 
-firstDayOfWeek: 1 # Sunday
+firstDayOfWeek: 1 # Понедельник
 
 am: "AM"
 pm: "PM"
@@ -26,47 +26,47 @@ shortDate: "m/d/Y" # 10/17/2023
 time: "g:i A" # 12:50 AM
 
 daysOfWeek:
-  1: "Sunday"
-  2: "Monday"
-  3: "Tuesday"
-  4: "Wednesday"
-  5: "Thursday"
-  6: "Friday"
-  7: "Saturday"
+  1: "Понедельник"
+  2: "Вторник"
+  3: "Среда"
+  4: "Четверг"
+  5: "Пятница"
+  6: "Суббота"
+  7: "Воскресенье"
 
 shortDaysOfWeek:
-  1: "Sun"
-  2: "Mon"
-  3: "Tue"
-  4: "Wed"
-  5: "Thur"
-  6: "Fri"
-  7: "Sat"
+  1: "Пн"
+  2: "Вт"
+  3: "Ср"
+  4: "Чт"
+  5: "Пт"
+  6: "Сб"
+  7: "Вс"
 
 monthNames:
-  1: "January"
-  2: "Feburary"
-  3: "March"
-  4: "April"
-  5: "May"
-  6: "June"
-  7: "July"
-  8: "August"
-  9: "September"
-  10: "October"
-  11: "November"
-  12: "December"
+  1: "Январь"
+  2: "Февраль"
+  3: "Март"
+  4: "Апрель"
+  5: "Май"
+  6: "Июнь"
+  7: "Июль"
+  8: "Август"
+  9: "Сентябрь"
+  10: "Октябрь"
+  11: "Ноябрь"
+  12: "Декабрь"
 
 shortMonthNames:
-  1: "Jan"
-  2: "Feb"
-  3: "Mar"
-  4: "Apr"
-  5: "May"
-  6: "Jun"
-  7: "Jul"
-  8: "Aug"
-  9: "Sep"
-  10: "Oct"
-  11: "Nov"
-  12: "Dec"
+  1: "Янв"
+  2: "Февр"
+  3: "Mарт"
+  4: "Апр"
+  5: "Май"
+  6: "Июнь"
+  7: "Июль"
+  8: "Авг"
+  9: "Сент"
+  10: "Окт"
+  11: "Нояб"
+  12: "Дек"
