@@ -1,0 +1,28 @@
+brandName: "Rehike"
+versionHeader: "バージョン %s"
+nightly: "Nightly"
+nightlyInfoTooltip: >
+  このリリースは最新のものであり、不規則なバグが含まれている可能性があります。
+
+subheaderNightlyInfo: "現在のブランチ情報"
+nonGitNotice: "この Rehike リリースには Git 情報がありません。"
+nonGitExtended: >
+  これは、GitHub から直接リポジトリをダウンロードした場合（たとえば、「ZIP ダウンロード」
+  機能から）に発生することがあります。一部のバージョン情報は失われたり利用できなかったり
+  する可能性があります。
+syncGithubButton: "GitHub と同期"
+failedNotice: "バージョン情報の取得に失敗しました。"
+remoteFailedNotice: "リモートバージョン情報の取得に失敗しました。"
+remoteFailedExtended: "バージョン情報が制限されています。"
+noDotVersionNotice: ".version ファイルが欠落または壊れています。"
+noNewVersions: "新しいバージョンはありません。"
+oneNewVersion: "新しいバージョンが 1 つ利用可能です。"
+varNewVersions: "%s 個の新しいバージョンが利用可能です。"
+unknownNewVersions: "このバージョンは非常に古いものです。"
+
+headingVersionInfo: "バージョン情報"
+viewOnGithub: "GitHub で見る"
+
+extraInfo: "追加情報"
+operatingSystem: "オペレーティング システム"
+phpVersion: "PHP バージョン"

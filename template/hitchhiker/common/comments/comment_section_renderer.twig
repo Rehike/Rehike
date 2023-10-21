@@ -10,7 +10,7 @@
    {% endif %}
    <div class="comment-section-renderer-items" id="comment-section-renderer-items">
       {# spinner img for switching view #}
-      <span class="yt-spinner-img comment-section-items-loading yt-sprite" title="Loading icon"></span>
+      <span class="yt-spinner-img comment-section-items-loading yt-sprite" title="{{ rehike.i18n.get("global", "loadingIconLabel") }}"></span>
       {% for item in data.comments.commentThreads %}
          {{ main.comment_thread(item) }}
       {% endfor %}
@@ -20,7 +20,7 @@
    {% endif %}
    {% include '/common/comments/simplebox.twig' %}
    <div class="feedback-banner hid" aria-live="polite"></div>
-   <span class="yt-spinner-img comment-renderer-loading yt-sprite" title="Loading icon"></span>
+   <span class="yt-spinner-img comment-renderer-loading yt-sprite" title="{{ rehike.i18n.get("global", "loadingIconLabel") }}"></span>
    <div class="hid" id="comment-renderer-abuse">
       <div class="comment-renderer-abuse-content"></div>
    </div>

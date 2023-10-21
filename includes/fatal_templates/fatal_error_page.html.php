@@ -42,7 +42,7 @@
                 <?php endif ?>
 
                 <div>
-                    <h3 class="fatal-actions-header">Actions</h3>
+                    <h3 class="section-header">Actions</h3>
                     <button class="fatal-button" onclick="window.location.reload()">Refresh page</button>
                     <button class="fatal-button" onclick="fatalDisableRehikeOnce()">Disable Rehike (just this time)</button>
                     <button class="fatal-button" onclick="fatalDisableRehike()">Disable Rehike (persistently)</button>
@@ -50,7 +50,7 @@
 
                 <?php if ($page instanceof InnertubeFailedRequestPage): ?>
                     <?php $e = $page->getInnertubeFailedException()->failedResponse ?>
-                    <h3 class="failed-request-info-header">
+                    <h3 class="section-header">
                         Failed request information
                     </h3>
                     <ul class="failed-request-info">
@@ -115,6 +115,18 @@
                         </li>
                     </ul>
                 <?php endif ?>
+                <div>
+                    <h3 class="section-header">
+                        Message logs
+                    </h3>
+                    <ul>
+                        <?php foreach ($page->getDebugLog() as $msg): ?>
+                            <li>
+                                <?= htmlspecialchars($msg) ?>
+                            </li>
+                        <?php endforeach ?>
+                    </ul>
+                </div>
             </p>
         </div>
     </body>

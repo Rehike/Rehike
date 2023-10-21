@@ -5,7 +5,7 @@ use YukisCoffee\PropertyAtPath;
 use YukisCoffee\CoffeeRequest\Promise;
 use \Rehike\Model\Comments\MCommentVoteButton as VoteButton;
 use \Rehike\Model\Comments\MCommentReplyButton as ReplyButton;
-use \Rehike\i18n;
+use \Rehike\i18n\i18n;
 use \Rehike\ConfigManager\ConfigManager;
 use \Rehike\Network;
 
@@ -274,20 +274,15 @@ class CommentThread
         {
             $teaser = false /* ConfigManager::getConfigProp("appearance.teaserReplies") */;
 
-            if (i18n::namespaceExists("comments")) {
-                $i18n = i18n::getNamespace("comments");
-            } else {
-                $i18n = i18n::newNamespace("comments");
-                $i18n->registerFromFolder("i18n/comments");
-            }
+            $i18n = i18n::getNamespace("comments");
 
             $viewText = &$context->viewReplies->buttonRenderer->text->runs[0]->text;
             $hideText = &$context->hideReplies->buttonRenderer->text->runs[0]->text;
 
             // YouTube is experimenting with bringing back the
             // old "View X replies" text format
-            if (!preg_match($i18n->oldReplyTextRegex, $viewText)) {
-                $replyCount = (int) preg_replace($i18n->replyCountIsolator, "", $viewText);
+            if (!preg_match($i18n->get("oldReplyTextRegex"), $viewText)) {
+                $replyCount = (int) preg_replace($i18n->get("replyCountIsolator"), "", $viewText);
                 if (isset($context->viewRepliesCreatorThumbnail)) {
                     $creatorName = $context->viewRepliesCreatorThumbnail->accessibility->accessibilityData->label;
                 }
@@ -298,22 +293,24 @@ class CommentThread
                 } else if ($replyCount > 1) {
                     if (isset($creatorName)) {
                         $viewText = $teaser
-                        ? $i18n->viewMultiTeaserOwner($replyCount, $creatorName)
-                        : $i18n->viewMultiOwner($replyCount, $creatorName);
+                        ? $i18n->format("viewMultiTeaserOwner", $replyCount, $creatorName)
+                        : $i18n->format("viewMultiOwner", $replyCount, $creatorName);
                     } else {
                         $viewText = $teaser
-                        ? $i18n->viewMultiTeaser($replyCount)
-                        : $i18n->viewMulti($replyCount);
+                        ? $i18n->format("viewMultiTeaser", $replyCount)
+                        : $i18n->format("viewMulti", $replyCount);
                     }
                 } else {
                     if (isset($creatorName)) {
-                        $viewText = $i18n->viewSingularOwner($creatorName);
+                        $viewText = $i18n->format("viewSingularOwner", $creatorName);
                     } else {
-                        $viewText = $i18n->viewSingular;
+                        $viewText = $i18n->get("viewSingular");
                     }
                 }
 
-                $hideText = ($replyCount > 1) ? $i18n->hideMulti($replyCount) : $i18n->hideSingular;
+                $hideText = ($replyCount > 1)
+                    ? $i18n->format("hideMulti", $replyCount)
+                    : $i18n->get("hideSingular");
             }
         }
 
@@ -379,15 +376,7 @@ class CommentThread
 
     public static function getLikeCountFromLabel($label)
     {
-        if (i18n::namespaceExists("comments"))
-        {
-            $i18n = i18n::getNamespace("comments");
-        }
-        else
-        {
-            $i18n = i18n::newNamespace("comments");
-            $i18n->registerFromFolder("i18n/comments");
-        }
-        return preg_replace($i18n->likeCountIsolator, "", $label);
+        $i18n = i18n::getNamespace("comments");
+        return preg_replace($i18n->get("likeCountIsolator"), "", $label);
     }
 }

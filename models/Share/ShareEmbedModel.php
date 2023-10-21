@@ -2,7 +2,7 @@
 namespace Rehike\Model\Share;
 
 use \Rehike\Model\Common\MAlert;
-use Rehike\i18n;
+use Rehike\i18n\i18n;
 use Rehike\Model\Share\MShareTabBar;
 
 class ShareEmbedModel {
@@ -10,8 +10,7 @@ class ShareEmbedModel {
     public static function bake($videoId, $title, $listData) {
 
         $response = (object) [];
-        $i18n = i18n::newNamespace("share");
-        $i18n -> registerFromFolder("i18n/share");
+        $i18n = i18n::getNamespace("share");
 
 
         $alternateUrls = [];
@@ -28,7 +27,7 @@ class ShareEmbedModel {
                     "alerts" => [
                         new MAlert([
                             "type" => MAlert::TypeError,
-                            "text" => $i18n -> playlistNonexistent
+                            "text" => $i18n -> get("playlistNonexistent")
                         ])
                     ]
                 ];
@@ -44,7 +43,7 @@ class ShareEmbedModel {
                     "alerts" => [
                         new MAlert([
                             "type" => MAlert::TypeError,
-                            "text" => $i18n -> playlistNoVideos
+                            "text" => $i18n -> get("playlistNoVideos")
                         ])
                     ]
                 ];

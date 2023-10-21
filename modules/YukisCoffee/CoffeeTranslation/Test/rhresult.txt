@@ -1,0 +1,488 @@
+---- BEGINNING OF STREAM -----
+
+=============================================================================
+  FILENAME: C:\xampp\Rehike07Dev\i18n_new\en-US\_culture.i18n
+  SUCCESS: Success!
+
+  PAYLOAD:
+    {
+        "languageName": "English",
+        "expandedLanguageName": "English (United States)",
+        "numberOfMonths": 12,
+        "daysInWeek": 7,
+        "spaceOnLineBreak": true,
+        "standardDateOrder": "MDY",
+        "firstDayOfWeek": 1,
+        "daysOfWeek": {
+            "1": "Sunday",
+            "2": "Monday",
+            "3": "Tuesday",
+            "4": "Wednesday",
+            "5": "Thursday",
+            "6": "Friday",
+            "7": "Saturday"
+        },
+        "monthNames": {
+            "1": "January",
+            "2": "Feburary",
+            "3": "March",
+            "4": "April",
+            "5": "May",
+            "6": "June",
+            "7": "July",
+            "8": "August",
+            "9": "September",
+            "10": "October",
+            "11": "November",
+            "12": "December"
+        }
+    }
+=============================================================================
+
+
+=============================================================================
+  FILENAME: C:\xampp\Rehike07Dev\i18n_new\en-US\addto.i18n
+  SUCCESS: Success!
+
+  PAYLOAD:
+    {
+        "addToHeading": "Add to",
+        "searchPlaylists": "Search playlists",
+        "createNewPlaylist": "Create new playlist",
+        "createNewPlaylistDynamic": "%s (create new)",
+        "playlistTitle": "Playlist title",
+        "playlistPrivacy": "Playlist privacy",
+        "privacyPublic": "Public",
+        "privacyUnlisted": "Unlisted",
+        "privacyPrivate": "Private",
+        "cancel": "Cancel",
+        "create": "Create"
+    }
+=============================================================================
+
+
+=============================================================================
+  FILENAME: C:\xampp\Rehike07Dev\i18n_new\en-US\appbar.i18n
+  SUCCESS: Success!
+
+  PAYLOAD:
+    {
+        "tabHome": "Home",
+        "tabTrending": "Trending",
+        "tabSubscripions": "Subscriptions"
+    }
+=============================================================================
+
+
+=============================================================================
+  FILENAME: C:\xampp\Rehike07Dev\i18n_new\en-US\attribution.i18n
+  SUCCESS: Success!
+
+  PAYLOAD:
+    {
+        "title": "Video Attribution Information",
+        "sectionTitle": "Used videos",
+        "sectionSubtitle": "These videos were used to create or were created with %s",
+        "viewAttrs": "View attributions",
+        "watchLater": "Watch later",
+        "goToUser": "Go to the user page for %s"
+    }
+=============================================================================
+
+
+=============================================================================
+  FILENAME: C:\xampp\Rehike07Dev\i18n_new\en-US\browse.i18n
+  SUCCESS: Success!
+
+  PAYLOAD:
+    {
+        "channelBadge": "Channel",
+        "liveBadge": "Live now",
+        "liveBadgeOriginal": "LIVE"
+    }
+=============================================================================
+
+
+=============================================================================
+  FILENAME: C:\xampp\Rehike07Dev\i18n_new\en-US\channel_switcher.i18n
+  SUCCESS: Success!
+
+  PAYLOAD:
+    {
+        "pageHeaderPrefix": "Channels for",
+        "ownerAccountNoChannel": "Owner account, no channel",
+        "learnMoreLink": "Learn about managing your YouTube channels"
+    }
+=============================================================================
+
+
+=============================================================================
+  FILENAME: C:\xampp\Rehike07Dev\i18n_new\en-US\channels.i18n
+  SUCCESS: Success!
+
+  PAYLOAD:
+    {
+        "flowGrid": "Grid",
+        "flowList": "List",
+        "viewUploads": "Uploads",
+        "viewAllVideos": "All videos",
+        "viewLiveStreams": "Live streams",
+        "viewShorts": "Shorts",
+        "seeAll": "See all",
+        "backstageViewAllCommentsSingular": "View comment",
+        "backstageViewAllCommentsPlural": "View all %s comments",
+        "videoSortPopular": "Most popular",
+        "videoSortOldest": "Date added (oldest)",
+        "videoSortNewest": "Date added (newest)",
+        "subscriptionConfirmationHeader": "Confirm Channel Subscription",
+        "nonexistent": "This channel does not exist.",
+        "secondaryHeaderSubs": "%s subscribers",
+        "secondaryHeaderViews": "%s views",
+        "secondaryHeaderManager": "Video Manager"
+    }
+=============================================================================
+
+
+=============================================================================
+  FILENAME: C:\xampp\Rehike07Dev\i18n_new\en-US\comments.i18n
+  SUCCESS: Success!
+
+  PAYLOAD:
+    {
+        "viewSingular": "View reply",
+        "viewMulti": "View %s replies",
+        "viewSingularOwner": "View reply from %s",
+        "viewMultiOwner": "View %s replies from %s and others",
+        "hideSingular": "Hide reply",
+        "hideMulti": "Hide %s replies",
+        "replyCountIsolator": "\/( replies)|( reply)\/i",
+        "oldReplyTextRegex": "\/View \/",
+        "likeCountIsolator": "\/(Like this )|(comment)|(reply)|( along with )|(,)|( other person)|( other people)\/"
+    }
+=============================================================================
+
+
+=============================================================================
+  FILENAME: C:\xampp\Rehike07Dev\i18n_new\en-US\disable_rehike.i18n
+  SUCCESS: Success!
+
+  PAYLOAD:
+    {
+        "disableRehike": "Disable Rehike",
+        "rhSettingsEnableRehike": "Enable Rehike",
+        "enableRehike": "Return to Rehike",
+        "currentlyDisabledMessage": "You currently have Rehike disabled. Functionality may be limited.",
+        "disableRehikeInfoHeader": "Are you sure?",
+        "disableRehikeInfoDescription": "This will disable Rehike until you enable it again. You can enable Rehike in the account menu in the new YouTube interface, or by the URL parameter: ?enable_rehike=1",
+        "disableRehikeInfoCancel": "Cancel",
+        "disableRehikeInfoDisable": "Disable"
+    }
+=============================================================================
+
+
+=============================================================================
+  FILENAME: C:\xampp\Rehike07Dev\i18n_new\en-US\footer.i18n
+  SUCCESS: Success!
+
+  PAYLOAD:
+    {
+        "logoTooltip": "YouTube home",
+        "pickerLanguage": "Language: %s",
+        "pickerLocation": "Location: %s",
+        "pickerSafety": "Restricted Mode: %s",
+        "safetyOn": "On",
+        "safetyOff": "Off",
+        "buttonHistory": "History",
+        "buttonHelp": "Help",
+        "primaryAbout": "About",
+        "primaryPress": "Press",
+        "primaryCopyright": "Copyright",
+        "primaryCreators": "Creators",
+        "primaryAdvertise": "Advertise",
+        "primaryDevs": "Developers",
+        "primaryVersion": "Rehike v%s [%s]",
+        "secondaryTerms": "Terms",
+        "secondaryPrivacy": "Privacy",
+        "secondaryPolicyAndSafety": "Policy & Safety",
+        "secondaryFeedback": "Send feedback",
+        "secondaryTestTube": "Test new features",
+        "secondaryCopyright": "\u00a9 %s Google LLC"
+    }
+=============================================================================
+
+
+=============================================================================
+  FILENAME: C:\xampp\Rehike07Dev\i18n_new\en-US\global.i18n
+  SUCCESS: Success!
+
+  PAYLOAD:
+    {
+        "loading": "Loading...",
+        "working": "Working...",
+        "close": "Close",
+        "showMore": "Show more",
+        "showLess": "Show less",
+        "durationA11y": " - Duration: %s.",
+        "usernamePrepend": "by ",
+        "verified": "Verified",
+        "addToWatchLater": "Watch later",
+        "addedToWatchLater": "Added",
+        "watchLaterSignIn": "%sSign in%s to add this to Watch Later",
+        "addToHeader": "Add to",
+        "addToLoading": "Loading playlists...",
+        "addToError": "Error",
+        "shelfsliderNext": "Next",
+        "shelfsliderPrev": "Previous",
+        "transcriptTitle": "Transcript",
+        "transcriptFail": "The interactive transcript could not be loaded.",
+        "commentPostFailure": "Comment failed to post.",
+        "loadingMoreSuggestions": "Loading more suggestions...",
+        "viewFullPlaylist": "View full playlist"
+    }
+=============================================================================
+
+
+=============================================================================
+  FILENAME: C:\xampp\Rehike07Dev\i18n_new\en-US\guide.i18n
+  SUCCESS: Success!
+
+  PAYLOAD:
+    {
+        "showMore": "Show more",
+        "showFewer": "Show fewer",
+        "trending": "Trending",
+        "myChannel": "My channel",
+        "subscriptions": "Subscriptions",
+        "guideBuilderLabel": "Browse channels",
+        "manageSubscriptionsLabel": "Manage subscriptions",
+        "bestOfYouTubeTitle": "Best of YouTube",
+        "bestOfYouTubePopularOnYouTube": "Popular on YouTube",
+        "bestOfYouTubeMusic": "Music",
+        "bestOfYouTubeSports": "Sports",
+        "bestOfYouTubeGaming": "Gaming",
+        "bestOfYouTubeMoviesTv": "Movies & Shows",
+        "bestOfYouTubeNews": "News",
+        "bestOfYouTubeLive": "Live",
+        "bestOfYouTubeSpotlight": "Spotlight",
+        "bestOfYouTube360": "360\u00b0 Video",
+        "subscriptionsPromoButton": "Add channels",
+        "subscriptionsPromoTooltip": "Your subscriptions will show up here Browse some channels to get started.",
+        "notifications": {
+            "watchLaterVideoAdded": "Added to Watch Later",
+            "watchLaterVideoRemoved": "Removed from Watch Later",
+            "subscription": "Subscription added",
+            "unsubscription": "Subscription removed",
+            "playlistLike": "Saved to Playlists",
+            "playlistUnlike": "Removed from Playlists",
+            "playlistVideoAdded": "Added to playlist",
+            "playlistVideoRemoved": "Removed from playlist",
+            "videoLike": "Added to Liked videos",
+            "videoUnlike": "Removed from Liked videos",
+            "eventReminderSet": "You'll be reminded about this event",
+            "eventReminderRemoved": "Event reminder removed"
+        }
+    }
+=============================================================================
+
+
+=============================================================================
+  FILENAME: C:\xampp\Rehike07Dev\i18n_new\en-US\masthead.i18n
+  SUCCESS: Success!
+
+  PAYLOAD:
+    {
+        "a11ySkipNav": "Skip navigation",
+        "logoTooltip": "YouTube Home",
+        "appbarGuideLabel": "Guide",
+        "searchboxPlaceholder": "Search",
+        "uploadButton": "Upload",
+        "creationLabel": "Go live",
+        "creationPost": "Create post",
+        "notificationsTitle": "Notifications",
+        "notificationsSettings": "Settings",
+        "notificationsNone": "0 unread notifications.",
+        "notificationsSingular": "1 unread notification.",
+        "notificationsPlural": "# unread notifications.",
+        "accountPickerLabel": "Account profile photo that opens list of alternate accounts",
+        "accountPickerStudio": "YouTube Studio",
+        "accountPickerSettings": "Rehike settings",
+        "accountPickerCreate": "Create channel",
+        "accountPickerPhotoChange": "Change",
+        "accountPickerMultiLoginHeader": "Other accounts",
+        "accountPickerAddAccount": "Add account",
+        "accountPickerSignOut": "Sign out",
+        "signInButton": "Sign in"
+    }
+=============================================================================
+
+
+=============================================================================
+  FILENAME: C:\xampp\Rehike07Dev\i18n_new\en-US\misc.i18n
+  SUCCESS: Success!
+
+  PAYLOAD:
+    {
+        "btnCancel": "Cancel",
+        "btnSave": "Save",
+        "subscriberTextSingular": "%s subscriber",
+        "subscriberTextPlural": "%s subscribers",
+        "viewTextSingular": "%s view",
+        "viewTextPlural": "%s views",
+        "dateTextPublic": "Published on %s",
+        "dateTextPrivate": "Uploaded on %s",
+        "subscribeText": "Subscribe",
+        "subscribedText": "Subscribed",
+        "unsubscribeText": "Unsubscribe",
+        "selfSubscribeTooltip": "No need to subscribe to yourself!",
+        "notificationPrefsTitle": "Notifications from %s",
+        "notificationPrefsLabel": "Subscription preferences"
+    }
+=============================================================================
+
+
+=============================================================================
+  FILENAME: C:\xampp\Rehike07Dev\i18n_new\en-US\picker.i18n
+  SUCCESS: Success!
+
+  PAYLOAD:
+    {
+        "languageTitle": "Choose your language",
+        "languageSubtitle": "This changes the language of the site. It won't change any text entered  by users."
+    }
+=============================================================================
+
+
+=============================================================================
+  FILENAME: C:\xampp\Rehike07Dev\i18n_new\en-US\playlist.i18n
+  SUCCESS: Success!
+
+  PAYLOAD:
+    {
+        "nonexistent": "That playlist does not exist.",
+        "unsupported": "That type of playlist is not supported.",
+        "playAll": "Play all"
+    }
+=============================================================================
+
+
+=============================================================================
+  FILENAME: C:\xampp\Rehike07Dev\i18n_new\en-US\regex.i18n
+  SUCCESS: Success!
+
+  PAYLOAD:
+    {
+        "likeCountIsolator": "\/(like this video along with )|( other people)|( other person)\/",
+        "likeTextDisabled": "I like this",
+        "countZero": "No",
+        "subscriberCountIsolator": "\/( subscribers)|( subscriber)\/",
+        "viewCountIsolator": "\/( views)|( view)\/",
+        "nonPublishCheck": "\/(Premiere)|(Started)|(Streamed)|(Scheduled)|(Live stream)\/",
+        "unsubChannelNameMatch": "\/Unsubscribe from (.*?)\\?\/",
+        "videoTimeIsolator": "\/([0-9]?[0-9])( seconds)|(1 second)\/",
+        "secondsIsolator": "\/( seconds)|( second)\/"
+    }
+=============================================================================
+
+
+=============================================================================
+  FILENAME: C:\xampp\Rehike07Dev\i18n_new\en-US\results.i18n
+  SUCCESS: Success!
+
+  PAYLOAD:
+    {
+        "resultCountSingular": "About 1 result",
+        "resultCountPlural": "About %s results",
+        "filtersClear": "Clear all filters",
+        "pageNext": "Next \u00bb",
+        "pagePrev": "\u00ab Previous"
+    }
+=============================================================================
+
+
+=============================================================================
+  FILENAME: C:\xampp\Rehike07Dev\i18n_new\en-US\share.i18n
+  SUCCESS: Success!
+
+  PAYLOAD:
+    {
+        "tabShare": "Share",
+        "tabEmbed": "Embed",
+        "tabEmail": "Email",
+        "serviceTooltip": "Share to %s. Opens in a new window.",
+        "startAt": "Start at:",
+        "sharePlaylist": "Share with playlist starting from  ",
+        "currentVideo": "current video",
+        "startPlaylist": "start of playlist",
+        "embedCode": "Embed code",
+        "preview": "Preview:",
+        "videoSize": "Video size:",
+        "customSize": "Custom size:",
+        "showRelated": "Show suggested videos when the video finishes",
+        "showControls": "Show player controls",
+        "showInfo": "Show video title and player actions",
+        "delayedCookies": "Enable privacy-enhanced mode",
+        "legalNotice": "By displaying YouTube videos on your site, you are agreeing to the ",
+        "legalNoticeLink": "YouTube API terms of service.",
+        "playlistNonexistent": "That playlist does not exist.",
+        "playlistNoVideos": "That playlist does not contain any videos."
+    }
+=============================================================================
+
+
+=============================================================================
+  FILENAME: C:\xampp\Rehike07Dev\i18n_new\en-US\watch.i18n
+  SUCCESS: Success!
+
+  PAYLOAD:
+    {
+        "autoplayToggleDesc": "Autoplay",
+        "autoplayTitle": "Up next",
+        "autoplayInfoText": "When autoplay is enabled, a suggested video will automatically play next.",
+        "relatedItemA11yDesc": " - Duration: %s.",
+        "actionAddTo": "Add to",
+        "actionShare": "Share",
+        "actionMore": "More",
+        "actionMoreTooltip": "More actions",
+        "actionReport": "Report",
+        "actionTranscript": "Transcript",
+        "actionLikeTooltip": "I like this",
+        "actionLikeTooltipActive": "Unlike",
+        "actionDislikeTooltip": "I dislike this",
+        "clickcardSignIn": "Sign in",
+        "clickcardPlaylistSignIn": "Sign in to YouTube",
+        "addToClickcardHeading": "Want to watch this video again later?",
+        "addToClickcardTip": "Sign in to add this video to a playlist.",
+        "reportClickcardHeading": "Need to report the video?",
+        "reportClickcardTip": "Sign in to report inappropriate content.",
+        "likeClickcardHeading": "Like the video?",
+        "dislikeClickcardHeading": "Dislike the video?",
+        "voteClickcardTip": "Sign in to make your opinion count.",
+        "channelSettings": "Channel settings",
+        "creatorBarInfo": "Information and configuration",
+        "creatorBarEnhancements": "Enhancements",
+        "creatorBarAudio": "Audio",
+        "creatorBarComments": "Comments",
+        "creatorBarCards": "Cards",
+        "creatorBarSubtitles": "Subtitles",
+        "creatorBarAnalytics": "Analytics",
+        "creatorBarVideoManager": "Video Manager",
+        "metadataLicense": "License",
+        "metadataLicenseStandard": "Standard YouTube License",
+        "metadataCategory": "Category",
+        "metadataSong": "Song",
+        "metadataGame": "Game",
+        "playlistVideosSingular": "1 video",
+        "playlistVideosPlural": "%s videos",
+        "playlistSave": "Save to Playlists",
+        "playlistUnsave": "Remove",
+        "playlistPrevVideo": "Previous video",
+        "playlistNextVideo": "Next video",
+        "privacyUnlisted": "This video is unlisted. Only those with the link can see it.",
+        "privacyPrivate": "This video is private. Only those with access can see it."
+    }
+=============================================================================
+
+
+
+
+---- END OF STREAM -----

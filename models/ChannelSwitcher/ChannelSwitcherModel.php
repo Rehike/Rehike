@@ -3,7 +3,8 @@ namespace Rehike\Model\ChannelSwitcher;
 
 use Rehike\TemplateFunctions as TF;
 use Rehike\Util\ParsingUtils;
-use Rehike\i18n;
+use Rehike\i18n\i18n;
+use Rehike\FormattedString;
 
 // TODO: video counts, which can be done like so:
 /*
@@ -18,11 +19,9 @@ class ChannelSwitcherModel
         $response = (object) [];
         $response->channels = [];
 
-        $i18n = i18n::newNamespace("channel_switcher");
-        $i18n->registerFromFolder("i18n/channel_switcher");
+        $i18n = i18n::getNamespace("channel_switcher");
 
-        $response->headerTextPrefix = $i18n->pageHeaderPrefix;
-        $response->learnMoreLinkText = $i18n->learnMoreLink;
+        $response->learnMoreLinkText = $i18n->get("learnMoreLink");
 
         foreach ($channels as $channel) 
         {
@@ -44,6 +43,10 @@ class ChannelSwitcherModel
             @$switcher->data->actions[0]->getMultiPageMenuAction
             ->menu->multiPageMenuRenderer->sections[0]
             ->accountSectionListRenderer->header->googleAccountHeaderRenderer->email
+        );
+
+        $response->headerText = FormattedString::fromTemplate(
+            $i18n->format("pageHeader", $response->email)
         );
 
         return $response;

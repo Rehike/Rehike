@@ -2,7 +2,7 @@
 namespace Rehike\Model\Common\Subscription;
 
 use Rehike\Model\Common\MButton;
-use Rehike\i18n;
+use Rehike\i18n\i18n;
 
 class MSubscriptionPreferencesButton extends MButton {
     public $class = [
@@ -10,7 +10,7 @@ class MSubscriptionPreferencesButton extends MButton {
     ];
 
     public function __construct($ucid, $stateId) {
-        $i18n = i18n::getNamespace("main/misc");
+        $i18n = i18n::getNamespace("misc");
 
         $this->attributes["channel-external-id"] = $ucid;
         $this->accessibility = (object) [
@@ -18,7 +18,7 @@ class MSubscriptionPreferencesButton extends MButton {
                 "live" => "polite",
                 "busy" => "false",
                 "role" => "button",
-                "label" => $i18n->notificationPrefsLabel
+                "label" => $i18n->get("notificationPrefsLabel")
             ]
         ];
         $this->icon = (object) [

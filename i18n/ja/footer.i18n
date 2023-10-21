@@ -1,0 +1,30 @@
+# Common strings that show in the footer at the bottom of the page:
+
+logoTooltip: "YouTube トップ"
+
+pickerLanguage: "言語: %s"
+pickerLocation: "国: %s"
+
+pickerSafety: "制限付きモード: %s"
+safetyOn: "オン"
+safetyOff: "オフ"
+
+buttonHistory: "履歴"
+buttonHelp: "ヘルプ"
+
+# Primary (top) links:
+primaryAbout: "YouTube について"
+primaryPress: "プレスルーム"
+primaryCopyright: "著作権センター"
+primaryCreators: "クリエイター向け"
+primaryAdvertise: "広告掲載"
+primaryDevs: "開発者向け"
+primaryVersion: "Rehike v%s [%s]" # Rehike-specific
+
+# Secondary (bottom) links:
+secondaryTerms: "利用規約"
+secondaryPrivacy: "プライバシー"
+secondaryPolicySafety: "ポリシーとセキュリティ"
+secondaryFeedback: "フィードバックの送信"
+secondaryTestTube: "新機能を試してみませんか"
+secondaryCopyright: "© %s Google LLC"

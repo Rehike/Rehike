@@ -2,6 +2,7 @@
 namespace Rehike\Model\Watch\Watch8\LikeButton;
 
 use Rehike\Model\Common\MToggleButton;
+use Rehike\i18n\i18n;
 
 /**
  * Define an abstract actual "like button" button (also used for dislikes).
@@ -31,6 +32,6 @@ class MAbstractLikeButton extends MToggleButton
             $this->class[] = "yt-uix-button-toggled";
 
         if (!is_null($count))
-            $this->setText(number_format($count));
+            $this->setText(i18n::formatNumber($count));
     }
 }

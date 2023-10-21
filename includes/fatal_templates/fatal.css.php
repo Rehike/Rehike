@@ -42,7 +42,7 @@ body, input, button, textarea, select
     display: inline;
 }
 
-.fatal-actions-header, .failed-request-info-header
+.section-header
 {
     font-weight: 500;
 }

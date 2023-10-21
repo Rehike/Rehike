@@ -101,15 +101,6 @@ class DisableRehike
     }
 
     /**
-     * Initializes i18n for this module.
-     */
-    public static function initI18n(): void
-    {
-        i18n::newNamespace("disable_rehike")
-            ->registerFromFolder("i18n/disable_rehike");
-    }
-
-    /**
      * Determines if the current URL requests to use Polymer instead of Rehike.
      */
     private static function isEnablePolymerUrl(): bool

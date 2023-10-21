@@ -4,7 +4,7 @@ namespace Rehike\Model\Watch\Watch8\PrimaryInfo;
 use Rehike\Model\Common\MButton;
 use Rehike\Model\Clickcard\MSigninClickcard;
 use Rehike\Signin\API as SignIn;
-use Rehike\i18n;
+use Rehike\i18n\i18n;
 
 /**
  * Defines an abstract watch action button.
@@ -110,10 +110,10 @@ class MActionButton extends MButton
         {
             $buttonCfg += [
                 "clickcard" => new MSigninClickcard(
-                    $i18n->addToClickcardHeading,
-                    $i18n->addToClickcardTip,
+                    $i18n->get("addToClickcardHeading"),
+                    $i18n->get("addToClickcardTip"),
                     [
-                        "text" => $i18n->clickcardSignIn,
+                        "text" => $i18n->get("clickcardSignIn"),
                         "href" => "https://accounts.google.com/ServiceLogin?continue=https%3A%2F%2Fwww.youtube.com%2Fsignin%3Fnext%3D%252F%253Faction_handle_signin%3Dtrue%26feature%3D__FEATURE__%26hl%3Den%26app%3Ddesktop&passive=true&hl=en&uilel=3&service=youtube"
                     ]
                 ),
@@ -153,7 +153,7 @@ class MActionButton extends MButton
         $i18n = i18n::getNamespace("watch");
 
         return new self([
-            "label" => $i18n->actionShare,
+            "label" => $i18n->get("actionShare"),
             "actionPanelTrigger" => "share"
         ]);
     }
@@ -171,7 +171,7 @@ class MActionButton extends MButton
         $i18n = i18n::getNamespace("watch");
 
         $buttonCfg = [
-            "label" => $i18n->actionReport,
+            "label" => $i18n->get("actionReport"),
             "class" => "report-button",
             "actionPanelTrigger" => "report"
         ];
@@ -180,10 +180,10 @@ class MActionButton extends MButton
             $buttonCfg += [
                 "fakeActionPanel" => true,
                 "clickcard" => new MSigninClickcard(
-                    $i18n->reportClickcardHeading,
-                    $i18n->reportClickcardTip,
+                    $i18n->get("reportClickcardHeading"),
+                    $i18n->get("reportClickcardTip"),
                     [
-                        "text" => $i18n->clickcardSignIn,
+                        "text" => $i18n->get("clickcardSignIn"),
                         "href" => "https://accounts.google.com/ServiceLogin?continue=https%3A%2F%2Fwww.youtube.com%2Fsignin%3Fnext%3D%252F%253Faction_handle_signin%3Dtrue%26feature%3D__FEATURE__%26hl%3Den%26app%3Ddesktop&passive=true&hl=en&uilel=3&service=youtube"
                     ]
                 ),
@@ -205,8 +205,8 @@ class MActionButton extends MButton
         $i18n = i18n::getNamespace("watch");
 
         return new self([
-            "label" => $i18n->actionMore,
-            "tooltip" => $i18n->actionMoreTooltip,
+            "label" => $i18n->get("actionMore"),
+            "tooltip" => $i18n->get("actionMoreTooltip"),
             "id" => "action-panel-overflow-button",
             "menu" => new MActionPanelOverflowMenu()
         ]);

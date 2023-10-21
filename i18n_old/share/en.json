@@ -1,0 +1,24 @@
+{
+    "tabShare": "Share",
+    "tabEmbed": "Embed",
+    "tabEmail": "Email",
+    "serviceTooltip": "Share to %s. Opens in a new window.",
+    "startAt": "Start at:",
+
+    "sharePlaylist": "Share with playlist starting from  ",
+    "currentVideo": "current video",
+    "startPlaylist": "start of playlist",
+    "embedCode": "Embed code",
+    "preview": "Preview:",
+    "videoSize": "Video size:",
+    "customSize": "Custom size",
+    "showRelated": "Show suggested videos when the video finishes",
+    "showControls": "Show player controls",
+    "showInfo": "Show video title and player actions",
+    "delayedCookies": "Enable privacy-enhanced mode",
+    "legalNotice": "By displaying YouTube videos on your site, you are agreeing to the ",
+    "legalNoticeLink": "YouTube API terms of service.",
+
+    "playlistNonexistent": "That playlist does not exist.",
+    "playlistNoVideos": "That playlist does not contain any videos."
+}

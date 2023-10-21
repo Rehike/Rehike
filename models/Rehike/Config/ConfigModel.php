@@ -1,19 +1,17 @@
 <?php
 namespace Rehike\Model\Rehike\Config;
-use Rehike\i18n;
+use Rehike\i18n\i18n;
 use Rehike\Model\Traits\NavigationEndpoint;
 use Rehike\RehikeConfigManager as ConfigManager;
 use Rehike\Model\Common\MButton;
 use Rehike\Model\Common\MAlert;
 
-use Rehike\DisableRehike\DisableRehike;
-
 class ConfigModel {
     public static function bake($tab, $status = null) {
         $response = (object) [];
-        $i18n = i18n::newNamespace("rehike/config") ->registerFromFolder("i18n/rehike/config");
-        $tabs = (object) $i18n->tabs;
-        $props = json_decode(json_encode($i18n->props)) ->{$tab};
+        $i18n = i18n::getNamespace("rehike/config");
+        $tabs = (object) $i18n->getAllTemplates()->tabs;
+        $props = json_decode(json_encode($i18n->getAllTemplates()->props))->{$tab};
 
         $response->tab = $tab;
 
@@ -23,7 +21,7 @@ class ConfigModel {
                     (object) [
                         "creatorSidebarSectionRenderer" => (object) [
                             "title" => (object) [
-                                "simpleText" => $i18n->title
+                                "simpleText" => $i18n->get("title")
                             ],
                             "targetId" => "rehike-config",
                             "isSelected" => true,
@@ -45,13 +43,13 @@ class ConfigModel {
                 case "success":
                     $response->alerts[] = new MAlert([
                         "type" => MAlert::TypeSuccess,
-                        "text" => $i18n->saveChangesSuccess
+                        "text" => $i18n->get("saveChangesSuccess")
                     ]);
                     break;
                 case "failure":
                     $response->alerts[] = new MAlert([
                         "type" => MAlert::TypeError,
-                        "text" => $i18n->saveChangesFailure
+                        "text" => $i18n->get("saveChangesFailure")
                     ]);
                     break;
             }
@@ -73,13 +71,13 @@ class ConfigModel {
         ];
 
         $contents = &$response->content->contents;
-        foreach (ConfigManager::getConfig() ->{$tab} as $option => $value) {
+        foreach (ConfigManager::getConfig()->{$tab} as $option => $value) {
             switch (ConfigManager::getConfigType("{$tab}.{$option}")) {
                 case "bool":
                     $contents[] = (object) [
                         "checkboxRenderer" => (object) [
-                            "title" => $props->{$option} ->title ?? null,
-                            "subtitle" => $props->{$option} ->subtitle ?? null,
+                            "title" => $props->{$option}->title ?? null,
+                            "subtitle" => $props->{$option}->subtitle ?? null,
                             "checked" => $value ? true : false,
                             "name" => "$tab.$option",
                         ]
@@ -101,7 +99,7 @@ class ConfigModel {
 
                     $contents[] = (object) [
                         "selectRenderer" => (object) [
-                            "label" => $props->{$option} ->title,
+                            "label" => $props->{$option}->title,
                             "name" => "$tab.$option",
                             "values" => $values,
                             "selectedValue" => $selectedValue
@@ -114,7 +112,7 @@ class ConfigModel {
         $response->content->saveButton = new MButton([
             "style" => "STYLE_PRIMARY",
             "text" => (object) [
-                "simpleText" => $i18n->saveChanges
+                "simpleText" => $i18n->get("saveChanges")
             ],
             "type" => "submit",
             "class" => ["rehike-config-save-button"],
@@ -138,12 +136,8 @@ class ConfigModel {
 
     private static function getDisableRehikeButton(): MButton
     {
-        if (!i18n::namespaceExists("disable_rehike"))
-            DisableRehike::initI18n();
-
+        $i18n = i18n::getNamespace("rehike/disable_rehike");
         $isDisabled = ConfigManager::getConfigProp("hidden.disableRehike");
-
-        $i18n = i18n::getNamespace("disable_rehike");
 
         $buttonText = $isDisabled
             ? $i18n->get("rhSettingsEnableRehike")

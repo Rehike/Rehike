@@ -1,6 +1,5 @@
 <?php
 use Rehike\ControllerV2\Router;
-use Rehike\SimpleFunnel;
 
 // Passed through the Rehike server. These simply request the YouTube server
 // directly.

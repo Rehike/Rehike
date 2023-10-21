@@ -2,12 +2,11 @@
 namespace Rehike\Model\Playlist;
 
 use \Rehike\Model\Common\MAlert;
-use \Rehike\i18n;
+use \Rehike\i18n\i18n;
 
 class PlaylistModel {
     public static function bake($dataHost) {
-        $i18n = i18n::newNamespace("playlist");
-        $i18n->registerFromFolder("i18n/playlist");
+        $i18n = i18n::getNamespace("playlist");
         $response = (object) [];
 
         $contentContainer = $dataHost->contents->twoColumnBrowseResultsRenderer->tabs[0]->tabRenderer->content ?? null;
@@ -17,7 +16,7 @@ class PlaylistModel {
                 "alerts" => [
                     new MAlert([
                         "type" => MAlert::TypeError,
-                        "text" => $i18n->nonexistent
+                        "text" => $i18n->get("nonexistent")
                     ])
                 ]
             ];
@@ -51,7 +50,7 @@ class PlaylistModel {
                 "alerts" => [
                     new MAlert([
                         "type" => MAlert::TypeError,
-                        "text" => $i18n->unsupported
+                        "text" => $i18n->get("unsupported")
                     ])
                 ]
             ];

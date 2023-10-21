@@ -1,0 +1,146 @@
+Successfully loaded new i18n file "C:\xampp\Rehike07Dev\i18n_new\en-US\_culture.i18n"
+Failed to load old counterpart file "C:\xampp\Rehike07Dev\i18n\_culture\en.json"
+Successfully parsed new i18n file.
+Successfully loaded new i18n file "C:\xampp\Rehike07Dev\i18n_new\en-US\addto.i18n"
+Successfully loaded old counterpart file "C:\xampp\Rehike07Dev\i18n\addto\en.json"
+Successfully parsed new i18n file.
+Successfully parsed old JSON file.
+Successfully loaded new i18n file "C:\xampp\Rehike07Dev\i18n_new\en-US\appbar.i18n"
+Successfully loaded old counterpart file "C:\xampp\Rehike07Dev\i18n\appbar\en.json"
+Successfully parsed new i18n file.
+Successfully parsed old JSON file.
+Successfully loaded new i18n file "C:\xampp\Rehike07Dev\i18n_new\en-US\attribution.i18n"
+Successfully loaded old counterpart file "C:\xampp\Rehike07Dev\i18n\attribution\en.json"
+Successfully parsed new i18n file.
+Successfully parsed old JSON file.
+Successfully loaded new i18n file "C:\xampp\Rehike07Dev\i18n_new\en-US\browse.i18n"
+Successfully loaded old counterpart file "C:\xampp\Rehike07Dev\i18n\browse\en.json"
+Successfully parsed new i18n file.
+Successfully parsed old JSON file.
+Successfully loaded new i18n file "C:\xampp\Rehike07Dev\i18n_new\en-US\channel_switcher.i18n"
+Successfully loaded old counterpart file "C:\xampp\Rehike07Dev\i18n\channel_switcher\en.json"
+Successfully parsed new i18n file.
+Successfully parsed old JSON file.
+
+-------------------------------------------------
+Value of new property pageHeaderPrefix is different from old one.
+
+New value:
+
+Channels for
+
+
+Old value:
+
+Channels for 
+
+-------------------------------------------------
+Successfully loaded new i18n file "C:\xampp\Rehike07Dev\i18n_new\en-US\channels.i18n"
+Successfully loaded old counterpart file "C:\xampp\Rehike07Dev\i18n\channels\en.json"
+Successfully parsed new i18n file.
+Successfully parsed old JSON file.
+Successfully loaded new i18n file "C:\xampp\Rehike07Dev\i18n_new\en-US\comments.i18n"
+Successfully loaded old counterpart file "C:\xampp\Rehike07Dev\i18n\comments\en.json"
+Successfully parsed new i18n file.
+Successfully parsed old JSON file.
+Successfully loaded new i18n file "C:\xampp\Rehike07Dev\i18n_new\en-US\disable_rehike.i18n"
+Successfully loaded old counterpart file "C:\xampp\Rehike07Dev\i18n\disable_rehike\en.json"
+Successfully parsed new i18n file.
+Successfully parsed old JSON file.
+Successfully loaded new i18n file "C:\xampp\Rehike07Dev\i18n_new\en-US\footer.i18n"
+Successfully loaded old counterpart file "C:\xampp\Rehike07Dev\i18n\footer\en.json"
+Successfully parsed new i18n file.
+Successfully parsed old JSON file.
+Successfully loaded new i18n file "C:\xampp\Rehike07Dev\i18n_new\en-US\global.i18n"
+Successfully loaded old counterpart file "C:\xampp\Rehike07Dev\i18n\global\en.json"
+Successfully parsed new i18n file.
+Successfully parsed old JSON file.
+Successfully loaded new i18n file "C:\xampp\Rehike07Dev\i18n_new\en-US\guide.i18n"
+Successfully loaded old counterpart file "C:\xampp\Rehike07Dev\i18n\guide\en.json"
+Successfully parsed new i18n file.
+Successfully parsed old JSON file.
+Successfully loaded new i18n file "C:\xampp\Rehike07Dev\i18n_new\en-US\masthead.i18n"
+Successfully loaded old counterpart file "C:\xampp\Rehike07Dev\i18n\masthead\en.json"
+Successfully parsed new i18n file.
+Successfully parsed old JSON file.
+Successfully loaded new i18n file "C:\xampp\Rehike07Dev\i18n_new\en-US\misc.i18n"
+Successfully loaded old counterpart file "C:\xampp\Rehike07Dev\i18n\misc\en.json"
+Successfully parsed new i18n file.
+Successfully parsed old JSON file.
+
+-------------------------------------------------
+Value of new property notificationPrefsLabel is different from old one.
+
+New value:
+
+Subscription preferences
+
+
+Old value:
+
+Subscription prefrences
+
+-------------------------------------------------
+Successfully loaded new i18n file "C:\xampp\Rehike07Dev\i18n_new\en-US\picker.i18n"
+Successfully loaded old counterpart file "C:\xampp\Rehike07Dev\i18n\picker\en.json"
+Successfully parsed new i18n file.
+Successfully parsed old JSON file.
+Successfully loaded new i18n file "C:\xampp\Rehike07Dev\i18n_new\en-US\playlist.i18n"
+Successfully loaded old counterpart file "C:\xampp\Rehike07Dev\i18n\playlist\en.json"
+Successfully parsed new i18n file.
+Successfully parsed old JSON file.
+Successfully loaded new i18n file "C:\xampp\Rehike07Dev\i18n_new\en-US\regex.i18n"
+Successfully loaded old counterpart file "C:\xampp\Rehike07Dev\i18n\regex\en.json"
+Successfully parsed new i18n file.
+Successfully parsed old JSON file.
+Successfully loaded new i18n file "C:\xampp\Rehike07Dev\i18n_new\en-US\results.i18n"
+Successfully loaded old counterpart file "C:\xampp\Rehike07Dev\i18n\results\en.json"
+Successfully parsed new i18n file.
+Successfully parsed old JSON file.
+Successfully loaded new i18n file "C:\xampp\Rehike07Dev\i18n_new\en-US\share.i18n"
+Successfully loaded old counterpart file "C:\xampp\Rehike07Dev\i18n\share\en.json"
+Successfully parsed new i18n file.
+Successfully parsed old JSON file.
+Successfully loaded new i18n file "C:\xampp\Rehike07Dev\i18n_new\en-US\watch.i18n"
+Successfully loaded old counterpart file "C:\xampp\Rehike07Dev\i18n\watch\en.json"
+Successfully parsed new i18n file.
+Successfully parsed old JSON file.
+Successfully loaded new i18n file "C:\xampp\Rehike07Dev\i18n_new\en-US\rehike\config.i18n"
+Successfully loaded old counterpart file "C:\xampp\Rehike07Dev\i18n\rehike\config\en.json"
+Successfully parsed new i18n file.
+Successfully parsed old JSON file.
+
+-------------------------------------------------
+Value of new property saveChangesFailure is different from old one.
+
+New value:
+
+Failed to update configuration.
+
+
+Old value:
+
+Failed to update configuration!
+
+-------------------------------------------------
+
+-------------------------------------------------
+Value of new property props.advanced.clearSigninCache.subtitle is different from old one.
+
+New value:
+
+Rehike caches sign-in data as to not make too many requests to YouTube.
+
+
+Old value:
+
+Rehike caches sign-in data as to not make too many requests to YouTube
+
+-------------------------------------------------
+Successfully loaded new i18n file "C:\xampp\Rehike07Dev\i18n_new\en-US\rehike\debugger.i18n"
+Successfully loaded old counterpart file "C:\xampp\Rehike07Dev\i18n\rehike\debugger\en.json"
+Successfully parsed new i18n file.
+Successfully parsed old JSON file.
+Successfully loaded new i18n file "C:\xampp\Rehike07Dev\i18n_new\en-US\rehike\version.i18n"
+Failed to load old counterpart file "C:\xampp\Rehike07Dev\i18n\rehike\version\en.json"
+Successfully parsed new i18n file.

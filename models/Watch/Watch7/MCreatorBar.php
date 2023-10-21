@@ -2,7 +2,7 @@
 namespace Rehike\Model\Watch\Watch7;
 
 use Rehike\Model\Common\MButton;
-use Rehike\i18n;
+use Rehike\i18n\i18n;
 use Rehike\Signin\API as SignIn;
 
 class MCreatorBar {
@@ -21,7 +21,7 @@ class MCreatorBar {
 
         $this->navButtons[] = new MButton([
             "text" => (object) [
-                "simpleText" => $i18n->creatorBarAnalytics
+                "simpleText" => $i18n->get("creatorBarAnalytics")
             ],
             "navigationEndpoint" => (object) [
                 "commandMetadata" => (object) [
@@ -36,7 +36,7 @@ class MCreatorBar {
         ]);
         $this->navButtons[] = new MButton([
             "text" => (object) [
-                "simpleText" => $i18n->creatorBarVideoManager
+                "simpleText" => $i18n->get("creatorBarVideoManager")
             ],
             "navigationEndpoint" => (object) [
                 "commandMetadata" => (object) [
@@ -51,37 +51,37 @@ class MCreatorBar {
         ]);
 
         $this->editButtons[] = new MCreatorBarEditButton([
-            "tooltip" => $i18n->creatorBarInfo,
+            "tooltip" => $i18n->get("creatorBarInfo"),
             "icon" => "INFO",
             "url" => "//studio.youtube.com/video/$vid/edit"
         ]);
 
         $this->editButtons[] = new MCreatorBarEditButton([
-            "tooltip" => $i18n->creatorBarEnhancements,
+            "tooltip" => $i18n->get("creatorBarEnhancements"),
             "icon" => "ENHANCE",
             "url" => "//studio.youtube.com/video/$vid/editor"
         ]);
 
         $this->editButtons[] = new MCreatorBarEditButton([
-            "tooltip" => $i18n->creatorBarAudio,
+            "tooltip" => $i18n->get("creatorBarAudio"),
             "icon" => "AUDIO",
             "url" => "//studio.youtube.com/video/$vid/editor"
         ]);
 
         $this->editButtons[] = new MCreatorBarEditButton([
-            "tooltip" => $i18n->creatorBarComments,
+            "tooltip" => $i18n->get("creatorBarComments"),
             "icon" => "ANNOTATIONS",
             "url" => "//studio.youtube.com/video/$vid/comments"
         ]);
 
         $this->editButtons[] = new MCreatorBarEditButton([
-            "tooltip" => $i18n->creatorBarCards,
+            "tooltip" => $i18n->get("creatorBarCards"),
             "icon" => "CARDS",
             "url" => "//studio.youtube.com/video/$vid/edit"
         ]);
 
         $this->editButtons[] = new MCreatorBarEditButton([
-            "tooltip" => $i18n->creatorBarSubtitles,
+            "tooltip" => $i18n->get("creatorBarSubtitles"),
             "icon" => "CAPTIONS",
             "url" => "//studio.youtube.com/video/$vid/translations"
         ]);

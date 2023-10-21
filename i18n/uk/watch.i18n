@@ -1,0 +1,86 @@
+# Watch strings:
+
+autoplayToggleDesc: "Автовідтворення"
+autoplayTitle: "Наступне"
+autoplayInfoText: >
+  Якщо функцію увімкнено, наступний ролик почне відтворюватися автоматично.
+
+relatedItemA11yDesc: " - Тривалість: %s."
+
+actionAddTo: "Додати в"
+actionShare: "Поділитися"
+actionMore: "Ще"
+actionMoreTooltip: "Ще"
+actionReport: "Поскаржитись"
+actionTranscript: "Текст відео"
+actionLikeTooltip: "Подобається"
+actionLikeTooltipActive: "Більше не подобається"
+actionDislikeTooltip: "Не подобається"
+
+clickcardSignIn: "Увійти"
+clickcardPlaylistSignIn: "Sign in to YouTube"
+addToClickcardHeading: "Бажаєте зберегти це відео?"
+addToClickcardTip: "Увійдіть до облікового запису та додайте його до плейлисту."
+reportClickcardHeading: "Поскаржитись на відео?"
+reportClickcardTip: "Виконайте вхід, щоб повідомити про неприйнятний вміст."
+likeClickcardHeading: "Подобалось?"
+dislikeClickcardHeading: "Не подобалось?"
+voteClickcardTip: "Увійдіть до облікового запису, щоб поставити позначку."
+
+channelSettings: "Налаштування канала"
+creatorBarInfo: "Інформація та конфігурація"
+creatorBarEnhancements: "Поліпшення"
+creatorBarAudio: "Аудіо"
+creatorBarComments: "Коментарі"
+creatorBarCards: "Карти"
+creatorBarSubtitles: "Субтитры"
+creatorBarAnalytics: "Аналітика"
+creatorBarVideoManager: "Менеджер відео"
+
+metadataLicense: "Ліцензія"
+metadataLicenseStandard: "Стандартна ліцензія YouTube"
+metadataCategory: "Категорія"
+metadataSong: "Звук"
+metadataGame: "Гра"
+
+playlistVideosSingular: "1 video"
+playlistVideosPlural: "%s videos"
+playlistSave: "Save to Playlists"
+playlistUnsave: "Remove"
+playlistPrevVideo: "Previous video"
+playlistNextVideo: "Next video"
+
+privacyUnlisted: >
+  This video is unlisted. Only those with the link can see it.
+privacyPrivate: >
+  This video is private. Only those with access can see it.
+
+actionPanelError: >
+  This feature is not available right now. Please try again later.
+actionPanelRentalRequired: >
+  Rating is available when the video has been rented.
+
+loadingMoreSuggestions: "Загрузка ещё предложений..."
+
+repeatPlaylistLabel: "Repeat playlist"
+shufflePlaylistLabel: "Shuffle"
+
+playerBlockadeContentWarning: "Content warning"
+playerBlockadeInappropriate: >
+  This video may be inappropriate for some users.
+playerBlockadeAgeRestrictedSignin: >
+  Sign in to confirm your age
+
+# JS messages:
+editorAjaxRequestFailed: >
+  Something went wrong trying to get data from the server. 
+  Try again, or reload the page.
+editorAjaxRequest503: >
+  This functionality is not available right now. Please try again later.
+
+# Slow internet connection message.
+speedygInfo: "Experiencing interruptions?"
+
+liveWatchingNow0: "0 watching now"
+liveWatchingNow1: "1 watching now"
+liveWatchingNow: "# watching now"

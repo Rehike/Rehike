@@ -4,7 +4,6 @@ namespace Rehike\Model\Watch\Watch8;
 use Rehike\TemplateFunctions;
 use Rehike\ConfigManager\ConfigManager;
 use Rehike\Util\ExtractUtils;
-use Rehike\i18n;
 
 use Rehike\Model\Watch\Watch8\{
     LikeButton\MLikeButtonRenderer,

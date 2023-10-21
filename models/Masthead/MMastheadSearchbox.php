@@ -2,7 +2,7 @@
 namespace Rehike\Model\Masthead;
 
 use Rehike\Model\Common\MButton;
-use Rehike\i18n;
+use Rehike\i18n\i18n;
 
 class MMastheadSearchbox {
     /** @var string */
@@ -20,12 +20,12 @@ class MMastheadSearchbox {
     public function __construct() {
         $i18n = i18n::getNamespace("masthead");
     
-        $this->placeholder = $i18n->searchboxPlaceholder;
+        $this->placeholder = $i18n->get("searchboxPlaceholder");
         $this->button = new MButton([
             "style" => "STYLE_DEFAULT",
             "size" => "SIZE_DEFAULT",
             "text" => (object) [
-                "simpleText" => $i18n->searchboxPlaceholder
+                "simpleText" => $i18n->get("searchboxPlaceholder")
             ],
             "targetId" => "search-btn",
             "class" => [

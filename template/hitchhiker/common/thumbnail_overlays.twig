@@ -47,7 +47,7 @@
         <span class="yt-valign-container">
             <span class="formatted-video-count-label">
                 {% if data.type == "radio" %}
-                    <b>50+</b> videos {# TODO: i18n #}
+                    {{ rehike.i18n.format("global", "videoCountPlural", "<b>50+</b>")|raw }}
                 {% else %}
                     {% for run in info.thumbnailText.runs %}
                         {% if run.bold == true %}

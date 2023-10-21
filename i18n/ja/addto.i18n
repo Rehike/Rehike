@@ -1,0 +1,13 @@
+# Add to definitions
+
+addToHeading: "追加"
+searchPlaylists: "再生リストを検索"
+createNewPlaylist: "新しい再生リストを作成"
+createNewPlaylistDynamic: "%s（新規作成）"
+playlistTitle: "再生リストのタイトル"
+playlistPrivacy: "再生リストのプライバシー"
+privacyPublic: "公開"
+privacyUnlisted: "限定公開"
+privacyPrivate: "非公開"
+cancel: "キャンセル"
+create: "作成"

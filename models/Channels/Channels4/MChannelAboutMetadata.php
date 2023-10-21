@@ -2,7 +2,7 @@
 namespace Rehike\Model\Channels\Channels4;
 
 use Rehike\Util\ExtractUtils;
-use Rehike\i18n;
+use Rehike\i18n\i18n;
 use Rehike\TemplateFunctions as TF;
 use Rehike\Model\Traits\NavigationEndpoint;
 
@@ -21,22 +21,22 @@ class MChannelAboutMetadata
 
     public function __construct($subCount, $data)
     {
-        $regexs = &i18n::getNamespace("main/regex");
-        $miscStrings = &i18n::getNamespace("main/misc");
+        $regexs = i18n::getNamespace("regex");
+        $miscStrings = i18n::getNamespace("misc");
 
         $this->subscriberCountText = self::getRichStat(
             $subCount,
-            $regexs->subscriberCountIsolator
+            $regexs->get("subscriberCountIsolator")
         );
 
-        $viewCountText = $miscStrings->viewTextPlural("0");
+        $viewCountText = $miscStrings->format("viewTextPlural", "0");
 
         if (isset($data->viewCountText))
             $viewCountText = TF::getText(@$data->viewCountText);
 
         $this->viewCountText = self::getRichStat(
             $viewCountText,
-            $regexs->viewCountIsolator
+            $regexs->get("viewCountIsolator")
         );
 
         $this->joinedDateText = TF::getText(@$data->joinedDateText);

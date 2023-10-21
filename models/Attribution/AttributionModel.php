@@ -1,7 +1,7 @@
 <?php
 namespace Rehike\Model\Attribution;
 
-use Rehike\i18n;
+use Rehike\i18n\i18n;
 use Rehike\Network;
 use Rehike\TemplateFunctions;
 
@@ -10,8 +10,7 @@ class AttributionModel {
     public $contents;
 
     public static function bake($dataHost, $videoId) {
-        $i18n = i18n::newNamespace("attribution");
-        $i18n->registerFromFolder("i18n/attribution");
+        $i18n = i18n::getNamespace("attribution");
         $response = (object) [];
         $response->videoId = $videoId;
 
@@ -38,7 +37,7 @@ class AttributionModel {
         if(isset($items[1] ->richItemRenderer)) {
             $contents = (object) [];
             $contents->title = $i18n->get("sectionTitle");
-            $contents->subtitle = $i18n->get("sectionSubtitle", TemplateFunctions::getText($header->video->title));
+            $contents->subtitle = $i18n->format("sectionSubtitle", TemplateFunctions::getText($header->video->title));
             $contents->items = [];
             for ($i = 1; $i < count($items); $i++) {
                 if (isset($items[$i] ->richItemRenderer)) {

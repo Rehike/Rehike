@@ -9,6 +9,7 @@ use Rehike\Model\Watch\AgeGate\MPlayerContentGate;
 
 use Rehike\Async\Promise;
 use function Rehike\Async\async;
+use Rehike\i18n\i18n;
 
 /**
  * Implements all logic pertaining to the generation of watch
@@ -103,7 +104,9 @@ class WatchModel
                     if (!isset($yt->playerUnavailable->subreason))
                     {
                         $yt->playerUnavailable->subreason = (object)[
-                            "simpleText" => "Sorry about that."
+                            "simpleText" => i18n::getRawString(
+                                "global", "sorryAboutThat"
+                            )
                         ];
                     }
                 }

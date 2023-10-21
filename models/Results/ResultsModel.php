@@ -1,6 +1,6 @@
 <?php
 namespace Rehike\Model\Results;
-use Rehike\i18n;
+use Rehike\i18n\i18n;
 use Rehike\Model\Common\Subscription\MSubscriptionActions;
 use Rehike\Util\ExtractUtils;
 use Rehike\TemplateFunctions;
@@ -25,8 +25,7 @@ class ResultsModel {
      */
     public static function bake($data, $paginatorInfo, $query)
     {
-        $i18n = i18n::newNamespace("results");
-        $i18n->registerFromFolder("i18n/results");
+        $i18n = i18n::getNamespace("results");
 
         $response = (object) [];
         $contents = $data->contents->twoColumnSearchResultsRenderer->primaryContents->sectionListRenderer;
@@ -47,9 +46,9 @@ class ResultsModel {
             unset($filters->text);
         }
         
-        $submenu -> resultCountText = self::getResultsCount($data) > 1
-            ? $i18n -> resultCountPlural(number_format(self::getResultsCount($data)))
-            : $i18n -> resultCountSingular(number_format(self::getResultsCount($data)));
+        $submenu->resultCountText = self::getResultsCount($data) > 1
+            ? $i18n->format("resultCountPlural", $i18n->formatNumber(self::getResultsCount($data)))
+            : $i18n->format("resultCountSingular", $i18n->formatNumber(self::getResultsCount($data)));
 
         $filterCrumbs = [];
         if (isset($submenu->groups))
@@ -66,7 +65,7 @@ class ResultsModel {
         if (count($filterCrumbs) > 0)
         {
             $submenu->clearAll = (object) [
-                "simpleText" => $i18n->filtersClear,
+                "simpleText" => $i18n->get("filtersClear"),
                 "navigationEndpoint" => (object) [
                     "commandMetadata" => (object) [
                         "webCommandMetadata" => (object) [

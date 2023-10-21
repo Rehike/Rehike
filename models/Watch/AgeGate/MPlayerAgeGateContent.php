@@ -1,6 +1,8 @@
 <?php
 namespace Rehike\Model\Watch\AgeGate;
 
+use Rehike\i18n\i18n;
+
 /**
  * Content class for the Age Gate screen.
  * 
@@ -15,7 +17,10 @@ class MPlayerAgeGateContent
 
     public function __construct(?object $data = null)
     {
-        $message = "This video may be inappropriate for some users.";
+        $message = i18n::getRawString(
+            "watch",
+            "playerBlockadeInappropriate"
+        );
         
         $this->message = $message;
 

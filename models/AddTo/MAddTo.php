@@ -1,7 +1,7 @@
 <?php
 namespace Rehike\Model\AddTo;
 
-use Rehike\i18n;
+use Rehike\i18n\i18n;
 
 class MAddTo
 {
@@ -14,8 +14,8 @@ class MAddTo
     {
         $strs = i18n::getNamespace("addto");
 
-        $this->createNewText = $strs->createNewPlaylist;
-        $this->searchText = $strs->searchPlaylists;
+        $this->createNewText = $strs->get("createNewPlaylist");
+        $this->searchText = $strs->get("searchPlaylists");
 
         $this->createPlaylistPanelRenderer = new MCreatePlaylist(true);
         

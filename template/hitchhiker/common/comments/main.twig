@@ -98,7 +98,7 @@
             {% if yt.signin.isSignedIn %}
             <div class="yt-uix-menu-container comment-renderer-action-menu yt-section-hover-container">
                <div class="yt-uix-menu yt-uix-menu-flipped hide-until-delayloaded">
-                  <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-action-menu yt-uix-button-empty yt-uix-button-has-icon no-icon-markup  yt-uix-menu-trigger" type="button" onclick=";return false;" aria-haspopup="true" aria-label="Action menu." aria-pressed="false" role="button"><span class="yt-uix-button-arrow yt-sprite"></span></button>
+                  <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-action-menu yt-uix-button-empty yt-uix-button-has-icon no-icon-markup  yt-uix-menu-trigger" type="button" onclick=";return false;" aria-haspopup="true" aria-label="{{ rehike.i18n.get("global", "actionMenuLabel") }}" aria-pressed="false" role="button"><span class="yt-uix-button-arrow yt-sprite"></span></button>
                   <div class="yt-uix-menu-content yt-ui-menu-content yt-uix-menu-content-hidden" role="menu">
                      <ul>
                         <li role="menuitem">
@@ -167,7 +167,7 @@ data-uix-load-more-target-id="comment-section-renderer-items" data-uix-load-more
    <span class="yt-uix-button-content">
       <span class="load-more-loading hid">
          <span class="yt-spinner">
-            <span title="Loading icon" class="yt-spinner-img  yt-sprite"></span>
+            <span title="{{ rehike.i18n.get("global", "loadingIconLabel") }}" class="yt-spinner-img  yt-sprite"></span>
             {{ yt.msgs.loading }}
          </span>
       </span>
@@ -181,7 +181,7 @@ data-uix-load-more-target-id="comment-section-renderer-items" data-uix-load-more
 {% macro loadMoreLink(action, commentId, token, text, style_down_arrow) %}
 <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-default load-more-button yt-uix-load-more comment-replies-renderer-paginator {{ style_down_arrow ? 'comment-replies-renderer-expander-down' }} yt-uix-button-link" type="button" onclick=";return false;" aria-label="{{ text }}" data-uix-load-more-href="/comment_service_ajax?{{ action }}=1" data-uix-load-more-post="true" data-uix-load-more-post-body="page_token={{ token }}" data-uix-load-more-target-id="comment-replies-renderer-{{ commentId }}"><span class="yt-uix-button-content">  <span class="load-more-loading hid">
 <span class="yt-spinner">
-<span class="yt-spinner-img  yt-sprite" title="Loading icon"></span>
+<span class="yt-spinner-img  yt-sprite" title="{{ rehike.i18n.get("global", "loadingIconLabel") }}"></span>
 {{ yt.msgs.loading }}
 </span>
 </span>

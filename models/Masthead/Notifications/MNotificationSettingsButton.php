@@ -2,7 +2,7 @@
 namespace Rehike\Model\Masthead\Notifications;
 
 use Rehike\Model\Common\MButton;
-use Rehike\i18n;
+use Rehike\i18n\i18n;
 
 class MNotificationSettingsButton extends MButton {
     public $targetId = "yt-masthead-notifications-settings";
@@ -13,7 +13,7 @@ class MNotificationSettingsButton extends MButton {
 
         $this->accessibility = (object) [
             "accessibilityLabel" => (object) [
-                "label" => $i18n->notificationsSettings
+                "label" => $i18n->get("notificationsSettings")
             ]
         ];
         $this->icon = (object) [

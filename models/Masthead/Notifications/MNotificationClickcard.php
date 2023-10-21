@@ -1,7 +1,7 @@
 <?php
 namespace Rehike\Model\Masthead\Notifications;
 
-use Rehike\i18n;
+use Rehike\i18n\i18n;
 
 class MNotificationClickcard {
     public $template = "masthead_notifications";
@@ -18,7 +18,7 @@ class MNotificationClickcard {
         $i18n = i18n::getNamespace("masthead");
 
         $this->content = (object) [];
-        $this->content->title = $i18n->notificationsTitle;
+        $this->content->title = $i18n->get("notificationsTitle");
         $this->content->button = new MNotificationSettingsButton();
     }
 }

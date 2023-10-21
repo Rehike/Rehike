@@ -1,0 +1,22 @@
+# Miscellaneous strings (move to global?)
+
+btnCancel: "キャンセル"
+btnSave: "保存"
+subscriberTextSingular: "チャンネル登録者数 1 人"
+subscriberTextPlural: "チャンネル登録者数 %s 人"
+viewTextSingular: "視聴回数 1 回"
+viewTextPlural: "視聴回数 %s 回"
+dateTextPublic: "%s に公開"
+dateTextPrivate: "%s にアップロード"
+subscribeText: "チャンネル登録"
+subscribedText: "登録済み"
+unsubscribeText: "登録解除"
+
+# How to obtain:
+# Get your UCID from YouTube. This is on https://www.youtube.com/account_advanced
+# Paste it into here: https://www.youtube.com/subscribe_embed?usegapi=1&channelid=<UCID>&layout=full&count=default
+# Make sure that you're logged into the account you need to access this string.
+selfSubscribeTooltip: "自分のチャンネルには、登録する必要はありません"
+
+notificationPrefsTitle: "%s からの通知"
+notificationPrefsLabel: "登録チャンネルの設定"

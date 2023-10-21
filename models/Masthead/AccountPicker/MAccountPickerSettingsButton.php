@@ -2,7 +2,7 @@
 namespace Rehike\Model\Masthead\AccountPicker;
 
 use Rehike\Model\Common\MButton;
-use Rehike\i18n;
+use Rehike\i18n\i18n;
 
 class MAccountPickerSettingsButton extends MButton {
     public $class = [
@@ -20,7 +20,7 @@ class MAccountPickerSettingsButton extends MButton {
                 ]
             ]
         ];
-        $this->tooltip = $i18n->accountPickerSettings;
+        $this->tooltip = $i18n->get("accountPickerSettings");
         $this->icon = (object) [
             "iconType" => "ICON_ACCOUNT_SETTINGS"
         ];

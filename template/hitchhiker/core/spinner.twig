@@ -3,7 +3,7 @@
 #}
 {%- macro render(label) -%}
 <p class="yt-spinner">
-    <span title="Loading icon" class="yt-spinner-img  yt-sprite"></span>
+    <span title="{{ rehike.i18n.get("global", "loadingIconLabel") }}" class="yt-spinner-img  yt-sprite"></span>
     <span class="yt-spinner-message">
         {{ label }}
     </span>

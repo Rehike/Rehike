@@ -126,4 +126,14 @@ class YtApp extends stdClass
      * Stores common i18n message strings.
      */
     public array $msgs = [];
+
+    /**
+     * The Rehike host language.
+     */
+    public string $hl = "en-US";
+
+    /**
+     * The user's geolocation (as obtained from YouTube).
+     */
+    public string $gl = "US";
 }

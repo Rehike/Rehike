@@ -1,0 +1,28 @@
+# Masthead (site header) strings:
+
+a11ySkipNav: "Skip navigation"
+logoTooltip: "YouTube Home"
+appbarGuideLabel: "Guide"
+searchboxPlaceholder: "Search"
+uploadButton: "Upload"
+creationLabel: "Create a video or post"
+creationUpload: "Upload video"
+creationLive: "Go live"
+creationPost: "Create post"
+notificationsTitle: "Notifications"
+notificationsSettings: "Settings"
+notificationsNone: "0 unread notifications."
+notificationsSingular: "1 unread notification."
+# Uses "#" symbol for placeholder because YouTube's JS accesses this string.
+notificationsPlural: "# unread notifications."
+notifications99Plus: "99+"
+accountPickerLabel: >
+  Account profile photo that opens list of alternate accounts
+accountPickerStudio: "YouTube Studio"
+accountPickerSettings: "Rehike settings"
+accountPickerCreate: "Create channel"
+accountPickerPhotoChange: "Change"
+accountPickerMultiLoginHeader: "Other accounts"
+accountPickerAddAccount: "Add account"
+accountPickerSignOut: "Sign out"
+signInButton: "Sign in"

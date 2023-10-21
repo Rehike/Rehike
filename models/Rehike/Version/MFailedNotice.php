@@ -1,7 +1,7 @@
 <?php
 namespace Rehike\Model\Rehike\Version;
 
-use Rehike\i18n;
+use Rehike\i18n\i18n;
 
 class MFailedNotice extends MNotice
 {
@@ -9,7 +9,7 @@ class MFailedNotice extends MNotice
     {
         $strings = i18n::getNamespace('rehike/version');
 
-        $this->text = $strings->failedNotice;
-        $this->description = $strings->noDotVersionNotice;
+        $this->text = $strings->get("failedNotice");
+        $this->description = $strings->get("noDotVersionNotice");
     }
 }

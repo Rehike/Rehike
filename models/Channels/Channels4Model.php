@@ -9,7 +9,7 @@ use Rehike\Model\Channels\Channels4\MSubConfirmationDialog;
 use Rehike\Model\Common\MAlert;
 use Rehike\Util\Base64Url;
 use Rehike\Util\ParsingUtils;
-use Rehike\i18n;
+use Rehike\i18n\i18n;
 use Com\Youtube\Innertube\Helpers\VideosContinuationWrapper;
 
 class Channels4Model
@@ -69,7 +69,7 @@ class Channels4Model
                   ?? $alert->alertRenderer
                   ?? null;
                 if (
-                    ParsingUtils::getText($alert->text) == $i18n->nonexistent
+                    ParsingUtils::getText($alert->text) == $i18n->get("nonexistent")
                 &&  isset($response["header"])
                 )
                 {

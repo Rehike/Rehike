@@ -23,6 +23,7 @@ class RehikeUtilsDelegate extends RehikeUtilsDelegateBase
     public CasingUtils $casing;
     public ResourceUtils $resource;
     public ParsingUtils $parsing;
+    public RehikeUtilsI18nDelegate $i18n;
 
     public function __construct()
     {
@@ -34,5 +35,6 @@ class RehikeUtilsDelegate extends RehikeUtilsDelegateBase
         $this->base64 = new Base64();
         $this->resource = new ResourceUtils();
         $this->parsing = new ParsingUtils();
+        $this->i18n = new RehikeUtilsI18nDelegate();
     }
 }

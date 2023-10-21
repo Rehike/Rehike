@@ -12,7 +12,6 @@ use \Rehike\Model\Channels\Channels4\MCarouselHeader;
 use \Rehike\Model\Channels\Channels4\MSecondaryHeader;
 use \Rehike\Util\Base64Url;
 use \Rehike\Network;
-use \Rehike\i18n;
 use Rehike\Util\ChannelUtils;
 use Rehike\Signin\API as SignIn;
 
@@ -55,9 +54,6 @@ return new class extends NirvanaController
 
             if (isset($yt->ucid))
             {
-                // Init i18n for channel model
-                i18n::newNamespace("channels")->registerFromFolder("i18n/channels");
-
                 $params = new BrowseRequestParams();
                 $params->setTab("playlists");
                 $yt->partiallySelectTabs = true;

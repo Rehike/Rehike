@@ -1,0 +1,49 @@
+# Guide strings:
+
+# Common strings:
+showMore: "もっと見る"
+showFewer: "折りたたむ"
+
+# Primary section items:
+trending: "急上昇"
+myChannel: "マイ チャンネル"
+subscriptions: "登録チャンネル"
+
+# Bottom section items:
+guideBuilderLabel: "チャンネル一覧"
+manageSubscriptionsLabel: "登録リストを管理"
+
+# Section names:
+bestOfYouTubeTitle: "Best of YouTube"
+
+# Best of YouTube section item names:
+bestOfYouTubePopularOnYouTube: "YouTube で人気"
+bestOfYouTubeMusic: "音楽"
+bestOfYouTubeSports: "スポーツ"
+bestOfYouTubeGaming: "ゲーム"
+bestOfYouTubeMoviesTv: "ムービー＆TV"
+bestOfYouTubeNews: "ニュース"
+bestOfYouTubeLive: "ライブ"
+bestOfYouTubeSpotlight: "スポットライト"
+bestOfYouTube360: "360 度の全方位動画"
+
+# Subscriptions promo:
+subscriptionsPromoButton: "チャンネルを追加"
+subscriptionsPromoTooltip: >
+  ここにあなたの登録チャンネルが表示されます。始めるためにいくつかの
+  チャンネルをブラウズしてください。
+
+# Guide notification messages:
+notifications:
+  watchLaterVideoAdded: "[後で見る] に追加しました"
+  watchLaterVideoRemoved: "[後で見る] から削除されました"
+  subscription: "追加された登録チャンネル"
+  unsubscription: "チャンネル登録を解除しました"
+  playlistLike: "再生リストに保存しました"
+  playlistUnlike: "再生リストから削除しました"
+  playlistVideoAdded: "再生リストに追加しました"
+  playlistVideoRemoved: "再生リストから削除しました"
+  videoLike: "高く評価した動画に追加されました"
+  videoUnlike: "高く評価した動画から削除されました"
+  eventReminderSet: "このイベントについての通知が送信されます"
+  eventReminderRemoved: "イベントについての通知が削除されました"

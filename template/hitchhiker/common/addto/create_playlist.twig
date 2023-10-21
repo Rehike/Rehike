@@ -42,9 +42,13 @@
             </div>
             <div class="create-playlist-buttons">
                 {% if not data.isCompact %}
-                <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-default cancel-button" type="reset" onclick=";return true;"><span class="yt-uix-button-content">Cancel</span></button>
+                <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-default cancel-button" type="reset" onclick=";return true;">
+                    <span class="yt-uix-button-content">{{ rehike.i18n.get("addto", "cancel") }}</span>
+                </button>
                 {% endif %}
-                <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-primary create-button" type="submit" onclick=";return true;" disabled="True"><span class="yt-uix-button-content">Create</span></button>
+                <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-primary create-button" type="submit" onclick=";return true;" disabled="True">
+                    <span class="yt-uix-button-content">{{ rehike.i18n.get("addto", "create") }}</span>
+                </button>
             </div>
         </div>
         <div class="yt-uix-focustrap-trap" tabindex="0"></div>

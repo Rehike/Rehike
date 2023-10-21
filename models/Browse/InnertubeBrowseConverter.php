@@ -1,7 +1,7 @@
 <?php
 namespace Rehike\Model\Browse;
 
-use Rehike\i18n;
+use Rehike\i18n\i18n;
 use Rehike\TemplateFunctions as TF;
 use Rehike\Util\ExtractUtils;
 use Rehike\Model\Channels\Channels4\BrandedPageV2\MSubnav;
@@ -134,12 +134,7 @@ class InnertubeBrowseConverter
 
     public static function channelRenderer($data, $context = [])
     {
-        if (i18n::namespaceExists("browse/converter")) {
-            $i18n = i18n::getNamespace("browse/converter");
-        } else {
-            $i18n = i18n::newNamespace("browse/converter");
-            $i18n->registerFromFolder("i18n/browse");
-        }
+        $i18n = i18n::getNamespace("browse");
 
         if (@$context["channelRendererNoSubscribeCount"])
             $subscriberCount = "";
@@ -179,7 +174,7 @@ class InnertubeBrowseConverter
             }
             $data->badges[] = (object) [
                 "metadataBadgeRenderer" => (object) [
-                    "label" => $i18n->channelBadge,
+                    "label" => $i18n->get("channelBadge"),
                     "style" => "BADGE_STYLE_TYPE_SIMPLE"
                 ]
             ];
@@ -219,25 +214,16 @@ class InnertubeBrowseConverter
 
     public static function videoRenderer($data, $context = [])
     {
-        $regex = i18n::getNamespace("main/regex");
-
-        if (i18n::namespaceExists("browse/converter"))
-        {
-            $i18n = i18n::getNamespace("browse/converter");
-        }
-        else 
-        {
-            $i18n = i18n::newNamespace("browse/converter");
-            $i18n->registerFromFolder("i18n/browse");
-        }
+        $regex = i18n::getNamespace("regex");
+        $i18n = i18n::getNamespace("browse");
 
         if (isset($data->badges))
         foreach ($data->badges as $badge) foreach ($badge as &$content)
         {
             if ($content->style == "BADGE_STYLE_TYPE_LIVE_NOW"
-            &&  $content->label == $i18n->liveBadgeOriginal)
+            &&  $content->label == $i18n->get("liveBadgeOriginal"))
             {
-                $content->label = $i18n->liveBadge;
+                $content->label = $i18n->get("liveBadge");
             }
         }
 
@@ -255,7 +241,7 @@ class InnertubeBrowseConverter
 
                             $data->badges[] = (object) [
                                 "metadataBadgeRenderer" => (object) [
-                                    "label" => $i18n->liveBadge,
+                                    "label" => $i18n->get("liveBadge"),
                                     "style" => "BADGE_STYLE_TYPE_LIVE_NOW"
                                 ]
                             ];
@@ -266,7 +252,7 @@ class InnertubeBrowseConverter
                             $content->style = "DEFAULT";
                             $atitle = $data->title->accessibility->accessibilityData->label;
 
-                            preg_match($regex->videoTimeIsolator, $atitle, $matches);
+                            preg_match($regex->get("videoTimeIsolator"), $atitle, $matches);
 
                             $text = null;
                             if (!isset($matches[0]))
@@ -275,7 +261,7 @@ class InnertubeBrowseConverter
                             }
                             else
                             {
-                                $time = (int) preg_replace($regex->secondsIsolator, "", $matches[0]);
+                                $time = (int) preg_replace($regex->get("secondsIsolator"), "", $matches[0]);
 
                                 if ($time < 10)
                                 {

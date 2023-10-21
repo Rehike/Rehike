@@ -1,7 +1,7 @@
 {% import "core/macros.twig" as core %}
 <html>
     <head>
-        <title>404 Not Found</title>
+        <title>{{ rehike.i18n.get("404", "title") }}</title>
         {{ core.css("www-core") }}
         {{ core.css("www-error") }}
         {{ core.css("www-pageframe") }}
@@ -14,13 +14,14 @@
         <div id="error-page">
             <div id="error-page-content">
                 <img src="/yts/img/ringo/img/image-hh-404-vflP3hqNT.png" alt="" id="error-page-hh-illustration">
-                <p>This page isn't available. Sorry about that.</p>
-                <p>Try searching for something else.</p>
+                <p>{{ rehike.i18n.get("404", "p1") }}</p>
+                <p>{{ rehike.i18n.get("404", "p2") }}</p>
                 <div id="yt-masthead">
-                    <a href="/" class="masthead-logo-renderer       spf-link "  id="logo-container" title="YouTube Home">  <span title="YouTube Home" class="logo masthead-logo-renderer-logo yt-sprite"></span></a>
+                    <a href="/" class="masthead-logo-renderer       spf-link "  id="logo-container" title="{{ rehike.i18n.get("404", "youtubeHome") }}">  <span title="{{ rehike.i18n.get("404", "youtubeHome") }}" class="logo masthead-logo-renderer-logo yt-sprite"></span></a>
                     <form id="masthead-search" class="search-form consolidated-form" action="/results" onsubmit="if (document.getElementById('masthead-search-term').value == '') return false;" data-clicktracking="CAIQ7VAiEwji18z73-raAhUQO38KHYD9Cikojh4">
-                        <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-default search-btn-component search-button" type="submit" onclick="if (document.getElementById('masthead-search-term').value == '') return false; document.getElementById('masthead-search').submit(); return false;;return true;" tabindex="2" id="search-btn" dir="ltr"><span class="yt-uix-button-content">Search</span></button>
-                        <div id="masthead-search-terms" class="masthead-search-terms-border " dir="ltr"><input id="masthead-search-term" autocomplete="off" onkeydown="if (!this.value &amp;&amp; (event.keyCode == 40 || event.keyCode == 32 || event.keyCode == 34)) {this.onkeydown = null; this.blur();}" class="search-term masthead-search-renderer-input yt-uix-form-input-bidi" name="search_query" value="" type="text" tabindex="1" placeholder="Search" title="Search" aria-label="Search" spellcheck="false" style="outline: currentcolor none medium;"></div>
+                        <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-default search-btn-component search-button" type="submit" onclick="if (document.getElementById('masthead-search-term').value == '') return false; document.getElementById('masthead-search').submit(); return false;;return true;" tabindex="2" id="search-btn" dir="ltr"><span class="yt-uix-button-content">{{ rehike.i18n.get("404", "search") }}</span></button>
+                        {% set searchTxt = rehike.i18n.get("404", "search") %}
+                        <div id="masthead-search-terms" class="masthead-search-terms-border " dir="ltr"><input id="masthead-search-term" autocomplete="off" onkeydown="if (!this.value &amp;&amp; (event.keyCode == 40 || event.keyCode == 32 || event.keyCode == 34)) {this.onkeydown = null; this.blur();}" class="search-term masthead-search-renderer-input yt-uix-form-input-bidi" name="search_query" value="" type="text" tabindex="1" placeholder={{ searchTxt }} title={{ searchTxt }} aria-label={{ searchTxt }} spellcheck="false" style="outline: currentcolor none medium;"></div>
                      <div class="gsfi" style="background: transparent none repeat scroll 0% 0%; color: rgb(0, 0, 0); padding: 0px; position: absolute; white-space: pre; visibility: hidden;"></div></form>
                 </div>
             </div>

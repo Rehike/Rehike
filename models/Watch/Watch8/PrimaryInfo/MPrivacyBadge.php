@@ -1,7 +1,7 @@
 <?php
 namespace Rehike\Model\Watch\Watch8\PrimaryInfo;
 
-use Rehike\i18n;
+use Rehike\i18n\i18n;
 
 class MPrivacyBadge
 {
@@ -16,8 +16,8 @@ class MPrivacyBadge
 
         $this->tooltip = match ($privacy)
         {
-            "PRIVACY_UNLISTED" => $i18n->privacyUnlisted,
-            "PRIVACY_PRIVATE" => $i18n->privacyPrivate,
+            "PRIVACY_UNLISTED" => $i18n->get("privacyUnlisted"),
+            "PRIVACY_PRIVATE" => $i18n->get("privacyPrivate"),
             default => ""
         };
     }

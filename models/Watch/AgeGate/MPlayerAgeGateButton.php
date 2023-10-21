@@ -3,6 +3,7 @@ namespace Rehike\Model\Watch\AgeGate;
 
 use Rehike\Util\ParsingUtils;
 use Rehike\Model\Common\MButton;
+use Rehike\i18n\i18n;
 
 /**
  * Button that shows on the Age Gate and Content Gate screens.
@@ -31,7 +32,10 @@ class MPlayerAgeGateButton extends MButton
     {
         $pThis = new self;
 
-        $text = "Sign in to confirm your age"; // TODO: i18n
+        $text = i18n::getRawString(
+            "watch",
+            "playerBlockadeAgeRestrictedSignin"
+        );
         $pThis->setText($text);
 
         return $pThis;

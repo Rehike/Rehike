@@ -1,0 +1,5 @@
+resultCountSingular: "1 Результат"
+resultCountPlural: "%s Результатов"
+filtersClear: "Очистить все фильтры"
+pageNext: "Следующие »"
+pagePrev: "« Предыдущий"

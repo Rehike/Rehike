@@ -1,0 +1,71 @@
+# Global strings
+# These include both common things and most JS messages.
+# These are exported to the templates at `yt.msg`.
+
+# Common aria (accessibility) labels
+loadingIconLabel: "Loading icon"
+actionMenuLabel: "Action menu."
+
+# Spinner (loading) text:
+loading: "Wczytuję..."
+working: "Działam..."
+
+# Generic close button text
+close: "Zamknij"
+
+showMore: "Pokaż więcej"
+showLess: "Pokaż mniej"
+
+# General "load more" text
+loadMore: "Load more"
+
+# Duration accessibility strings (shown on watch)
+durationA11y: " - Czas trwania: %s."
+
+# TODO-i18n: make this use printf formatting so it can be more
+# versatile.
+usernamePrepend: "autor: "
+verified: "Zweryfikowano"
+
+# Video thumbnail watch later button strings:
+addToWatchLater: "Do obejrzenia"
+addedToWatchLater: "Dodano"
+addToWatchLaterError: "Błąd"
+addToWatchQueue: "Watch Queue"
+addToWatchQueueAdded: "Added"
+addToWatchQueueError: "Error"
+addToTvQueue: "Queue"
+watchLaterSignIn: "%sZaloguj się%s, by dodać film do listy „Do obejrzenia”"
+
+# Add to dialog strings:
+addToHeader: "Dodaj do"
+addToLoading: "Wczytuję playlisty..."
+
+# Shelfsliders (horizontal shelves):
+shelfsliderNext: "Następny"
+shelfsliderPrev: "Poprzedni"
+
+# Interactive transcripts:
+transcriptTitle: "Transkrypcja"
+transcriptFail: "Interaktywna transkrypcja nie mogła zostać wczytana."
+
+# Video player ad (?) JS messages
+adsInstreamFirstPlay: "A video ad is playing."
+adsInstreamSkippable: "Video ad can be skipped."
+adsOverlayImpression: "Ad displayed."
+
+# Searchbox labels
+sboxSuggestionDismissedLabel: "Suggestion removed"
+sboxSuggestionDismissLabel: "Remove"
+
+# Misc:
+videoCountPlural: "%s videos"
+videoCountSingular: "1 video"
+commentPostFail: Komentarz nie został opublikowany."
+viewFullPlaylist: "Pokaż całą playlistę"
+mdxAutoplayOff: "Autoplay is off"
+mdxAutoplayOn: "Autoplay is on"
+sorryAboutThat: "Sorry about that."
+browseUnsavedChanges: >
+  Some of the changes you have made to channel settings have not been saved
+  and will be lost if you navigate away from this page.

@@ -64,7 +64,7 @@
             </span>
             {% set videoTime = getVideoTime(info) %}
             {% if videoTime != null %}
-            <span id="description-id-{{ a11yId }}" class="accessible-description">{{ yt.msgs.durationA11y|format(videoTime) }}</span> {# TODO: i18n #}
+            <span id="description-id-{{ a11yId }}" class="accessible-description">{{ yt.msgs.durationA11y|format(videoTime) }}</span>
             {% endif %}
             {% set author = getByline(info) %}
             {% if author != null %}

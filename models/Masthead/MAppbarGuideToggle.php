@@ -2,7 +2,7 @@
 namespace Rehike\Model\Masthead;
 
 use Rehike\Model\Common\MButton;
-use Rehike\i18n;
+use Rehike\i18n\i18n;
 
 class MAppbarGuideToggle extends MButton {
     public $style = "STYLE_TEXT";
@@ -19,7 +19,7 @@ class MAppbarGuideToggle extends MButton {
         $this->accessibility = (object) [
             "accessibilityData" => (object) [
                 "controls" => "appbar-guide-menu",
-                "label" => $i18n->appbarGuideLabel
+                "label" => $i18n->get("appbarGuideLabel")
             ]
         ];
 

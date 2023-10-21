@@ -3,6 +3,7 @@ namespace Rehike\Model\Rehike\Security;
 
 use Rehike\Model\Common\MButton;
 use Rehike\Model\Traits\Runs;
+use Rehike\i18n\i18n;
 
 /**
  * Informs the user of a security vulnerability via a lightbox.
@@ -26,7 +27,8 @@ class SecurityLightbox
 
     public function __construct()
     {
-        $this->title = "Security warning";
+        $i18n = i18n::getNamespace("security_lightbox");
+        $this->title = $i18n->get("securityWarning");
 
         $this->createMessage();
 
@@ -39,14 +41,14 @@ class SecurityLightbox
             "text" => (object)[
                 "runs" => [
                     (object)[
-                        "text" => "Learn more"
+                        "text" => $i18n->get("learnMoreButton")
                     ]
                 ]
             ],
             "navigationEndpoint" => (object)[
                 "commandMetadata" => (object)[
                     "webCommandMetadata" => (object)[
-                        "url" => "https://github.com/Rehike/Rehike/wiki/Running-Apache-as-user-on-Windows"
+                        "url" => $i18n->get("languageRespectiveWikiLink")
                     ]
                 ]
             ]
@@ -58,7 +60,7 @@ class SecurityLightbox
             "text" => (object)[
                 "runs" => [
                     (object)[
-                        "text" => "Dismiss"
+                        "text" => $i18n->get("dismissButton")
                     ]
                 ]
             ]
@@ -70,7 +72,7 @@ class SecurityLightbox
             "text" => (object)[
                 "runs" => [
                     (object)[
-                        "text" => "More options"
+                        "text" => $i18n->get("moreOptionsButton")
                     ]
                 ]
             ],
@@ -83,7 +85,7 @@ class SecurityLightbox
             "text" => (object)[
                 "runs" => [
                     (object)[
-                        "text" => "Do not show this again"
+                        "text" => $i18n->get("doNotShowAgainButton")
                     ]
                 ]
             ]
@@ -93,15 +95,8 @@ class SecurityLightbox
     private function createMessage(): void
     {
         $this->message[] = $this->createRun(
-            "Rehike is running as SYSTEM. This can create a security " .
-            "vulnerability, and it is recommended that you reconfigure " .
-            "Apache to run as your own account. "
+            i18n::getRawString("security_lightbox", "runningAsSystemMessage")
         );
-
-        // $this->message[] = $this->createRun(
-        //     "Learn more.",
-        //     "https://github.com/Rehike/Rehike/wiki/Running-Apache-as-user-on-Windows"
-        // );
     }
 
     private function createDismissButton(): MButton

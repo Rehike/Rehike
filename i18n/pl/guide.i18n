@@ -1,0 +1,52 @@
+# Guide strings:
+
+# Note that many strings are taken from InnerTube rather than this file.
+# For example, the signed-out subscription promo.
+# This file only contains strings that are not built into InnerTube anymore.
+
+# Common strings:
+showMore: "Pokaż więcej"
+showFewer: "Pokaż mniej"
+
+# Primary section items:
+trending: "Na czasie"
+myChannel: "Mój kanał"
+subscriptions: "Subskrypcje"
+
+# Bottom section items:
+guideBuilderLabel: "Przeglądaj kanały"
+manageSubscriptionsLabel: "Zarządzaj subskrypcjami"
+
+# Section names:
+bestOfYouTubeTitle: "Najlepsze w YouTube"
+
+# Best of YouTube section item names:
+bestOfYouTubePopularOnYouTube: "Popularne w YouTube"
+bestOfYouTubeMusic: "Muzyka"
+bestOfYouTubeSports: "Sport"
+bestOfYouTubeGaming: "Gry"
+bestOfYouTubeMoviesTv: "Filmy i programy"
+bestOfYouTubeNews: "Aktualności"
+bestOfYouTubeLive: "Na żywo"
+bestOfYouTubeSpotlight: "Wyróżnione"
+bestOfYouTube360: "Film 360°"
+
+# Subscriptions promo:
+subscriptionsPromoButton: "Dodaj kanały"
+subscriptionsPromoTooltip: >
+  Twoje subskrypcje pojawią się tutaj Przejrzyj kilka kanałów, aby zacząć.
+
+# Guide notification messages:
+notifications:
+  watchLaterVideoAdded: "Dodano do listy Do obejrzenia"
+  watchLaterVideoRemoved: "Usunięto z listy „Do obejrzenia”"
+  subscription: "Dodano subskrypcję"
+  unsubscription: "Subskrypcja została usunięta"
+  playlistLike: "Zapisano w playlistach"
+  playlistUnlike: "Usunięto z playlist"
+  playlistVideoAdded: "Dodano do playlisty"
+  playlistVideoRemoved: "Usunięto z playlisty"
+  videoLike: "Dodano do lubianych filmów"
+  videoUnlike: "Usunięto z lubianych filmów"
+  eventReminderSet: "Otrzymasz przypomnienie o tym wydarzeniu"
+  eventReminderRemoved: "Przypomnienie o wydarzeniu zostało usunięte"

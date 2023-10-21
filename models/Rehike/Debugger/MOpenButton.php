@@ -1,7 +1,7 @@
 <?php
 namespace Rehike\Model\Rehike\Debugger;
 
-use \Rehike\i18n;
+use \Rehike\i18n\i18n;
 use \Rehike\Version\VersionController;
 use \Rehike\Model\Common\MButton;
 
@@ -40,7 +40,7 @@ class MOpenButton extends MButton
      */
     public static function getTitle($errorCount = 0, $condensed = false)
     {
-        $i18n = &i18n::getNamespace("rebug");
+        $i18n = i18n::getNamespace("rehike/debugger");
 
         $label = "";
 
@@ -52,7 +52,7 @@ class MOpenButton extends MButton
              * as such:
              *    "Debugger@rehike.master.500 (2 errors)"
              */
-            $label = $i18n->openButtonLabel;
+            $label = $i18n->get("openButtonLabel");
 
             // Attempt to get version from version service
             $versionInfo = &VersionController::$versionInfo;
@@ -107,12 +107,13 @@ class MOpenButton extends MButton
                  */
                 if (1 == $errorCount)
                 {
-                    $label .= " " . $i18n->openButtonErrorCountSingular;
+                    $label .= " " . $i18n->get("openButtonErrorCountSingular");
                 }
                 else
                 {
-                    $label .= " " . $i18n->openButtonErrorCountPlural(
-                        number_format($errorCount)
+                    $label .= " " . $i18n->format(
+                        "openButtonErrorCountPlural",
+                        $i18n->formatNumber($errorCount)
                     );
                 }
             }
@@ -126,12 +127,13 @@ class MOpenButton extends MButton
                  */
                 if (1 == $errorCount)
                 {
-                    $label = $i18n->condensedButtonLabelSingular;
+                    $label = $i18n->get("condensedButtonLabelSingular");
                 }
                 else
                 {
-                    $label = $i18n->condensedButtonLabelPlural(
-                        number_format($errorCount)
+                    $label = $i18n->format(
+                        "condensedButtonLabelPlural",
+                        $i18n->formatNumber($errorCount)
                     );
                 }
             }

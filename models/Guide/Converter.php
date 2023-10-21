@@ -1,7 +1,7 @@
 <?php
 namespace Rehike\Model\Guide;
 
-use Rehike\i18n;
+use Rehike\i18n\i18n;
 use Rehike\Signin\API as Signin;
 use Rehike\ConfigManager\ConfigManager;
 use Rehike\Model\Common\MButton;
@@ -35,8 +35,6 @@ class Converter
         // Log the sign in state from the Signin service
         // so that I can use it later.
         $signedIn = Signin::isSignedIn();
-
-        $strings = &i18n::getNamespace("main/guide");
 
         $response = [];
 
@@ -97,7 +95,7 @@ class Converter
         // Some strings, like "My channel" and "Trending" aren't
         // reported at all by InnerTube, so I have to use a custom
         // language file to store these strings in.
-        $strings = &i18n::getNamespace("main/guide");
+        $strings = i18n::getNamespace("guide");
 
         // Get signin info if possible (needed for the UCID)
         $signinInfo = null;
@@ -129,14 +127,14 @@ class Converter
         {
             $response[] = self::bakeGuideItem(
                 "/channel/{$signinInfo->ucid}",
-                $strings->myChannel,
+                $strings->get("myChannel"),
                 "SYSTEM::MY_CHANNEL"
             );
         }
 
         // Trending item
         $response[] = self::bakeGuideItem(
-            "/feed/trending", $strings->trending, "SYSTEM::TRENDING"
+            "/feed/trending", $strings->get("trending"), "SYSTEM::TRENDING"
         );
 
         // Subscriptions item (if signed in)
@@ -176,7 +174,7 @@ class Converter
      * /rehike/static/best_of_youtube)
      */
     public static function getBestOfYouTubeSection() {
-        $strings = i18n::getNamespace("main/guide");
+        $strings = i18n::getNamespace("guide");
 
         // Thumbnail prefix and suffix
         $format = ConfigManager::getConfigProp("appearance.oldBestOfYouTubeIcons")
@@ -185,56 +183,56 @@ class Converter
 
         $response = (object) [];
         $response->formattedTitle = (object) [
-            "simpleText" => $strings->bestOfYouTubeTitle
+            "simpleText" => $strings->get("bestOfYouTubeTitle")
         ];
 
         $items = [];
 
         $items[] = self::bakeGuideItem(
             "/channel/UC-9-kyTW8ZkZNDHQJ6FgpwQ",
-            $strings->bestOfYouTubeMusic,
+            $strings->get("bestOfYouTubeMusic"),
             sprintf($format, "music")
         );
 
         $items[] = self::bakeGuideItem(
             "/channel/UCEgdi0XIXXZ-qJOFPf4JSKw",
-            $strings->bestOfYouTubeSports,
+            $strings->get("bestOfYouTubeSports"),
             sprintf($format, "sports")
         );
 
         $items[] = self::bakeGuideItem(
             "/gaming",
-            $strings->bestOfYouTubeGaming,
+            $strings->get("bestOfYouTubeGaming"),
             sprintf($format, "gaming")
         );
 
         $items[] = self::bakeGuideItem(
             "/channel/UClgRkhTL3_hImCAmdLfDE4g",
-            $strings->bestOfYouTubeMoviesTv,
+            $strings->get("bestOfYouTubeMoviesTv"),
             sprintf($format, "movies_tv")
         );
         
         $items[] = self::bakeGuideItem(
             "/channel/UCYfdidRxbB8Qhf0Nx7ioOYw",
-            $strings->bestOfYouTubeNews,
+            $strings->get("bestOfYouTubeNews"),
             sprintf($format, "news")
         );
 
         $items[] = self::bakeGuideItem(
             "/channel/UC4R8DWoMoI7CAwX8_LjQHig",
-            $strings->bestOfYouTubeLive,
+            $strings->get("bestOfYouTubeLive"),
             sprintf($format, "live")
         );
 
         $items[] = self::bakeGuideItem(
             "/channel/UCBR8-60-B28hp2BmDPdntcQ",
-            $strings->bestOfYouTubeSpotlight,
+            $strings->get("bestOfYouTubeSpotlight"),
             sprintf($format, "spotlight")
         );
 
         $items[] = self::bakeGuideItem(
             "/channel/UCzuqhhs6NWbgTzMuM09WKDQ",
-            $strings->bestOfYouTube360,
+            $strings->get("bestOfYouTube360"),
             sprintf($format, "360")
         );
 
@@ -269,7 +267,7 @@ class Converter
 
         // Custom strings are only used this time for the expander
         // text.
-        $strings = &i18n::getNamespace("main/guide");
+        $strings = i18n::getNamespace("guide");
 
         $ucid = Signin::getInfo()["ucid"];
 
@@ -356,10 +354,10 @@ class Converter
                 "guideCollapsibleEntryRenderer" => (object)[
                     "expandableItems" => $collapsible,
                     "expanderItem" => (object)[
-                        "text" => $strings->showMore
+                        "text" => $strings->get("showMore")
                     ],
                     "collapserItem" => (object)[
-                        "text" => $strings->showFewer
+                        "text" => $strings->get("showFewer")
                     ]
                 ]
             ];
@@ -467,21 +465,21 @@ class Converter
      * This shows when you have no subscriptions.
      */
     public static function buildSubscriptionsPromoSection() {
-        $i18n = i18n::getNamespace("main/guide");
+        $i18n = i18n::getNamespace("guide");
         $response = (object) [];
         $format = ConfigManager::getConfigProp("appearance.oldBestOfYouTubeIcons")
         ? "/rehike/static/best_of_youtube/%s_old.jpg"
         : "/rehike/static/best_of_youtube/%s.jpg";
 
         $response->formattedTitle = (object) [
-            "simpleText" => $i18n->subscriptions,
+            "simpleText" => $i18n->get("subscriptions"),
             "navigationEndpoint" => NavigationEndpoint::createEndpoint("/feed/channels")
         ];
 
         $response->button = new MButton([
             "style" => "STYLE_PRIMARY",
             "text" => (object) [
-                "simpleText" => $i18n->subscriptionsPromoButton
+                "simpleText" => $i18n->get("subscriptionsPromoButton")
             ],
             "icon" => (object) [
                 "iconType" => "PLUS"
@@ -491,7 +489,7 @@ class Converter
 
         $response->tooltip = (object) [
             "text" => (object) [
-                "simpleText" => $i18n->subscriptionsPromoTooltip
+                "simpleText" => $i18n->get("subscriptionsPromoTooltip")
             ],
             "navigationEndpoint" => NavigationEndpoint::createEndpoint("/feed/guide_builder")
         ];
@@ -500,25 +498,25 @@ class Converter
 
         $response->items[] = self::bakeGuideItem(
             "/channel/UCF0pVplsI8R5kcAqgtoRqoA",
-            $i18n->bestOfYouTubePopularOnYouTube,
+            $i18n->get("bestOfYouTubePopularOnYouTube"),
             sprintf($format, "popular_on_youtube")
         );
 
         $response->items[] = self::bakeGuideItem(
             "/channel/UC-9-kyTW8ZkZNDHQJ6FgpwQ",
-            $i18n->bestOfYouTubeMusic,
+            $i18n->get("bestOfYouTubeMusic"),
             sprintf($format, "music")
         );
 
         $response->items[] = self::bakeGuideItem(
             "/channel/UCEgdi0XIXXZ-qJOFPf4JSKw",
-            $i18n->bestOfYouTubeSports,
+            $i18n->get("bestOfYouTubeSports"),
             sprintf($format, "sports")
         );
 
         $response->items[] = self::bakeGuideItem(
             "/gaming",
-            $i18n->bestOfYouTubeGaming,
+            $i18n->get("bestOfYouTubeGaming"),
             sprintf($format, "gaming")
         );
 
@@ -549,12 +547,12 @@ class Converter
     {
         $response = [];
 
-        $strings = &i18n::getNamespace("main/guide");
+        $strings = i18n::getNamespace("guide");
 
         // Bake "browse channels" (guide builder) item
         $response[] = self::bakeGuideItem(
             "/feed/guide_builder",
-            $strings->guideBuilderLabel,
+            $strings->get("guideBuilderLabel"),
             "SYSTEM::BUILDER"
         );
 
@@ -563,7 +561,7 @@ class Converter
         {
             $response[] = self::bakeGuideItem(
                 "/feed/channels",
-                $strings->manageSubscriptionsLabel,
+                $strings->get("manageSubscriptionsLabel"),
                 "SYSTEM::SUBSCRIPTION_MANAGER"
             );
         }

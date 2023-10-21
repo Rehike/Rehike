@@ -1,7 +1,7 @@
 <?php
 namespace Rehike\Model\Rehike\Debugger;
 
-use \Rehike\i18n;
+use \Rehike\i18n\i18n;
 use \Rehike\Debugger\ErrorWrapper;
 use \Rehike\Model\Common\MButton;
 
@@ -107,7 +107,7 @@ trait RichContent
      */
     public function addError($error)
     {
-        $i18n = &i18n::getNamespace("rebug");
+        $i18n = i18n::getNamespace("rehike/debugger");
 
         // Get error information from the ID
         switch ($error->errno)
@@ -115,22 +115,22 @@ trait RichContent
             case E_ERROR:
             case E_USER_ERROR:
                 $type = "error";
-                $errorTypeText = $i18n->errorError ?? "Error";
+                $errorTypeText = $i18n->get("errorError");
                 break;
             case E_WARNING:
             case E_USER_WARNING:
                 $type = "warning";
-                $errorTypeText = $i18n->errorWarning ?? "Warning";
+                $errorTypeText = $i18n->get("errorWarning");
                 break;
             case E_DEPRECATED:
             case E_USER_DEPRECATED:
                 $type = "deprecated";
-                $errorTypeText = $i18n->errorDeprecated ?? "Deprecated";
+                $errorTypeText = $i18n->get("errorDeprecated");
                 break;
             case E_NOTICE:
             case E_USER_NOTICE:
                 $type = "notice";
-                $errorTypeText = $i18n->errorNotice ?? "Notice";
+                $errorTypeText = $i18n->get("errorNotice");
                 break;
         }
 

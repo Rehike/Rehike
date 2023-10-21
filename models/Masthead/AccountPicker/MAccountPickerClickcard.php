@@ -1,7 +1,7 @@
 <?php
 namespace Rehike\Model\Masthead\AccountPicker;
 
-use Rehike\i18n;
+use Rehike\i18n\i18n;
 use Rehike\Signin\API as SignIn;
 use Rehike\Model\Common\Thumb\MThumbSquare;
 use Rehike\Util\ImageUtils;
@@ -37,7 +37,7 @@ class MAccountPickerClickcard {
         $content->username = $activeChannel["name"];
         $content->subCount = $activeChannel["byline"];
         $content->photo = (object) [
-            "simpleText" => $i18n->accountPickerPhotoChange,
+            "simpleText" => $i18n->get("accountPickerPhotoChange"),
             "navigationEndpoint" => (object) [
                 "commandMetadata" => (object) [
                     "webCommandMetadata" => (object) [

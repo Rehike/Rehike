@@ -2,7 +2,7 @@
 namespace Rehike\Model\Masthead\AccountPicker;
 
 use Rehike\Model\Common\MButton;
-use Rehike\i18n;
+use Rehike\i18n\i18n;
 use Rehike\Signin\API as SignIn;
 
 class MAccountPickerStudioButton extends MButton {
@@ -18,7 +18,7 @@ class MAccountPickerStudioButton extends MButton {
 
         if ($hasChannel) {
             $this->text = (object) [
-                "simpleText" => $i18n->accountPickerStudio
+                "simpleText" => $i18n->get("accountPickerStudio")
             ];
             $this->navigationEndpoint = (object) [
                 "commandMetadata" => (object) [
@@ -29,7 +29,7 @@ class MAccountPickerStudioButton extends MButton {
             ];
         } else {
             $this->text = (object) [
-                "simpleText" => $i18n->accountPickerCreate
+                "simpleText" => $i18n->get("accountPickerCreate")
             ];
             $this->navigationEndpoint = (object) [
                 "commandMetadata" => (object) [

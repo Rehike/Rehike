@@ -1,7 +1,7 @@
 <?php
 namespace Rehike\Model\Rehike\Version;
 
-use Rehike\i18n;
+use Rehike\i18n\i18n;
 
 class MNightlyNotice
 {
@@ -12,7 +12,7 @@ class MNightlyNotice
     {
         $strings = i18n::getNamespace('rehike/version');
 
-        $this->text = $strings->nightly;
-        $this->tooltip = $strings->nightlyInfoTooltip;
+        $this->text = $strings->get("nightly");
+        $this->tooltip = $strings->get("nightlyInfoTooltip");
     }
 }

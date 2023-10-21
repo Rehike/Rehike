@@ -1,0 +1,16 @@
+# Comments common strings:
+
+viewSingular: "返信を表示"
+viewMulti: "%s 件の返信を表示"
+viewSingularOwner: "%s さんの返信を表示"
+viewMultiOwner: "%2$s さんなど返信 %1$s 件を表示"
+hideSingular: "返信を非表示"
+hideMulti: "%s 件の返信を非表示"
+
+# Used to detect if the old reply count string should be used.
+# This may be removed in the future, because it doesn't seem useful to keep
+# around anymore.
+oldReplyTextRegex: "/表示/"
+
+replyCountIsolator: "/[^0-9]/"
+likeCountIsolator: "/[^0-9]]/"

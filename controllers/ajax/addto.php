@@ -5,7 +5,6 @@ use Rehike\YtApp;
 use Rehike\ControllerV2\RequestMetadata;
 
 use Rehike\Controller\core\AjaxController;
-use Rehike\i18n;
 use Rehike\Network;
 use Rehike\Model\AddTo\MAddTo as AddTo;
 
@@ -22,8 +21,6 @@ return new class extends AjaxController
 
     public function onPost(YtApp $yt, RequestMetadata $request): void
     {
-        i18n::newNamespace("addto")->registerFromFolder("i18n/addto");
-
         // Because YouTube's own server is a bit weird, this
         // might go too fast and break everything.
         // Hence: very gross fix for a server-side bug

@@ -1,0 +1,5 @@
+resultCountSingular: "約 1 件の検索結果"
+resultCountPlural: "約 %s 件の検索結果"
+filtersClear: "すべてのフィルターを削除"
+pageNext: "次 »"
+pagePrev: "« 前"

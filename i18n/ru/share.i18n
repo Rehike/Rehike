@@ -1,0 +1,35 @@
+tabShare: "Поделиться"
+tabEmbed: "Встроить"
+tabEmail: "Электронная почта"
+
+serviceTooltip: "Поделиться с %s. Открыть в новом окне."
+startAt: "Начало:"
+
+sharePlaylist: "Поделиться с плейлистом, начиная с  "
+currentVideo: "текущее видео"
+startPlaylist: "начало плейлиста"
+embedCode: "Встраивание видео"
+
+preview: "Превью:"
+videoSize: "Размер видео:"
+customSize: "Выбраный размер:"
+
+showRelated: "Показывать рекомендуемые видео, когда видео заканчивается"
+showControls: "Показать элементы управления плеером"
+showInfo: "Показать название видео и действия игрока"
+delayedCookies: "Включить режим повышенной конфиденциальности"
+
+legalNotice: >
+  Размещая видео YouTube на своем сайте, вы соглашаетесь с %s
+legalNoticeLink: "Условия использования API YouTube."
+
+playlistNonexistent: "Такого плейлиста не существует.",
+playlistNoVideos: "В этом плейлисте нет видео."
+
+recipientsPlaceholder: "To"
+recipientsAlt: "Enter email addresses"
+optionalMessagePlaceholder: "Optional message"
+optionalMessageAlt: "Enter your email address (optional)"
+messagePreview: "Message preview:"
+emailShared: " has shared a video with you on YouTube",
+sendEmail: "Send email"

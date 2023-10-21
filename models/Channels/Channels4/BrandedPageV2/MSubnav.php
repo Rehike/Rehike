@@ -1,7 +1,7 @@
 <?php
 namespace Rehike\Model\Channels\Channels4\BrandedPageV2;
 
-use Rehike\i18n;
+use Rehike\i18n\i18n;
 
 use Rehike\Model\Channels\Channels4Model;
 
@@ -42,15 +42,15 @@ class MSubnav
 
     public static function getViewButton(self &$instance): void
     {
-        $i18n = &i18n::getNamespace("channels");
+        $i18n = i18n::getNamespace("channels");
 
         if (count(Channels4Model::$extraVideoTabs) == 0)
         {
             $instance->title = match(Channels4Model::getCurrentTab())
             {
-                "videos" => $i18n->viewUploads,
-                "streams" => $i18n->viewLiveStreams,
-                "shorts" => $i18n->viewShorts
+                "videos" => $i18n->get("viewUploads"),
+                "streams" => $i18n->get("viewLiveStreams"),
+                "shorts" => $i18n->get("viewShorts")
             };
         }
         else
@@ -61,9 +61,9 @@ class MSubnav
         
             $options = [];
     
-            $uploadsText = $i18n->viewUploads;
-            $streamsText = $i18n->viewLiveStreams;
-            $shortsText = $i18n->viewShorts;
+            $uploadsText = $i18n->get("viewUploads");
+            $streamsText = $i18n->get("viewLiveStreams");
+            $shortsText = $i18n->get("viewShorts");
     
             if ("streams" == Channels4Model::getCurrentTab())
             {
@@ -108,9 +108,9 @@ class MSubnav
 
         $options = [];
         
-        $popularText = $i18n->videoSortPopular;
-        $newestText = $i18n->videoSortNewest;
-        $oldestText = $i18n->videoSortOldest;
+        $popularText = $i18n->get("videoSortPopular");
+        $newestText = $i18n->get("videoSortNewest");
+        $oldestText = $i18n->get("videoSortOldest");
 
         switch ($sort)
         {
@@ -144,12 +144,12 @@ class MSubnav
 
     public static function getFlowButton($view)
     {
-        $i18n = &i18n::getNamespace("channels");
+        $i18n = i18n::getNamespace("channels");
 
         $baseUrl = Channels4Model::getBaseUrl();
 
-        $gridText = $i18n->flowGrid;
-        $listText = $i18n->flowList;
+        $gridText = $i18n->get("flowGrid");
+        $listText = $i18n->get("flowList");
 
         $sort = match (Channels4Model::getVideosSort()) {
             0 => "dd",
@@ -178,7 +178,7 @@ class MSubnav
 
     public static function fromData($data)
     {
-        $i18n = &i18n::getNamespace("channels");
+        $i18n = i18n::getNamespace("channels");
 
         $baseUrl = Channels4Model::getBaseUrl();
 

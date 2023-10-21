@@ -1,0 +1,36 @@
+languageName: "English"
+expandedLanguageName: "English (United Kingdom)"
+writingDirection: ltr
+baseLanguageId: en-US
+
+numberOfMonths: 12
+daysInWeek: 7
+
+spaceOnLineBreak: true
+
+standardDateOrder: dmy
+
+firstDayOfWeek: 2 # Monday
+
+daysOfWeek:
+  1: "Sunday"
+  2: "Monday"
+  3: "Tuesday"
+  4: "Wednesday"
+  5: "Thursday"
+  6: "Friday"
+  7: "Saturday"
+
+monthNames:
+  1: "January"
+  2: "Feburary"
+  3: "March"
+  4: "April"
+  5: "May"
+  6: "June"
+  7: "July"
+  8: "August"
+  9: "September"
+  10: "October"
+  11: "November"
+  12: "December"

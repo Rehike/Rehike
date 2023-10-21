@@ -2,7 +2,7 @@
 namespace Rehike\Model\Results;
 
 use Rehike\Controller\ResultsController;
-use Rehike\i18n;
+use Rehike\i18n\i18n;
 
 /**
  * Implements the search paginator model.
@@ -59,7 +59,7 @@ class MPaginator {
         $strings = i18n::getNamespace("results");
 
         if ($pageNumber > 1) {
-            $response[] = new MPaginatorButton($strings->pagePrev, false, ResultsController::getPageParamUrl(ResultsController::$param, $pageNumber - 1));
+            $response[] = new MPaginatorButton($strings->get("pagePrev"), false, ResultsController::getPageParamUrl(ResultsController::$param, $pageNumber - 1));
         }
 
         for ($i = 0, $j = count($displayedPages); $i < $j; $i++) {
@@ -71,7 +71,7 @@ class MPaginator {
         }
 
         if ($pageNumber < $pagesCount) {
-            $response[] = new MPaginatorButton($strings->pageNext, false, ResultsController::getPageParamUrl(ResultsController::$param, $pageNumber + 1));
+            $response[] = new MPaginatorButton($strings->get("pageNext"), false, ResultsController::getPageParamUrl(ResultsController::$param, $pageNumber + 1));
         }
 
         return $response;

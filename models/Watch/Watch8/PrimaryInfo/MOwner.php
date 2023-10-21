@@ -6,7 +6,7 @@ use Rehike\Model\Common\Subscription\MSubscriptionActions;
 use Rehike\Model\Common\MButton;
 use Rehike\Signin\API as SignIn;
 use Rehike\Util\ExtractUtils;
-use Rehike\i18n;
+use Rehike\i18n\i18n;
 
 /**
  * Defines the video owner information, which appears in the bottom
@@ -77,7 +77,7 @@ class MOwner
                     "style" => "default",
                     "size" => "default",
                     "text" => (object) [
-                        "simpleText" => $i18n->channelSettings
+                        "simpleText" => $i18n->get("channelSettings")
                     ],
                     "icon" => true,
                     "navigationEndpoint" => (object) [

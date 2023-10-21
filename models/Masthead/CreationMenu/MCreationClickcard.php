@@ -1,7 +1,7 @@
 <?php
 namespace Rehike\Model\Masthead\CreationMenu;
 
-use Rehike\i18n;
+use Rehike\i18n\i18n;
 use Rehike\Signin\API as SignIn;
 
 class MCreationClickcard {
@@ -25,17 +25,17 @@ class MCreationClickcard {
 
         $items[] = new MCreationMenuItem(
             "upload",
-            $i18n->creationUpload,
+            $i18n->get("creationUpload"),
             $hasChannel ? "//studio.youtube.com/channel/$ucid/videos?d=ud" : "/create_channel?upsell=upload&next=/"
         );
         $items[] = new MCreationMenuItem(
             "live",
-            $i18n->creationLive,
+            $i18n->get("creationLive"),
             $hasChannel ? "//studio.youtube.com/channel/$ucid/livestreaming" : "/create_channel?upsell=livestreaming&next=/"
         );
         if ($hasChannel) $items[] = new MCreationMenuItem(
             "post",
-            $i18n->creationPost,
+            $i18n->get("creationPost"),
             $hasChannel ? "/channel/$ucid/community?show_create_dialog=1" : "/create_chanel?upsell=community&next=/"
         );
 

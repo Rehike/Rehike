@@ -1,0 +1,8 @@
+# Used on the "Video Attribution Information" page at /attribution.
+
+title: "動画の属性情報"
+sectionTitle: "使用された動画"
+sectionSubtitle: "これらの動画は作成または %s で作成されました"
+viewAttrs: "属性を表示"
+watchLater: "後で見る"
+goToUser: "%s のユーザーページに移動"

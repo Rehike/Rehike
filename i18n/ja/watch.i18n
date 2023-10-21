@@ -1,0 +1,86 @@
+# Watch strings:
+
+autoplayToggleDesc: "自動再生"
+autoplayTitle: "次の動画"
+autoplayInfoText: >
+  自動再生を有効にすると、関連動画が自動的に再生されます。
+
+relatedItemA11yDesc: " - 長さ: %s。"
+
+actionAddTo: "追加"
+actionShare: "共有"
+actionMore: "その他"
+actionMoreTooltip: "その他の操作"
+actionReport: "報告"
+actionTranscript: "文字起こし"
+actionLikeTooltip: "高く評価"
+actionLikeTooltipActive: "高評価を取り消し"
+actionDislikeTooltip: "低く評価"
+
+clickcardSignIn: "ログイン"
+clickcardPlaylistSignIn: "YouTube にログイン"
+addToClickcardHeading: "後でもう一度再生しますか？"
+addToClickcardTip: "この動画を再生リストに追加するには、ログインしてください。"
+reportClickcardHeading: "動画を報告しますか？"
+reportClickcardTip: "不適切なコンテンツを報告するにはログインしてください。"
+likeClickcardHeading: "この動画を高く評価する"
+dislikeClickcardHeading: "この動画を低く評価する"
+voteClickcardTip: "評価するには、ログインしてください。"
+
+channelSettings: "チャンネル設定"
+creatorBarInfo: "情報と設定"
+creatorBarEnhancements: "機能強化"
+creatorBarAudio: "オーディオ"
+creatorBarComments: "コメント"
+creatorBarCards: "カード"
+creatorBarSubtitles: "字幕"
+creatorBarAnalytics: "分析"
+creatorBarVideoManager: "動画の管理"
+
+metadataLicense: "ライセンス"
+metadataLicenseStandard: "標準の YouTube ライセンス"
+metadataCategory: "カテゴリ"
+metadataSong: "歌"
+metadataGame: "ゲーム"
+
+playlistVideosSingular: "1 本の動画"
+playlistVideosPlural: "%s 本の動画"
+playlistSave: "再生リストに保存"
+playlistUnsave: "削除"
+playlistPrevVideo: "前の動画"
+playlistNextVideo: "次の動画"
+
+privacyUnlisted: >
+  この動画は限定公開です。リンクを持つ人だけが閲覧できます。
+privacyPrivate: >
+  この動画は非公開です。アクセス権を持つ人だけが閲覧できます。
+
+actionPanelError: >
+  この機能は現在利用できません。しばらくしてからもう一度お試しください。 
+actionPanelRentalRequired: >
+  この動画に評価を付けるにはレンタルする必要があります。
+
+loadingMoreSuggestions: "他の候補を読み込んでいます..."
+
+repeatPlaylistLabel: "再生リストをループ再生"
+shufflePlaylistLabel: "シャッフル"
+
+playerBlockadeContentWarning: "コンテンツに関する警告"
+playerBlockadeInappropriate: >
+  この動画は、一部のユーザーに適さない可能性があります。
+playerBlockadeAgeRestrictedSignin: >
+  年齢確認のためログインしてください
+
+# JS messages:
+editorAjaxRequestFailed: >
+  サーバーからのデータ取得中に問題が発生しました。もう一度試すか、ページを
+  再読み込みしてください。
+editorAjaxRequest503: >
+  この機能は現在利用できません。しばらくしてからもう一度お試しください。
+
+# Slow internet connection message.
+speedygInfo: "再生の中断はありませんか？"
+
+liveWatchingNow0: "現在 0 人視聴中"
+liveWatchingNow1: "現在 1 人視聴中"
+liveWatchingNow: "現在 # 人視聴中"

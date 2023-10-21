@@ -1,7 +1,7 @@
 <?php
 namespace Rehike\Model\Common\Subscription;
 
-use Rehike\i18n;
+use Rehike\i18n\i18n;
 use Rehike\TemplateFunctions;
 
 class MSubscriptionActions
@@ -22,7 +22,7 @@ class MSubscriptionActions
 
     public function __construct($opts)
     {
-        $i18n = i18n::getNamespace("main/misc");
+        $i18n = i18n::getNamespace("misc");
 
         // Default options
         $opts += [
@@ -107,7 +107,7 @@ class MSubscriptionActions
 
     public static function buildMock($count = "", $branded = true)
     {
-        $i18n = i18n::getNamespace("main/misc");
+        $i18n = i18n::getNamespace("misc");
 
         return new self([
             "isDisabled" => true,
@@ -115,7 +115,7 @@ class MSubscriptionActions
             "longText" => $count,
             "shortText" => $count,
             "branded" => $branded,
-            "tooltip" => $i18n->selfSubscribeTooltip
+            "tooltip" => $i18n->get("selfSubscribeTooltip")
         ]);
     }
 

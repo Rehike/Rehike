@@ -6,7 +6,7 @@ use Rehike\Exception\FileSystem\FsFileDoesNotExistException;
 use Rehike\Exception\FileSystem\FsFileReadFailureException;
 use Rehike\SimpleFunnel;
 use Rehike\FileSystem;
-use Rehike\i18n;
+use Rehike\i18n\i18n;
 use function Rehike\Async\async;
 
 use YukisCoffee\CoffeeRequest\Network\Response;
@@ -93,13 +93,8 @@ class PolymerDocument
      */
     private static function getDisablePolymerJsConfig(): string
     {
-        if (!i18n::namespaceExists("disable_rehike"))
-        {
-            DisableRehike::initI18n();
-        }
-
-        $i18n = i18n::getNamespace("disable_rehike");
-        $strings = $i18n->getStrings()[$i18n->getLanguage()];
+        $i18n = i18n::getNamespace("rehike/disable_rehike");
+        $strings = $i18n->getAllTemplates();
 
         return json_encode((object)[
             "strings" => $strings

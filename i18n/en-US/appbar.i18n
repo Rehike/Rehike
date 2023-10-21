@@ -1,0 +1,5 @@
+# Appbar definitions
+
+tabHome: "Home"
+tabTrending: "Trending"
+tabSubscriptions: "Subscriptions"

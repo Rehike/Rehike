@@ -1,0 +1,16 @@
+# Comments common strings:
+
+viewSingular: "Посмотреть ответ"
+viewMulti: "Посмотреть %s ответов"
+viewSingularOwner: "Посмотреть ответ от %s"
+viewMultiOwner: "Посмотреть %s ответы от %s и других"
+hideSingular: "Скрыть ответ"
+hideMulti: "Скрыть %s ответы"
+
+# Used to detect if the old reply count string should be used.
+# This may be removed in the future, because it doesn't seem useful to keep
+# around anymore.
+oldReplyTextRegex: "/Посмотреть /"
+
+replyCountIsolator: "/( ответы)|( ответить)/i"
+likeCountIsolator: "/(Like this )|(comment)|(reply)|( along with )|(,)|( other person)|( other people)/"

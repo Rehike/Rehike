@@ -2,6 +2,7 @@
 namespace Rehike;
 
 use Rehike\Util\Base64Url;
+use Rehike\i18n\Private\Core as I18nCore;
 
 /**
  * Generates a valid InnerTube client context required
@@ -100,10 +101,20 @@ class InnertubeContext
             string|int $cname, 
             string $cver, 
             ?string $visitorData = null, 
-            string $hl = "en", 
-            string $gl = "US"
+            ?string $hl = null, 
+            ?string $gl = null
     ): object
     {
+        if (is_null($hl))
+        {
+            $hl = I18nCore::getInnertubeLanguageId();
+        }
+
+        if (is_null($gl))
+        {
+            $gl = I18nCore::getInnertubeGeolocation();
+        }
+
         if (is_null($visitorData)) $visitorData = ContextManager::$visitorData;
         return (object) [
             'context' => (object) [

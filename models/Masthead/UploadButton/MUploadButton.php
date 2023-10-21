@@ -2,7 +2,7 @@
 namespace Rehike\Model\Masthead\UploadButton;
 
 use Rehike\Model\Common\MButton;
-use Rehike\i18n;
+use Rehike\i18n\i18n;
 use Rehike\Signin\API as SignIn;
 
 class MUploadButton extends MButton {
@@ -16,7 +16,7 @@ class MUploadButton extends MButton {
         if ($hasChannel) $ucid = $signInInfo->ucid;
 
         $this->text = (object) [
-            "simpleText" => $i18n->uploadButton
+            "simpleText" => $i18n->get("uploadButton")
         ];
         $this->navigationEndpoint = (object) [
             "commandMetadata" => (object) [

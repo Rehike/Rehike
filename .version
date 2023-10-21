@@ -1,10 +1,10 @@
 {
-	"previousHash": "d03230cc71855c4f86257fff8ce01af82af333da",
-	"currentRevisionId": 1022,
-	"subject": "Merge branch 'master' of https://github.com/Rehike/Rehike",
-	"body": "Merge branch 'master' of https://github.com/Rehike/Rehike",
+	"previousHash": "9c5214969d54977a964106efa7e96f011427586d",
+	"currentRevisionId": 1026,
+	"subject": "Localization megaupdate",
+	"body": "Localization megaupdate",
 	"branch": "master",
-	"committerName": "aubymori",
-	"committerEmail": "aubyomori@gmail.com",
-	"time": 1697756789
+	"committerName": "Taniko Yamamoto",
+	"committerEmail": "kirasicecreamm@gmail.com",
+	"time": 1697898298
 }

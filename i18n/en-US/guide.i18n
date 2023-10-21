@@ -1,0 +1,52 @@
+# Guide strings:
+
+# Note that many strings are taken from InnerTube rather than this file.
+# For example, the signed-out subscription promo.
+# This file only contains strings that are not built into InnerTube anymore.
+
+# Common strings:
+showMore: "Show more"
+showFewer: "Show fewer"
+
+# Primary section items:
+trending: "Trending"
+myChannel: "My channel"
+subscriptions: "Subscriptions"
+
+# Bottom section items:
+guideBuilderLabel: "Browse channels"
+manageSubscriptionsLabel: "Manage subscriptions"
+
+# Section names:
+bestOfYouTubeTitle: "Best of YouTube"
+
+# Best of YouTube section item names:
+bestOfYouTubePopularOnYouTube: "Popular on YouTube"
+bestOfYouTubeMusic: "Music"
+bestOfYouTubeSports: "Sports"
+bestOfYouTubeGaming: "Gaming"
+bestOfYouTubeMoviesTv: "Movies & Shows"
+bestOfYouTubeNews: "News"
+bestOfYouTubeLive: "Live"
+bestOfYouTubeSpotlight: "Spotlight"
+bestOfYouTube360: "360° Video"
+
+# Subscriptions promo:
+subscriptionsPromoButton: "Add channels"
+subscriptionsPromoTooltip: >
+  Your subscriptions will show up here Browse some channels to get started.
+
+# Guide notification messages:
+notifications:
+  watchLaterVideoAdded: "Added to Watch Later"
+  watchLaterVideoRemoved: "Removed from Watch Later"
+  subscription: "Subscription added"
+  unsubscription: "Subscription removed"
+  playlistLike: "Saved to Playlists"
+  playlistUnlike: "Removed from Playlists"
+  playlistVideoAdded: "Added to playlist"
+  playlistVideoRemoved: "Removed from playlist"
+  videoLike: "Added to Liked videos"
+  videoUnlike: "Removed from Liked videos"
+  eventReminderSet: "You'll be reminded about this event"
+  eventReminderRemoved: "Event reminder removed"

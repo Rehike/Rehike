@@ -1,7 +1,7 @@
 <?php
 namespace Rehike\Model\Rehike\Debugger;
 
-use \Rehike\i18n;
+use \Rehike\i18n\i18n;
 
 /**
  * Implements the dialog header.
@@ -47,13 +47,15 @@ class MDialogHeader
      */
     public function __construct($condensed, $closeButton = true)
     {
-        $i18n = &i18n::getNamespace("rebug");
+        $i18n = i18n::getNamespace("rehike/debugger");
 
-        $this->title = !$condensed ? $i18n->debuggerTitle : $i18n->condensedDebuggerTitle;
+        $this->title = !$condensed
+            ? $i18n->get("debuggerTitle")
+            : $i18n->get("condensedDebuggerTitle");
 
         if ($condensed) {
             $this->helpLink = (object) [
-                "text" => $i18n->condensedDebuggerHelpLink,
+                "text" => $i18n->get("condensedDebuggerHelpLink"),
                 "href" => "//github.com/Rehike/Rehike/wiki/Creating-an-issue"
             ];
         }

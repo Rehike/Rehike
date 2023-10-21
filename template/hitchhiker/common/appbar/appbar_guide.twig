@@ -20,51 +20,51 @@
       {% set strings = yt.appbar.guideNotificationStrings %}
       {{ _self.appbar_guide_notification_template(
          "watch-later-video-added",
-         strings.watchLaterVideoAdded
+         rehike.i18n.get("guide", "watchLaterVideoAdded")
       ) }}
       {{ _self.appbar_guide_notification_template(
          "watch-later-video-removed",
-         strings.watchLaterVideoRemoved
+         rehike.i18n.get("guide", "watchLaterVideoRemoved")
       ) }}
       {{ _self.appbar_guide_notification_template(
          "subscription",
-         strings.subscription
+         rehike.i18n.get("guide", "subscription")
       ) }}
       {{ _self.appbar_guide_notification_template(
          "unsubscription",
-         strings.unsubscription
+         rehike.i18n.get("guide", "unsubscription")
       ) }}
       {{ _self.appbar_guide_notification_template(
          "playlist-like",
-         strings.playlistLike
+         rehike.i18n.get("guide", "playlistLike")
       ) }}
       {{ _self.appbar_guide_notification_template(
          "playlist-unlike",
-         strings.playlistUnlike
+         rehike.i18n.get("guide", "playlistUnlike")
       ) }}
       {{ _self.appbar_guide_notification_template(
          "playlist-video-added",
-         strings.playlistVideoAdded
+         rehike.i18n.get("guide", "playlistVideoAdded")
       ) }}
       {{ _self.appbar_guide_notification_template(
          "playlist-video-removed",
-         strings.playlistVideoRemoved
+         rehike.i18n.get("guide", "playlistVideoRemoved")
       ) }}
       {{ _self.appbar_guide_notification_template(
          "video-like",
-         strings.videoLike
+         rehike.i18n.get("guide", "videoLike")
       ) }}
       {{ _self.appbar_guide_notification_template(
          "video-unlike",
-         strings.videoUnlike
+         rehike.i18n.get("guide", "videoUnlike")
       ) }}
       {{ _self.appbar_guide_notification_template(
          "event-reminder-set",
-         strings.eventReminderSet
+         rehike.i18n.get("guide", "eventReminderSet")
       ) }}
       {{ _self.appbar_guide_notification_template(
          "event-reminder-removed",
-         strings.eventReminderRemoved
+         rehike.i18n.get("guide", "eventReminderRemoved")
       ) }}
    </div>
    {# 
@@ -81,7 +81,7 @@
             "icon": {"iconType": "PLAYLISTS"},
             "hrefOverride": "__URL__",
             "appbarGuideNotification": {
-               "label": strings.playlistLike,
+               "label": rehike.i18n.get("guide", "playlistLike"),
                "template": "__NOTIFICATION_OVERLAY_MESSAGE__"
             }
       }) }}
@@ -91,7 +91,7 @@
             "icon": {"iconType": "MIX"},
             "hrefOverride": "__URL__",
             "appbarGuideNotification": {
-               "label": strings.playlistLike,
+               "label": rehike.i18n.get("guide", "playlistLike"),
                "template": "__NOTIFICATION_OVERLAY_MESSAGE__"
             }
       }) }}
@@ -107,7 +107,7 @@
             },
             "hrefOverride": "__URL__",
             "appbarGuideNotification": {
-               "label": strings.subscription,
+               "label": rehike.i18n.get("guide", "subscription"),
                "template": "__NOTIFICATION_OVERLAY_MESSAGE__"
             }
       }) }}

@@ -1,6 +1,8 @@
 <?php
 namespace Rehike\Model\Watch\AgeGate;
 
+use Rehike\i18n\i18n;
+
 /**
  * Represents the age gate screen for content which is age restricted.
  * 
@@ -15,7 +17,7 @@ class MPlayerAgeGate
 
     public function __construct(?object $data = null)
     {
-        $reason = "Content warning";
+        $reason = i18n::getRawString("watch", "playerBlockadeContentWarning");
         
         $this->reason = (object)["simpleText" => $reason];
         $this->subreason = (object)["watch7PlayerAgeGateContent" => new MPlayerAgeGateContent($data)];

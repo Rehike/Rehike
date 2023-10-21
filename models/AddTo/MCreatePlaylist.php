@@ -1,7 +1,7 @@
 <?php
 namespace Rehike\Model\AddTo;
 
-use Rehike\i18n;
+use Rehike\i18n\i18n;
 
 class MCreatePlaylist
 {
@@ -16,11 +16,11 @@ class MCreatePlaylist
     {
         $strs = i18n::getNamespace("addto");
 
-        $this->label = $strs->playlistTitle;
-        $this->publicText = $strs->privacyPublic;
-        $this->unlistedText = $strs->privacyUnlisted;
-        $this->privateText = $strs->privacyPrivate;
-        $this->playlistPrivacyText = $strs->playlistPrivacy;
+        $this->label = $strs->get("playlistTitle");
+        $this->publicText = $strs->get("privacyPublic");
+        $this->unlistedText = $strs->get("privacyUnlisted");
+        $this->privateText = $strs->get("privacyPrivate");
+        $this->playlistPrivacyText = $strs->get("playlistPrivacy");
 
         $this->isCompact = $compact;
     }

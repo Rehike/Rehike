@@ -2,7 +2,7 @@
 namespace Rehike\Model\Masthead\AccountPicker;
 
 use Rehike\Model\Common\MButton;
-use Rehike\i18n;
+use Rehike\i18n\i18n;
 
 class MAccountPickerAddButton extends MButton {
     public $class = ["yt-masthead-picker-button"];
@@ -11,7 +11,7 @@ class MAccountPickerAddButton extends MButton {
         $i18n = i18n::getNamespace("masthead");
 
         $this->text = (object) [
-            "simpleText" => $i18n->accountPickerAddAccount
+            "simpleText" => $i18n->get("accountPickerAddAccount")
         ];
         $this->navigationEndpoint = (object) [
             "commandMetadata" => (object) [

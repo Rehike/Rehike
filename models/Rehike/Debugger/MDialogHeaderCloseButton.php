@@ -1,7 +1,7 @@
 <?php
 namespace Rehike\Model\Rehike\Debugger;
 
-use \Rehike\i18n;
+use \Rehike\i18n\i18n;
 use \Rehike\Model\Common\MButton;
 
 /**
@@ -24,9 +24,9 @@ class MDialogHeaderCloseButton extends MButton
 
     public function __construct()
     {
-        $i18n = &i18n::getNamespace("rebug");
+        $i18n = i18n::getNamespace("rehike/debugger");
 
-        $this->tooltip = $i18n->debuggerClose;
+        $this->tooltip = $i18n->get("debuggerClose");
         $this->icon = (object) [
             "iconType" => "CLOSE"
         ];

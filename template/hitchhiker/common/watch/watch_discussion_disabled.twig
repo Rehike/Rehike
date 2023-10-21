@@ -5,7 +5,7 @@
     data-child-tracking=""
 >
     <div class="comment-section-renderer-items" id="comment-section-renderer-items">
-        <span class="yt-spinner-img comment-section-items-loading yt-sprite" title="Loading icon"></span>
+        <span class="yt-spinner-img comment-section-items-loading yt-sprite" title="{{ rehike.i18n.get("global", "loadingIconLabel") }}"></span>
 
         <div class="display-message">
             {%- for run in message.runs -%}
@@ -21,7 +21,7 @@
     </div>
 
     <div class="feedback-banner hid" aria-live="polite"></div>
-    <span class="yt-spinner-img comment-renderer-loading yt-sprite" title="Loading icon"></span>
+    <span class="yt-spinner-img comment-renderer-loading yt-sprite" title="{{ rehike.i18n.get("global", "loadingIconLabel") }}"></span>
 
     <div class="hid" id="comment-renderer-abuse">
         <div class="comment-renderer-abuse-content"></div>

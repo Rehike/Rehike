@@ -1,0 +1,16 @@
+# Comments common strings:
+
+viewSingular: "View reply"
+viewMulti: "View %s replies"
+viewSingularOwner: "View reply from %s"
+viewMultiOwner: "View %s replies from %s and others"
+hideSingular: "Hide reply"
+hideMulti: "Hide %s replies"
+
+# Used to detect if the old reply count string should be used.
+# This may be removed in the future, because it doesn't seem useful to keep
+# around anymore.
+oldReplyTextRegex: "/View /"
+
+replyCountIsolator: "/( replies)|( reply)/i"
+likeCountIsolator: "/(Like this )|(comment)|(reply)|( along with )|(,)|( other person)|( other people)/"

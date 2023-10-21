@@ -1,0 +1,28 @@
+# Masthead (site header) strings:
+
+a11ySkipNav: "ナビゲーションをスキップ"
+logoTooltip: "YouTube トップ"
+appbarGuideLabel: "ガイド"
+searchboxPlaceholder: "検索"
+uploadButton: "アップロード"
+creationLabel: "作成"
+creationUpload: "動画をアップロード"
+creationLive: "ライブ配信を開始"
+creationPost: "投稿を作成"
+notificationsTitle: "通知"
+notificationsSettings: "設定"
+notificationsNone: "0 件の未読のお知らせがあります。"
+notificationsSingular: "1 件の未読のお知らせがあります。"
+# Uses "#" symbol for placeholder because YouTube's JS accesses this string.
+notificationsPlural: "# 件の未読のお知らせがあります。"
+notifications99Plus: "99+"
+accountPickerLabel: >
+  代替アカウントのリストを開くアカウントのプロフィール写真
+accountPickerStudio: "YouTube Studio"
+accountPickerSettings: "Rehike 設定"
+accountPickerCreate: "チャンネルの作成"
+accountPickerPhotoChange: "編集"
+accountPickerMultiLoginHeader: "チャンネルをすべて表示"
+accountPickerAddAccount: "アカウントを追加"
+accountPickerSignOut: "ログアウト"
+signInButton: "ログイン"

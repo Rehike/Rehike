@@ -1,0 +1,11 @@
+# Browse definitions
+# These are common strings for the browse endpoint.
+
+channelBadge: "チャンネル"
+liveBadge: "ライブ配信中"
+
+# Original live badge string from InnerTube. Used to detect and change the
+# text in Rehike.
+liveBadgeOriginal: "ライブ"
+
+feedItemDismissalNotice: "この項目は非表示になりました"

@@ -12,7 +12,6 @@ use Rehike\Network;
 use Rehike\Async\Promise;
 use YukisCoffee\CoffeeRequest\Network\Response;
 use Rehike\Util\Base64Url;
-use Rehike\i18n;
 use Rehike\Util\ExtractUtils;
 use Rehike\Util\ChannelUtils;
 use Rehike\Signin\API as SignIn;
@@ -66,9 +65,6 @@ class channel extends NirvanaController
     {
         async(function() use (&$yt, $request) {
             $this->useJsModule("www/channels");
-
-            // Init i18n
-            i18n::newNamespace("channels")->registerFromFolder("i18n/channels");
 
             // BUG (kirasicecreamm): ChannelUtils::getUcid is hardcoded
             // to look at the path property of the input object.

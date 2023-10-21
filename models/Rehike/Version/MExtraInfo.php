@@ -1,7 +1,7 @@
 <?php
 namespace Rehike\Model\Rehike\Version;
 
-use Rehike\i18n;
+use Rehike\i18n\i18n;
 
 class MExtraInfo
 {
@@ -14,10 +14,10 @@ class MExtraInfo
     {
         $strings = i18n::getNamespace("rehike/version");
 
-        $this->headingText = $strings->extraInfo;
+        $this->headingText = $strings->get("extraInfo");
 
         $this->info[] = [
-            $strings->operatingSystem,
+            $strings->get("operatingSystem"),
             php_uname("s") . " " .
             php_uname("r") . " " .
             php_uname("v") . " " .
@@ -25,7 +25,7 @@ class MExtraInfo
         ];
 
         $this->info[] = [
-            $strings->phpVersion,
+            $strings->get("phpVersion"),
             phpversion()
         ];
     }

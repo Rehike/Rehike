@@ -1,0 +1,72 @@
+languageName: "Русский"
+writingDirection: ltr
+
+thousandsSeparator: ","
+decimalSeparator: "."
+
+numberOfMonths: 12
+daysInWeek: 7
+
+spaceOnLineBreak: true
+
+standardDateOrder: mdy
+
+firstDayOfWeek: 1 # Sunday
+
+am: "AM"
+pm: "PM"
+
+# https://www.php.net/manual/en/datetime.format.php
+expandedDateWithTime: "l, F j, Y g:i A" # Tuesday, October 17, 2023 12:50 AM
+expandedDate: "l, F j, Y" # Tuesday, October 17, 2023
+dateWithTime: "F j, Y g:i A" # October 17, 2023 12:50 AM
+date: "F j, Y" # October 17 2023
+shortDateWithTime: "m/d/Y g:i A" # 10/17/2023 12:50 AM
+shortDate: "m/d/Y" # 10/17/2023
+time: "g:i A" # 12:50 AM
+
+daysOfWeek:
+  1: "Sunday"
+  2: "Monday"
+  3: "Tuesday"
+  4: "Wednesday"
+  5: "Thursday"
+  6: "Friday"
+  7: "Saturday"
+
+shortDaysOfWeek:
+  1: "Sun"
+  2: "Mon"
+  3: "Tue"
+  4: "Wed"
+  5: "Thur"
+  6: "Fri"
+  7: "Sat"
+
+monthNames:
+  1: "January"
+  2: "Feburary"
+  3: "March"
+  4: "April"
+  5: "May"
+  6: "June"
+  7: "July"
+  8: "August"
+  9: "September"
+  10: "October"
+  11: "November"
+  12: "December"
+
+shortMonthNames:
+  1: "Jan"
+  2: "Feb"
+  3: "Mar"
+  4: "Apr"
+  5: "May"
+  6: "Jun"
+  7: "Jul"
+  8: "Aug"
+  9: "Sep"
+  10: "Oct"
+  11: "Nov"
+  12: "Dec"

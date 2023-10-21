@@ -2,7 +2,7 @@
 namespace Rehike\Model\Masthead\AccountPicker;
 
 use Rehike\Model\Common\MButton;
-use Rehike\i18n;
+use Rehike\i18n\i18n;
 use Rehike\Signin\API as SignIn;
 use Rehike\Model\Common\Thumb\MThumbSquare;
 use Rehike\Util\ImageUtils;
@@ -29,7 +29,7 @@ class MAccountPickerButton extends MButton {
         ]);
         $this->accessibility = (object) [
             "accessibilityData" => (object) [
-                "label" => $i18n->accountPickerLabel
+                "label" => $i18n->get("accountPickerLabel")
             ]
         ];
         $this->clickcard = new MAccountPickerClickcard();

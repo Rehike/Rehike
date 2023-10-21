@@ -6,7 +6,6 @@ use YukisCoffee\CoffeeRequest\CoffeeRequest;
 use Rehike\{
     ContextManager,
     TemplateManager,
-    i18n,
     YtApp,
     Network,
     Async\Concurrency,
@@ -16,7 +15,9 @@ use Rehike\{
     Misc\ResourceConstantsStore,
     RehikeConfigManager,
     Util\Nameserver\Nameserver,
-    Util\Base64Url
+    Util\Base64Url,
+    i18n\BootServices as i18nBoot,
+    i18n\i18n
 };
 
 /**
@@ -56,20 +57,12 @@ final class Tasks
 
     public static function setupI18n(): void
     {
-        i18n::setDefaultLanguage("en");
-
-        i18n::newNamespace("main/regex")
-            ->registerFromFolder("i18n/regex");
-        i18n::newNamespace("main/misc")
-            ->registerFromFolder("i18n/misc");
-        i18n::newNamespace("main/guide")
-            ->registerFromFolder("i18n/guide");
-        $msgs = i18n::newNamespace("main/global")
-            ->registerFromFolder("i18n/global");
+        // i18n v2
+        i18nBoot::boot();
 
         // Also expose common messages to the global variable.
         YtApp::getInstance()->msgs = 
-            $msgs->getStrings()[$msgs->getLanguage()];
+            (array)i18n::getAllTemplates("global");
     }
 
     public static function setupControllerV2(): void

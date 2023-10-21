@@ -3,7 +3,6 @@ namespace Rehike\Model\Watch\Watch8;
 
 use Rehike\Util\ExtractUtils;
 use Rehike\Util\ParsingUtils;
-use Rehike\i18n;
 use Rehike\Model\Watch\Watch8\SecondaryInfo\MMetadataRowContainer;
 
 /**

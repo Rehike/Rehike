@@ -3,7 +3,7 @@ namespace Rehike\Debugger;
 
 use \Rehike\RehikeConfigManager;
 use \Rehike\TemplateManager;
-use \Rehike\i18n;
+use \Rehike\i18n\i18n;
 use \Rehike\YtApp;
 use \YukisCoffee\CoffeeException;
 
@@ -75,7 +75,6 @@ class Debugger
         // exposed if the debugger is enabled
         if (!self::$condensed) self::$yt = &$yt;
 
-        self::setupI18n();
         self::$context = new Context();
 
         error_reporting(E_ALL);
@@ -145,12 +144,12 @@ class Debugger
      */
     public static function setupTabs(Dialog $context): void
     {
-        $i18n = &i18n::getNamespace("rebug");
+        $i18n = i18n::getNamespace("rehike/debugger");
 
         /** @var ErrorTab */
         $errorTab = $context->addTab(
             ErrorTab::createTab(
-                $i18n->tabErrorTitle(number_format(self::getErrorCount())),
+                $i18n->format("tabErrorTitle", $i18n->formatNumber(self::getErrorCount())),
                 "error",
                 true
             )
@@ -171,7 +170,7 @@ class Debugger
             /** @var YtWalker */
             $ytWalker = $context->addTab(
                 YtWalker::createTab(
-                    $i18n->tabYtWalkerTitle, "global_walker"
+                    $i18n->get("tabYtWalkerTitle"), "global_walker"
                 )
             );
             $ytWalker->addYt(self::$yt);
@@ -183,7 +182,7 @@ class Debugger
      */
     public static function expose(): void
     {
-        $i18n = &i18n::getNamespace("rebug");
+        $i18n = i18n::getNamespace("rehike/debugger");
 
         $context = &self::$context;
 
@@ -260,16 +259,6 @@ class Debugger
     public static function addContext(string $name, mixed $value): void
     {
         self::$context->{$name} = $value;
-    }
-
-    /**
-     * Initialise i18n
-     */
-    protected static function setupI18n(): void
-    {
-        $i18n = &i18n::newNamespace("rebug");
-
-        $i18n->registerFromFile("en", "i18n/rehike/debugger/en.json");
     }
 
     /**

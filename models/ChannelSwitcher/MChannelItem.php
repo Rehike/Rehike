@@ -1,7 +1,7 @@
 <?php
 namespace Rehike\Model\ChannelSwitcher;
 
-use Rehike\i18n;
+use Rehike\i18n\i18n;
 use Rehike\Util\ParsingUtils;
 use Rehike\TemplateFunctions as TF;
 
@@ -25,7 +25,7 @@ class MChannelItem
 
         $this->subscriberCountText = $data->hasChannel
             ? ParsingUtils::getText(@$data->accountByline)
-            : $i18n->ownerAccountNoChannel;
+            : $i18n->get("ownerAccountNoChannel");
 
         $tokenRoot = $data->serviceEndpoint->selectActiveIdentityEndpoint->supportedTokens;
 

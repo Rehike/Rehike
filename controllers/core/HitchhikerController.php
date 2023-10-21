@@ -294,10 +294,7 @@ abstract class HitchhikerController
             if (!isset($yt->page->alerts))
                 $yt->page->alerts = [];
 
-            if (!i18n::namespaceExists("disable_rehike"))
-                DisableRehike::initI18n();
-
-            $i18n = i18n::getNamespace("disable_rehike");
+            $i18n = i18n::getNamespace("rehike/disable_rehike");
             
             $yt->page->alerts[] = new MAlert([
                 "type" => MAlert::TypeWarning,

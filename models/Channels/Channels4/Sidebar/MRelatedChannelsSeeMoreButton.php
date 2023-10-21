@@ -1,7 +1,7 @@
 <?php
 namespace Rehike\Model\Channels\Channels4\Sidebar;
 
-use Rehike\i18n;
+use Rehike\i18n\i18n;
 
 class MRelatedChannelsSeeMoreButton
 {
@@ -10,9 +10,9 @@ class MRelatedChannelsSeeMoreButton
 
     public function __construct($href)
     {
-        $strings = &i18n::getNamespace("channels");
+        $strings = i18n::getNamespace("channels");
 
-        $this->title = $strings->seeAll;
+        $this->title = $strings->get("seeAll");
         $this->href = $href;
     }
 }

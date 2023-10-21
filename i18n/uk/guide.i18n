@@ -1,0 +1,53 @@
+# Guide strings:
+
+# Note that many strings are taken from InnerTube rather than this file.
+# For example, the signed-out subscription promo.
+# This file only contains strings that are not built into InnerTube anymore.
+
+# Common strings:
+showMore: "Показать больше"
+showFewer: "Показать меньше"
+
+# Primary section items:
+trending: "В тренде"
+myChannel: "Мой канал"
+subscriptions: "Подписки"
+
+# Bottom section items:
+guideBuilderLabel: "Просмотр каналов"
+manageSubscriptionsLabel: "Управление подписками"
+
+# Section names:
+bestOfYouTubeTitle: "ЛУЧШЕЕ НА YOUTUBE"
+
+# Best of YouTube section item names:
+bestOfYouTubePopularOnYouTube: "Популярно на YouTube"
+bestOfYouTubeMusic: "Музыка"
+bestOfYouTubeSports: "Спорт"
+bestOfYouTubeGaming: "Гейминг"
+bestOfYouTubeMoviesTv: "Фильмы & Шоу"
+bestOfYouTubeNews: "Новости"
+bestOfYouTubeLive: "Прямые трансляции"
+bestOfYouTubeSpotlight: "В центре внимания"
+bestOfYouTube360: "Панорамные видео"
+
+# Subscriptions promo:
+subscriptionsPromoButton: "Добавить каналы"
+subscriptionsPromoTooltip: >
+  Ваши подписки будут отображаться здесь. Просмотрите несколько каналов, 
+  чтобы начать.
+
+# Guide notification messages:
+notifications:
+  watchLaterVideoAdded: "Добавлено к просмотру позже"
+  watchLaterVideoRemoved: "Удалено из Посмотреть позже"
+  subscription: "Подписка добавлена"
+  unsubscription: "Подписка удалена"
+  playlistLike: "Сохранено в плейлисты"
+  playlistUnlike: "Удалено из плейлистов"
+  playlistVideoAdded: "Добавлено в плейлист"
+  playlistVideoRemoved: "Удалено из плейлиста"
+  videoLike: "Добавлено в понравившиеся видео"
+  videoUnlike: "Удалено из понравившихся видео"
+  eventReminderSet: "Вам напомнят об этом событии"
+  eventReminderRemoved: "Напоминание о событии удалено"

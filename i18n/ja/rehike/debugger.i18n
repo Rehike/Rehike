@@ -1,0 +1,29 @@
+openButtonLabel: "デバッガー"
+openButtonErrorCountSingular: "(1 エラー)"
+openButtonErrorCountPlural: "(%s エラー)"
+condensedButtonLabelSingular: >
+  1 エラーが発生しました。詳細を確認するにはクリックしてください。
+condensedButtonLabelPlural: >
+  %s エラーが発生しました。詳細を確認するにはクリックしてください。
+
+debuggerTitle: "デバッガー"
+condensedDebuggerTitle: "エラー"
+condensedDebuggerHelpLink: "どうすればいいですか？"
+debuggerClose: "閉じる"
+
+errorWarning: "警告"
+errorError: "エラー"
+errorNotice: "通知"
+errorDeprecated: "非推奨"
+
+tabErrorTitle: "エラー (%s)"
+tabConsoleTitle: "PHP コンソール"
+tabNetworkTitle: "ネットワーク"
+tabPerformanceTitle: "パフォーマンス"
+tabYtWalkerTitle: "変数ツリー"
+nothingToSee: "ここには何もありません"
+
+historyCurrent: "現在のページ"
+historyPrevious: "前のページ"
+historyPagesAgo: "# ページ前"
+historyUnavailable: "履歴は利用できません"

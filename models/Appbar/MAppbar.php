@@ -1,7 +1,7 @@
 <?php
 namespace Rehike\Model\Appbar;
 
-use Rehike\i18n;
+use Rehike\i18n\i18n;
 
 use Rehike\Model\Guide\MGuide;
 
@@ -30,9 +30,5 @@ class MAppbar
     public function addGuide($guide)
     {
         $this->guide = $guide;
-
-        $this->guideNotificationStrings =
-            i18n::getNamespace("main/guide")->notifications
-        ;
     }
 }

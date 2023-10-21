@@ -10,7 +10,6 @@ use Rehike\Model\Results\ResultsModel;
 use \Com\Youtube\Innertube\Request\SearchRequestParams;
 
 use Rehike\Network;
-use Rehike\i18n;
 use Rehike\Util\Base64Url;
 
 /**
@@ -44,9 +43,6 @@ class ResultsController extends NirvanaController {
         // Seemingly unused on the client-side (?), but this should still be
         // declared regardless.
         $this->useJsModule("www/results");
-
-        $i18n = &i18n::newNamespace("results");
-        $i18n->registerFromFolder("i18n/results");
         
         // Setup search query internally
         $query = $_GET["search_query"] ?? null;

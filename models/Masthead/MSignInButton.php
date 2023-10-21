@@ -2,7 +2,7 @@
 namespace Rehike\Model\Masthead;
 
 use Rehike\Model\Common\MButton;
-use Rehike\i18n;
+use Rehike\i18n\i18n;
 
 class MSignInButton extends MButton {
     public $style = "STYLE_PRIMARY";
@@ -12,7 +12,7 @@ class MSignInButton extends MButton {
         $i18n = i18n::getNamespace("masthead");
 
         $this->text = (object) [
-            "simpleText" => $i18n->signInButton
+            "simpleText" => $i18n->get("signInButton")
         ];
     }
 }

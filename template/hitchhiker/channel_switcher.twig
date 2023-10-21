@@ -11,7 +11,15 @@
 <div id="channel-switcher-content">
     <div class="channel-switcher-header">
         <p>
-            <span class="channel-switcher-caption"><b>{{ yt.page.headerTextPrefix }}</b>{{ yt.page.email }}</span>
+            <span class="channel-switcher-caption">
+                {% for run in yt.page.headerText.runs %}
+                    {% if run.bold %}
+                    <b>{{ run.text }}</b>
+                    {% else %}
+                    {{ run.text }}
+                    {% endif %}
+                {% endfor %}
+            </span>
         </p>
         <p class="channel-switcher-brand-account-info">
             <a href="https://support.google.com/youtube/?p=manage_channels&amp;hl=en" target="_blank">
@@ -74,18 +82,21 @@
         </ul>
     </div>
 </div>
+{% from "core/spinner.twig" import render as spinner %}
 <div class="yt-dialog hid" id="add-new-channel-lb">
     <div class="yt-dialog-base">
         <span class="yt-dialog-align"></span>
         <div class="yt-dialog-fg" role="dialog">
             <div class="yt-dialog-fg-content">
                 <div class="yt-dialog-header">
-                    <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-default yt-dialog-dismiss yt-dialog-close" type="button" onclick="return!1" data-action="close"><span class="yt-uix-button-content">Close</span></button>
+                    <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-default yt-dialog-dismiss yt-dialog-close" type="button" onclick="return!1" data-action="close">
+                        <span class="yt-uix-button-content">{{ yt.msg.close }}</span>
+                    </button>
                     <h2 class="yt-dialog-title" role="alert">__title__</h2>
                 </div>
                 <div class="yt-dialog-loading">
                     <div class="yt-dialog-waiting-content">
-                        <p class="yt-spinner"><span class="yt-spinner-img yt-sprite" title="Loading icon"></span><span class="yt-spinner-message">Loading...</span></p>
+                        {{ spinner(yt.msg.loading) }}
                     </div>
                 </div>
                 <div class="yt-dialog-content">
@@ -95,7 +106,7 @@
                     <div class="yt-dialog-working-overlay"></div>
                     <div class="yt-dialog-working-bubble">
                         <div class="yt-dialog-waiting-content">
-                            <p class="yt-spinner"><span class="yt-spinner-img yt-sprite" title="Loading icon"></span><span class="yt-spinner-message">Working...</span></p>
+                            {{ spinner(yt.msg.working) }}
                         </div>
                     </div>
                 </div>

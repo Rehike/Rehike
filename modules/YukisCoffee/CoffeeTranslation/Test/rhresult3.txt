@@ -1,0 +1,183 @@
+---- BEGINNING OF STREAM -----
+
+=============================================================================
+  FILENAME: C:\xampp\Rehike07Dev\i18n_new\en-US\rehike\config.i18n
+  SUCCESS: Success!
+
+  PAYLOAD:
+    {
+        "title": "Rehike settings",
+        "saveChanges": "Save changes",
+        "saveChangesSuccess": "Successfully updated configuration!",
+        "saveChangesFailure": "Failed to update configuration.",
+        "tabs": {
+            "appearance": "Appearance",
+            "experiments": "Experiments",
+            "advanced": "Advanced"
+        },
+        "props": {
+            "appearance": {
+                "modernLogo": {
+                    "title": "Use the current YouTube logo",
+                    "subtitle": "Used since 2017. Enabling this may break some custom themes made before 2017."
+                },
+                "uploadButtonType": {
+                    "title": "Upload button type:",
+                    "values": {
+                        "BUTTON": "Button (2013-2016)",
+                        "ICON": "Material icon (2016-2018)",
+                        "MENU": "Creation menu (2018+)"
+                    }
+                },
+                "largeSearchResults": {
+                    "title": "Larger thumbnails on search page",
+                    "subtitle": "Will break some custom themes made before 2017."
+                },
+                "swapSearchViewsAndDate": {
+                    "title": "Swap view and date on search on page",
+                    "subtitle": "Show the view count before the date on search page video renderers."
+                },
+                "showVersionInFooter": {
+                    "title": "Show Rehike version in the footer",
+                    "subtitle": "Display a convenient link to the Rehike about page at the end of the footer."
+                },
+                "useRyd": {
+                    "title": "Show dislikes on videos",
+                    "subtitle": "Stats from the Return YouTube Dislike API."
+                },
+                "usernamePrepends": {
+                    "title": "Show \"by\" before the author's name on video links",
+                    "subtitle": "Used before 2016."
+                },
+                "noViewsText": {
+                    "title": "Remove \"views\" text from view count on watch page",
+                    "subtitle": "Before 2016, only the count itself was displayed, without any label."
+                },
+                "movingThumbnails": {
+                    "title": "Show an animated preview when hovering over a video",
+                    "subtitle": "Used since 2018."
+                },
+                "cssFixes": {
+                    "title": "YouTube CSS fixes",
+                    "subtitle": "Fixes bugs or inconsistencies with the original Hitchhiker CSS. May break compatibility with some userstyles."
+                },
+                "watchSidebarDates": {
+                    "title": "Show upload date on watch page recommendations",
+                    "subtitle": "Unlike Polymer, Hitchhiker didn't show these by default."
+                },
+                "watchSidebarVerification": {
+                    "title": "Show verification badges on watch page recommendations",
+                    "subtitle": "Unlike Polymer, Hitchhiker didn't show these by default."
+                },
+                "oldBestOfYouTubeIcons": {
+                    "title": "Old red icons in \"Best of YouTube\" guide section",
+                    "subtitle": "Show the old red topic channel icons, rather than the black ones used today."
+                }
+            },
+            "experiments": {
+                "useSignInV2": {
+                    "title": "Use sign in V2",
+                    "subtitle": "Use the experimental new rewrite of the sign in rewrite. This option should be available for the duration of V2's development, after which it will become the default and the legacy one will be removed."
+                },
+                "disableSignInOnHome": {
+                    "title": "Disable authenticated home requests",
+                    "subtitle": "Makes the home page signed out. This is a workaround for YouTube blocking homepage access if you have watch history disabled (2023\/08\/18)."
+                }
+            },
+            "advanced": {
+                "enableDebugger": {
+                    "title": "Enable the debugger",
+                    "subtitle": "The debugger provides useful tools for developers. Only enable if you're a developer or reporting a bug and need more information."
+                },
+                "clearSigninCache": {
+                    "title": "Sign-in cache",
+                    "subtitle": "Rehike caches sign-in data as to not make too many requests to YouTube.",
+                    "button": "Clear sign-in cache"
+                },
+                "clearPlayerCache": {
+                    "title": "Player cache",
+                    "subtitle": "Rehike caches information about the player as to not make too many requests to YouTube.",
+                    "button": "Clear player cache"
+                },
+                "factoryReset": {
+                    "title": "Reset Rehike",
+                    "subtitle": "Reset Rehike to its defaults, including settings, cache, and any changes that aren't on the remote repository.",
+                    "button": "Reset Rehike"
+                },
+                "updateRehike": {
+                    "title": "Update Rehike",
+                    "button": "Update"
+                }
+            }
+        }
+    }
+=============================================================================
+
+
+=============================================================================
+  FILENAME: C:\xampp\Rehike07Dev\i18n_new\en-US\rehike\debugger.i18n
+  SUCCESS: Success!
+
+  PAYLOAD:
+    {
+        "openButtonLabel": "Debugger",
+        "openButtonErrorCountSingular": "(1 error)",
+        "openButtonErrorCountPlural": "(%s errors)",
+        "condensedButtonLabelSingular": "An error has occurred. Click to learn more.",
+        "condensedButtonLabelPlural": "%s errors have occurred. Click to learn more.",
+        "debuggerTitle": "Debugger",
+        "condensedDebuggerTitle": "Errors",
+        "condensedDebuggerHelpLink": "What should I do?",
+        "debuggerClose": "Close",
+        "errorWarning": "Warning",
+        "errorError": "Error",
+        "errorNotice": "Notice",
+        "errorDeprecated": "Deprecated",
+        "tabErrorTitle": "Errors (%s)",
+        "tabConsoleTitle": "PHP console",
+        "tabNetworkTitle": "Network",
+        "tabPerformanceTitle": "Performance",
+        "tabYtWalkerTitle": "Variable walker",
+        "nothingToSee": "Nothing to see here!",
+        "historyCurrent": "Current page",
+        "historyPrevious": "Previous page",
+        "historyPagesAgo": "# pages ago",
+        "historyUnavailable": "History unavailable"
+    }
+=============================================================================
+
+
+=============================================================================
+  FILENAME: C:\xampp\Rehike07Dev\i18n_new\en-US\rehike\version.i18n
+  SUCCESS: Success!
+
+  PAYLOAD:
+    {
+        "brandName": "Rehike",
+        "versionHeader": "Version %s",
+        "nightly": "Nightly",
+        "nightlyInfoTooltip": "This release is bleeding edge and may contain irregular bugs.",
+        "subheaderNightlyInfo": "Current branch information",
+        "nonGitNotice": "This release of Rehike lacks Git information.",
+        "nonGitExtended": "This may occur if you downloaded the repository directly from GitHub, such as from the \"Download ZIP\" feature. Some version information may be lost or unavailable.",
+        "syncGithubButton": "Synchronize with GitHub",
+        "failedNotice": "Failed to get version information.",
+        "remoteFailedNotice": "Failed to get remote version information.",
+        "remoteFailedExtended": "Version information is limited.",
+        "noDotVersionNotice": "The .version file is missing or corrupted.",
+        "noNewVersions": "No new versions available.",
+        "oneNewVersion": "1 new version available.",
+        "varNewVersions": "%s new versions available.",
+        "unknownNewVersions": "This version is critically out of date.",
+        "headingVersionInfo": "Version information",
+        "viewOnGithub": "View on GitHub",
+        "extraInfo": "Extra information",
+        "operatingSystem": "Operating system",
+        "phpVersion": "PHP version"
+    }
+=============================================================================
+
+
+
+
+---- END OF STREAM -----

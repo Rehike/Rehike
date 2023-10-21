@@ -1,7 +1,7 @@
 <?php
 namespace Rehike\Model\Rehike\Version;
 
-use Rehike\i18n;
+use Rehike\i18n\i18n;
 
 class MVersionPage
 {
@@ -20,12 +20,12 @@ class MVersionPage
     {
         $strings = i18n::getNamespace('rehike/version');
 
-        $this->headingText = $strings->headingVersionInfo;
-        $this->brandName = $strings->brandName;
+        $this->headingText = $strings->get("headingVersionInfo");
+        $this->brandName = $strings->get("brandName");
 
         if (@$data["semanticVersion"])
         {
-            $this->version = $strings->versionHeader($data["semanticVersion"]);
+            $this->version = $strings->format("versionHeader", $data["semanticVersion"]);
         }
 
         if (!@$data["isRelease"] && null != $data)

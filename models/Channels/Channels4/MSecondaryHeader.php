@@ -1,7 +1,7 @@
 <?php
 namespace Rehike\Model\Channels\Channels4;
 
-use Rehike\i18n;
+use Rehike\i18n\i18n;
 use Rehike\Model\Channels\Channels4\SecondaryHeader\MSecondaryHeaderLink;
 use Rehike\Signin\API as SignIn;
 
@@ -19,7 +19,7 @@ class MSecondaryHeader
         if (isset($data->subscribers))
         {
             $this->links[] = new MSecondaryHeaderLink(
-                $i18n->secondaryHeaderSubs(number_format($data->subscribers)),
+                $i18n->format("secondaryHeaderSubs", $i18n->formatNumber($data->subscribers)),
                 "//studio.youtube.com/channel/$ucid"
             );
         }
@@ -27,14 +27,14 @@ class MSecondaryHeader
         if (isset($data->views))
         {
             $this->links[] = new MSecondaryHeaderLink(
-                $i18n->secondaryHeaderViews(number_format($data->views)),
+                $i18n->format("secondaryHeaderViews", $i18n->formatNumber($data->views)),
                 "//studio.youtube.com/channel/$ucid/analytics",
                 "analytics"
             );
         }
 
         $this->links[] = new MSecondaryHeaderLink(
-            $i18n->secondaryHeaderManager,
+            $i18n->get("secondaryHeaderManager"),
             "//studio.youtube.com/channel/$ucid/videos",
             "vm"
         );

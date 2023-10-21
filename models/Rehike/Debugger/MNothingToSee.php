@@ -1,7 +1,7 @@
 <?php
 namespace Rehike\Model\Rehike\Debugger;
 
-use Rehike\i18n;
+use Rehike\i18n\i18n;
 
 /**
  * Implements the Rehike Debugger "Nothing to See" renderer.
@@ -18,8 +18,8 @@ class MNothingToSee
 
     public function __construct()
     {
-        $i18n = &i18n::getNamespace("rebug");
+        $i18n = i18n::getNamespace("rehike/debugger");
 
-        $this->text = $i18n->nothingToSee;
+        $this->text = $i18n->get("nothingToSee");
     }
 }

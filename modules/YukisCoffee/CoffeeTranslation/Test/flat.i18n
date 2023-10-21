@@ -1,0 +1,32 @@
+# Hiii
+# This is a test file to see if proper formatting works right
+testString0: "こんにちは" # Hey
+testString1: "Hello"
+testString2: "I have something to say: \":3\"!!!"
+testString3: ":3"
+
+collectionTest:
+    a: "Hi"
+    b: "Hello!!"
+
+multilineStringTest: >
+    Hello. This is a long string that spans multiple lines.
+    I think that it can often be a useful behavior to have in
+    markup languages, since it helps you understand at a glance
+    a sequence\
+    , and much, much more!
+
+simpleMultilineTest: >
+  Hi.
+  This is a test.
+  I am glad this system is working out alright.\
+  Although, a part of it appears to still be broken...
+
+numberValueTest: 32 # end of line test
+floatValueTest:  430.567
+boolValueTest: true
+bool2: false
+unquotedString: Hello this is also a string! # Another comment test
+
+a_b_c: a
+#abdhwsudhsaud

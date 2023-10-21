@@ -2,7 +2,8 @@
 namespace Rehike\Model\Rehike\Version;
 
 use Rehike\Controller\Version\GetVersionController as Controller;
-use Rehike\i18n;
+use Rehike\i18n\i18n;
+use YukisCoffee\CoffeeTranslation\DateTimeFormats;
 
 class MNightlyInfo
 {
@@ -17,11 +18,11 @@ class MNightlyInfo
 
     public function __construct(&$data)
     {
-        $strings = i18n::getNamespace('rehike/version');
+        $strings = i18n::getNamespace("rehike/version");
 
         if ($branch = @$data["branch"])
         {
-			$this->headingText = $strings->subheaderNightlyInfo;
+			$this->headingText = $strings->get("subheaderNightlyInfo");
             $this->branch = $branch;
         }
 
@@ -44,13 +45,16 @@ class MNightlyInfo
 
         if ($time = @$data["time"])
         {
-            $this->commitDateTime = $strings->get("getFormattedDate")($time);
+            $this->commitDateTime = $strings->formatDate(
+                DateTimeFormats::EXPANDED_DATE_WITH_TIME,
+                $time
+            );
         }
 
         if (Controller::GH_ENABLED && @$this->fullCommitHash)
         {
             $this->ghButton = (object)[];
-            $this->ghButton->label = $strings->viewOnGithub;
+            $this->ghButton->label = $strings->get("viewOnGithub");
             $this->ghButton->endpoint = "//github.com/" . Controller::GH_REPO . "/tree/{$this->fullCommitHash}";
         }
     }

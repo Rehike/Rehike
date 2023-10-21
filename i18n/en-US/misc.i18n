@@ -1,0 +1,22 @@
+# Miscellaneous strings (move to global?)
+
+btnCancel: "Cancel"
+btnSave: "Save"
+subscriberTextSingular: "%s subscriber"
+subscriberTextPlural: "%s subscribers"
+viewTextSingular: "%s view"
+viewTextPlural: "%s views"
+dateTextPublic: "Published on %s"
+dateTextPrivate: "Uploaded on %s"
+subscribeText: "Subscribe"
+subscribedText: "Subscribed"
+unsubscribeText: "Unsubscribe"
+
+# How to obtain:
+# Get your UCID from YouTube. This is on https://www.youtube.com/account_advanced
+# Paste it into here: https://www.youtube.com/subscribe_embed?usegapi=1&channelid=<UCID>&layout=full&count=default
+# Make sure that you're logged into the account you need to access this string.
+selfSubscribeTooltip: "No need to subscribe to yourself!"
+
+notificationPrefsTitle: "Notifications from %s"
+notificationPrefsLabel: "Subscription preferences"

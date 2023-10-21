@@ -1,7 +1,7 @@
 <?php
 namespace Rehike\Util;
 
-use Rehike\i18n;
+use Rehike\i18n\i18n;
 
 /**
  * General string handler/substring extraction utilities for Rehike.
@@ -32,7 +32,7 @@ class ExtractUtils {
      * @param $likeCount Base string to modify.
      */
     public static function isolateLikeCnt(?string $likeCount): string {
-        $i18n = i18n::getNamespace("main/regex");
+        $i18n = i18n::getNamespace("regex");
 
         $a = self::isolateCount($likeCount, $i18n->get("likeCountIsolator"));
         if ($a != $i18n->get("likeTextDisabled")) {
@@ -50,7 +50,7 @@ class ExtractUtils {
      * @param $subCount Base string to modify.
      */
     public static function isolateSubCnt(?string $subCount): string {
-        $i18n = i18n::getNamespace("main/regex");
+        $i18n = i18n::getNamespace("regex");
 
         $a = self::isolateCount($subCount, $i18n->get("subscriberCountIsolator"));
         if ($a != $i18n->get("countZero")) {
@@ -73,7 +73,7 @@ class ExtractUtils {
      * @param $viewCount Base string to modify.
      */
     public static function isolateViewCnt(?string $viewCount): string {
-        $i18n = i18n::getNamespace("main/regex");
+        $i18n = i18n::getNamespace("regex");
         
         $a = self::isolateCount($viewCount, $i18n->get("viewCountIsolator"));
         if ($a != $i18n->get("countZero")) {
@@ -93,13 +93,13 @@ class ExtractUtils {
      * @return string
      */
     public static function resolveDate($date, $isPrivate = false) {
-        $i18n = i18n::getNamespace("main/regex");
-        $misc = i18n::getNamespace("main/misc");
+        $i18n = i18n::getNamespace("regex");
+        $misc = i18n::getNamespace("misc");
 
         if (is_object($date)) $date = $date->simpleText;
         if (!preg_match($i18n->get("nonPublishCheck"), $date)) {
             $string = $isPrivate ? "dateTextPrivate" : "dateTextPublic";
-            return $misc->get($string, $date);
+            return $misc->format($string, $date);
         } else {
             return $date;
         }

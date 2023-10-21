@@ -1,0 +1,35 @@
+tabShare: "シェア"
+tabEmbed: "埋め込む"
+tabEmail: "Eメール"
+
+serviceTooltip: "%sに共有します。 新しいウィンドウで開きます。"
+startAt: "で開始:"
+
+sharePlaylist: "再生リストを共有（開始位置）"
+currentVideo: "現在の動画"
+startPlaylist: "再生リストの先頭"
+embedCode: "埋め込みコード"
+
+preview: "プレビュー："
+videoSize: "ビデオサイズ："
+customSize: "ビデオサイズ："
+
+showRelated: "動画が終了したら、おすすめの動画を表示する"
+showControls: "プレーヤーのコントロールを表示する"
+showInfo: "動画のタイトルとプレーヤーのアクションを表示する"
+delayedCookies: "プライバシー強化モードを有効にする"
+
+legalNotice: >
+  あなたのサイトにYouTubeビデオを表示することにより、あなたは%s
+legalNoticeLink: "YouTubeAPI利用規約"
+
+playlistNonexistent: "その再生リストは存在しません。",
+playlistNoVideos: "その再生リストには動画が含まれていません。"
+
+recipientsPlaceholder: "宛先"
+recipientsAlt: "Eメールアドレスを入力"
+optionalMessagePlaceholder: "任意のメッセージ"
+optionalMessageAlt: "Eメールアドレスを入力（任意）"
+messagePreview: "メッセージプレビュー:"
+emailShared: " さんがYouTubeでビデオを共有しました",
+sendEmail: "Eメールを送信"

@@ -1,0 +1,30 @@
+# Common strings that show in the footer at the bottom of the page:
+
+logoTooltip: "Strona główna YouTube"
+
+pickerLanguage: "Język: %s"
+pickerLocation: "Region: %s"
+
+pickerSafety: "Tryb ograniczonego dostępu: %s"
+safetyOn: "Włączony"
+safetyOff: "Wyłączony"
+
+buttonHistory: "Historia"
+buttonHelp: "Pomoc"
+
+# Primary (top) links:
+primaryAbout: "Informacje"
+primaryPress: "Centrum prasowe"
+primaryCopyright: "Prawa autorskie"
+primaryCreators: "Twórcy"
+primaryAdvertise: "Reklamy"
+primaryDevs: "Programiści"
+primaryVersion: "Rehike v%s [%s]" # Rehike-specific
+
+# Secondary (bottom) links:
+secondaryTerms: "Warunki"
+secondaryPrivacy: "Prywatność"
+secondaryPolicySafety: "Zasady i bezpieczeństwo"
+secondaryFeedback: "Prześlij opinię"
+secondaryTestTube: "Przetestuj nowe funkcje"
+secondaryCopyright: "© %s Google LLC"

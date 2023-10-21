@@ -147,26 +147,26 @@
     });
     yt.setConfig('SPF_SEARCH_BOX', true);
     yt.setMsg({
-        'ADDTO_CREATE_NEW_PLAYLIST': "Create new playlist\n",
-        'ADDTO_CREATE_PLAYLIST_DYNAMIC_TITLE': "  $dynamic_title_placeholder (create new)\n",
+        'ADDTO_CREATE_NEW_PLAYLIST': "{{ rehike.i18n.get("addto", "createNewPlaylist") }}",
+        'ADDTO_CREATE_PLAYLIST_DYNAMIC_TITLE': "{{ rehike.i18n.get("addto", "createNewPlaylistDynamic") }}",
         'ADDTO_WATCH_LATER': "{{ yt.msgs.addToWatchLater }}",
         'ADDTO_WATCH_LATER_ADDED': "{{ yt.msgs.addedToWatchLater }}",
-        'ADDTO_WATCH_LATER_ERROR': "{{ yt.msgs.addToError }}",
-        'ADDTO_WATCH_QUEUE': "Watch Queue",
-        'ADDTO_WATCH_QUEUE_ADDED': "Added",
-        'ADDTO_WATCH_QUEUE_ERROR': "Error",
-        'ADDTO_TV_QUEUE': "Queue",
-        'ADS_INSTREAM_FIRST_PLAY': "A video ad is playing.",
-        'ADS_INSTREAM_SKIPPABLE': "Video ad can be skipped.",
-        'ADS_OVERLAY_IMPRESSION': "Ad displayed.",
+        'ADDTO_WATCH_LATER_ERROR': "{{ yt.msgs.addToWatchLaterToError }}",
+        'ADDTO_WATCH_QUEUE': "{{ yt.msgs.addToWatchQueue }}",
+        'ADDTO_WATCH_QUEUE_ADDED': "{{ yt.msgs.addToWatchQueueAdded }}",
+        'ADDTO_WATCH_QUEUE_ERROR': "{{ yt.msgs.addToWatchQueueError }}",
+        'ADDTO_TV_QUEUE': "{{ yt.msgs.addToTvQueue }}",
+        'ADS_INSTREAM_FIRST_PLAY': "{{ yt.msgs.adsInstreamFirstPlay }}",
+        'ADS_INSTREAM_SKIPPABLE': "{{ yt.msgs.adsInstreamSkippable }}",
+        'ADS_OVERLAY_IMPRESSION': "{{ yt.msgs.adsOverlayImpression }}",
         'MASTHEAD_NOTIFICATIONS_LABEL': {
-            "other": "{{ yt.masthead.notificationStrings.plural }}",
-            "case1": "{{ yt.masthead.notificationStrings.singular }}",
-            "case0": "{{ yt.masthead.notificationStrings.none }}"
+            "other": "{{ rehike.i18n.get("masthead", "notificationsPlural") }}",
+            "case1": "{{ rehike.i18n.get("masthead", "notificationsSingular") }}",
+            "case0": "{{ rehike.i18n.get("masthead", "notificationsNone") }}"
         },
-        'MASTHEAD_NOTIFICATIONS_COUNT_99PLUS': "99+",
-        'MDX_AUTOPLAY_OFF': 'Autoplay is off',
-        'MDX_AUTOPLAY_ON': 'Autoplay is on'
+        'MASTHEAD_NOTIFICATIONS_COUNT_99PLUS': "{{ rehike.i18n.get("masthead", "notifications99Plus") }}",
+        'MDX_AUTOPLAY_OFF': "{{ yt.msgs.mdxAutoplayOff }}",
+        'MDX_AUTOPLAY_ON': "{{ yt.msgs.mdxAutoplayOn }}"
     });
     yt.setConfig('FEED_PRIVACY_CSS_URL', "\//s.ytimg.com/yts\/cssbin\/www-feedprivacydialog-vflLtZObB.css");
     yt.setConfig('FEED_PRIVACY_LIGHTBOX_ENABLED', true);
@@ -183,8 +183,8 @@
             "IS_FUSION": false
         },
         'SBOX_LABELS': {
-            "SUGGESTION_DISMISSED_LABEL": "Suggestion removed",
-            "SUGGESTION_DISMISS_LABEL": "Remove"
+            "SUGGESTION_DISMISSED_LABEL": "{{ yt.msgs.sboxSuggestionDismissedLabel }}",
+            "SUGGESTION_DISMISS_LABEL": "{{ yt.msgs.sboxSuggesstionDismissLabel }}"
         }
     });
     yt.setConfig({

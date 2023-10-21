@@ -1,0 +1,67 @@
+# Global strings
+# These include both common things and most JS messages.
+# These are exported to the templates at `yt.msg`.
+
+# Common aria (accessibility) labels
+loadingIconLabel: "読み込み中のアイコン"
+actionMenuLabel: "アクションメニュー"
+
+loading: "読み込んでいます..."
+working: "処理しています..."
+
+loadMore: "もっと読み込む"
+
+# Generic close button text
+close: "閉じる"
+
+showMore: "もっと見る"
+showLess: "一部を表示"
+
+durationA11y: " - 長さ: %s。"
+
+# TODO-i18n: make this use printf formatting so it can be more
+# versatile.
+usernamePrepend: "作者: "
+verified: "確認済み"
+
+# Video thumbnail watch later button strings:
+addToWatchLater: "後で見る"
+addedToWatchLater: "追加済み"
+addToWatchLaterError: "エラー"
+addToWatchQueue: "キュー"
+addToWatchQueueAdded: "追加しました"
+addToWatchQueueError: "エラー"
+watchLaterSignIn: "「後で見る」に追加するには %sログイン%s してください"
+
+# Add to dialog strings:
+addToHeader: "追加" 
+addToLoading: "再生リストを読み込んでいます..."
+
+# Shelfsliders (horizontal shelves):
+shelfsliderNext: "次へ"
+shelfsliderPrev: "前へ"
+
+# Interactive transcripts:
+transcriptTitle: "文字起こし"
+transcriptFail: "インタラクティブな文字起こしテキストを読み込めませんでした。"
+
+# Video player ad (?) JS messages
+adsInstreamFirstPlay: "動画広告を再生中です。"
+adsInstreamSkippable: "動画広告をスキップできます。"
+adsOverlayImpression: "広告が表示されました。"
+
+# Searchbox labels
+sboxSuggestionDismissedLabel: "候補を破棄しました"
+sboxSuggestionDismissLabel: "削除"
+
+# Misc:
+videoCountPlural: "%s 本の動画"
+videoCountSingular: "1 本の動画"
+commentPostFail: "コメントの投稿に失敗しました。"
+viewFullPlaylist: "再生リスト全体を表示"
+mdxAutoplayOff: "自動再生がオフになっています"
+mdxAutoplayOn: "自動再生がオンになっています"
+sorryAboutThat: "申し訳ありません。"
+browseUnsavedChanges: >
+  チャンネル設定への一部の変更が保存されていません。
+  このページから離れると失われます。

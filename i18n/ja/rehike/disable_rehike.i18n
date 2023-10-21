@@ -1,0 +1,24 @@
+# Strings related to the soft-disable feature:
+
+# Shows in configuration settings:
+disableRehike: "Rehike の無効化"
+rhSettingsEnableRehike: "Rehike の有効化"
+
+# Shows in the account menu in Polymer:
+enableRehike: "Rehike に戻る"
+
+# Disabled message:
+currentlyDisabledMessage: >
+    現在、Rehike は無効になっています。機能が制限される可能性があります。
+
+# Dialog box strings:
+disableRehikeInfoHeader: "本当によろしいですか？"
+disableRehikeInfoDescription: >
+    これを無効にすると、再度有効にするまで Rehike が無効になります。
+    Rehike を有効にするには、新しい YouTube インターフェースのアカウントメニューから、
+    または以下の URL パラメーターを使用して行うことができます：
+    ?enable_rehike=1
+
+# Dialog buttons:
+disableRehikeInfoCancel: "キャンセル"
+disableRehikeInfoDisable: "無効化"

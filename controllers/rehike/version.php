@@ -6,7 +6,6 @@ use Rehike\ControllerV2\RequestMetadata;
 
 use Rehike\Controller\core\HitchhikerController;
 use Rehike\Version\VersionController;
-use Rehike\i18n;
 
 use Rehike\Model\Rehike\Version\MVersionPage;
 
@@ -145,8 +144,6 @@ class GetVersionController extends HitchhikerController
 
     public function onGet(YtApp $yt, RequestMetadata $request): void
     {
-        i18n::newNamespace("rehike/version")->registerFromFolder("i18n/rehike/version");
-        
         $yt->page = (object)self::bake();
     }
 

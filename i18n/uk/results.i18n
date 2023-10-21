@@ -1,0 +1,5 @@
+resultCountSingular: "1 Результат"
+resultCountPlural: "%s Результатів"
+filtersClear: "Очистити всі фільтри"
+pageNext: "Наступні »"
+pagePrev: "« Попередній"

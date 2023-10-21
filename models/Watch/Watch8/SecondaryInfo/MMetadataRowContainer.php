@@ -3,7 +3,7 @@ namespace Rehike\Model\Watch\Watch8\SecondaryInfo;
 
 use Rehike\Model\Traits\Runs;
 use Rehike\TemplateFunctions;
-use Rehike\i18n;
+use Rehike\i18n\i18n;
 
 class MMetadataRowContainer
 {
@@ -47,7 +47,7 @@ class MMetadataRowContainer
                                 $richItems[] = (object) [
                                     "richMetadataRowRenderer" => (object) [
                                         "label" => (object) [
-                                            "simpleText" => $i18n->metadataGame
+                                            "simpleText" => $i18n->get("metadataGame")
                                         ],
                                         "title" => $row->title,
                                         "subtitle" => $row->subtitle ?? null,
@@ -90,7 +90,7 @@ class MMetadataRowContainer
                 // Add song title from the lockup if it exists
                 if (isset($lockup->carouselLockupRenderer->videoLockup))
                 {
-                    $title = $i18n->metadataSong;
+                    $title = $i18n->get("metadataSong");
 
                     $content = TemplateFunctions::getText($lockup->carouselLockupRenderer->videoLockup->compactVideoRenderer->title);
                     $href = TemplateFunctions::getUrl($lockup->carouselLockupRenderer->videoLockup->compactVideoRenderer);
@@ -156,7 +156,7 @@ class MMetadataRowContainer
     protected function getCategoryField($dataHost)
     {
         $i18n = i18n::getNamespace("watch");
-        $title = $i18n->metadataCategory;
+        $title = $i18n->get("metadataCategory");
 
         $category = @$dataHost::$yt->playerResponse->microformat
             ->playerMicroformatRenderer->category
@@ -172,8 +172,8 @@ class MMetadataRowContainer
     {
         $i18n = i18n::getNamespace("watch");
 
-        $title = $i18n -> metadataLicense;
-        $text = $i18n -> metadataLicenseStandard;
+        $title = $i18n -> get("metadataLicense");
+        $text = $i18n -> get("metadataLicenseStandard");
 
         return self::createSimpleField($title, $text);
     }

@@ -5,7 +5,7 @@ use Rehike\Model\Watch\WatchModel as WatchBase;
 use Rehike\Model\Watch\Watch7\MVideoDiscussionDelayloadRenderer;
 use Rehike\Model\Watch\Watch7\MVideoDiscussionNotice;
 use Rehike\Model\Watch\Watch7\MCreatorBar;
-use Rehike\i18n;
+use Rehike\i18n\i18n;
 use Rehike\ConfigManager\ConfigManager;
 use Rehike\Util\PrefUtils;
 use Rehike\Signin\API as SignIn;
@@ -185,9 +185,9 @@ class Watch8Subcontroller
                     // Move autoplay video to its own object
                     $compactAutoplayRenderer = (object)[
                         "contents" => [ $recomsList[$autoplayIndex] ],
-                        "infoText" => $i18n->autoplayInfoText,
-                        "title" => $i18n->autoplayTitle,
-                        "toggleDesc" => $i18n->autoplayToggleDesc,
+                        "infoText" => $i18n->get("autoplayInfoText"),
+                        "title" => $i18n->get("autoplayTitle"),
+                        "toggleDesc" => $i18n->get("autoplayToggleDesc"),
                         "checked" => PrefUtils::autoplayEnabled($pref)
                     ];
                     $response += ["compactAutoplayRenderer" => $compactAutoplayRenderer];
@@ -236,11 +236,11 @@ class Watch8Subcontroller
 
                 if ("1" == $videoCount)
                 {
-                    $videoCount = $i18n->playlistVideosSingular;
+                    $videoCount = $i18n->get("playlistVideosSingular");
                 }
                 else
                 {
-                    $videoCount = $i18n->playlistVideosPlural($videoCount);
+                    $videoCount = $i18n->format("playlistVideosPlural", $videoCount);
                 }
 
                 $out->videoCountText = (object) [
@@ -289,7 +289,7 @@ class Watch8Subcontroller
             $out->behaviorControls[] = new MButton([
                 "size" => "SIZE_DEFAULT",
                 "style" => "STYLE_OPACITY",
-                "tooltip" => $i18n->playlistPrevVideo,
+                "tooltip" => $i18n->get("playlistPrevVideo"),
                 "navigationEndpoint" => NavigationEndpoint::createEndpoint($prevUrl),
                 "icon" => (object) [
                     "iconType" => "WATCH_APPBAR_PLAY_PREV"
@@ -304,7 +304,7 @@ class Watch8Subcontroller
             $out->behaviorControls[] = new MButton([
                 "size" => "SIZE_DEFAULT",
                 "style" => "STYLE_OPACITY",
-                "tooltip" => $i18n->playlistNextVideo,
+                "tooltip" => $i18n->get("playlistNextVideo"),
                 "navigationEndpoint" => NavigationEndpoint::createEndpoint($nextUrl),
                 "icon" => (object) [
                     "iconType" => "WATCH_APPBAR_PLAY_NEXT"
@@ -330,13 +330,13 @@ class Watch8Subcontroller
                     "watch-playlist-like",
                     $isSaved ? "yt-uix-button-toggled" : ""
                 ],
-                "tooltip" => $isSaved ? $i18n->playlistUnsave : $i18n->playlistSave,
+                "tooltip" => $isSaved ? $i18n->get("playlistUnsave") : $i18n->get("playlistSave"),
                 "attributes" => [
                     "like-label" => "",
                     "playlist-id" => $out->playlistId,
                     "unlike-label" => "",
-                    "unlike-tooltip" => $i18n->playlistUnsave,
-                    "like-tooltip" => $i18n->playlistSave,
+                    "unlike-tooltip" => $i18n->get("playlistUnsave"),
+                    "like-tooltip" => $i18n->get("playlistSave"),
                     "toggle-class" => "yt-uix-button-toggled",
                     "token" => "dummy"
                 ]
@@ -345,10 +345,10 @@ class Watch8Subcontroller
             if (!SignIn::isSignedIn())
             {
                 $out->saveButton->clickcard = new MSigninClickcard(
-                    $i18n->clickcardPlaylistSignIn,
+                    $i18n->get("clickcardPlaylistSignIn"),
                     "",
                     [
-                        "text" => $i18n->clickcardSignIn,
+                        "text" => $i18n->get("clickcardSignIn"),
                         "href" => "https://accounts.google.com/ServiceLogin?continue=https%3A%2F%2Fwww.youtube.com%2Fsignin%3Fnext%3D%252F%253Faction_handle_signin%3Dtrue%26feature%3D__FEATURE__%26hl%3Den%26app%3Ddesktop&passive=true&hl=en&uilel=3&service=youtube"
                     ]
                 );

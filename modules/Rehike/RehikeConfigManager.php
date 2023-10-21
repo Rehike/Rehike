@@ -38,6 +38,7 @@ class RehikeConfigManager extends ConfigManager
             "enableDebugger" => false
         ],
         "hidden" => [
+            "language" => "en-US",
             "securityIgnoreWindowsServerRunningAsSystem" => false,
             "disableRehike" => false
         ]
@@ -67,6 +68,7 @@ class RehikeConfigManager extends ConfigManager
             "enableDebugger" => "bool"
         ],
         "hidden" => [
+            "language" => "string",
             "securityIgnoreWindowsServerRunningAsSystem" => "bool",
             "disableRehike" => "bool"
         ]

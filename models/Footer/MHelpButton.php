@@ -1,7 +1,7 @@
 <?php
 namespace Rehike\Model\Footer;
 
-use Rehike\i18n;
+use Rehike\i18n\i18n;
 use Rehike\Model\Common\MButton;
 use Rehike\ConfigManager\ConfigManager;
 use Rehike\Player\Configurable;
@@ -24,7 +24,7 @@ class MHelpButton extends MButton {
         $i18n = i18n::getNamespace("footer");
 
         $this->text = (object) [
-            "simpleText" => $i18n->buttonHelp
+            "simpleText" => $i18n->get("buttonHelp")
         ];
         $this->icon = (object) [
             "iconType" => "QUESTIONMARK"

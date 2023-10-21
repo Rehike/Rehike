@@ -1,6 +1,6 @@
 <?php
 namespace Rehike\Model\Rehike\Version;
-use Rehike\i18n;
+use Rehike\i18n\i18n;
 
 class MNonGitNotice extends MNotice
 {
@@ -8,7 +8,7 @@ class MNonGitNotice extends MNotice
     {
         $strings = i18n::getNamespace('rehike/version');
 
-        $this->text = $strings->nonGitNotice;
-        $this->description = $strings->nonGitExtended;
+        $this->text = $strings->get("nonGitNotice");
+        $this->description = $strings->get("nonGitExtended");
     }
 }
