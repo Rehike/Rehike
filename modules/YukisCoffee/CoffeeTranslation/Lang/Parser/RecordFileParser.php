@@ -564,6 +564,7 @@ class RecordFileParser
                             $result .= Tokens::TOKEN_ESCAPE;
                             break;
                     }
+                    $this->parser->next();
                     break;
 
                 case Tokens::TOKEN_LINE_BREAK:

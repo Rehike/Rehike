@@ -5,6 +5,8 @@ use Rehike\Model\Common\MButton;
 use Rehike\Model\Traits\Runs;
 use Rehike\i18n\i18n;
 
+use YukisCoffee\CoffeeTranslation\Lang\NamespaceBoundLanguageApi;
+
 /**
  * Informs the user of a security vulnerability via a lightbox.
  * 
@@ -25,10 +27,12 @@ class SecurityLightbox
     public MButton $moreOptionsButton;
     public MButton $doNotShowAgainButton;
 
+    private NamespaceBoundLanguageApi $i18n;
+
     public function __construct()
     {
-        $i18n = i18n::getNamespace("security_lightbox");
-        $this->title = $i18n->get("securityWarning");
+        $this->i18n = i18n::getNamespace('rehike/security_lightbox');
+        $this->title = $this->i18n->get("securityWarning");
 
         $this->createMessage();
 
@@ -41,14 +45,14 @@ class SecurityLightbox
             "text" => (object)[
                 "runs" => [
                     (object)[
-                        "text" => $i18n->get("learnMoreButton")
+                        "text" => $this->i18n->get("learnMoreButton")
                     ]
                 ]
             ],
             "navigationEndpoint" => (object)[
                 "commandMetadata" => (object)[
                     "webCommandMetadata" => (object)[
-                        "url" => $i18n->get("languageRespectiveWikiLink")
+                        "url" => $this->i18n->get("languageRespectiveWikiLink")
                     ]
                 ]
             ]
@@ -60,7 +64,7 @@ class SecurityLightbox
             "text" => (object)[
                 "runs" => [
                     (object)[
-                        "text" => $i18n->get("dismissButton")
+                        "text" => $this->i18n->get("dismissButton")
                     ]
                 ]
             ]
@@ -72,7 +76,7 @@ class SecurityLightbox
             "text" => (object)[
                 "runs" => [
                     (object)[
-                        "text" => $i18n->get("moreOptionsButton")
+                        "text" => $this->i18n->get("moreOptionsButton")
                     ]
                 ]
             ],
@@ -85,7 +89,7 @@ class SecurityLightbox
             "text" => (object)[
                 "runs" => [
                     (object)[
-                        "text" => $i18n->get("doNotShowAgainButton")
+                        "text" => $this->i18n->get("doNotShowAgainButton")
                     ]
                 ]
             ]
@@ -95,7 +99,7 @@ class SecurityLightbox
     private function createMessage(): void
     {
         $this->message[] = $this->createRun(
-            i18n::getRawString("security_lightbox", "runningAsSystemMessage")
+            $this->i18n->get("runningAsSystemMessage")
         );
     }
 
