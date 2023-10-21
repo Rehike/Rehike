@@ -87,20 +87,24 @@ class ExtractUtils {
      * Resolve the date string to use within a video's secondary info renderer
      * above the description on the watch page.
      * 
-     * @param string $date      Original date.
-     * @param string $isPrivate Is the video not publicly available?
+     * @param string|object $date       Original date.
+     * @param bool          $isPrivate  Is the video unlisted or private?
      * 
      * @return string
      */
-    public static function resolveDate($date, $isPrivate = false) {
+    public static function resolveDate(string|object $date, bool $isPrivate = false): string
+    {
         $i18n = i18n::getNamespace("regex");
         $misc = i18n::getNamespace("misc");
 
         if (is_object($date)) $date = $date->simpleText;
-        if (!preg_match($i18n->get("nonPublishCheck"), $date)) {
+        if (!preg_match($i18n->get("nonPublishCheck"), $date))
+        {
             $string = $isPrivate ? "dateTextPrivate" : "dateTextPublic";
             return $misc->format($string, $date);
-        } else {
+        }
+        else
+        {
             return $date;
         }
     }

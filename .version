@@ -1,10 +1,10 @@
 {
-	"previousHash": "5a4b835c1cbddc92292849a8d69322680ba1d7b0",
-	"currentRevisionId": 1059,
-	"subject": "i might be stupid",
-	"body": "i might be stupid",
+	"previousHash": "0bd060fbd8fdc434f5dba8da3cff8cabb3630757",
+	"currentRevisionId": 1060,
+	"subject": "Display "Uploaded on" on unlisted/private videos",
+	"body": "Display "Uploaded on" on unlisted/private videos",
 	"branch": "master",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1697922969
+	"time": 1697923369
 }
