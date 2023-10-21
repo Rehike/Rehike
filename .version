@@ -1,10 +1,10 @@
 {
-	"previousHash": "11a40372bd659dda10c537193ff1f93e6f5e88c9",
-	"currentRevisionId": 1061,
-	"subject": "Localize html lang attr",
-	"body": "Localize html lang attr",
+	"previousHash": "4144abd4bfc1d6142f2e1f4053238bea97f426ab",
+	"currentRevisionId": 1062,
+	"subject": "Fix guide notifications Would've fixed the keys in the templates themselves but this API is fucking broken",
+	"body": "Fix guide notifications Would've fixed the keys in the templates themselves but this API is fucking broken",
 	"branch": "master",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1697924172
+	"time": 1697925483
 }

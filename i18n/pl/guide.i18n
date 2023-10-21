@@ -37,16 +37,15 @@ subscriptionsPromoTooltip: >
   Twoje subskrypcje pojawią się tutaj Przejrzyj kilka kanałów, aby zacząć.
 
 # Guide notification messages:
-notifications:
-  watchLaterVideoAdded: "Dodano do listy Do obejrzenia"
-  watchLaterVideoRemoved: "Usunięto z listy „Do obejrzenia”"
-  subscription: "Dodano subskrypcję"
-  unsubscription: "Subskrypcja została usunięta"
-  playlistLike: "Zapisano w playlistach"
-  playlistUnlike: "Usunięto z playlist"
-  playlistVideoAdded: "Dodano do playlisty"
-  playlistVideoRemoved: "Usunięto z playlisty"
-  videoLike: "Dodano do lubianych filmów"
-  videoUnlike: "Usunięto z lubianych filmów"
-  eventReminderSet: "Otrzymasz przypomnienie o tym wydarzeniu"
-  eventReminderRemoved: "Przypomnienie o wydarzeniu zostało usunięte"
+watchLaterVideoAdded: "Dodano do listy Do obejrzenia"
+watchLaterVideoRemoved: "Usunięto z listy „Do obejrzenia”"
+subscription: "Dodano subskrypcję"
+unsubscription: "Subskrypcja została usunięta"
+playlistLike: "Zapisano w playlistach"
+playlistUnlike: "Usunięto z playlist"
+playlistVideoAdded: "Dodano do playlisty"
+playlistVideoRemoved: "Usunięto z playlisty"
+videoLike: "Dodano do lubianych filmów"
+videoUnlike: "Usunięto z lubianych filmów"
+eventReminderSet: "Otrzymasz przypomnienie o tym wydarzeniu"
+eventReminderRemoved: "Przypomnienie o wydarzeniu zostało usunięte"

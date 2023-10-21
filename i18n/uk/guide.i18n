@@ -38,16 +38,15 @@ subscriptionsPromoTooltip: >
   чтобы начать.
 
 # Guide notification messages:
-notifications:
-  watchLaterVideoAdded: "Добавлено к просмотру позже"
-  watchLaterVideoRemoved: "Удалено из Посмотреть позже"
-  subscription: "Подписка добавлена"
-  unsubscription: "Подписка удалена"
-  playlistLike: "Сохранено в плейлисты"
-  playlistUnlike: "Удалено из плейлистов"
-  playlistVideoAdded: "Добавлено в плейлист"
-  playlistVideoRemoved: "Удалено из плейлиста"
-  videoLike: "Добавлено в понравившиеся видео"
-  videoUnlike: "Удалено из понравившихся видео"
-  eventReminderSet: "Вам напомнят об этом событии"
-  eventReminderRemoved: "Напоминание о событии удалено"
+watchLaterVideoAdded: "Добавлено к просмотру позже"
+watchLaterVideoRemoved: "Удалено из Посмотреть позже"
+subscription: "Подписка добавлена"
+unsubscription: "Подписка удалена"
+playlistLike: "Сохранено в плейлисты"
+playlistUnlike: "Удалено из плейлистов"
+playlistVideoAdded: "Добавлено в плейлист"
+playlistVideoRemoved: "Удалено из плейлиста"
+videoLike: "Добавлено в понравившиеся видео"
+videoUnlike: "Удалено из понравившихся видео"
+eventReminderSet: "Вам напомнят об этом событии"
+eventReminderRemoved: "Напоминание о событии удалено"
