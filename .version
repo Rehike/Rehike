@@ -1,10 +1,10 @@
 {
-	"previousHash": "0bd060fbd8fdc434f5dba8da3cff8cabb3630757",
-	"currentRevisionId": 1060,
-	"subject": "Display "Uploaded on" on unlisted/private videos",
-	"body": "Display "Uploaded on" on unlisted/private videos",
+	"previousHash": "11a40372bd659dda10c537193ff1f93e6f5e88c9",
+	"currentRevisionId": 1061,
+	"subject": "Localize html lang attr",
+	"body": "Localize html lang attr",
 	"branch": "master",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1697923369
+	"time": 1697924172
 }
