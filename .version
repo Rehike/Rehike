@@ -1,10 +1,10 @@
 {
-	"previousHash": "b58958217c62de9e04e5cad7d8596848932f79db",
-	"currentRevisionId": 1027,
-	"subject": "sorry didn't read",
-	"body": "sorry didn't read",
+	"previousHash": "e13f2e48e65c9bbdeab11da93ef9bfb163fb3f7c",
+	"currentRevisionId": 1028,
+	"subject": "Russian i18n regex correction",
+	"body": "Russian i18n regex correction",
 	"branch": "master",
 	"committerName": "Taniko Yamamoto",
 	"committerEmail": "kirasicecreamm@gmail.com",
-	"time": 1697898750
+	"time": 1697899773
 }
