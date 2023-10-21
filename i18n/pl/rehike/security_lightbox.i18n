@@ -1,13 +1,13 @@
 # Rehike security lightbox messages
 
-securityWarning: "Security warning"
-learnMoreButton: "Learn more"
-dismissButton: "Dismiss"
-moreOptionsButton: "More options"
-doNotShowAgainButton: "Do not show this again"
+securityWarning: "Ostrzeżenie dotyczące bezpieczeństwa"
+learnMoreButton: "Dowiedz się więcej"
+dismissButton: "Odrzuć"
+moreOptionsButton: "Więcej opcji"
+doNotShowAgainButton: "Nie pokazuj tego więcej"
 languageRespectiveWikiLink: "https://github.com/Rehike/Rehike/wiki/Running-Apache-as-user-on-Windows"
 
 runningAsSystemMessage: >
-  Rehike is running as NT AUTHORITY\SYSTEM. This can create a security 
-  vulnerability, and it is recommended that you reconfigure your webserver 
-  to run under your own user account.
+  Rehike działa jako NT AUTHORITY\SYSTEM. Może to stworzyć lukę w zabezpieczeniach 
+  i zaleca się ponowne skonfigurowanie webserwera 
+  aby działał pod własnym kontem użytkownika.
