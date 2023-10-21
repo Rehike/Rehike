@@ -1,10 +1,10 @@
 {
-	"previousHash": "19d4140938c4131ac30a2e32ff808eebd359eb1f",
-	"currentRevisionId": 1057,
-	"subject": "fix spf shit",
-	"body": "fix spf shit",
+	"previousHash": "53a9f4316eddfc0399f97c6f45ebc5a3217f4d47",
+	"currentRevisionId": 1058,
+	"subject": "Localize byline in watch recommendations",
+	"body": "Localize byline in watch recommendations",
 	"branch": "master",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1697921890
+	"time": 1697922765
 }

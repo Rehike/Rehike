@@ -50,7 +50,7 @@
         {% if author != null %}
         <span class="stat attribution">
             {% if rehike.config.appearance.usernamePrepends %}
-                <span>by </span>
+                <span>{{ yt.msgs.usernamePrepend }}</span>
             {% endif %}
             <span>{{ rehike.getText(author) }}</span>
         </span>
