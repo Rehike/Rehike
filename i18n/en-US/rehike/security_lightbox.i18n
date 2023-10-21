@@ -11,3 +11,4 @@ runningAsSystemMessage: >
   Rehike is running as NT AUTHORITY\SYSTEM. This can create a security 
   vulnerability, and it is recommended that you reconfigure your webserver 
   to run under your own user account.
+
