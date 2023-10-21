@@ -13,4 +13,4 @@ hideMulti: "Скрыть %s ответы"
 oldReplyTextRegex: "/Посмотреть /"
 
 replyCountIsolator: "/( ответы)|( ответить)/i"
-likeCountIsolator: "/(Like this )|(comment)|(reply)|( along with )|(,)|( other person)|( other people)/"
+likeCountIsolator: "/[^0-9]/"
