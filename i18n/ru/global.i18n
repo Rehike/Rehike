@@ -35,7 +35,7 @@ addToWatchQueue: "Очередь на просмотр"
 addToWatchQueueAdded: "Добавлено"
 addToWatchQueueError: "Ошибка"
 addToTvQueue: "Очередь"
-watchLaterSignIn: "%s Войдите %s чтобы добавить это в Смотреть позже"
+watchLaterSignIn: "Сначала %s войдите в аккаунт%s"
 
 # Add to dialog strings:
 addToHeader: "Добавить в"
