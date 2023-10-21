@@ -1,10 +1,10 @@
 {
-	"previousHash": "d5d2aa2eea52a1ff3db36480d31de7d25de40f39",
-	"currentRevisionId": 1040,
-	"subject": "Localize yt.config_",
-	"body": "Localize yt.config_",
+	"previousHash": "19d4140938c4131ac30a2e32ff808eebd359eb1f",
+	"currentRevisionId": 1057,
+	"subject": "fix spf shit",
+	"body": "fix spf shit",
 	"branch": "master",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1697919463
+	"time": 1697921890
 }
