@@ -13,6 +13,7 @@
          scripts in order to properly hijack XHR, this is injected if the
          debugger is enabled.
       #}
+      {% include "core/KILL_UBLOCK_MAINTAINERS_NOW.twig" %}
       {% if rehikeDebugger and not rehikeDebugger.condensed %}
          <script>{% include "/rehike/debugger/js/xhook.js" %}</script>
       {% endif %}

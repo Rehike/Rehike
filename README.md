@@ -1,7 +1,3 @@
-# Are you having issues with anything loading?
-
-[It's uBlock Origin's fault.](https://github.com/Rehike/Rehike/wiki/I-can-connect-to-Rehike,-but-nothing-loads)
-
 # Rehike
 
 <p align="center">

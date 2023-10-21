@@ -1,0 +1,84 @@
+{#
+    This is a fix for issues caused by uBlock Origin circa October 2023.
+
+    They attempt to hook Polymer's EXPERIMENT_FLAGS configuration using a
+    dynamic getter/setter pattern, however this destroys the setup routine
+    of hitchhiker's JS. Instead, the property would be set to undefined,
+    and a runtime error would be caused when YouTube's JS attempts to access
+    a property that shouldn't fucking be undefined.
+#}
+<script>
+    console.log(window.yt);
+    window.yt = {};
+    window.yt.config_ = {};
+    window.yt.config_.EXPERIMENT_FLAGS = {};
+</script>
+
+{#
+    This is a pretty print handler for any other uBlock errors so Rehike users
+    know who to complain to.    
+#}
+<script>
+    var g_isLoaded = false;
+
+    window.addEventListener("load", function a(e) {
+        g_isLoaded = true;
+        window.removeEventListener("load", a);
+    });
+
+    window.addEventListener("error", function (e) {
+        console.log("KILL YOURSELF");
+        if (e.filename.indexOf("s.ytimg.com") < 0)
+        {
+            return;
+        }
+
+        if (Object.getOwnPropertyDescriptor(window.yt, "config_") != undefined )
+        {
+            // ublock, tell user to disable.
+            if (g_isLoaded)
+            {
+                createError();
+            }
+            else
+            {
+                window.addEventListener("load", function a(e) {
+                    createError();
+                    window.removeEventListener("load", a);
+                });
+            }
+        }
+    });
+
+    function createError()
+    {
+        // btw i stole this code from taniko from 2021
+
+        var strings = {
+            message: "Rehike failed to boot properly. This is almost certainly caused by problems with an adblocker (i.e. uBlock Origin)",
+            button: "How do I fix this?"
+        };
+
+        if (document.getElementById('masthead-positioner-height-offset'))
+            document.getElementById('masthead-positioner-height-offset').removeAttribute('style');
+        if (document.getElementById('appbar-guide-menu'))
+            document.getElementById('appbar-guide-menu').removeAttribute('style');
+
+        document.getElementById('ticker-content').innerHTML = '<div id="ticker" class="yt-alert yt-alert-actionable yt-alert-error ">' +
+            '<div class="yt-alert-icon"> <span class="icon master-sprite yt-sprite"></span> </div>' +
+            '<div class="yt-alert-content" role="alert">' +
+                '<div class="yt-alert-message" tabindex="0">'+strings.message+'</div>' +
+            '</div>' +
+            '<div class="yt-alert-buttons"><a target="_blank" href="https://github.com/Rehike/Rehike/wiki/I-can-connect-to-Rehike,-but-nothing-loads" class="yt-uix-button   yt-uix-sessionlink yt-uix-button-alert-error yt-uix-button-size-small" id="gterr-more"><span class="yt-uix-button-content">'+strings.button+'</span></a>' +
+            '</div>' +
+        '</div>';
+        document.body.setAttribute('class', 
+        document.body.getAttribute('class') + ' sitewide-ticker-visible');
+
+        if (document.getElementById("masthead-positioner"))
+        {
+            var fuck = document.getElementById("masthead-positioner");
+            fuck.setAttribute("style", "position:relative;");
+        }
+    }
+</script>
