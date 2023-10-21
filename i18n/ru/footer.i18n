@@ -1,6 +1,6 @@
 # Common strings that show in the footer at the bottom of the page:
 
-logoTooltip: "YouTube home"
+logoTooltip: "Главная страница YouTube"
 
 pickerLanguage: "Язык: %s"
 pickerLocation: "Страна: %s"
