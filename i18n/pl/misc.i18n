@@ -16,7 +16,7 @@ unsubscribeText: "Usuń subskrypcję"
 # Get your UCID from YouTube. This is on https://www.youtube.com/account_advanced
 # Paste it into here: https://www.youtube.com/subscribe_embed?usegapi=1&channelid=<UCID>&layout=full&count=default
 # Make sure that you're logged into the account you need to access this string.
-selfSubscribeTooltip: "Nie musisz subskrybować samego siebie!"
+selfSubscribeTooltip: "Nie trzeba subskrybować własnego kanału"
 
 notificationPrefsTitle: "Powiadomienia od %s"
 notificationPrefsLabel: "Preferencje subskrypcji"

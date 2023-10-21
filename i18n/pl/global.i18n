@@ -3,8 +3,8 @@
 # These are exported to the templates at `yt.msg`.
 
 # Common aria (accessibility) labels
-loadingIconLabel: "Loading icon"
-actionMenuLabel: "Action menu."
+loadingIconLabel: "Ikona wczytywania"
+actionMenuLabel: "Menu działania."
 
 # Spinner (loading) text:
 loading: "Wczytuję..."
@@ -17,7 +17,7 @@ showMore: "Pokaż więcej"
 showLess: "Pokaż mniej"
 
 # General "load more" text
-loadMore: "Load more"
+loadMore: "Pokaż więcej"
 
 # Duration accessibility strings (shown on watch)
 durationA11y: " - Czas trwania: %s."
@@ -31,10 +31,10 @@ verified: "Zweryfikowano"
 addToWatchLater: "Do obejrzenia"
 addedToWatchLater: "Dodano"
 addToWatchLaterError: "Błąd"
-addToWatchQueue: "Watch Queue"
-addToWatchQueueAdded: "Added"
-addToWatchQueueError: "Error"
-addToTvQueue: "Queue"
+addToWatchQueue: "Kolejka oglądania"
+addToWatchQueueAdded: "Dodano"
+addToWatchQueueError: "Błąd"
+addToTvQueue: "Kolejka"
 watchLaterSignIn: "%sZaloguj się%s, by dodać film do listy „Do obejrzenia”"
 
 # Add to dialog strings:
@@ -50,22 +50,22 @@ transcriptTitle: "Transkrypcja"
 transcriptFail: "Interaktywna transkrypcja nie mogła zostać wczytana."
 
 # Video player ad (?) JS messages
-adsInstreamFirstPlay: "A video ad is playing."
-adsInstreamSkippable: "Video ad can be skipped."
-adsOverlayImpression: "Ad displayed."
+adsInstreamFirstPlay: "Trwa odtwarzanie reklamy."
+adsInstreamSkippable: "Reklama może być pominięta."
+adsOverlayImpression: "Reklama wyświetlona."
 
 # Searchbox labels
-sboxSuggestionDismissedLabel: "Suggestion removed"
-sboxSuggestionDismissLabel: "Remove"
+sboxSuggestionDismissedLabel: "Propozycja usunięta"
+sboxSuggestionDismissLabel: "Usuń"
 
 # Misc:
-videoCountPlural: "%s videos"
-videoCountSingular: "1 video"
+videoCountPlural: "%s filmów"
+videoCountSingular: "1 film"
 commentPostFail: Komentarz nie został opublikowany."
 viewFullPlaylist: "Pokaż całą playlistę"
-mdxAutoplayOff: "Autoplay is off"
-mdxAutoplayOn: "Autoplay is on"
-sorryAboutThat: "Sorry about that."
+mdxAutoplayOff: "Autoodtwarzanie jest wyłączone"
+mdxAutoplayOn: "Autoodtwarzanie jest włączone"
+sorryAboutThat: "Przepraszamy za usterki."
 browseUnsavedChanges: >
-  Some of the changes you have made to channel settings have not been saved
-  and will be lost if you navigate away from this page.
+  Niektóre zmiany wprowadzone w ustawieniach kanału nie zostały zapisane
+  i zostaną utracone w przypadku opuszczenia tej strony.
