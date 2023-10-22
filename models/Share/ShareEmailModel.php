@@ -2,7 +2,7 @@
 
 namespace Rehike\Model\Share;
 
-use Rehike\i18n;
+use Rehike\i18n\i18n;
 use Rehike\Model\Common\MButton;
 
 
@@ -15,20 +15,19 @@ class ShareEmailModel {
 
 
         $response = (object) [];
-        $i18n = i18n::newNamespace("share");
-        $i18n->registerFromFolder("i18n/share");
+        $i18n = i18n::getNamespace("share");
 
         $response->strs = $i18n;
         
         $response->email_forms = [
             (object) [
-                "placeholder" => $i18n->recipientsPlaceholder,
-                "title" => $i18n->recipientsAlt,
+                "placeholder" => $i18n->get("recipientsPlaceholder"),
+                "title" => $i18n->get("recipientsAlt"),
                 "class" => "share-email-recipients"
             ],
             (object) [
-                "placeholder" => $i18n->optionalMessagePlaceholder,
-                "title" => $i18n->optionalMessageAlt,
+                "placeholder" => $i18n->get("optionalMessagePlaceholder"),
+                "title" => $i18n->get("optionalMessageAlt"),
                 "class" => "share-email-note"
             ]
         ];
@@ -66,7 +65,7 @@ class ShareEmailModel {
             "text" => (object) [
                 "runs" => [
                     (object) [
-                        "text" => $i18n->sendEmail
+                        "text" => $i18n->get("sendEmail")
                     ]
                 ]
             ]
