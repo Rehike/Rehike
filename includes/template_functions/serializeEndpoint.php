@@ -16,7 +16,7 @@ use Com\Youtube\Innertube\Navigation\NavigationEndpoint\UrlEndpoint;
  * @param object $endpoint
  * @return string
  */
-\Rehike\TemplateFunctions::register('serialiseEndpoint', function($endpoint) {
+\Rehike\TemplateFunctions::register('serializeEndpoint', function($endpoint) {
     $pb = new NavigationEndpoint();
 
     if (isset($endpoint->browseEndpoint))
