@@ -1,10 +1,10 @@
 {
-	"previousHash": "4144abd4bfc1d6142f2e1f4053238bea97f426ab",
-	"currentRevisionId": 1062,
-	"subject": "Fix guide notifications Would've fixed the keys in the templates themselves but this API is fucking broken",
-	"body": "Fix guide notifications Would've fixed the keys in the templates themselves but this API is fucking broken",
+	"previousHash": "c0c646a8daeabf968325a76060990c601556e23c",
+	"currentRevisionId": 1068,
+	"subject": "remove legacy i18n dead code",
+	"body": "remove legacy i18n dead code",
 	"branch": "master",
-	"committerName": "aubymori",
-	"committerEmail": "aubyomori@gmail.com",
-	"time": 1697925483
+	"committerName": "Daylin Cooper",
+	"committerEmail": "dcoop2004@gmail.com",
+	"time": 1697985987
 }
