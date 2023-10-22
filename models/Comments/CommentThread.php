@@ -361,17 +361,10 @@ class CommentThread
         
         $count = (int)self::getLikeCountFromLabel($likeAriaLabel);
 
-        if (@$context->isLiked) {
-            $context->voteCount = [
-                "indifferentText" => (string)($count - 1),
-                "likedText" => (string)$count
-            ];
-        } else {
-            $context->voteCount = [
-                "indifferentText" => (string)$count,
-                "likedText" => (string)($count + 1)
-            ];
-        }
+        $context->voteCount = [
+            "indifferentText" => (string)$count,
+            "likedText" => (string)($count + 1)
+        ];
     }
 
     public static function getLikeCountFromLabel($label)

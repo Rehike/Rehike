@@ -14,8 +14,6 @@ class MLikeButton extends MAbstractLikeButton
     {
         $i18n = i18n::getNamespace("watch");
 
-        if ($active && is_numeric($likeCount)) $likeCount++;
-
         $this->accessibility = (object) [
             "accessibilityData" => (object) [
                 "label" => $a11y

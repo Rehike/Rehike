@@ -14,8 +14,6 @@ class MDislikeButton extends MAbstractLikeButton
     {
         $i18n = i18n::getNamespace("watch");
 
-        if ($active && is_numeric($dislikeCount)) $dislikeCount++;
-
         $this->accessibilityAttributes = [
             "label" => $a11y
         ];
