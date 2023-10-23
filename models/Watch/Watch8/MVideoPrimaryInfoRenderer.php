@@ -4,6 +4,7 @@ namespace Rehike\Model\Watch\Watch8;
 use Rehike\TemplateFunctions;
 use Rehike\ConfigManager\ConfigManager;
 use Rehike\Util\ExtractUtils;
+use Rehike\i18n\i18n;
 
 use Rehike\Model\Watch\Watch8\{
     LikeButton\MLikeButtonRenderer,
@@ -48,6 +49,7 @@ class MVideoPrimaryInfoRenderer
     public function __construct($dataHost, $videoId)
     {
         $info = &$dataHost::$primaryInfo ?? null;
+        $i18n = i18n::getNamespace("watch");
 
         if (!is_null($info))
         {
@@ -57,9 +59,14 @@ class MVideoPrimaryInfoRenderer
             $dataHost::$title = TemplateFunctions::getText($this->title);
 
             if (isset($info->viewCount->videoViewCountRenderer))
-            $this->viewCount = (true === ConfigManager::getConfigProp("appearance.noViewsText"))
-                ? ExtractUtils::isolateViewCnt(TemplateFunctions::getText($info->viewCount->videoViewCountRenderer->viewCount))
-                : TemplateFunctions::getText($info->viewCount->videoViewCountRenderer->viewCount) ?? null;
+
+            $this->viewCount = TemplateFunctions::getText($info->viewCount->videoViewCountRenderer->viewCount);
+            if (ConfigManager::getConfigProp("appearance.noViewsText"))
+            {
+                $this->viewCount = $i18n->formatNumber(
+                    ExtractUtils::isolateViewCnt($this->viewCount)
+                );
+            }
             $this->superTitle = isset($info->superTitleLink) ? new MSuperTitle($info->superTitleLink) : null;
             $this->likeButtonRenderer = new MLikeButtonRenderer($dataHost, $info->videoActions->menuRenderer, $videoId);
             $this->owner = new MOwner($dataHost);
