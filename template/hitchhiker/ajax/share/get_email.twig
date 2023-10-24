@@ -18,12 +18,12 @@
 		{%- endfor -%}
 
 
-		<label>{{ yt.page.strs.messagePreview }}</label>
+		<label>{{ yt.page.messagePreviewStr }}</label>
 		<div class="share-email-preview-container section">
 			{# yt-uix-form-input-placeholder-container is used here for spacing below the element. Weird, I know. #}
 			<span class="share-email-preview-header yt-uix-form-input-placeholder-container">
 				<a href="https://www.youtube.com/channel/{{ yt.page.user_ucid }}">{{ yt.page.user_name }}</a>
-				{{ yt.page.strs.emailShared }}:
+				{{ yt.page.emailSharedStr }}:
 			</span>
             <br>
 
