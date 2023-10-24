@@ -1,0 +1,113 @@
+title: "Ajustes de Rehike"
+saveChanges: "Guardar cambios"
+saveChangesSuccess: "Configuración actualizada con exito!"
+saveChangesFailure: "Error al actualizar la configuración."
+
+tabs:
+  appearance: "Apariencia"
+  experiments: "Experimentos"
+  advanced: "Avanzado"
+
+props:
+  appearance:
+    modernLogo:
+      title: "Usar el logo actual de YouTube"
+      subtitle: >
+        Usado desde 2017. Habilitar esto puede romper
+        algunos temas personalizados hechos antes de 2017.
+    uploadButtonType:
+      title: "Tipo de botón de subir"
+      values:
+        BUTTON: "Botón (2013-2016)"
+        ICON: "Icono (2016-2018)"
+        MENU: "Menu de creación (2018+)"
+    largeSearchResults:
+      title: "Miniaturas grandes en la página de búsqueda"
+      subtitle: >
+        Puede romper algunos temas personalizados hechos antes de 2017.
+    swapSearchViewsAndDate:
+      title: "Intercambiar visualizaciones y fecha en la página de búsqueda"
+      subtitle: >
+        Mostrar las visualizaciones antes de la fecha en los videos de la página de búsqueda.
+    showVersionInFooter:
+      title: "Mostrar versión de Rehike en el pie de página"
+      subtitle: >
+        Muestra un link al "Acerca de" de Rehike al final del pie de página. 
+    useRyd:
+      title: "Mostrar \"No me gusta\" en los videos"
+      subtitle: >
+        Estadisticas obtenidas por la API de Return Youtube Dislike.
+    usernamePrepends:
+      title: "Mostrar \"por\" antes del nombre del autor en links"
+      subtitle: >
+        Utilizado hasta antes de 2016.
+    noViewsText:
+      title: "Quitar el texto de \"visualizaciones\" del contador en la pagina del video"
+      subtitle: >
+        Antes del 2016, solo se mostraba el número de visualizaciones, sin ningún texto.
+    movingThumbnails:
+      title: "Mostrar una previsualización animada del video al acercar el puntero"
+      subtitle: >
+        Utilizado desde 2018.
+    cssFixes:
+      title: "Arreglos de CSS para YouTube"
+      subtitle: >
+        Arregla inconsistencias o bugs con el CSS original de Hitchhiker. Puede que rompa
+        la compatibilidad con algunos estilos personalizados.
+    watchSidebarDates:
+      title: "Muestra fecha de publicación en las recomendaciones de la página de visualización"
+      subtitle: >
+        A comparación de Polymer, Hitchhiker no mostraba estos por defecto.
+    watchSidebarVerification:
+      title: "Muestra iconos de verificación en las recomendaciones de la pagina de visualización"
+      subtitle: >
+        A comparación de Polymer, Hitchhiker no mostraba estos por defecto.
+    oldBestOfYouTubeIcons:
+      title: "Muestra los antiguos iconos rojos en la sección de \"Lo mejor de Youtube\" en la guía"
+      subtitle: >
+        Muestra los antiguos iconos rojos de los canales, 
+        en vez de los iconos negros utilizados ahora.
+  
+  experiments:
+    useSignInV2:
+      title: "Utiliza el nuevo inicio de sesión (V2)"
+      subtitle: >
+        Utiliza el nuevo experimento de la reescritura del servicio de inicio de sesión.
+        Esta opción deberia de estar disponible durante el desarollo de la versión 2, hasta que
+        sea utilizada por defecto y que el antiguo servicio sea eliminado.
+    disableSignInOnHome:
+      title: "Deshabilita la pagina de inicio como usuario"
+      subtitle: >
+        Quita las recomendaciones hechas para el usuario y hace la página de
+        inicio como si no hubieras iniciado sesión. Esto es una solución a la
+        restricción de la página de inicio si tienes el historial de reproducción desactivado.
+        (2023/08/18).
+  
+  advanced:
+    enableDebugger:
+      title: "Habilita el depurador"
+      subtitle: >
+        El depurador provee herramientas útiles para desarolladores. Solo habilítalo
+        si eres un desarollador o si quieres reportar un bug y necesitas más información.
+    clearSigninCache:
+      title: "Cache de inicio de sesión"
+      subtitle: >
+        Rehike tiene un cache de inicio de sesión para evitar realizar
+        muchas solicitudes a YouTube.
+      button: "Borrar caché de inicio de sesión"
+    clearPlayerCache:
+      title: "Cache del reproductor"
+      subtitle: >
+        Rehike tiene un cache para el reproductor, así evitando 
+        realizar muchas solicitudes a YouTube.
+      button: "Borrar caché del reproductor"
+    factoryReset:
+      title: "Restablecer Rehike"
+      subtitle: >
+        Restablece a Rehike a las configuraciones predeterminadas,
+        incluyendo configuraciones, cache, y cambios que no se encuentren
+        en el repositorio remoto.
+      button: "Restablecer Rehike"
+    updateRehike:
+      title: "Actualizar Rehike"
+      button: "Actualizar"

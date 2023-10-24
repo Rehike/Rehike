@@ -1,0 +1,5 @@
+resultCountSingular: "Cerca de 1 resultado"
+resultCountPlural: "Cerca de %s resultados"
+filtersClear: "Borrar todos los filtros"
+pageNext: "Siguiente »"
+pagePrev: "« Anterior"

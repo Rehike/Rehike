@@ -1,0 +1,28 @@
+brandName: "Rehike"
+versionHeader: "Versión %s"
+nightly: "Nightly"
+nightlyInfoTooltip: >
+  Este lanzamiento es demasiado reciente y puede contener errores inesperados.
+
+subheaderNightlyInfo: "Información actual de la rama"
+nonGitNotice: "Este lanzamiento de Rehike no contiene información Git"
+nonGitExtended: >
+  Esto puede haber ocurrido si has descargado el repositorio directamente desde GitHub,
+  por ejemplo, usando la función de "Download ZIP". La información de la version puede
+  no estar disponible o perdida.
+syncGithubButton: "Sincronizar con GitHub"
+failedNotice: "Fallo al obtener la información de la versión."
+remoteFailedNotice: "Fallo al obtener la información remota de la versión."
+remoteFailedExtended: "La información de la versión es limitada."
+noDotVersionNotice: "El archivo .version no se encuentra o está corrupto."
+noNewVersions: "No hay versiones nuevas disponibles."
+oneNewVersion: "Una nueva versión esta disponible."
+varNewVersions: "Hay %s versiones disponibles."
+unknownNewVersions: "Esta versión es demasiado antigua."
+
+headingVersionInfo: "Información de la versión"
+viewOnGithub: "Ver en GitHub"
+
+extraInfo: "Información extra"
+operatingSystem: "Sistema operativo"
+phpVersion: "Versión PHP"
