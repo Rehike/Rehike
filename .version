@@ -1,10 +1,10 @@
 {
-	"previousHash": "108fa23ba3a5907b447184c8707f2d13589dab37",
-	"currentRevisionId": 1076,
-	"subject": "Close enough",
-	"body": "Close enough",
+	"previousHash": "7c91ee41e1ca30ceab6db033c222adb6452ffc85",
+	"currentRevisionId": 1077,
+	"subject": "[i18n/ja] 404 strings",
+	"body": "[i18n/ja] 404 strings",
 	"branch": "master",
 	"committerName": "Taniko Yamamoto",
 	"committerEmail": "kirasicecreamm@gmail.com",
-	"time": 1698139695
+	"time": 1698140338
 }
