@@ -760,7 +760,11 @@ class Converter
     {
         $signinInfo = Signin::getInfo();
 
-        if (isset($signinInfo["ucid"]) && is_string($signinInfo["ucid"]))
+        if (
+            isset($signinInfo["ucid"]) && 
+            is_string($signinInfo["ucid"]) && 
+            !empty($signinInfo["ucid"])
+        )
         {
             self::$ucid = $signinInfo["ucid"];
         }
