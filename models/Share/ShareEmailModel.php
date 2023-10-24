@@ -17,7 +17,8 @@ class ShareEmailModel {
         $response = (object) [];
         $i18n = i18n::getNamespace("share");
 
-        $response->strs = $i18n;
+        $response->messagePreviewStr = $i18n->get("messagePreview");
+        $response->emailSharedStr = $i18n->get("emailShared");
         
         $response->email_forms = [
             (object) [
