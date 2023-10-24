@@ -1,0 +1,28 @@
+# Masthead (site header) strings:
+
+a11ySkipNav: "Saltar navegación"
+logoTooltip: "Inicio"
+appbarGuideLabel: "Guía"
+searchboxPlaceholder: "Buscar"
+uploadButton: "Subir"
+creationLabel: "Crear un video o post"
+creationUpload: "Subir video"
+creationLive: "Transmitir en vivo"
+creationPost: "Crear post"
+notificationsTitle: "Notificaciones"
+notificationsSettings: "Ajustes"
+notificationsNone: "0 notificaciones sin leer."
+notificationsSingular: "1 notificación sin leer."
+# Uses "#" symbol for placeholder because YouTube's JS accesses this string.
+notificationsPlural: "# notificaciones sin leer."
+notifications99Plus: "99+"
+accountPickerLabel: >
+  Foto de perfil de la cuenta la cual abre la lista de cuentas alternativas
+accountPickerStudio: "YouTube Studio"
+accountPickerSettings: "Ajustes de Rehike"
+accountPickerCreate: "Crear canal"
+accountPickerPhotoChange: "Cambiar"
+accountPickerMultiLoginHeader: "Otras cuentas"
+accountPickerAddAccount: "Añadir cuenta"
+accountPickerSignOut: "Cerrar sesión"
+signInButton: "Iniciar sesión"

@@ -1,0 +1,29 @@
+openButtonLabel: "Depurador"
+openButtonErrorCountSingular: "(1 error)"
+openButtonErrorCountPlural: "(%s errores)"
+condensedButtonLabelSingular: >
+  Ha ocurrido un error. Haz click para averiguar más.
+condensedButtonLabelPlural: >
+  Han ocurrido %s errores. Haz click para averiguar más.
+
+debuggerTitle: "Depurador"
+condensedDebuggerTitle: "Errores"
+condensedDebuggerHelpLink: "¿Qué debería de hacer?"
+debuggerClose: "Cerrar"
+
+errorWarning: "Advertencia"
+errorError: "Error"
+errorNotice: "Aviso"
+errorDeprecated: "Obsoleto"
+
+tabErrorTitle: "Errores (%s)"
+tabConsoleTitle: "Consola de PHP"
+tabNetworkTitle: "Red"
+tabPerformanceTitle: "Rendimiento"
+tabYtWalkerTitle: "Caminador de variables"
+nothingToSee: "¡Nada que ver aquí!"
+
+historyCurrent: "Página actual"
+historyPrevious: "Página anterior"
+historyPagesAgo: "# páginas atrás"
+historyUnavailable: "Historial no disponible"

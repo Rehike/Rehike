@@ -1,0 +1,71 @@
+# Global strings
+# These include both common things and most JS messages.
+# These are exported to the templates at `yt.msg`.
+
+# Common aria (accessibility) labels
+loadingIconLabel: "Ícono de carga"
+actionMenuLabel: "Menu de acción."
+
+# Spinner (loading) text:
+loading: "Cargando..."
+working: "Trabajando..."
+
+# Generic close button text
+close: "Cerrar"
+
+showMore: "Mostrar más"
+showLess: "Mostrar menos"
+
+# General "load more" text
+loadMore: "Cargar más"
+
+# Duration accessibility strings (shown on watch)
+durationA11y: " - Duración: %s."
+
+# TODO-i18n: make this use printf formatting so it can be more
+# versatile.
+usernamePrepend: "por "
+verified: "Verificado"
+
+# Video thumbnail watch later button strings:
+addToWatchLater: "Ver mas tarde"
+addedToWatchLater: "Añadido"
+addToWatchLaterError: "Error"
+addToWatchQueue: "Cola de reproducción"
+addToWatchQueueAdded: "Añadido"
+addToWatchQueueError: "Error"
+addToTvQueue: "Cola"
+watchLaterSignIn: "%sInicia sesión%s para añadir esto a Ver mas tarde"
+
+# Add to dialog strings:
+addToHeader: "Añadir a"
+addToLoading: "Cargando listas de reproducción..."
+
+# Shelfsliders (horizontal shelves):
+shelfsliderNext: "Siguiente"
+shelfsliderPrev: "Anterior"
+
+# Interactive transcripts:
+transcriptTitle: "Transcripcción"
+transcriptFail: "La transcripcción interactiva no se ha podido cargar."
+
+# Video player ad (?) JS messages
+adsInstreamFirstPlay: "Una videopublicidad se esta reproduciendo."
+adsInstreamSkippable: "La publicidad se puede saltar."
+adsOverlayImpression: "Publicidad mostrada."
+
+# Searchbox labels
+sboxSuggestionDismissedLabel: "Sugerencia eliminada"
+sboxSuggestionDismissLabel: "Quitar"
+
+# Misc:
+videoCountPlural: "%s videos"
+videoCountSingular: "1 video"
+commentPostFail: "Error al publicar comentario."
+viewFullPlaylist: "Ver lista de reproducción completa"
+mdxAutoplayOff: "Reproducción automática deshabilitada"
+mdxAutoplayOn: "Reproducción automática habilitada"
+sorryAboutThat: "Lo sentimos."
+browseUnsavedChanges: >
+  Algunos de los cambios que has hecho a la configuración del canal no han sido
+  guardados y se perderán si sales de la página.

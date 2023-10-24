@@ -1,0 +1,73 @@
+languageName: "Español"
+expandedLanguageName: "Español (Latinoamerica)"
+writingDirection: ltr
+
+thousandsSeparator: ","
+decimalSeparator: "."
+
+numberOfMonths: 12
+daysInWeek: 7
+
+spaceOnLineBreak: true
+
+standardDateOrder: dmy
+
+firstDayOfWeek: 1 # Sunday
+
+am: "AM"
+pm: "PM"
+
+# https://www.php.net/manual/en/datetime.format.php
+expandedDateWithTime: "l, j \d\e F, Y g:i A" # Tuesday, 17 de Octubre, 2023 12:50 AM
+expandedDate: "l, j \d\e F, Y" # Tuesday, 17 de Octubre, 2023
+dateWithTime: "j \d\e F, Y g:i A" # 17 de Octubre, 2023 12:50 AM
+date: "F j, Y" # October 17 2023
+shortDateWithTime: "d/m/Y g:i A" # 10/17/2023 12:50 AM
+shortDate: "d/m/Y" # 10/17/2023
+time: "g:i A" # 12:50 AM
+
+daysOfWeek:
+  1: "Domingo"
+  2: "Lunes"
+  3: "Martes"
+  4: "Miércoles"
+  5: "Jueves"
+  6: "Viernes"
+  7: "Sábado"
+
+shortDaysOfWeek:
+  1: "Dom"
+  2: "Lun"
+  3: "Mar"
+  4: "Mié"
+  5: "Jue"
+  6: "Vie"
+  7: "Sáb"
+
+monthNames:
+  1: "Enero"
+  2: "Febrero"
+  3: "Marzo"
+  4: "Abril"
+  5: "Mayo"
+  6: "Junio"
+  7: "Julio"
+  8: "Agosto"
+  9: "Septiembre"
+  10: "Octubre"
+  11: "Noviembre"
+  12: "Diciembre"
+
+shortMonthNames:
+  1: "Ene"
+  2: "Feb"
+  3: "Mar"
+  4: "Abr"
+  5: "May"
+  6: "Jun"
+  7: "Jul"
+  8: "Ago"
+  9: "Sep"
+  10: "Oct"
+  11: "Nov"
+  12: "Dic"
