@@ -19,6 +19,7 @@ manageSubscriptionsLabel: "Manage subscriptions"
 
 # Section names:
 bestOfYouTubeTitle: "Best of YouTube"
+libraryTitle: "Library"
 
 # Best of YouTube section item names:
 bestOfYouTubePopularOnYouTube: "Popular on YouTube"

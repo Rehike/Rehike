@@ -15,6 +15,7 @@ manageSubscriptionsLabel: "登録リストを管理"
 
 # Section names:
 bestOfYouTubeTitle: "Best of YouTube"
+libraryTitle: "ライブラリ"
 
 # Best of YouTube section item names:
 bestOfYouTubePopularOnYouTube: "YouTube で人気"

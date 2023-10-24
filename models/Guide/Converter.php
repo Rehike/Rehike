@@ -12,13 +12,19 @@ use Rehike\Model\Traits\NavigationEndpoint;
  * the Rehike format.
  * 
  * It's messy because I was lazy and sick while writing this,
- * sorry.
+ * sorry. <--- hi taniko from the past i love you and it really wasn't bad
+ * code at all :3 it's very readable and well documented
  * 
  * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class Converter
 {
+    /**
+     * The user's current UCID.
+     */
+    private static string $ucid = "";
+
     /**
      * Since the entire purpose of this class is to convert from
      * data, this is the insertion point function.
@@ -35,6 +41,14 @@ class Converter
         // Log the sign in state from the Signin service
         // so that I can use it later.
         $signedIn = Signin::isSignedIn();
+
+        // Guide update (October 2023) makes obtaining the UCID a little bit
+        // more difficult.
+        $canonicalLibrary = self::getInnertubeLibrarySection($data);
+        if (null != $canonicalLibrary)
+        {
+            self::initUcid($canonicalLibrary);
+        }
 
         $response = [];
 
@@ -123,10 +137,10 @@ class Converter
         $response[] = $homeItem;
 
         // My channel item (if signed in)
-        if ($signedIn && isset($signinInfo->ucid) && @$signinInfo->ucid != "")
+        if ($signedIn && !empty(self::getUcid()))
         {
             $response[] = self::bakeGuideItem(
-                "/channel/{$signinInfo->ucid}",
+                "/channel/" . self::getUcid(),
                 $strings->get("myChannel"),
                 "SYSTEM::MY_CHANNEL"
             );
@@ -244,6 +258,26 @@ class Converter
     }
 
     /**
+     * Get the InnerTube library section structure.
+     * 
+     * Since this is used in multiple areas, there is one common helper function
+     * for this behavior.
+     */
+    private static function getInnertubeLibrarySection(object $data): ?object
+    {
+        $mainSection = $data->items[0]->guideSectionRenderer->items;
+
+        // This atrocious pattern appears a lot here.
+        // It's just the easiest way to get the last item of the array.
+        if (isset($mainSection[count($mainSection) - 1]->guideCollapsibleSectionEntryRenderer))
+        {
+            return $mainSection[count($mainSection) - 1]->guideCollapsibleSectionEntryRenderer;
+        }
+        
+        return null;
+    }
+
+    /**
      * This function is responsible for getting the library section.
      * 
      * It's a huge mess.
@@ -263,27 +297,19 @@ class Converter
      */
     public static function getLibrarySection($data)
     {
-        $mainSection = $data->items[0]->guideSectionRenderer->items;
-
         // Custom strings are only used this time for the expander
         // text.
         $strings = i18n::getNamespace("guide");
 
-        $ucid = Signin::getInfo()["ucid"];
+        $ucid = self::getUcid();
 
-        // This atrocious pattern appears a lot here.
-        // It's just the easiest way to get the last item of the array.
-        if (isset($mainSection[count($mainSection) - 1]->guideCollapsibleSectionEntryRenderer))
-        {
-            $librarySection = $mainSection[count($mainSection) - 1]->guideCollapsibleSectionEntryRenderer;
-        }
-        else
-        {
+        $librarySection = self::getInnertubeLibrarySection($data);
+
+        if ($librarySection == null)
             return null;
-        }
 
         // Store the title for later use (it needs to have a navigation endpoint later on)
-        $title = $librarySection->headerEntry->guideEntryRenderer->formattedTitle->simpleText;
+        $title = $strings->get("libraryTitle");
 
         $response = [];
 
@@ -720,5 +746,32 @@ class Converter
 
         // Otherwise it doesn't exist
         return null;
+    }
+
+    /**
+     * Get the user's current UCID.
+     */
+    public static function getUcid(): string
+    {
+        return self::$ucid;
+    }
+
+    private static function initUcid(object $librarySection): void
+    {
+        $signinInfo = Signin::getInfo();
+
+        if (isset($signinInfo["ucid"]) && is_string($signinInfo["ucid"]))
+        {
+            self::$ucid = $signinInfo["ucid"];
+        }
+        else if (isset($librarySection->sectionItems[0]->guideEntryRenderer->icon->iconType))
+        {
+            $a = $librarySection->sectionItems[0]->guideEntryRenderer;
+
+            if ("ACCOUNT_BOX" == $a->icon->iconType)
+            {
+                self::$ucid = $a->navigationEndpoint->browseEndpoint->browseId;
+            }
+        }
     }
 }
