@@ -3,6 +3,7 @@ namespace Rehike;
 
 use Rehike\Exception\Network\InnertubeFailedRequestException;
 use Rehike\Signin\AuthManager;
+use Rehike\i18n\i18n;
 
 use YukisCoffee\CoffeeRequest\CoffeeRequest;
 use YukisCoffee\CoffeeRequest\Promise;

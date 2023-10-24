@@ -74,7 +74,7 @@ video-{{ yt.videoId }} {{ (yt.theaterMode) ? 'watch-wide watch-stage-mode' }}
       {% endif %}
       'GET_PLAYER_EVENT_ID': "23PrWrDCHMvF-gPPu7LAAQ",
       'HL_LOCALE': "en_US",
-      'TTS_URL': "",
+      'TTS_URL': "{{ yt.playerResponse.captions.playerCaptionsTracklistRenderer.captionTracks[0].baseUrl|raw }}",
       'JS_DELAY_LOAD': 0,
       'LIST_AUTO_PLAY_VALUE': 1,
       'SHUFFLE_VALUE': 0,

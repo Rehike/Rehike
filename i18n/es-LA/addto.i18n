@@ -1,0 +1,13 @@
+# Add to definitions
+
+addToHeading: "Añadir a"
+searchPlaylists: "Buscar listas de reproducción"
+createNewPlaylist: "Crear nueva lista de reproducción"
+createNewPlaylistDynamic: "%s (crear nueva)"
+playlistTitle: "Titulo de lista de reproducción"
+playlistPrivacy: "Privacidad de la lista de reproducción"
+privacyPublic: "Pública"
+privacyUnlisted: "Oculto"
+privacyPrivate: "Privada"
+cancel: "Cancelar"
+create: "Crear"

@@ -1,6 +1,7 @@
 <?php
 namespace Rehike\i18n;
 
+use Rehike\Util\PrefUtils;
 use Rehike\RehikeConfigManager as Config;
 use Rehike\i18n\Private\Core as I18nCore;
 use Rehike\YtApp;
@@ -38,5 +39,15 @@ class BootServices
 
         YtApp::getInstance()->gl = I18nCore::getInnertubeGeolocation();
         YtApp::getInstance()->hl = I18nCore::getInnertubeLanguageId();
+
+        /* Set PREF values */
+        $pref = isset($_COOKIE["PREF"])
+        ? PrefUtils::decode($_COOKIE["PREF"])
+        : (object)[];
+
+        $pref->hl = I18nCore::getInnertubeLanguageId();
+        $pref->gl = I18nCore::getInnertubeGeolocation();
+
+        setcookie("PREF", PrefUtils::encode($pref));
     }
 }

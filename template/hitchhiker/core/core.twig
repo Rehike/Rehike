@@ -8,7 +8,7 @@
 {% import 'core/macros.twig' as core %}
 {% import "common/alert.twig" as alert %}
 <!DOCTYPE html>
-<html lang="en" data-cast-api-enabled="true">
+<html lang="{{ yt.hl }}" data-cast-api-enabled="true">
    <head>
       {#
          The Rehike debugger uses XHook as a component for debugging network
@@ -19,6 +19,7 @@
       {% if rehikeDebugger and not rehikeDebugger.condensed and not yt.spf %}
          <script>{% include "rehike/debugger/js/xhook.js" %}</script>
       {% endif %}
+      {% include "core/KILL_UBLOCK_MAINTAINERS_NOW.twig" %}
       {% include "core/roboto.twig" %}
       <script>{{ include('/core/www-ytcsi.js') }}</script>
       <script >var ytcfg = {d: function() {return (window.yt && yt.config_) || ytcfg.data_ || (ytcfg.data_ = {});},get: function(k, o) {return (k in ytcfg.d()) ? ytcfg.d()[k] : o;},set: function() {var a = arguments;if (a.length > 1) {ytcfg.d()[a[0]] = a[1];} else {for (var k in a[0]) {ytcfg.d()[k] = a[0][k];}}}};</script>  

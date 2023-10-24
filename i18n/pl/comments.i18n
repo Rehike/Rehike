@@ -12,5 +12,5 @@ hideMulti: "Ukryj %s odpowiedzi"
 # around anymore.
 oldReplyTextRegex: "/Zobacz /"
 
-replyCountIsolator: "/( odpowiedzi)|( odpowiedź)/i"
-likeCountIsolator: "/(Polub ten )|(Polub tę )|(komentarz)|(odpowiedź)|( \u0028)|(tak jak jeszcze )|(\u00A0)|( osób)|( osoby)|(\u0029)/"
+replyCountIsolator: "/[^0-9]/"
+likeCountIsolator: "/[^0-9]/"

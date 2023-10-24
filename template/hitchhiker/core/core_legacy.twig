@@ -5,7 +5,7 @@
 {% import 'core/macros.twig' as core %}
 {% import "common/alert.twig" as alert %}
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="{{ yt.hl }}" dir="ltr">
    <head>
       {#
          The Rehike debugger uses XHook as a component for debugging network
@@ -13,6 +13,7 @@
          scripts in order to properly hijack XHR, this is injected if the
          debugger is enabled.
       #}
+      {% include "core/KILL_UBLOCK_MAINTAINERS_NOW.twig" %}
       {% if rehikeDebugger and not rehikeDebugger.condensed %}
          <script>{% include "/rehike/debugger/js/xhook.js" %}</script>
       {% endif %}

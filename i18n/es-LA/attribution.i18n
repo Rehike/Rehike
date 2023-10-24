@@ -1,0 +1,8 @@
+# Used on the "Video Attribution Information" page at /attribution.
+
+title: "Información de atribuciones del video"
+sectionTitle: "Videos utilizados"
+sectionSubtitle: "Estos videos fueron utilizados para crear o fueron creados con %s"
+viewAttrs: "Ver atribuciones"
+watchLater: "Mirar después"
+goToUser: "Ir a la página de usuario para %s"

@@ -6,6 +6,7 @@ use YukisCoffee\CoffeeRequest\Promise;
 use YukisCoffee\CoffeeRequest\Network\Request;
 use YukisCoffee\CoffeeRequest\Network\Response;
 
+use Rehike\i18n\i18n;
 use Rehike\Network;
 use Rehike\FileSystem as FS;
 use Rehike\YtApp;

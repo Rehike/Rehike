@@ -15,6 +15,7 @@ manageSubscriptionsLabel: "登録リストを管理"
 
 # Section names:
 bestOfYouTubeTitle: "Best of YouTube"
+libraryTitle: "ライブラリ"
 
 # Best of YouTube section item names:
 bestOfYouTubePopularOnYouTube: "YouTube で人気"
@@ -34,16 +35,15 @@ subscriptionsPromoTooltip: >
   チャンネルをブラウズしてください。
 
 # Guide notification messages:
-notifications:
-  watchLaterVideoAdded: "[後で見る] に追加しました"
-  watchLaterVideoRemoved: "[後で見る] から削除されました"
-  subscription: "追加された登録チャンネル"
-  unsubscription: "チャンネル登録を解除しました"
-  playlistLike: "再生リストに保存しました"
-  playlistUnlike: "再生リストから削除しました"
-  playlistVideoAdded: "再生リストに追加しました"
-  playlistVideoRemoved: "再生リストから削除しました"
-  videoLike: "高く評価した動画に追加されました"
-  videoUnlike: "高く評価した動画から削除されました"
-  eventReminderSet: "このイベントについての通知が送信されます"
-  eventReminderRemoved: "イベントについての通知が削除されました"
+watchLaterVideoAdded: "[後で見る] に追加しました"
+watchLaterVideoRemoved: "[後で見る] から削除されました"
+subscription: "追加された登録チャンネル"
+unsubscription: "チャンネル登録を解除しました"
+playlistLike: "再生リストに保存しました"
+playlistUnlike: "再生リストから削除しました"
+playlistVideoAdded: "再生リストに追加しました"
+playlistVideoRemoved: "再生リストから削除しました"
+videoLike: "高く評価した動画に追加されました"
+videoUnlike: "高く評価した動画から削除されました"
+eventReminderSet: "このイベントについての通知が送信されます"
+eventReminderRemoved: "イベントについての通知が削除されました"

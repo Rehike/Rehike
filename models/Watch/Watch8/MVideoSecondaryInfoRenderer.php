@@ -32,10 +32,23 @@ class MVideoSecondaryInfoRenderer
                 $this->description = ParsingUtils::commandRunsToRuns($info->attributedDescription);
                 self::fixDescLinks($this->description->runs);
             }
+
+            $isPrivate = false;
+            if (isset($primaryInfo->badges))
+            foreach ($primaryInfo->badges as $badge)
+            {
+                if ($icon = @$badge->metadataBadgeRenderer->icon->iconType)
+                {
+                    if (str_starts_with($icon, "PRIVACY_"))
+                    {
+                        $isPrivate = true;
+                    }
+                }
+            }
             
             $this->defaultExpanded = $info->defaultExpanded ?? false;
             $this->dateText = isset($primaryInfo->dateText)
-                ? ExtractUtils::resolveDate($primaryInfo->dateText)
+                ? ExtractUtils::resolveDate($primaryInfo->dateText, $isPrivate)
                 : null;
             $this->metadataRowContainer = new MMetadataRowContainer(
                 $info->metadataRowContainer->metadataRowContainerRenderer->rows,

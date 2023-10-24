@@ -1,9 +1,0 @@
-{
-    "likeCountIsolator": "/(like this video along with )|( other people)|( other person)/",
-    "likeTextDisabled": "Мне это нравится",
-    "countZero": "Нет",
-    "subscriberCountIsolator": "/( подписчиков)|( подписчик)/",
-    "viewCountIsolator": "/( просмотров)|( просмотр)/",
-    "nonPublishCheck": "/(Premiere)|(Started)|(Streamed)|(Scheduled)/",
-    "unsubChannelNameMatch": "/Отписаться от (.*?)\\?/"
-}

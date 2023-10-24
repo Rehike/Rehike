@@ -1,7 +1,7 @@
 languageName: "Polski"
 writingDirection: ltr
 
-thousandsSeparator: ","
+thousandsSeparator: " "
 decimalSeparator: "."
 
 numberOfMonths: 12
@@ -11,7 +11,7 @@ spaceOnLineBreak: true
 
 standardDateOrder: mdy
 
-firstDayOfWeek: 1 # Sunday
+firstDayOfWeek: 1 # Poniedziałek
 
 am: "AM"
 pm: "PM"
@@ -26,47 +26,47 @@ shortDate: "m/d/Y" # 10/17/2023
 time: "g:i A" # 12:50 AM
 
 daysOfWeek:
-  1: "Sunday"
-  2: "Monday"
-  3: "Tuesday"
-  4: "Wednesday"
-  5: "Thursday"
-  6: "Friday"
-  7: "Saturday"
+  1: "Poniedziałek"
+  2: "Wtorek"
+  3: "Środa"
+  4: "Czwartek"
+  5: "Piątek"
+  6: "Sobota"
+  7: "Niedziela"
 
 shortDaysOfWeek:
-  1: "Sun"
-  2: "Mon"
-  3: "Tue"
-  4: "Wed"
-  5: "Thur"
-  6: "Fri"
-  7: "Sat"
+  1: "Pon"
+  2: "Wt"
+  3: "Śr"
+  4: "Czw"
+  5: "Pt"
+  6: "Sob"
+  7: "Niedz"
 
 monthNames:
-  1: "January"
-  2: "Feburary"
-  3: "March"
-  4: "April"
-  5: "May"
-  6: "June"
-  7: "July"
-  8: "August"
-  9: "September"
-  10: "October"
-  11: "November"
-  12: "December"
+  1: "Styczeń"
+  2: "Luty"
+  3: "Marzec"
+  4: "Kwiecień"
+  5: "Maj"
+  6: "Czerwiec"
+  7: "Lipiec"
+  8: "Sierpień"
+  9: "Wrzesień"
+  10: "Październik"
+  11: "Listopad"
+  12: "Grudzień"
 
 shortMonthNames:
-  1: "Jan"
-  2: "Feb"
+  1: "Sty"
+  2: "Lut"
   3: "Mar"
-  4: "Apr"
-  5: "May"
-  6: "Jun"
-  7: "Jul"
-  8: "Aug"
-  9: "Sep"
-  10: "Oct"
-  11: "Nov"
-  12: "Dec"
+  4: "Kwi"
+  5: "Maj"
+  6: "Cze"
+  7: "Lip"
+  8: "Sie"
+  9: "Wrz"
+  10: "Paź"
+  11: "Lis"
+  12: "Gru"
