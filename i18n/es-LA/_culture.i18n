@@ -18,9 +18,9 @@ am: "AM"
 pm: "PM"
 
 # https://www.php.net/manual/en/datetime.format.php
-expandedDateWithTime: "l, j de F, Y g:i A" # Tuesday, 17 de Octubre, 2023 12:50 AM
-expandedDate: "l, j de F, Y" # Tuesday, 17 de Octubre, 2023
-dateWithTime: "j de F, Y g:i A" # 17 de Octubre, 2023 12:50 AM
+expandedDateWithTime: "l, j \d\e F, Y g:i A" # Tuesday, 17 de Octubre, 2023 12:50 AM
+expandedDate: "l, j \d\e F, Y" # Tuesday, 17 de Octubre, 2023
+dateWithTime: "j \d\e F, Y g:i A" # 17 de Octubre, 2023 12:50 AM
 date: "F j, Y" # October 17 2023
 shortDateWithTime: "d/m/Y g:i A" # 10/17/2023 12:50 AM
 shortDate: "d/m/Y" # 10/17/2023
