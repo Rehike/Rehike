@@ -1,10 +1,10 @@
 {
-	"previousHash": "9fc5905b5d50dbf60697b6130cc88ae3fb94b990",
-	"currentRevisionId": 1087,
-	"subject": "Clean up uBlock error code, localize strings in it",
-	"body": "Clean up uBlock error code, localize strings in it",
+	"previousHash": "d4f2740780af174022ae1b3c3e249b023c9cacbf",
+	"currentRevisionId": 1095,
+	"subject": "Merge branch 'master' of https://github.com/Rehike/Rehike",
+	"body": "Merge branch 'master' of https://github.com/Rehike/Rehike",
 	"branch": "master",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1698270191
+	"time": 1698278266
 }
