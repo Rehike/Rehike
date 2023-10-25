@@ -28,7 +28,6 @@
     });
 
     window.addEventListener("error", function (e) {
-        console.log("KILL YOURSELF");
         if (e.filename.indexOf("s.ytimg.com") < 0)
         {
             return;
@@ -56,8 +55,8 @@
         // btw i stole this code from taniko from 2021
 
         var strings = {
-            message: "Rehike failed to boot properly. This is almost certainly caused by problems with an adblocker (i.e. uBlock Origin)",
-            button: "How do I fix this?"
+            message: '{{ rehike.i18n.get("rehike/ublock_error", "message") }}',
+            button: '{{ rehike.i18n.get("rehike/ublock_error", "button") }}'
         };
 
         if (document.getElementById('masthead-positioner-height-offset'))
