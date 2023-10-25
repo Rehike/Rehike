@@ -23,7 +23,7 @@ legalNotice: >
   Wyświetlanie filmów YouTube na swojej stronie oznacza zgodę na %s
 legalNoticeLink: "warunki korzystania z interfejsu YouTube API."
 
-playlistNonexistent: "Ta playlista nie istnieje.",
+playlistNonexistent: "Ta playlista nie istnieje."
 playlistNoVideos: "Ta playlista nie zawiera żadnych filmów."
 
 recipientsPlaceholder: "Do"
@@ -31,5 +31,5 @@ recipientsAlt: "Wpisz adresy e-mail"
 optionalMessagePlaceholder: "Opcjonalna wiadomość"
 optionalMessageAlt: "Wpisz swoją wiadomość e-mail (opcjonalne)"
 messagePreview: "Podgląd wiadomości:"
-emailShared: "  udostępnił(a) Ci film w YouTube",
+emailShared: "  udostępnił(a) Ci film w YouTube"
 sendEmail: "Wyślij e-maila"
