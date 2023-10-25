@@ -1,0 +1,6 @@
+# Messages for the uBlock origin error (template/hitchhiker/core/ublock_error.twig)
+
+message: >
+  Rehike не удалось нормально загрузиться. Скорее всего это
+  вызвано проблемами с адблокером (например, uBlock Origin).
+button: Как это починить?
