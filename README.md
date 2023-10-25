@@ -29,7 +29,7 @@ We currently do not support an automated install. If you wish to use Rehike, you
 
 ## Configuration
 
-[See this page for configuration details.](//github.com/Rehike/Rehike/wiki/Configuration)
+[Once Rehike is installed, you can visit this link to configure it.](//www.youtube.com/rehike/config)
 
 ## Acknowledgements
 
