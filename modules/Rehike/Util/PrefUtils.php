@@ -20,7 +20,7 @@ class PrefUtils
         foreach ($temp as $value)
         {
             $temp2 = explode("=", $value);
-            $response->{$temp2[0]} = $temp2[1];
+            $response->{$temp2[0]} = $temp2[1] ?? "";
         }
 
         return $response;
