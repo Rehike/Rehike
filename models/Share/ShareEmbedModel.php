@@ -79,7 +79,7 @@ class ShareEmbedModel {
 
         
         $response -> alternateUrls = $alternateUrls;
-        $response -> strs = $i18n;
+        $response -> strs = (array) $i18n->getAllTemplates();
 
 
 

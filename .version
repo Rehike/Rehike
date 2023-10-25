@@ -1,10 +1,10 @@
 {
-	"previousHash": "7c91ee41e1ca30ceab6db033c222adb6452ffc85",
-	"currentRevisionId": 1077,
-	"subject": "[i18n/ja] 404 strings",
-	"body": "[i18n/ja] 404 strings",
+	"previousHash": "cab8655bb9bae0a8facb7aff26ad4cd87c09fc35",
+	"currentRevisionId": 1081,
+	"subject": "fix disable rehike i18n typo",
+	"body": "fix disable rehike i18n typo",
 	"branch": "master",
-	"committerName": "Taniko Yamamoto",
-	"committerEmail": "kirasicecreamm@gmail.com",
-	"time": 1698140338
+	"committerName": "Daylin Cooper",
+	"committerEmail": "dcoop2004@gmail.com",
+	"time": 1698190356
 }
