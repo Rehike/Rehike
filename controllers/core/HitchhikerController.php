@@ -5,7 +5,7 @@ use Rehike\{
     YtApp,
     TemplateManager,
     Network,
-    i18n,
+    i18n\i18n,
     RehikeConfigManager,
     SecurityChecker
 };
