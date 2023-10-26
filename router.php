@@ -63,6 +63,7 @@ Router::redirect([
             return urldecode($request->params->q);
     },
     "/feed/library" => "/profile",
+    "/feed/you" => "/profile",
     "/subscription_manager" => "/feed/channels",
     "/rehike/settings" => "/rehike/config",
     "/subscription_center?(*)" => function($request) {
