@@ -13,7 +13,7 @@ actionMore: "Mais"
 actionMoreTooltip: "Mais ações"
 actionReport: "Denúnciar"
 actionTranscript: "Transcrição"
-actionLikeTooltip: "Gostei"
+actionLikeTooltip: "Marcar como \"Gostei\"
 actionLikeTooltipActive: "Remover \"Gostei\"
 actionDislikeTooltip: "Marcar como \"Não gostei\"
 
