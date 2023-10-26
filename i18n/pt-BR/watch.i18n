@@ -45,7 +45,7 @@ metadataGame: "Jogo"
 
 playlistVideosSingular: "1 vídeo"
 playlistVideosPlural: "%s vídeos"
-playlistSave: "Adicionar à playlists"
+playlistSave: "Adicionar à playlist"
 playlistUnsave: "Remover"
 playlistPrevVideo: "Vídeo anterior"
 playlistNextVideo: "Próximo vídeo"
