@@ -38,7 +38,7 @@ addToTvQueue: "Fila"
 watchLaterSignIn: "%sFaça login%s para adicionar este vídeo ao Assistir mais tarde"
 
 # Add to dialog strings:
-addToHeader: "Adicionar para"
+addToHeader: "Adicionar à playlist"
 addToLoading: "Carregando playlists..."
 
 # Shelfsliders (horizontal shelves):
