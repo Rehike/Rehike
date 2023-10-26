@@ -1,0 +1,6 @@
+# uBlock originのエラー (template/hitchhiker/core/ublock_error.twig) メッセージ
+
+message: >
+  Rehikeが正しく読み込めませんでした。これはおそらく、
+  広告ブロック（uBlock Originなど）の問題が原因です。
+button: "どうすれば直るのか？"
