@@ -16,7 +16,7 @@ props:
         Usado desde 2017. Habilitar essa opção pode quebrar alguns temas feitos 
         antes de 2017.
     uploadButtonType:
-      title: "Tipo do botão de "Enviar":"
+      title: "Tipo do botão de \"Enviar\":"
       values:
         BUTTON: "Botão (2013-2016)"
         ICON: "Ícone material (2016-2018)"
