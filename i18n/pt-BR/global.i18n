@@ -1,0 +1,71 @@
+# Global strings
+# These include both common things and most JS messages.
+# These are exported to the templates at `yt.msg`.
+
+# Common aria (accessibility) labels
+loadingIconLabel: "Ícone de carregamento"
+actionMenuLabel: "Menu de ações."
+
+# Spinner (loading) text:
+loading: "Carregando..."
+working: "Trabalhando..."
+
+# Generic close button text
+close: "Fechar"
+
+showMore: "Mostrar mais"
+showLess: "Mostrar menos"
+
+# General "load more" text
+loadMore: "Carregar mais"
+
+# Duration accessibility strings (shown on watch)
+durationA11y: " - Duração: %s."
+
+# TODO-i18n: make this use printf formatting so it can be more
+# versatile.
+usernamePrepend: "por "
+verified: "Verificado"
+
+# Video thumbnail watch later button strings:
+addToWatchLater: "Assistir mais tarde"
+addedToWatchLater: "Adicionado"
+addToWatchLaterError: "Erro"
+addToWatchQueue: "Fila de reprodução"
+addToWatchQueueAdded: "Adicionado"
+addToWatchQueueError: "Erro"
+addToTvQueue: "Fila"
+watchLaterSignIn: "%sFaça login%s para adicionar este vídeo ao Assistir mais tarde"
+
+# Add to dialog strings:
+addToHeader: "Adicionar para"
+addToLoading: "Carregando playlists..."
+
+# Shelfsliders (horizontal shelves):
+shelfsliderNext: "Próximo"
+shelfsliderPrev: "Anterior"
+
+# Interactive transcripts:
+transcriptTitle: "Transcrição"
+transcriptFail: "A transcrição interativa não pôde ser carregada."
+
+# Video player ad (?) JS messages
+adsInstreamFirstPlay: "Um anúncio está sendo reproduzido."
+adsInstreamSkippable: "O anúncio já pode ser pulado."
+adsOverlayImpression: "Anúncio exibido."
+
+# Searchbox labels
+sboxSuggestionDismissedLabel: "Sugestão removida"
+sboxSuggestionDismissLabel: "Remover"
+
+# Misc:
+videoCountPlural: "%s vídeos"
+videoCountSingular: "1 vídeo"
+commentPostFail: "Falha ao publicar o comentário."
+viewFullPlaylist: "Ver playlist inteira"
+mdxAutoplayOff: "Autoplay desligado"
+mdxAutoplayOn: "Autoplay ligado"
+sorryAboutThat: "Mil desculpas."
+browseUnsavedChanges: >
+  Algumas mudanças que você fez nas configurações do canal não foram salvas
+  e serão perdidas se você sair desta página

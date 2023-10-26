@@ -34,6 +34,8 @@ return new class extends NirvanaController {
 
     public function onGet(YtApp $yt, RequestMetadata $request): void
     {
+        trigger_error("Test warning", E_USER_WARNING);
+
         $this->useJsModule("www/watch");
 
         // invalid request redirect

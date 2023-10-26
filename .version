@@ -1,10 +1,10 @@
 {
-	"previousHash": "cab8655bb9bae0a8facb7aff26ad4cd87c09fc35",
-	"currentRevisionId": 1081,
-	"subject": "fix disable rehike i18n typo",
-	"body": "fix disable rehike i18n typo",
+	"previousHash": "8bda2a1c213123dcb578bc84fb56d2eb0ec73c6d",
+	"currentRevisionId": 1096,
+	"subject": "Use relative rehike:// path in debugger",
+	"body": "Use relative rehike:// path in debugger",
 	"branch": "master",
-	"committerName": "Daylin Cooper",
-	"committerEmail": "dcoop2004@gmail.com",
-	"time": 1698190356
+	"committerName": "aubymori",
+	"committerEmail": "aubyomori@gmail.com",
+	"time": 1698278566
 }
