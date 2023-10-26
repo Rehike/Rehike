@@ -1,0 +1,86 @@
+# Watch strings:
+
+autoplayToggleDesc: "Reproducción automática"
+autoplayTitle: "A continuación"
+autoplayInfoText: >
+  Cuando la reproducción automática está habilitada, un video sugerido se reproducirá automaticamente después.
+
+relatedItemA11yDesc: " - Duración: %s."
+
+actionAddTo: "Añadir a"
+actionShare: "Compartir"
+actionMore: "Más"
+actionMoreTooltip: "Más acciones"
+actionReport: "Reportar"
+actionTranscript: "Transcripcción"
+actionLikeTooltip: "Me gusta"
+actionLikeTooltipActive: "Ya no me gusta"
+actionDislikeTooltip: "No me gusta"
+
+clickcardSignIn: "Iniciar sesión"
+clickcardPlaylistSignIn: "Inicia sesión en YouTube"
+addToClickcardHeading: "¿Quieres ver este video de nuevo luego?"
+addToClickcardTip: "Inicia sesión para añadir este video a una lista de reproducción."
+reportClickcardHeading: "¿Necesitas reportar este video?"
+reportClickcardTip: "Inicia sesión para reportar contenido inapropiado."
+likeClickcardHeading: "¿Te gusta el video?"
+dislikeClickcardHeading: "¿No te gusta el video?"
+voteClickcardTip: "Inicia sesión para que puedas hacer valer tu opinión."
+
+channelSettings: "Ajustes del canal"
+creatorBarInfo: "Información y configuración"
+creatorBarEnhancements: "Mejoras"
+creatorBarAudio: "Audio"
+creatorBarComments: "Comentarios"
+creatorBarCards: "Cartas"
+creatorBarSubtitles: "Subtítulos"
+creatorBarAnalytics: "Analiticas"
+creatorBarVideoManager: "Administrador de videos"
+
+metadataLicense: "Licencia"
+metadataLicenseStandard: "Licencia estandar de YouTube"
+metadataCategory: "Categoría"
+metadataSong: "Canción"
+metadataGame: "Juego"
+
+playlistVideosSingular: "1 video"
+playlistVideosPlural: "%s videos"
+playlistSave: "Guardar en Lista de reproducción"
+playlistUnsave: "Quitar"
+playlistPrevVideo: "Video anterior"
+playlistNextVideo: "Siguiente video"
+
+privacyUnlisted: >
+  Este video esta oculto. Solo los que tengan el enlace pueden verlo.
+privacyPrivate: >
+  Este video es privado. Solo los que tengan acceso pueden verlo.
+
+actionPanelError: >
+  Esta función no esta disponible ahora. Intenta de nuevo después.
+actionPanelRentalRequired: >
+  La puntuación está disponible cuando un video ha sido rentado.
+
+loadingMoreSuggestions: "Cargando más sugerencias..."
+
+repeatPlaylistLabel: "Repetir lista de reproducción"
+shufflePlaylistLabel: "Aleatorizar"
+
+playerBlockadeContentWarning: "Advertencia de contenido"
+playerBlockadeInappropriate: >
+  Este contenido puede ser inapropiado para algunos usuarios.
+playerBlockadeAgeRestrictedSignin: >
+  Inicia sesión para confirmar tu edad.
+
+# JS messages:
+editorAjaxRequestFailed: >
+  Algo falló cuando se intentó conseguir datos del servidor.
+  Intenta de nuevo, o refresca la página.
+editorAjaxRequest503: >
+  Esta función no esta disponible ahora. Intenta de nuevo mas tarde.
+
+# Slow internet connection message.
+speedygInfo: "¿Presentas interrupciones?"
+
+liveWatchingNow0: "0 mirando ahora"
+liveWatchingNow1: "1 mirando ahora"
+liveWatchingNow: "# mirando ahora"
