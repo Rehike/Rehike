@@ -14,7 +14,7 @@ actionMoreTooltip: "Mais ações"
 actionReport: "Denúnciar"
 actionTranscript: "Transcrição"
 actionLikeTooltip: "Gostei"
-actionLikeTooltipActive: "Remover "Gostei""
+actionLikeTooltipActive: "Remover \"Gostei\"
 actionDislikeTooltip: "Não gostei"
 
 clickcardSignIn: "Fazer login"
