@@ -41,7 +41,7 @@ Rehike makes use of the following software or services:
     - [YukisCoffee/simple_html_dom](//github.com/YukisCoffee/simple_html_dom) fork of [voku/simple_html_dom](//github.com/voku/simple_html_dom)
 - [Protocol Buffers](//developers.google.com/protocol-buffers/)
 - [Return YouTube Dislike API](https://www.returnyoutubedislike.com/)
-- [Protoaxis](//github.com/Protoaxis) for shelves homepage on InnerTube WEB v2
+- [Prototaxis](//github.com/Prototaxis) for shelves homepage on InnerTube WEB v2
 
 Use of these third party services is governed by their respective licenses. Where possible, their application will be optional.
 
