@@ -1,0 +1,35 @@
+tabShare: "Compartir"
+tabEmbed: "Adjuntar"
+tabEmail: "Enviar Correo"
+
+serviceTooltip: "Compartir a %s. Abre una nueva ventana."
+startAt: "Empieza desde:"
+
+sharePlaylist: "Compartir con lista de reproducción empezando desde  "
+currentVideo: "video actual"
+startPlaylist: "inicio de lista de reproducción"
+embedCode: "Código para adjuntar"
+
+preview: "Previsualizar:"
+videoSize: "Tamaño del video:"
+customSize: "Tamaño personalizado"
+
+showRelated: "Mostrar videos sugeridos cuando el video finaliza."
+showControls: "Mostrar controles de reproducción"
+showInfo: "Ver título del video y acciones de reproducción"
+delayedCookies: "Habilita el modo de privacidad mejorado"
+
+legalNotice: >
+  Al mostrar videos de YouTube en tu sitio, estás de acuerdo con los 
+legalNoticeLink: "Terminos de servicio de la API de YouTube."
+
+playlistNonexistent: "Esa lista de reproducción no existe."
+playlistNoVideos: "Esa lista de reproducción no contiene videos."
+
+recipientsPlaceholder: "Para"
+recipientsAlt: "Colocar direcciones de correo"
+optionalMessagePlaceholder: "Mensaje opcional"
+optionalMessageAlt: "Coloca tu correo electrónico (opcional)"
+messagePreview: "Previsualización del mensaje:"
+emailShared: " ha compartido un video contigo en YouTube"
+sendEmail: "Enviar correo"
