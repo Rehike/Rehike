@@ -4,6 +4,7 @@ namespace Rehike\Model\Rehike\Debugger;
 use \Rehike\i18n\i18n;
 use \Rehike\Debugger\ErrorWrapper;
 use \Rehike\Model\Common\MButton;
+use \Rehike\FileSystem;
 
 /**
  * A general trait for rich text content as used by the
@@ -134,6 +135,11 @@ trait RichContent
                 break;
         }
 
+        // Get relative rehike:// path
+        $longFile = FileSystem::getRehikeRelativePath(
+            $error->errfile
+        );
+
         // Get the short filename
         $shortFile = $error->errfile;
         $shortFile = explode("/", str_replace("\\", "/", $shortFile));
@@ -142,7 +148,7 @@ trait RichContent
         $this->richDebuggerRenderer[] = (object)[
             "errorRenderer" => (object)[
                 "number" => $error->errno,
-                "file" => $error->errfile,
+                "file" => $longFile,
                 "shortFile" => $shortFile,
                 "message" => $error->errstr,
                 "line" => $error->errline,

@@ -1,10 +1,10 @@
 {
-	"previousHash": "d4f2740780af174022ae1b3c3e249b023c9cacbf",
-	"currentRevisionId": 1095,
-	"subject": "Merge branch 'master' of https://github.com/Rehike/Rehike",
-	"body": "Merge branch 'master' of https://github.com/Rehike/Rehike",
+	"previousHash": "8bda2a1c213123dcb578bc84fb56d2eb0ec73c6d",
+	"currentRevisionId": 1096,
+	"subject": "Use relative rehike:// path in debugger",
+	"body": "Use relative rehike:// path in debugger",
 	"branch": "master",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1698278266
+	"time": 1698278566
 }
