@@ -1,10 +1,10 @@
 {
-	"previousHash": "b4559081170cb22226028235a89e60e29d8db7f7",
-	"currentRevisionId": 1127,
-	"subject": "Redirect /feed/you to profile This page is the same as library and as such should exhibit the same behavior",
-	"body": "Redirect /feed/you to profile This page is the same as library and as such should exhibit the same behavior",
+	"previousHash": "6b41d7168033056e0282370bfe30cdd07ba3ee36",
+	"currentRevisionId": 1128,
+	"subject": "Readd build number to version page",
+	"body": "Readd build number to version page",
 	"branch": "master",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1698354538
+	"time": 1698369781
 }

@@ -66,9 +66,9 @@ class VersionController
 
         $initStatus = self::init();
 
-        if ($initStatus && $dateAvailable)
+        if ($initStatus && @self::$versionInfo["currentRevisionId"] && $dateAvailable)
         {
-            $semanticVersion .= " (" . $dateTime->format("Y-m-d") . ")";
+            $semanticVersion .= " (build " . (string)self::$versionInfo["currentRevisionId"] . ", " . $dateTime->format("Y-m-d") . ")";
         }
 
         return $semanticVersion;
