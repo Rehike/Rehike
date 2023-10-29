@@ -9,11 +9,19 @@ namespace Rehike\ConfigManager\Properties;
  */
 class BoolProp extends AbstractConfigProperty
 {
-    private bool $defaultValue = false;
+    protected bool $defaultValue = false;
 
     public function __construct(bool $defaultValue)
     {
         $this->defaultValue = $defaultValue;
+    }
+
+    /**
+     * Get the default value of the property.
+     */
+    public function getDefaultValue(): mixed
+    {
+        return $this->defaultValue;
     }
 
     public function getType(): string

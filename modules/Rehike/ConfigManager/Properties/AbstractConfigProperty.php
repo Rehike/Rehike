@@ -9,20 +9,6 @@ namespace Rehike\ConfigManager\Properties;
  */
 abstract class AbstractConfigProperty
 {
-    private mixed $defaultValue = null;
-
-    public function __construct(mixed $defaultValue)
-    {
-        $this->defaultValue = $defaultValue;
-    }
-
-    /**
-     * Get the default value of the property.
-     */
-    public function getDefaultValue(): mixed
-    {
-        return $this->defaultValue;
-    }
-
+    abstract public function getDefaultValue(): mixed;
     abstract public function getType(): string;
 }

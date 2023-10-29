@@ -9,11 +9,19 @@ namespace Rehike\ConfigManager\Properties;
  */
 class EnumProp extends AbstractConfigProperty
 {
-    private string $defaultValue = "";
+    protected string $defaultValue = "";
 
     public function __construct(string $defaultValue)
     {
         $this->defaultValue = $defaultValue;
+    }
+
+    /**
+     * Get the default value of the property.
+     */
+    public function getDefaultValue(): mixed
+    {
+        return $this->defaultValue;
     }
 
     public function getType(): string
