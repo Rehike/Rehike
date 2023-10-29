@@ -6,7 +6,7 @@ Still, the codebase organization may feel uncomfortable to a newcomer. Here is t
 
 Auxiliary things (these are not a part of the Rehike source code, per se, but are used for other purposes):
 
-- `.git_hooks/` - Development Git scripts. If you are going to contribute back to Rehike, please copy these into `.git/hooks`.
+- `.git-hooks/` - Development Git scripts. If you are going to contribute back to Rehike, please copy these into `.git/hooks`.
 - `.github/` - Stores GitHub-related things such as issue templates.
 - `branding/` - Stores the branding banner for the README.md file in the root.
 - `cache/` - Created on first execution; stores generated cache files for the user session.
