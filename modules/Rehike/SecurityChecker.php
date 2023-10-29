@@ -1,6 +1,8 @@
 <?php
 namespace Rehike;
 
+use Rehike\ConfigManager\Config;
+
 /**
  * Manages security checks.
  * 
@@ -32,7 +34,7 @@ class SecurityChecker
 
     public static function windowsNtIsRunningAsSystem($dontLie = false): bool
     {
-        $disabled = $dontLie || (RehikeConfigManager::getConfigProp(
+        $disabled = $dontLie || (Config::getConfigProp(
             "hidden.securityIgnoreWindowsServerRunningAsSystem"
         ) == true);
 

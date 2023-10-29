@@ -1,7 +1,7 @@
 <?php
 namespace Rehike\Misc;
 
-use Rehike\RehikeConfigManager;
+use Rehike\ConfigManager\Config;
 use Rehike\Version\VersionController;
 
 use Rehike\Util\ParsingUtils;
@@ -34,7 +34,7 @@ abstract class RehikeUtilsDelegateBase extends stdClass
      */
     public function __construct()
     {
-        $this->config = RehikeConfigManager::loadConfig();
+        $this->config = Config::loadConfig();
         $this->version = (object)VersionController::$versionInfo;
         $this->version->semanticVersion = VersionController::getVersion();
     }

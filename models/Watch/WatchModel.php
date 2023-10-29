@@ -1,7 +1,7 @@
 <?php
 namespace Rehike\Model\Watch;
 
-use Rehike\ConfigManager\ConfigManager;
+use Rehike\ConfigManager\Config;
 use Rehike\Signin\API as SignIn;
 
 use Rehike\Model\Watch\AgeGate\MPlayerAgeGate;

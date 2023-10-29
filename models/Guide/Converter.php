@@ -3,7 +3,7 @@ namespace Rehike\Model\Guide;
 
 use Rehike\i18n\i18n;
 use Rehike\Signin\API as Signin;
-use Rehike\ConfigManager\ConfigManager;
+use Rehike\ConfigManager\Config;
 use Rehike\Model\Common\MButton;
 use Rehike\Model\Traits\NavigationEndpoint;
 
@@ -191,7 +191,7 @@ class Converter
         $strings = i18n::getNamespace("guide");
 
         // Thumbnail prefix and suffix
-        $format = ConfigManager::getConfigProp("appearance.oldBestOfYouTubeIcons")
+        $format = Config::getConfigProp("appearance.oldBestOfYouTubeIcons")
         ? "/rehike/static/best_of_youtube/%s_old.jpg"
         : "/rehike/static/best_of_youtube/%s.jpg";
 
@@ -493,7 +493,7 @@ class Converter
     public static function buildSubscriptionsPromoSection() {
         $i18n = i18n::getNamespace("guide");
         $response = (object) [];
-        $format = ConfigManager::getConfigProp("appearance.oldBestOfYouTubeIcons")
+        $format = Config::getConfigProp("appearance.oldBestOfYouTubeIcons")
         ? "/rehike/static/best_of_youtube/%s_old.jpg"
         : "/rehike/static/best_of_youtube/%s.jpg";
 

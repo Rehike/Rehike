@@ -4,7 +4,7 @@ namespace Rehike\Controller\rehike;
 use Rehike\YtApp;
 use Rehike\ControllerV2\RequestMetadata;
 
-use Rehike\RehikeConfigManager as ConfigManager;
+use Rehike\ConfigManager\Config;
 
 return new class extends \Rehike\Controller\core\AjaxController
 {
@@ -18,16 +18,17 @@ return new class extends \Rehike\Controller\core\AjaxController
         {
             foreach ($input as $option => $value)
             {
-                ConfigManager::setConfigProp(
+                Config::setConfigProp(
                     $option,
                     $value
                 );
             }
-            ConfigManager::dumpConfig();
+            Config::dumpConfig();
         }
         catch(\Throwable $e)
         {
             http_response_code(400);
+            echo $e;
         }
     }
 };

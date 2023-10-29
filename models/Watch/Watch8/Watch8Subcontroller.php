@@ -6,7 +6,7 @@ use Rehike\Model\Watch\Watch7\MVideoDiscussionDelayloadRenderer;
 use Rehike\Model\Watch\Watch7\MVideoDiscussionNotice;
 use Rehike\Model\Watch\Watch7\MCreatorBar;
 use Rehike\i18n\i18n;
-use Rehike\ConfigManager\ConfigManager;
+use Rehike\ConfigManager\Config;
 use Rehike\Util\PrefUtils;
 use Rehike\Signin\API as SignIn;
 use Rehike\Model\Browse\InnertubeBrowseConverter;

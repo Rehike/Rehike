@@ -3,7 +3,7 @@ namespace Rehike\Model\Footer;
 
 use Rehike\i18n\i18n;
 use Rehike\Model\Common\MButton;
-use Rehike\ConfigManager\ConfigManager;
+use Rehike\ConfigManager\Config;
 use Rehike\Player\Configurable;
 
 class MFooter {
@@ -59,7 +59,7 @@ class MFooter {
             $i18n->get("primaryDevs"),
             "/yt/dev/"
         );
-        if (ConfigManager::getConfigProp("appearance.showVersionInFooter"))
+        if (Config::getConfigProp("appearance.showVersionInFooter"))
         $this->primaryLinks[] = new MFooterLink(
             $i18n->format("primaryVersion", $rehikeVersion->semanticVersion, $rehikeVersion->branch),
             "/rehike/version"

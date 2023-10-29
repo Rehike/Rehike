@@ -6,7 +6,7 @@ use Rehike\{
     TemplateManager,
     Network,
     i18n\i18n,
-    RehikeConfigManager,
+    ConfigManager\Config,
     SecurityChecker
 };
 
@@ -289,7 +289,7 @@ abstract class HitchhikerController
             $yt->rehikeSecurityNotice = new SecurityLightbox();
         }
 
-        if (RehikeConfigManager::getConfigProp("hidden.disableRehike") == true)
+        if (Config::getConfigProp("hidden.disableRehike") == true)
         {
             if (!isset($yt->page->alerts))
                 $yt->page->alerts = [];

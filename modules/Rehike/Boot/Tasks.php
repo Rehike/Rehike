@@ -4,6 +4,7 @@ namespace Rehike\Boot;
 use YukisCoffee\CoffeeRequest\CoffeeRequest;
 
 use Rehike\{
+    ConfigDefinitions,
     ContextManager,
     TemplateManager,
     YtApp,
@@ -13,7 +14,7 @@ use Rehike\{
     Player\PlayerCore,
     Misc\RehikeUtilsDelegate,
     Misc\ResourceConstantsStore,
-    RehikeConfigManager,
+    ConfigManager\Config,
     Util\Nameserver\Nameserver,
     Util\Base64Url,
     i18n\BootServices as i18nBoot,
@@ -42,7 +43,10 @@ final class Tasks
 
     public static function initConfigManager(): void
     {
-        RehikeConfigManager::loadConfig();
+        Config::registerConfigDefinitions(
+            ConfigDefinitions::getConfigDefinitions()
+        );
+        Config::loadConfig();
     }
 
     public static function setupTemplateManager(): void

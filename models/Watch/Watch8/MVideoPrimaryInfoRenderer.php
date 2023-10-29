@@ -2,7 +2,7 @@
 namespace Rehike\Model\Watch\Watch8;
 
 use Rehike\TemplateFunctions;
-use Rehike\ConfigManager\ConfigManager;
+use Rehike\ConfigManager\Config;
 use Rehike\Util\ExtractUtils;
 use Rehike\i18n\i18n;
 
@@ -61,7 +61,7 @@ class MVideoPrimaryInfoRenderer
             if (isset($info->viewCount->videoViewCountRenderer))
 
             $this->viewCount = TemplateFunctions::getText($info->viewCount->videoViewCountRenderer->viewCount);
-            if (ConfigManager::getConfigProp("appearance.noViewsText"))
+            if (Config::getConfigProp("appearance.noViewsText"))
             {
                 $number = (int)ExtractUtils::isolateViewCnt($this->viewCount);
                 if (is_int($number))

@@ -16,7 +16,7 @@ use \Com\Youtube\Innertube\Request\BrowseRequestParams;
 use \Rehike\Util\Base64Url;
 use \Rehike\Model\History\HistoryModel;
 use \Rehike\Model\Browse\InnertubeBrowseConverter;
-use Rehike\RehikeConfigManager;
+use Rehike\ConfigManager\Config;
 use \Rehike\Util\ParsingUtils;
 
 use function Rehike\Async\async;
@@ -111,7 +111,7 @@ return new class extends \Rehike\Controller\core\NirvanaController {
             // The homepage also had the searchbox in the masthead autofocus.
             $yt->masthead->searchbox->autofocus = true;
 
-            if ($a = RehikeConfigManager::getConfigProp("experiments.disableSignInOnHome"))
+            if ($a = Config::getConfigProp("experiments.disableSignInOnHome"))
             {
                 $useAuthentication = !(bool)$a;
             }

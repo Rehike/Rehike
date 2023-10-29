@@ -7,7 +7,7 @@ use Rehike\{
     ControllerV2\Core as ControllerV2,
     Debugger\Debugger,
     Signin\AuthManager,
-    RehikeConfigManager
+    ConfigManager\Config
 };
 
 /**
@@ -42,7 +42,7 @@ final class YtStateManager
         /*
          * TODO: This should be removed when V1 is deprecated.
          */
-        if (RehikeConfigManager::getConfigProp("experiments.useSignInV2") !== true)
+        if (Config::getConfigProp("experiments.useSignInV2") !== true)
         {
             AuthManager::use($yt);
         }

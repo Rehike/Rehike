@@ -2,7 +2,7 @@
 namespace Rehike\Model\Rehike\Config;
 use Rehike\i18n\i18n;
 use Rehike\Model\Traits\NavigationEndpoint;
-use Rehike\RehikeConfigManager as ConfigManager;
+use Rehike\ConfigManager\Config;
 use Rehike\Model\Common\MButton;
 use Rehike\Model\Common\MAlert;
 
@@ -71,8 +71,8 @@ class ConfigModel {
         ];
 
         $contents = &$response->content->contents;
-        foreach (ConfigManager::getConfig()->{$tab} as $option => $value) {
-            switch (ConfigManager::getConfigType("{$tab}.{$option}")) {
+        foreach (Config::getConfig()->{$tab} as $option => $value) {
+            switch (Config::getConfigType("{$tab}.{$option}")) {
                 case "bool":
                     $contents[] = (object) [
                         "checkboxRenderer" => (object) [
@@ -137,7 +137,7 @@ class ConfigModel {
     private static function getDisableRehikeButton(): MButton
     {
         $i18n = i18n::getNamespace("rehike/disable_rehike");
-        $isDisabled = ConfigManager::getConfigProp("hidden.disableRehike");
+        $isDisabled = Config::getConfigProp("hidden.disableRehike");
 
         $buttonText = $isDisabled
             ? $i18n->get("rhSettingsEnableRehike")

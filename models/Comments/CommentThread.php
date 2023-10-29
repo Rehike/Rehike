@@ -6,7 +6,7 @@ use YukisCoffee\CoffeeRequest\Promise;
 use \Rehike\Model\Comments\MCommentVoteButton as VoteButton;
 use \Rehike\Model\Comments\MCommentReplyButton as ReplyButton;
 use \Rehike\i18n\i18n;
-use \Rehike\ConfigManager\ConfigManager;
+use \Rehike\ConfigManager\Config;
 use \Rehike\Network;
 
 use function \Rehike\Async\async;
@@ -272,7 +272,7 @@ class CommentThread
     {
         if (isset($context->viewReplies))
         {
-            $teaser = false /* ConfigManager::getConfigProp("appearance.teaserReplies") */;
+            $teaser = false /* Config::getConfigProp("appearance.teaserReplies") */;
 
             $i18n = i18n::getNamespace("comments");
 

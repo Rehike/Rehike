@@ -2,7 +2,7 @@
 namespace Rehike\DisableRehike;
 
 use Rehike\{
-    RehikeConfigManager,
+    ConfigManager\Config,
     FileSystem,
     SimpleFunnel,
     i18n
@@ -37,7 +37,7 @@ class DisableRehike
         if (self::shouldPersistentlyEnableRehikeFromCurrentUrl())
             return false;
 
-        $cfg = RehikeConfigManager::getConfigProp("hidden.disableRehike");
+        $cfg = Config::getConfigProp("hidden.disableRehike");
         $url = self::isRehikeUrl() ? false : self::getEnablePolymerUrlState();
 
         // ?enable_polymer=0, false with hidden.disableRehike should actually
@@ -87,8 +87,8 @@ class DisableRehike
      */
     public static function enableRehike(): void
     {
-        RehikeConfigManager::setConfigProp("hidden.disableRehike", false);
-        RehikeConfigManager::dumpConfig();
+        Config::setConfigProp("hidden.disableRehike", false);
+        Config::dumpConfig();
     }
 
     /**
@@ -96,8 +96,8 @@ class DisableRehike
      */
     public static function disableRehike(): void
     {
-        RehikeConfigManager::setConfigProp("hidden.disableRehike", true);
-        RehikeConfigManager::dumpConfig();
+        Config::setConfigProp("hidden.disableRehike", true);
+        Config::dumpConfig();
     }
 
     /**

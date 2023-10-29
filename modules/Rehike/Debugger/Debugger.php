@@ -1,7 +1,7 @@
 <?php
 namespace Rehike\Debugger;
 
-use \Rehike\RehikeConfigManager;
+use \Rehike\ConfigManager\Config;
 use \Rehike\TemplateManager;
 use \Rehike\i18n\i18n;
 use \Rehike\YtApp;
@@ -266,7 +266,7 @@ class Debugger
      */
     protected static function refreshInternalCondensedStatus(): void
     {
-        self::$condensed = RehikeConfigManager::getConfigProp("advanced.enableDebugger")
+        self::$condensed = Config::getConfigProp("advanced.enableDebugger")
             ? false
             : true;
     }

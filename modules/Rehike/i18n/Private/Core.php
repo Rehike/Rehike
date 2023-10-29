@@ -3,7 +3,7 @@ namespace Rehike\i18n\Private;
 
 use Rehike\i18n\i18n;
 use Rehike\FileSystem;
-use Rehike\RehikeConfigManager;
+use Rehike\ConfigManager\Config;
 
 /**
  * Implements core services pertaining to the Rehike i18n system.
@@ -38,7 +38,7 @@ class Core
 
     public static function getInnertubeGeolocation(): string
     {
-        $configGl = RehikeConfigManager::getConfigProp("hidden.gl");
+        $configGl = Config::getConfigProp("hidden.gl");
 
         return $configGl ?? "US";
     }

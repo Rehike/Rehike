@@ -11,7 +11,7 @@ use Rehike\Network;
 use Rehike\Async\Promise;
 
 use Rehike\Util\Base64Url;
-use Rehike\ConfigManager\ConfigManager;
+use Rehike\ConfigManager\Config;
 use Rehike\Util\WatchUtils;
 use Rehike\Util\ExtractUtils;
 
@@ -175,7 +175,7 @@ return new class extends NirvanaController {
          * Determine whether or not to use the Return YouTube Dislike
          * API to return dislikes. Retrieved from application config.
          */
-        if (true === ConfigManager::getConfigProp("appearance.useRyd"))
+        if (true === Config::getConfigProp("appearance.useRyd"))
         {
             $rydUrl = "https://returnyoutubedislikeapi.com/votes?videoId=" . $yt->videoId;
 

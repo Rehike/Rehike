@@ -9,7 +9,7 @@ use Rehike\Model\Comments\CommentThread;
 use Rehike\Model\Comments\CommentsHeader;
 use Rehike\Model\Appbar\MAppbar as Appbar;
 use Rehike\Network;
-use Rehike\ConfigManager\ConfigManager;
+use Rehike\ConfigManager\Config;
 
 /**
  * Watch fragments ajax controller

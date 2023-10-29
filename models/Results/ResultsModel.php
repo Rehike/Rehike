@@ -6,7 +6,7 @@ use Rehike\Util\ExtractUtils;
 use Rehike\TemplateFunctions;
 use Rehike\Model\Browse\InnertubeBrowseConverter;
 
-use Rehike\RehikeConfigManager as ConfigManager;
+use Rehike\ConfigManager\Config;
 
 class ResultsModel {
     static $yt;
@@ -87,7 +87,7 @@ class ResultsModel {
         $response->content = InnerTubeBrowseConverter::sectionListRenderer($contents, [
             "channelRendererUnbrandedSubscribeButton" => true,
             "channelRendererChannelBadge" => true,
-            "searchMetadataOrder" => false == ConfigManager::getConfigProp("appearance.swapSearchViewsAndDate")
+            "searchMetadataOrder" => false == Config::getConfigProp("appearance.swapSearchViewsAndDate")
         ]);
 
         // Paginator
