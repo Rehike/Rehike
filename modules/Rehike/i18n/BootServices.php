@@ -24,7 +24,7 @@ class BootServices
         i18n::getConfigApi()
             ->setRootDirectory($_SERVER["DOCUMENT_ROOT"] . "/i18n");
 
-        if (!i18n::isValidLanguageId($langId))
+        if ($langId == null || !i18n::isValidLanguageId($langId))
         {
             $langId = "en-US";
         }
