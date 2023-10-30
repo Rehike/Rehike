@@ -47,7 +47,7 @@ class AjaxWatchFragments2Controller extends AjaxController
 
     private function getGuide(YtApp $yt): void
     {
-        $this->template = "common/appbar/appbar_guide";
+        $this->template = "ajax/watch_fragments2/guide";
         $this->spfIdListeners = [
             '@masthead_search<data-is-crosswalk>',
             'guide'
@@ -61,7 +61,7 @@ class AjaxWatchFragments2Controller extends AjaxController
 
     private function getComments(YtApp &$yt): void
     {
-        $this->template = 'common/watch/watch_fragments2/comments';
+        $this->template = "ajax/watch_fragments2/comments";
         $yt->page = (object) [];
         $yt->page->commentsRenderer = (object) [
             "headerRenderer" => (object)[],
