@@ -1,10 +1,10 @@
 {
-	"previousHash": "93eb3ea9582b72e14a09d8dffab81616d71ba48b",
-	"currentRevisionId": 1148,
-	"subject": "Fix notifications",
-	"body": "Fix notifications",
+	"previousHash": "aac735280206f66509a1848ddbaeb120f8e1dfdc",
+	"currentRevisionId": 1149,
+	"subject": "Fix signin UCID (and own channel header)",
+	"body": "Fix signin UCID (and own channel header)",
 	"branch": "master",
 	"committerName": "Taniko Yamamoto",
 	"committerEmail": "kirasicecreamm@gmail.com",
-	"time": 1698657913
+	"time": 1698664542
 }

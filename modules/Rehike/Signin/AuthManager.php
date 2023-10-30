@@ -10,6 +10,7 @@ use Rehike\i18n\i18n;
 use Rehike\Network;
 use Rehike\FileSystem as FS;
 use Rehike\YtApp;
+use Rehike\Util\ChannelUtils;
 
 /**
  * Treat this as private. Use the API please.
@@ -156,10 +157,9 @@ class AuthManager
                 self::$info = self::processSwitcherData(
                     $data->switcher
                 );
+                self::$info["ucid"] = $data->ucid;
 
                 Network::useAuthGaiaId();
-
-                self::processMenuData(self::$info, $data->menu);
 
                 return self::$info;
             }
@@ -178,8 +178,9 @@ class AuthManager
         /** @var string */
         $switcher = null;
         /** @var string */
-        $menu = null;
+        $ucid = null;
 
+        /** @var array */
         $info = null;
         
         Network::urlRequest(
@@ -192,23 +193,46 @@ class AuthManager
 
             Network::useAuthGaiaId();
 
-            return Network::innertubeRequest("account/account_menu", [
-                "deviceTheme" => "DEVICE_THEME_SUPPORTED",
-                "userInterfaceTheme" => "USER_INTERFACE_THEME_DARK"
-            ]);
+            return Network::innertubeRequest(
+                action: "navigation/resolve_url",
+                body: [
+                    "url" => "https://www.youtube.com/profile"
+                ]
+            );
         })->then(function($response) use (&$menu) {
-            $menu = $response->getText();
+            $response = $response->getJson();
+
+            $endpoint = $response->endpoint->urlEndpoint->url;
+
+            if (strpos($endpoint, "/channel/") !== false)
+            {
+                $ucid = explode("/channel/", $endpoint)[1];
+
+                return new Promise(function($r) use ($ucid) {
+                    $r($ucid);
+                });
+            }
+            else
+            {
+                return new Promise(function($r) use ($endpoint) {
+                    ChannelUtils::getUcid($endpoint)->then(function ($ucid) use ($r) {
+                        $r($ucid);
+                    });
+                });
+            }
+        })->then(function($ucidValue) use (&$ucid) {
+            $ucid = $ucidValue;
         });
 
         // This call blocks the thread until the requests are done.
         Network::run();
-        
-        self::processMenuData($info, $menu);
 
         $responses = [
             "switcher" => &$switcher,
-            "menu" => &$menu
+            "ucid" => &$ucid
         ];
+
+        $info["ucid"] = $ucid;
 
         Cacher::writeCache($responses);
 
@@ -232,43 +256,6 @@ class AuthManager
         self::$isSignedIn = true;
 
         return $info;
-    }
-
-    /**
-     * Modify the switcher endpoint's data to add the UCID obtained from the
-     * menu data.
-     * 
-     * @param $info Reference to the data to modify.
-     * @param $menu Response of the account_menu endpoint.
-     */
-    public static function processMenuData(?array &$info, string $menu): void
-    {
-        // UCID must be retrieved here to work with GAIA id
-        $info["ucid"] = self::getUcid(json_decode($menu));
-    }
-
-    /**
-     * Get the UCID of the active channel.
-     */
-    public static function getUcid(object $menu): ?string
-    {
-        if ($items = @$menu->actions[0]->openPopupAction->popup
-            ->multiPageMenuRenderer->sections[0]->multiPageMenuSectionRenderer
-            ->items
-        )
-        {
-            foreach ($items as $item)
-            {
-                $item = @$item->compactLinkRenderer;
-
-                if ("ACCOUNT_BOX" == @$item->icon->iconType)
-                {
-                    return $item->navigationEndpoint->browseEndpoint->browseId ?? null;
-                }
-            }
-        }
-        
-        return "";
     }
 
     /**

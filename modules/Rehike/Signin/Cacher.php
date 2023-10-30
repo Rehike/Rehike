@@ -28,6 +28,8 @@ class Cacher
      */
     const CACHE_FILE = "cache/signin_cache.json";
 
+    const CACHE_VERSION = 2;
+
     /**
      * Get the cache file if it exists and is valid.
      * 
@@ -44,6 +46,10 @@ class Cacher
                 $object = self::readCacheFile();
 
                 $expiration = @$object->expire ?? 0;
+                $version = @$object->version ?? 0;
+
+                if ($version != self::CACHE_VERSION)
+                    return false;
 
                 if (time() > $expiration)
                     return false;
@@ -93,6 +99,7 @@ class Cacher
 
             $data = (object)[
                 "expire" => time() + (1 * WEEKS),
+                "version" => self::CACHE_VERSION,
                 "responseCache" => (object)[
                     $session => (object)$responses
                 ]
@@ -115,8 +122,11 @@ class Cacher
     {
         $data = self::readCacheFile();
         
-        if (null == $data)
+        if ((null == $data) || (@$data->version != self::CACHE_VERSION))
+        {
             self::writeCache($addedResponses, true);
+            return;
+        }
 
         $session = AuthManager::getUniqueSessionCookie();
 
