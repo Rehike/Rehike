@@ -7,7 +7,7 @@
         <div class="yt-thumb video-thumb {{data.type == "video" and rehike.config.appearance.movingThumbnails ? "yt-uix-mouseover-img-wrap" }}">
             <span class="yt-thumb-simple">
                 {{ img({
-                    src: rehike.getThumb(data.thumbArray, y),
+                    src: rehike.getThumb(data.thumbArray, y, data.type == "video"),
                     width: x,
                     height: y,
                     ytImg: 1,

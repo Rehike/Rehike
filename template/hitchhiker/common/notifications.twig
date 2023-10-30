@@ -23,7 +23,7 @@
             <div class="yt-lockup-content">
                 <h3 class="yt-lockup-title">
                     <a class="yt-uix-tile-link yt-ui-ellipsis yt-ui-ellipsis-6  spf-link " href="{{ this.navigationEndpoint.getCommentsFromInboxCommand ? "/watch?v=" ~ this.navigationEndpoint.getCommentsFromInboxCommand.videoId ~ "&lc=" ~ this.navigationEndpoint.getCommentsFromInboxCommand.linkedCommentId : rehike.getUrl(this) }}" title="{{ rehike.getText(this.shortMessage) }}">{{ rehike.getText(this.shortMessage) }}</a>
-                    <span class="accessible-description" id="description-id-{{ random(10000, 99999) }}"> - Notification</span>
+                    <span class="accessible-description" id="description-id-{{ rehike.generateRid() }}">{{ rehike.i18n.get("misc", "notificationA11yDesc") }}</span>
                 </h3>
                 <ul class="yt-lockup-byline">
                     <li>{{ rehike.getText(this.sentTimeText) }}</li>
@@ -34,7 +34,7 @@
                 <div class="yt-thumb video-thumb">
                     <span class="yt-thumb-simple">
                         {{ img({
-                            src: rehike.getThumb(this.videoThumbnail, 54),
+                            src: rehike.getThumb(this.videoThumbnail, 54, true),
                             width: 72,
                             height: 54,
                             onload: ";window.__ytRIL && __ytRIL(this)",

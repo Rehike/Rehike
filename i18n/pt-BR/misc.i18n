@@ -16,7 +16,7 @@ unsubscribeText: "Remover inscrição"
 # Get your UCID from YouTube. This is on https://www.youtube.com/account_advanced
 # Paste it into here: https://www.youtube.com/subscribe_embed?usegapi=1&channelid=<UCID>&layout=full&count=default
 # Make sure that you're logged into the account you need to access this string.
-selfSubscribeTooltip: "Não precisa se inscrever em seu próprio canal!"
+selfSubscribeTooltip: "Não precisa se inscrever em seu próprio canal"
 
 notificationPrefsTitle: "Notificações de %s"
 notificationPrefsLabel: "Preferências"

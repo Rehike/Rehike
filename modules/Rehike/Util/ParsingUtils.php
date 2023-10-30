@@ -75,7 +75,7 @@ class ParsingUtils
      * This will work on anything from video renderers to avatar images
      * for users.
      */
-    public static function getThumb(object $container, int $height = 0): ?string
+    public static function getThumb(object $container, int $height = 0, bool $correctForShorts = false): ?string
     {
         // We no longer support other access methods.
         if (!isset($container->thumbnails)) return null;
@@ -100,7 +100,13 @@ class ParsingUtils
         // sometimes InnerTube thumbnails have the height set to 0 (for
         // instance, live stream thumbnails in the notifications menu), and
         // that will cause a division by zero error.
+        //
+        // Also skip station renderers. If we don't, they will be incorrectly
+        // classified as Shorts, and be stripped of their signature. This isn't
+        // a problem for other thumbnails, but it will break station thumbnails
+        // entirely.
         if (
+            $correctForShorts &&
             isset($thumb->width) &&
             isset($thumb->height) &&
             $thumb->width > 0 &&

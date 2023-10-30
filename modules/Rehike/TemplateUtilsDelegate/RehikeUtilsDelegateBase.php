@@ -3,9 +3,11 @@ namespace Rehike\TemplateUtilsDelegate;
 
 use Rehike\ConfigManager\Config;
 use Rehike\Version\VersionController;
+use Rehike\i18n\i18n;
 
 use Rehike\Util\ParsingUtils;
 use Rehike\Util\Base64Url;
+
 use Com\Youtube\Innertube\Navigation\NavigationEndpoint;
 use Com\Youtube\Innertube\Navigation\NavigationEndpoint\BrowseEndpoint;
 use Com\Youtube\Innertube\Navigation\NavigationEndpoint\UrlEndpoint;
@@ -33,6 +35,21 @@ abstract class RehikeUtilsDelegateBase extends stdClass
      * Provides version information about the current Rehike setup.
      */
     public object $version;
+
+    /**
+     * Valid lockup types for getLockupInfo.
+     * 
+     * @var string[]
+     */
+    public const VALID_LOCKUP_TYPES = [
+        "video",
+        "channel",
+        "playlist",
+        "radio",
+        "movie",
+        "show",
+        "station" // Album
+    ];
 
     /**
      * Initialise all utilities.
@@ -63,11 +80,11 @@ abstract class RehikeUtilsDelegateBase extends stdClass
     /**
      * Alias for ParsingUtils::getThumb() for templating use.
      */
-    public static function getThumb(?object $obj, int $height = 0): string
+    public static function getThumb(?object $obj, int $height = 0, bool $correctForShorts = false): string
     {
         if (null == $obj) return "//i.ytimg.com";
         
-        return ParsingUtils::getThumb($obj, $height) ?? "//i.ytimg.com/";
+        return ParsingUtils::getThumb($obj, $height, $correctForShorts) ?? "//i.ytimg.com/";
     }
 
     /**
@@ -169,16 +186,12 @@ abstract class RehikeUtilsDelegateBase extends stdClass
         {
             $response->thumbArray = $response->info->thumbnail ?? null;
         }
-    
-        $validTypes = ["video", "channel", "playlist", "radio", "movie", "show"];
-    
-        for ($i = 0; $i < count($validTypes); $i++)
+
+        if (in_array($response->type, self::VALID_LOCKUP_TYPES))
         {
-            if ($response->type == $validTypes[$i])
-            {
-                return $response;
-            }
+            return $response;
         }
+
         return null;
     }
 
@@ -212,8 +225,8 @@ abstract class RehikeUtilsDelegateBase extends stdClass
         {
             if (
                 isset($renderer->{$meta}) && (
-                    isset($renderer->{$meta} ->simpleText) ||
-                    isset($renderer->{$meta} ->runs)
+                    isset($renderer->{$meta}->simpleText) ||
+                    isset($renderer->{$meta}->runs)
                 )
             )
             {
@@ -221,7 +234,7 @@ abstract class RehikeUtilsDelegateBase extends stdClass
             }
         }
     
-        return $metas;
+        return count($metas) > 0 ? $metas : null;
     }
 
     /**
@@ -230,6 +243,8 @@ abstract class RehikeUtilsDelegateBase extends stdClass
      */
     public static function getVideoTime(?object $obj): ?string
     {
+        $regexes = i18n::getNamespace("regex");
+
         if (isset($obj->lengthText))
         {
             return $obj->lengthText->simpleText;
@@ -257,7 +272,7 @@ abstract class RehikeUtilsDelegateBase extends stdClass
                     // - the video is at MOST 1 minute
                     // - if it has no seconds in the accessibility label it is 100% exactly 1 minute long
                     preg_match(
-                        "/([0-9]?[0-9])( seconds)|(1 second)/", 
+                        $regexes->get("videoTimeIsolator"), 
                         $obj->title->accessibility->accessibilityData->label, $matches
                     );
 
@@ -267,12 +282,8 @@ abstract class RehikeUtilsDelegateBase extends stdClass
                     }
                     else
                     {
-                        $lengthText = (int) preg_replace("/( seconds)|( second)/", "", $matches[0]);
-                        if ($lengthText < 10) {
-                            return "0:0" . $lengthText;
-                        } else {
-                            return "0:" . $lengthText;
-                        }
+                        $lengthText = preg_replace($regexes->get("secondsIsolator"), "", $matches[0]);
+                        return "0:" . str_pad($lengthText, 2, "0", STR_PAD_LEFT);
                     }
                 }
                 else if ($lengthText == "LIVE")

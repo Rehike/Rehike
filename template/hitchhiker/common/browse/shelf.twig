@@ -23,7 +23,7 @@
         <div class="yt-uix-shelfslider-body yt-viewport">
             <ul class="yt-uix-shelfslider-list">
             {%- for item in data.items -%}
-                <li class="yt-shelf-grid-item yt-uix-shelfslider-item {{ item.channelRenderer or item.gridChannelRenderer ? "channels-content-item channel-shelf-item" }}">
+                <li class="yt-shelf-grid-item yt-uix-shelfslider-item {{ item.channelRenderer or item.gridChannelRenderer or item.compactStationRenderer ? "channels-content-item channel-shelf-item" }}">
                     {{ lockup.grid(item) }}
                 </li>
                 {% endfor %}

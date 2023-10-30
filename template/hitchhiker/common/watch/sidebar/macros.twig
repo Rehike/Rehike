@@ -31,7 +31,7 @@
             <span class="video-thumb yt-thumb yt-thumb-168">
                 <span class="yt-thumb-clip">
                     {{ img({
-                        src: rehike.getThumb(data.thumbArray, 94),
+                        src: rehike.getThumb(data.thumbArray, 94, true),
                         width: 168,
                         height: 94,
                         ytImg: 1,
@@ -95,7 +95,7 @@
         <a href="{{ rehike.getUrl(info) }}" class="thumb-link spf-link">
             <span class="yt-uix-simple-thumb-wrap yt-uix-simple-thumb-related {{ data.type == "video" and rehike.config.appearance.movingThumbnails ? "yt-uix-mouseover-img-wrap" }}">
                 {{ img({
-                    src: rehike.getThumb(data.thumbArray, 94),
+                    src: rehike.getThumb(data.thumbArray, 94, true),
                     width: 168,
                     height: 94,
                     ytImg: 1,
