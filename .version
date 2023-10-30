@@ -1,10 +1,10 @@
 {
-	"previousHash": "9994d6d38da34052944233e129c96af5296e615e",
-	"currentRevisionId": 1135,
-	"subject": "fix #361",
-	"body": "fix #361",
+	"previousHash": "7807891fad133a8f3fbc7b61168ddebfb4f0a03f",
+	"currentRevisionId": 1136,
+	"subject": "i think this makes more sense",
+	"body": "i think this makes more sense",
 	"branch": "master",
 	"committerName": "Daylin Cooper",
 	"committerEmail": "dcoop2004@gmail.com",
-	"time": 1698632326
+	"time": 1698632604
 }
