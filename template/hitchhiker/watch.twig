@@ -210,32 +210,32 @@ video-{{ yt.videoId }} {{ (yt.theaterMode) ? 'watch-wide watch-stage-mode' }}
             {%- for result in yt.page.results -%}
                {%- if result.videoCreatorBarRenderer -%}
                {% set creator_bar = result.videoCreatorBarRenderer %}
-               {% include "/common/watch/watch7/creator_bar.twig" %}
+               {% include "/common/watch/creator_bar.twig" %}
                {%- endif -%}
                {%- if result.videoPrimaryInfoRenderer -%}
                   {% set info = result.videoPrimaryInfoRenderer %}
                   {% set owner = info.owner %}
-                  {% include '/common/watch/watch8/primary_info_renderer.twig' %}
+                  {% include '/common/watch/primary_info_renderer.twig' %}
                {% endif %}
                <div id="promotion-shelf" class="promotion-shelf-slot yt-card yt-card-has-padding hid"></div>
                {%- if result.videoSecondaryInfoRenderer -%}
                   {% set secondaryInfo = result.videoSecondaryInfoRenderer %}
-                  {% include '/common/watch/watch7/action_panel/details.twig' %}
+                  {% include '/common/watch/action_panel/details.twig' %}
                {%- endif -%}
                {%- if result.videoDiscussionDelayloadRenderer -%}
-                  {% include '/common/watch/watch_discussion_delayload_module.twig' %}
+                  {% include '/common/watch/comments/watch_discussion_delayload_module.twig' %}
                {%- elseif result.videoDiscussionRenderer -%}
-                  {% from '/common/watch/watch_discussion_module.twig' import watch_discussion %}
+                  {% from '/common/watch/comments/watch_discussion_module.twig' import watch_discussion %}
                   {{ watch_discussion(result.videoDiscussionRenderer) }}
                {%- elseif result.videoDiscussionNotice -%}
-                  {% from '/common/watch/watch_discussion_disabled.twig' import watch_discussion_disabled %}
+                  {% from '/common/watch/comments/watch_discussion_disabled.twig' import watch_discussion_disabled %}
                   {{ watch_discussion_disabled(result.videoDiscussionNotice.message) }}
                {%- endif -%}
             {%- endfor -%}
          </div>
          {% set secondaryResults = yt.page.secondaryResults %}
          {%- if yt.page.results or yt.page.secondaryResults -%}
-            {% include '/common/watch/watch7/sidebar/watch_sidebar.twig' %}
+            {% include '/common/watch/sidebar/watch_sidebar.twig' %}
          {%- endif -%}
       </div>
    </div>

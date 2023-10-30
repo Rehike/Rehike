@@ -1,4 +1,4 @@
-{% import '/common/watch/watch7/sidebar/macros.twig' as sidebar %}
+{% import '/common/watch//sidebar/macros.twig' as sidebar %}
 
 <div id="watch7-sidebar" class="watch-sidebar">
     <div id="placeholder-playlist" class="watch-playlist player-height {{ not yt.page.playlist ? ' hid' }}"></div>
@@ -10,7 +10,7 @@
         <div id="watch7-sidebar-modules">
             {% if secondaryResults.compactAutoplayRenderer %}
             <div class="watch-sidebar-section">
-                {% include '/common/watch/watch7/sidebar/autoplay_module.twig' %}
+                {% include '/common/watch//sidebar/autoplay_module.twig' %}
             </div>
             {% endif %}
             <div class="watch-sidebar-section">
