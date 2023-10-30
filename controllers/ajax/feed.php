@@ -67,8 +67,8 @@ return new class extends AjaxController
             )->then(function ($response) use ($yt) {
                 $ytdata = $response->getJson();
 
-                $yt->notifList = $ytdata->actions[0] ->appendContinuationItemsAction->continuationItems ?? null;
-                $yt->nextContinuation = (end($yt->notifList) 
+                $yt->page->notifList = $ytdata->actions[0] ->appendContinuationItemsAction->continuationItems ?? null;
+                $yt->page->nextContinuation = (end($yt->notifList) 
                     ->continuationItemRenderer 
                     ->continuationEndpoint 
                     ->getNotificationMenuEndpoint 
@@ -102,7 +102,7 @@ return new class extends AjaxController
         )->then(function ($response) use ($yt) {
             $ytdata = $response->getJson();
 
-            $yt->notifSections = $ytdata->actions[0]
+            $yt->page->notifSections = $ytdata->actions[0]
                 ->openPopupAction->popup->multiPageMenuRenderer->sections;
         });
     }

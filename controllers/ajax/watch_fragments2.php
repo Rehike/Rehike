@@ -63,7 +63,7 @@ class AjaxWatchFragments2Controller extends AjaxController
     {
         $this->template = 'common/watch/watch_fragments2/comments';
         $yt->page = (object) [];
-        $yt->commentsRenderer = (object) [
+        $yt->page->commentsRenderer = (object) [
             "headerRenderer" => (object)[],
             "comments" => (object)[]
         ];
@@ -78,7 +78,7 @@ class AjaxWatchFragments2Controller extends AjaxController
         )->then(function($response) use (&$yt) {
             $ytdata = $response->getJson();
 
-            $yt->commentsRenderer->headerRenderer = CommentsHeader::fromData(
+            $yt->page->commentsRenderer->headerRenderer = CommentsHeader::fromData(
                 $ytdata->onResponseReceivedEndpoints[0]->reloadContinuationItemsCommand->continuationItems[0]->commentsHeaderRenderer
             );
 
@@ -89,7 +89,7 @@ class AjaxWatchFragments2Controller extends AjaxController
             $_oct = $ytdata->onResponseReceivedEndpoints[1]->reloadContinuationItemsCommand; // original comment threads
 
             CommentThread::bakeComments($_oct->continuationItems)->then(function ($value) use ($yt) {
-                $yt->commentsRenderer->comments = $value;
+                $yt->page->commentsRenderer->comments = $value;
             });
         });
     }

@@ -9,7 +9,7 @@
                 {% endfor %}
             {% endfor %}
         </ol>
-        {% set lastSection = yt.notifSections|last %}
+        {% set lastSection = yt.page.notifSections|last %}
         {% set lastSection = lastSection.multiPageMenuNotificationSectionRenderer.items %}
         {% set lastItem = lastSection|last %}
         {% if lastItem.continuationItemRenderer %}
