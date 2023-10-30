@@ -3,7 +3,7 @@
 <body>
     <div id="yt-masthead-notifications-content" class="yt-uix-scroller" data-loaded="true" data-scroller-mousewheel-listener="" data-scroller-scroll-listener="">
         <ol id="item-section-{{ rehike.generateRid() }}" class="item-section">
-            {% for section in yt.notifSections %}
+            {% for section in yt.page.notifSections %}
                 {% for item in section.multiPageMenuNotificationSectionRenderer.items %}
                     {{ notification(item) }}
                 {% endfor %}
