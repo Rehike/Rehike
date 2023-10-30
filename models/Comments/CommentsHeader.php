@@ -1,7 +1,7 @@
 <?php
 namespace Rehike\Model\Comments;
 
-use Rehike\TemplateFunctions;
+use Rehike\Util\ParsingUtils;
 
 class CommentsHeader {
     public $title;
@@ -15,7 +15,7 @@ class CommentsHeader {
         $new = new self();
 
         if ($a = @$data->titleText) {
-            $new->title = TemplateFunctions::getText($data->titleText);
+            $new->title = ParsingUtils::getText($data->titleText);
         }
         
         if ($a = @$data->countText) {
@@ -59,7 +59,7 @@ class CommentsHeader {
             $new->simpleBoxRenderer = (object) [];
             $_sbr = $new->simpleBoxRenderer; // shorthand
             $_sbr->authorThumbnail = $a->authorThumbnail;
-            $_sbr->placeholderText = TemplateFunctions::getText($a->placeholderText);
+            $_sbr->placeholderText = ParsingUtils::getText($a->placeholderText);
         }
 
         return $new;

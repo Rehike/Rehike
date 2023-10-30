@@ -3,7 +3,6 @@ namespace Rehike\Model\ChannelSwitcher;
 
 use Rehike\i18n\i18n;
 use Rehike\Util\ParsingUtils;
-use Rehike\TemplateFunctions as TF;
 
 class MChannelItem
 {

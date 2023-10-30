@@ -16,9 +16,9 @@
     <span class="yt-uix-button-content">{{ yt.msgs.showMore }}</span>
 </button>
 {% else %}
-{% set data = getLockupInfo(renderer) %}
+{% set data = rehike.getLockupInfo(renderer) %}
 {% set info = data.info %}
-{% set a11yId = generateRid() %}
+{% set a11yId = rehike.generateRid() %}
 {% import "common/thumbnail_overlays.twig" as overlays %}
 {% from "core/html/img.twig" import img %}
 {% from "common/uix/badge_list.twig" import render as badge_list %}
@@ -46,7 +46,7 @@
         <span class="title" dir="ltr" title="{{ rehike.getText(info.title) }}">
             {{ rehike.getText(info.title) }}
         </span>
-        {% set author = getByline(info) %}
+        {% set author = rehike.getByline(info) %}
         {% if author != null %}
         <span class="stat attribution">
             {% if rehike.config.appearance.usernamePrepends %}
@@ -62,11 +62,11 @@
             <span dir="ltr" class="title" aria-describedby="description-id-{{ a11yId }}">
                 {{ rehike.getText(info.title) }}
             </span>
-            {% set videoTime = getVideoTime(info) %}
+            {% set videoTime = rehike.getVideoTime(info) %}
             {% if videoTime != null %}
             <span id="description-id-{{ a11yId }}" class="accessible-description">{{ yt.msgs.durationA11y|format(videoTime) }}</span>
             {% endif %}
-            {% set author = getByline(info) %}
+            {% set author = rehike.getByline(info) %}
             {% if author != null %}
             <span class="stat attribution">
                 {% if rehike.config.appearance.usernamePrepends %}

@@ -1,7 +1,7 @@
 <?php
 namespace Rehike\Model\Watch\Watch8;
 
-use Rehike\TemplateFunctions;
+use Rehike\Util\ParsingUtils;
 use Rehike\ConfigManager\Config;
 use Rehike\Util\ExtractUtils;
 use Rehike\i18n\i18n;
@@ -56,11 +56,11 @@ class MVideoPrimaryInfoRenderer
             $this->title = $info->title ?? null;
 
             // Also set title of the whole page from this property
-            $dataHost::$title = TemplateFunctions::getText($this->title);
+            $dataHost::$title = ParsingUtils::getText($this->title);
 
             if (isset($info->viewCount->videoViewCountRenderer))
 
-            $this->viewCount = TemplateFunctions::getText($info->viewCount->videoViewCountRenderer->viewCount);
+            $this->viewCount = ParsingUtils::getText($info->viewCount->videoViewCountRenderer->viewCount);
             if (Config::getConfigProp("appearance.noViewsText"))
             {
                 $number = (int)ExtractUtils::isolateViewCnt($this->viewCount);

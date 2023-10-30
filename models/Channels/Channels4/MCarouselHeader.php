@@ -1,7 +1,7 @@
 <?php
 namespace Rehike\Model\Channels\Channels4;
 
-use Rehike\TemplateFunctions;
+use Rehike\Util\ParsingUtils;
 use Rehike\Util\ImageUtils;
 use Rehike\Util\ExtractUtils;
 use Rehike\Model\Common\Subscription\MSubscriptionActions;
@@ -21,7 +21,7 @@ class MCarouselHeader extends MHeader
                 if (isset($header->title))
                 {
                     $this->title = (object) [
-                        "text" => TemplateFunctions::getText($header->title),
+                        "text" => ParsingUtils::getText($header->title),
                         "href" => $baseUrl
                     ];
                 }
@@ -37,8 +37,8 @@ class MCarouselHeader extends MHeader
 
                 if (isset($header->subscribeButton->subscribeButtonRenderer))
                 {
-                    $count = ExtractUtils::isolateSubCnt(TemplateFunctions::getText($header->subtitle));
-                    $this->subscriptionCount = TemplateFunctions::getText($header->subtitle);
+                    $count = ExtractUtils::isolateSubCnt(ParsingUtils::getText($header->subtitle));
+                    $this->subscriptionCount = ParsingUtils::getText($header->subtitle);
 
                     $this->subscriptionButton = MSubscriptionActions::fromData(
                         $header->subscribeButton->subscribeButtonRenderer,

@@ -5,7 +5,7 @@ use Rehike\Model\Appbar\MAppbarNav;
 use Rehike\Model\Appbar\MAppbarNavItem;
 use Rehike\Util\ExtractUtils;
 use Rehike\Util\ImageUtils;
-use Rehike\TemplateFunctions as TF;
+use Rehike\Util\ParsingUtils;
 use Rehike\Model\Common\Subscription\MSubscriptionActions;
 
 class MHeader
@@ -72,8 +72,8 @@ class MHeader
 
             if (isset($header->subscriberCountText))
             {
-                $count = ExtractUtils::isolateSubCnt(TF::getText($header->subscriberCountText));
-                $this->subscriptionCount = TF::getText($header->subscriberCountText);
+                $count = ExtractUtils::isolateSubCnt(ParsingUtils::getText($header->subscriberCountText));
+                $this->subscriptionCount = ParsingUtils::getText($header->subscriberCountText);
             }
 
             $this->subscriptionButton = MSubscriptionActions::fromData(
@@ -85,8 +85,8 @@ class MHeader
         {
             if (isset($header->subscriberCountText))
             {
-                $count = ExtractUtils::isolateSubCnt(TF::getText($header->subscriberCountText));
-                $this->subscriptionCount = TF::getText($header->subscriberCountText);
+                $count = ExtractUtils::isolateSubCnt(ParsingUtils::getText($header->subscriberCountText));
+                $this->subscriptionCount = ParsingUtils::getText($header->subscriberCountText);
             }
 
             $this->subscriptionButton = MSubscriptionActions::buildMock(
@@ -97,8 +97,8 @@ class MHeader
         {
             if (isset($header->subscriberCountText))
             {
-                $count = ExtractUtils::isolateSubCnt(TF::getText($header->subscriberCountText));
-                $this->subscriptionCount = TF::getText($header->subscriberCountText);
+                $count = ExtractUtils::isolateSubCnt(ParsingUtils::getText($header->subscriberCountText));
+                $this->subscriptionCount = ParsingUtils::getText($header->subscriberCountText);
             }
 
             $this->subscriptionButton = MSubscriptionActions::signedOutStub($count);

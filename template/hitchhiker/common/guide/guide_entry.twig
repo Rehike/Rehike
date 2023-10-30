@@ -1,7 +1,7 @@
 {% macro render(item) %}
-{% set externalId = item.idOverride ?? resolveGuideEndpoint(item) %}
-{% set serializedEndpoint = serializeEndpoint(item.navigationEndpoint) %}
-{% set selected = (serializedEndpoint == serializeEndpoint(yt.currentEndpoint)) %}
+{% set externalId = item.idOverride ?? rehike.resolveGuideEndpoint(item) %}
+{% set serializedEndpoint = rehike.serializeEndpoint(item.navigationEndpoint) %}
+{% set selected = (serializedEndpoint == rehike.serializeEndpoint(yt.currentEndpoint)) %}
 <li id="{{ externalId }}-guide-item" class="guide-channel guide-notification-item overflowable-list-item" role="menuitem">
     <a href="{{ item.hrefOverride ?? rehike.getUrl(item) }}" class="guide-item {{ selected ? "guide-item-selected" }}  yt-valign spf-link" title="{{ item.titleOverride ?? rehike.getText(item.formattedTitle) }}"
     data-external-id="{{ externalId }}"

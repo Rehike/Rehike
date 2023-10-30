@@ -3,7 +3,7 @@ namespace Rehike\Model\Channels\Channels4;
 
 use Rehike\Util\ExtractUtils;
 use Rehike\i18n\i18n;
-use Rehike\TemplateFunctions as TF;
+use Rehike\Util\ParsingUtils;
 use Rehike\Model\Traits\NavigationEndpoint;
 
 class MChannelAboutMetadata
@@ -32,32 +32,32 @@ class MChannelAboutMetadata
         $viewCountText = $miscStrings->format("viewTextPlural", "0");
 
         if (isset($data->viewCountText))
-            $viewCountText = TF::getText(@$data->viewCountText);
+            $viewCountText = ParsingUtils::getText(@$data->viewCountText);
 
         $this->viewCountText = self::getRichStat(
             $viewCountText,
             $regexs->get("viewCountIsolator")
         );
 
-        $this->joinedDateText = TF::getText(@$data->joinedDateText);
+        $this->joinedDateText = ParsingUtils::getText(@$data->joinedDateText);
 
         if (isset($data->descriptionLabel))
-            $this->descriptionLabel = TF::getText($data->descriptionLabel);
+            $this->descriptionLabel = ParsingUtils::getText($data->descriptionLabel);
 
         if (isset($data->detailsLabel))
-            $this->detailsLabel = TF::getText($data->detailsLabel);
+            $this->detailsLabel = ParsingUtils::getText($data->detailsLabel);
 
         if (isset($data->primaryLinksLabel))
-            $this->linksLabel = TF::getText($data->primaryLinksLabel);
+            $this->linksLabel = ParsingUtils::getText($data->primaryLinksLabel);
         
         if (isset($data->description))
             $this->description = $data->description;
 
         if (isset($data->country))
-            $this->country = TF::getText($data->country);
+            $this->country = ParsingUtils::getText($data->country);
 
         if (isset($data->countryLabel))
-            $this->countryLabel = TF::getText($data->countryLabel);
+            $this->countryLabel = ParsingUtils::getText($data->countryLabel);
 
         if (isset($data->primaryLinks))
             $this->primaryLinks = $data->primaryLinks;

@@ -1,7 +1,6 @@
 <?php
 namespace Rehike\Model\ChannelSwitcher;
 
-use Rehike\TemplateFunctions as TF;
 use Rehike\Util\ParsingUtils;
 use Rehike\i18n\i18n;
 use Rehike\FormattedString;

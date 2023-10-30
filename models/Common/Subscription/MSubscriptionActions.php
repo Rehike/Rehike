@@ -2,7 +2,7 @@
 namespace Rehike\Model\Common\Subscription;
 
 use Rehike\i18n\i18n;
-use Rehike\TemplateFunctions;
+use Rehike\Util\ParsingUtils;
 
 class MSubscriptionActions
 {
@@ -100,9 +100,9 @@ class MSubscriptionActions
             "isSubscribed" => $data->subscribed ?? false,
             "channelExternalId" => $data->channelId ?? "",
             "params" => $data->onSubscribeEndpoints[0] ->subscribeEndpoint->params ?? null,
-            "subscribeText" => TemplateFunctions::getText($data->unsubscribedButtonText ?? null),
-            "subscribedText" => TemplateFunctions::getText($data->subscribedButtonText ?? null),
-            "unsubscribeText" => TemplateFunctions::getText($data->unsubscribeButtonText ?? null),
+            "subscribeText" => ParsingUtils::getText($data->unsubscribedButtonText ?? null),
+            "subscribedText" => ParsingUtils::getText($data->subscribedButtonText ?? null),
+            "unsubscribeText" => ParsingUtils::getText($data->unsubscribeButtonText ?? null),
             "unsubConfirmDialog" => $data->onUnsubscribeEndpoints[0] ->signalServiceEndpoint->actions[0] ->openPopupAction->popup->confirmDialogRenderer ?? null,
             "notificationStateId" => $data->notificationPreferenceButton->subscriptionNotificationToggleButtonRenderer->currentStateId ?? 3
         ]);

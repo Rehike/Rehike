@@ -7,7 +7,7 @@ use Rehike\ControllerV2\RequestMetadata;
 use Rehike\Async\Promise;
 use \Rehike\Controller\core\AjaxController;
 use \Rehike\Network;
-use \Rehike\TemplateFunctions;
+use \Rehike\Util\ParsingUtils;
 use Rehike\Signin\API as SignIn;
 use \Rehike\Model\Share\ShareBoxModel;
 use \Rehike\Model\Share\ShareEmbedModel;
@@ -55,7 +55,7 @@ return new class extends AjaxController
 
             $yt->page = ShareBoxModel::bake(
                 videoId: $this->videoId, 
-                title: TemplateFunctions::getText($priInfo->title), 
+                title: ParsingUtils::getText($priInfo->title), 
                 listId: $this->listId
             );
         });
@@ -84,7 +84,7 @@ return new class extends AjaxController
 
             $yt->page = ShareEmbedModel::bake(
                 videoId: $this->videoId, 
-                title: TemplateFunctions::getText($priInfo->title), 
+                title: ParsingUtils::getText($priInfo->title), 
                 listData: $listData
             );
         });
@@ -106,7 +106,7 @@ return new class extends AjaxController
             
             $yt->page = ShareEmailModel::bake(
                 videoId: $this->videoId,
-                title: TemplateFunctions::getText($priInfo->title),
+                title: ParsingUtils::getText($priInfo->title),
                 userId: $userData["ucid"],
                 userName: $userData["activeChannel"]["name"],
                 desc: $secInfo->attributedDescription->content

@@ -68,6 +68,5 @@ require "includes/constants.php";
 // Include the Composer and Rehike autoloaders, respectively.
 require "vendor/autoload.php";
 require "includes/rehike_autoloader.php";
-foreach (glob('includes/template_functions/*.php') as $file) include $file;
 
 \Rehike\Boot\Bootloader::startSession();

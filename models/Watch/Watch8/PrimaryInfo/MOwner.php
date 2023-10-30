@@ -1,7 +1,7 @@
 <?php
 namespace Rehike\Model\Watch\Watch8\PrimaryInfo;
 
-use Rehike\TemplateFunctions;
+use Rehike\Util\ParsingUtils;
 use Rehike\Model\Common\Subscription\MSubscriptionActions;
 use Rehike\Model\Common\MButton;
 use Rehike\Signin\API as SignIn;
@@ -63,7 +63,7 @@ class MOwner
 
             // Subscription button
             $subscribeCount = isset($info->subscriberCountText)
-                ? ExtractUtils::isolateSubCnt(TemplateFunctions::getText($info->subscriberCountText))
+                ? ExtractUtils::isolateSubCnt(ParsingUtils::getText($info->subscriberCountText))
                 : null
             ;
 

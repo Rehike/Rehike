@@ -2,7 +2,7 @@
 namespace Rehike\Model\Watch\Watch8\SecondaryInfo;
 
 use Rehike\Model\Traits\Runs;
-use Rehike\TemplateFunctions;
+use Rehike\Util\ParsingUtils;
 use Rehike\i18n\i18n;
 
 class MMetadataRowContainer
@@ -92,8 +92,8 @@ class MMetadataRowContainer
                 {
                     $title = $i18n->get("metadataSong");
 
-                    $content = TemplateFunctions::getText($lockup->carouselLockupRenderer->videoLockup->compactVideoRenderer->title);
-                    $href = TemplateFunctions::getUrl($lockup->carouselLockupRenderer->videoLockup->compactVideoRenderer);
+                    $content = ParsingUtils::getText($lockup->carouselLockupRenderer->videoLockup->compactVideoRenderer->title);
+                    $href = ParsingUtils::getUrl($lockup->carouselLockupRenderer->videoLockup->compactVideoRenderer);
                     if ("" == $href) $href = null;
 
                     $musicItems[] = self::createSimpleField($title, $content, $href);
@@ -107,10 +107,10 @@ class MMetadataRowContainer
                     // WHY IS THE FUCKING TITLE HARDCODED UPPERCASE
                     // I AM GOING TO FUCKING KILL MYSELF
                     // love taniko
-                    $title = ucfirst(strtolower(TemplateFunctions::getText(@$data->title)));
+                    $title = ucfirst(strtolower(ParsingUtils::getText(@$data->title)));
 
-                    $content = TemplateFunctions::getText(@$data->{$element});
-                    $href = TemplateFunctions::getUrl(@$data->{$element}->runs[0]);
+                    $content = ParsingUtils::getText(@$data->{$element});
+                    $href = ParsingUtils::getUrl(@$data->{$element}->runs[0]);
                     if ("" == $href) $href = null;
 
                     $musicItems[] = self::createSimpleField($title, $content, $href);

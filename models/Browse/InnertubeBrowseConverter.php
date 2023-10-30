@@ -2,7 +2,7 @@
 namespace Rehike\Model\Browse;
 
 use Rehike\i18n\i18n;
-use Rehike\TemplateFunctions as TF;
+use Rehike\Util\ParsingUtils;
 use Rehike\Util\ExtractUtils;
 use Rehike\Model\Channels\Channels4\BrandedPageV2\MSubnav;
 use Rehike\Signin\API as SignIn;
@@ -139,7 +139,7 @@ class InnertubeBrowseConverter
         if (@$context["channelRendererNoSubscribeCount"])
             $subscriberCount = "";
         else if (isset($data->subscriberCountText))
-            $subscriberCount = ExtractUtils::isolateSubCnt(TF::getText($data->subscriberCountText));
+            $subscriberCount = ExtractUtils::isolateSubCnt(ParsingUtils::getText($data->subscriberCountText));
 
         $subscriberCount = $subscriberCount ?? "";
 
@@ -161,7 +161,7 @@ class InnertubeBrowseConverter
          *  - love, aubrey <3
          */
         if (substr($subscriberCount, 0, 1) == "@") {
-            $subscriberCount = ExtractUtils::isolateSubCnt(TF::getText($data->videoCountText));
+            $subscriberCount = ExtractUtils::isolateSubCnt(ParsingUtils::getText($data->videoCountText));
             unset($data->videoCountText);
         }
 

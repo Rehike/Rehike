@@ -3,7 +3,6 @@ namespace Rehike\Model\Results;
 use Rehike\i18n\i18n;
 use Rehike\Model\Common\Subscription\MSubscriptionActions;
 use Rehike\Util\ExtractUtils;
-use Rehike\TemplateFunctions;
 use Rehike\Model\Browse\InnertubeBrowseConverter;
 
 use Rehike\ConfigManager\Config;

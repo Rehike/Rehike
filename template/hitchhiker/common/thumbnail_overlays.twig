@@ -1,13 +1,13 @@
 {% macro renderOLD(data) %}
 {% from "common/uix/watch_later_button.twig" import render as watch_later %}
 {% set info = data.info %}
-{% if getVideoTime(info) != null %}
-<span class="video-time">{{ getVideoTime(info) }}</span>
+{% if rehike.getVideoTime(info) != null %}
+<span class="video-time">{{ rehike.getVideoTime(info) }}</span>
 {% endif %}
-{%- if getWLOverlay(info) != null -%}
-{{ watch_later(getWLOverlay(info), info.videoId) }}
+{%- if rehike.getWLOverlay(info) != null -%}
+{{ watch_later(rehike.getWLOverlay(info), info.videoId) }}
 {%- endif -%}
-{% set percentWatched = getWatchedPercent(info) %}
+{% set percentWatched = rehike.getWatchedPercent(info) %}
 {% if percentWatched != null %}
 <span class="resume-playback-background"></span>
 <span class="resume-playback-progress-bar" style="width:{{ percentWatched }}%"></span>

@@ -63,7 +63,7 @@
         {% if data.isCollapsible %}
         <div class="yt-uix-expander yt-uix-expander-collapsed">
         {% endif %}
-            <ul id="grid-{{ generateRid() }}" class="shelf-content">
+            <ul id="grid-{{ rehike.generateRid() }}" class="shelf-content">
                 {% for item in data.items %}
                 <li class="yt-shelf-grid-item">
                     {{ lockup.grid(item) }}

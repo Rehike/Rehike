@@ -1,5 +1,5 @@
 <?php
-namespace Rehike\Misc;
+namespace Rehike;
 
 /**
  * Stores resource constants locations for resource routing in Rehike.

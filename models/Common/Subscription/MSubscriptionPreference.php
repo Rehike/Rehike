@@ -1,7 +1,7 @@
 <?php
 namespace Rehike\Model\Common\Subscription;
 
-use Rehike\TemplateFunctions;
+use Rehike\Util\ParsingUtils;
 
 class MSubscriptionPreference
 {
@@ -25,7 +25,7 @@ class MSubscriptionPreference
     {
         $item = $data->menuServiceItemRenderer ?? null;
         return new self([
-            "label" => TemplateFunctions::getText($item->text) ?? "",
+            "label" => ParsingUtils::getText($item->text) ?? "",
             "checked" => $item->isSelected ?? false,
             "params" => $item->serviceEndpoint->modifyChannelNotificationPreferenceEndpoint->params ?? "",
             "class" => match ($item->icon->iconType)

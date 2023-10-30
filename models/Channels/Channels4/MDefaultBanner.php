@@ -1,7 +1,7 @@
 <?php
 namespace Rehike\Model\Channels\Channels4;
 
-use Rehike\TemplateFunctions as TF;
+use Rehike\Util\ResourceUtils;
 
 /**
  * Implements the (very hacky) Channels4 default banner.
@@ -19,12 +19,12 @@ class MDefaultBanner
     {
         $resources = include "includes/resource_constants.php";
 
-        $this->image = TF::imgPath(
+        $this->image = ResourceUtils::imgPath(
             "channels/c4/default_banner",
             $resources
         );
 
-        $this->hdImage = TF::imgPath(
+        $this->hdImage = ResourceUtils::imgPath(
             "channels/c4/default_banner_hq",
             $resources
         );

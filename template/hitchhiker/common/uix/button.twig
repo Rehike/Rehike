@@ -25,8 +25,8 @@
         href="{{ rehike.getUrl(data) }}"
         {% endif %}
         class="yt-uix-button 
-        yt-uix-button-size-{{ resolveSize(data.size) }} 
-        {% if not data.noStyle %}yt-uix-button-{{ styleOverride ?? resolveStyle(data.style) }}{% endif %}
+        yt-uix-button-size-{{ rehike.resolveSize(data.size) }} 
+        {% if not data.noStyle %}yt-uix-button-{{ styleOverride ?? rehike.resolveStyle(data.style) }}{% endif %}
         {% if data.text.runs is empty and not data.text.simpleText and not data.thumb %}
             yt-uix-button-empty
         {% endif %}
@@ -65,7 +65,7 @@
         {% if data.tooltip %} 
             title="{{ data.tooltip }}" 
         {% endif %}
-        {% for name, value in obj2arr(data.accessibility.accessibilityData) %}
+        {% for name, value in rehike.obj2arr(data.accessibility.accessibilityData) %}
             aria-{{ name }}="{{ value }}" 
         {% endfor %}
         {% if id or data.targetId %}
@@ -89,7 +89,7 @@
     >
         {%- if data.icon.iconType -%}
             <span class="yt-uix-button-icon-wrapper">
-                <span class="yt-uix-button-icon yt-uix-button-icon-{{ const2class(data.icon.iconType) }} yt-sprite"></span>
+                <span class="yt-uix-button-icon yt-uix-button-icon-{{ rehike.casing.constantToHyphen(data.icon.iconType) }} yt-sprite"></span>
             </span>
         {%- endif -%}
         {%- apply spaceless -%}

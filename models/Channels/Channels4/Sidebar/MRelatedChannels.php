@@ -1,7 +1,6 @@
 <?php
 namespace Rehike\Model\Channels\Channels4\Sidebar;
 
-use Rehike\TemplateFunctions as TF;
 use Rehike\Model\Browse\InnertubeBrowseConverter as Converter;
 
 class MRelatedChannels

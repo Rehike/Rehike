@@ -1,7 +1,7 @@
 <?php
 namespace Rehike\Model\Comments;
 use \Rehike\Model\Common\MButton;
-use \Rehike\TemplateFunctions;
+use \Rehike\Util\ParsingUtils;
 
 class MCommentReplyButton extends MButton {
     public $size = "SIZE_SMALL";
@@ -25,8 +25,8 @@ class MCommentReplyButton extends MButton {
     public static function fromData($data, $id) {
         $dialog = $data->navigationEndpoint->createCommentReplyDialogEndpoint->dialog->commentReplyDialogRenderer ?? null;
         $params = $dialog->replyButton->buttonRenderer->serviceEndpoint->createCommentReplyEndpoint->createReplyParams ?? "";
-        $label = TemplateFunctions::getText($dialog->replyButton->buttonRenderer->text);
-        $placeholder = TemplateFunctions::getText($dialog->placeholderText);
+        $label = ParsingUtils::getText($dialog->replyButton->buttonRenderer->text);
+        $placeholder = ParsingUtils::getText($dialog->placeholderText);
         $text = $data->text;
         return new self([
             "id" => $id,

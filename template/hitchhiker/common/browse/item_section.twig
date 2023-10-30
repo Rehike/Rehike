@@ -2,7 +2,7 @@
     {% from "common/browse/shelf.twig" import render as shelf %}
     {% from "common/channels4/video_player_view_component.twig" import render as video_player_view_component %}
     {% import "common/uix/lockup.twig" as lockup %}
-    {% set rid = generateRid() %}
+    {% set rid = rehike.generateRid() %}
     <ol id="item-section-{{ rid }}" class="item-section">
         {%- for item in data.contents -%}
             {%- if item.shelfRenderer -%}

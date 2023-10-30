@@ -1,5 +1,5 @@
 <?php
-namespace Rehike\Misc;
+namespace Rehike\TemplateUtilsDelegate;
 
 use Rehike\i18n\i18n;
 use Throwable;

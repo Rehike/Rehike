@@ -2,7 +2,7 @@
 namespace Rehike\Model\Clickcard;
 
 use Rehike\Model\Common\MAbstractClickcard;
-use Rehike\TemplateFunctions;
+use Rehike\Util\ParsingUtils;
 use Rehike\Model\Common\MButton;
 
 /**
@@ -44,11 +44,11 @@ class MSigninClickcard extends MAbstractClickcard
         $button = $data->button->buttonRenderer ?? null;
         
         return new self(
-            TemplateFunctions::getText($heading) ?? null,
-            TemplateFunctions::getText($message) ?? null,
+            ParsingUtils::getText($heading) ?? null,
+            ParsingUtils::getText($message) ?? null,
             [
-                "text" => TemplateFunctions::getText($button->text) ?? null,
-                "href" => TemplateFunctions::getUrl($button) ?? null
+                "text" => ParsingUtils::getText($button->text) ?? null,
+                "href" => ParsingUtils::getUrl($button) ?? null
             ]
         );
     }

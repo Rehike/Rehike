@@ -1,7 +1,7 @@
 <?php
 namespace Rehike\Util;
 
-use Rehike\Misc\ResourceConstantsStore;
+use Rehike\ResourceConstantsStore;
 
 use Rehike\Util\Exception\ResourceUtils\BadResourceException;
 
@@ -23,6 +23,7 @@ class ResourceUtils
         $css2x = false;
 
         // TODO: add css 2x check
+        // old code: if (isset($pref->f4) && substr($pref->f4, 0, 1) == "4")
 
         if (isset($constants->css->{$name}))
         {

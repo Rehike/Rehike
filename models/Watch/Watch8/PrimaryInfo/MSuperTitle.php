@@ -1,7 +1,7 @@
 <?php
 namespace Rehike\Model\Watch\Watch8\PrimaryInfo;
 
-use Rehike\TemplateFunctions;
+use Rehike\Util\ParsingUtils;
 
 /**
  * Define the super title (links that appear above the title, such as hashtags).
@@ -18,7 +18,7 @@ class MSuperTitle
         {
             $this->items[] = (object)[
                 "text" => $run->text,
-                "url" => TemplateFunctions::getUrl($run)
+                "url" => ParsingUtils::getUrl($run)
             ];
         }
     }

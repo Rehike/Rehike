@@ -37,12 +37,12 @@
                                 <span title="{{ yt.msgs.verified }}" class="yt-uix-tooltip yt-channel-title-icon-verified yt-sprite"></span>
                             {% endif %}
                         </a>
-                        {%- if getVideoTime(info) != null -%}
-                            {{ _self.a11yDesc(getVideoTime(info)) }}
+                        {%- if rehike.getVideoTime(info) != null -%}
+                            {{ _self.a11yDesc(rehike.getVideoTime(info)) }}
                         {% endif %}
                     </h3>
-                    {% if getByline(info) != null and data.type != "channel" %}
-                    {% set byline = getByline(info) %}
+                    {% if rehike.getByline(info) != null and data.type != "channel" %}
+                    {% set byline = rehike.getByline(info) %}
                     <div class="yt-lockup-byline">
                         {% set bylineUrl = rehike.getUrl(byline.runs[0]) %}
                         {% if bylineUrl %}
@@ -59,10 +59,10 @@
                     {% endif %}
                     {% if data.type == "playlist" or data.type == "radio" %}
                     {{ _self.playlistMeta(data, style) }}
-                    {% elseif getMeta(info) != false %}
+                    {% elseif rehike.getMeta(info) != false %}
                     <div class="yt-lockup-meta">
                         <ul class="yt-lockup-meta-info">
-                            {% for meta in getMeta(info) %}
+                            {% for meta in rehike.getMeta(info) %}
                             <li>{{ rehike.getText(meta) }}</li>
                             {% endfor %}
                             {% if info.upcomingEventData %}
@@ -81,9 +81,9 @@
                     </div>
                     {% endif %}
                     {{ data.type == "channel" and style == "grid" ? subscription_button(info.subscribeButton) }}
-                    {% if style == "tile" and getDescSnippet(info) != false %}
+                    {% if style == "tile" and rehike.getDescSnippet(info) != false %}
                     <div class="yt-lockup-description yt-ui-ellipsis yt-ui-ellipsis-2">
-                        {{ rehike.getText(getDescSnippet(info))|nl2br }}
+                        {{ rehike.getText(rehike.getDescSnippet(info))|nl2br }}
                     </div>
                     {% endif %}
                     {%- if info.badges or info.upcomingEventData or (data.type == "channel" and style == "tile") -%}
@@ -135,7 +135,7 @@
         {% if video.childVideoRenderer %}
             {% set this = video.childVideoRenderer %}
             <li class="yt-lockup-playlist-item clearfix">
-                <span class="yt-lockup-playlist-item-length">{{ getVideoTime(this) }}</span>
+                <span class="yt-lockup-playlist-item-length">{{ rehike.getVideoTime(this) }}</span>
                 <a href="{{ rehike.getUrl(this) }}" class="yt-lockup-playlist-item-title spf-link">{{ rehike.getText(this.title) }}</a>
             </li>
         {% endif %}
@@ -152,27 +152,27 @@
 {% endmacro %}
 
 {% macro grid(data, thumbX = 196, thumbY = 110, config) %}
-    {{ _self.main(getLockupInfo(data), "grid", thumbX, thumbY, config) }}
+    {{ _self.main(rehike.getLockupInfo(data), "grid", thumbX, thumbY, config) }}
 {% endmacro %}
 
 {% macro tile(data, thumbX = 196, thumbY = 110, config) %}
-    {{ _self.main(getLockupInfo(data), "tile", thumbX, thumbY, config) }}
+    {{ _self.main(rehike.getLockupInfo(data), "tile", thumbX, thumbY, config) }}
 {% endmacro %}
 
 {# LEGACY #}
 {%- macro title(info, type, overflow = true, class) -%}
 <h3 class="yt-lockup-title ">
-   <a href="{{ rehike.getUrl(info) }} " class=" {% if overflow %}yt-ui-ellipsis yt-ui-ellipsis-2{% endif %}   {{ class ?: "" }}    spf-link "   title="{{ rehike.getText(info.title) }}" aria-describedby="description-id-{{ generateRid }}" dir="ltr">
+   <a href="{{ rehike.getUrl(info) }} " class=" {% if overflow %}yt-ui-ellipsis yt-ui-ellipsis-2{% endif %}   {{ class ?: "" }}    spf-link "   title="{{ rehike.getText(info.title) }}" aria-describedby="description-id-{{ rehike.generateRid }}" dir="ltr">
    {{ rehike.getText(info.title) }}{% if info.ownerBadges and type == "channel" %}    <span title="{{ yt.msgs.verified }}" class="yt-uix-tooltip yt-channel-title-icon-verified yt-sprite"></span>{% endif %}
    </a>
-   {%- if getVideoTime(info) != null -%}
-      {{ _self.a11yDesc(getVideoTime(info)) }}
+   {%- if rehike.getVideoTime(info) != null -%}
+      {{ _self.a11yDesc(rehike.getVideoTime(info)) }}
    {% endif %}
 </h3>
 {%- endmacro -%}
 
 {% macro a11yDesc(lengthText) %}
-<span class="accessible-description" id="description-id-{{ generateRid() }}">
+<span class="accessible-description" id="description-id-{{ rehike.generateRid() }}">
    {{ yt.msgs.durationA11y|format(lengthText) }}
 </span>
 {% endmacro %}

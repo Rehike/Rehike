@@ -3,7 +3,7 @@ namespace Rehike\Model\Attribution;
 
 use Rehike\i18n\i18n;
 use Rehike\Network;
-use Rehike\TemplateFunctions;
+use Rehike\Util\ParsingUtils;
 
 class AttributionModel {
     public $header;
@@ -37,7 +37,7 @@ class AttributionModel {
         if(isset($items[1] ->richItemRenderer)) {
             $contents = (object) [];
             $contents->title = $i18n->get("sectionTitle");
-            $contents->subtitle = $i18n->format("sectionSubtitle", TemplateFunctions::getText($header->video->title));
+            $contents->subtitle = $i18n->format("sectionSubtitle", ParsingUtils::getText($header->video->title));
             $contents->items = [];
             for ($i = 1; $i < count($items); $i++) {
                 if (isset($items[$i] ->richItemRenderer)) {
@@ -62,7 +62,7 @@ class AttributionModel {
                     // $current->thumbnail = preg_replace("/\?sqp=.*/", "", $thumb);
                     // $current->title = $reelHeader->reelTitleText;
                     // $current->author = $reelHeader->channelTitleText;
-                    // $current->authorA11yLabel = $i18n->get("goToUser", TemplateFunctions::getText($reelHeader->channelTitleText));
+                    // $current->authorA11yLabel = $i18n->get("goToUser", ParsingUtils::getText($reelHeader->channelTitleText));
                     // $current->author->navigationEndpoint = $reelHeader->channelNavigationEndpoint;
                     // $current->attrLink = (object) [
                     //     "simpleText" => $i18n->get("viewAttrs"),
