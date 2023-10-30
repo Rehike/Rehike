@@ -79,8 +79,8 @@
                             {% endif %}
                         </ul>
                     </div>
-                    {{ data.type == "channel" and style == "grid" ? subscription_button(info.subscribeButton) }}
                     {% endif %}
+                    {{ data.type == "channel" and style == "grid" ? subscription_button(info.subscribeButton) }}
                     {% if style == "tile" and getDescSnippet(info) != false %}
                     <div class="yt-lockup-description yt-ui-ellipsis yt-ui-ellipsis-2">
                         {{ rehike.getText(getDescSnippet(info))|nl2br }}

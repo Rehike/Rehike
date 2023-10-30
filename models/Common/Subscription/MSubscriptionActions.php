@@ -88,6 +88,9 @@ class MSubscriptionActions
         }
     }
 
+    /**
+     * Build a subscription actions model from a standard InnerTube WEB data.
+     */
     public static function fromData($data, $count = "", $branded = true)
     {
         return new self([

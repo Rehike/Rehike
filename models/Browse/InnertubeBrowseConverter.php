@@ -188,7 +188,7 @@ class InnertubeBrowseConverter
                 $subscribeButtonBranded
             );
         }
-        elseif (SignIn::isSignedIn())
+        else if (SignIn::isSignedIn())
         {
             $data->subscribeButton = MSubscriptionActions::buildMock(
                 $subscriberCount,
