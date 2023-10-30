@@ -1,10 +1,10 @@
 {
-	"previousHash": "356f284e23b8b2bf12cdea947d58e6e8fcb70d1d",
-	"currentRevisionId": 1138,
-	"subject": "oh i forgot this hidden asshole WHY IS IT THERE",
-	"body": "oh i forgot this hidden asshole WHY IS IT THERE",
+	"previousHash": "a7c3ad4b0e23b572a80234506252081bc0b6b74f",
+	"currentRevisionId": 1139,
+	"subject": "remove unused debug variables",
+	"body": "remove unused debug variables",
 	"branch": "master",
 	"committerName": "Daylin Cooper",
 	"committerEmail": "dcoop2004@gmail.com",
-	"time": 1698633711
+	"time": 1698633786
 }

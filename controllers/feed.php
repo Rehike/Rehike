@@ -336,9 +336,6 @@ return new class extends \Rehike\Controller\core\NirvanaController {
                 ];
             }
 
-            $yt->test = $rcontents;
-            $yt->test2 = $contents;
-
             if (isset($ytdata->header))
             foreach ($ytdata->header as $header)
             if (isset($header->title))
