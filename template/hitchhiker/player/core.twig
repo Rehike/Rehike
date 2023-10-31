@@ -2,9 +2,7 @@
    <div id="theater-background" class="player-height"></div>
    <div id="player-mole-container">
       <div id="player-unavailable" class="{{ yt.playerUnavailable ? "  player-width player-height player-unavailable " : "hid"  }}">
-         {% if yt.playerUnavailable %}
-            {% include "player/player_unavailable.twig" %}
-         {% endif %}
+         {% include "page_fragments/player_unavailable.twig" %}
       </div>
       <div id="player-api" class="player-width player-height off-screen-target player-api" tabIndex="-1"></div>
       <script >if (window.ytcsi) {window.ytcsi.tick("cfg", null, '');}</script>
@@ -89,9 +87,7 @@ ytplayer.load = function() {
 };
 </script>
       <div id="player-playlist" class="  {{ yt.page.playlist ? 'content-alignment  watch-player-playlist' :  'hid' }}  ">
-         {%- if yt.page.playlist -%}
-            {% include '/common/watch/watch_playlist.twig' %}
-         {%- endif -%}
+         {% include 'page_fragments/player_playlist.twig' %}
       </div>
    </div>
    <div class="clear"></div>

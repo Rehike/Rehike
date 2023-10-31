@@ -57,12 +57,10 @@
          <div id="ticker-content">
          </div>
          <div id="masthead-positioner">
-         {%- if yt.page.ticker -%}
-         {{ alert.render(yt.page.ticker) }}
-         {%- endif -%}
-         <div id="yt-masthead-container" class="clearfix yt-base-gutter">
-            {% include 'common/pageframe/masthead.twig' %}     
-         </div>
+            {% include "page_fragments/ticker_content.twig" %}
+            <div id="yt-masthead-container" class="clearfix yt-base-gutter">
+               {% include 'common/pageframe/masthead.twig' %}     
+            </div>
             <div id="masthead-appbar-container" class="clearfix">
                <div id="masthead-appbar">
                   <div id="appbar-content" class="">

@@ -1,10 +1,10 @@
 {
-	"previousHash": "d7cfcf825f230d8753eaad374b2def241f1c3df3",
-	"currentRevisionId": 1156,
-	"subject": "remove unused alert block templates",
-	"body": "remove unused alert block templates",
-	"branch": "master",
+	"previousHash": "920de19ca9c1df3a744947a577b3f4cf094562fb",
+	"currentRevisionId": 1157,
+	"subject": "Migrate a few page fragments to their own templates",
+	"body": "Migrate a few page fragments to their own templates",
+	"branch": "dev-0.8-spf-rewrite",
 	"committerName": "Daylin Cooper",
 	"committerEmail": "dcoop2004@gmail.com",
-	"time": 1698727318
+	"time": 1698728149
 }
