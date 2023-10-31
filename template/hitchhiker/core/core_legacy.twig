@@ -42,9 +42,7 @@
          <form name="logoutForm" method="POST" action="/logout"><input type="hidden" name="action_logout" value="1"></form>
          <!--begin page-->
          <div id="ticker-content">
-            {%- if yt.page.ticker -%}
-            {{ alert.render(yt.page.ticker) }}
-            {%- endif -%}
+            {% include "page_fragments/ticker_content.twig" %}
          </div>
          {% block masthead %}
          <div id="yt-masthead-container" class="clearfix yt-base-gutter">

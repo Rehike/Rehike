@@ -1,0 +1,4 @@
+{%- if yt.page.ticker -%}
+{% import "common/alert.twig" as alert %}
+{{ alert.render(yt.page.ticker) }}
+{%- endif -%}
