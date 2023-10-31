@@ -52,7 +52,6 @@
          </div>
          {% endblock %}
          <div id="alerts" class="{{ not leftAlignPage ? "content-alignment" }}">
-            {% block alerts %}{% endblock %}
             {%- for item in yt.page.alerts -%}
             {{ alert.render(item) }}
             {%- endfor -%}
