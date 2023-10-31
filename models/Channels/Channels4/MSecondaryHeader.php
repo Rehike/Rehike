@@ -18,8 +18,27 @@ class MSecondaryHeader
 
         if (isset($data->subscribers))
         {
+            $count = $data->subscribers;
+            
+            if ($count == 1)
+            {
+                $text = i18n::getFormattedString(
+                    "misc", 
+                    "subscriberTextSingular", 
+                    $i18n->formatNumber($data->subscribers)
+                );
+            }
+            else
+            {
+                $text = i18n::getFormattedString(
+                    "misc", 
+                    "subscriberTextPlural", 
+                    $i18n->formatNumber($data->subscribers)
+                );
+            }
+
             $this->links[] = new MSecondaryHeaderLink(
-                $i18n->format("secondaryHeaderSubs", $i18n->formatNumber($data->subscribers)),
+                $text,
                 "//studio.youtube.com/channel/$ucid"
             );
         }

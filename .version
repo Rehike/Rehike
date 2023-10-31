@@ -1,10 +1,10 @@
 {
-	"previousHash": "a08662bb50ad60205317d235b6875212e9e1698d",
-	"currentRevisionId": 1152,
-	"subject": "Fix old getText leftover",
-	"body": "Fix old getText leftover",
+	"previousHash": "381f6796e645fc78b73cccbba82af7c1e7274f12",
+	"currentRevisionId": 1153,
+	"subject": "Fix pluralization of sub count in channel owner header",
+	"body": "Fix pluralization of sub count in channel owner header",
 	"branch": "master",
 	"committerName": "Taniko Yamamoto",
 	"committerEmail": "kirasicecreamm@gmail.com",
-	"time": 1698703918
+	"time": 1698715354
 }
