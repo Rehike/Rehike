@@ -19,14 +19,6 @@
 {% endif %}
 {% set enableSnapScaling = true %}
 
-{%- block title -%}
-    {%- if yt.page.header.title -%}
-        {{ rehike.getText(yt.page.header.title) }} - {{ parent() }}
-    {%- else -%}
-        {{ parent() }}
-    {%- endif -%}
-{%- endblock -%}
-
 {% block foot_scripts %}
 <script>
     yt.setConfig('ANGULAR_JS', "\/\/s.ytimg.com\/yts\/jslib\/angular.min-vfl8oYsy-.js");

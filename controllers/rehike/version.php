@@ -145,6 +145,7 @@ class GetVersionController extends HitchhikerController
     public function onGet(YtApp $yt, RequestMetadata $request): void
     {
         $yt->page = (object)self::bake();
+        $this->setTitle("Rehike Version");
     }
 
     public static function bake(): MVersionPage

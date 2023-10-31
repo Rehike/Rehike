@@ -221,6 +221,11 @@ return new class extends NirvanaController {
                 rydData: $rydResponse
             )->then(function ($watchModelResult) use ($yt) {
                 $yt->page = $watchModelResult;
+
+                if (isset($yt->page->title))
+                {
+                    $this->setTitle($yt->page->title);
+                }
             });
         });
     }

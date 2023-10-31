@@ -11,10 +11,6 @@
 {% set defaultAppbarVisibility = false %}
 {% set enableSnapScaling = false %}
 
-{%- block title -%}
-{{ yt.masthead.searchbox.query }} - {{ parent() }}
-{%- endblock -%}
-
 {%- block head_css -%}
 {{ core.css("www-results") }}
 {{ core.css("www-home-c4") }}

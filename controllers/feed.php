@@ -179,6 +179,11 @@ return new class extends \Rehike\Controller\core\NirvanaController {
             ]
         )->then(function ($response) use ($yt) {
             $yt->page = HistoryModel::bake($response->getJson());
+
+            if (isset($yt->page->title))
+            {
+                $this->setTitle($yt->page->title);
+            }
         });
     }
 
@@ -227,9 +232,9 @@ return new class extends \Rehike\Controller\core\NirvanaController {
             if (isset($header->title))
             if (isset($header->title->runs)
             || isset($header->title->simpleText))
-                $yt->page->title = ParsingUtils::getText($header->title);
+                $this->setTitle(ParsingUtils::getText($header->title));
             else
-                $yt->page->title = $header->title;
+                $this->setTitle($header->title);
         });
     }
 
@@ -341,9 +346,9 @@ return new class extends \Rehike\Controller\core\NirvanaController {
             if (isset($header->title))
             if (isset($header->title->runs)
             || isset($header->title->simpleText))
-                $yt->page->title = ParsingUtils::getText($header->title);
+                $this->setTitle(ParsingUtils::getText($header->title));
             else
-                $yt->page->title = $header->title;
+                $this->setTitle($header->title);
         });
     }
 };

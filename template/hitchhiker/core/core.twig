@@ -31,7 +31,7 @@
       <link rel="stylesheet" href="{{ yt.playerConfig.baseCssUrl }}" name="player/www-player">
       {{ core.css('www-pageframe') }}
       {{ core.css('www-guide') }}
-      <title>{% block title %}YouTube{% endblock %}</title>
+      <title>{{ yt.title ?? "YouTube" }}</title>
       {% include 'core/meta.twig' %}
       {%- if rehike.config.appearance.modernLogo -%}
         {% include 'experiment/ringo/ringo.twig' %}

@@ -114,6 +114,11 @@ return new class extends NirvanaController
                         $tabs,
                         $yt->page->channelHeader
                     );
+                    
+                    if (isset($yt->page->header->title))
+                    {
+                        $this->setTitle($yt->page->header->title);
+                    }
                 }
             }
         });

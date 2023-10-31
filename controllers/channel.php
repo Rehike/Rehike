@@ -287,6 +287,11 @@ class channel extends NirvanaController
                 sidebarData: $sidebar,
                 ownerData: $ownerData
             );
+
+            if (isset($yt->page->title))
+            {
+                $this->setTitle($yt->page->title);
+            }
         });
     }
 

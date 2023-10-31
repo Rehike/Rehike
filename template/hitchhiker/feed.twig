@@ -15,14 +15,6 @@
 {% set defaultAppbarVisibility = not yt.appbar.nav is empty %}
 {% set enableSnapScaling = true %}
 
-{%- block title -%}
-{%- if yt.page.title -%}
-{{ yt.page.title }} - {{ parent() }}
-{%- else -%}
-{{ parent() }}
-{%- endif -%}
-{% endblock %}
-
 {% block foot_scripts %}
 <script>
   yt.setConfig('ANGULAR_JS', "\/yts\/jslib\/angular.min-vflWkvD5q.js");

@@ -158,6 +158,20 @@ abstract class HitchhikerController
         if ($this->useTemplate) $this->doGeneralRender();
     }
 
+    public function setTitle(string $title): void
+    {
+        $yt = $this->yt;
+
+        if (empty($title))
+        {
+            $yt->title = "YouTube";
+        }
+        else
+        {
+            $yt->title = $title . " - YouTube";
+        }
+    }
+
     /**
      * Initialise the player.
      */

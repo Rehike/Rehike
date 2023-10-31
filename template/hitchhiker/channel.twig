@@ -74,10 +74,6 @@
 </script>
 {% endblock %}
 
-{%- block title -%}
-{{ yt.page.title ? yt.page.title ~ ' - ' }}{{ parent() }}
-{% endblock %}
-
 {%- block head_css -%}
 {{ core.css('www-home-c4') }}
 {% if yt.page.secondaryHeader %}

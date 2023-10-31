@@ -50,6 +50,7 @@ class ResultsController extends NirvanaController {
 
         // Display query in the searchbox.
         $yt->masthead->searchbox->query = $query;
+        $this->setTitle($query);
 
         // used for filters
         $yt->params = $_GET["sp"] ?? null;

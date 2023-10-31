@@ -1,5 +1,7 @@
 <?php
 use \Rehike\Controller\core\HitchhikerController;
+use Rehike\ControllerV2\RequestMetadata;
+use Rehike\YtApp;
 
 /**
  * Controller for the oops (error) page.
@@ -11,4 +13,9 @@ use \Rehike\Controller\core\HitchhikerController;
  */
 return new class extends HitchhikerController {
     public string $template = "oops";
+
+    public function onGet(YtApp $yt, RequestMetadata $request): void
+    {
+        $this->setTitle("Oops! Something went wrong.");
+    }
 };

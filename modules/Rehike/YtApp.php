@@ -56,6 +56,11 @@ class YtApp extends stdClass
     public object|array $page;
 
     /**
+     * The title of the page, as it appears in the browser.
+     */
+    public string $title = "YouTube";
+
+    /**
      * Stores data for the masthead of the page.
      * 
      * This includes the entire top of the page with the search bar, guide
