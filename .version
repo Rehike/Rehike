@@ -1,10 +1,10 @@
 {
-	"previousHash": "255696700ab7dd40a4e497030373c8e883ef85df",
-	"currentRevisionId": 1160,
-	"subject": "Fix external links with styling",
-	"body": "Fix external links with styling",
+	"previousHash": "4e1f0b59a1edd57d5bd78b618f221c6b8ddf4b9f",
+	"currentRevisionId": 1161,
+	"subject": "Fix crash on certain feed pages.",
+	"body": "Fix crash on certain feed pages.",
 	"branch": "master",
-	"committerName": "aubymori",
-	"committerEmail": "aubyomori@gmail.com",
-	"time": 1698896656
+	"committerName": "Taniko Yamamoto",
+	"committerEmail": "kirasicecreamm@gmail.com",
+	"time": 1698903348
 }
