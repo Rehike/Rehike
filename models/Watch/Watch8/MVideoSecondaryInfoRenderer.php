@@ -20,6 +20,8 @@ class MVideoSecondaryInfoRenderer
     public $showMoreText;
     public $showLessText;
 
+    public const REDIRECT_URL_REGEX = "/(?<=\?q=|&q=)(?=(.*?)&|$)/";
+
     public function __construct($dataHost)
     {
         if (!is_null($dataHost::$secondaryInfo))
@@ -103,10 +105,26 @@ class MVideoSecondaryInfoRenderer
                         break;
                 }
             }
-            // Weird fake channel links
-            else if (str_contains($run->text, "\xc2\xa0"))
+            // Other links which have custom styling
+            else if (str_contains($run->text, "\xC2\xA0"))
             {
-                $run->text = self::truncate($run->navigationEndpoint->commandMetadata->webCommandMetadata->url);
+                $url = $run->navigationEndpoint->commandMetadata->webCommandMetadata->url;
+
+                // Some external links (e.g. Twitter) have custom styles applied to them
+                // like channel links and such. Just using the regular URL from these
+                // results in a redirect link being directly displayed, so if that occurs,
+                // we just extract the actual URL from the redirect URL.
+                if (str_starts_with($url, "https://www.youtube.com/redirect"))
+                {
+                    $matches = [];
+                    preg_match(self::REDIRECT_URL_REGEX, $url, $matches);
+                    if (isset($matches[1]))
+                    {
+                        $url = urldecode($matches[1]);
+                    }
+                }
+
+                $run->text = self::truncate($url);
             }
         }
     }

@@ -1,10 +1,10 @@
 {
-	"previousHash": "d7cfcf825f230d8753eaad374b2def241f1c3df3",
-	"currentRevisionId": 1156,
-	"subject": "remove unused alert block templates",
-	"body": "remove unused alert block templates",
+	"previousHash": "255696700ab7dd40a4e497030373c8e883ef85df",
+	"currentRevisionId": 1160,
+	"subject": "Fix external links with styling",
+	"body": "Fix external links with styling",
 	"branch": "master",
-	"committerName": "Daylin Cooper",
-	"committerEmail": "dcoop2004@gmail.com",
-	"time": 1698727318
+	"committerName": "aubymori",
+	"committerEmail": "aubyomori@gmail.com",
+	"time": 1698896656
 }
