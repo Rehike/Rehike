@@ -7,18 +7,6 @@
 {% extends "core.twig" %}
 {% import "core/macros.twig" as core %}
 
-{% set pageType = '' %}
-{% set pageName = 'playlist' %}
-
-{% set appbarEnabled = true %}
-{% set defaultGuideVisibility = true %}
-{% if yt.page.channelHeader %}
-{% set defaultAppbarVisibility = true %}
-{% else %}
-{% set defaultAppbarVisibility = false %}
-{% endif %}
-{% set enableSnapScaling = true %}
-
 {% block foot_scripts %}
 <script>
     yt.setConfig('ANGULAR_JS', "\/\/s.ytimg.com\/yts\/jslib\/angular.min-vfl8oYsy-.js");

@@ -32,6 +32,21 @@ return new class extends NirvanaController {
     // Watch should only load the guide after everything else is done.
     protected bool $delayLoadGuide = true;
 
+    /**
+     * Configures view properties for the page.
+     */
+    public function setupViewProps(\Rehike\ViewProperties $vp): void
+    {
+        $vp->pageClassName = "watch";
+        $vp->guideDefaultVisibility = false;
+        $vp->appbarDefaultVisibility = false;
+        $vp->enableSnapScaling = true;
+
+        // This is a fixed value for the player type, which is only used on the
+        // watch page. It's always "watch-small", no matter what.
+        $vp->playerTypeClass = "content-alignment       watch-small";
+    }
+
     public function onGet(YtApp $yt, RequestMetadata $request): void
     {
         $this->useJsModule("www/watch");

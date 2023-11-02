@@ -4,13 +4,6 @@
 {% extends "core.twig" %}
 {% import "core/macros.twig" as core %}
 
-{% set pageType = 'search' %}
-
-{% set appbarEnabled = true %}
-{% set defaultGuideVisibility = true %}
-{% set defaultAppbarVisibility = false %}
-{% set enableSnapScaling = false %}
-
 {%- block head_css -%}
 {{ core.css("www-results") }}
 {{ core.css("www-home-c4") }}

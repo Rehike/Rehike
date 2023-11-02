@@ -4,13 +4,9 @@
 {% extends "core.twig" %}
 {% import "core/macros.twig" as core %}
 
-{% set enableSnapScaling = false %}
-
 {%- block head_css -%}
 {{ core.css("www-error") }}
 {%- endblock -%}
-
-{% set pageType = "oops-content" %}
 
 {%- block content -%}
 <img src="/yts/img/tv_stack-vflmeOpv_.png" alt="Sorry, something went wrong! Our tubes must be clogged." title="Sorry, something went wrong! Our tubes must be clogged.">

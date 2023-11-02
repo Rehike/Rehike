@@ -18,6 +18,18 @@ return new class extends \Rehike\Controller\core\NirvanaController
         "advanced"
     ];
 
+    /**
+     * Configures view properties for the page.
+     */
+    public function setupViewProps(\Rehike\ViewProperties $vp): void
+    {
+        $vp->pageClassName = "search";
+        $vp->guideDefaultVisibility = false;
+        $vp->appbarDefaultVisibility = false;
+        $vp->enableSnapScaling = true;
+        $vp->flexWidthSnapDisabled = true;
+    }
+
     public function onGet(YtApp $yt, RequestMetadata $request): void
     {
         $tab = $request->path[2] ?? self::DEFAULT_TAB;

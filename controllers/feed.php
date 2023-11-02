@@ -65,6 +65,18 @@ return new class extends \Rehike\Controller\core\NirvanaController {
         "FEsubscriptions"
     ];
 
+    /**
+     * Configures view properties for the page.
+     */
+    public function setupViewProps(\Rehike\ViewProperties $vp): void
+    {
+        $vp->pageClassName = "feed";
+        $vp->jsPageName = "feed";
+        $vp->guideDefaultVisibility = true;
+        $vp->appbarDefaultVisibility = isset($this->yt->appbar->nav);
+        $vp->enableSnapScaling = true;
+    }
+
     public function onGet(YtApp $yt, RequestMetadata $request): void
     {
         $feedId = $request->path[1] ?? "what_to_watch";

@@ -31,6 +31,17 @@ class ResultsController extends NirvanaController {
     public static ?string $query;
     public static ?string $param;
 
+    /**
+     * Configures view properties for the page.
+     */
+    public function setupViewProps(\Rehike\ViewProperties $vp): void
+    {
+        $vp->pageClassName = "search";
+        $vp->guideDefaultVisibility = true;
+        $vp->appbarDefaultVisibility = false;
+        $vp->enableSnapScaling = false; // search does something else
+    }
+
     public function onGet(YtApp $yt, RequestMetadata $request): void
     {
         // invalid request redirect

@@ -67,7 +67,7 @@
         ],
     });
     yt.setConfig({
-        'PAGE_NAME': "{{ pageName ?? pageType }}", {# page type usually works, but some pages (index) differ #}
+        'PAGE_NAME': "{{ yt.viewProps.jsPageName ?? yt.viewProps.pageClassName }}", {# page type usually works, but some pages (index) differ #}
         'LOGGED_IN': {{ yt.signin.isSignedIn ? "true" : "false" }},
         'SESSION_INDEX': 0,
         'VALID_SESSION_TEMPDATA_DOMAINS': ["www.youtube.com", "gaming.youtube.com"],
@@ -80,7 +80,7 @@
         'JS_COMMON_MODULE': "\//s.ytimg.com/yts\/jsbin\/www-en_US-vfl2g6bso\/common.js",
         'PAGE_FRAME_DELAYLOADED_CSS': "\//s.ytimg.com/yts\/cssbin\/www-pageframedelayloaded-vflkvMhoL.css",
         'EXPERIMENT_FLAGS': {% include 'core/experiment_flags.json' %},
-        {% if not (defaultGuideVisibility or yt.spf) %}
+        {% if not (yt.viewProps.guideDefaultVisibility or yt.spf) %}
             'GUIDE_DELAY_LOAD': true,
             'GUIDE_DELAYLOADED_CSS': {{ rehike.resource.cssPath('www-guide')|json_encode|raw }},
         {% endif %}

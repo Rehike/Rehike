@@ -65,7 +65,7 @@ try {
    e: toggle content-snap-width-(n)
 #}
 yt.www.masthead.sizing.runBeforeBodyIsReady(
-   {{ defaultGuideVisibility ? 'true' : 'false' }}, 
-   {{ defaultGuideVisibility ? 'true' : 'false' }}, 
-   {{ enableSnapScaling ? 'true' : 'false' }}
+   {{ yt.viewProps.guideDefaultVisibility ? 'true' : 'false' }}, 
+   {{ yt.viewProps.guideDefaultVisibility ? 'true' : 'false' }}, 
+   {{ yt.viewProps.enableSnapScaling ? 'true' : 'false' }}
 );

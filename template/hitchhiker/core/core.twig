@@ -72,12 +72,12 @@
          <div id="masthead-positioner-height-offset"></div>
          {% endblock masthead %}
          <div id="page-container">
-            <div id="page" class="{{ pageType }} {% block page_class %}{% endblock %}  clearfix ">
+            <div id="page" class="{{ yt.viewProps.pageClassName }} {% block page_class %}{% endblock %}  clearfix ">
                {%- block guide_container -%}
                   {% include 'common/appbar/appbar_guide.twig' %}
                {% endblock %}
                <div class="alerts-wrapper">
-                  <div id="alerts" class="{{ not leftAlignPage ? "content-alignment" }}">
+                  <div id="alerts" class="{{ not yt.viewProps.leftAlignPage ? "content-alignment" }}">
                      {%- for item in yt.page.alerts -%}
                      {{ alert.render(item) }}
                      {%- endfor -%}
@@ -87,7 +87,7 @@
                {% block header %}{% endblock %}
                </div>
                {% include 'player/core.twig' %}
-               <div id="content" class="  {{ not leftAlignPage ? "content-alignment" }}" role="main">
+               <div id="content" class="  {{ not yt.viewProps.leftAlignPage ? "content-alignment" }}" role="main">
                   {% block content %}{% endblock %}
                </div>
             </div>

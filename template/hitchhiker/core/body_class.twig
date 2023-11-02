@@ -2,8 +2,8 @@
     Date and language are prepended to the body class for non-appbar
     pages. Since this is a shared template, a hack is used here.
 #}
-{{ not appbarEnabled ? "date-" ~ yt.rehikeVersion.time|date('Ymd') }}
-{{ not appbarEnabled ? "en_US" }}
+{{ not yt.viewProps.appbarEnabled ? "date-" ~ yt.rehikeVersion.time|date('Ymd') }}
+{{ not yt.viewProps.appbarEnabled ? "en_US" }}
 visibility-logging-enabled  
 ltr    
 {{ rehike.config.appearance.modernLogo ? 'exp-invert-logo' }}
@@ -12,11 +12,11 @@ exp-responsive
 {{ rehike.config.appearance.largeSearchResults ? "exp-search-big-thumbs" }} 
 site-center-aligned 
 site-as-giant-card 
-{{ (appbarEnabled and defaultGuideVisibility) ? 'guide-pinning-enabled' }}   
-{{ (appbarEnabled and not defaultAppbarVisibility) ? 'appbar-hidden' }}
+{{ (yt.viewProps.appbarEnabled and yt.viewProps.guideDefaultVisibility) ? 'guide-pinning-enabled' }}   
+{{ (yt.viewProps.appbarEnabled and not yt.viewProps.appbarDefaultVisibility) ? 'appbar-hidden' }}
 not-nirvana-dogfood    
 flex-width-enabled      
-{{ flexWidthSnapDisabled ? '' : "flex-width-enabled-snap" }}    
+{{ yt.viewProps.flexWidthSnapDisabled ? '' : "flex-width-enabled-snap" }}    
 {{ yt.spf ? '' : 'delayed-frame-styles-not-in' }}
 {{ yt.page.ticker ? "sitewide-ticker-visible" }}
 {{ yt.signin.isSignedIn ? "yt-user-logged-in" }}

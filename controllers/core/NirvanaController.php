@@ -2,6 +2,7 @@
 namespace Rehike\Controller\core;
 
 use Rehike\YtApp;
+use Rehike\ViewProperties;
 use SpfPhp\SpfPhp;
 
 use Rehike\Model\{
@@ -50,15 +51,20 @@ abstract class NirvanaController extends HitchhikerController
     protected function init(YtApp $yt, string &$template): void
     {
         $yt->spfEnabled = true;
+        $yt->viewProps = new ViewProperties;
         $yt->useModularCore = true;
         $yt->modularCoreModules = [];
         $yt->appbar = new Appbar();
         $yt->page = (object)[];
 
-        if ($this->useTemplate) {
+        $yt->viewProps->appbarEnabled = true;
+
+        if ($this->useTemplate)
+        {
             $yt->masthead = new Masthead(true);
             $yt->footer = new Footer();
         }
+
         $yt->footer = new Footer();
 
         // Request appbar guide fragments if the page has the

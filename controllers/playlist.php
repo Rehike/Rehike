@@ -21,6 +21,18 @@ return new class extends NirvanaController
 {
     public string $template = "playlist";
 
+    /**
+     * Configures view properties for the page.
+     */
+    public function setupViewProps(\Rehike\ViewProperties $vp): void
+    {
+        $vp->pageClassName = "";
+        $vp->jsPageName = "playlist";
+        $vp->guideDefaultVisibility = true;
+        $vp->appbarDefaultVisibility = isset($this->yt->page->channelHeader);
+        $vp->enableSnapScaling = true;
+    }
+
     public function onGet(YtApp $yt, RequestMetadata $request): void
     {
         async(function() use (&$yt, $request) {

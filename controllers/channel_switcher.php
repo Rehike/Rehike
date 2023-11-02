@@ -16,6 +16,14 @@ return new class extends HitchhikerController
 {
     public string $template = "channel_switcher";
 
+    /**
+     * Configures view properties for the page.
+     */
+    public function setupViewProps(\Rehike\ViewProperties $vp): void
+    {
+        $vp->leftAlignPage = true;
+    }
+
     public function onGet(YtApp $yt, RequestMetadata $request): void
     {
         async(function() use (&$yt, &$request) {

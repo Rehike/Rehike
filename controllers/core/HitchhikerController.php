@@ -7,7 +7,8 @@ use Rehike\{
     Network,
     i18n\i18n,
     ConfigManager\Config,
-    SecurityChecker
+    SecurityChecker,
+    ViewProperties
 };
 
 use Rehike\Model\{
@@ -49,6 +50,7 @@ abstract class HitchhikerController
      * Stores all information that is sent to Twig for rendering the page.
      * 
      * @var YtApp $yt
+     *   + viewProps (object, required) - HTML/SPF shared view properties.
      *   + useModularCore (bool, required) - Toggles base.js/core.js use by Hitchhiker.
      *   + modularCoreModules (string[]) - Defines base.js page modules.
      *   + spfEnabled (bool, required) - Enables YouTube SPF (soft loading).
@@ -173,6 +175,11 @@ abstract class HitchhikerController
     }
 
     /**
+     * Configures view properties for the page.
+     */
+    public function setupViewProps(ViewProperties $vp): void {}
+
+    /**
      * Initialise the player.
      */
     public function initPlayer(YtApp $yt): void
@@ -270,8 +277,12 @@ abstract class HitchhikerController
         $yt->spfEnabled = false;
         $yt->useModularCore = false;
         $yt->page = (object)[];
+        $yt->viewProps = new ViewProperties;
 
-        if ($this->useTemplate) {
+        $yt->viewProps->appbarEnabled = false;
+
+        if ($this->useTemplate)
+        {
             $yt->masthead = new Masthead(false);
             $yt->footer = new Footer();
         }
@@ -288,6 +299,7 @@ abstract class HitchhikerController
     public function postInit(YtApp $yt, string &$template): void
     {
         $template = $this->template;
+        $this->setupViewProps($yt->viewProps);
         
         if (isset(self::$currentEndpoint))
         {

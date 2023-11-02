@@ -61,6 +61,11 @@ class YtApp extends stdClass
     public string $title = "YouTube";
 
     /**
+     * Stores configuration properties related to generating the page view.
+     */
+    public ViewProperties $viewProps;
+
+    /**
      * Stores data for the masthead of the page.
      * 
      * This includes the entire top of the page with the search bar, guide

@@ -55,6 +55,17 @@ class channel extends NirvanaController
         "streams"
     ];
 
+    /**
+     * Configures view properties for the page.
+     */
+    public function setupViewProps(\Rehike\ViewProperties $vp): void
+    {
+        $vp->pageClassName = "channel";
+        $vp->guideDefaultVisibility = true;
+        $vp->appbarDefaultVisibility = true;
+        $vp->enableSnapScaling = true;
+    }
+
     public function onPost(YtApp $yt, RequestMetadata $request): void
     {
         http_response_code(404);

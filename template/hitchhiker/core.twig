@@ -7,4 +7,4 @@
         - core.twig provides appbar (aka Nirvana)
         - core_legacy.twig provides no-appbar (like hitchhiker in 2013)
 #}
-{% extends appbarEnabled ? "core/core.twig" : "core/core_legacy.twig" %}
+{% extends yt.viewProps.appbarEnabled ? "core/core.twig" : "core/core_legacy.twig" %}

@@ -7,14 +7,6 @@
 {% import 'core/macros.twig' as core %}
 {% import 'common/appbar/appbar_nav.twig' as appbar_nav %}
 
-{% set pageType = 'feed' %}
-{% set pageName = 'feed' %}
-
-{% set appbarEnabled = true %}
-{% set defaultGuideVisibility = true %}
-{% set defaultAppbarVisibility = not yt.appbar.nav is empty %}
-{% set enableSnapScaling = true %}
-
 {% block foot_scripts %}
 <script>
   yt.setConfig('ANGULAR_JS', "\/yts\/jslib\/angular.min-vflWkvD5q.js");
