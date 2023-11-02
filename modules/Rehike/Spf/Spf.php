@@ -20,6 +20,14 @@ class Spf
     private static array $elementRegistry = [];
 
     /**
+     * @return Element[]
+     */
+    public static function getAllElements(): array
+    {
+        return self::$elementRegistry;
+    }
+
+    /**
      * Get an element by its ID. If the element does not exist, this will return
      * null.
      */
@@ -38,11 +46,13 @@ class Spf
      */
     public static function createElement(
             string $id,
-            string $templateName,
-            string $blockBound
+            ?string $templateName = null,
+            bool $blockBound = false
     ): Element
     {
-        self::$elementRegistry[$id] = new Element($templateName, $blockBound);
+        self::$elementRegistry[$id] = new Element(
+            $id, $templateName, $blockBound
+        );
         return self::$elementRegistry[$id];
     }
 
@@ -52,5 +62,25 @@ class Spf
     public static function element(string $id): ?Element
     {
         return self::getElementById($id);
+    }
+
+    /**
+     * Determines if SPF is requested, and gets the state request type if so.
+     */
+    public static function isSpfRequested(): string|false
+    {
+        if (isset($_GET["spf"]))
+        {
+            switch ($_GET["spf"])
+            {
+                case "navigate":
+                case "navigate-back":
+                case "navigate-forward":
+                case "load":
+                    return $_GET["spf"];
+            }
+        }
+
+        return false;
     }
 }

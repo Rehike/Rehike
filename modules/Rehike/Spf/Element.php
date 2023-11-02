@@ -23,7 +23,7 @@ class Element
     /**
      * The name of the template to use for the SPF element, if applicable.
      */
-    private string $templateName = "";
+    private ?string $templateName = null;
 
     /**
      * The name of the block to request for the SPF element, if applicable.
@@ -41,7 +41,7 @@ class Element
      */
     public function __construct(
             string $id,
-            string $name, 
+            string $name = null, 
             bool $isBlockBound = false
     )
     {
@@ -74,11 +74,11 @@ class Element
      * Get the name of the Twig template or block name to be used for retrieving
      * HTML data.
      */
-    public function getTemplateName(): string
+    public function getTemplateName(): ?string
     {
         return $this->isBlockBound_ 
-            ? $this->templateName
-            : $this->blockName;
+            ? $this->blockName
+            : $this->templateName;
     }
 
     /**
@@ -140,11 +140,11 @@ class Element
      */
     public function serializeHtmlAttributes(): string
     {
-        $out = "\"id\"=\"$this->id\" ";
+        $out = "id=\"$this->id\" ";
 
         foreach ($this->attributes as $name => $value)
         {
-            $out .= "\"" . htmlspecialchars($name) . "\"" . "=" .
+            $out .= htmlspecialchars($name) . "=" .
                 "\"" . htmlspecialchars($value) . "\"" . " ";
         }
 

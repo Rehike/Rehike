@@ -64,6 +64,8 @@ class channel extends NirvanaController
         $vp->guideDefaultVisibility = true;
         $vp->appbarDefaultVisibility = true;
         $vp->enableSnapScaling = true;
+
+        $vp->pageClasses = "not-fixed-width-tab-widescreen";
     }
 
     public function onPost(YtApp $yt, RequestMetadata $request): void

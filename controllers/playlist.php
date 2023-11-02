@@ -31,6 +31,8 @@ return new class extends NirvanaController
         $vp->guideDefaultVisibility = true;
         $vp->appbarDefaultVisibility = isset($this->yt->page->channelHeader);
         $vp->enableSnapScaling = true;
+
+        $vp->pageClasses = "not-fixed-width-tab-widescreen";
     }
 
     public function onGet(YtApp $yt, RequestMetadata $request): void

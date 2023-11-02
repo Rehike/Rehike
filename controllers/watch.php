@@ -4,6 +4,8 @@ use Rehike\Controller\core\NirvanaController;
 use Rehike\YtApp;
 use Rehike\ControllerV2\RequestMetadata;
 
+use Rehike\Spf\Spf;
+
 use Com\Youtube\Innertube\Request\NextRequestParams;
 use Com\Youtube\Innertube\Request\NextRequestParams\UnknownThing;
 
@@ -42,9 +44,23 @@ return new class extends NirvanaController {
         $vp->appbarDefaultVisibility = false;
         $vp->enableSnapScaling = true;
 
-        // This is a fixed value for the player type, which is only used on the
-        // watch page. It's always "watch-small", no matter what.
-        $vp->playerTypeClass = "content-alignment       watch-small";
+        $vp->pageClasses = "video-" . $this->yt->videoId . " ";
+
+        if ($this->yt->theaterMode)
+        {
+            $vp->pageClasses .= "watch-wide watch-stage-mode";
+        }
+    }
+
+    /**
+     * Page-specific SPF element changes.
+     */
+    public function initSpfElements(): void
+    {
+        Spf::getElementById("player")->setAttribute(
+            "class",
+            "content-alignment       watch-small"
+        );
     }
 
     public function onGet(YtApp $yt, RequestMetadata $request): void

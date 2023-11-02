@@ -64,13 +64,7 @@ class ViewProperties
     public bool $flexWidthSnapDisabled = false;
 
     /**
-     * Configures player container element's class.
-     * 
-     * Naturally, this will only be set on the watch page. In other contexts,
-     * it becomes "off-screen".
-     * 
-     * TODO: This isn't migrated yet because I'm iffy about the implementation.
-     *       It's easier to move later if I don't do anything now.
+     * Other page classes to use, which will be specified after $pageClassName.
      */
-    public ?string $playerTypeClass = null;
+    public string $pageClasses = "";
 }

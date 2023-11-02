@@ -69,6 +69,33 @@ class TemplateManager
     }
 
     /**
+     * Render a single Twig block.
+     */
+    public static function renderBlock(
+            string $blockName,
+            array $vars = [],
+            string $template = ""
+    ): string
+    {
+        if (!is_array($vars) && !is_null($vars))
+            throw new \Exception("\$vars must be an array.");
+        
+        $passedVars = [self::$yt] + $vars;
+
+        if (empty($template))
+            $template = self::$template;
+
+        $context = self::$twig->load("$template.twig");
+        
+        if ($context->hasBlock($blockName))
+        {
+            return $context->renderBlock($blockName, $passedVars);
+        }
+        
+        return "";
+    }
+
+    /**
      * Add a global variable to the templater.
      */
     public static function addGlobal(string $name, mixed &$value): void

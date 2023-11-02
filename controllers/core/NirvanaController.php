@@ -3,6 +3,7 @@ namespace Rehike\Controller\core;
 
 use Rehike\YtApp;
 use Rehike\ViewProperties;
+use Rehike\Spf\Spf;
 use SpfPhp\SpfPhp;
 
 use Rehike\Model\{
@@ -47,6 +48,39 @@ abstract class NirvanaController extends HitchhikerController
         '@player<class>'
     ];
 
+    /**
+     * @inheritdoc
+     */
+    public function internalInitSpfElements_(): void
+    {
+        parent::internalInitSpfElements_();
+
+        $page = Spf::getElementById("page");
+        $page->setAttribute(
+            "class",
+            $this->yt->viewProps->pageClassName . " "
+                . $this->yt->viewProps->pageClasses . "  "
+                . "clearfix"
+        );
+
+        $earlyBody = Spf::createElement(id: "early-body");
+
+        $appbarContent = Spf::createElement(
+            id: "appbar-content",
+            templateName: "appbarContent",
+            blockBound: true
+        )->setAttribute("class", "");
+
+        $header = Spf::createElement(
+            id: "header",
+            templateName: "header",
+            blockBound: true
+        );
+
+        // Seemingly unused?
+        $tickerContent = Spf::createElement(id: "ticker-content");
+    }
+
     /** @inheritdoc */
     protected function init(YtApp $yt, string &$template): void
     {
@@ -70,7 +104,7 @@ abstract class NirvanaController extends HitchhikerController
         // Request appbar guide fragments if the page has the
         // guide enabled, the request is not SPF, and the guide
         // is open by default.
-        if (!$this->delayLoadGuide && !SpfPhp::isSpfRequested())
+        if (!$this->delayLoadGuide && !Spf::isSpfRequested())
         {
             $this->getPageGuide()->then(function ($guide) use ($yt) {
                 $yt->appbar->addGuide($guide);

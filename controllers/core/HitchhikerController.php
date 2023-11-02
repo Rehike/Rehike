@@ -8,7 +8,8 @@ use Rehike\{
     i18n\i18n,
     ConfigManager\Config,
     SecurityChecker,
-    ViewProperties
+    ViewProperties,
+    Spf\Spf
 };
 
 use Rehike\Model\{
@@ -190,6 +191,71 @@ abstract class HitchhikerController
     }
 
     /**
+     * Responsible for early initialization of SPF elements (page-inspecific).
+     */
+    public function internalInitSpfElements_(): void
+    {
+        $playerUnavailable = Spf::createElement(
+            id: "player-unavailable",
+            templateName: "page_fragments/player_unavailable"
+        );
+        $playerUnavailable->setAttribute(
+            "class",
+            "hid"
+        );
+
+        $alerts = Spf::createElement(
+            id: "alerts",
+            templateName: "alerts",
+            blockBound: true
+        );
+        $alerts->setAttribute(
+            "class",
+            $this->yt->viewProps->leftAlignPage
+                ? ""
+                : "content-alignment"
+        );
+
+        $content = Spf::createElement(
+            id: "content",
+            templateName: "content",
+            blockBound: true
+        );
+        $content->setAttribute(
+            "class",
+            $this->yt->viewProps->leftAlignPage
+                ? ""
+                : "content-alignment"
+        );
+
+        $page = Spf::createElement(id: "page");
+        $page->setAttribute(
+            "class",
+            $this->yt->viewProps->pageClassName . " "
+                . $this->yt->viewProps->pageClasses
+        );
+
+        $playerPlaylist = Spf::createElement(
+            id: "player-playlist",
+            templateName: "page_fragments/player_playlist"
+        );
+        $playerPlaylist->setAttribute(
+            "class",
+            isset($this->yt->page->playlist)
+                ? "content-alignment  watch-player-playlist"
+                : "hid"
+        );
+
+        $player = Spf::createElement(id: "player");
+        $player->setAttribute("class", "off-screen");
+    }
+
+    /**
+     * Page-specific SPF element changes.
+     */
+    public function initSpfElements(): void {}
+
+    /**
      * Request the guide and return the processed result.
      * 
      * As Rehike implements a Nirvana frontend primarily, this behaviour
@@ -300,6 +366,8 @@ abstract class HitchhikerController
     {
         $template = $this->template;
         $this->setupViewProps($yt->viewProps);
+        $this->internalInitSpfElements_();
+        $this->initSpfElements();
         
         if (isset(self::$currentEndpoint))
         {
@@ -336,19 +404,20 @@ abstract class HitchhikerController
      */
     public function doGeneralRender(): void
     {
-        if (SpfPhp::isSpfRequested() && $this->yt->spfEnabled)
+        if (Spf::isSpfRequested() && $this->yt->spfEnabled)
         {
             // Report SPF status to the templater
             $this->yt->spf = true;
 
             // Capture the render so that we may send it through SpfPhp.
-            $capturedRender = TemplateManager::render();
+            //$capturedRender = TemplateManager::render();
 
             // Skip serialisation so that the output may be modified. (also 
             // suppress warnings; idk why (buggy library lol))
-            $spf = @SpfPhp::parse($capturedRender, $this->spfIdListeners, [
-                "skipSerialization" => true
-            ]);
+            // $spf = @SpfPhp::parse($capturedRender, $this->spfIdListeners, [
+            //     "skipSerialization" => true
+            // ]);
+            $spf = $this->bakeNewSpfResponse();
 
             // Post-data generation callback for custom handling
             $this->handleSpfData($spf);
@@ -373,6 +442,39 @@ abstract class HitchhikerController
             // In the case this is not an SPF request, we don't have to do anything.
             echo $capturedRender;
         }
+    }
+
+    protected function bakeNewSpfResponse(): object
+    {
+        $result = (object)[];
+
+        $result->title = $this->yt->title;
+        //$result->head = "";
+        $result->body = (object)[];
+        $result->attr = (object)[];
+
+        foreach (Spf::getAllElements() as $id => $element)
+        {
+            $body = "";
+
+            if ($element->getTemplateName() != null)
+            $body = $element->isBlockBound()
+                ? TemplateManager::renderBlock($element->getTemplateName())
+                : TemplateManager::render([], $element->getTemplateName());
+
+            if (!empty($body))
+                $result->body->{$id} = $body;
+            $result->attr->{$id} = (object)[];
+
+            foreach ($element->getAllAttributes() as $name => $value)
+            {
+                $result->attr->{$id}->{$name} = $value;
+            }
+        }
+
+        //$result->foot = "";
+
+        return $result;
     }
 
     /**

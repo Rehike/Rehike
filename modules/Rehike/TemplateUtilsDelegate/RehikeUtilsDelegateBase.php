@@ -4,6 +4,7 @@ namespace Rehike\TemplateUtilsDelegate;
 use Rehike\ConfigManager\Config;
 use Rehike\Version\VersionController;
 use Rehike\i18n\i18n;
+use Rehike\Spf\Spf;
 
 use Rehike\Util\ParsingUtils;
 use Rehike\Util\Base64Url;
@@ -51,6 +52,8 @@ abstract class RehikeUtilsDelegateBase extends stdClass
         "station" // Album
     ];
 
+    public Spf $spf;
+
     /**
      * Initialise all utilities.
      */
@@ -59,6 +62,7 @@ abstract class RehikeUtilsDelegateBase extends stdClass
         $this->config = Config::loadConfig();
         $this->version = (object)VersionController::$versionInfo;
         $this->version->semanticVersion = VersionController::getVersion();
+        $this->spf = new Spf;
     }
 
     /**

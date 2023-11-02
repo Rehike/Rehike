@@ -87,7 +87,7 @@
                {% block header %}{% endblock %}
                </div>
                {% include 'player/core.twig' %}
-               <div id="content" class="  {{ not yt.viewProps.leftAlignPage ? "content-alignment" }}" role="main">
+               <div {{ rehike.spf.element("content").serializeHtmlAttributes()|raw }} role="main">
                   {% block content %}{% endblock %}
                </div>
             </div>
