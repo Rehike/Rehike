@@ -26,10 +26,10 @@ legalNoticeLink: "Условия использования API YouTube."
 playlistNonexistent: "Такого плейлиста не существует.",
 playlistNoVideos: "В этом плейлисте нет видео."
 
-recipientsPlaceholder: "To"
-recipientsAlt: "Enter email addresses"
-optionalMessagePlaceholder: "Optional message"
-optionalMessageAlt: "Enter your email address (optional)"
-messagePreview: "Message preview:"
-emailShared: " has shared a video with you on YouTube",
-sendEmail: "Send email"
+recipientsPlaceholder: "Кому"
+recipientsAlt: "Введите адреса электронной почты"
+optionalMessagePlaceholder: "Дополнительное сообщение"
+optionalMessageAlt: "Введите свой адрес электронной почты (необязательно)"
+messagePreview: "Предварительный просмотр сообщения:"
+emailShared: " поделился с вами видеороликом на YouTube",
+sendEmail: "Отправить письмо"

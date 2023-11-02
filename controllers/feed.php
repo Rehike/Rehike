@@ -96,13 +96,13 @@ return new class extends \Rehike\Controller\core\NirvanaController {
         
         switch ($feedId) {
             case "FEwhat_to_watch":
-                self::whatToWatch($yt);
+                $this->whatToWatch($yt);
                 break;
             case "FEsubscriptions":
-                self::subscriptions($yt, $request);
+                $this->subscriptions($yt, $request);
                 break;
             default:
-                self::miscFeeds($yt, $request, $feedId);
+                $this->miscFeeds($yt, $request, $feedId);
                 break;
         }
     }
@@ -113,7 +113,7 @@ return new class extends \Rehike\Controller\core\NirvanaController {
      * Internally, the homepage is known as FEwhat_to_watch, which corresponds
      * with its older name "What to Watch".
      */
-    private static function whatToWatch(YtApp $yt): Promise
+    private function whatToWatch(YtApp $yt): Promise
     {
         return async(function() use ($yt) {
             // The copyright text in the description only appeared if the
@@ -174,7 +174,7 @@ return new class extends \Rehike\Controller\core\NirvanaController {
     /**
      * History feed.
      */
-    private static function history(YtApp $yt, RequestMetadata $request): void
+    private function history(YtApp $yt, RequestMetadata $request): void
     {
         $params = new BrowseRequestParams();
         if (isset($request->params->bp))
@@ -204,7 +204,7 @@ return new class extends \Rehike\Controller\core\NirvanaController {
      * 
      * Don't even try to make sense of this.
      */
-    private static function miscFeeds(YtApp $yt, RequestMetadata $request, string $feedId): void
+    private function miscFeeds(YtApp $yt, RequestMetadata $request, string $feedId): void
     {
         $params = new BrowseRequestParams();
         if (isset($request->params->bp))
@@ -258,7 +258,7 @@ return new class extends \Rehike\Controller\core\NirvanaController {
      * For anyone who is about to read or edit this function, I am sincerely
      * sorry, and I wish you the best of luck. You're going to need it.
      */
-    private static function subscriptions(YtApp $yt, RequestMetadata $request): void
+    private function subscriptions(YtApp $yt, RequestMetadata $request): void
     {
         $list = ((int)@$request->params->flow == 2);
 

@@ -11,7 +11,7 @@ likeTextDisabled: "Мне это нравится"
 
 # A like button accessibility substring used specifically in the case of
 # 0 likes in some languages. This is used to replace it with "0".
-countZero: "Нет"
+countZero: "0"
 
 # Used to isolate the subscriber count. Note that since subscriber counts are
 # abbreviated by YouTube, you can't just replace all numerical data, or you
