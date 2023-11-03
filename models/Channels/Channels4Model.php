@@ -225,6 +225,13 @@ class Channels4Model
 
             array_splice($tabs, $searchBarIndex - 1, 0, (object)[
                 "tabRenderer" => [
+                    "endpoint" => (object)[
+                        "commandMetadata" => (object)[
+                            "webCommandMetadata" => (object)[
+                                "url" => self::$baseUrl . "/about"
+                            ]
+                        ]
+                    ],
                     "selected" => $aboutTabSelected,
                     "content" => "Special::PopupAboutTab"
                 ]
