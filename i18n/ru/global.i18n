@@ -59,6 +59,7 @@ sboxSuggestionDismissedLabel: "Предложение удалено"
 sboxSuggestionDismissLabel: "Убрать"
 
 # Misc:
+videoCountNone: "Нет видео"
 videoCountPlural: "%s видео"
 videoCountSingular: "1 видео"
 commentPostFail: "Не удалось опубликовать комментарий."
