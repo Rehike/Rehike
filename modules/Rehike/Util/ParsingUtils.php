@@ -50,6 +50,10 @@ class ParsingUtils
             {
                 return $source->simpleText;
             }
+            else if (isset($source->content))
+            {
+                return self::getText(self::commandRunsToRuns($source));
+            }
         }
         else if (is_string($source))
         {

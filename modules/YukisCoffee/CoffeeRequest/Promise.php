@@ -372,6 +372,12 @@ class Promise/*<T>*/
             throw UncaughtPromiseException::from($this->reason);
         }
 
+        // KILL YOUR FUCKING SELF TANIKO FUCK YOU FUCK YOU FUCK YOU
+        if ($this->throwOnUnresolved)
+        {
+            PromiseResolutionTracker::unregisterPendingPromise($this);
+        }
+
         $this->setStatus(PromiseStatus::REJECTED);
     }
 

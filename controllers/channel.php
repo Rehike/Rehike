@@ -1,6 +1,9 @@
 <?php
 namespace Rehike\Controller;
 
+use Com\Google\Protos\Youtube\Api\Innertube\BrowseContinuation;
+use Com\Google\Protos\Youtube\Api\Innertube\BrowseContinuationWrapper;
+use Com\Google\Protos\Youtube\Api\Innertube\ContinuationWrapper;
 use Rehike\Controller\core\NirvanaController;
 
 use Rehike\YtApp;
@@ -10,6 +13,7 @@ use \Com\Youtube\Innertube\Request\BrowseRequestParams;
 
 use Rehike\Network;
 use Rehike\Async\Promise;
+use Rehike\Exception\Network\InnertubeFailedRequestException;
 use YukisCoffee\CoffeeRequest\Network\Response;
 use Rehike\Util\Base64Url;
 use Rehike\Util\ExtractUtils;
@@ -17,6 +21,7 @@ use Rehike\Util\ChannelUtils;
 use Rehike\Signin\API as SignIn;
 
 use \Rehike\Model\Channels\Channels4Model as Channels4;
+use YukisCoffee\CoffeeRequest\Exception\PromiseAllException;
 
 use function Rehike\Async\async;
 
@@ -155,16 +160,23 @@ class channel extends NirvanaController
             }
 
             // Compose InnerTube requests for later.
-            $channelRequest = Network::innertubeRequest(
-                action: "browse",
-                body: [
-                    "browseId" => $ucid,
-                    "params" => isset($params)
-                        ? Base64Url::encode($params->serializeToString())
-                        : null,
-                    "query" => $request->params->query ?? null
-                ]
-            );
+            if ($tab == "about")
+            {
+                $channelRequest = self::requestAbout($request, $ucid, Base64Url::encode($params->serializeToString()));
+            }
+            else
+            {
+                $channelRequest = Network::innertubeRequest(
+                    action: "browse",
+                    body: [
+                        "browseId" => $ucid,
+                        "params" => isset($params)
+                            ? Base64Url::encode($params->serializeToString())
+                            : null,
+                        "query" => $request->params->query ?? null
+                    ]
+                );
+            }
 
             if (
                 in_array($tab, self::SECONDARY_RESULTS_ENABLED_TAB_IDS) &&
@@ -317,6 +329,57 @@ class channel extends NirvanaController
                 $url = "/watch?v=" . $ytdata->endpoint->watchEndpoint->videoId;
                 (require "includes/spf_redirect_handler.php")($url);
             }
+        });
+    }
+
+    /**
+     * KILL YOURSELF KILL YOURSELF KILL YOURSELF KILL YOURSELF KILL YOURSELF KILL YOURSELF KILL YOURSELF KILL YOURSELF KILL YOURSELF
+     * GOD FUCK THIS FUCK YOU FUCK GOOGLE
+     */
+    private static function requestAbout(RequestMetadata $request, string $ucid, string $browseParam): Promise
+    {
+        return new Promise(function($resolveRequest) use ($request, $ucid, $browseParam) {
+            Network::innertubeRequest(
+                action: "browse",
+                body: [
+                    "browseId" => $ucid,
+                    "params" => $browseParam,
+                    "query" => $request->params->query ?? null
+                ]
+            )->then(function($response) use ($resolveRequest) {
+                $resolveRequest($response);
+            })->catch(function($e) use ($ucid, $resolveRequest) {
+                // WHAT THE FUCK
+                $aboutRequestContinuation = new ContinuationWrapper();
+                $aboutRequestContinuationBrowseContinuation = new BrowseContinuationWrapper();
+                $aboutRequestContinuationBrowseContinuation->setBrowseId($ucid);
+                $aboutRequestContinuationBrowseContinuation->setEncodedAction("8gYrGimaASYKJDY1NjFhYWYzLTAwMDAtMmQ1Zi05Zjg2LWQ0ZjU0N2YyY2U5Yw%3D%3D");
+                $aboutRequestContinuation->setBrowseContinuation($aboutRequestContinuationBrowseContinuation);
+
+                $fuckYou = Network::innertubeRequest(
+                    action: "browse",
+                    body: [
+                        "browseId" => $ucid
+                    ]
+                );
+                $killYourself = Network::innertubeRequest(
+                    action: "browse",
+                    body: [
+                        "continuation" => Base64Url::encode($aboutRequestContinuation->serializeToString())
+                    ]
+                );
+
+                Promise::all($fuckYou, $killYourself)->then(function($responses) use ($resolveRequest) {
+                    $baseResponse = $responses[0]->getJson();
+                    $aboutResponse = $responses[1]->getJson();
+
+                    $baseResponse->rehikeAboutTab = $aboutResponse?->onResponseReceivedEndpoints[0];
+
+                    $resolveRequest(new \YukisCoffee\CoffeeRequest\Network\Response(
+                        $responses[0]->sourceRequest, 200, json_encode($baseResponse), (array)$responses[0]->headers)
+                    );
+                });
+            });
         });
     }
 }

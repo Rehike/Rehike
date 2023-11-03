@@ -1,5 +1,6 @@
 # Channels common strings:
 
+tabChannels: "チャンネル"
 tabAbout: "概要"
 
 flowGrid: "グリッド"
@@ -18,3 +19,7 @@ subscriptionConfirmationHeader: "チャンネル登録の確認"
 nonexistent: "チャンネルが存在しません。"
 secondaryHeaderViews: "%s 回視聴"
 secondaryHeaderManager: "動画の管理"
+
+# about tab strings
+aboutTabDetails: "詳細"
+aboutTabCountry: "場所"

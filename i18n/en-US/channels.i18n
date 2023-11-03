@@ -1,5 +1,6 @@
 # Channels common strings:
 
+tabChannels: "Channels"
 tabAbout: "About"
 
 flowGrid: "Grid"
@@ -18,3 +19,7 @@ subscriptionConfirmationHeader: "Confirm Channel Subscription"
 nonexistent: "This channel does not exist."
 secondaryHeaderViews: "%s views"
 secondaryHeaderManager: "Video Manager"
+
+# about tab strings
+aboutTabDetails: "Details"
+aboutTabCountry: "Country"

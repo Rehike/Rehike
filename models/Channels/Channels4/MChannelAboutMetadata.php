@@ -21,6 +21,7 @@ class MChannelAboutMetadata
 
     public function __construct($subCount, $data)
     {
+        $i18n = i18n::getNamespace("channels");
         $regexs = i18n::getNamespace("regex");
         $miscStrings = i18n::getNamespace("misc");
 
@@ -46,6 +47,8 @@ class MChannelAboutMetadata
 
         if (isset($data->detailsLabel))
             $this->detailsLabel = ParsingUtils::getText($data->detailsLabel);
+        else
+            $this->detailsLabel = $i18n->get("aboutTabDetails");
 
         if (isset($data->primaryLinksLabel))
             $this->linksLabel = ParsingUtils::getText($data->primaryLinksLabel);
@@ -58,6 +61,8 @@ class MChannelAboutMetadata
 
         if (isset($data->countryLabel))
             $this->countryLabel = ParsingUtils::getText($data->countryLabel);
+        else
+            $this->countryLabel = $i18n->get("aboutTabCountry");
 
         if (isset($data->primaryLinks))
             $this->primaryLinks = $data->primaryLinks;

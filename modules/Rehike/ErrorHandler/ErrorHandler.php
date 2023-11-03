@@ -14,6 +14,7 @@ use Rehike\ErrorHandler\ErrorPage\{
 use Rehike\Exception\Network\InnertubeFailedRequestException;
 use YukisCoffee\CoffeeRequest\Exception\UnhandledPromiseException;
 use YukisCoffee\CoffeeRequest\Exception\UncaughtPromiseException;
+use YukisCoffee\CoffeeRequest\Exception\PromiseAllException;
 
 /**
  * Implements a general error handler for Rehike.
@@ -65,6 +66,17 @@ final class ErrorHandler
         else if ($e instanceof InnertubeFailedRequestException)
         {
             self::$pageModel = new InnertubeFailedRequestPage($e);
+        }
+        else if ($e instanceof PromiseAllException)
+        {
+            if ($e->getReason() instanceof InnertubeFailedRequestException)
+            {
+                self::$pageModel = new InnertubeFailedRequestPage($e->getReason());
+            }
+            else
+            {
+                self::$pageModel = new UncaughtExceptionPage($e);
+            }
         }
         else
         {

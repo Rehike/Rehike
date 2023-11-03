@@ -223,8 +223,8 @@ class Channels4Model
                 $aboutTabSelected = false;
             }
 
-            array_splice($tabs, $searchBarIndex - 1, 0, (object)[
-                "tabRenderer" => [
+            $aboutContent = (object)[
+                "tabRenderer" => (object)[
                     "endpoint" => (object)[
                         "commandMetadata" => (object)[
                             "webCommandMetadata" => (object)[
@@ -233,9 +233,14 @@ class Channels4Model
                         ]
                     ],
                     "selected" => $aboutTabSelected,
-                    "content" => "Special::PopupAboutTab"
+                    "content" => (object)["rehikeStateParams" => "Special::PopupAboutTab"],
+                    "title" => i18n::getRawString("channels", "tabAbout")
                 ]
-            ]);
+            ];
+
+            array_splice($tabs, $searchBarIndex, 0, [$aboutContent]);
+
+            self::$yt->FUCKYOU = $tabs;
         }
         
         $header->addTabs($tabs, ($yt->partiallySelectTabs ?? false));
@@ -300,17 +305,15 @@ class Channels4Model
                     )
             ];
         }
-        else if ($content == "Special::PopupAboutTab")
+        else if ($content?->rehikeStateParams == "Special::PopupAboutTab")
         {
             // new about format hack
             return (object)[
                 "channelAboutMetadataRenderer" =>
                     new MChannelAboutMetadata(
                         self::$subscriptionCount,
-                        self::$responseData?->onResponseReceivedEndpoints[0]?->showEngagementPanelEndpoint
-                            ?->engagementPanel?->engagementPanelSectionListRenderer?->content
-                            ?->sectionListRenderer?->contents[0]?->itemSectionRenderer?->contents[0]
-                            ?->aboutChannelRenderer?->metadata?->aboutChannelViewModel
+                        self::$responseData?->rehikeAboutTab->appendContinuationItemsAction->continuationItems[0]
+                            ->aboutChannelRenderer->metadata->aboutChannelViewModel
                     )
             ];
         }
