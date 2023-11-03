@@ -11,6 +11,7 @@ use \Com\Youtube\Innertube\Request\SearchRequestParams;
 
 use Rehike\Network;
 use Rehike\Util\Base64Url;
+use function Rehike\Async\async;
 
 /**
  * Controller for the results (search) page.
@@ -33,41 +34,81 @@ class ResultsController extends NirvanaController {
 
     public function onGet(YtApp $yt, RequestMetadata $request): void
     {
-        // invalid request redirect
-        if (!isset($_GET["search_query"]))
-        {
-            header("Location: /");
-            die();
-        }
-        
-        // Seemingly unused on the client-side (?), but this should still be
-        // declared regardless.
-        $this->useJsModule("www/results");
-        
-        // Setup search query internally
-        $query = $_GET["search_query"] ?? null;
-        self::$query = $query;
+        async(function() use ($yt, $request) {
+            // invalid request redirect
+            if (!isset($_GET["search_query"]))
+            {
+                header("Location: /");
+                die();
+            }
+            
+            // Seemingly unused on the client-side (?), but this should still be
+            // declared regardless.
+            $this->useJsModule("www/results");
+            
+            // Setup search query internally
+            $query = $_GET["search_query"] ?? null;
+            self::$query = $query;
 
-        // Display query in the searchbox.
-        $yt->masthead->searchbox->query = $query;
-        $this->setTitle($query);
+            // Display query in the searchbox.
+            $yt->masthead->searchbox->query = $query;
+            $this->setTitle($query);
 
-        // used for filters
-        $yt->params = $_GET["sp"] ?? null;
-        self::$param = &$yt->params;
+            // used for filters
+            $yt->params = $_GET["sp"] ?? null;
+            self::$param = &$yt->params;
 
-        // Calculates the offset to give the InnerTube server.
-        $resultsIndex = self::getPaginatorIndex($yt->params);
+            // Calculates the offset to give the InnerTube server.
+            $resultsIndex = self::getPaginatorIndex($yt->params);
 
-        Network::innertubeRequest(
-            action: "search",
-            body: [
-                "query"  => self::$query,
-                "params" => $yt->params
-            ]
-        )->then(function ($response) use ($yt, $resultsIndex) {
+            $response = yield Network::innertubeRequest(
+                action: "search",
+                body: [
+                    "query"  => self::$query,
+                    "params" => $yt->params
+                ]
+            );
             $ytdata = $response->getJson();
-    
+
+            // Collect channel UCIDs for data API request (used for video count)
+            $ucids = [];
+
+            if (@$contents = $ytdata->contents->twoColumnSearchResultsRenderer->primaryContents->sectionListRenderer->contents)
+            foreach ($contents as $data)
+            {
+                if (isset($data->itemSectionRenderer->contents))
+                foreach ($data->itemSectionRenderer->contents as $cdata)
+                {
+                    if ($ucid = @$cdata->channelRenderer->channelId)
+                    {
+                        $ucids[] = $ucid;
+                    }
+                }
+            }
+
+            if (count($ucids) > 0)
+            {
+                $dresponse = yield Network::dataApiRequest(
+                    action: "channels",
+                    params: [
+                        "part" => "id,statistics",
+                        "id" => implode(",", $ucids)
+                    ]
+                );
+            }
+
+            $dapidata = [];
+            if (isset($dresponse))
+            {
+                $dapijson = $dresponse->getJson();
+
+                if (@$dapijson->items)
+                foreach ($dapijson->items as $item)
+                {
+                    $dapidata[$item->id] = $item->statistics;
+                }
+            }
+        
             $resultsCount = ResultsModel::getResultsCount($ytdata);
     
             $paginatorInfo = self::getPaginatorInfo(
@@ -77,7 +118,8 @@ class ResultsController extends NirvanaController {
             $yt->page = ResultsModel::bake(
                 data:           $ytdata, 
                 paginatorInfo:  $paginatorInfo, 
-                query:          self::$query
+                query:          self::$query,
+                dapidata:       $dapidata
             );
         });
     }

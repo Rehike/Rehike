@@ -52,6 +52,17 @@ abstract class RehikeUtilsDelegateBase extends stdClass
     ];
 
     /**
+     * Valid meta types in order for getMeta.
+     * 
+     * @var string[]
+     */
+    public const VALID_METAS = [
+        "viewCountText",
+        "publishedTimeText",
+        "videoCountText"
+    ];
+
+    /**
      * Initialise all utilities.
      */
     public function __construct()
@@ -200,28 +211,16 @@ abstract class RehikeUtilsDelegateBase extends stdClass
      */
     public static function getMeta(?object $renderer): ?array
     {
-        if (isset($renderer->dateBeforeViews) && $renderer->dateBeforeViews)
-        {
-            $dateViews = [
-                "publishedTimeText",
-                "viewCountText"
-            ];
-        }
-        else
-        {
-            $dateViews = [
-                "viewCountText",
-                "publishedTimeText"
-            ];
-        }
-    
-        $VALID_METAS = $dateViews + [
-            "videoCountText"
-        ];
-    
+        $validMetas = self::VALID_METAS;
         $metas = [];
+
+        /* Swap date and views */
+        if (@$renderer->dateBeforeViews)
+        {
+            [$validMetas[0], $validMetas[1]] = [$validMetas[1], $validMetas[0]];
+        }
     
-        foreach ($VALID_METAS as $meta)
+        foreach ($validMetas as $meta)
         {
             if (
                 isset($renderer->{$meta}) && (
