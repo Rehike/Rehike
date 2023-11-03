@@ -59,6 +59,7 @@ sboxSuggestionDismissedLabel: "Propozycja usunięta"
 sboxSuggestionDismissLabel: "Usuń"
 
 # Misc:
+videoCountNone: "Brak filmów"
 videoCountPlural: "%s filmów"
 videoCountSingular: "1 film"
 commentPostFail: Komentarz nie został opublikowany."
