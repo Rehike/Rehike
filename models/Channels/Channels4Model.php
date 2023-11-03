@@ -27,11 +27,14 @@ class Channels4Model
 
     private static ?object $currentTabContents = null;
 
+    private static $responseData;
+
     public static function bake(&$yt, $data, $sidebarData = null, $ownerData = null)
     {
         $i18n = i18n::getNamespace("channels");
 
         self::$yt = &$yt;
+        self::$responseData = $data;
 
         self::$videosSort = $yt->videosSort ?? 0;
 
@@ -157,6 +160,10 @@ class Channels4Model
     {
         /** @var object */
         $videosTab = null;
+        
+        /** @var object */
+        $aboutTab = null;
+        $searchBarIndex = 0;
 
         // Splice "live" tab as this should be cascaded into videos.
         for ($i = 0; $i < count($tabs); $i++)
@@ -183,8 +190,45 @@ class Channels4Model
 
                         if (@$tabR->tabRenderer->selected) $videosTab->tabRenderer->selected = true;
                     }
+                    else if (stripos($tabEndpoint, "/about"))
+                    {
+                        $aboutTab = &$tabR;
+                    }
                 }
             }
+            else if (isset($tabs[$i]->expandableTabRenderer))
+            {
+                $searchBarIndex = $i;
+            }
+        }
+
+        // 2023/11/03: YouTube are experimenting with moving the about tab into
+        // a popup menu. Thus, we must convert the data.
+        if (is_null($aboutTab))
+        {
+            if (self::$yt->tab == "about")
+            {
+                foreach ($tabs as $t)
+                {
+                    if (isset($t->tabRenderer))
+                    {
+                        $t->tabRenderer->selected = false;
+                    }
+                }
+
+                $aboutTabSelected = true;
+            }
+            else
+            {
+                $aboutTabSelected = false;
+            }
+
+            array_splice($tabs, $searchBarIndex - 1, 0, (object)[
+                "tabRenderer" => [
+                    "selected" => $aboutTabSelected,
+                    "content" => "Special::PopupAboutTab"
+                ]
+            ]);
         }
         
         $header->addTabs($tabs, ($yt->partiallySelectTabs ?? false));
@@ -240,11 +284,26 @@ class Channels4Model
     {
         if (isset($content->sectionListRenderer->contents[0]->itemSectionRenderer->contents[0]->channelAboutFullMetadataRenderer))
         {
+            // old about format
             return (object)[
                 "channelAboutMetadataRenderer" => 
                     new MChannelAboutMetadata(
                         self::$subscriptionCount,
                         $content->sectionListRenderer->contents[0]->itemSectionRenderer->contents[0]->channelAboutFullMetadataRenderer
+                    )
+            ];
+        }
+        else if ($content == "Special::PopupAboutTab")
+        {
+            // new about format hack
+            return (object)[
+                "channelAboutMetadataRenderer" =>
+                    new MChannelAboutMetadata(
+                        self::$subscriptionCount,
+                        self::$responseData?->onResponseReceivedEndpoints[0]?->showEngagementPanelEndpoint
+                            ?->engagementPanel?->engagementPanelSectionListRenderer?->content
+                            ?->sectionListRenderer?->contents[0]?->itemSectionRenderer?->contents[0]
+                            ?->aboutChannelRenderer?->metadata?->aboutChannelViewModel
                     )
             ];
         }
