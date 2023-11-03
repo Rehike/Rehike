@@ -1,5 +1,6 @@
 # Channels common strings:
 
+tabAbout: "О канале"
 flowGrid: "Сетка"
 flowList: "Список"
 viewUploads: "Загрузки"
