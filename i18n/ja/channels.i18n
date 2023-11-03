@@ -1,5 +1,7 @@
 # Channels common strings:
 
+tabAbout: "概要"
+
 flowGrid: "グリッド"
 flowList: "リスト"
 viewUploads: "アップロード"
