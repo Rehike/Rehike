@@ -2,6 +2,7 @@
 namespace Rehike\Model\Comments;
 
 use Rehike\Util\ParsingUtils;
+use Rehike\i18n\i18n;
 
 class CommentsHeader {
     public $title;
@@ -17,6 +18,13 @@ class CommentsHeader {
 
         if ($a = @$data->titleText) {
             $new->title = ParsingUtils::getText($data->titleText);
+            
+            // Some languages (Portuguese) need to override the InnerTube
+            // string since it is wrong (ALL COMENTÁRIOS lol)
+            if (i18n::tryGetRawString("comments", "customTitleText", $text))
+            {
+                $new->title = $text;
+            }
         }
         
         if ($a = @$data->countText) {

@@ -1,10 +1,10 @@
 {
-	"previousHash": "0537f7a6e7a6bbc2e7d8b397d0c0177528e7df92",
-	"currentRevisionId": 1175,
-	"subject": "??? wtf php",
-	"body": "??? wtf php",
+	"previousHash": "dce80d0125b0c6f2851fea8b34f9f490d4ebe294",
+	"currentRevisionId": 1176,
+	"subject": "Custom comments title text support",
+	"body": "Custom comments title text support",
 	"branch": "master",
 	"committerName": "Taniko Yamamoto",
 	"committerEmail": "kirasicecreamm@gmail.com",
-	"time": 1699097869
+	"time": 1699098398
 }
