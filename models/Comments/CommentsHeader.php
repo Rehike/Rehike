@@ -10,6 +10,7 @@ class CommentsHeader {
     public $simpleBoxRenderer;
     public $createParams;
     public $commentsCountEndpoint;
+    public $commentText;
 
     public static function fromData($data) {
         $new = new self();
@@ -25,6 +26,7 @@ class CommentsHeader {
 
         if ($a = @$data->createRenderer) {
             $new->createParams = $a->commentSimpleboxRenderer->submitButton->buttonRenderer->serviceEndpoint->createCommentEndpoint->createCommentParams ?? null;
+            $new->commentText = ParsingUtils::getText($a->commentSimpleboxRenderer->submitButton->buttonRenderer->text);
         }
 
         if ($a = $data->sortMenu) {
