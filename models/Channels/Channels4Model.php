@@ -305,7 +305,7 @@ class Channels4Model
                     )
             ];
         }
-        else if ($content?->rehikeStateParams == "Special::PopupAboutTab")
+        else if (@$content->rehikeStateParams == "Special::PopupAboutTab")
         {
             // new about format hack
             return (object)[
