@@ -1,5 +1,8 @@
 # Channels common strings:
 
+tabChannels: "Canais"
+tabAbout: "Sobre"
+
 flowGrid: "Grade"
 flowList: "Lista"
 viewUploads: "Vídeos"

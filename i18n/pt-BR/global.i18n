@@ -59,6 +59,7 @@ sboxSuggestionDismissedLabel: "Sugestão removida"
 sboxSuggestionDismissLabel: "Remover"
 
 # Misc:
+videoCountNone: "Nenhum vídeo"
 videoCountPlural: "%s vídeos"
 videoCountSingular: "1 vídeo"
 commentPostFail: "Falha ao publicar o comentário."
