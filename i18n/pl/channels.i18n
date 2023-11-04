@@ -1,5 +1,8 @@
 # Channels common strings:
 
+tabChannels: "Kanały"
+tabAbout: "Informacje"
+
 flowGrid: "Siatka"
 flowList: "Lista"
 viewUploads: "Przesłane filmy"
@@ -16,3 +19,7 @@ subscriptionConfirmationHeader: "Potwierdź subskrypcję kanału"
 nonexistent: "Ten kanał nie istnieje."
 secondaryHeaderViews: "%s wyświetleń"
 secondaryHeaderManager: "Menedżer filmów"
+
+# about tab strings
+aboutTabDetails: "Opis"
+aboutTabCountry: "Kraj"
