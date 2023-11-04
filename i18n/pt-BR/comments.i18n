@@ -1,5 +1,6 @@
 # Comments common strings:
 
+customTitleText: "TODOS OS COMENTÁRIOS"
 viewSingular: "Ver resposta"
 viewMulti: "Ver %s respostas"
 viewSingularOwner: "Ver resposta de %s"

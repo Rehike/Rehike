@@ -22,7 +22,7 @@ subscriberCountIsolator: "/( inscritos)|( inscrito)/"
 # Used for detecting if the date string in watch descriptions should be
 # modified. If none of these words are found in the string, then it is assumed
 # that the string should be modified.
-nonPublishCheck: "/(Estreia)|(Começou)|(Transmitido)|(Programado)|(Transmissão ao vivo)/"
+nonPublishCheck: "/(Estreia)|(Começou)|(Estreou)|(Programado)|(Transmissão ao vivo)/"
 
 # Used to isolate a channel name from the unsubscription modal message.
 unsubChannelNameMatch: "/Remover inscrição de (.*?)\\?/"
