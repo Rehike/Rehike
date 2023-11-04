@@ -1,7 +1,7 @@
 languageName: "Polski"
 writingDirection: ltr
 
-thousandsSeparator: " "
+thousandsSeparator: " "
 decimalSeparator: "."
 
 numberOfMonths: 12
@@ -9,64 +9,61 @@ daysInWeek: 7
 
 spaceOnLineBreak: true
 
-standardDateOrder: mdy
+standardDateOrder: dmy
 
-firstDayOfWeek: 1 # Poniedziałek
-
-am: "AM"
-pm: "PM"
+firstDayOfWeek: 1 # niedziela
 
 # https://www.php.net/manual/en/datetime.format.php
-expandedDateWithTime: "l, F j, Y g:i A" # Tuesday, October 17, 2023 12:50 AM
-expandedDate: "l, F j, Y" # Tuesday, October 17, 2023
-dateWithTime: "F j, Y g:i A" # October 17, 2023 12:50 AM
-date: "F j, Y" # October 17 2023
-shortDateWithTime: "m/d/Y g:i A" # 10/17/2023 12:50 AM
-shortDate: "m/d/Y" # 10/17/2023
-time: "g:i A" # 12:50 AM
+expandedDateWithTime: "l, j F Y H:i" # wtorek, 17 października 2023 12:50
+expandedDate: "l, j F Y" # wtorek, 17 października 2023
+dateWithTime: "j F Y H:i" # 17 października 2023 12:50
+date: "j F Y" # 17 października 2023
+shortDateWithTime: "d.m.Y H:i" # 17.10.2023 12:50
+shortDate: "d.m.Y" # 17.10.2023
+time: "H:i" # 12:50
 
 daysOfWeek:
-  1: "Poniedziałek"
-  2: "Wtorek"
-  3: "Środa"
-  4: "Czwartek"
-  5: "Piątek"
-  6: "Sobota"
-  7: "Niedziela"
+  1: "niedziela"
+  2: "poniedziałek"
+  3: "wtorek"
+  4: "środa"
+  5: "czwartek"
+  6: "piątek"
+  7: "sobota"
 
 shortDaysOfWeek:
-  1: "Pon"
-  2: "Wt"
-  3: "Śr"
-  4: "Czw"
-  5: "Pt"
-  6: "Sob"
-  7: "Niedz"
+  1: "niedz"
+  2: "pon"
+  3: "wt"
+  4: "śr"
+  5: "czw"
+  6: "pt"
+  7: "sob"
 
 monthNames:
-  1: "Styczeń"
-  2: "Luty"
-  3: "Marzec"
-  4: "Kwiecień"
-  5: "Maj"
-  6: "Czerwiec"
-  7: "Lipiec"
-  8: "Sierpień"
-  9: "Wrzesień"
-  10: "Październik"
-  11: "Listopad"
-  12: "Grudzień"
+  1: "stycznia"
+  2: "lutego"
+  3: "marca"
+  4: "kwietnia"
+  5: "maja"
+  6: "czerwca"
+  7: "lipca"
+  8: "sierpnia"
+  9: "września"
+  10: "października"
+  11: "listopada"
+  12: "grudnia"
 
 shortMonthNames:
-  1: "Sty"
-  2: "Lut"
-  3: "Mar"
-  4: "Kwi"
-  5: "Maj"
-  6: "Cze"
-  7: "Lip"
-  8: "Sie"
-  9: "Wrz"
-  10: "Paź"
-  11: "Lis"
-  12: "Gru"
+  1: "sty"
+  2: "lut"
+  3: "mar"
+  4: "kwi"
+  5: "maj"
+  6: "cze"
+  7: "lip"
+  8: "sie"
+  9: "wrz"
+  10: "paź"
+  11: "lis"
+  12: "gru"
