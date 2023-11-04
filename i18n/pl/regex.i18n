@@ -17,12 +17,12 @@ countZero: "Brak"
 # abbreviated by YouTube, you can't just replace all numerical data, or you
 # would display wrong counts. Instead, you must replace all text that can occur
 # in the string except for the units.
-subscriberCountIsolator: "/(subskrybentów)|(subskrybent)/"
+subscriberCountIsolator: "/( subskrybentów)|( subskrybent)/"
 
 # Used for detecting if the date string in watch descriptions should be
 # modified. If none of these words are found in the string, then it is assumed
 # that the string should be modified.
-nonPublishCheck: "/(Data premiery: )|(Transmisja zaczęła się )|(Nadawane na żywo )|(Zaplanowany na)/"
+nonPublishCheck: "/(Data premiery: )|(Transmisja zaczęła się )|(Premiera rozpoczęła się )|(Nadawane na żywo )|(Zaplanowany na)/"
 
 # Used to isolate a channel name from the unsubscription modal message.
 unsubChannelNameMatch: "/Anulować subskrypcję kanału (.*?)\\?/"
