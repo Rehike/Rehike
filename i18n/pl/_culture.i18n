@@ -32,13 +32,13 @@ daysOfWeek:
   7: "sobota"
 
 shortDaysOfWeek:
-  1: "niedz"
-  2: "pon"
-  3: "wt"
-  4: "śr"
-  5: "czw"
-  6: "pt"
-  7: "sob"
+  1: "niedz."
+  2: "pon."
+  3: "wt."
+  4: "śr."
+  5: "czw."
+  6: "pt."
+  7: "sob."
 
 monthNames:
   1: "stycznia"
