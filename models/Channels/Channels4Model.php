@@ -206,7 +206,7 @@ class Channels4Model
         // a popup menu. Thus, we must convert the data.
         if (is_null($aboutTab))
         {
-            if (self::$yt->tab == "about")
+            if (@self::$yt->tab == "about")
             {
                 foreach ($tabs as $t)
                 {
@@ -239,8 +239,6 @@ class Channels4Model
             ];
 
             array_splice($tabs, $searchBarIndex, 0, [$aboutContent]);
-
-            self::$yt->FUCKYOU = $tabs;
         }
         
         $header->addTabs($tabs, ($yt->partiallySelectTabs ?? false));
