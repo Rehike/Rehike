@@ -14,7 +14,7 @@ myChannel: "Meu canal"
 subscriptions: "Inscrições"
 
 # Bottom section items:
-guideBuilderLabel: "Navegar canais"
+guideBuilderLabel: "Procurar canais"
 manageSubscriptionsLabel: "Gerenciar inscrições"
 
 # Section names:
