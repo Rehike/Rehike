@@ -1,0 +1,47 @@
+{#
+    Standard SPF core response prototype.
+#}
+{
+    "body": {
+        "player-unavailable": {{ include("page_fragments/player_unavailable.twig")|json_encode|raw }},
+        "debug": "",
+        "early-body": "",
+        "appbar-content": {% apply json_encode|raw %}
+            {% block appbarContent %}{% endblock %}
+        {% endapply %},
+        {# todo: support!!! #}
+        "alerts": "",
+        "content": {% apply json_encode|raw %}
+            {% block content %}{% endblock %}
+        {% endapply %},
+        "header": {% apply json_encode|raw %}
+            {% block header %}{% endblock %}
+        {% endapply %},
+        "ticker-content": "",
+        "player-playlist": {{ include("page_fragments/player_playlist.twig")|json_encode|raw }}
+    },
+    {# todo: most of these #}
+    "attr": {
+        "player-unavailable": {
+            "class": "  hid  "
+         },
+         "appbar-content": {
+            "class": ""
+         },
+         "page": {
+            "class": {% apply spaceless|json_encode|raw %}
+                {{ pageType }} {% block page_class %}{% endblock %} clearfix 
+            {% endapply %}
+         },
+         "body": {
+            "class": {% apply json_encode|raw %}
+                {%- block body_class -%}
+                    {% include "core/body_class.twig" %}
+                {%- endblock -%}
+            {% endapply %}
+         }
+    },
+    "title": {% apply spaceless|json_encode|raw %}
+        {% block title %}YouTube{% endblock %}
+    {% endapply %}
+}

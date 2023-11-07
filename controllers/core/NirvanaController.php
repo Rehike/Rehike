@@ -2,7 +2,7 @@
 namespace Rehike\Controller\core;
 
 use Rehike\YtApp;
-use SpfPhp\SpfPhp;
+use Rehike\Spf;
 
 use Rehike\Model\{
     Appbar\MAppbar as Appbar,
@@ -64,7 +64,7 @@ abstract class NirvanaController extends HitchhikerController
         // Request appbar guide fragments if the page has the
         // guide enabled, the request is not SPF, and the guide
         // is open by default.
-        if (!$this->delayLoadGuide && !SpfPhp::isSpfRequested())
+        if (!$this->delayLoadGuide && !Spf::isSpfRequested())
         {
             $this->getPageGuide()->then(function ($guide) use ($yt) {
                 $yt->appbar->addGuide($guide);

@@ -7,4 +7,14 @@
         - core.twig provides appbar (aka Nirvana)
         - core_legacy.twig provides no-appbar (like hitchhiker in 2013)
 #}
-{% extends appbarEnabled ? "core/core.twig" : "core/core_legacy.twig" %}
+
+{% if yt.spf %}
+    {% set rehike_base_template = "core/core_spf.twig" %}
+{% else %}
+    {% set rehike_base_template = appbarEnabled
+            ? "core/core.twig"
+            : "core/core_legacy.twig"
+    %}
+{% endif %}
+
+{% extends rehike_base_template %}

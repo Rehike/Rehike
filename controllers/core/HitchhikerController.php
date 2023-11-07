@@ -7,7 +7,8 @@ use Rehike\{
     Network,
     i18n\i18n,
     ConfigManager\Config,
-    SecurityChecker
+    SecurityChecker,
+    Spf
 };
 
 use Rehike\Model\{
@@ -21,7 +22,6 @@ use Rehike\Model\{
 use Rehike\Async\Promise;
 
 use Rehike\Player\PlayerCore;
-use SpfPhp\SpfPhp;
 use Rehike\ControllerV2\RequestMetadata;
 use Rehike\Debugger\Debugger;
 use Rehike\DisableRehike\DisableRehike;
@@ -298,7 +298,7 @@ abstract class HitchhikerController
             $yt->currentEndpoint = null;
         }
 
-        if (!SecurityChecker::isSecure() && !SpfPhp::isSpfRequested())
+        if (!SecurityChecker::isSecure() && !Spf::isSpfRequested())
         {
             $yt->rehikeSecurityNotice = new SecurityLightbox();
         }
@@ -324,7 +324,7 @@ abstract class HitchhikerController
      */
     public function doGeneralRender(): void
     {
-        if (SpfPhp::isSpfRequested() && $this->yt->spfEnabled)
+        if (Spf::isSpfRequested() && $this->yt->spfEnabled)
         {
             // Report SPF status to the templater
             $this->yt->spf = true;
@@ -332,21 +332,23 @@ abstract class HitchhikerController
             // Capture the render so that we may send it through SpfPhp.
             $capturedRender = TemplateManager::render();
 
-            // Skip serialisation so that the output may be modified. (also 
-            // suppress warnings; idk why (buggy library lol))
-            $spf = @SpfPhp::parse($capturedRender, $this->spfIdListeners, [
-                "skipSerialization" => true
-            ]);
+            // // Skip serialisation so that the output may be modified. (also 
+            // // suppress warnings; idk why (buggy library lol))
+            // $spf = @SpfPhp::parse($capturedRender, $this->spfIdListeners, [
+            //     "skipSerialization" => true
+            // ]);
 
-            // Post-data generation callback for custom handling
-            $this->handleSpfData($spf);
+            // // Post-data generation callback for custom handling
+            // $this->handleSpfData($spf);
 
-            if (is_object($spf))
-                $spf->rebug_data = Debugger::exposeSpf();
+            // if (is_object($spf))
+            //     $spf->rebug_data = Debugger::exposeSpf();
 
             header("Content-Type: application/json");
 
-            echo json_encode($spf);
+            // echo json_encode($spf);
+
+            echo $capturedRender;
         }
         else
         {

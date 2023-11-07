@@ -1,5 +1,5 @@
 <?php
-use SpfPhp\SpfPhp;
+use Rehike\Spf;
 
 /**
  * A custom redirect handler that takes SPF into account.
@@ -8,7 +8,7 @@ use SpfPhp\SpfPhp;
  * @author The Rehike Maintainers
  */
 return function($url) {
-    if (SpfPhp::isSpfRequested())
+    if (Spf::isSpfRequested())
     {
         $spfRegexp = '/(\?|&)spf=[A-Za-z0-9]*/';
 
