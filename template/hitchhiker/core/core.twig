@@ -72,15 +72,17 @@
          <div id="masthead-positioner-height-offset"></div>
          {% endblock masthead %}
          <div id="page-container">
-            <div id="page" class="{{ pageType }} {% block page_class %}{% endblock %}  clearfix ">
+            {# need to capture the page class for legacy reasons #}
+            {%- set rh_page_class -%}
+               {% block page_class %}{% endblock %}
+            {%- endset -%}
+            <div id="page" class="{% include "page_fragments/page.class.twig" with {page_class: rh_page_class} %}">
                {%- block guide_container -%}
                   {% include 'common/appbar/appbar_guide.twig' %}
                {% endblock %}
                <div class="alerts-wrapper">
                   <div id="alerts" class="{{ not leftAlignPage ? "content-alignment" }}">
-                     {%- for item in yt.page.alerts -%}
-                     {{ alert.render(item) }}
-                     {%- endfor -%}
+                     {% include "page_fragments/alerts.twig" %}
                   </div>
                </div>
                <div id="header">

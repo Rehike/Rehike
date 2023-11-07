@@ -1,0 +1,4 @@
+{% import "common/alert.twig" as alert %}
+{%- for item in yt.page.alerts -%}
+{{ alert.render(item) }}
+{%- endfor -%}

@@ -1,7 +1,7 @@
 <div id="player" class="  {{ playerType ? playerType : 'off-screen' }} " role="complementary">
    <div id="theater-background" class="player-height"></div>
    <div id="player-mole-container">
-      <div id="player-unavailable" class="{{ yt.playerUnavailable ? "  player-width player-height player-unavailable " : "hid"  }}">
+      <div id="player-unavailable" class="{% include "page_fragments/player_unavailable.class.twig" %}">
          {% include "page_fragments/player_unavailable.twig" %}
       </div>
       <div id="player-api" class="player-width player-height off-screen-target player-api" tabIndex="-1"></div>
@@ -86,7 +86,7 @@ ytplayer.load = function() {
     ytplayer.config.loaded = true;
 };
 </script>
-      <div id="player-playlist" class="  {{ yt.page.playlist ? 'content-alignment  watch-player-playlist' :  'hid' }}  ">
+      <div id="player-playlist" class="{{ include("page_fragments/player_playlist.class.twig") }}">
          {% include 'page_fragments/player_playlist.twig' %}
       </div>
    </div>
