@@ -1,3 +1,4 @@
+{% if not yt.spf %}
 (function() {
     var b = {
         a: "content-snap-width-1",
@@ -58,6 +59,7 @@ try {
         document.attachEvent('onclick', ytbuffer.handleClick);
     }
 } catch (e) {}
+{% endif %}
 
 {# DOCUMENTATION - runBeforeBodyIsReady => k(bool a, bool c, bool e)
    a: toggle guide-pinned

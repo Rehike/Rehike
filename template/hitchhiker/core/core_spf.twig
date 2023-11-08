@@ -1,7 +1,13 @@
 {#
     Standard SPF core response prototype.
 #}
+{% import 'core/macros.twig' as core %}
 {
+    "head": {%- apply json_encode|raw -%}
+        <script>{{ include('/core/www-pageframesizing.js.twig') }}</script>
+        {{ core.css('www-core') }}
+        {%- block head_css  -%}{%- endblock -%}
+    {%- endapply -%},
     "body": {
         "player-unavailable": {{ include("page_fragments/player_unavailable.twig")|json_encode|raw }},
         "debug": "",
@@ -20,34 +26,65 @@
         "player-playlist": {{ include("page_fragments/player_playlist.twig")|json_encode|raw }}
     },
     "attr": {
+        "player": {
+            "class": {{ include("page_fragments/player.class.twig")|json_encode|raw }}
+        },
         "player-unavailable": {
-            "class": {{ include("page_fragments/player_unavailable.class.twig")|json_encode|raw }}
-         },
-         "appbar-content": {
-            {# Currently not handled by Rehike. #}
-            "class": ""
-         },
-         "player-playlist": {
+           "class": {{ include("page_fragments/player_unavailable.class.twig")|json_encode|raw }}
+        },
+        "appbar-content": {
+           {# Currently not handled by Rehike. #}
+           "class": ""
+        },
+        "content": {
+           "class": {{ include("page_fragments/content.class.twig")|json_encode|raw }}
+        },
+        "player-playlist": {
             "class": {{ include("page_fragments/player_playlist.class.twig")|json_encode|raw }}
-         },
-         "page": {
-            {# need to capture the page class for legacy reasons #}
-            {%- set rh_page_class -%}
-               {% block page_class %}{% endblock %}
-            {%- endset -%}
-            "class": {{ include("page_fragments/page.class.twig", {page_class: rh_page_class})|json_encode|raw }}
-         },
-         "body": {
-            "class": {% apply json_encode|raw %}
-                {%- block body_class -%}
-                    {% include "core/body_class.twig" %}
-                {%- endblock -%}
-            {% endapply %}
-         }
+        },
+        "page": {
+           {# need to capture the page class for legacy reasons #}
+           {%- set rh_page_class -%}
+              {% block page_class %}{% endblock %}
+           {%- endset -%}
+           "class": {{ include("page_fragments/page.class.twig", {page_class: rh_page_class})|json_encode|raw }}
+        },
+        "body": {
+           "class": {% apply json_encode|raw %}
+               {%- block body_class -%}
+                   {% include "core/body_class.twig" %}
+               {%- endblock -%}
+           {% endapply %}
+        }
     },
+    {#
+        JS configuration scripts.
+
+        Unlike the head, which only calls the sizing code and loads stylesheets,
+        this is pretty much the same as non-SPF. It's a bit messy, but I decided
+        to go with using the Nirvana structure always instead of hacking around
+        in order to preserve the core_legacy structure too, which only differs
+        in slight ordering things.
+    #}
+    "foot": {%- apply json_encode|raw -%}
+        {% include 'core/spf_module.twig' %}
+        {%- if yt.useModularCore -%}
+            {% include 'core/modular_js_v2.twig' %}
+        {% else %}
+            {{ core.js('www-core/www-core') }}
+        {% endif %}
+        {%- block foot_scripts -%}{%- endblock -%}
+        {% include 'core/yt_global_js_config.twig' %}
+    {%- endapply -%},
     "title": {% apply spaceless|json_encode|raw %}
         {% block title %}YouTube{% endblock %}
-    {% endapply %},
-    {# TODO: #}
-    "url": ""
+    {% endapply %}
+    
+    {% if yt.spfConfig.url %}
+    , "url": {{ yt.spfConfig.url|json_encode|raw }}
+    {% endif %}
+
+    {% if yt.spfConfig.data %}
+    , "data": {{ yt.spfConfig.data|json_encode|raw }}
+    {% endif %}
 }

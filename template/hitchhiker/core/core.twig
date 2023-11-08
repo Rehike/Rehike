@@ -89,7 +89,7 @@
                {% block header %}{% endblock %}
                </div>
                {% include 'player/core.twig' %}
-               <div id="content" class="  {{ not leftAlignPage ? "content-alignment" }}" role="main">
+               <div id="content" class="{{ include("page_fragments/content.class.twig") }}" role="main">
                   {% block content %}{% endblock %}
                </div>
             </div>

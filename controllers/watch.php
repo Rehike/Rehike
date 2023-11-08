@@ -235,16 +235,16 @@ return new class extends NirvanaController {
      * 
      * Specifically, this binds the player data to the SPF data in order to
      * refresh the player on the client-side.
-     * 
-     * @param $data  SPF data.
-     * @return void  (Modifies $data.)
      */
-    public function handleSpfData(object $data): void
+    public function tryGetSpfData(?object &$data): bool
     {
-        $yt = &$this->yt;
+        $yt = $this->yt;
 
-        if (isset($yt->playerResponse)) {
-            $data->data = (object) [
+        $data = null;
+
+        if (isset($yt->playerResponse))
+        {
+            $data = (object) [
                 'swfcfg' => (object) [
                     'args' => (object) [
                         'raw_player_response' => null,
@@ -253,15 +253,20 @@ return new class extends NirvanaController {
                 ]
             ];
 
-            $data->data->swfcfg->args->raw_player_response = $yt->playerResponse;
-            $data->data->swfcfg->args->raw_watch_next_response = $yt->watchNextResponse;
+            $data->swfcfg->args->raw_player_response = $yt->playerResponse;
+            $data->swfcfg->args->raw_watch_next_response = $yt->watchNextResponse;
     
-            if (isset($yt->page->playlist)) {
-                $data->data->swfcfg->args->is_listed = '1';
-                $data->data->swfcfg->args->list = $yt->playlistId;
-                $data->data->swfcfg->args->videoId = $yt->videoId;
+            if (isset($yt->page->playlist))
+            {
+                $data->swfcfg->args->is_listed = '1';
+                $data->swfcfg->args->list = $yt->playlistId;
+                $data->swfcfg->args->videoId = $yt->videoId;
             }
+
+            return true;
         }
+
+        return false;
     }
 
     /**

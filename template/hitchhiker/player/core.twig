@@ -1,4 +1,4 @@
-<div id="player" class="  {{ playerType ? playerType : 'off-screen' }} " role="complementary">
+<div id="player" class="{{ include("page_fragments/player.class.twig") }}" role="complementary">
    <div id="theater-background" class="player-height"></div>
    <div id="player-mole-container">
       <div id="player-unavailable" class="{% include "page_fragments/player_unavailable.class.twig" %}">

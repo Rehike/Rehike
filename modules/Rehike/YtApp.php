@@ -37,6 +37,7 @@ class YtApp extends stdClass
     public function __construct()
     {
         self::$instance = $this;
+        $this->spfConfig = (object)[];
     }
 
     public static function getInstance(): YtApp
@@ -98,6 +99,11 @@ class YtApp extends stdClass
      * This is set to true before rendering by the SPF controller.
      */
     public bool $spf = false;
+
+    /**
+     * Stores SPF configuration properties.
+     */
+    public object $spfConfig;
 
     /**
      * Determines if the current page should use the revamped module system

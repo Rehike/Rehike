@@ -329,6 +329,11 @@ abstract class HitchhikerController
             // Report SPF status to the templater
             $this->yt->spf = true;
 
+            if ($this->tryGetSpfData($spfData))
+            {
+                $this->yt->spfConfig->data = $spfData;
+            }
+
             // Capture the render so that we may send it through SpfPhp.
             $capturedRender = TemplateManager::render();
 
@@ -366,12 +371,15 @@ abstract class HitchhikerController
     }
 
     /**
-     * Modify generated SPF data before it's sent to the client.
+     * Used by certain controllers in order to supply custom data to be included
+     * in an SPF response.
      * 
-     * For example, adding custom metadata to the response.
-     * 
-     * @param object $data reference
-     * @return void
+     * This is a try-get pattern, so the argument is the output, and the return
+     * type is the status.
      */
-    public function handleSpfData(object $data): void {}
+    public function tryGetSpfData(?object &$data): bool
+    {
+        $data = null;
+        return false;
+    }
 }
