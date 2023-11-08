@@ -29,11 +29,6 @@ class AjaxRelatedController extends AjaxController
 
     public function onPost(YtApp $yt, RequestMetadata $request): void
     {
-        $this->spfIdListeners = [
-            '@masthead_search<data-is-crosswalk>',
-            'watch-more-related'
-        ];
-
         if (!isset($_GET["continuation"]))
         {
             die('{"name":"other"}');
