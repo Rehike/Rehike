@@ -20,7 +20,7 @@ showInfo: "Pokaż tytuł filmu i działania odtwarzacza"
 delayedCookies: "Włącz rozszerzony tryb prywatności"
 
 legalNotice: >
-  Wyświetlanie filmów YouTube na swojej stronie oznacza zgodę na %s
+  Wyświetlanie filmów YouTube na swojej stronie oznacza zgodę na 
 legalNoticeLink: "warunki korzystania z interfejsu YouTube API."
 
 playlistNonexistent: "Ta playlista nie istnieje."
