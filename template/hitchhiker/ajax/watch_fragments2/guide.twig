@@ -1,1 +1,15 @@
-{% include "common/appbar/appbar_guide.twig" %}
+{#
+    Watch Fragments 2 / Guide
+
+    Delivers delayloaded guide HTML content via SPF.
+#}
+{
+    "body": {
+        "guide": {% apply json_encode|raw %}
+            {% from "common/appbar/appbar_guide.twig" 
+                import render_inner as appbar_guide_inner 
+            %}
+            {{ appbar_guide_inner(yt.appbar.guide) }}
+        {% endapply %}
+    }
+}

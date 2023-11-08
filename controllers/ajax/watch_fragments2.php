@@ -48,10 +48,6 @@ class AjaxWatchFragments2Controller extends AjaxController
     private function getGuide(YtApp $yt): void
     {
         $this->template = "ajax/watch_fragments2/guide";
-        $this->spfIdListeners = [
-            '@masthead_search<data-is-crosswalk>',
-            'guide'
-        ];
 
         $yt->appbar = new Appbar();
         $this->getPageGuide()->then(function ($guide) use ($yt) {

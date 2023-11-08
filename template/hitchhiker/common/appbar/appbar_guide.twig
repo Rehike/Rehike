@@ -8,111 +8,118 @@
    @author Taniko Yamamoto (kirasicecreamm@gmail.com)
    @author The Rehike Maintainers
 #}
-{% from "common/guide/main.twig" import render as guide %}
+
+{% macro render(data) %}
 <div id="guide" class="yt-scrollbar">
-   {# Implements the actual appbar guide menu #}
-   <div id="appbar-guide-menu" class="appbar-menu appbar-guide-menu-layout appbar-guide-clickable-ancestor yt-uix-scroller yt-uix-tdl" role="navigation">
-      {{ guide(yt.appbar.guide) }}
-   </div>
-   {# Implements the appbar guide notifications wrapper.
-      This is currently only managed on a templater level. #}
-   <div id="appbar-guide-notifications" class="hid">
-      {% set strings = yt.appbar.guideNotificationStrings %}
-      {{ _self.appbar_guide_notification_template(
-         "watch-later-video-added",
-         rehike.i18n.get("guide", "watchLaterVideoAdded")
-      ) }}
-      {{ _self.appbar_guide_notification_template(
-         "watch-later-video-removed",
-         rehike.i18n.get("guide", "watchLaterVideoRemoved")
-      ) }}
-      {{ _self.appbar_guide_notification_template(
-         "subscription",
-         rehike.i18n.get("guide", "subscription")
-      ) }}
-      {{ _self.appbar_guide_notification_template(
-         "unsubscription",
-         rehike.i18n.get("guide", "unsubscription")
-      ) }}
-      {{ _self.appbar_guide_notification_template(
-         "playlist-like",
-         rehike.i18n.get("guide", "playlistLike")
-      ) }}
-      {{ _self.appbar_guide_notification_template(
-         "playlist-unlike",
-         rehike.i18n.get("guide", "playlistUnlike")
-      ) }}
-      {{ _self.appbar_guide_notification_template(
-         "playlist-video-added",
-         rehike.i18n.get("guide", "playlistVideoAdded")
-      ) }}
-      {{ _self.appbar_guide_notification_template(
-         "playlist-video-removed",
-         rehike.i18n.get("guide", "playlistVideoRemoved")
-      ) }}
-      {{ _self.appbar_guide_notification_template(
-         "video-like",
-         rehike.i18n.get("guide", "videoLike")
-      ) }}
-      {{ _self.appbar_guide_notification_template(
-         "video-unlike",
-         rehike.i18n.get("guide", "videoUnlike")
-      ) }}
-      {{ _self.appbar_guide_notification_template(
-         "event-reminder-set",
-         rehike.i18n.get("guide", "eventReminderSet")
-      ) }}
-      {{ _self.appbar_guide_notification_template(
-         "event-reminder-removed",
-         rehike.i18n.get("guide", "eventReminderRemoved")
-      ) }}
-   </div>
-   {# 
-      Implements appbar guide item templates 
-      
-      Ignore some of the markup here like the hrefOverride property,
-      as these are specific only to this implementation. They
-      should be avoided elsewhere.
-   #}
-   <div id="appbar-guide-item-templates" class="hid">
-      {{ _self.appbar_guide_item_template("playlist", {
-            "idOverride": "__ID__",
-            "titleOverride": "__TITLE__",
-            "icon": {"iconType": "PLAYLISTS"},
-            "hrefOverride": "__URL__",
-            "appbarGuideNotification": {
-               "label": rehike.i18n.get("guide", "playlistLike"),
-               "template": "__NOTIFICATION_OVERLAY_MESSAGE__"
-            }
-      }) }}
-      {{ _self.appbar_guide_item_template("mix", {
-            "idOverride": "__ID__",
-            "titleOverride": "__TITLE__",
-            "icon": {"iconType": "MIX"},
-            "hrefOverride": "__URL__",
-            "appbarGuideNotification": {
-               "label": rehike.i18n.get("guide", "playlistLike"),
-               "template": "__NOTIFICATION_OVERLAY_MESSAGE__"
-            }
-      }) }}
-      {{ _self.appbar_guide_item_template("channel", {
-            "idOverride": "__ID__",
-            "titleOverride": "__TITLE__",
-            "thumbnail": {
-               "thumbnails": [
-                  {
-                     url: "__THUMBNAIL_URL__"
-                  }
-               ]
-            },
-            "hrefOverride": "__URL__",
-            "appbarGuideNotification": {
-               "label": rehike.i18n.get("guide", "subscription"),
-               "template": "__NOTIFICATION_OVERLAY_MESSAGE__"
-            }
-      }) }}
-   </div>
+   {{ _self.render_inner(data) }}
 </div>
+{% endmacro %}
+
+{% macro render_inner(data) %}
+{% from "common/guide/main.twig" import render as guide %}
+{# Implements the actual appbar guide menu #}
+<div id="appbar-guide-menu" class="appbar-menu appbar-guide-menu-layout appbar-guide-clickable-ancestor yt-uix-scroller yt-uix-tdl" role="navigation">
+   {{ guide(data) }}
+</div>
+{# Implements the appbar guide notifications wrapper.
+   This is currently only managed on a templater level. #}
+<div id="appbar-guide-notifications" class="hid">
+   {% set strings = yt.appbar.guideNotificationStrings %}
+   {{ _self.appbar_guide_notification_template(
+      "watch-later-video-added",
+      rehike.i18n.get("guide", "watchLaterVideoAdded")
+   ) }}
+   {{ _self.appbar_guide_notification_template(
+      "watch-later-video-removed",
+      rehike.i18n.get("guide", "watchLaterVideoRemoved")
+   ) }}
+   {{ _self.appbar_guide_notification_template(
+      "subscription",
+      rehike.i18n.get("guide", "subscription")
+   ) }}
+   {{ _self.appbar_guide_notification_template(
+      "unsubscription",
+      rehike.i18n.get("guide", "unsubscription")
+   ) }}
+   {{ _self.appbar_guide_notification_template(
+      "playlist-like",
+      rehike.i18n.get("guide", "playlistLike")
+   ) }}
+   {{ _self.appbar_guide_notification_template(
+      "playlist-unlike",
+      rehike.i18n.get("guide", "playlistUnlike")
+   ) }}
+   {{ _self.appbar_guide_notification_template(
+      "playlist-video-added",
+      rehike.i18n.get("guide", "playlistVideoAdded")
+   ) }}
+   {{ _self.appbar_guide_notification_template(
+      "playlist-video-removed",
+      rehike.i18n.get("guide", "playlistVideoRemoved")
+   ) }}
+   {{ _self.appbar_guide_notification_template(
+      "video-like",
+      rehike.i18n.get("guide", "videoLike")
+   ) }}
+   {{ _self.appbar_guide_notification_template(
+      "video-unlike",
+      rehike.i18n.get("guide", "videoUnlike")
+   ) }}
+   {{ _self.appbar_guide_notification_template(
+      "event-reminder-set",
+      rehike.i18n.get("guide", "eventReminderSet")
+   ) }}
+   {{ _self.appbar_guide_notification_template(
+      "event-reminder-removed",
+      rehike.i18n.get("guide", "eventReminderRemoved")
+   ) }}
+</div>
+{# 
+   Implements appbar guide item templates 
+   
+   Ignore some of the markup here like the hrefOverride property,
+   as these are specific only to this implementation. They
+   should be avoided elsewhere.
+#}
+<div id="appbar-guide-item-templates" class="hid">
+   {{ _self.appbar_guide_item_template("playlist", {
+         "idOverride": "__ID__",
+         "titleOverride": "__TITLE__",
+         "icon": {"iconType": "PLAYLISTS"},
+         "hrefOverride": "__URL__",
+         "appbarGuideNotification": {
+            "label": rehike.i18n.get("guide", "playlistLike"),
+            "template": "__NOTIFICATION_OVERLAY_MESSAGE__"
+         }
+   }) }}
+   {{ _self.appbar_guide_item_template("mix", {
+         "idOverride": "__ID__",
+         "titleOverride": "__TITLE__",
+         "icon": {"iconType": "MIX"},
+         "hrefOverride": "__URL__",
+         "appbarGuideNotification": {
+            "label": rehike.i18n.get("guide", "playlistLike"),
+            "template": "__NOTIFICATION_OVERLAY_MESSAGE__"
+         }
+   }) }}
+   {{ _self.appbar_guide_item_template("channel", {
+         "idOverride": "__ID__",
+         "titleOverride": "__TITLE__",
+         "thumbnail": {
+            "thumbnails": [
+               {
+                  url: "__THUMBNAIL_URL__"
+               }
+            ]
+         },
+         "hrefOverride": "__URL__",
+         "appbarGuideNotification": {
+            "label": rehike.i18n.get("guide", "subscription"),
+            "template": "__NOTIFICATION_OVERLAY_MESSAGE__"
+         }
+   }) }}
+</div>
+{% endmacro %}
 
 {# Generates a notification with the given text. #}
 {% macro appbar_guide_notification(text) %}
