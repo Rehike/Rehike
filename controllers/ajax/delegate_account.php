@@ -10,10 +10,6 @@ return new class extends \Rehike\Controller\core\AjaxController
 {
     public string $template = "ajax/delegate_account";
 
-    protected array $spfIdListeners = [
-        "yt-delegate-accounts"
-    ];
-
     public function onGet(YtApp $yt, RequestMetadata $request): void 
     {
         $this->onPost($yt, $request);
