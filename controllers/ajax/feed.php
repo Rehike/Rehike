@@ -6,7 +6,6 @@ use Rehike\ControllerV2\RequestMetadata;
 
 use Rehike\Controller\core\AjaxController;
 use \Rehike\Network;
-use SpfPhp\SpfPhp;
 
 /**
  * Controller for AJAX feeds.

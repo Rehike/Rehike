@@ -37,8 +37,6 @@ Rehike makes use of the following software or services:
 
 - [Composer](//getcomposer.org)
 - [Twig](//twig.symfony.com)
-- [SpfPhp](//github.com/Rehike/SpfPhp)
-    - [YukisCoffee/simple_html_dom](//github.com/YukisCoffee/simple_html_dom) fork of [voku/simple_html_dom](//github.com/voku/simple_html_dom)
 - [Protocol Buffers](//developers.google.com/protocol-buffers/)
 - [Return YouTube Dislike API](https://www.returnyoutubedislike.com/)
 - [Prototaxis](//github.com/Prototaxis) for shelves homepage on InnerTube WEB v2
