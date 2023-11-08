@@ -26,7 +26,7 @@ class MPlaylistHeader
         if (isset($thumbnail->thumbnail))
         {
             $this->thumbnail = new MPlaylistHeaderThumbnail(
-                ParsingUtils::getThumb($thumbnail->thumbnail, 126),
+                ParsingUtils::getThumb($thumbnail->thumbnail, 126, true),
                 ParsingUtils::getUrl($thumbnail->onTap),
                 ParsingUtils::getText($thumbnail->thumbnailOverlays->thumbnailOverlayHoverTextRenderer->text),
                 ParsingUtils::getUrl($data->ownerEndpoint) . "/playlists"

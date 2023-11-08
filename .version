@@ -1,10 +1,10 @@
 {
-	"previousHash": "9e8dad15b1a3b1a204989a9e24d5f3c858592274",
-	"currentRevisionId": 1187,
-	"subject": "fix playlist crash (remove debug code)",
-	"body": "fix playlist crash (remove debug code)",
+	"previousHash": "1b2fb6e508da318732a40a4e1a74b1249770b0ce",
+	"currentRevisionId": 1188,
+	"subject": "Fix playlist page thumbnail",
+	"body": "Fix playlist page thumbnail",
 	"branch": "master",
-	"committerName": "Daylin Cooper",
-	"committerEmail": "dcoop2004@gmail.com",
-	"time": 1699391267
+	"committerName": "aubymori",
+	"committerEmail": "aubyomori@gmail.com",
+	"time": 1699402428
 }
