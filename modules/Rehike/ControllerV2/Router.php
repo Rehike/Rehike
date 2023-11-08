@@ -4,8 +4,6 @@ namespace Rehike\ControllerV2;
 use Rehike\ControllerV2\Util\GlobToRegexp;
 use Rehike\SimpleFunnel;
 
-include_once "includes/polyfill/fnmatch.php";
-
 /**
  * Implements the Controller V2 router.
  * 
@@ -118,7 +116,7 @@ class Router
                 $name = $value;
             }
 
-            if (\fnmatch($name, explode("?", $_SERVER["REQUEST_URI"])[0]))
+            if (GlobToRegexp::doMatch($name, explode("?", $_SERVER["REQUEST_URI"])[0]))
             {
                 SimpleFunnel::funnelCurrentPage()->then(fn($r) => $r->output());
             }
@@ -144,7 +142,7 @@ class Router
 
         // Iterate the array and look for a match.
         foreach ($definitions as $def => $_val)
-        if (\fnmatch($def, explode("?", $_SERVER["REQUEST_URI"])[0]))
+        if (GlobToRegexp::doMatch($def, explode("?", $_SERVER["REQUEST_URI"])[0]))
         {
             $bestMatch = $def;
         }
