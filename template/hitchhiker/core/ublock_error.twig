@@ -7,7 +7,6 @@
     and a runtime error would be caused when YouTube's JS attempts to access
     a property that shouldn't fucking be undefined.
 #}
-{% if not yt.spf %}
 <script>
     console.log(window.yt);
     window.yt = {};
@@ -82,4 +81,3 @@
         }
     }
 </script>
-{% endif %}

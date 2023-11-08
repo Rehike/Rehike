@@ -10,9 +10,9 @@ namespace Rehike\Util;
 class PrefUtils
 {
     /**
-     * Decode the PREF cookie into an object.
+     * Parse the PREF cookie.
      */
-    public static function decode(string $pref): object
+    public static function parse(string $pref): object
     {
         $response = (object) [];
         $temp = explode("&", $pref);
@@ -24,19 +24,6 @@ class PrefUtils
         }
 
         return $response;
-    }
-
-    /**
-     * Encode the decoded PREF object back into a cookie string.
-     */
-    public static function encode(object $pref): string
-    {
-        $temp = [];
-        foreach ($pref as $key => $value)
-        {
-            $temp[] = "$key=$value";
-        }
-        return implode("&", $temp);
     }
 
     /**

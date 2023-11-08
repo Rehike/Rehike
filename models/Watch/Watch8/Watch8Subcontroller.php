@@ -177,7 +177,7 @@ class Watch8Subcontroller
                     $autoplayIndex = self::getRecomAutoplay($recomsList);
 
                     if (isset($_COOKIE["PREF"])) {
-                        $pref = PrefUtils::decode($_COOKIE["PREF"]);
+                        $pref = PrefUtils::parse($_COOKIE["PREF"]);
                     } else {
                         $pref = (object) [];
                     }
