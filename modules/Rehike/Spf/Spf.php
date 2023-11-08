@@ -1,5 +1,5 @@
 <?php
-namespace Rehike;
+namespace Rehike\Spf;
 
 /**
  * Structured Page Fragments JS library utilities for Rehike.

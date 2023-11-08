@@ -1,5 +1,5 @@
 <?php
-use Rehike\Spf;
+use Rehike\Spf\Spf;
 
 /**
  * A custom redirect handler that takes SPF into account.

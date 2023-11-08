@@ -8,7 +8,7 @@ use Rehike\{
     i18n\i18n,
     ConfigManager\Config,
     SecurityChecker,
-    Spf
+    Spf\Spf
 };
 
 use Rehike\Model\{

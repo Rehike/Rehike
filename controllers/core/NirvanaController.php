@@ -2,7 +2,7 @@
 namespace Rehike\Controller\core;
 
 use Rehike\YtApp;
-use Rehike\Spf;
+use Rehike\Spf\Spf;
 
 use Rehike\Model\{
     Appbar\MAppbar as Appbar,
