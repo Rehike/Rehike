@@ -90,10 +90,6 @@ return new class extends AjaxController
 
     private function getNotifications(YtApp $yt, RequestMetadata $request): void
     {
-        $this->spfIdListeners = [
-            "yt-masthead-notifications-content"
-        ]; 
-
         Network::innertubeRequest(
             action: "notification/get_notification_menu",
             body: [

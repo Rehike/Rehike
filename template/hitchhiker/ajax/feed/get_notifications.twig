@@ -1,20 +1,39 @@
-{% import "common/uix/load_more_button.twig" as load_more %}
-{% from "common/notifications.twig" import notification_item as notification %}
-<body>
-    <div id="yt-masthead-notifications-content" class="yt-uix-scroller" data-loaded="true" data-scroller-mousewheel-listener="" data-scroller-scroll-listener="">
-        <ol id="item-section-{{ rehike.generateRid() }}" class="item-section">
-            {% for section in yt.page.notifSections %}
-                {% for item in section.multiPageMenuNotificationSectionRenderer.items %}
-                    {{ notification(item) }}
+{#
+    Notifications AJAX.
+
+    Provides user notifications HTML via SPF.
+#}
+{
+    "body": {
+        "yt-masthead-notifications-content": {% apply json_encode|raw %}
+            {% import "common/uix/load_more_button.twig" as load_more %}
+            {% from "common/notifications.twig" import notification_item 
+                as notification 
+            %}
+            <ol id="item-section-{{ rehike.generateRid() }}" class="item-section">
+                {% for section in yt.page.notifSections %}
+                    {% for item in section.multiPageMenuNotificationSectionRenderer.items %}
+                        {{ notification(item) }}
+                    {% endfor %}
                 {% endfor %}
-            {% endfor %}
-        </ol>
-        {% set lastSection = yt.page.notifSections|last %}
-        {% set lastSection = lastSection.multiPageMenuNotificationSectionRenderer.items %}
-        {% set lastItem = lastSection|last %}
-        {% if lastItem.continuationItemRenderer %}
-            {% set this = lastItem.continuationItemRenderer %}
-            {{ load_more.render(this.continuationEndpoint.getNotificationMenuEndpoint.ctoken, "item-section-327280", false, "feed_ajax") }}
-        {% endif %}
-    </div>
-</body>
+            </ol>
+            {% set lastSection = yt.page.notifSections|last %}
+            {% set lastSection = lastSection.multiPageMenuNotificationSectionRenderer.items %}
+            {% set lastItem = lastSection|last %}
+            {% if lastItem.continuationItemRenderer %}
+                {% set this = lastItem.continuationItemRenderer %}
+                {{ load_more.render(
+                    this.continuationEndpoint.getNotificationMenuEndpoint.ctoken, 
+                    "item-section-327280", 
+                    false, 
+                    "feed_ajax"
+                ) }}
+            {% endif %}
+        {% endapply %}
+    },
+    "attr": {
+        "yt-masthead-notifications-content": {
+            "data-loaded": "true"
+        }
+    }
+}
