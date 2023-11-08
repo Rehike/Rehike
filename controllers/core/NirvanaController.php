@@ -31,22 +31,6 @@ abstract class NirvanaController extends HitchhikerController
     protected bool $delayLoadGuide = false;
 
     /** @inheritdoc */
-    protected array $spfIdListeners = [
-        '@body<class>',
-        'player-unavailable<class>',
-        'debug',
-        'early-body',
-        'appbar-content<class>',
-        'alerts',
-        'content',
-        '@page<class>',
-        'header',
-        'ticker-content',
-        'player-playlist<class>',
-        '@player<class>'
-    ];
-
-    /** @inheritdoc */
     protected function init(YtApp $yt, string &$template): void
     {
         $yt->spfEnabled = true;

@@ -76,23 +76,6 @@ abstract class HitchhikerController
     public bool $useTemplate = true;
 
     /**
-     * Defines the default element IDs that are listened to by
-     * YouTube's SPF library.
-     * 
-     * This defines what elements get changed with every soft navigation.
-     * 
-     * @var string[]
-     */
-    protected array $spfIdListeners = [
-        'player-unavailable<class>',
-        'alerts',
-        'content',
-        '@page<class>',
-        'player-playlist<class>',
-        '@player<class>'
-    ];
-
-    /**
      * What the Content-Type header should be in the response
      * 
      * @var string

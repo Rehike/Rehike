@@ -88,7 +88,6 @@ class channel extends NirvanaController
             if ($ucid == "" || is_null($ucid))
             {
                 http_response_code(404);
-                $this->spfIdListeners = [];
                 $this->template = "error/404";
                 
                 return;
