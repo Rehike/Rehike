@@ -23,4 +23,11 @@ class SpfConfig
      * Custom data to be included in the response.
      */
     public ?object $data = null;
+
+    /**
+     * Exports Rebug data for the templater.
+     * 
+     * This is pre-serialized as a Twig hack.
+     */
+    public ?string $rebugData = null;
 }

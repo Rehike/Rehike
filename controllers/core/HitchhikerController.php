@@ -334,25 +334,14 @@ abstract class HitchhikerController
                 $this->yt->spfConfig->data = $spfData;
             }
 
-            // Capture the render so that we may send it through SpfPhp.
+            // We pre-serialize Rebug data via SPF because it doesn't encode
+            // anything in the Twig context itself. This is probably due to
+            // recursion, but I don't care to look into it.
+            $this->yt->spfConfig->rebugData = json_encode(Debugger::exposeSpf());
+
             $capturedRender = TemplateManager::render();
 
-            // // Skip serialisation so that the output may be modified. (also 
-            // // suppress warnings; idk why (buggy library lol))
-            // $spf = @SpfPhp::parse($capturedRender, $this->spfIdListeners, [
-            //     "skipSerialization" => true
-            // ]);
-
-            // // Post-data generation callback for custom handling
-            // $this->handleSpfData($spf);
-
-            // if (is_object($spf))
-            //     $spf->rebug_data = Debugger::exposeSpf();
-
             header("Content-Type: application/json");
-
-            // echo json_encode($spf);
-
             echo $capturedRender;
         }
         else

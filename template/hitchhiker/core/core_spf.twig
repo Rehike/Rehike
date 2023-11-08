@@ -87,4 +87,8 @@
     {% if yt.spfConfig.data %}
     , "data": {{ yt.spfConfig.data|json_encode|raw }}
     {% endif %}
+
+    {% if yt.spfConfig.rebugData %}
+    , "rebug_data": {{ yt.spfConfig.rebugData|raw }}
+    {% endif %}
 }
