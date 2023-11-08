@@ -1,14 +1,21 @@
 {## 
-  # Fragments (version 2) / Comments
+  # Watch Fragments 2 / Comments
   #
-  # This new version relies on SPF.js for loading fragments. However,
-  # element wrappers do not have to be complete. This only renders partial
-  # HTML to update the page.
+  # Delivers comments HTML via SPF.
   #}
-<body>
-    <div id="masthead_search" data-is-crosswalk="0"></div>
-    <div id="watch-discussion">
-        {% from "/common/comments/comment_section_renderer.twig" import render as comment_section_renderer %}
-        {{ comment_section_renderer(yt.page.commentsRenderer)}}
-    </div>
-</body>
+{
+    "attr": {
+        "masthead-search": {
+            "data-is-crosswalk": "0"
+        }
+    },
+    
+    "body": {
+        "watch-discussion": {% apply json_encode|raw %}
+            {% from "/common/comments/comment_section_renderer.twig" 
+                import render as comment_section_renderer 
+            %}
+            {{ comment_section_renderer(yt.page.commentsRenderer)}}
+        {% endapply %}
+    }
+}

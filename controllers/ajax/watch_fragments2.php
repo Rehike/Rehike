@@ -67,10 +67,6 @@ class AjaxWatchFragments2Controller extends AjaxController
             "headerRenderer" => (object)[],
             "comments" => (object)[]
         ];
-        $this->spfIdListeners = [
-            '@masthead_search<data-is-crosswalk>',
-            'watch-discussion'
-        ];
 
         Network::innertubeRequest(
             action: "next", 
