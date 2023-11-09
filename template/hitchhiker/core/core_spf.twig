@@ -77,7 +77,7 @@
         {% include 'core/yt_global_js_config.twig' %}
     {%- endapply -%},
     "title": {% apply spaceless|json_encode|raw %}
-        {{ yt.title ?? "YouTube" }}
+        {{ yt.title|raw ?? "YouTube" }}
     {% endapply %}
     
     {% if yt.spfConfig.url %}
