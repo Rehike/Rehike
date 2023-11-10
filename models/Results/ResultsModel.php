@@ -95,7 +95,7 @@ class ResultsModel {
                     if (isset($dapidata[$cr->channelId]))
                     {
                         /* the monkeys put subscriber count in video count text */
-                        $cr->subscriberCountText = $cr->videoCountText;
+                        $cr->subscriberCountText = $cr->videoCountText ?? null;
                         $videos = (int)$dapidata[$cr->channelId]->videoCount ?? 0;
                         
                         $text = "";
