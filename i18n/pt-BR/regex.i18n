@@ -17,7 +17,7 @@ countZero: "Não"
 # abbreviated by YouTube, you can't just replace all numerical data, or you
 # would display wrong counts. Instead, you must replace all text that can occur
 # in the string except for the units.
-subscriberCountIsolator: "/( inscritos)|( inscrito)/"
+subscriberCountIsolator: "/( de)|( inscritos)|( inscrito)/"
 
 # Used for detecting if the date string in watch descriptions should be
 # modified. If none of these words are found in the string, then it is assumed
