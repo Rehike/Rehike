@@ -161,7 +161,7 @@ class channel extends NirvanaController
             // Compose InnerTube requests for later.
             if ($tab == "about")
             {
-                $channelRequest = self::requestAbout($request, $ucid, Base64Url::encode($params->serializeToString()));
+                $channelRequest = $this->requestAbout($request, $ucid, Base64Url::encode($params->serializeToString()));
             }
             else
             {
@@ -332,53 +332,56 @@ class channel extends NirvanaController
     }
 
     /**
-     * KILL YOURSELF KILL YOURSELF KILL YOURSELF KILL YOURSELF KILL YOURSELF KILL YOURSELF KILL YOURSELF KILL YOURSELF KILL YOURSELF
-     * GOD FUCK THIS FUCK YOU FUCK GOOGLE
+     * 2023/11/13: Channel about requests are pretty strange.
+     *
+     * Currently, we rely on a mobile-specific parameter for requesting the page
+     * content (otherwise we'd have to look into some UUID nonsense I guess), so
+     * we have a separate function to handle this.
+     *
+     * The channel header must be zippered together from another response, so we
+     * must request twice.
      */
-    private static function requestAbout(RequestMetadata $request, string $ucid, string $browseParam): Promise
+    private function requestAbout(RequestMetadata $request, string $ucid, string $browseParam): Promise
     {
-        return new Promise(function($resolveRequest) use ($request, $ucid, $browseParam) {
-            Network::innertubeRequest(
+        return async(function() use ($request, $ucid, $browseParam) {
+            $headerRequest = Network::innertubeRequest(
+                action: "browse",
+                body: [
+                    "browseId" => $ucid
+                ]
+            );
+
+            $aboutRequest = Network::innertubeRequest(
                 action: "browse",
                 body: [
                     "browseId" => $ucid,
-                    "params" => $browseParam,
-                    "query" => $request->params->query ?? null
+                    "params" => "8gYEEgIiAA"
                 ]
-            )->then(function($response) use ($resolveRequest) {
-                $resolveRequest($response);
-            })->catch(function($e) use ($ucid, $resolveRequest) {
-                // WHAT THE FUCK
-                $aboutRequestContinuation = new ContinuationWrapper();
-                $aboutRequestContinuationBrowseContinuation = new BrowseContinuationWrapper();
-                $aboutRequestContinuationBrowseContinuation->setBrowseId($ucid);
-                $aboutRequestContinuationBrowseContinuation->setEncodedAction("8gYrGimaASYKJDY1NjFhYWYzLTAwMDAtMmQ1Zi05Zjg2LWQ0ZjU0N2YyY2U5Yw%3D%3D");
-                $aboutRequestContinuation->setBrowseContinuation($aboutRequestContinuationBrowseContinuation);
+            );
 
-                $fuckYou = Network::innertubeRequest(
-                    action: "browse",
-                    body: [
-                        "browseId" => $ucid
-                    ]
-                );
-                $killYourself = Network::innertubeRequest(
-                    action: "browse",
-                    body: [
-                        "continuation" => Base64Url::encode($aboutRequestContinuation->serializeToString())
-                    ]
-                );
+            $responses = yield Promise::all([
+                "header" => $headerRequest,
+                "about"  => $aboutRequest
+            ]);
 
-                Promise::all($fuckYou, $killYourself)->then(function($responses) use ($resolveRequest) {
-                    $baseResponse = $responses[0]->getJson();
-                    $aboutResponse = $responses[1]->getJson();
+            $baseResponse = $responses["header"]->getJson();
+            $aboutResponse = $responses["about"]->getJson();
 
-                    $baseResponse->rehikeAboutTab = $aboutResponse?->onResponseReceivedEndpoints[0];
+            $this->yt->test = $aboutResponse;
 
-                    $resolveRequest(new \YukisCoffee\CoffeeRequest\Network\Response(
-                        $responses[0]->sourceRequest, 200, json_encode($baseResponse), (array)$responses[0]->headers)
-                    );
-                });
-            });
+            $baseResponse->rehikeAboutTab = @$aboutResponse
+                ->contents->twoColumnBrowseResultsRenderer->tabs[0]->tabRenderer
+                ->content->sectionListRenderer->contents[0]->itemSectionRenderer
+                ->contents[0]->channelAboutFullMetadataRenderer;
+
+            // Hack to generate a new, modified network response since we're
+            // expecting it earlier in the code.
+            return new \YukisCoffee\CoffeeRequest\Network\Response(
+                $responses["header"]->sourceRequest, 
+                200, 
+                json_encode($baseResponse),
+                (array)$responses["header"]->headers
+            );
         });
     }
 }

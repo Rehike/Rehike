@@ -310,8 +310,7 @@ class Channels4Model
                 "channelAboutMetadataRenderer" =>
                     new MChannelAboutMetadata(
                         self::$subscriptionCount,
-                        self::$responseData?->rehikeAboutTab->appendContinuationItemsAction->continuationItems[0]
-                            ->aboutChannelRenderer->metadata->aboutChannelViewModel
+                        self::$responseData?->rehikeAboutTab
                     )
             ];
         }
