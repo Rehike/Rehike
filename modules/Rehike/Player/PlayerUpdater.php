@@ -60,10 +60,23 @@ class PlayerUpdater
 
         $sts = self::extractSts($js);
 
+        if ("CURRENT" === Config::getConfigProp("experiments.olderplayers")){
+            $currentlyUsedJsUrl = $jsUrl;
+            $currentlyusedCssUrl = $cssUrl;
+        }
+        elseif ("SQUARE" === Config::getConfigProp("experiments.olderplayers")){
+            $currentlyUsedJsUrl = "/s/player/c57c113c/player_ias.vflset/en_US/base.js";
+            $currentlyusedCssUrl = "/s/player/c57c113c/www-player.css";
+        }
+        else {
+            $currentlyUsedJsUrl = "/yts/jsbin/player_ias-vfl1Ng2HU/de_DE/base.js";
+            $currentlyusedCssUrl = "/yts/cssbin/player-vflfo9Nwd/www-player-webp.css";
+        };
+
         // Pack these up and return:
         return (object)[
-            "baseJsUrl" => $jsUrl,
-            "baseCssUrl" => $cssUrl,
+            "baseJsUrl" => $currentlyUsedJsUrl,
+            "baseCssUrl" => $currentlyusedCssUrl,
             "embedJsUrl" => $embedJsUrl,
             "signatureTimestamp" => $sts
         ];
