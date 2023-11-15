@@ -38,7 +38,9 @@ class ConfigDefinitions
             ],
             "experiments" => [
                 "useSignInV2" => new BoolProp(false),
-                "disableSignInOnHome" => new BoolProp(false)
+                "disableSignInOnHome" => new BoolProp(false),
+                "olderPlayers" => new EnumProp(CURRENT),
+                "encryptedStreams" => new BoolProp(true)
             ],
             "advanced" => [
                 "enableDebugger" => new BoolProp(false)
