@@ -60,11 +60,11 @@ class PlayerUpdater
 
         $sts = self::extractSts($js);
 
-        if ("CURRENT" === Config::getConfigProp("experiments.olderplayers")){
+        if ("CURRENT" === Config::getConfigProp("experiments.olderpPlayers")){
             $currentlyUsedJsUrl = $jsUrl;
             $currentlyusedCssUrl = $cssUrl;
         }
-        elseif ("SQUARE" === Config::getConfigProp("experiments.olderplayers")){
+        elseif ("SQUARE" === Config::getConfigProp("experiments.olderPlayers")){
             $currentlyUsedJsUrl = "/s/player/c57c113c/player_ias.vflset/en_US/base.js";
             $currentlyusedCssUrl = "/s/player/c57c113c/www-player.css";
         }
