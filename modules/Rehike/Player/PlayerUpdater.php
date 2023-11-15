@@ -60,7 +60,7 @@ class PlayerUpdater
 
         $sts = self::extractSts($js);
 
-        if ("CURRENT" === Config::getConfigProp("experiments.olderpPlayers")){
+        if ("CURRENT" === Config::getConfigProp("experiments.olderPlayers")){
             $currentlyUsedJsUrl = $jsUrl;
             $currentlyusedCssUrl = $cssUrl;
         }
