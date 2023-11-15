@@ -242,13 +242,9 @@ return new class extends NirvanaController {
         ])->then(function ($responses) use ($yt) {
             $nextResponse = $responses["next"]->getJson();
             $playerResponse = $responses["player"]->getJson();
-            try{                
+            if (false === Config::getConfigProp("experiments.encryptedStreams")){
                 $storyboardResponse = $responses["storyboard"]->getJson();
                 $playerResponse->storyboards = $storyboardResponse->storyboards;
-            }
-            catch (GeneralException $e)
-            {
-                $storyboardResponse = (object) [];
             }
             try
             {

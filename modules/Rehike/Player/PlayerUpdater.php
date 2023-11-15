@@ -1,6 +1,8 @@
 <?php
 namespace Rehike\Player;
 
+use Rehike\ConfigManager\Config;
+
 use Rehike\Player\Exception\UpdaterException;
 
 /**
