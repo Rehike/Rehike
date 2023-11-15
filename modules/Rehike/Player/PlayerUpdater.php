@@ -69,7 +69,7 @@ class PlayerUpdater
             $currentlyusedCssUrl = "/s/player/c57c113c/www-player.css";
         }
         else {
-            $currentlyUsedJsUrl = "/yts/jsbin/player_ias-vfl1Ng2HU/de_DE/base.js";
+            $currentlyUsedJsUrl = "/yts/jsbin/player_ias-vfl1Ng2HU/en_US/base.js";
             $currentlyusedCssUrl = "/yts/cssbin/player-vflfo9Nwd/www-player-webp.css";
         };
 
