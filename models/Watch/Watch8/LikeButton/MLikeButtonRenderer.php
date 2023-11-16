@@ -54,11 +54,11 @@ class MLikeButtonRenderer
             $this->sparkbars = new MSparkbars($likeCountInt, $dislikeCountInt);
         }
 
-        $likeCountOff = @$likeCountInt;
-        $likeCountOn = @$likeCountInt + 1;
+        $likeCountOff = isset($likeCountInt) ? $likeCountInt : null;
+        $likeCountOn = isset($likeCountInt) ? $likeCountInt + 1 : null;
 
-        $dislikeCountOff = @$dislikeCountInt;
-        $dislikeCountOn = @$dislikeCountInt + 1;
+        $dislikeCountOff = isset($dislikeCountInt) ? $dislikeCountInt : null;
+        $dislikeCountOn = isset($dislikeCountInt) ? $dislikeCountInt + 1 : null;
 
         $this->likeButton = new MLikeButton($likeCountOff, $likeA11y, !$isLiked, $videoId);
         $this->activeLikeButton = new MLikeButton($likeCountOn, $likeA11y, $isLiked, $videoId, true);

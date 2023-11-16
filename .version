@@ -1,10 +1,10 @@
 {
-	"previousHash": "1b2fb6e508da318732a40a4e1a74b1249770b0ce",
-	"currentRevisionId": 1188,
-	"subject": "Fix playlist page thumbnail",
-	"body": "Fix playlist page thumbnail",
+	"previousHash": "0857783de488f5b251aa3d03b416bb5b3bdc899a",
+	"currentRevisionId": 1213,
+	"subject": "Fix videos with vote counts hidden incorrectly showing 1",
+	"body": "Fix videos with vote counts hidden incorrectly showing 1",
 	"branch": "master",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1699402428
+	"time": 1700105042
 }
