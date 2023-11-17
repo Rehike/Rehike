@@ -1,10 +1,10 @@
 {
-	"previousHash": "0857783de488f5b251aa3d03b416bb5b3bdc899a",
-	"currentRevisionId": 1213,
-	"subject": "Fix videos with vote counts hidden incorrectly showing 1",
-	"body": "Fix videos with vote counts hidden incorrectly showing 1",
+	"previousHash": "7d75ec4e27d50f7feb2382116e1bdd14e84886b8",
+	"currentRevisionId": 1214,
+	"subject": "Fix channel views in about",
+	"body": "Fix channel views in about",
 	"branch": "master",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1700105042
+	"time": 1700191234
 }

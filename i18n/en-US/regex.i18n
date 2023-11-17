@@ -1,7 +1,10 @@
 # Displays substrings used to isolate simple counts. These ones can usually
 # just replace all non-numerical characters, since they're full counts.
 likeCountIsolator: "/[^0-9]/"
-viewCountIsolator: "/[^0-9]/"
+
+# This needs to be explicit.
+# See MChannelAboutMetadata::getRichStat.
+viewCountIsolator: "/( views)|( view)|( watching now)/"
 
 # The like button accessibility string when likes are disabled on a video.
 # This is used to isolate this case and replace the string with 0.

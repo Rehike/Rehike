@@ -119,12 +119,15 @@ class MChannelAboutMetadata
         return $out;
     }
 
-    public static function getRichStat($text, $isolator)
+    /**
+     * fuck whoever wrote this
+     */
+    public static function getRichStat(string $text, string $isolator): ?object
     {
-        if ("" == $text) return;
+        if ("" == $text) return null;
 
         $number = preg_replace(
-            str_replace("/g", "/", $isolator), "", $text
+            $isolator, "", $text
         );
         $string = str_replace($number, "<b>$number<b>", $text);
         $string = explode("<b>", $string);
