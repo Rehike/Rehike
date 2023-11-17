@@ -1,10 +1,10 @@
 {
-	"previousHash": "7d75ec4e27d50f7feb2382116e1bdd14e84886b8",
-	"currentRevisionId": 1214,
-	"subject": "Fix channel views in about",
-	"body": "Fix channel views in about",
+	"previousHash": "8ba1359613ec90de74ce9b0085db20eed2662087",
+	"currentRevisionId": 1215,
+	"subject": "Revert "Fix channel views in about"",
+	"body": "Revert "Fix channel views in about"",
 	"branch": "master",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1700191234
+	"time": 1700191368
 }
