@@ -59,11 +59,19 @@ class MFooter {
             $i18n->get("primaryDevs"),
             "/yt/dev/"
         );
+
         if (Config::getConfigProp("appearance.showVersionInFooter"))
-        $this->primaryLinks[] = new MFooterLink(
-            $i18n->format("primaryVersion", $rehikeVersion->semanticVersion, $rehikeVersion->branch),
-            "/rehike/version"
-        );
+        {
+            $this->primaryLinks[] = new MFooterLink(
+                $i18n->format(
+                    "primaryVersion",
+                    $rehikeVersion->semanticVersion ?? "",
+                    $rehikeVersion->branch ?? ""
+                ),
+                "/rehike/version"
+            );
+        }
+        
         $this->secondaryLinks[] = new MFooterLink(
             $i18n->get("secondaryTerms"),
             "/t/terms"
