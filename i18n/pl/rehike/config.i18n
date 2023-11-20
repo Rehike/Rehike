@@ -68,6 +68,11 @@ props:
       subtitle: >
         Pokaż stare czerwone ikony kanałów tematycznych, a nie czarne używane
         obecnie.
+    smallPlayer:
+      title: "Użyj niestandardowego stylu mniejszego odtwarzacza."
+      subtitle: >
+        Używa kompaktowego stylu przycisków odtwarzacza, takiego jak w 2019, który może być bardziej
+        wygodniejszy w przypadku mniejszych okien.
   
   experiments:
     useSignInV2:
