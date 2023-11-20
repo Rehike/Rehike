@@ -1,11 +1,11 @@
-title: "Rehike конфигурация"
+title: "Настройки Rehike"
 saveChanges: "Сохранить изменения"
 saveChangesSuccess: "Изменения сохранены!"
 saveChangesFailure: "Не удалось сохранить изменения!"
 
 tabs:
   appearance: "Внешний вид"
-  experiments: "Experiments"
+  experiments: "Экспериментальное"
   advanced: "Расширенные опции"
 
 props:
@@ -26,25 +26,25 @@ props:
       subtitle: >
         Включения поломает некоторые кастомные стили.
     swapSearchViewsAndDate:
-      title: "Swap view and date on search page"
+      title: "Поменять местами просмотры и даты на странице поиска"
       subtitle: >
-        Show the view count before the date on search page video renderers.
+       Показывать количество просмотров до даты на видео на странице поиска.
     showVersionInFooter:
       title: "Показывать версию Rehike Внизу"
       subtitle: >
-        Показываетссылку на страницу о Rehike в конце страницы
+        Показывает ссылку на страницу о Rehike в конце страницы
     useRyd:
       title: "Показывать дизлайки на видео"
       subtitle: >
         Статистика из Return YouTube Dislike API.
     usernamePrepends:
-      title: "Показывать \"by\" перед именем автора в ссылках на видео"
+      title: "Показывать \"от\" перед именем автора в ссылках на видео"
       subtitle: >
         Использовался до 2016.
     noViewsText:
-      title: "Убрать \"просмотры\" текст из счетчика просмотров на странице просмотра"
+      title: "Убрать текст \"просмотров\" на счетчике просмотров на странице просмотра"
       subtitle: >
-        Использовался до 2016, отображался только сам счет, без какой-либо метки.
+        Использовался до 2016, отображались только цифры, без какой-либо метки.
     movingThumbnails:
       title: "Показывать анимированный превью при наведении курсора на видео"
       subtitle: >
@@ -59,29 +59,34 @@ props:
       subtitle: >
         В отличие от Polymer, Hitchhiker не показывал их по умолчанию.
     watchSidebarVerification:
-      title: "Старые красные иконы в \"Best of YouTube\" разделе"
+      title: "Показывать значки верификации в рекомендациях на странице просмотра"
       subtitle: >
-        Покажите старые красные значки тематических каналов, а не черные,
-        которые используются сегодня.
+        В отличие от Polymer, Hitchhiker не показывает их по умолчанию.
     oldBestOfYouTubeIcons:
-      title: "Old red icons in \"Best of YouTube\" guide section"
+      title: "Старые красные иконки в разделе \"Лучшее на YouTube\""
       subtitle: >
-        Show the old red topic channel icons, rather than the black ones used 
-        today.
+        Отображать старые красные иконки тематических каналов, а не черные,
+        которые используются сегодня.
+    smallPlayer:
+      title: "Использовать уменьшенный стиль плеера."
+      subtitle: >
+        Используется компактный стиль кнопок плеера, подобный 2019, который может быть более
+        удобен при работе с небольшими окнами.
   
   experiments:
     useSignInV2:
-      title: "Use sign in V2"
+      title: "Использование входа V2"
       subtitle: >
-        Use the experimental new rewrite of the sign in rewrite. This option
-        should be available for the duration of V2's development, after which
-        it will become the default and the legacy one will be removed.
+        Использовать экспериментальную новую перезапись входа. Эта опция
+        должна быть доступна в течение всего периода разработки V2, после чего
+        она станет использоваться по умолчанию, а устаревшая будет удалена.
     disableSignInOnHome:
-      title: "Disable authenticated home requests"
+      title: "Отключить аутентифицированные запросы на главную"
       subtitle: >
-        Makes the home page signed out. This is a workaround for YouTube 
-        blocking homepage access if you have watch history disabled 
-        (2023/08/18).
+        Делает главную страницу разлогиненой. Это обходной путь для YouTube 
+        блокирующего доступ к домашней странице, если отключена история просмотров 
+        (2023/08/18). ps: поправьте если перевел не правильно)
+	
   
   advanced:
     enableDebugger:
