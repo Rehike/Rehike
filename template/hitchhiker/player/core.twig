@@ -104,3 +104,8 @@ ytplayer.load = function() {
       document.body.appendChild(a);
    }
 </script>
+{% if rehike.config.appearance.smallPlayer %}
+   <style id="rehike-ext-config-small-player">
+      {% include "player/small_style.css.twig" %}
+   </style>
+{% endif %}

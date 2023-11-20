@@ -68,6 +68,11 @@ props:
       subtitle: >
         Show the old red topic channel icons, rather than the black ones used 
         today.
+    smallPlayer:
+      title: "Use custom smaller player style."
+      subtitle: >
+        Uses a compact player button style like 2019 that may be more
+        comfortable with smaller windows.
   
   experiments:
     useSignInV2:

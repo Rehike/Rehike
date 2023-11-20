@@ -1,10 +1,10 @@
 {
-	"previousHash": "8ba1359613ec90de74ce9b0085db20eed2662087",
-	"currentRevisionId": 1215,
-	"subject": "Revert "Fix channel views in about"",
-	"body": "Revert "Fix channel views in about"",
+	"previousHash": "9ebaa50a9ce1c80dacd9c5bb6a99e8bfa30e8fb9",
+	"currentRevisionId": 1217,
+	"subject": "Add built-in small player CSS for UX benefits",
+	"body": "Add built-in small player CSS for UX benefits",
 	"branch": "master",
-	"committerName": "aubymori",
-	"committerEmail": "aubyomori@gmail.com",
-	"time": 1700191368
+	"committerName": "Taniko Yamamoto",
+	"committerEmail": "kirasicecreamm@gmail.com",
+	"time": 1700471677
 }
