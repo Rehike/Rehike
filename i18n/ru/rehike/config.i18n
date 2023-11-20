@@ -5,7 +5,7 @@ saveChangesFailure: "Не удалось сохранить изменения!"
 
 tabs:
   appearance: "Внешний вид"
-  experiments: "Экспериментальные"
+  experiments: "Экспериментальное"
   advanced: "Расширенные опции"
 
 props:
