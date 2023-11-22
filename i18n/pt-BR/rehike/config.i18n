@@ -72,7 +72,7 @@ props:
     smallPlayer:
       title: "Usar um estilo personalizado de player menor"
       subtitle: >
-        Usa um estilo pro player customizado como o de 2019 que pode
+        Usa um estilo pro player ficar parecido com o de 2019, que pode
         ser mais confortável pra janelas menores.
   
   experiments:
