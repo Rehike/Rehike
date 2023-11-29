@@ -205,10 +205,13 @@ return new class extends NirvanaController {
                 $rydResponse = (object) [];
             }
 
-            // This may not be needed any longer, but manually removing ads
-            // has been historically required as adblockers no longer have
-            // the Hitchhiker-era rules.
-            $this->removeAds($playerResponse);
+            if (Config::getConfigProp("appearance.enableAdblock"))
+            {
+                // This may not be needed any longer, but manually removing ads
+                // has been historically required as adblockers no longer have
+                // the Hitchhiker-era rules.
+                $this->removeAds($playerResponse);
+            }
 
              // Push these over to the global object.
              $yt->playerResponse = $playerResponse;

@@ -35,7 +35,8 @@ class ConfigDefinitions
                 "watchSidebarDates" => new BoolProp(false),
                 "watchSidebarVerification" => new BoolProp(false),
                 "oldBestOfYouTubeIcons" => new BoolProp(false),
-                "smallPlayer" => new BoolProp(true)
+                "smallPlayer" => new BoolProp(true),
+                "enableAdblock" => new BoolProp(true)
             ],
             "experiments" => [
                 "useSignInV2" => new BoolProp(false),
