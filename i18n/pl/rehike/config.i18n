@@ -73,6 +73,10 @@ props:
       subtitle: >
         Używa kompaktowego stylu przycisków odtwarzacza, takiego jak w 2019, który może być bardziej
         wygodniejszy w przypadku mniejszych okien.
+    enableAdblock:
+      title: "Włącz wbudowaną blokadę reklam"
+      subtitle: >
+        Zapewnia stabilne blokowanie reklam w odtwarzaczu wideo.
   
   experiments:
     useSignInV2:
