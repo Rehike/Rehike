@@ -100,23 +100,21 @@ class Router
     {
         foreach ($defs as $index => $value)
         {
-            // This behaviour will be expanded on later, if ever
-            // multiple domain support is added.
-            // Currently the simplefunnel script comes from a very
-            // outdated project and should probably be rewrote as it
-            // stands.
-            /** @var string $name */
-            $name;
-            if (is_int($index))
+            $pattern = $value;
+
+            if ("~" == $pattern[0])
             {
-                $name = $value;
-            }
-            else
-            {
-                $name = $value;
+                if (GlobToRegexp::doMatch(
+                    substr($pattern, 1),
+                    explode("?", $_SERVER["REQUEST_URI"])[0])
+                )
+                {
+                    // The following URL should not be matched at all, so return.
+                    return;
+                }
             }
 
-            if (GlobToRegexp::doMatch($name, explode("?", $_SERVER["REQUEST_URI"])[0]))
+            if (GlobToRegexp::doMatch($pattern, explode("?", $_SERVER["REQUEST_URI"])[0]))
             {
                 SimpleFunnel::funnelCurrentPage()->then(fn($r) => $r->output());
             }

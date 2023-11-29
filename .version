@@ -1,10 +1,10 @@
 {
-	"previousHash": "c67133c636e0496acda56e1ae8e5fc6b340d8bc1",
-	"currentRevisionId": 1219,
-	"subject": "Promise API documentation",
-	"body": "Promise API documentation",
+	"previousHash": "d76cd5d9625fb9e572bacbbb35a37ce4d298efac",
+	"currentRevisionId": 1233,
+	"subject": "Enable template caching",
+	"body": "Enable template caching",
 	"branch": "master",
 	"committerName": "Taniko Yamamoto",
 	"committerEmail": "kirasicecreamm@gmail.com",
-	"time": 1700477261
+	"time": 1701255422
 }

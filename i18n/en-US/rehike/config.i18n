@@ -73,6 +73,10 @@ props:
       subtitle: >
         Uses a compact player button style like 2019 that may be more
         comfortable with smaller windows.
+    enableAdblock:
+      title: "Enable built-in adblock"
+      subtitle: >
+        Provides a stable adblocker for ads in the video player.
   
   experiments:
     useSignInV2:

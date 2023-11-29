@@ -10,7 +10,7 @@
 {% if renderer.continuationItemRenderer %}
 {% set continuation = renderer.continuationItemRenderer.continuationEndpoint.continuationCommand.token %}
 <div id="watch-more-related" class="hid">
-    <li id="watch-more-related-loading">{{ yt.msgs.loadingMoreSuggestions }}</li>
+    <li id="watch-more-related-loading">{{ rehike.i18n.get("watch", "loadingMoreSuggestions") }}</li>
 </div>
 <button id="watch-more-related-button" class="yt-uix-button yt-uix-button-size-default yt-uix-button-expander" onclick=";return false;" data-continuation="{{ continuation }}" data-button-action="yt.www.watch.related.loadMore">
     <span class="yt-uix-button-content">{{ yt.msgs.showMore }}</span>

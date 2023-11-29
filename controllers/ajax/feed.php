@@ -66,12 +66,13 @@ return new class extends AjaxController
             )->then(function ($response) use ($yt) {
                 $ytdata = $response->getJson();
 
-                $yt->page->notifList = $ytdata->actions[0] ->appendContinuationItemsAction->continuationItems ?? null;
-                $yt->page->nextContinuation = (end($yt->notifList) 
-                    ->continuationItemRenderer 
-                    ->continuationEndpoint 
-                    ->getNotificationMenuEndpoint 
-                    ->ctoken) ?? null;
+                $yt->page->notifList = $ytdata->actions[0] ->appendContinuationItemsAction->continuationItems ?? [];
+                $yt->page->nextContinuation = (end($yt->page->notifList) 
+                        ->continuationItemRenderer 
+                        ->continuationEndpoint 
+                        ->getNotificationMenuEndpoint 
+                        ->ctoken
+                    ) ?? null;
             });
         }
         else
