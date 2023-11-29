@@ -1,10 +1,10 @@
 {
-	"previousHash": "0dbc1e9dd858ec1fbc9716f48f9c6a0863260acc",
-	"currentRevisionId": 1231,
-	"subject": "Adblocker improvements",
-	"body": "Adblocker improvements",
+	"previousHash": "d76cd5d9625fb9e572bacbbb35a37ce4d298efac",
+	"currentRevisionId": 1233,
+	"subject": "Enable template caching",
+	"body": "Enable template caching",
 	"branch": "master",
 	"committerName": "Taniko Yamamoto",
 	"committerEmail": "kirasicecreamm@gmail.com",
-	"time": 1701249341
+	"time": 1701255422
 }

@@ -49,7 +49,8 @@ class ConfigDefinitions
                 "language" => new StringProp("en-US"),
                 "securityIgnoreWindowsServerRunningAsSystem" =>
                     new BoolProp(false),
-                "disableRehike" => new BoolProp(false)
+                "disableRehike" => new BoolProp(false),
+                "enableProfiler" => new BoolProp(false)
             ]
         ];
     }

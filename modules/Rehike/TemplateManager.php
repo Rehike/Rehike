@@ -34,7 +34,11 @@ class TemplateManager
         self::$twig = new \Twig\Environment(
             new \Twig\Loader\FilesystemLoader(
                 $_SERVER["DOCUMENT_ROOT"] . "/" . $viewsDir
-            )
+            ),
+            [
+                "cache" => $_SERVER["DOCUMENT_ROOT"] . "/cache/templates",
+                "auto_reload" => true
+            ]
         );
 
         ControllerV2::registerTemplateVariable(self::$template);
