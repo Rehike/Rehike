@@ -88,6 +88,9 @@ class Network
         bool $useAuthentication = true
     ): Promise/*<Response>*/
     {
+        $profilerRid = rand(10000, 99999);
+        \Rehike\Profiler::start("innertube-$action-$profilerRid");
+
         $host = self::INNERTUBE_API_HOST;
         $key  = self::INNERTUBE_API_KEY;
 
@@ -114,7 +117,8 @@ class Network
                  $host,
                  $key,
                  $ignoreErrors,
-                 $requestHeaders)
+                 $requestHeaders,
+                 $profilerRid)
         {
             CoffeeRequest::request(
                 "{$host}/youtubei/v1/{$action}?key={$key}",
@@ -125,7 +129,7 @@ class Network
                     "onError" => "ignore",
                     "dnsOverride" => self::DNS_OVERRIDE_HOST
                 ]
-            )->then(function ($response) use ($resolve, $reject, $ignoreErrors) {
+            )->then(function ($response) use ($resolve, $reject, $ignoreErrors, $profilerRid, $action) {
                 if ( (200 == $response->status) || (true == $ignoreErrors) )
                 {
                     $resolve($response);
@@ -136,6 +140,7 @@ class Network
                         $response
                     ));
                 }
+                \Rehike\Profiler::end("innertube-$action-$profilerRid");
             });
         });
     }

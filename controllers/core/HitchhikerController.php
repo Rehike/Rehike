@@ -307,6 +307,8 @@ abstract class HitchhikerController
      */
     public function doGeneralRender(): void
     {
+        \Rehike\Profiler::start("template");
+
         if (Spf::isSpfRequested() && $this->yt->spfEnabled)
         {
             // Report SPF status to the templater
@@ -340,6 +342,8 @@ abstract class HitchhikerController
             // In the case this is not an SPF request, we don't have to do anything.
             echo $capturedRender;
         }
+        
+        \Rehike\Profiler::end("template");
     }
 
     /**

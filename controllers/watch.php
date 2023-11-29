@@ -142,6 +142,7 @@ return new class extends NirvanaController {
             }
         }
 
+        \Rehike\Profiler::start("watch_requests");
         // Makes the main watch request.
         $nextRequest = Network::innertubeRequest(
             "next",
@@ -193,6 +194,7 @@ return new class extends NirvanaController {
             "player" => $playerRequest,
             "ryd"    => $rydRequest
         ])->then(function ($responses) use ($yt) {
+            \Rehike\Profiler::end("watch_requests");
             $nextResponse = $responses["next"]->getJson();
             $playerResponse = $responses["player"]->getJson();
 
@@ -217,6 +219,8 @@ return new class extends NirvanaController {
              $yt->playerResponse = $playerResponse;
              $yt->watchNextResponse = $nextResponse;
 
+            \Rehike\Profiler::start("modelbake");
+
             WatchModel::bake(
                 yt:      $yt,
                 data:    $nextResponse,
@@ -230,6 +234,8 @@ return new class extends NirvanaController {
                     $this->setTitle($yt->page->title);
                 }
             });
+            
+            \Rehike\Profiler::end("modelbake");
         });
     }
 
