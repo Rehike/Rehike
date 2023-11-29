@@ -37,7 +37,7 @@
         if (Object.getOwnPropertyDescriptor(window.yt, "config_") != undefined )
         {
             // ublock, tell user to disable.
-            if (g_isLoaded && Date.now() - g_startTime > 5000)
+            if (g_isLoaded && Date.now() - g_startTime < 5000)
             {
                 createError();
             }
