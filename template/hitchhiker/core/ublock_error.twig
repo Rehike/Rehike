@@ -21,6 +21,7 @@
 #}
 <script>
     var g_isLoaded = false;
+    var g_startTime = Date.now();
 
     window.addEventListener("load", function a(e) {
         g_isLoaded = true;
@@ -36,7 +37,7 @@
         if (Object.getOwnPropertyDescriptor(window.yt, "config_") != undefined )
         {
             // ublock, tell user to disable.
-            if (g_isLoaded)
+            if (g_isLoaded && Date.now() - g_startTime > 5000)
             {
                 createError();
             }
