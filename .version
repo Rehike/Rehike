@@ -1,10 +1,10 @@
 {
-	"previousHash": "d76cd5d9625fb9e572bacbbb35a37ce4d298efac",
-	"currentRevisionId": 1233,
-	"subject": "Enable template caching",
-	"body": "Enable template caching",
+	"previousHash": "78024f427c737aadfe3bdedef158cc3a53cc64a2",
+	"currentRevisionId": 1234,
+	"subject": "Fix compact debugger SPF navigation",
+	"body": "Fix compact debugger SPF navigation",
 	"branch": "master",
 	"committerName": "Taniko Yamamoto",
 	"committerEmail": "kirasicecreamm@gmail.com",
-	"time": 1701255422
+	"time": 1701264175
 }
