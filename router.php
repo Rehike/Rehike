@@ -5,7 +5,8 @@ use Rehike\ControllerV2\Router;
 // directly.
 Router::funnel([
     "/api/*",
-    "/youtubei/*",
+    "~/youtubei/v1/player*", // exclude player
+    "/youtubei/*", // all youtubei/ except player, which is proxied elsewhere
     "/s/*",
     "/embed/*",
     "/yts/*",
@@ -102,6 +103,7 @@ Router::get([
 ]);
 
 Router::post([
+    "/youtubei/v1/player" => "special/innertube_player_proxy",
     "/feed_ajax" => "ajax/feed",
     "/browse_ajax" => "ajax/browse",
     "/watch_fragments2_ajax" => "ajax/watch_fragments2",

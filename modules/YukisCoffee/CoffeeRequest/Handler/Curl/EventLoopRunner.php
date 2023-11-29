@@ -21,8 +21,9 @@ use function curl_getinfo;
 use function curl_close;
 use const CURLM_OK;
 use const CURLINFO_HTTP_CODE;
+use CurlMultiHandle;
 
-if (false/*PHP_VERSION_ID >= 81000*/)
+if (PHP_VERSION_ID >= 81000)
 {
 
 //=====================================================================
@@ -40,7 +41,85 @@ trait EventLoopRunner // implements Event::onRun()
     #[Override]
     public function onRun(): Generator/*<void>*/
     {
-        yield;
+        // Defined in CurlHandler
+        $requests = &$this->requests;
+
+        $normalItems = [];
+        $fiberItems = [];
+
+        $halfOfList = floor(count($this->requests) / 2);
+
+        if (count($requests) == 0)
+        {
+            $this->fulfil();
+            return;
+        }
+
+        $mhFiber = curl_multi_init();
+        $mhNormal = curl_multi_init();
+
+        // Register all queued requests in the handle array
+        foreach ($requests as $index => $request)
+        {
+            $index > $halfOfList
+                ? curl_multi_add_handle($mhFiber, $request->handle)
+                : curl_multi_add_handle($mhNormal, $request->handle);
+        }
+
+        // Initialize fiber:
+        $fiber = new Fiber(function(CurlMultiHandle $mh) {
+            $active = null;
+
+            do
+            {
+                curl_multi_exec($mh, $active);
+                Fiber::suspend();
+            }
+            while ($active);
+        });
+        $fiber->start();
+
+        do
+        {
+            $status = curl_multi_exec($mhNormal, $active);
+
+            if ($active)
+            {
+                usleep(1);
+                yield;
+            }
+        }
+        while ($active && CURLM_OK == $status);
+
+        // Close fiber:
+        do
+        {
+            $fiber->resume();
+        }
+        while (!$fiber->isTerminated());
+
+        // Report each of the responses.
+        foreach ($requests as $index => $request)
+        {
+            $response = $this->makeResponse(
+                curl_getinfo($request->handle, CURLINFO_HTTP_CODE),
+                curl_multi_getcontent($request->handle),
+                $request
+            );
+
+            $this->sendResponse($request->instance, $response);
+
+            $index > $halfOfList
+                ? curl_multi_remove_handle($mhFiber, $request->handle)
+                : curl_multi_remove_handle($mhNormal, $request->handle);
+
+            curl_close($request->handle);
+        }
+
+        curl_multi_close($mhNormal);
+        curl_multi_close($mhFiber);
+
+        $this->fulfill();
     }
 
 } // EventLoopRunner

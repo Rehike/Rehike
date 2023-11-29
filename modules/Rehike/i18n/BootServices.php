@@ -18,6 +18,7 @@ class BootServices
      */
     public static function boot()
     {
+        \Rehike\Profiler::start("i18nboot");
         $langId = Config::getConfigProp("hidden.language");
 
         i18n::getConfigApi()
@@ -38,5 +39,6 @@ class BootServices
 
         YtApp::getInstance()->gl = I18nCore::getInnertubeGeolocation();
         YtApp::getInstance()->hl = I18nCore::getInnertubeLanguageId();
+        \Rehike\Profiler::end("i18nboot");
     }
 }

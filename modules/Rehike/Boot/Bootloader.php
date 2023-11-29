@@ -5,6 +5,7 @@ use Rehike\{
     Debugger\Debugger,
     DisableRehike\DisableRehike
 };
+use Rehike\ConfigManager\Config;
 
 /**
  * Main bootstrapper insertion point for Rehike.
@@ -19,7 +20,9 @@ final class Bootloader
      */
     public static function startSession(): void
     {
+        \Rehike\Profiler::start("rhboot");
         self::boot();
+        \Rehike\Profiler::end("rhboot");
         self::postboot();
         self::shutdown();
     }
@@ -63,6 +66,16 @@ final class Bootloader
     private static function shutdown(): void
     {
         Debugger::shutdown();
+        
+        if (Config::getConfigProp("hidden.enableProfiler"))
+        {
+            header(
+                "X-Rehike-Profiler-Result: " . 
+                json_encode(\Rehike\Profiler::getTimings())
+            );
+        }
+
+        ob_end_flush();
     }
 
     /**

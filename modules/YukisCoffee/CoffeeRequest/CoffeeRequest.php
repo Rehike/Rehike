@@ -5,6 +5,7 @@ use YukisCoffee\CoffeeRequest\Network\Request;
 use YukisCoffee\CoffeeRequest\Network\Response;
 use YukisCoffee\CoffeeRequest\Handler\NetworkHandler;
 use YukisCoffee\CoffeeRequest\Handler\NetworkHandlerFactory;
+use YukisCoffee\CoffeeRequest\Hooks\Hooks;
 use YukisCoffee\CoffeeRequest\Exception\GeneralException;
 
 /**
@@ -14,11 +15,8 @@ use YukisCoffee\CoffeeRequest\Exception\GeneralException;
  * as the main API mirrors fetch and internal APIs mirror JavaScript's
  * Events system and Promises API.
  * 
- * **Currently not for production release!**
- * Use only in Rehike 0.7 "asynchike" development releases.
- * 
  * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
- * @version 3.0 BETA
+ * @version 3.0.1
  */
 final class CoffeeRequest
 {
@@ -28,7 +26,7 @@ final class CoffeeRequest
      * @see getVersion()
      * @var string
      */
-    private const VERSION = "3.0";
+    private const VERSION = "3.1";
 
     /** 
      * Stores references to all currently running requests.

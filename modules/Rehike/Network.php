@@ -88,6 +88,9 @@ class Network
         bool $useAuthentication = true
     ): Promise/*<Response>*/
     {
+        $profilerRid = rand(10000, 99999);
+        \Rehike\Profiler::start("innertube-$action-$profilerRid");
+
         $host = self::INNERTUBE_API_HOST;
         $key  = self::INNERTUBE_API_KEY;
 
@@ -114,7 +117,8 @@ class Network
                  $host,
                  $key,
                  $ignoreErrors,
-                 $requestHeaders)
+                 $requestHeaders,
+                 $profilerRid)
         {
             CoffeeRequest::request(
                 "{$host}/youtubei/v1/{$action}?key={$key}",
@@ -125,7 +129,7 @@ class Network
                     "onError" => "ignore",
                     "dnsOverride" => self::DNS_OVERRIDE_HOST
                 ]
-            )->then(function ($response) use ($resolve, $reject, $ignoreErrors) {
+            )->then(function ($response) use ($resolve, $reject, $ignoreErrors, $profilerRid, $action) {
                 if ( (200 == $response->status) || (true == $ignoreErrors) )
                 {
                     $resolve($response);
@@ -136,7 +140,68 @@ class Network
                         $response
                     ));
                 }
+                \Rehike\Profiler::end("innertube-$action-$profilerRid");
             });
+        });
+    }
+
+    /**
+     * Make a fake InnerTube request. This is used for developer testing purposes.
+     * 
+     * This will return data from a local JSON file as if it's a true InnerTube request. This
+     * allows Rehike developers to test InnerTube dumps for debugging purposes.
+     * 
+     * The signature is kept about the same as innertubeRequest, so that it's easy to swap things
+     * out during development purposes.
+     * 
+     * In addition, if $localFilePath is "error", then an InnerTube error will be forced. This
+     * may be used to test error handling.
+     * 
+     * @return Promise<Response>
+     */
+    public static function innertubeRequestFake(
+        string $localFilePath,
+        string $action, 
+        array $body = [],
+        string $clientName = "WEB", 
+        string $clientVersion = "2.20230331.00.00",
+        bool $ignoreErrors = false,
+        bool $useAuthentication = true
+    ): Promise/*<Response>*/
+    {
+        return new Promise(function ($resolve, $reject)
+            use ($action, 
+                 $body, 
+                 $clientName, 
+                 $clientVersion,
+                 $ignoreErrors,
+                 $localFilePath)
+        {
+            $fakeRequestInstance = new class extends Request {
+                final public function __construct() {}
+            };
+
+            if ($localFilePath == "error")
+            {
+                $reject(new InnertubeFailedRequestException(
+                    new Response(
+                        $fakeRequestInstance,
+                        400,
+                        "fake innertube error",
+                        []
+                    )
+                ));
+                return;
+            }
+
+            $fileContents = FileSystem::getFileContents($localFilePath);
+
+            $resolve(new Response(
+                $fakeRequestInstance,
+                200,
+                $fileContents,
+                []
+            ));
         });
     }
 

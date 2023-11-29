@@ -142,6 +142,7 @@ return new class extends NirvanaController {
             }
         }
 
+        \Rehike\Profiler::start("watch_requests");
         // Makes the main watch request.
         $nextRequest = Network::innertubeRequest(
             "next",
@@ -193,6 +194,7 @@ return new class extends NirvanaController {
             "player" => $playerRequest,
             "ryd"    => $rydRequest
         ])->then(function ($responses) use ($yt) {
+            \Rehike\Profiler::end("watch_requests");
             $nextResponse = $responses["next"]->getJson();
             $playerResponse = $responses["player"]->getJson();
 
@@ -205,14 +207,19 @@ return new class extends NirvanaController {
                 $rydResponse = (object) [];
             }
 
-            // This may not be needed any longer, but manually removing ads
-            // has been historically required as adblockers no longer have
-            // the Hitchhiker-era rules.
-            $this->removeAds($playerResponse);
+            if (Config::getConfigProp("appearance.enableAdblock"))
+            {
+                // This may not be needed any longer, but manually removing ads
+                // has been historically required as adblockers no longer have
+                // the Hitchhiker-era rules.
+                $this->removeAds($playerResponse);
+            }
 
              // Push these over to the global object.
              $yt->playerResponse = $playerResponse;
              $yt->watchNextResponse = $nextResponse;
+
+            \Rehike\Profiler::start("modelbake");
 
             WatchModel::bake(
                 yt:      $yt,
@@ -227,6 +234,8 @@ return new class extends NirvanaController {
                     $this->setTitle($yt->page->title);
                 }
             });
+            
+            \Rehike\Profiler::end("modelbake");
         });
     }
 

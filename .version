@@ -1,10 +1,10 @@
 {
-	"previousHash": "c67133c636e0496acda56e1ae8e5fc6b340d8bc1",
-	"currentRevisionId": 1219,
-	"subject": "Promise API documentation",
-	"body": "Promise API documentation",
+	"previousHash": "78024f427c737aadfe3bdedef158cc3a53cc64a2",
+	"currentRevisionId": 1234,
+	"subject": "Fix compact debugger SPF navigation",
+	"body": "Fix compact debugger SPF navigation",
 	"branch": "master",
 	"committerName": "Taniko Yamamoto",
 	"committerEmail": "kirasicecreamm@gmail.com",
-	"time": 1700477261
+	"time": 1701264175
 }
