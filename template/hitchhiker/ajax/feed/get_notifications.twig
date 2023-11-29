@@ -10,7 +10,8 @@
             {% from "common/notifications.twig" import notification_item 
                 as notification 
             %}
-            <ol id="item-section-{{ rehike.generateRid() }}" class="item-section">
+            {% set notifications_rid = rehike.generateRid() %}
+            <ol id="item-section-{{ notifications_rid }}" class="item-section">
                 {% for section in yt.page.notifSections %}
                     {% for item in section.multiPageMenuNotificationSectionRenderer.items %}
                         {{ notification(item) }}
@@ -24,7 +25,7 @@
                 {% set this = lastItem.continuationItemRenderer %}
                 {{ load_more.render(
                     this.continuationEndpoint.getNotificationMenuEndpoint.ctoken, 
-                    "item-section-327280", 
+                    "item-section-" ~ notifications_rid, 
                     false, 
                     "feed_ajax"
                 ) }}
