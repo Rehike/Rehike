@@ -141,6 +141,66 @@ class Network
     }
 
     /**
+     * Make a fake InnerTube request. This is used for developer testing purposes.
+     * 
+     * This will return data from a local JSON file as if it's a true InnerTube request. This
+     * allows Rehike developers to test InnerTube dumps for debugging purposes.
+     * 
+     * The signature is kept about the same as innertubeRequest, so that it's easy to swap things
+     * out during development purposes.
+     * 
+     * In addition, if $localFilePath is "error", then an InnerTube error will be forced. This
+     * may be used to test error handling.
+     * 
+     * @return Promise<Response>
+     */
+    public static function innertubeRequestFake(
+        string $localFilePath,
+        string $action, 
+        array $body = [],
+        string $clientName = "WEB", 
+        string $clientVersion = "2.20230331.00.00",
+        bool $ignoreErrors = false,
+        bool $useAuthentication = true
+    ): Promise/*<Response>*/
+    {
+        return new Promise(function ($resolve, $reject)
+            use ($action, 
+                 $body, 
+                 $clientName, 
+                 $clientVersion,
+                 $ignoreErrors,
+                 $localFilePath)
+        {
+            $fakeRequestInstance = new class extends Request {
+                final public function __construct() {}
+            };
+
+            if ($localFilePath == "error")
+            {
+                $reject(new InnertubeFailedRequestException(
+                    new Response(
+                        $fakeRequestInstance,
+                        400,
+                        "fake innertube error",
+                        []
+                    )
+                ));
+                return;
+            }
+
+            $fileContents = FileSystem::getFileContents($localFilePath);
+
+            $resolve(new Response(
+                $fakeRequestInstance,
+                200,
+                $fileContents,
+                []
+            ));
+        });
+    }
+
+    /**
      * Request the public YouTube Data API v3.
      * 
      * This uses a unique key, and as such, doesn't have any limitations.
