@@ -74,6 +74,10 @@ props:
       subtitle: >
         Usa um estilo pro player ficar parecido com o de 2019, que pode
         ser mais confortável pra janelas menores.
+    enableAdblock:
+      title: "Ativar o ad-blocker incluso"
+      subtitle: >
+        Providência um ad-blocker estável pro player.
   
   experiments:
     useSignInV2:

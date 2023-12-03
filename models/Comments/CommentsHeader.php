@@ -18,17 +18,6 @@ class CommentsHeader {
 
         if ($a = @$data->titleText) {
             $new->title = ParsingUtils::getText($data->titleText);
-            
-            // Some languages (Portuguese) need to override the InnerTube
-            // string since it is wrong (ALL COMENTÁRIOS lol)
-            //
-            // Update (10 minutes after this update): Translator was using a
-            // userstyle that prepended "ALL " before the text. Whatever, I
-            // guess it doesn't hurt to keep this in.
-            if (i18n::tryGetRawString("comments", "customTitleText", $text))
-            {
-                $new->title = $text;
-            }
         }
         
         if ($a = @$data->countText) {

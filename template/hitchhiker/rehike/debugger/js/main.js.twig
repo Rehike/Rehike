@@ -58,7 +58,9 @@ rebug.debug.error = function(namespaceOrMessage, message)
 {% include "rehike/debugger/js/tabs.js.twig" %}
 {% include "rehike/debugger/js/menu.js.twig" %}
 {% include "rehike/debugger/js/history.js.twig" %}
-{% include "rehike/debugger/js/network.js.twig" %}
+{% if not rehikeDebugger.condensed %}
+    {% include "rehike/debugger/js/network.js.twig" %}
+{% endif %}
 {% include "rehike/debugger/js/spf.js.twig" %}
 {% include "rehike/debugger/js/global_walker.js.twig" %}
 {% include "rehike/debugger/js/widgets.js.twig" %}

@@ -40,7 +40,7 @@
 {%- macro content(data) -%}
     {{ _self.dialog_header(data.header) }}
     <div class="rebug-main-content">
-        {{ not rehikeDebugger.condensed ? _self.dialog_tabs_switcher(data.tabs) }}
+        {{ _self.dialog_tabs_switcher(data.tabs, rehikeDebugger.condensed) }}
         {{ _self.dialog_tabs_container(data.tabs) }}
     </div>
 {%- endmacro -%}
@@ -68,8 +68,8 @@
     </div>
 {%- endmacro -%}
 
-{%- macro dialog_tabs_switcher(tabs) -%}
-    <div id="rebug-tabs-switcher">
+{%- macro dialog_tabs_switcher(tabs, condensed) -%}
+    <div id="rebug-tabs-switcher" class="{{ condensed ? "hid" : "full-view" }}">
         {%- for tab in tabs -%}
             <div class="rebug-tab {{ tab.selected ? "rebug-tab-selected" }}" data-tab-target="{{ tab.id }}">
                 {{ tab.title }}

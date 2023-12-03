@@ -237,13 +237,27 @@ class CommentThread
         }
 
         // Correct mentions
-        foreach ($context->contentText->runs as &$run) {
+        foreach ($context->contentText->runs as $i => &$run) {
             if ($ucid = @$run->navigationEndpoint->browseEndpoint->browseId)
             {
+                /** 
+                 * Redo the whole @ string. This also removes the automatic spaces
+                 * put around it.
+                 */
                 if (substr($ucid, 0, 2) == "UC"
                 &&  isset(self::$dataApiData[$ucid]))
                 {
-                    $run->text = "\u{00A0}@" . self::$dataApiData[$ucid]->title . "\u{00A0}";
+                    $run->text = "@" . self::$dataApiData[$ucid]->title . "";
+                }
+
+                /**
+                 * Add a space to the next run if it isn't there. We need to do this
+                 * or else some comments will show things like: "@userHi hello".
+                 */
+                $nextRun = &$context->contentText->runs[$i + 1];
+                if (substr($nextRun->text, 0, 1) != " ")
+                {
+                    $nextRun->text = " " . $nextRun->text;
                 }
             }
         }

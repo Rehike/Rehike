@@ -753,6 +753,9 @@ rebug.globalWalker._handleExpander = function(data)
  */
 rebug.globalWalker.onHistorySwitch = function(data)
 {
+    if (!(data && data.globalWalker && data.globalWalker.data))
+        return;
+
     rebug.globalWalker.currentRoot = data.globalWalker.data.yt;
 
     if (rebug.globalWalker._isLoaded)
