@@ -1,10 +1,10 @@
 {
-	"previousHash": "b8802b13804956ddffdb582bba28f92bc10c73b7",
-	"currentRevisionId": 1240,
-	"subject": "Split common/shared parts of rebug into a separate JS module",
-	"body": "Split common/shared parts of rebug into a separate JS module",
+	"previousHash": "32fdbd436db1bae0a80fda9fbf709149c735e423",
+	"currentRevisionId": 1241,
+	"subject": "[i18n/en-US] Small capitalization change.",
+	"body": "[i18n/en-US] Small capitalization change.",
 	"branch": "master",
 	"committerName": "Taniko Yamamoto",
 	"committerEmail": "kirasicecreamm@gmail.com",
-	"time": 1701933264
+	"time": 1701934068
 }

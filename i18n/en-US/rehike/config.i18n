@@ -80,10 +80,10 @@ props:
   
   experiments:
     useSignInV2:
-      title: "Use sign in V2"
+      title: "Use sign in v2"
       subtitle: >
         Use the experimental new rewrite of the sign in rewrite. This option
-        should be available for the duration of V2's development, after which
+        should be available for the duration of v2's development, after which
         it will become the default and the legacy one will be removed.
     disableSignInOnHome:
       title: "Disable authenticated home requests"
