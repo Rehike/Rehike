@@ -5,7 +5,7 @@ rebug.widgets.ExpanderTarget.onClick = function(elm, targetElement)
     // Find parent and trigger its expander
     for (var parent = elm; null != parent; parent = parent.parentElement)
     {
-        if (rebug.class.has(parent, "rebug-expander"))
+        if (rehike.class.has(parent, "rebug-expander"))
         {
             rebug.widgets.Expander.onClick(parent, targetElement, true);
             return;

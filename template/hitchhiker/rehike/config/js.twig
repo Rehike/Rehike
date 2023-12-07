@@ -13,12 +13,7 @@
  #                     IMPORTS.                        #
  ######################################################}
 
-var rebug = {};
-
-{% include "rehike/debugger/js/class.js.twig" %}
-{% include "rehike/debugger/js/util.js.twig" %}
-{% include "rehike/debugger/js/event_delegate.js.twig" %}
-{% include "rehike/debugger/js/pubsub.js.twig" %}
+{% include "rehike/core/rehike-core.js.twig" %}
 
 //*/
 
@@ -62,16 +57,16 @@ rehike.config.init = function() {
         rehike.config.props_.push(props[i]);
     }
 
-    rebug.eventDelegate.add('change', 'rehike-config-option-bool',
+    rehike.eventDelegate.add('change', 'rehike-config-option-bool',
         rehike.config.onModifyBool_);
     
-    rebug.eventDelegate.add('change', 'rehike-config-option-enum',
+    rehike.eventDelegate.add('change', 'rehike-config-option-enum',
         rehike.config.onModifyEnum_);
 
-    rebug.eventDelegate.add('click', 'rehike-config-save-button',
+    rehike.eventDelegate.add('click', 'rehike-config-save-button',
         rehike.config.submit_);
 
-    rebug.eventDelegate.add('click', 'rehike-config-disable-rehike-button',
+    rehike.eventDelegate.add('click', 'rehike-config-disable-rehike-button',
         rehike.config.disableRehike_);
 
     rehike.config.saveButton_ = document.querySelector(
@@ -95,7 +90,7 @@ window.rehike.config.init = rehike.config.init;
  */
 rehike.config.onModifyBool_ = function(prop) {
     var name = prop.getAttribute('data-cfg-name');
-    var isChecked = rebug.class.has(prop, 'checked');
+    var isChecked = rehike.class.has(prop, 'checked');
 
     rehike.config.modifyProp_(name, isChecked);
 };

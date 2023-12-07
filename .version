@@ -1,10 +1,10 @@
 {
-	"previousHash": "d8af4a1e19add5e0108f3380d933ecc96678abfe",
-	"currentRevisionId": 1238,
-	"subject": "Fix mention spacing for comments again",
-	"body": "Fix mention spacing for comments again",
+	"previousHash": "b8802b13804956ddffdb582bba28f92bc10c73b7",
+	"currentRevisionId": 1240,
+	"subject": "Split common/shared parts of rebug into a separate JS module",
+	"body": "Split common/shared parts of rebug into a separate JS module",
 	"branch": "master",
-	"committerName": "aubymori",
-	"committerEmail": "aubyomori@gmail.com",
-	"time": 1701549616
+	"committerName": "Taniko Yamamoto",
+	"committerEmail": "kirasicecreamm@gmail.com",
+	"time": 1701933264
 }

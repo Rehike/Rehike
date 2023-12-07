@@ -1,0 +1,95 @@
+/**
+ * @fileoverview Provides basic lightbox behaviours for Rehike core JS.
+ * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
+ * @author The Rehike Maintainers
+ */
+
+/** @constructor */
+rehike.Lightbox = function(containerElement) {
+    if ("string" == typeof containerElement)
+    {
+        this._container = 
+            document.getElementById("rehike-lightbox-container") || null;
+    }
+    else if ("object" == typeof containerElement)
+    {
+        this._container = containerElement;
+    }
+};
+
+/**
+ * Stores a reference to the lightbox container element.
+ * 
+ * @type {Element}
+ */
+rehike.Lightbox.prototype._container = null;
+
+/**
+ * Opens the lightbox.
+ */
+rehike.Lightbox.prototype.open = function()
+{
+    var container = this._container;
+
+    // Create YT dialog background HTML
+    this._createDialogBackground();
+
+    // Unhide the lightbox
+    rehike.class.add(container, "open");
+};
+
+/**
+ * Closes the lightbox.
+ */
+rehike.Lightbox.prototype.close = function()
+{
+    var container = this._container;
+
+    // Remove the dialog background
+    this._removeDialogBackground();
+
+    // Hide the lightbox
+    rehike.class.remove(container, "open");
+};
+
+/**
+ * Creates the lightbox dialog background.
+ * 
+ * @private
+ */
+rehike.Lightbox.prototype._createDialogBackground = function()
+{
+    rehike.util.scrollLock.enable();
+    
+    rehike.class.add(document.body, "hide-players");
+    rehike.class.add(document.body, "yt-dialog-active");
+
+    // Create the dialog
+    var bgdiv = document.createElement("DIV");
+    bgdiv.setAttribute("id", "yt-dialog-bg");
+    bgdiv.setAttribute("class", "yt-dialog-bg");
+    bgdiv.setAttribute("style", "height: 100%; width: 100%; position: fixed;");
+    document.body.insertBefore(bgdiv, 
+        (
+            document.getElementById("footer-container") ||
+            document.body.children[document.body.children.length - 1]
+        ).nextSibling
+    );
+};
+
+/**
+ * Removes the dialog background.
+ * 
+ * @private
+ */
+rehike.Lightbox.prototype._removeDialogBackground = function()
+{
+    // Remove the dialog and body classes
+    rehike.class.remove(document.body, "hide-players");
+    rehike.class.remove(document.body, "yt-dialog-active");
+
+    document.getElementById("yt-dialog-bg").remove();
+
+    rehike.util.scrollLock.disable();
+};
