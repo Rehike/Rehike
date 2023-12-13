@@ -1,11 +1,11 @@
 /**
- * Implements the event manager of the Rehike debugger.
+ * Implements the event manager of the Rehike JS core.
  * 
  * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 
-rebug.eventDelegate = {};
+rehike.eventDelegate = {};
 
 /**
  * Stores a map of event handlers.
@@ -13,7 +13,7 @@ rebug.eventDelegate = {};
  * @type {Object[]}
  * @private
  */
-rebug.eventDelegate._handlers = [];
+rehike.eventDelegate._handlers = [];
 
 /**
  * Stores the names of all active events.
@@ -21,7 +21,7 @@ rebug.eventDelegate._handlers = [];
  * @type {string[]}
  * @private
  */
-rebug.eventDelegate._activeEvents = [];
+rehike.eventDelegate._activeEvents = [];
 
 /**
  * Add a delegated event handler.
@@ -30,19 +30,19 @@ rebug.eventDelegate._activeEvents = [];
  * @param {string} className 
  * @param {function(Event)} cb 
  */
-rebug.eventDelegate.add = function(eventName, className, cb) {
-    if (!rebug.eventDelegate._isActiveEventName(eventName))
+rehike.eventDelegate.add = function(eventName, className, cb) {
+    if (!rehike.eventDelegate._isActiveEventName(eventName))
     {
-        rebug.util.events.add(
+        rehike.util.events.add(
             document, 
             eventName, 
-            rebug.eventDelegate._getDelegateHandler(eventName)
+            rehike.eventDelegate._getDelegateHandler(eventName)
         );
 
-        rebug.eventDelegate._activeEvents.push(eventName);
+        rehike.eventDelegate._activeEvents.push(eventName);
     }
 
-    rebug.eventDelegate._addHandler(eventName, className, cb);
+    rehike.eventDelegate._addHandler(eventName, className, cb);
 };
 
 /**
@@ -54,9 +54,9 @@ rebug.eventDelegate.add = function(eventName, className, cb) {
  * 
  * @private
  */
-rebug.eventDelegate._isActiveEventName = function(name)
+rehike.eventDelegate._isActiveEventName = function(name)
 {
-    return rebug.eventDelegate._activeEvents.includes(name);
+    return rehike.eventDelegate._activeEvents.includes(name);
 };
 
 /**
@@ -67,11 +67,11 @@ rebug.eventDelegate._isActiveEventName = function(name)
  * 
  * @private
  */
-rebug.eventDelegate._getDelegateHandler = function(eventName)
+rehike.eventDelegate._getDelegateHandler = function(eventName)
 {
     return function(e) {
         var activeElement = e.target;
-        var handlerClassNameList = rebug.eventDelegate._handlers[eventName];
+        var handlerClassNameList = rehike.eventDelegate._handlers[eventName];
         
         while (null != activeElement)
         {
@@ -93,7 +93,7 @@ rebug.eventDelegate._getDelegateHandler = function(eventName)
                     {
                         return handlerClassNameList[classes[i]](activeElement, e);
                     }
-                    else if ("rebug-no-propagate" == classes[i])
+                    else if ("rehike-no-propagate" == classes[i])
                     {
                         return;
                     }
@@ -114,12 +114,12 @@ rebug.eventDelegate._getDelegateHandler = function(eventName)
  * 
  * @private
  */
-rebug.eventDelegate._addHandler = function(eventName, className, cb)
+rehike.eventDelegate._addHandler = function(eventName, className, cb)
 {
-    if (!(eventName in rebug.eventDelegate._handlers))
+    if (!(eventName in rehike.eventDelegate._handlers))
     {
-        rebug.eventDelegate._handlers[eventName] = {};
+        rehike.eventDelegate._handlers[eventName] = {};
     }
 
-    rebug.eventDelegate._handlers[eventName][className] = cb;
+    rehike.eventDelegate._handlers[eventName][className] = cb;
 };

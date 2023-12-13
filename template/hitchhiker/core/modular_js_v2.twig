@@ -9,8 +9,13 @@
         'www/': '{{ ytConstants.jsModulesPath }}'
     });
     var ytdepmap = {
-        "www/base": null,
-        "www/common": "www/base",
+        /*
+         * Prevent loading unmodified base module, since we already load our
+         * own modified version.
+         */
+        //"www/base": null,
+        //"www/common": "www/base",
+        "www/common": null,
         "www/angular_base": "www/common",
         "www/channels_accountupload": "www/common",
         "www/channels": "www/common",

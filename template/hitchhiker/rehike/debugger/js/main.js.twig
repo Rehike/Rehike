@@ -9,30 +9,6 @@ var _rebug = _rebug || {};
 
 (function(rebug) {
 
-rebug.debug = {};
-
-/**
- * Throw an error if something goes wrong.
- * 
- * @param {string} namespaceOrMessage 
- * @param {string|null} message 
- */
-rebug.debug.error = function(namespaceOrMessage, message)
-{
-    message = message || null;
-
-    if (namespaceOrMessage && "string" == typeof message)
-    {
-        var namespace = namespaceOrMessage;
-
-        throw new Error("[rebug:" + namespace + "] " + message);
-    }
-    else
-    {
-        throw new Error("[rebug] " + message);
-    }
-};
-
 /*{{ "*"~"/" }}
 
  {######################################################
@@ -50,10 +26,7 @@ rebug.debug.error = function(namespaceOrMessage, message)
 
 {% include "rehike/debugger/js/polyfill/Array.includes.js.twig" %}
 {% include "rehike/debugger/js/polyfill/Element.remove.js.twig" %}
-{% include "rehike/debugger/js/class.js.twig" %}
-{% include "rehike/debugger/js/util.js.twig" %}
-{% include "rehike/debugger/js/event_delegate.js.twig" %}
-{% include "rehike/debugger/js/pubsub.js.twig" %}
+{% include "rehike/core/rehike-core.js.twig" %}
 {% include "rehike/debugger/js/lightbox.js.twig" %}
 {% include "rehike/debugger/js/tabs.js.twig" %}
 {% include "rehike/debugger/js/menu.js.twig" %}
@@ -70,28 +43,28 @@ rebug.debug.error = function(namespaceOrMessage, message)
 function init()
 {
     // Register events for clicking the open button.
-    rebug.eventDelegate.add(
+    rehike.eventDelegate.add(
         "click", 
         "rebug-open-button", 
         rebug.widgets.OpenButton.onClick
     );
-    rebug.eventDelegate.add(
+    rehike.eventDelegate.add(
         "click", 
         "rebug-close-button", 
         rebug.widgets.CloseButton.onClick
     );
 
-    rebug.eventDelegate.add(
+    rehike.eventDelegate.add(
         "click", 
         "rebug-tab", 
         rebug.widgets.Tab.onClick
     );
-    rebug.eventDelegate.add(
+    rehike.eventDelegate.add(
         "click", 
         "rebug-expander",
         rebug.widgets.Expander.onClick
     );
-    rebug.eventDelegate.add(
+    rehike.eventDelegate.add(
         "click", 
         "rebug-expander-target", 
         rebug.widgets.ExpanderTarget.onClick
@@ -100,14 +73,14 @@ function init()
     if (window.ytspf && window.ytspf.enabled)
     {
         // Register SPF event handlers
-        rebug.util.events.add(
+        rehike.util.events.add(
             document, 
             "spfdone", 
             rebug.spf.events.onSpfDone
         );
     }
 
-    rebug.pubsub.publish("rebug-init-finish");
+    rehike.pubsub.publish("rebug-init-finish");
 }
 
 init();

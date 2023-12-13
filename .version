@@ -1,10 +1,10 @@
 {
-	"previousHash": "78024f427c737aadfe3bdedef158cc3a53cc64a2",
-	"currentRevisionId": 1234,
-	"subject": "Fix compact debugger SPF navigation",
-	"body": "Fix compact debugger SPF navigation",
+	"previousHash": "dc59150c24cc66f340a8ccbcdfd7dd682f8035bd",
+	"currentRevisionId": 1245,
+	"subject": "Localized video category names",
+	"body": "Localized video category names",
 	"branch": "master",
 	"committerName": "Taniko Yamamoto",
 	"committerEmail": "kirasicecreamm@gmail.com",
-	"time": 1701264175
+	"time": 1702462352
 }

@@ -1,11 +1,11 @@
 /**
- * @fileoverview CSS class utilities for Rebug.
+ * @fileoverview CSS class utilities for Rehike Core JS.
  * 
  * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 
-rebug.class = {};
+rehike.class = {};
 
 /**
  * Determine if an element has a class.
@@ -14,7 +14,7 @@ rebug.class = {};
  * @param {string} className 
  * @return {boolean}
  */
-rebug.class.has = function(element, className)
+rehike.class.has = function(element, className)
 {
     if ("" == className) return;
 
@@ -34,7 +34,7 @@ rebug.class.has = function(element, className)
  * @param {Element} element 
  * @param {string} className 
  */
-rebug.class.add = function(element, className)
+rehike.class.add = function(element, className)
 {
     if ("" == className) return;
 
@@ -54,7 +54,7 @@ rebug.class.add = function(element, className)
  * @param {Element} element 
  * @param {string} className 
  */
-rebug.class.remove = function(element, className)
+rehike.class.remove = function(element, className)
 {
     if ("" == className) return;
 
