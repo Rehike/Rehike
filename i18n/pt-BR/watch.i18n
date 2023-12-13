@@ -86,11 +86,11 @@ liveWatchingNow1: "1 assistindo agora"
 liveWatchingNow: "# assistindo agora"
 
 # Video categories
-categoryAutosAndVehicles: "Automóvels"
+categoryAutosAndVehicles: "Automóveis"
 categoryComedy: "Comédia"
 categoryEducation: "Educação"
 categoryEntertainment: "Entretenimento"
-categoryFilmAndAnimation: "Filme e animação"
+categoryFilmAndAnimation: "Filmes e animação"
 categoryGaming: "Jogos"
 categoryHowtoAndStyle: "Instruções e estilo"
 categoryMusic: "Música"
