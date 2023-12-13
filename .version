@@ -1,10 +1,10 @@
 {
-	"previousHash": "12e97524423ffc198d5afa78233835bb33f11275",
-	"currentRevisionId": 1243,
-	"subject": "[CoffeeTranslation] Add bug notice to DateTimeApi",
-	"body": "[CoffeeTranslation] Add bug notice to DateTimeApi",
+	"previousHash": "2c7aff43cc713cbf784a46086a89b6488478b086",
+	"currentRevisionId": 1244,
+	"subject": "Emergency player fix",
+	"body": "Emergency player fix",
 	"branch": "master",
 	"committerName": "Taniko Yamamoto",
 	"committerEmail": "kirasicecreamm@gmail.com",
-	"time": 1702035893
+	"time": 1702447487
 }

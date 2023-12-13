@@ -42,7 +42,7 @@ return (object) [
         "www-core/www-core" => "{$js}www-core-vflWuPqdk/www-core.js",
         "www-searchbox/www-searchbox" => "{$js}www-searchbox-vflV_B8yT/www-searchbox.js",
         "www-notfound/www-notfound" => "{$js}www-notfound-vflsu8ylX/www-notfound.js",
-        "www/base" => "{$mod}base.js",
+        "www/base" => "/rehike/static/js/www-base-rehike.js",
         "www/common" => "{$mod}common.js",
         "www/angular_base" => "{$mod}angular_base.js",
         "www/channels_accountupload" => "{$mod}channels_accountupload.js",
