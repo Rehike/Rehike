@@ -24,6 +24,52 @@ unknownNewVersions: "Essa versão está criticamente desatualizada."
 headingVersionInfo: "Informação da versão"
 viewOnGithub: "Ver no GitHub"
 
-extraInfo: "Informação extra"
+extraInfo: "Informação do runtime"
 operatingSystem: "Sistema operacional"
 phpVersion: "Versão do PHP"
+browserVersion: "Versão do navegador"
+
+githubLinkButton: "Rehike no GitHub"
+creditsButton: "Créditos"
+runtimeInfoMoreInfoButton: "Mais info"
+gitManagerPullButton: "Pull"
+gitManagerUnpushedChanges: >
+  Você tem mudanças sem pull, então isso na verdade é mais antigo.
+
+# -- Git manager messages --
+
+gitManagerDialogDismissButton: "Dispensar"
+gitManagerDialogRetryButton: "Tentar de novo"
+
+gitManagerDialogFailedPullTitle: "Falha ao realizar pull"
+gitManagerDialogFailedPullMessage: >
+  Falha ao realizar pull de alterações da fonte remota. Registro de erros do Git:
+
+# -- Translations for the credits section --
+
+creditsTitle: "Créditos"
+creditsDevelopersTitle: "Desenvolvedores do Rehike"
+
+# Major contributor names.
+# Feel free to add transliterations of names in parentheses if you wish
+# to do so.
+creditsAubrey: "Aubrey Pankow"
+creditsDaylin: "Daylin Cooper"
+creditsTaniko: "Taniko Yamamoto"
+
+creditsThirdPartyHeader: >
+  A Rehike utiliza o seguinte software, contribuições,
+  ou serviços de terceiros:
+
+# Credits to Prototaxis for documenting the WEB v2 shelves technique
+# we use for the homepage.
+# The template placeholder "%s" is replaced with an anchor link to his
+# GitHub profile, but it's not featured here in order to avoid embedding
+# HTML content.
+creditsPrototaxisTemplate: >
+  %s pra documentar as explorações da API do InnerTube que usamos para restaurar o
+  design clássico das "prateleiras" da página inicial.
+
+creditsThirdPartyFooter: >
+  A utilização destes serviços de terceiros é regida pelas respectivas licenças.
+  Sempre que possível, a sua aplicação será facultativa.
