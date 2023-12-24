@@ -71,7 +71,7 @@ creditsThirdPartyHeader: >
 # HTML content.
 creditsPrototaxisTemplate: >
   %s za udokumentowanie exploitów API InnerTube, których używamy do przywrócenia
-  klasyczny wygląd strony głównej z "półkami".
+  klasycznego wyglądu strony głównej z "półkami".
 
 creditsThirdPartyFooter: >
   Korzystanie z tych usług stron trzecich podlega odpowiednim licencjom.
