@@ -1,28 +1,78 @@
+aboutRehike: "Informacje o Rehike"
 brandName: "Rehike"
 versionHeader: "Wersja %s"
 nightly: "Nightly"
 nightlyInfoTooltip: >
-  To wydanie jest na granicy wytrzymałości i może zawierać nieregularne błędy.
+  Ta wersja jest najnowsza i może zawierać nieregularne błędy.
 
-subheaderNightlyInfo: "Obecne informacje o gałęzi"
-nonGitNotice: "To wydanie Rehike nie zawiera informacji o Git."
+subheaderNightlyInfo: "Aktualne informacje o gałęzi"
+nonGitNotice: "W tym wydaniu Rehike brakuje informacji Git."
 nonGitExtended: >
-  Może to nastąpić, jeśli pobrałeś repozytorium bezpośrednio z GitHub,
-  na przykład z funkcji "Download ZIP". Niektóre informacje o wersji mogą
-  zostać utracone lub niedostępne.
-syncGithubButton: "Synchronizuj z GitHubem"
+  Może się to zdarzyć, jeśli repozytorium zostało pobrane bezpośrednio z GitHub, 
+  na przykład z funkcji "Download ZIP". Niektóre informacje o wersji mogą zostać utracone lub 
+  niedostępne.
+syncGithubButton: "Synchronizacja z GitHub"
 failedNotice: "Nie udało się uzyskać informacji o wersji."
-remoteFailedNotice: "Nie udało się uzyskać informacji o wersji zdalnej."
+remoteFailedNotice: "Nie udało się uzyskać informacji o zdalnej wersji."
 remoteFailedExtended: "Informacje o wersji są ograniczone."
-noDotVersionNotice: "Brakuje pliku .version lub jest on uszkodzony."
+noDotVersionNotice: "Brak pliku .version lub jest on uszkodzony."
 noNewVersions: "Brak dostępnych nowych wersji."
-oneNewVersion: "Dostępna 1 nowa wersja."
-varNewVersions: "Dostępne %s nowych wersji."
-unknownNewVersions: "Ta wersja jest krytycznie przestarzała."
+oneNewVersion: "Dostępna jest 1 nowa wersja."
+varNewVersions: "Dostępnych jest %s nowych wersji."
+unknownNewVersions: "Ta wersja jest krytycznie nieaktualna."
 
-headingVersionInfo: "Informacje o wersji"
-viewOnGithub: "Zobacz na GitHubie"
+updatesAvailable: "Dostępne aktualizacje"
+upToDate: "Jesteś na bieżąco ze zdalną gałęzią."
 
-extraInfo: "Dodatkowe informacje"
+headingVersionInfo: "Informacje o Rehike"
+viewOnGithub: "Zobacz na GitHub"
+
+extraInfo: "Informacje o środowisku"
 operatingSystem: "System operacyjny"
 phpVersion: "Wersja PHP"
+browserVersion: "Wersja przeglądarki"
+
+githubLinkButton: "Rehike na GitHub"
+creditsButton: "Uznania"
+runtimeInfoMoreInfoButton: "Więcej informacji"
+gitManagerPullButton: "Pociągnij"
+gitManagerUnpushedChanges: >
+  Zmiany lokalne nie zostały pociągnięte, więc jest to starsza wersja.
+
+# -- Git manager messages --
+
+gitManagerDialogDismissButton: "Odrzuć"
+gitManagerDialogRetryButton: "Ponów próbę"
+
+gitManagerDialogFailedPullTitle: "Nie udało się pociągnąć"
+gitManagerDialogFailedPullMessage: >
+  Nie udało się pociągnąć zmian ze zdalnego źródła. Dziennik błędów Git:
+
+# -- Translations for the credits section --
+
+creditsTitle: "Uznania"
+creditsDevelopersTitle: "Deweloperzy Rehike"
+
+# Major contributor names.
+# Feel free to add transliterations of names in parentheses if you wish
+# to do so.
+creditsAubrey: "Aubrey Pankow"
+creditsDaylin: "Daylin Cooper"
+creditsTaniko: "Taniko Yamamoto"
+
+creditsThirdPartyHeader: >
+  Rehike korzysta z następującego oprogramowania stron trzecich, wkładów,
+  lub usług:
+
+# Credits to Prototaxis for documenting the WEB v2 shelves technique
+# we use for the homepage.
+# The template placeholder "%s" is replaced with an anchor link to his
+# GitHub profile, but it's not featured here in order to avoid embedding
+# HTML content.
+creditsPrototaxisTemplate: >
+  %s za udokumentowanie exploitów API InnerTube, których używamy do przywrócenia
+  klasycznego wyglądu strony głównej z "półkami".
+
+creditsThirdPartyFooter: >
+  Korzystanie z tych usług stron trzecich podlega odpowiednim licencjom.
+  Tam, gdzie to możliwe, ich stosowanie będzie opcjonalne.
