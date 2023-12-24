@@ -59,7 +59,7 @@ rebug.globalWalker.templates = {
         {
             for (var i = 0, j = options.class.length; i < j; i++)
             {
-                rebug.class.add(element, options.class[i]);
+                rehike.class.add(element, options.class[i]);
             }
         }
 
@@ -645,7 +645,7 @@ rebug.globalWalker.updateRootScene = function(newRoot)
     if (!rebug.globalWalker._isLoaded)
     {
         var loadingEl = baseEl.querySelector(".loading");
-        rebug.class.add(loadingEl, "hid");
+        rehike.class.add(loadingEl, "hid");
         loadingEl.style.display = "none";
     }
 
@@ -699,7 +699,7 @@ rebug.globalWalker.loadInitialView = function()
  */
 rebug.globalWalker.tryOpenSubchildren = function(el)
 {
-    if (1 == el.children.length && rebug.class.has(el.children[0], "rebug-expander"))
+    if (1 == el.children.length && rehike.class.has(el.children[0], "rebug-expander"))
     {
         el.children[0].querySelector(".rebug-expander-target").click();
     }
@@ -783,7 +783,7 @@ rebug.globalWalker.onVisit = function()
         rebug.globalWalker._isCurrentlyVisited = true;
     }
 
-    rebug.pubsub.subscribe(
+    rehike.pubsub.subscribe(
         "rebug-expander-toggled",
         rebug.globalWalker._handleExpander
     );
@@ -798,7 +798,7 @@ rebug.globalWalker.onExit = function()
 {
     rebug.globalWalker._isCurrentlyVisited = false;
 
-    rebug.pubsub.unsubscribe(
+    rehike.pubsub.unsubscribe(
         "rebug-expander-toggled",
         rebug.globalWalker._handleExpander
     );
@@ -822,5 +822,5 @@ rebug.globalWalker.onTabSwitch = function()
     }
 };
 
-rebug.pubsub.subscribe("rebug-tab-switch", rebug.globalWalker.onTabSwitch);
-rebug.pubsub.subscribe("rebug-history-switch", rebug.globalWalker.onHistorySwitch);
+rehike.pubsub.subscribe("rebug-tab-switch", rebug.globalWalker.onTabSwitch);
+rehike.pubsub.subscribe("rebug-history-switch", rebug.globalWalker.onHistorySwitch);

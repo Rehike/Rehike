@@ -1,0 +1,34 @@
+{% macro render(data, custom_wrapper_class) %}
+    {% embed "common/dialog/dialog_base.twig" %}
+    {% from "common/uix/button.twig" import render as button %}
+
+    {% block wrapper_class %}{{ custom_wrapper_class ?? block("wrapper_class") }}{% endblock %}
+
+    {% block dialog_title %}{{ rehike.getText(data.title) }}{% endblock %}
+
+    {% block dialog_content %}
+    <div class="yt-dialog-overlay-content-container">
+        {%- for message in data.dialogMessages -%}
+            <p>
+            {%- for run in message.runs -%}
+                {%- if run.navigationEndpoint -%}
+                    <a href="{{ rehike.getUrl(run) }}">{{ run.text }}</a>
+                {%- else -%}
+                    {{ run.text }}
+                {%- endif -%}
+            {%- endfor -%}
+            </p>
+        {%- endfor -%}
+        <div class="yt-uix-overlay-actions">
+            {% if data.cancelButton %}
+                {{ button(data.cancelButton) }}
+            {% endif %}
+            {% if data.confirmButton %}
+                {{ button(data.confirmButton) }}
+            {% endif %}
+        </div>
+    </div>
+    {% endblock %}
+
+    {% endembed %}
+{% endmacro %}

@@ -158,14 +158,55 @@ class MMetadataRowContainer
         $i18n = i18n::getNamespace("watch");
         $title = $i18n->get("metadataCategory");
 
-        $category = @$dataHost::$yt->playerResponse->microformat
+        $canonicalCategoryName = @$dataHost::$yt->playerResponse->microformat
             ->playerMicroformatRenderer->category
         ;
+
+        $category = $this->getLocalizedCategoryName($canonicalCategoryName);
 
         if ($category)
         {
             return self::createSimpleField($title, $category);
         }
+    }
+
+    protected function getLocalizedCategoryName(string $playerStr): string
+    {
+        $i18n = i18n::getNamespace("watch");
+
+        switch ($playerStr)
+        {
+            case "Autos & Vehicles":
+                return $i18n->get("categoryAutosAndVehicles");
+            case "Comedy":
+                return $i18n->get("categoryComedy");
+            case "Education":
+                return $i18n->get("categoryEducation");
+            case "Film & Animation":
+                return $i18n->get("categoryFilmAndAnimation");
+            case "Gaming":
+                return $i18n->get("categoryGaming");
+            case "Howto & Style":
+                return $i18n->get("categoryHowtoAndStyle");
+            case "Music":
+                return $i18n->get("categoryMusic");
+            case "News & Politics":
+                return $i18n->get("categoryNewsAndPolitics");
+            case "Nonprofits & Activism":
+                return $i18n->get("categoryNonprofitsAndActivism");
+            case "People & Blogs":
+                return $i18n->get("categoryPeopleAndBlogs");
+            case "Pets & Animals":
+                return $i18n->get("categoryPetsAndAnimals");
+            case "Science & Technology":
+                return $i18n->get("categoryScienceAndTechnology");
+            case "Sports":
+                return $i18n->get("categorySports");
+            case "Travel & Events":
+                return $i18n->get("categoryTravelAndEvents");
+        }
+
+        return $playerStr;
     }
 
     protected function getLicenseField()

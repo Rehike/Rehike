@@ -109,6 +109,31 @@ class DateTimeApi
     {
         $dt = $this->cultureInfo->dateTimeInfo;
 
+        /**
+         * TODO (kirasicecreamm): Prevent work from being overdone :P
+         * 
+         * I didn't think this through, since a conflict would be unlikely, but
+         * in the case of English specifically, there can be a few oddities.
+         * 
+         * "Thursday" -> "Thurrsday"
+         * 
+         * This is because the full weekdays are replaced with versions from the
+         * culture file: "Thursday" -> "Thursday". Effectively no change is made.
+         * 
+         * Then, because this is a naive system, it overrides this, and replaces
+         * the short week days. In the error case that brought this to my
+         * attention:
+         * 
+         * "Thu" -> "Thur"
+         * 
+         * This results in the final string being displayed incorrectly as
+         * "Thurrsday".
+         * 
+         * This can be easily fixed with a more complicated replacement system
+         * whereby a region of text can be marked as "dirty", and ignored by
+         * subsequent modifications, ensuring that the replacement of substrings
+         * doesn't affect those that we already modified.
+         */
         foreach (self::ENGLISH_WEEKDAYS as $i => $day)
         {
             $translation = $dt->daysOfWeek[$i];

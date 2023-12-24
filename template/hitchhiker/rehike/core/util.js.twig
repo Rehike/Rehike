@@ -5,9 +5,9 @@
  * @author The Rehike Maintainers
  */
 
-rebug.util = {};
+rehike.util = {};
 
-rebug.util.scrollLock = {};
+rehike.util.scrollLock = {};
 
 /**
  * Is scroll lock enabled? 
@@ -15,7 +15,7 @@ rebug.util.scrollLock = {};
  * @private
  * @type {boolean}
  */
-rebug.util.scrollLock._enabled = false;
+rehike.util.scrollLock._enabled = false;
 
 /**
  * The previous scroll height.
@@ -23,7 +23,7 @@ rebug.util.scrollLock._enabled = false;
  * @private
  * @type {number}
  */
-rebug.util.scrollLock._previousScroll = 0;
+rehike.util.scrollLock._previousScroll = 0;
 
 /**
  * A list of elements that were changed.
@@ -31,7 +31,7 @@ rebug.util.scrollLock._previousScroll = 0;
  * @private
  * @type {Object[]}
  */
-rebug.util.scrollLock._elements = [];
+rehike.util.scrollLock._elements = [];
 
 /**
  * Info of the body when changed.
@@ -39,7 +39,7 @@ rebug.util.scrollLock._elements = [];
  * @private
  * @type {Object}
  */
-rebug.util.scrollLock._bodyInfo = null;
+rehike.util.scrollLock._bodyInfo = null;
 
 /**
  * Get display information of an element for scroll locking it.
@@ -47,7 +47,7 @@ rebug.util.scrollLock._bodyInfo = null;
  * @param {Element} element 
  * @return {Object}
  */
-rebug.util.scrollLock.getElementInfo = function(element)
+rehike.util.scrollLock.getElementInfo = function(element)
 {
     var style = getComputedStyle(element);
 
@@ -71,13 +71,13 @@ rebug.util.scrollLock.getElementInfo = function(element)
  * 
  * @return {void}
  */
-rebug.util.scrollLock.enable = function()
+rehike.util.scrollLock.enable = function()
 {
-    if (rebug.util.scrollLock._enabled) return;
+    if (rehike.util.scrollLock._enabled) return;
 
     // Get the original scroll position
     var originalScroll = document.documentElement.scrollTop;
-    rebug.util.scrollLock._previousScroll = originalScroll;
+    rehike.util.scrollLock._previousScroll = originalScroll;
 
     // Iterate all direct children of body and determine
     // if they should be acted upon.
@@ -85,11 +85,11 @@ rebug.util.scrollLock.enable = function()
     {
         var el = document.body.children[i];
 
-        var info = rebug.util.scrollLock.getElementInfo(el);
+        var info = rehike.util.scrollLock.getElementInfo(el);
 
         if (info.shouldModify)
         {
-            rebug.util.scrollLock._elements.push(info);
+            rehike.util.scrollLock._elements.push(info);
 
             info.element.setAttribute(
                 "style",
@@ -102,8 +102,8 @@ rebug.util.scrollLock.enable = function()
     }
 
     // Finally, freeze the body itself in place.
-    var bodyInfo = rebug.util.scrollLock.getElementInfo(document.body);
-    rebug.util.scrollLock._bodyInfo = bodyInfo;
+    var bodyInfo = rehike.util.scrollLock.getElementInfo(document.body);
+    rehike.util.scrollLock._bodyInfo = bodyInfo;
 
     // PATCH (dcooper): Required to not jump around visually if not already set on <html>
     document.documentElement.setAttribute(
@@ -122,7 +122,7 @@ rebug.util.scrollLock.enable = function()
         )
     );
 
-    rebug.util.scrollLock._enabled = true;
+    rehike.util.scrollLock._enabled = true;
 };
 
 /**
@@ -130,13 +130,13 @@ rebug.util.scrollLock.enable = function()
  * 
  * @return {void}
  */
-rebug.util.scrollLock.disable = function()
+rehike.util.scrollLock.disable = function()
 {
-    if (!rebug.util.scrollLock._enabled) return;
+    if (!rehike.util.scrollLock._enabled) return;
 
     // Undo body changes (this must be done first to avoid
     // conflicts with children changes)
-    var bodyInfo = rebug.util.scrollLock._bodyInfo;
+    var bodyInfo = rehike.util.scrollLock._bodyInfo;
 
     document.documentElement.removeAttribute("style");
 
@@ -150,7 +150,7 @@ rebug.util.scrollLock.disable = function()
     }
 
     // And now iterate children to undo their property changes.
-    var children = rebug.util.scrollLock._elements;
+    var children = rehike.util.scrollLock._elements;
 
     for (var i = 0, j = children.length; i < j; i++)
     {
@@ -166,15 +166,15 @@ rebug.util.scrollLock.disable = function()
         }
     }
 
-    rebug.util.scrollLock._elements = [];
+    rehike.util.scrollLock._elements = [];
 
-    document.documentElement.scrollTop = rebug.util.scrollLock._previousScroll;
+    document.documentElement.scrollTop = rehike.util.scrollLock._previousScroll;
 
-    rebug.util.scrollLock._enabled = false;
+    rehike.util.scrollLock._enabled = false;
 };
 
 
-rebug.util.events = {};
+rehike.util.events = {};
 
 /**
  * Add an event listener.
@@ -183,7 +183,7 @@ rebug.util.events = {};
  * @param {string} name 
  * @param {function(Event)} cb 
  */
-rebug.util.events.add = function(target, name, cb)
+rehike.util.events.add = function(target, name, cb)
 {
     if (target.addEventListener)
     {
@@ -202,7 +202,7 @@ rebug.util.events.add = function(target, name, cb)
  * @param {string} name 
  * @param {function(Event)} cb 
  */
-rebug.util.events.remove = function(target, name, cb)
+rehike.util.events.remove = function(target, name, cb)
 {
     if (target.removeEventListener)
     {
@@ -212,4 +212,29 @@ rebug.util.events.remove = function(target, name, cb)
     {
         target.detachEvent("on" + name, cb);
     }
+};
+
+/**
+ * Checks if the following element is a child of the parent element, or one of
+ * its children.
+ * 
+ * @param {Element} child
+ * @param {Element} parent
+ */
+rehike.util.isChildOf = function(childEl, parentEl)
+{
+    var curElement = childEl;
+
+    do
+    {
+        if (curElement.parentNode && curElement.parentNode == parentEl)
+        {
+            return true;
+        }
+
+        curElement = curElement.parentNode;
+    }
+    while (curElement != null);
+
+    return false;
 };

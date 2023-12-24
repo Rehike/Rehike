@@ -1,0 +1,13 @@
+{% macro render(data) %}
+<div class="ytg-fl">
+    <div class="account-header">
+        <h1>{{ data.title }}</h1>
+        <span class="rehike-creator-header-right">
+            <span class="rehike-version-mini-logo yt-sprite"></span>
+        </span>
+    </div>
+    <hr class="yt-horizontal-rule">
+    {{ data.inner_content }}
+</div>
+{{ data.footer_content }}
+{% endmacro %}

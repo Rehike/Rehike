@@ -1,10 +1,10 @@
 {
-	"previousHash": "d8af4a1e19add5e0108f3380d933ecc96678abfe",
-	"currentRevisionId": 1238,
-	"subject": "Fix mention spacing for comments again",
-	"body": "Fix mention spacing for comments again",
+	"previousHash": "d83bc6f9b4fd3deb500b23d6d43b6572796186c1",
+	"currentRevisionId": 1248,
+	"subject": "0.8.1: Settings redesign",
+	"body": "0.8.1: Settings redesign",
 	"branch": "master",
-	"committerName": "aubymori",
-	"committerEmail": "aubyomori@gmail.com",
-	"time": 1701549616
+	"committerName": "Taniko Yamamoto",
+	"committerEmail": "kirasicecreamm@gmail.com",
+	"time": 1703392630
 }

@@ -11,19 +11,15 @@
 {{ core.css("www-account-settings") }}
 {{ core.css("www-creatorpage") }}
 <style>
+{% include "rehike/panel/common.css.twig" %}
+</style>
+<style>
 {% include "rehike/config/css.twig" %}
 </style>
 {% endblock %}
 
 {% block content %}
-{% embed "common/creator/creator_page.twig" %}
-{% from "common/creator/creator_sidebar.twig" import render as creator_sidebar %}
-
-{% block creator_page_class %}account-page{% endblock %}
-
-{% block creator_page_sidebar %}
-{{ creator_sidebar(yt.page.sidebar.creatorSidebarRenderer) }}
-{% endblock %}
+{% embed "rehike/panel/base.twig" %}
 
 {% block creator_page_content_class %}account-settings-container{% endblock %}
 
@@ -58,39 +54,45 @@
     </span>
 {% endmacro %}
 
-{% block creator_page_content %}
-<div class="ytg-fl account-container">
-    <div class="account-header">
-        <h1>{{ yt.page.content.title }}</h1>
-    </div>
-    <hr class="yt-horizontal-rule">
-    <form id="rehike-config-form" onsubmit="event.preventDefault();return!1">
-        <div class="account-content">
-            <div class="account-section rehike-config-options-container">
-                {% for option in yt.page.content.contents %}
-                <div class="account-section-setting">
-                    {% if option.checkboxRenderer %}
-                        {{ _self.checkbox_renderer(option.checkboxRenderer) }}
-                    {% elseif option.selectRenderer %}
-                        {{ _self.select_renderer(option.selectRenderer) }}
-                    {% endif %}
-                </div>
-                {% endfor %}
+{% macro render_inner() %}
+<form id="rehike-config-form" onsubmit="event.preventDefault();return!1">
+    <div class="account-content">
+        <div class="account-section rehike-config-options-container">
+            {% for option in yt.page.content.contents %}
+            <div class="account-section-setting">
+                {% if option.checkboxRenderer %}
+                    {{ _self.checkbox_renderer(option.checkboxRenderer) }}
+                {% elseif option.selectRenderer %}
+                    {{ _self.select_renderer(option.selectRenderer) }}
+                {% endif %}
             </div>
-            <hr class="yt-horizontal-rule">
-            <div class="account-footer">
-                {% from "common/uix/button.twig" import render as button %}
-                {{ button(yt.page.content.saveButton, null, "rehike-config-save-button") }}
-            </div>
+            {% endfor %}
         </div>
-    </form>
-</div>
+        <hr class="yt-horizontal-rule">
+        <div class="account-footer">
+            {% from "common/uix/button.twig" import render as button %}
+            {{ button(yt.page.content.saveButton, null, "rehike-config-save-button") }}
+        </div>
+    </div>
+</form>
+{% endmacro %}
+
+{% macro render_scripts() %}
 <script>
 {% include "rehike/config/js.twig" %}
 </script>
 <script>
     rehike.config.init();
 </script>
+{% endmacro %}
+
+{% block creator_page_content %}
+    {% from "rehike/panel/content.twig" import render as panel_content %}
+    {{ panel_content({
+        title: yt.page.content.title,
+        inner_content: _self.render_inner(),
+        footer_content: _self.render_scripts()
+    }) }}
 {% endblock %}
 
 {% endembed %}

@@ -4,7 +4,7 @@
     {%- if data.showUnsubConfirmDialog and data.unsubConfirmDialog -%}
         <span class="unsubscribe-confirmation-overlay-container">
             <div class="yt-uix-overlay "  data-overlay-style="primary" data-overlay-shape="tiny">
-                {% embed "/common/uix/dialog.twig" %}
+                {% embed "/common/dialog/dialog_base.twig" %}
                 {% block dialog_content %}
                 {% from "/common/uix/button.twig" import render as button %}
                 <div class="unsubscribe-confirmation-overlay-content-container">
@@ -35,7 +35,7 @@
     {%- if data.showSubscriptionPreferences -%}
         <span class="subscription-preferences-overlay-container">
             <div class="yt-uix-overlay "  data-overlay-style="primary" data-overlay-shape="tiny">
-                {% embed "/common/uix/dialog.twig" %}
+                {% embed "/common/dialog/dialog_base.twig" %}
                 {% import "/core/spinner.twig" as spinner %}
                 {% block dialog_content %}
                 <div class="subscription-preferences-overlay-content-container">

@@ -47,15 +47,13 @@ class DotGit
      * 
      * @return string[]
      */
-    public static function getInfo(): array
+    public static function getInfo(VersionInfo $versionInfo)
     {
         if (!self::canUse()) return []; // Add nothing at all
 
-        $response = [];
-
-        if ($branch = self::getBranch()) $response += ["branch" => $branch];
-        if ($commit = self::getCommit($branch)) $response += ["currentHash" => $commit];
-
-        return $response;
+        if ($branch = self::getBranch())
+            $versionInfo->branch = $branch;
+        if ($commit = self::getCommit($branch))
+            $versionInfo->currentHash = $commit;
     }
 }

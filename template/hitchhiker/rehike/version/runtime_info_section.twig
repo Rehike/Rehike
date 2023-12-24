@@ -1,0 +1,211 @@
+{% macro render(info) %}
+<div id="rehike-runtime-info" class="rehike-info">
+    <h1>{{ info.headingText }}</h1>
+    <div class="runtime-info">
+        <ul>
+            <li class="os-info">
+                <div class="runtime-info-title">
+                    {{ info.osInfo.title }}
+                </div>
+                <div class="runtime-info-info">
+                    <span class="yt-sprite runtime-info-logo-{{ info.osInfo.logo }}"></span>
+                    <h3>{{ info.osInfo.prominentOsName }}</h3>
+                    {% for fact in info.osInfo.info %}
+                        <div>{{ fact }}</div>
+                    {% endfor %}
+                </div>
+            </li>
+            <li class="php-info">
+                <div class="runtime-info-title">
+                    {{ info.phpInfo.title }}
+                </div>
+                <div class="runtime-info-info">
+                    <span class="yt-sprite runtime-info-logo-php"></span>
+                    <h3>PHP {{ info.phpInfo.version }}</h3>
+                    <div>{{ info.phpInfo.serverVersion }}</div>
+                    {% from "common/uix/button.twig" import render as button %}
+                    {{ button(info.phpInfo.seeMoreButton) }}
+                </div>
+            </li>
+            <li class="browser-info hid" id="rehike-runtime-info-browser-info-section">
+                <div class="runtime-info-title">
+                    {{ info.browserInfo.title }}
+                </div>
+                <div class="runtime-info-info">
+                    <span class="yt-sprite runtime-info-browser-logo "></span>
+                    <h3 class="title"></h3>
+                    <div class="version"></div>
+                </div>
+                {# Script to detect the user's browser at runtime. #}
+                <script>
+                (function(){
+                    var browserInfoEl = document.getElementById("rehike-runtime-info-browser-info-section");
+                    var ua = navigator.userAgent;
+
+                    var name = "Unknown";
+                    var version = "";
+                    var logo = "";
+
+                    var baseVer = navigator.userAgent.match(/(opera|opr|edg|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i);
+
+                    if (ua.indexOf("OPR") != -1)
+                    {
+                        // OPR = Chromium Opera (version >= 15)
+                        name = "Opera";
+                        version = baseVer[2];
+                        logo = "opera-33";
+
+                        if (version < 33)
+                        {
+                            logo = "opera-15";
+                        }
+                    }
+                    else if (ua.indexOf("Opera") != -1)
+                    {
+                        // Opera = Presto Opera (version < 15)
+                        name = "Opera";
+                        version = baseVer[2];
+                        logo = "opera-10";
+
+                        if (version < 10)
+                        {
+                            logo = "opera-7";
+
+                            if (version < 7)
+                            {
+                                logo = "opera-2";
+                            }
+                        }
+                    }
+                    else if (ua.indexOf("Edge") != -1)
+                    {
+                        // Edge = EdgeHTML Edge
+                        name = "Microsoft Edge";
+                        logo = "edge-12";
+                        version = baseVer[2];
+                    }
+                    // else if (ua.indexOf("Edg") != -1)
+                    // {
+                    //     // Edg = Chromium Edge
+                    //     name = "Microsoft Edge";
+                    // }
+                    // else if (ua.indexOf("Chrome") != -1)
+                    // {
+                    //     name = "Google Chrome";
+                    // }
+                    else if ((ua.indexOf("Chrome") || ua.indexOf("Chromium")) != -1)
+                    {
+                        // All Chromium browsers (expect Opera) are also handled
+                        // under here. This is because it's insanely difficult
+                        // to detect specific Chromium forks since they all
+                        // report as "Chrome".
+                        name = "Chromium";
+                        logo = "chromium-99";
+
+                        version = baseVer[2];
+
+                        if (version < 99)
+                        {
+                            logo = "chromium-49";
+
+                            if (version < 49)
+                            {
+                                logo = "chromium-12";
+                                
+                                if (version < 12)
+                                {
+                                    logo = "chromium-1";
+                                }
+                            }
+                        }
+                    }
+                    else if (ua.indexOf("Safari") != -1)
+                    {
+                        name = "Safari";
+                        logo = "safari-14";
+                        version = baseVer[2];
+
+                        if (version < 14)
+                        {
+                            logo = "safari-8";
+
+                            if (version < 8)
+                            {
+                                logo = "safari-1";
+                            }
+                        }
+                    }
+                    else if (ua.indexOf("Firefox") != -1)
+                    {
+                        name = "Firefox";
+                        logo = "firefox-70";
+
+                        var version = baseVer[2];
+
+                        if (version < 70)
+                        {
+                            logo = "firefox-57";
+                        }
+                        if (version < 57)
+                        {
+                            // I like to associate pre-Photon Firefox with the
+                            // old branding: "Mozilla Firefox".
+                            name = "Mozilla Firefox";
+                            logo = "firefox-23";
+                        }
+                        if (version < 23)
+                        {
+                            logo = "firefox-3";
+                        }
+                        if (version < 3)
+                        {
+                            logo = "firefox-1-5";
+                        }
+                        if (version < 1.5)
+                        {
+                            logo = "firefox-1";
+                        }
+                    }
+                    else if (ua.indexOf("MSIE") != -1 || (!!document.documentMode == true))
+                    {
+                        name = "Internet Explorer";
+                        var vertemp = /\brv[ :]+(\d+)/g.exec(ua) || [];
+                        version = vertemp[1] || "";
+
+                        logo = "ie-9";
+
+                        if (version < 9)
+                        {
+                            logo = "ie-7";
+                        }
+                        if (version < 7)
+                        {
+                            logo = "ie-5";
+                        }
+                    }
+
+                    // Install the logo and metadata into the container and set
+                    // it up for display.
+                    var logoEl = browserInfoEl.querySelector(".runtime-info-browser-logo");
+                    var titleEl = browserInfoEl.querySelector(".title");
+                    var versionEl = browserInfoEl.querySelector(".version");
+
+                    logoEl.setAttribute(
+                        "class",
+                        logoEl.getAttribute("class") + " " + logo
+                    );
+                    titleEl.innerText = name;
+                    versionEl.innerText = version;
+
+                    // Unhide the element.
+                    browserInfoEl.setAttribute(
+                        "class",
+                        browserInfoEl.getAttribute("class").replace("hid", "")
+                    );
+                })();
+                </script>
+            </li>
+        </ul>
+    </div>
+</div>
+{% endmacro %}

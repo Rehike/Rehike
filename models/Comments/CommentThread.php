@@ -255,7 +255,7 @@ class CommentThread
                  * or else some comments will show things like: "@userHi hello".
                  */
                 $nextRun = &$context->contentText->runs[$i + 1];
-                if (substr($nextRun->text, 0, 1) != " ")
+                if ($nextRun && substr($nextRun->text, 0, 1) != " ")
                 {
                     $nextRun->text = " " . $nextRun->text;
                 }

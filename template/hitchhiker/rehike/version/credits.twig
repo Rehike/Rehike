@@ -1,0 +1,112 @@
+{% macro render() %}
+    {% embed "common/dialog/dialog_base.twig" %}
+        {% set enable_top_right_close_button = true %}
+
+        {% block wrapper_class %}rehike-dialog{% endblock %}
+
+        {% block dialog_title %}
+            {{ rehike.i18n.get("rehike/version", "creditsTitle") }}
+        {% endblock %}
+
+        {% block dialog_content %}
+            {# Shhhh... I don't know why it doesn't work otherwise. #}
+            {% import "rehike/version/credits.twig" as credits %}
+            <div class="rehike-credits-content">
+                {{ credits.credits_content() }}
+            </div>
+        {% endblock %}
+    {% endembed %}
+{% endmacro %}
+
+{% macro credits_content() %}
+<div class="general-section section">
+    <p>
+        {{ rehike.i18n.get("rehike/version", "creditsThirdPartyHeader") }}
+    </p>
+    <br>
+    <ul>
+        <li>
+            <a href="//getcomposer.org">Composer</a>
+        </li>
+        <li>
+            <a href="//twig.symfony.com">Twig</a>
+        </li>
+        <li>
+            <a href="//developers.google.com/protocol-buffers/">
+                Protocol Buffers
+            </a>
+        </li>
+        <li>
+            <a href="//www.returnyoutubedislike.com">
+                Return YouTube Dislike API
+            </a>
+        </li>
+        <li>
+            {% set prototaxis_credits_link_html %}
+            <a href="//github.com/Prototaxis">Prototaxis</a>
+            {% endset %}
+            {{ rehike.i18n.format(
+                "rehike/version", 
+                "creditsPrototaxisTemplate",
+                prototaxis_credits_link_html)|raw 
+            }}
+        </li>
+    </ul>
+    <br>
+    <p>
+        {{ rehike.i18n.get("rehike/version", "creditsThirdPartyFooter") }}
+    </p>
+</div>
+{# I'll do this eventually. #}
+<div class="developers-section section">
+    <div class="title">{{ rehike.i18n.get("rehike/version", "creditsDevelopersTitle") }}</div>
+    <ul>
+        {{ _self.developer_entry(
+            rehike.i18n.get("rehike/version", "creditsTaniko"),
+            "/rehike/static/version/taniko.jpg",
+            {
+                githubLink: "//github.com/YukisCoffee"
+            }
+        ) }}
+        {{ _self.developer_entry(
+            rehike.i18n.get("rehike/version", "creditsAubrey"),
+            "/rehike/static/version/aubrey.png",
+            {
+                githubLink: "//github.com/aubymori"
+            }
+        ) }}
+        {{ _self.developer_entry(
+            rehike.i18n.get("rehike/version", "creditsDaylin"),
+            "/rehike/static/version/daylin.jpg",
+            {
+                githubLink: "//github.com/ephemeralViolette"
+            }
+        ) }}
+    </ul>
+</div>
+{% endmacro %}
+
+{% macro developer_entry(name, image, extra) %}
+<li class="rh-developer-entry">
+    <span class="photo left">
+        <img src="{{ image }}" width="56" height="56">
+    </span>
+    <span class="info right">
+        <div class="name">{{ name }}</div>
+        <div class="info-buttons">
+            {% if extra.githubLink %}
+                <a 
+                    href="{{ extra.githubLink }}"
+                    class="yt-uix-button yt-uix-button-default yt-uix-button-size-small"
+                    target="_blank"
+                >
+                    <span class="yt-uix-button-icon-wrapper">
+                        <span class="yt-uix-button-icon yt-uix-button-icon-rh-github-icon yt-sprite"></span>
+                    </span>
+                    <span class="yt-uix-button-content">GitHub</span>
+                </a>
+            {% endif %}
+        </div>
+    </span>
+</li>
+{% endmacro %}

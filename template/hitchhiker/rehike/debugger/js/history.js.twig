@@ -169,7 +169,7 @@ rebug.history._addRegistry = function(data, url, title, switchTo)
  */
 rebug.history._switchToSnapshot = function(snapshot)
 {
-    rebug.pubsub.publish("rebug-history-switch", snapshot);
+    rehike.pubsub.publish("rebug-history-switch", snapshot);
 
     rebug.history._updateTabs(snapshot.updatedTabs);
     
@@ -273,7 +273,7 @@ rebug.history._onRebugInit = function()
 {
     rebug.history._historyButton = document.querySelector(".rebug-history-button");
 
-    rebug.eventDelegate.add(
+    rehike.eventDelegate.add(
         "click", 
         "rebug-history-button", 
         rebug.history._onClickHistoryButton
@@ -282,4 +282,4 @@ rebug.history._onRebugInit = function()
     rebug.history._setupInitialPage();
 };
 
-rebug.pubsub.subscribe("rebug-init-finish", rebug.history._onRebugInit);
+rehike.pubsub.subscribe("rebug-init-finish", rebug.history._onRebugInit);

@@ -4,14 +4,47 @@
         {% if section.creatorSidebarSectionRenderer %}
             {% set this = section.creatorSidebarSectionRenderer %}
             <li id="creator-sidebar-section-id-{{ this.targetId }}" class="creator-sidebar-section {{ this.isSelected ? "selected" }}">
-                <h3>{{ rehike.getText(this.title) }}</h3>
-                <ul class="creator-sidebar-submenu">
-                    {% for item in this.items %}
-                        {% if item.creatorSidebarItemRenderer %}
-                            {{ _self.item(item.creatorSidebarItemRenderer) }}
-                        {% endif %}
-                    {% endfor %}
-                </ul>
+                <h3>
+                    {%- if this.sectionLink -%}
+                        <a class="creator-sidebar-section-link yt-uix-sessionlink spf-link" href="{{ this.sectionLink.href }}">
+                            <span class="studio-icon creator-sidebar-{{ this.sectionLink.icon }} {{ this.isSelected ? "selected" }}  yt-sprite"></span>
+                            <span class="header-text">{{ rehike.getText(this.sectionLink.title) }}</span>
+                            {%- if this.items|length > 1 and not this.isSelected -%}
+                                <span class="creator-sidebar-bullet yt-sprite"></span>
+                            {%- endif -%}
+                        </a>
+                    {%- else -%}
+                        {{ rehike.getText(this.title) }}
+                    {%- endif -%}
+                </h3>
+                {% if this.items|length > 1 and (this.sectionLink ? this.isSelected : true) %}
+                    <ul class="creator-sidebar-submenu">
+                        {% for item in this.items %}
+                            {% if item.creatorSidebarItemRenderer %}
+                                {{ _self.item(item.creatorSidebarItemRenderer) }}
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </li>
+        {% elseif section.creatorSidebarSeparatorRenderer %}
+            <li id="creator-sidebar-separator"></li>
+        {% elseif section.creatorSidebarBranding %}
+            <li class="creator-sidebar-branding">
+                <h1>{{ rehike.getText(section.creatorSidebarBranding.text) }}</h1>
+            </li>
+        {% elseif section.creatorSidebarButtonRenderer %}
+            {% set this = section.creatorSidebarButtonRenderer %}
+            {% from "common/uix/button.twig" import render as button %}
+            <li class="{{ this.class }}">
+                {{ button(this.buttonRenderer) }}
+                {% if this.rehikeDialogRenderer %}
+                    {% from "common/dialog/confirm_dialog.twig" import render as confirm_dialog %}
+                    {{ confirm_dialog(
+                        this.rehikeDialogRenderer,
+                        this.rehikeDialogRenderer.jsWrapperClassName
+                    ) }}
+                {% endif %}
             </li>
         {% endif %}
     {% endfor %}

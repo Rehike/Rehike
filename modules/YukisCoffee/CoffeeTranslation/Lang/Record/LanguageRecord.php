@@ -33,11 +33,13 @@ class LanguageRecord implements IResourceRecord
         $tok = strtok($path, $tokens);
 
         $cur = $root;
-        $type = "other"; // real type name doesn't matter here
+        $type = "object";
 
         if (isset($cur->{$tok}))
         {
             $cur = $cur->{$tok};
+            $type = gettype($cur);
+            $tok = strtok($tokens);
         }
 
         do
@@ -45,23 +47,16 @@ class LanguageRecord implements IResourceRecord
             if ("object" == $type && isset($cur->{$tok}))
             {
                 $cur = $cur->{$tok};
-                $type = gettype($cur);
                 $tok = strtok($tokens);
+                $type = gettype($cur);
                 continue;
             }
             else if ("array" == $type && isset($cur[$tok]))
             {
                 $cur = $cur[$tok];
-                $type = gettype($cur);
                 $tok = strtok($tokens);
+                $type = gettype($cur);
                 continue;
-            }
-            else if ("object" == $type || "array" == $type)
-            {
-                // If we get here, then the requested property is
-                // unavailable.
-                $out = null;
-                return false;
             }
             else
             {
@@ -71,7 +66,7 @@ class LanguageRecord implements IResourceRecord
                 return true;
             }
         }
-        while ($tok !== false);
+        while (true);
 
         $out = null;
         return false;
