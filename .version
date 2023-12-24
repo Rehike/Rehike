@@ -1,10 +1,10 @@
 {
-	"previousHash": "dc59150c24cc66f340a8ccbcdfd7dd682f8035bd",
-	"currentRevisionId": 1245,
-	"subject": "Localized video category names",
-	"body": "Localized video category names",
+	"previousHash": "d83bc6f9b4fd3deb500b23d6d43b6572796186c1",
+	"currentRevisionId": 1248,
+	"subject": "0.8.1: Settings redesign",
+	"body": "0.8.1: Settings redesign",
 	"branch": "master",
 	"committerName": "Taniko Yamamoto",
 	"committerEmail": "kirasicecreamm@gmail.com",
-	"time": 1702462352
+	"time": 1703392630
 }

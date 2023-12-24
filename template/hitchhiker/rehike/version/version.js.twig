@@ -1,0 +1,161 @@
+/**
+ * @fileoverview Version page scripts.
+ * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
+ */
+
+(function(){
+
+/*{{ "*"~"/" }}
+
+ {######################################################
+ #                     IMPORTS.                        #
+ ######################################################}
+
+{% include "rehike/core/rehike-core.js.twig" %}
+
+//*/
+
+rehike.version = rehike.version || {};
+
+/**
+ * @var {string}
+ */
+rehike.version.activeDialogClass_ = null;
+
+/**
+ * @var {rehike.Dialog}
+ */
+rehike.version.activeDialogController_ = null;
+
+rehike.version.init = function()
+{
+    var creditsButton = document.querySelector(".rehike-version-credits-button");
+    var gitManagerPullButton =
+        document.querySelector(".git-manager-pull-button");
+
+    if (creditsButton)
+    {
+        rehike.util.events.add(
+            creditsButton, 
+            "click",
+            rehike.version.onClickCreditsButton_
+        );
+    }
+
+    if (gitManagerPullButton)
+    {
+        rehike.util.events.add(
+            gitManagerPullButton,
+            "click",
+            rehike.version.onClickPullButton_
+        );
+    }
+};
+
+rehike.version.onClickCreditsButton_ = function()
+{
+    var creditsDialog = document.querySelector(
+        "#rehike-version-credits-dialog-container .rehike-dialog"
+    );
+
+    if (creditsDialog)
+    {
+        var dialogController = new rehike.Dialog(creditsDialog, {
+            initialState: "content"
+        });
+        dialogController.open();
+    }
+};
+
+rehike.version.onClickPullButton_ = function()
+{
+    var xhr = new XMLHttpRequest;
+    xhr.open("GET", "/rehike/ajax/git_ajax?action_pull=1");
+    xhr.onload = function() {
+        var response = JSON.parse(xhr.responseText);
+        
+        if (response.status == "SUCCESS")
+        {
+            window.location.reload();
+        }
+        else
+        {
+            if (response.dialogHtml && response.dialogRid)
+            {
+                rehike.version.activeDialogClass_ = 
+                    rehike.version.getGitManagerDialogClass_(response.dialogRid);
+                
+                // Dialog controller depends on the dialog HTML existing in the
+                // DOM beforehand, so we must add it first.
+                document.body.insertAdjacentHTML(
+                    "beforeend",
+                    response.dialogHtml
+                );
+
+                var dialogElement = document.querySelector(
+                    "." + rehike.version.activeDialogClass_
+                );
+
+                console.log(dialogElement);
+
+                var dialogController = new rehike.Dialog(dialogElement, {
+                    initialState: "content",
+                    buttonHandlerCb: rehike.version.pullDialogProc_,
+                    preventOverflow: true
+                });
+                rehike.version.activeDialogController_ = dialogController;
+                dialogController.close =
+                    rehike.version.onCloseDialog_.bind(dialogController);
+                dialogController.open();
+            }
+        }
+    };
+    xhr.send();
+};
+
+rehike.version.getGitManagerDialogClass_ = function(rid)
+{
+    return "rehike-dialog-rid-" + String(rid);
+};
+
+rehike.version.pullDialogProc_ = function(defaultDialogProc, targetEl, event)
+{
+    if (targetEl && rehike.class.has(targetEl, "confirm-button"))
+    {
+        // For the confirm button, the easiest solution is to just close the
+        // dialog and send a click event to the "pull" button again.
+        if (rehike.version.activeDialogController_)
+        {
+            rehike.version.activeDialogController_.close();
+        }
+
+        var pullButton = document.querySelector(".git-manager-pull-button");
+        pullButton.click();
+    }
+
+    return defaultDialogProc(targetEl, event);
+};
+
+/**
+ * This is an overloaded function that we apply on our instance of the Dialog
+ * controller. Thus, it has the same `this` variable as if it were a member of
+ * that class.
+ */
+rehike.version.onCloseDialog_ = function()
+{
+    console.log("hi");
+    rehike.Dialog.prototype.close.call(this);
+
+    var dialogElement =
+        document.querySelector("." + rehike.version.activeDialogClass_);
+    
+    dialogElement.remove();
+
+    rehike.version.activeDialogController_ = null;
+    rehike.version.activeDialogClass_ = null;
+};
+
+rehike.version.init();
+
+})();

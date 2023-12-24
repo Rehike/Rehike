@@ -99,6 +99,8 @@ Router::get([
     "/channel_switcher" => "channel_switcher",
     "/rehike/config" => "rehike/config",
     "/rehike/config/**" => "rehike/config",
+    "/rehike/ajax/git_ajax" => "rehike/ajax/git_ajax",
+    "/rehike/server_info" => "rehike/server_info",
     "default" => "channel"
 ]);
 

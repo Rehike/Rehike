@@ -1,41 +1,40 @@
 <?php
 namespace Rehike\Model\Rehike\Config;
+
+use AllowDynamicProperties;
+use Rehike\Model\Rehike\Panel\RehikePanelPage;
+
 use Rehike\i18n\i18n;
 use Rehike\Model\Traits\NavigationEndpoint;
 use Rehike\ConfigManager\Config;
 use Rehike\Model\Common\MButton;
 use Rehike\Model\Common\MAlert;
 
-class ConfigModel {
-    public static function bake($tab, $status = null) {
-        $response = (object) [];
+class ConfigModel extends RehikePanelPage
+{
+    /**
+     * The ID of the selected tab.
+     */
+    public string $tab;
+
+    public array $alerts = [];
+
+    public object $content;
+
+    public function __construct(string $tabId)
+    {
+        $this->content = (object)[];
+        parent::__construct($tabId);
+    }
+
+    public static function bake(string $tab, $status = null) {
+        
+        $response = new self($tab);
         $i18n = i18n::getNamespace("rehike/config");
         $tabs = (object) $i18n->getAllTemplates()->tabs;
         $props = json_decode(json_encode($i18n->getAllTemplates()->props))->{$tab};
 
         $response->tab = $tab;
-
-        $response->sidebar = (object) [
-            "creatorSidebarRenderer" => (object) [
-                "sections" => [
-                    (object) [
-                        "creatorSidebarSectionRenderer" => (object) [
-                            "title" => (object) [
-                                "simpleText" => $i18n->get("title")
-                            ],
-                            "targetId" => "rehike-config",
-                            "isSelected" => true,
-                            "items" => []
-                        ]
-                    ]
-                ],
-                "footButtons" => [
-                    (object)[
-                        "buttonRenderer" => self::getDisableRehikeButton()
-                    ]
-                ]
-            ]
-        ];
 
         if ($status != null) {
             $response->alerts = [];
@@ -53,16 +52,6 @@ class ConfigModel {
                     ]);
                     break;
             }
-        }
-
-        foreach ($tabs as $name => $text) {
-            $response->sidebar->creatorSidebarRenderer->sections[0]
-            ->creatorSidebarSectionRenderer->items[] = 
-            self::buildCreatorSidebarItem(
-                $text,
-                "/rehike/config/{$name}",
-                ($name == $tab)
-            );
         }
 
         $response->content = (object) [
@@ -132,30 +121,5 @@ class ConfigModel {
                 "isSelected" => $selected
             ]
         ];
-    }
-
-    private static function getDisableRehikeButton(): MButton
-    {
-        $i18n = i18n::getNamespace("rehike/disable_rehike");
-        $isDisabled = Config::getConfigProp("hidden.disableRehike");
-
-        $buttonText = $isDisabled
-            ? $i18n->get("rhSettingsEnableRehike")
-            : $i18n->get("disableRehike");
-
-        return new MButton([
-            "style" => "STYLE_DARK",
-            "class" => [ "rehike-config-disable-rehike-button" ],
-            "attributes" => [
-                "disable-rehike-action" => $isDisabled ? "enable" : "disable",
-                "dialog-header-text" => $i18n->get("disableRehikeInfoHeader"),
-                "dialog-header-description" => $i18n->get("disableRehikeInfoDescription"),
-                "dialog-header-button-cancel" => $i18n->get("disableRehikeInfoCancel"),
-                "dialog-header-button-disable" => $i18n->get("disableRehikeInfoDisable")
-            ],
-            "text" => (object)[
-                "simpleText" => $buttonText
-            ]
-        ]);
     }
 }

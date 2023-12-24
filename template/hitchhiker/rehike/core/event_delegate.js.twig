@@ -29,8 +29,11 @@ rehike.eventDelegate._activeEvents = [];
  * @param {string} eventName 
  * @param {string} className 
  * @param {function(Event)} cb 
+ * 
+ * @return {number}
  */
-rehike.eventDelegate.add = function(eventName, className, cb) {
+rehike.eventDelegate.add = function(eventName, className, cb)
+{
     if (!rehike.eventDelegate._isActiveEventName(eventName))
     {
         rehike.util.events.add(
@@ -42,7 +45,17 @@ rehike.eventDelegate.add = function(eventName, className, cb) {
         rehike.eventDelegate._activeEvents.push(eventName);
     }
 
-    rehike.eventDelegate._addHandler(eventName, className, cb);
+    return rehike.eventDelegate._addHandler(eventName, className, cb);
+};
+
+rehike.eventDelegate.remove = function(eventName, className, handle)
+{
+    if (!rehike.eventDelegate._handlers[eventName])
+        return;
+    if (!rehike.eventDelegate._handlers[eventName][className])
+        return;
+
+    rehike.eventDelegate._handlers[eventName][className].splice(handle, 1);
 };
 
 /**
@@ -91,7 +104,13 @@ rehike.eventDelegate._getDelegateHandler = function(eventName)
                 {
                     if (classes[i] in handlerClassNameList)
                     {
-                        return handlerClassNameList[classes[i]](activeElement, e);
+                        for (var k = 0, l = handlerClassNameList[classes[i]].length; k < l; k++)
+                        {
+                            if (typeof handlerClassNameList[classes[i]][k] == "function")
+                            {
+                                handlerClassNameList[classes[i]][k](activeElement, e);
+                            }
+                        }
                     }
                     else if ("rehike-no-propagate" == classes[i])
                     {
@@ -112,6 +131,8 @@ rehike.eventDelegate._getDelegateHandler = function(eventName)
  * @param {string} className 
  * @param {function(Event)} cb 
  * 
+ * @return {number}
+ * 
  * @private
  */
 rehike.eventDelegate._addHandler = function(eventName, className, cb)
@@ -121,5 +142,12 @@ rehike.eventDelegate._addHandler = function(eventName, className, cb)
         rehike.eventDelegate._handlers[eventName] = {};
     }
 
-    rehike.eventDelegate._handlers[eventName][className] = cb;
+    if (!(className in rehike.eventDelegate._handlers[eventName]))
+    {
+        rehike.eventDelegate._handlers[eventName][className] = [];
+    }
+
+    rehike.eventDelegate._handlers[eventName][className].push(cb);
+
+    return rehike.eventDelegate._handlers[eventName][className].length - 1;
 };

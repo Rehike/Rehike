@@ -68,7 +68,7 @@ abstract class RehikeUtilsDelegateBase extends stdClass
     public function __construct()
     {
         $this->config = Config::loadConfig();
-        $this->version = (object)VersionController::$versionInfo;
+        $this->version = VersionController::$versionInfo;
         $this->version->semanticVersion = VersionController::getVersion();
     }
 

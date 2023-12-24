@@ -15,7 +15,7 @@ currentlyDisabledMessage: >
 disableRehikeInfoHeader: "本当によろしいですか？"
 disableRehikeInfoDescription: >
     これを無効にすると、再度有効にするまで Rehike が無効になります。
-    Rehike を有効にするには、新しい YouTube インターフェースのアカウントメニューから、
+    Rehike を有効にするには、新しい YouTube UI のアカウントメニューから、
     または以下の URL パラメーターを使用して行うことができます：
     ?enable_rehike=1
 

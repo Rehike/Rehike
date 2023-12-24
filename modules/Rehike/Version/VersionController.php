@@ -12,14 +12,17 @@ use DateTime, DateTimeZone;
 class VersionController
 {
     /**
-     * Array storing the version information.
+     * Structure storing the version information.
      * 
-     * This is obtained from the .version file in root,
-     * or .git if it is available.
-     * 
-     * @var mixed[]
+     * This is obtained from the .version file in root, or .git if it is
+     * available.
      */
-    public static array $versionInfo = [];
+    public static VersionInfo $versionInfo;
+
+    public static function __initStatic(): void
+    {
+        self::init();
+    }
 
     /**
      * Initialise the Version subsystem.
@@ -29,15 +32,17 @@ class VersionController
         static $hasRun = false;
         if ($hasRun) return true;
 
+        self::$versionInfo = new VersionInfo;
+
         if ($dg = DotGit::canUse())
         {
-            self::$versionInfo = DotGit::getInfo();
-            self::$versionInfo += ["supportsDotGit" => true];
+            DotGit::getInfo(self::$versionInfo);
+            self::$versionInfo->supportsDotGit = true;
         }
         
         if ($dv = DotVersion::canUse())
         {
-            self::$versionInfo += DotVersion::getInfo();
+            DotVersion::getInfo(self::$versionInfo);
         }
 
         if ($dg || $dv)
@@ -58,17 +63,17 @@ class VersionController
         
         $dateTime = new DateTime(timezone: new DateTimeZone("GMT"));
         $dateAvailable = false;
-        if (isset(self::$versionInfo["time"]) && is_int(self::$versionInfo["time"]))
+        if (isset(self::$versionInfo->time) && is_int(self::$versionInfo->time))
         {
-            $dateTime->setTimestamp(self::$versionInfo["time"]);
+            $dateTime->setTimestamp(self::$versionInfo->time);
             $dateAvailable = true;
         }
 
         $initStatus = self::init();
 
-        if ($initStatus && @self::$versionInfo["currentRevisionId"] && $dateAvailable)
+        if ($initStatus && @self::$versionInfo->currentRevisionId && $dateAvailable)
         {
-            $semanticVersion .= " (build " . (string)self::$versionInfo["currentRevisionId"] . ", " . $dateTime->format("Y-m-d") . ")";
+            $semanticVersion .= " (build " . (string)self::$versionInfo->currentRevisionId . ", " . $dateTime->format("Y-m-d") . ")";
         }
 
         return $semanticVersion;
