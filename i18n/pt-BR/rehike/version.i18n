@@ -7,9 +7,9 @@ nightlyInfoTooltip: >
 subheaderNightlyInfo: "Informação atual da branch"
 nonGitNotice: "Essa versão do Rehike ausenta informação do Git."
 nonGitExtended: >
-  Isso pode ocorrer se você tiver instalado o repositório
-  diretamente do GitHub, como o recurso do "Baixar ZIP".
-  Alguma informação da versão pode estar perdida ou indisponível.
+  Isso pode ocorrer se você tiver instalado o repositório diretamente do
+  GitHub, como o recurso do "Baixar ZIP". Alguma informação da versão
+  pode estar perdida ou indisponível.
 syncGithubButton: "Sincronizar com o GitHub"
 failedNotice: "Falha ao pegar informação da versão."
 remoteFailedNotice: "Falha ao obter informações da versão remota."
