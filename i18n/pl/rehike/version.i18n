@@ -18,7 +18,7 @@ remoteFailedExtended: "Informacje o wersji są ograniczone."
 noDotVersionNotice: "Brak pliku .version lub jest on uszkodzony."
 noNewVersions: "Brak dostępnych nowych wersji."
 oneNewVersion: "Dostępna jest 1 nowa wersja."
-varNewVersions: "Dostępne są %s nowe wersje."
+varNewVersions: "Dostępnych jest %s nowych wersji."
 unknownNewVersions: "Ta wersja jest krytycznie nieaktualna."
 
 updatesAvailable: "Dostępne aktualizacje"
