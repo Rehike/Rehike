@@ -1,3 +1,4 @@
+aboutRehike: "About Rehike"
 brandName: "Rehike"
 versionHeader: "Version %s"
 nightly: "Nightly"
@@ -20,9 +21,58 @@ oneNewVersion: "1 new version available."
 varNewVersions: "%s new versions available."
 unknownNewVersions: "This version is critically out of date."
 
-headingVersionInfo: "Version information"
+updatesAvailable: "Updates available"
+upToDate: "You're up to date with the remote branch."
+
+headingVersionInfo: "About Rehike"
 viewOnGithub: "View on GitHub"
 
-extraInfo: "Extra information"
+extraInfo: "Runtime information"
 operatingSystem: "Operating system"
 phpVersion: "PHP version"
+browserVersion: "Browser version"
+
+githubLinkButton: "Rehike on GitHub"
+creditsButton: "Credits"
+runtimeInfoMoreInfoButton: "More info"
+gitManagerPullButton: "Pull"
+gitManagerUnpushedChanges: >
+  You have unpushed local changes, so this is actually older.
+
+# -- Git manager messages --
+
+gitManagerDialogDismissButton: "Dismiss"
+gitManagerDialogRetryButton: "Retry"
+
+gitManagerDialogFailedPullTitle: "Failed to pull"
+gitManagerDialogFailedPullMessage: >
+  Failed to pull changes from the remote source. Git error log:
+
+# -- Translations for the credits section --
+
+creditsTitle: "Credits"
+creditsDevelopersTitle: "Rehike Developers"
+
+# Major contributor names.
+# Feel free to add transliterations of names in parentheses if you wish
+# to do so.
+creditsAubrey: "Aubrey Pankow"
+creditsDaylin: "Daylin Cooper"
+creditsTaniko: "Taniko Yamamoto"
+
+creditsThirdPartyHeader: >
+  Rehike makes use of the following third-party software, contributions,
+  or services:
+
+# Credits to Prototaxis for documenting the WEB v2 shelves technique
+# we use for the homepage.
+# The template placeholder "%s" is replaced with an anchor link to his
+# GitHub profile, but it's not featured here in order to avoid embedding
+# HTML content.
+creditsPrototaxisTemplate: >
+  %s for documenting the InnerTube API exploits we use to restore the
+  classic "shelves" homepage design.
+
+creditsThirdPartyFooter: >
+  Use of these third-party services is governed by their respective licenses.
+  Where possible, their application will be optional.

@@ -1,5 +1,5 @@
 /**
- * @fileoverview Provides basic lightbox behaviours for Rebug.
+ * @fileoverview Provides basic lightbox behaviors for Rebug.
  * 
  * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
@@ -7,10 +7,39 @@
 
 rebug.lightbox = {};
 
+rebug.lightbox.RebugLightbox = function(containerElement) {
+    rehike.Dialog.call(this, containerElement);
+};
+rehike.inherits(rebug.lightbox.RebugLightbox, rehike.Dialog);
+
 /**
- * Stores a reference to the lightbox container element.
+ * Opens the Rebug lightbox.
+ */
+rebug.lightbox.RebugLightbox.prototype.open = function()
+{
+    rebug.lightbox.RebugLightbox.super(this, "open");
+
+    // Unhide the lightbox
+    var container = this._container;
+    rehike.class.add(container, "open");
+};
+
+/**
+ * Closes the Rebug lightbox.
+ */
+rebug.lightbox.RebugLightbox.prototype.close = function()
+{
+    rebug.lightbox.RebugLightbox.super(this, "close");
+
+    // Hide the lightbox
+    var container = this._container;
+    rehike.class.remove(container, "open");
+};
+
+/**
+ * Stores a reference to the lightbox API.
  * 
- * @type {rehike.Lightbox}
+ * @type {rehike.lightbox.RebugLightbox}
  */
 rebug.lightbox._instance = null;
 
@@ -37,13 +66,13 @@ rebug.lightbox.close = function()
 };
 
 /**
- * Runs upon Rebug initialisation.
+ * Runs upon Rebug initialization.
  * 
  * @private
  */
 rebug.lightbox._init = function()
 {
-    rebug.lightbox._instance = new rehike.Lightbox(
+    rebug.lightbox._instance = new rebug.lightbox.RebugLightbox(
         document.getElementById("rebug-lightbox-container") || null
     );
 };

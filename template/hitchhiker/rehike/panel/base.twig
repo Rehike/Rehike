@@ -1,0 +1,15 @@
+{% extends "common/creator/creator_page.twig" %}
+
+{% from "common/creator/creator_sidebar.twig" import render as creator_sidebar %}
+{% from "rehike/panel/content.twig" import render as panel_content %}
+
+{% block creator_page_sidebar %}
+{{ creator_sidebar(yt.page.sidebar.creatorSidebarRenderer) }}
+<script>
+    {% include "rehike/panel/panel.js.twig" %}
+</script>
+{% endblock %}
+
+{% block creator_page_content %}
+    {{ panel_content("placeholder", "placeholder") }}
+{% endblock %}

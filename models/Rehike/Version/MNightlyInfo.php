@@ -3,64 +3,57 @@ namespace Rehike\Model\Rehike\Version;
 
 use Rehike\Controller\Version\GetVersionController as Controller;
 use Rehike\i18n\i18n;
+use Rehike\Version\VersionInfo;
 use YukisCoffee\CoffeeTranslation\DateTimeFormats;
 
 class MNightlyInfo
 {
-    public $headingText;
-    public $branch;
-    public $commitHash;
-    public $fullCommitHash;
-    public $isPreviousHash = false;
-    public $commitName;
-    public $commitDateTime;
-    public $ghButton;
+    public string $headingText;
+    public MNightlyInfoItem $primaryItem;
+    public bool $updateAvailable = false;
+    public ?MNightlyInfoUpdate $updateContainer = null;
 
-    public function __construct(&$data)
+    public function __construct(VersionInfo $data)
     {
         $strings = i18n::getNamespace("rehike/version");
+        $this->headingText = $strings->get("subheaderNightlyInfo");
+        $this->primaryItem = MNightlyInfoItem::fromVersionInfo($data);
 
-        if ($branch = @$data["branch"])
+        if (isset($data->remoteGit) && is_array($data->remoteGit))
         {
-			$this->headingText = $strings->get("subheaderNightlyInfo");
-            $this->branch = $branch;
-        }
+            if (isset($data->remoteGit[0]->commit->committer->date))
+            {
+                $base = $data->remoteGit[0];
+                $latestRemoteTime = strtotime($base->commit->committer->date);
+                $currentTime = 0;
+                
+                if ($output = shell_exec("git log -1 --pretty=%ct"))
+                {
+                    $currentTime = (int)$output;
+                }
+                else
+                {
+                    // If the git command line is unavailable, then use the
+                    // less accurate timestamp from the .version file.
+                    $currentTime = $data->time;
+                }
 
-        if ($hash = @$data["currentHash"])
-        {
-            $this->commitHash = self::trimHash($hash);
-            $this->fullCommitHash = $hash;
-        }
-        else if ($hash = @$data["previousHash"])
-        {
-            $this->commitHash = self::trimHash($hash);
-            $this->fullCommitHash = $hash;
-            $this->isPreviousHash = true;
-        }
+                $latestRemoteSha = @$base->sha ?? "";
 
-        if ($name = @$data["subject"])
-        {
-            $this->commitName = $name;
-        }
+                // Sometimes the times can differ, but the hashes can be the
+                // same. If it's the same hash, then of course the commits are
+                // the same, so there is no update.
+                $isDifferentHash = $data->currentHash != $latestRemoteSha;
 
-        if ($time = @$data["time"])
-        {
-            $this->commitDateTime = $strings->formatDate(
-                DateTimeFormats::EXPANDED_DATE_WITH_TIME,
-                $time
-            );
+                if ($latestRemoteTime > $currentTime && $isDifferentHash)
+                {
+                    $this->updateAvailable = true;
+                    $this->updateContainer = new MNightlyInfoUpdate(
+                        $base,
+                        $data
+                    );
+                }
+            }
         }
-
-        if (Controller::GH_ENABLED && @$this->fullCommitHash)
-        {
-            $this->ghButton = (object)[];
-            $this->ghButton->label = $strings->get("viewOnGithub");
-            $this->ghButton->endpoint = "//github.com/" . Controller::GH_REPO . "/tree/{$this->fullCommitHash}";
-        }
-    }
-
-    private static function trimHash($hash)
-    {
-        return substr($hash, 0, 7);
     }
 }

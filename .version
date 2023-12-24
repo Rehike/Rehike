@@ -1,10 +1,10 @@
 {
-	"previousHash": "10b59e92d633fe93fdf4dca5a2c770cf2309912e",
-	"currentRevisionId": 1247,
-	"subject": "lol",
-	"body": "lol",
+	"previousHash": "d83bc6f9b4fd3deb500b23d6d43b6572796186c1",
+	"currentRevisionId": 1248,
+	"subject": "0.8.1: Settings redesign",
+	"body": "0.8.1: Settings redesign",
 	"branch": "master",
-	"committerName": "Daylin Cooper",
-	"committerEmail": "dcoop2004@gmail.com",
-	"time": 1703302647
+	"committerName": "Taniko Yamamoto",
+	"committerEmail": "kirasicecreamm@gmail.com",
+	"time": 1703392630
 }

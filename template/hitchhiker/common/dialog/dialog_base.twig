@@ -1,0 +1,55 @@
+{% import "/core/spinner.twig" as spinner %}
+{# 
+    In extensions from this template, the following variables can be
+    set to change behavior:
+
+        - enable_top_right_close_button
+#}
+<div class="{% block wrapper_class %}yt-dialog{% endblock %} hid " {{ id ? ('id="' ~ id ~ '"')|raw }}>
+    <div class="yt-dialog-base">
+        <span class="yt-dialog-align"></span>
+        <div class="yt-dialog-fg" role="dialog">
+            <div class="yt-dialog-fg-content">
+                {#
+                 # The dialog header HTML is only included if the block has
+                 # content. Default content is only shown if the title is set,
+                 # which is a little hacky to say the least.   
+                 #}
+                {% if block("dialog_header") is not empty %}
+                    <div class="yt-dialog-header">
+                    {% block dialog_header %}{#
+                        #}{% if enable_top_right_close_button %}
+                        <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-default yt-dialog-dismiss yt-dialog-close" type="button" onclick="return!1" data-action="close">
+                            <span class="yt-uix-button-content">{{ yt.msgs.close }}</span>
+                        </button>
+                        {#
+                        #}{% endif %}{#
+                        #}{% if block("dialog_title") is not empty %}
+                        <h2 class="yt-dialog-title" role="alert">
+                            {% block dialog_title %}{% endblock %}
+                        </h2>
+                        {% endif %}{#
+                    #}{% endblock %}
+                    </div>
+                {% endif %}
+                <div class="yt-dialog-loading">
+                    <div class="yt-dialog-waiting-content">
+                        {{ spinner.render(yt.msgs.loading) }}
+                    </div>
+                </div>
+                <div class="yt-dialog-content">
+                    {% block dialog_content %}{% endblock %}
+                </div>
+                <div class="yt-dialog-working">
+                    <div class="yt-dialog-working-overlay"></div>
+                    <div class="yt-dialog-working-bubble">
+                        <div class="yt-dialog-waiting-content">
+                            {{ spinner.render(yt.msgs.working) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="yt-dialog-focus-trap" tabindex="0"></div>
+        </div>
+    </div>
+</div>

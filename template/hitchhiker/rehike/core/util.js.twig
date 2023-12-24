@@ -213,3 +213,28 @@ rehike.util.events.remove = function(target, name, cb)
         target.detachEvent("on" + name, cb);
     }
 };
+
+/**
+ * Checks if the following element is a child of the parent element, or one of
+ * its children.
+ * 
+ * @param {Element} child
+ * @param {Element} parent
+ */
+rehike.util.isChildOf = function(childEl, parentEl)
+{
+    var curElement = childEl;
+
+    do
+    {
+        if (curElement.parentNode && curElement.parentNode == parentEl)
+        {
+            return true;
+        }
+
+        curElement = curElement.parentNode;
+    }
+    while (curElement != null);
+
+    return false;
+};

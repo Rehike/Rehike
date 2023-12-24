@@ -30,7 +30,7 @@ class MFooter {
 
     public function __construct() {
         $i18n = i18n::getNamespace("footer");
-        $rehikeVersion = (object) \Rehike\Version\VersionController::$versionInfo;
+        $rehikeVersion = \Rehike\Version\VersionController::$versionInfo;
         $rehikeVersion->semanticVersion = \Rehike\Version\VersionController::getVersion();
 
         $this->logoTooltip = $i18n->get("logoTooltip");
