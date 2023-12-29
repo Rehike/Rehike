@@ -75,7 +75,7 @@ return new class extends NirvanaController {
         ];
 
         // Content restriction
-        if (isset($_GET["has_verified"]) && ($_GET["has_verified"] == "1" || $_GET["has_verified"] == true))
+        if (isset($_GET["has_verified"]) && ($_GET["has_verified"] == "1" || $_GET["has_verified"] == true) or false === Config::getConfigProp("experiments.encryptedStreams"))
         {
             $sharedRequestParams += ["racyCheckOk" => true];
             $sharedRequestParams += ["contentCheckOk" => true];
@@ -152,25 +152,71 @@ return new class extends NirvanaController {
         // Unlike Polymer, Hitchhiker had all of the player data already
         // available in the initial response. So an additional player request
         // is used.
-        $playerRequest = Network::innertubeRequest(
-            "player",
-            [
-                "playbackContext" => [
-                    'contentPlaybackContext' => (object) [
-                        'autoCaptionsDefaultOn' => false,
-                        'autonavState' => 'STATE_OFF',
-                        'html5Preference' => 'HTML5_PREF_WANTS',
-                        'lactMilliseconds' => '13407',
-                        'mdxContext' => (object) [],
-                        'playerHeightPixels' => 1080,
-                        'playerWidthPixels' => 1920,
-                        'signatureTimestamp' => $yt->playerConfig->signatureTimestamp
-                    ]   
-                ],
-                "startTimeSecs" => $startTime ?? 0,
-                "params" => $yt->playerParams
-            ] + $sharedRequestParams
-        );
+        if (false === Config::getConfigProp("experiments.encryptedStreams")){
+            $playerRequest = Network::innertubeRequest(
+                "player",
+                [
+                    "playbackContext" => [
+                        'contentPlaybackContext' => (object) [
+                            'autoCaptionsDefaultOn' => false,
+                            'autonavState' => 'STATE_OFF',
+                            'html5Preference' => 'HTML5_PREF_WANTS',
+                            'lactMilliseconds' => '13407',
+                            'mdxContext' => (object) [],
+                            'playerHeightPixels' => 1080,
+                            'playerWidthPixels' => 1920,
+                            'signatureTimestamp' => $yt->playerConfig->signatureTimestamp
+                        ]   
+                    ],
+                    "startTimeSecs" => $startTime ?? 0,
+                    "params" => 'CgIQBg=='
+                ] + $sharedRequestParams,
+                    clientName: "ANDROID",
+                    clientVersion: "16.02.00"
+            );
+            $storyboardRequest = Network::innertubeRequest(
+                "player",
+                [
+                    "playbackContext" => [
+                        'contentPlaybackContext' => (object) [
+                            'autoCaptionsDefaultOn' => false,
+                            'autonavState' => 'STATE_OFF',
+                            'html5Preference' => 'HTML5_PREF_WANTS',
+                            'lactMilliseconds' => '13407',
+                            'mdxContext' => (object) [],
+                            'playerHeightPixels' => 1080,
+                            'playerWidthPixels' => 1920,
+                            'signatureTimestamp' => $yt->playerConfig->signatureTimestamp
+                        ]
+                    ],
+                    "startTimeSecs" => $startTime ?? 0
+                ] + $sharedRequestParams,
+                clientName: "XBOXONEGUIDE",
+                clientVersion: "1.0"
+            );
+        }
+        else{
+            $playerRequest = Network::innertubeRequest(
+                "player",
+                [
+                    "playbackContext" => [
+                        'contentPlaybackContext' => (object) [
+                            'autoCaptionsDefaultOn' => false,
+                            'autonavState' => 'STATE_OFF',
+                            'html5Preference' => 'HTML5_PREF_WANTS',
+                            'lactMilliseconds' => '13407',
+                            'mdxContext' => (object) [],
+                            'playerHeightPixels' => 1080,
+                            'playerWidthPixels' => 1920,
+                            'signatureTimestamp' => $yt->playerConfig->signatureTimestamp
+                        ]   
+                    ],
+                    "startTimeSecs" => $startTime ?? 0,
+                    "params" => $yt->playerParams
+                ] + $sharedRequestParams
+            );
+            $storyboardRequest = new Promise(fn($r) => $r());
+        }
 
         /**
          * Determine whether or not to use the Return YouTube Dislike
@@ -190,14 +236,18 @@ return new class extends NirvanaController {
         }
 
         Promise::all([
-            "next"   => $nextRequest,
-            "player" => $playerRequest,
-            "ryd"    => $rydRequest
+            "next"       => $nextRequest,
+            "player"     => $playerRequest,
+            "ryd"        => $rydRequest,
+            "storyboard" => $storyboardRequest
         ])->then(function ($responses) use ($yt) {
             \Rehike\Profiler::end("watch_requests");
             $nextResponse = $responses["next"]->getJson();
             $playerResponse = $responses["player"]->getJson();
-
+            if (false === Config::getConfigProp("experiments.encryptedStreams")){
+                $storyboardResponse = $responses["storyboard"]->getJson();
+                $playerResponse->storyboards = $storyboardResponse->storyboards;
+            }
             try
             {
                 $rydResponse = $responses["ryd"]?->getJson() ?? (object)[];
