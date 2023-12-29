@@ -44,8 +44,8 @@ class PlayerUpdater
     protected static string $sourceUrl = "https://www.youtube.com/embed/jNQXAC9IVRw?hl=en&gl=US";
 
     /**
-     * Request all necessary player information for the latest
-     * version.
+     * Request all necessary player information for the requested player
+     * revision.
      */
     public static function requestPlayerInfo(): object
     {
@@ -62,23 +62,27 @@ class PlayerUpdater
 
         $sts = self::extractSts($js);
 
-        if ("CURRENT" === Config::getConfigProp("experiments.olderPlayers")){
-            $currentlyUsedJsUrl = $jsUrl;
-            $currentlyusedCssUrl = $cssUrl;
+        $playerChoice = Config::getConfigProp("experiments.playerChoice");
+        if ("CURRENT" === $playerChoice)
+        {
+            $effectiveJsUrl = $jsUrl;
+            $effectiveCssUrl = $cssUrl;
         }
-        elseif ("SQUARE" === Config::getConfigProp("experiments.olderPlayers")){
-            $currentlyUsedJsUrl = "/s/player/c57c113c/player_ias.vflset/en_US/base.js";
-            $currentlyusedCssUrl = "/s/player/c57c113c/www-player.css";
+        else if ("PLAYER_2022" === $playerChoice)
+        {
+            $effectiveJsUrl = "/s/player/c57c113c/player_ias.vflset/en_US/base.js";
+            $effectiveCssUrl = "/s/player/c57c113c/www-player.css";
         }
-        else {
-            $currentlyUsedJsUrl = "/yts/jsbin/player_ias-vfl1Ng2HU/en_US/base.js";
-            $currentlyusedCssUrl = "/yts/cssbin/player-vflfo9Nwd/www-player-webp.css";
+        else if ("PLAYER_2020" === $playerChoice)
+        {
+            $effectiveJsUrl = "/yts/jsbin/player_ias-vfl1Ng2HU/en_US/base.js";
+            $effectiveCssUrl = "/yts/cssbin/player-vflfo9Nwd/www-player-webp.css";
         };
 
         // Pack these up and return:
         return (object)[
-            "baseJsUrl" => $currentlyUsedJsUrl,
-            "baseCssUrl" => $currentlyusedCssUrl,
+            "baseJsUrl" => $effectiveJsUrl,
+            "baseCssUrl" => $effectiveCssUrl,
             "embedJsUrl" => $embedJsUrl,
             "signatureTimestamp" => $sts
         ];

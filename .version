@@ -1,10 +1,10 @@
 {
-	"previousHash": "5803584e8133f512949d354d3e35828b2ed40829",
-	"currentRevisionId": 1252,
-	"subject": "Improve data structure code layout",
-	"body": "Improve data structure code layout",
-	"branch": "master",
+	"previousHash": "708230b7409c9c96df5821a2f353a8979a2dd7fc",
+	"currentRevisionId": 1255,
+	"subject": "Edit player code by David C Granger.",
+	"body": "Edit player code by David C Granger.",
+	"branch": "dev-0.8-player-switcher",
 	"committerName": "Taniko Yamamoto",
 	"committerEmail": "kirasicecreamm@gmail.com",
-	"time": 1703836245
+	"time": 1703893910
 }

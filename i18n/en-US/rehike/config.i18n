@@ -10,6 +10,13 @@ tabs:
 
 props:
   appearance:
+    playerChoice:
+      title: "Choose video player revision:"
+      values:
+        CURRENT: "Latest player" # No specific date; true latest player.
+        PLAYER_2022: "2022 - Square edges, old storyboard"
+        PLAYER_2020: "2020 - Smaller UI"
+        PLAYER_2014: "2014 - Classic UI, old buffering behavior"
     modernLogo:
       title: "Use the current YouTube logo"
       subtitle: >
@@ -91,12 +98,6 @@ props:
         Makes the home page signed out. This is a workaround for YouTube 
         blocking homepage access if you have watch history disabled 
         (2023/08/18).
-    olderPlayers:
-      title: "Use older video players (delete player_cache.json!):"
-      values:
-        CURRENT: "Latest player"
-        SQUARE: "2022 - Square edges, old storyboard"
-        SMALLER: "2020 - Smaller UI"
     encryptedStreams:
       title: "Use encrypted video streams"
       subtitle: >

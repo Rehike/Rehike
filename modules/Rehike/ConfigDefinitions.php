@@ -22,6 +22,7 @@ class ConfigDefinitions
     {
         return [
             "appearance" => [
+                "playerChoice" => new EnumProp("CURRENT"),
                 "modernLogo" => new BoolProp(true),
                 "uploadButtonType" => new EnumProp("MENU"),
                 "largeSearchResults" => new BoolProp(true),
@@ -41,7 +42,6 @@ class ConfigDefinitions
             "experiments" => [
                 "useSignInV2" => new BoolProp(false),
                 "disableSignInOnHome" => new BoolProp(false),
-                "olderPlayers" => new EnumProp("CURRENT"),
                 "encryptedStreams" => new BoolProp(true)
             ],
             "advanced" => [
