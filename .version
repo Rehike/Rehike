@@ -1,10 +1,10 @@
 {
-	"previousHash": "d83bc6f9b4fd3deb500b23d6d43b6572796186c1",
-	"currentRevisionId": 1248,
-	"subject": "0.8.1: Settings redesign",
-	"body": "0.8.1: Settings redesign",
+	"previousHash": "5803584e8133f512949d354d3e35828b2ed40829",
+	"currentRevisionId": 1252,
+	"subject": "Improve data structure code layout",
+	"body": "Improve data structure code layout",
 	"branch": "master",
 	"committerName": "Taniko Yamamoto",
 	"committerEmail": "kirasicecreamm@gmail.com",
-	"time": 1703392630
+	"time": 1703836245
 }

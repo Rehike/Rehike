@@ -1,7 +1,7 @@
 <?php
 namespace Rehike\ControllerV2;
 
-use Rehike\DataArray;
+use Rehike\Ds\EasyAccessMap;
 
 /**
  * Return accessible information from a request.
@@ -23,9 +23,9 @@ class RequestMetadata
     public string $rawPath;
 
     /** @var string[] */
-    public DataArray $headers;
+    public EasyAccessMap $headers;
 
-    public DataArray $params;
+    public EasyAccessMap $params;
 
     public mixed $body;
 
@@ -35,7 +35,7 @@ class RequestMetadata
         $this->path = self::getPath();
         $this->rawPath = $_SERVER["REQUEST_URI"];
         $this->headers = self::getHeaders();
-        $this->params = new DataArray($_GET);
+        $this->params = new EasyAccessMap($_GET);
 
         // Body will only be available for POST requests
         if ("POST" == $this->method)
@@ -76,7 +76,7 @@ class RequestMetadata
      * 
      * @return string[]
      */
-    protected static function getHeaders(): DataArray
+    protected static function getHeaders(): EasyAccessMap
     {
         // Apache (only) has apache_request_headers
         // function:
@@ -103,7 +103,7 @@ class RequestMetadata
              * 
              *      Content-Type == contentType
              */
-            return new DataArray($headers);
+            return new EasyAccessMap($headers);
         }
         else
         {
@@ -123,7 +123,7 @@ class RequestMetadata
                 $headers += [$newKey => $value];
             }
 
-            return new DataArray($headers);
+            return new EasyAccessMap($headers);
         }
     }
 
