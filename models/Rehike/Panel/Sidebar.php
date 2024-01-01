@@ -31,23 +31,23 @@ class Sidebar
         $configStrings = i18n::getNamespace("rehike/config");
         $this->selectedTabId = $selectedTabId;
         $this->creatorSidebarRenderer = (object)[
-            "sections" => [
-                (object)["creatorSidebarBranding" => (object)[
-                    "text" => $configStrings->get("title")
-                ]],
-                // Extract the links of the configuration section and merge them
-                // into this object:
-                ...$this->buildConfigSection(),
-                (object)["creatorSidebarSeparatorRenderer" => (object)[]],
-                $this->buildVersionSection(),
-                (object)["creatorSidebarButtonRenderer" => (object)[
-                    "class" => "rehike-creator-footer-button",
-                    // Extract the button and dialog models returned by the
-                    // following function:
-                    ...self::getDisableRehikeButton()
-                ]]
-            ]
+            "sections" => []
         ];
+
+        $sectionsResult = &$this->creatorSidebarRenderer->sections;
+        $sectionsResult[] = (object)["creatorSidebarBranding" => (object)[
+            "text" => $configStrings->get("title")
+        ]];
+        $sectionsResult = array_merge($sectionsResult, $this->buildConfigSection());
+        $sectionsResult[] = (object)["creatorSidebarSeparatorRenderer" => (object)[]];
+        $sectionsResult[] = $this->buildVersionSection();
+
+        $buttonRendererTemp = [
+            "class" => "rehike-creator-footer-button"
+        ];
+        $buttonRendererTemp = array_merge($buttonRendererTemp, self::getDisableRehikeButton());
+        $sectionsResult[] = (object)["creatorSidebarButtonRenderer" => (object)$buttonRendererTemp];
+
         $this->selectCurrentItem();
     }
 

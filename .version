@@ -1,10 +1,10 @@
 {
-	"previousHash": "5803584e8133f512949d354d3e35828b2ed40829",
-	"currentRevisionId": 1252,
-	"subject": "Improve data structure code layout",
-	"body": "Improve data structure code layout",
+	"previousHash": "fc11cf36c6a254bb26fb94c2bb392a14751fbcb1",
+	"currentRevisionId": 1253,
+	"subject": "Fix settings for PHP 8.0",
+	"body": "Fix settings for PHP 8.0",
 	"branch": "master",
-	"committerName": "Taniko Yamamoto",
-	"committerEmail": "kirasicecreamm@gmail.com",
-	"time": 1703836245
+	"committerName": "Daylin Cooper",
+	"committerEmail": "dcoop2004@gmail.com",
+	"time": 1704143040
 }
