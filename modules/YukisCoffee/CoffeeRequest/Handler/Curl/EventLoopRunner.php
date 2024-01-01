@@ -73,6 +73,7 @@ trait EventLoopRunner // implements Event::onRun()
             do
             {
                 curl_multi_exec($mh, $active);
+                curl_multi_select($mh);
                 Fiber::suspend();
             }
             while ($active);
@@ -85,7 +86,10 @@ trait EventLoopRunner // implements Event::onRun()
 
             if ($active)
             {
-                usleep(1);
+                if (-1 == curl_multi_select($mhNormal))
+                {
+                    usleep(10);
+                }
                 yield;
             }
         }
@@ -163,7 +167,13 @@ trait EventLoopRunner // implements Event::onRun()
 
             if ($active)
             {
-                usleep(1);
+                // This seems to work better than the previous implementation, which was just
+                // a usleep(1) and seems to have errored somewhat.
+                if (-1 == curl_multi_select($mh))
+                {
+                    usleep(10);
+                }
+
                 yield;
             }
         }
