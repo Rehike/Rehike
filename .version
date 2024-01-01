@@ -1,10 +1,10 @@
 {
-	"previousHash": "708230b7409c9c96df5821a2f353a8979a2dd7fc",
-	"currentRevisionId": 1255,
-	"subject": "Edit player code by David C Granger.",
-	"body": "Edit player code by David C Granger.",
-	"branch": "dev-0.8-player-switcher",
-	"committerName": "Taniko Yamamoto",
-	"committerEmail": "kirasicecreamm@gmail.com",
-	"time": 1703893910
+	"previousHash": "fc11cf36c6a254bb26fb94c2bb392a14751fbcb1",
+	"currentRevisionId": 1253,
+	"subject": "Fix settings for PHP 8.0",
+	"body": "Fix settings for PHP 8.0",
+	"branch": "master",
+	"committerName": "Daylin Cooper",
+	"committerEmail": "dcoop2004@gmail.com",
+	"time": 1704143040
 }
