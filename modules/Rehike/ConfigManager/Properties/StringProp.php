@@ -7,7 +7,7 @@ namespace Rehike\ConfigManager\Properties;
  * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
-class StringProp extends AbstractConfigProperty
+class StringProp extends AbstractAssociativeProp
 {
     protected string $defaultValue = "";
 

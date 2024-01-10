@@ -7,6 +7,8 @@ use YukisCoffee\PropertyAtPath;
 use Rehike\ConfigManager\Properties\{
     BoolProp,
     EnumProp,
+    PropGroup,
+    DependentProp,
     StringProp
 };
 
@@ -24,7 +26,11 @@ class ConfigDefinitions
             "appearance" => [
                 "playerChoice" => new EnumProp("CURRENT"),
                 "modernLogo" => new BoolProp(true),
-                "uploadButtonType" => new EnumProp("MENU"),
+                "uploadButtonType" => new EnumProp("MENU", [
+                    "BUTTON",
+                    "ICON",
+                    "MENU"
+                ]),
                 "largeSearchResults" => new BoolProp(true),
                 "swapSearchViewsAndDate" => new BoolProp(false),
                 "showVersionInFooter" => new BoolProp(true),
