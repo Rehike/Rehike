@@ -7,13 +7,15 @@ namespace Rehike\ConfigManager\Properties;
  * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
-class EnumProp extends AbstractConfigProperty
+class EnumProp extends AbstractAssociativeProp
 {
     protected string $defaultValue = "";
+    protected array $validValues = [];
 
-    public function __construct(string $defaultValue)
+    public function __construct(string $defaultValue, array $validValues)
     {
         $this->defaultValue = $defaultValue;
+        $this->validValues = $validValues;
     }
 
     /**
@@ -22,6 +24,11 @@ class EnumProp extends AbstractConfigProperty
     public function getDefaultValue(): mixed
     {
         return $this->defaultValue;
+    }
+
+    public function getValidValues(): array
+    {
+        return $this->validValues;
     }
 
     public function getType(): string
