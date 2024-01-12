@@ -19,3 +19,7 @@ subscriptionConfirmationHeader: "Confirmar inscrição no canal"
 nonexistent: "O canal não existe."
 secondaryHeaderViews: "%s visualizações"
 secondaryHeaderManager: "Gerenciador de vídeos"
+
+# about tab strings
+aboutTabDetails: "Detalhes"
+aboutTabCountry: "País"
