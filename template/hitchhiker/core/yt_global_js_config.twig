@@ -1,6 +1,9 @@
 <script>
     yt.setConfig({
-        REHIKE_LATEST_PLAYER: true
+        REHIKE_LATEST_PLAYER: {{ rehike.config.appearance.playerChoice == "CURRENT" ? "true" : "false" }}
+        {% if rehike.config.appearance.playerChoice == "PLAYER_2014" %}
+        ,REHIKE_CLASSIC_PLAYER: true
+        {% endif %}
     });
     yt.setConfig({
         APIARY_HOST_FIRSTPARTY: "",

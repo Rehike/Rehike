@@ -35,4 +35,16 @@ class RehikeUtilsI18nDelegate
             return "< unknown string $namespace:$name >";
         }
     }
+
+    public function dump(string $namespace): object
+    {
+        try
+        {
+            return i18n::getAllTemplates($namespace);
+        }
+        catch (Throwable $e)
+        {
+            return (object)[];
+        }
+    }
 }

@@ -1,6 +1,8 @@
 <?php
 namespace Rehike\Player;
 
+require_once "Constants.php";
+
 use Rehike\Player\{
     Exception\CacherException,
     Exception\UpdaterException

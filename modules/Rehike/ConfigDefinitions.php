@@ -24,7 +24,24 @@ class ConfigDefinitions
     {
         return [
             "appearance" => [
-                "playerChoice" => new EnumProp("CURRENT"),
+                new PropGroup(...[
+                    // Temporarily a dependent property until the experimental
+                    // phase is over.
+                    "playerChoice" => new DependentProp(
+                        "experiments.displayPlayerChoice",
+                        new EnumProp("CURRENT", [
+                            "CURRENT",
+                            "PLAYER_2014",
+                            "PLAYER_2020",
+                            "PLAYER_2022"
+                        ])
+                    ),
+                    "classicPlayerForcePersistentControls" =>
+                        new DependentProp(
+                            "appearance.playerChoice == PLAYER_2014",
+                            new BoolProp(true)
+                        )
+                ]),
                 "modernLogo" => new BoolProp(true),
                 "uploadButtonType" => new EnumProp("MENU", [
                     "BUTTON",
@@ -46,6 +63,7 @@ class ConfigDefinitions
                 "enableAdblock" => new BoolProp(true)
             ],
             "experiments" => [
+                "displayPlayerChoice" => new BoolProp(false),
                 "useSignInV2" => new BoolProp(false),
                 "disableSignInOnHome" => new BoolProp(false),
                 "encryptedStreams" => new BoolProp(true)

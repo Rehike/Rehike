@@ -1,9 +1,13 @@
 <?php
 namespace Rehike\Player;
 
-use Rehike\ConfigManager\Config;
+require_once "Constants.php";
 
 use Rehike\Player\Exception\UpdaterException;
+
+// --- REHIKE-SPECIFIC IMPORTS ---
+use Rehike\ConfigManager\Config;
+// -------------------------------
 
 /**
  * Retrieve information about the current player.
@@ -53,20 +57,25 @@ class PlayerUpdater
 
         // Attempt to get application URLs from the
         // response.
-        $jsUrl = self::extractApplicationUrl($html);
-        $cssUrl = self::extractApplicationCss($html);
+        $latestJsUrl = self::extractApplicationUrl($html);
+        $latestCssUrl = self::extractApplicationCss($html);
         $embedJsUrl = self::extractEmbedUrl($html);
 
         // Now get the sts from the application itself.
-        $js = self::requestApplication(self::unrelativize($jsUrl));
+        $js = self::requestApplication(self::unrelativize($latestJsUrl));
 
         $sts = self::extractSts($js);
 
-        $playerChoice = Config::getConfigProp("experiments.playerChoice");
+        if (IS_REHIKE)
+            $playerChoice = Config::getConfigProp("appearance.playerChoice");
+        else
+            $playerChoice = "CURRENT";
+
+
         if ("CURRENT" === $playerChoice)
         {
-            $effectiveJsUrl = $jsUrl;
-            $effectiveCssUrl = $cssUrl;
+            $effectiveJsUrl = $latestJsUrl;
+            $effectiveCssUrl = $latestCssUrl;
         }
         else if ("PLAYER_2022" === $playerChoice)
         {
@@ -77,14 +86,21 @@ class PlayerUpdater
         {
             $effectiveJsUrl = "/yts/jsbin/player_ias-vfl1Ng2HU/en_US/base.js";
             $effectiveCssUrl = "/yts/cssbin/player-vflfo9Nwd/www-player-webp.css";
-        };
+        }
+        else if ("PLAYER_2014" === $playerChoice)
+        {
+            $effectiveJsUrl = "/rehike/static/js/html5player-2014.js";
+            $effectiveCssUrl = "//s.ytimg.com/yts/cssbin/www-player-vfluwFMix.css";
+        }
 
         // Pack these up and return:
         return (object)[
             "baseJsUrl" => $effectiveJsUrl,
             "baseCssUrl" => $effectiveCssUrl,
             "embedJsUrl" => $embedJsUrl,
-            "signatureTimestamp" => $sts
+            "signatureTimestamp" => $sts,
+            "latestJsUrl" => $latestJsUrl,
+            "latestCssUrl" => $latestCssUrl
         ];
     }
     

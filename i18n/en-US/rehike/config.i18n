@@ -86,6 +86,11 @@ props:
         Provides a stable adblocker for ads in the video player.
   
   experiments:
+    displayPlayerChoice:
+      title: "Enable the use of older players"
+      subtitle: >
+        Enables the option to change the YouTube player revision on the
+        appearance page.
     useSignInV2:
       title: "Use sign in v2"
       subtitle: >

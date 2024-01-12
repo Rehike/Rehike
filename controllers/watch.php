@@ -301,28 +301,31 @@ return new class extends NirvanaController {
 
         $data = null;
 
-        if (isset($yt->playerResponse))
+        if ("PLAYER_2014" != Config::getConfigProp("appearance.playerChoice"))
         {
-            $data = (object) [
-                'swfcfg' => (object) [
-                    'args' => (object) [
-                        'raw_player_response' => null,
-                        'raw_watch_next_response' => null
-                    ]
-                ]
-            ];
-
-            $data->swfcfg->args->raw_player_response = $yt->playerResponse;
-            $data->swfcfg->args->raw_watch_next_response = $yt->watchNextResponse;
-    
-            if (isset($yt->page->playlist))
+            if (isset($yt->playerResponse))
             {
-                $data->swfcfg->args->is_listed = '1';
-                $data->swfcfg->args->list = $yt->playlistId;
-                $data->swfcfg->args->videoId = $yt->videoId;
-            }
+                $data = (object) [
+                    'swfcfg' => (object) [
+                        'args' => (object) [
+                            'raw_player_response' => null,
+                            'raw_watch_next_response' => null
+                        ]
+                    ]
+                ];
 
-            return true;
+                $data->swfcfg->args->raw_player_response = $yt->playerResponse;
+                $data->swfcfg->args->raw_watch_next_response = $yt->watchNextResponse;
+        
+                if (isset($yt->page->playlist))
+                {
+                    $data->swfcfg->args->is_listed = '1';
+                    $data->swfcfg->args->list = $yt->playlistId;
+                    $data->swfcfg->args->videoId = $yt->videoId;
+                }
+
+                return true;
+            }
         }
 
         return false;

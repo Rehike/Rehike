@@ -7,6 +7,20 @@
         <script>{{ include('/core/www-pageframesizing.js.twig') }}</script>
         {{ core.css('www-core') }}
         {%- block head_css  -%}{%- endblock -%}
+        {% if rehike.config.appearance.playerChoice == "PLAYER_2014" %}
+            <script>
+                // (function(){
+                //     var player = document.getElementById("movie_player");
+
+                //     if (player)
+                //     {
+                //         player.parentNode.removeChild(player);
+                //     }
+                // })();
+
+                {% include "player/classic_player_boot.twig" %}
+            </script>
+        {% endif %}
     {%- endapply -%},
     "body": {
         "player-unavailable": {{ include("page_fragments/player_unavailable.twig")|json_encode|raw }},
