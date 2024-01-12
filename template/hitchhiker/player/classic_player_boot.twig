@@ -32,7 +32,7 @@ var LATEST_PLAYER_JS_URL = "{{ yt.playerConfig.latestJsUrl }}";
 window._rehikeClassicPlayerListsGetState = function()
 {
     // Get the native state from watch module:
-    var nativeState = yt.www.watch.lists.getState();
+    var nativeState = yt && yt.www && yt.www.watch && yt.www.watch.lists.getState();
 
     if (!nativeState)
         return {};
