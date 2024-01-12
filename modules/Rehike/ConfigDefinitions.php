@@ -7,6 +7,8 @@ use YukisCoffee\PropertyAtPath;
 use Rehike\ConfigManager\Properties\{
     BoolProp,
     EnumProp,
+    PropGroup,
+    DependentProp,
     StringProp
 };
 
@@ -22,8 +24,30 @@ class ConfigDefinitions
     {
         return [
             "appearance" => [
+                new PropGroup(...[
+                    // Temporarily a dependent property until the experimental
+                    // phase is over.
+                    "playerChoice" => new DependentProp(
+                        "experiments.displayPlayerChoice",
+                        new EnumProp("CURRENT", [
+                            "CURRENT",
+                            "PLAYER_2014",
+                            "PLAYER_2020",
+                            "PLAYER_2022"
+                        ])
+                    ),
+                    "classicPlayerForcePersistentControls" =>
+                        new DependentProp(
+                            "appearance.playerChoice == PLAYER_2014",
+                            new BoolProp(true)
+                        )
+                ]),
                 "modernLogo" => new BoolProp(true),
-                "uploadButtonType" => new EnumProp("MENU"),
+                "uploadButtonType" => new EnumProp("MENU", [
+                    "BUTTON",
+                    "ICON",
+                    "MENU"
+                ]),
                 "largeSearchResults" => new BoolProp(true),
                 "swapSearchViewsAndDate" => new BoolProp(false),
                 "showVersionInFooter" => new BoolProp(true),
@@ -39,8 +63,10 @@ class ConfigDefinitions
                 "enableAdblock" => new BoolProp(true)
             ],
             "experiments" => [
+                "displayPlayerChoice" => new BoolProp(false),
                 "useSignInV2" => new BoolProp(false),
-                "disableSignInOnHome" => new BoolProp(false)
+                "disableSignInOnHome" => new BoolProp(false),
+                "encryptedStreams" => new BoolProp(true)
             ],
             "advanced" => [
                 "enableDebugger" => new BoolProp(false)

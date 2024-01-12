@@ -7,7 +7,7 @@ namespace Rehike\ConfigManager\Properties;
  * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
-class BoolProp extends AbstractConfigProperty
+class BoolProp extends AbstractAssociativeProp
 {
     protected bool $defaultValue = false;
 

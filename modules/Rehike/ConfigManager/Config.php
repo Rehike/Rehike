@@ -1,7 +1,12 @@
 <?php
 namespace Rehike\ConfigManager;
 
-use Rehike\ConfigManager\Properties\AbstractConfigProperty;
+use Rehike\ConfigManager\Properties\{
+    AbstractConfigProperty,
+    AbstractAssociativeProp,
+    DependentProp,
+    PropGroup
+};
 use Rehike\FileSystem;
 use YukisCoffee\PropertyAtPath;
 
@@ -78,7 +83,24 @@ class Config
                 $out["defs"][$name] = $result["defs"];
                 $out["types"][$name] = $result["types"];
             }
-            else if ($def instanceof AbstractConfigProperty)
+            else if ($def instanceof PropGroup)
+            {
+                $result = self::parseDefs($def->getProperties());
+                
+                foreach ($result["defs"] as $resultName => $resultDef)
+                {
+                    $out["defs"][$resultName] = $resultDef;
+                    $out["types"][$resultName] = $result["types"][$resultName];
+                }
+            }
+            else if ($def instanceof DependentProp)
+            {
+                $prop = $def->getProp();
+                $out["defs"][$name] = $prop->getDefaultValue();
+                $out["types"][$name] = $prop->getType();
+                continue;
+            }
+            else if ($def instanceof AbstractAssociativeProp)
             {
                 $out["defs"][$name] = $def->getDefaultValue();
                 $out["types"][$name] = $def->getType();

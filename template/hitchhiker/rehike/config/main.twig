@@ -54,16 +54,38 @@
     </span>
 {% endmacro %}
 
+{% macro try_render_associative_prop(option) %}
+    {% if option.checkboxRenderer %}
+        {{ _self.checkbox_renderer(option.checkboxRenderer) }}
+    {% elseif option.selectRenderer %}
+        {{ _self.select_renderer(option.selectRenderer) }}
+    {% elseif option.dependentPropertyRenderer %}
+        {% set this = option.dependentPropertyRenderer %}
+        <div class="dependent-property" data-condition="{{ this.condition }}">
+            {{ _self.try_render_associative_prop(this.content) }}
+        </div>
+    {% endif %}
+{% endmacro %}
+
 {% macro render_inner() %}
 <form id="rehike-config-form" onsubmit="event.preventDefault();return!1">
     <div class="account-content">
+        <script>
+            window._rehikeFullConfig = {{ rehike.config|json_encode|raw }};
+        </script>
         <div class="account-section rehike-config-options-container">
             {% for option in yt.page.content.contents %}
             <div class="account-section-setting">
-                {% if option.checkboxRenderer %}
-                    {{ _self.checkbox_renderer(option.checkboxRenderer) }}
-                {% elseif option.selectRenderer %}
-                    {{ _self.select_renderer(option.selectRenderer) }}
+                {% if option.propertyGroupRenderer %}
+                    <div class="property-group">
+                        {% for option in option.propertyGroupRenderer.contents %}
+                            <div class="property-group-setting">
+                                {{ _self.try_render_associative_prop(option) }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ _self.try_render_associative_prop(option) }}
                 {% endif %}
             </div>
             {% endfor %}

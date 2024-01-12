@@ -1,7 +1,10 @@
 <?php
 namespace Rehike\Player;
 
+require_once "Constants.php";
+
 use Rehike\Player\Exception\CacherException;
+use Rehike\ConfigManager\Config;
 
 /**
  * Manage caching and player information storage.
@@ -31,18 +34,27 @@ class Cacher
         $root = PlayerCore::$cacheDestDir;
         $name = PlayerCore::$cacheDestName;
         $path = "$root/$name.json";
+        $playerChoice = Config::getConfigProp("appearance.playerChoice");
 
-        if (file_exists($path))
+        if (!DEBUG && file_exists($path))
         {
             $result = json_decode(file_get_contents($path));
 
-            if (null != $result && time() < $result->expire)
+            if (
+                null != $result && 
+                time() < $result->expire &&
+                IS_REHIKE ? $playerChoice == $result->conditionPlayerChoice : true
+            )
+            {
                 return $result->content; // file contents
+            }
             else
+            {
                 throw new CacherException(
                     "Failed to get cached contents from file \"$path\" " .
                     "(or cache has expired)"
                 );
+            }
         }
         else
         {
@@ -78,8 +90,15 @@ class Cacher
     {
         $expireTime = time() + $duration;
 
+        if (IS_REHIKE)
+            $playerChoice = Config::getConfigProp("appearance.playerChoice");
+
         return (object)[
             "expire" => $expireTime,
+            ...(IS_REHIKE
+                    ? ["conditionPlayerChoice" => $playerChoice]
+                    : []
+            ),
             "content" => $object
         ];
     }

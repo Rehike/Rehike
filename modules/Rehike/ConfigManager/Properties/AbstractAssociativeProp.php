@@ -7,7 +7,8 @@ namespace Rehike\ConfigManager\Properties;
  * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
-abstract class AbstractConfigProperty
+abstract class AbstractAssociativeProp extends AbstractConfigProperty
 {
+    abstract public function getDefaultValue(): mixed;
     abstract public function getType(): string;
 }

@@ -2,6 +2,7 @@
 namespace Rehike\Model\Rehike\Config;
 
 use AllowDynamicProperties;
+use Rehike\ConfigDefinitions;
 use Rehike\Model\Rehike\Panel\RehikePanelPage;
 
 use Rehike\i18n\i18n;
@@ -10,6 +11,13 @@ use Rehike\ConfigManager\Config;
 use Rehike\Model\Common\MButton;
 use Rehike\Model\Common\MAlert;
 
+/**
+ * Configuration GUI.
+ * 
+ * @author Aubrey Pankow <aubyomori@gmail.com>
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
+ * @author The Rehike Maintainers
+ */
 class ConfigModel extends RehikePanelPage
 {
     /**
@@ -58,45 +66,11 @@ class ConfigModel extends RehikePanelPage
             "title" => $tabs->{$tab},
             "contents" => []
         ];
-
-        $contents = &$response->content->contents;
-        foreach (Config::getConfig()->{$tab} as $option => $value) {
-            switch (Config::getConfigType("{$tab}.{$option}")) {
-                case "bool":
-                    $contents[] = (object) [
-                        "checkboxRenderer" => (object) [
-                            "title" => $props->{$option}->title ?? null,
-                            "subtitle" => $props->{$option}->subtitle ?? null,
-                            "checked" => $value ? true : false,
-                            "name" => "$tab.$option",
-                        ]
-                    ];
-                    break;
-                case "enum":
-                    $values = [];
-                    $selectedValue = null;
-
-                    foreach ($props->{$option} ->values as $name => $text) {
-                        $values[] = (object) [
-                            "text" => $text,
-                            "value" => $name,
-                            "selected" => ($value == $name)
-                        ];
-
-                        if ($value == $name) $selectedValue = $value;
-                    }
-
-                    $contents[] = (object) [
-                        "selectRenderer" => (object) [
-                            "label" => $props->{$option}->title,
-                            "name" => "$tab.$option",
-                            "values" => $values,
-                            "selectedValue" => $selectedValue
-                        ]
-                    ];
-                    break;
-            }
-        }
+        
+        $contentsModel = new ConfigModelContents;
+        $contentsModel->setPage($tab);
+        $contentsModel->bake();
+        $response->content->contents = $contentsModel->getResult();
 
         $response->content->saveButton = new MButton([
             "style" => "STYLE_PRIMARY",
@@ -109,17 +83,5 @@ class ConfigModel extends RehikePanelPage
         ]);
 
         return $response;
-    }
-
-    public static function buildCreatorSidebarItem($title, $href, $selected = false) {
-        return (object) [
-            "creatorSidebarItemRenderer" => (object) [
-                "title" => (object) [
-                    "simpleText" => $title
-                ] ,
-                "navigationEndpoint" => NavigationEndpoint::createEndpoint($href),
-                "isSelected" => $selected
-            ]
-        ];
     }
 }

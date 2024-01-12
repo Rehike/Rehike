@@ -1,10 +1,10 @@
 {
-	"previousHash": "d83bc6f9b4fd3deb500b23d6d43b6572796186c1",
-	"currentRevisionId": 1248,
-	"subject": "0.8.1: Settings redesign",
-	"body": "0.8.1: Settings redesign",
+	"previousHash": "cbdb7bcd73feaa7133edf27d9d022505b42ed4fd",
+	"currentRevisionId": 1264,
+	"subject": "[i18n/en] Add strings for classicPlayerForcePersitentControls config option",
+	"body": "[i18n/en] Add strings for classicPlayerForcePersitentControls config option",
 	"branch": "master",
 	"committerName": "Taniko Yamamoto",
 	"committerEmail": "kirasicecreamm@gmail.com",
-	"time": 1703392630
+	"time": 1705053706
 }

@@ -1,0 +1,755 @@
+{% apply spaceless %}
+(function(){
+
+// Prerequisite: listen for player load requests from www/base.js:
+// This event is dispatched by our modded copy when yt.config_.REHIKE_CLASSIC_PLAYER
+// is set.
+var g_playerLoadRequestCb = null;
+var rehike = rehike || {};
+{% include "rehike/core/util.js.twig" %}
+rehike.util.events.add(
+    document,
+    "rh-classic-player-request-load",
+    function(e) {
+        g_playerLoadRequestCb = e.detail.cb;
+    }
+);
+
+window._rehikeClassicPlayerTranslations =
+    {{ rehike.i18n.dump("player_classic")|json_encode|raw }};
+
+var LATEST_PLAYER_JS_URL = "{{ yt.playerConfig.latestJsUrl }}";
+
+{% if not yt.spf %}
+/**
+ * Encode playlist state for the old player.
+ * 
+ * Since this is critical in order to load playlist videos at all on the 2014
+ * player, this is included here rather than in the mods code.
+ * 
+ * @return {object}
+ */
+window._rehikeClassicPlayerListsGetState = function()
+{
+    // Get the native state from watch module:
+    var nativeState = yt.www.watch.lists.getState();
+
+    if (!nativeState)
+        return {};
+
+    var out = {};
+
+    var videoData = {};
+    var videoIds = [];
+    var clipRanges = [];
+
+    for (var videoId in nativeState.video)
+    {
+        var cur = nativeState.video[videoId];
+        videoIds.push(videoId);
+        clipRanges.push({
+            start: "None",
+            end: "None"
+        })
+        videoData[videoId] = {
+            author: cur.author,
+            id: cur.encrypted_id,
+            video_id: cur.encrypted_id,
+            title: cur.title
+        };
+    }
+
+    var authorText = "";
+    var authorEl = document.querySelector("#player-playlist .author-attribution");
+    if (authorEl)
+    {
+        authorText = authorEl.innerText;
+    }
+
+    out.author = authorText;
+    out.clipRanges = clipRanges;
+    out.videoData = videoData;
+    out.videoIds = videoIds;
+    out.listTitle = nativeState.title || "";
+    out.listDescription = nativeState.description || "";
+    out.index = nativeState.index;
+
+    return out;
+};
+{% endif %}
+
+// This needs to be set on SPF navigation too I think:
+window.yt.config_.REHIKE_CLASSIC_PLAYER_LISTS_GET_STATE = "_rehikeClassicPlayerListsGetState";
+
+{% if not yt.spf %}
+// I think this should be defined if we're here anyways.
+var RAW_PLAYER_RESPONSE = (ytInitialPlayerResponse && ytInitialPlayerResponse.playerResponse) || null;
+{% else %}
+var RAW_PLAYER_RESPONSE = {{ yt.playerResponse|json_encode|raw }};
+{% endif %}
+
+var RAW_WATCH_NEXT_RESPONSE = {{ yt.watchNextResponse|json_encode|raw }};
+
+// Include classic player decryptors (getDecryptorForPlayerSig, getDecryptorForPlayerN)
+{% include "player/classic_player_decryptors.js.twig" %}
+
+/**
+ * Gets necessary information from the latest player revision.
+ * 
+ * @returns {
+ *      {
+ *          cbDecodeSig: function(sourceSignature),
+ *          cbDecodeN: function(sourceN)
+ *      }
+ * }
+ */
+function getLatestPlayerJsInfo()
+{
+    var CACHE_INDEX = LATEST_PLAYER_JS_URL;
+
+    return new Promise(function(resolve, reject) {
+        var cacheStr;
+        if (cacheStr = localStorage.getItem("rh-classic-player-cache"))
+        {
+            try
+            {
+                var cache = JSON.parse(cacheStr);
+                if (CACHE_INDEX in cache)
+                {
+                    var cbDecodeSig = new Function(
+                        cache[CACHE_INDEX].decodeSig.args,
+                        cache[CACHE_INDEX].decodeSig.body
+                    );
+                    var cbDecodeN = new Function(
+                        cache[CACHE_INDEX].decodeN.args,
+                        cache[CACHE_INDEX].decodeN.body
+                    );
+
+                    resolve({
+                        cbDecodeSig: cbDecodeSig,
+                        cbDecodeN: cbDecodeN
+                    });
+                }
+                else
+                {
+                    // Invalidate the cache.
+                    localStorage.removeItem("rh-classic-player-cache");
+                }
+            }
+            catch (e)
+            {
+                // Bad cache; invalidate.
+                localStorage.removeItem("rh-classic-player-cache");
+            }
+        }
+
+        // If the cache is unavailable, then request the player from
+        // YouTube and rebuild the cache.
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", LATEST_PLAYER_JS_URL);
+        xhr.onload = function() {
+            if (200 == xhr.status)
+            {
+                var text = xhr.responseText;
+
+                var cbDecodeSig, cbDecodeN;
+                var cacheObj = {};
+
+                var signatureResult = getDecryptorForPlayerSig(text);
+                var fnDecodeSig = null;
+                if (signatureResult.status == "SUCCESS")
+                {
+                    cbDecodeSig = signatureResult.extractCb;
+                    cacheObj.decodeSig = signatureResult.cacheParams;
+                }
+
+                var nDecoderResult = getDecryptorForPlayerN(text);
+                var fnDecryptN = null;
+                if (nDecoderResult.status == "SUCCESS")
+                {
+                    cbDecodeN = nDecoderResult.extractCb;
+                    cacheObj.decodeN = nDecoderResult.cacheParams;
+                }
+
+                // Store the cache:
+                localStorage.setItem(
+                    "rh-classic-player-cache", 
+                    JSON.stringify(cacheObj)
+                );
+
+                resolve({
+                    cbDecodeSig: cbDecodeSig,
+                    cbDecodeN: cbDecodeN
+                });
+            }
+            else
+            {
+                console.error("[Rehike.ClassicPlayer] Failed to download latest player.");
+                reject();
+            }
+        };
+        xhr.send();
+    });
+}
+
+/**
+ * Visits all stream URLs returned by InnerTube and decodes their URLs for
+ * playback independent of any version of the YouTube player.
+ * 
+ * This is required in order to play videos on significantly older players,
+ * since they don't decrypt video playback URLs in the same manner that the
+ * newer versions do.
+ * 
+ * @param {function(encodedSig)} fnDecodeSig Function to decode the signature.
+ * @param {function(encodedN)} fnDecodeN Function to decode the N parameter.
+ */
+function streamUrlVisitor(map, fnDecodeSig, fnDecodeN)
+{
+    for (var i = 0, j = map.length; i < j; i++)
+    {
+        if ("signatureCipher" in map[i])
+        {
+            var base = map[i].signatureCipher;
+            var cipher = decodeURIComponent(base.split("s=")[1].split("&")[0]);
+            var decodedCipher = fnDecodeSig(cipher);
+
+            var streamUrl = decodeURIComponent(base.split("&url=")[1]);
+            var params = decodeURIComponent(streamUrl.split("videoplayback")[1]);
+
+            var nParam = null;
+            if (
+                ((nParam = "&n=") && (params.indexOf(nParam) > -1)) ||
+                ((nParam = "?n=") && (params.indexOf(nParam) > -1))
+            )
+            {
+                var value = params.split(nParam)[1].split("&")[0];
+                var decodedValue = fnDecodeN(value);
+                params = params.replace(nParam + value, nParam + decodedValue);
+            }
+
+            streamUrl = streamUrl.split("videoplayback")[0] + "videoplayback" + params;
+
+            map[i].url = streamUrl + "&alr=yes&sig=" + encodeURIComponent(decodedCipher);
+            map[i].rhDecorated = true;
+        }
+        else if ("url" in map[i] && !map[i].rhDecorated)
+        {
+            // Sometimes, InnerTube returns streams with stream URLs that seem
+            // unencrypted, in the standard URL field. The signature is already
+            // formed fine, but for these URLs, `n` is used as the primary
+            // encryption key. For signatureCipher videos, `n` only serves a
+            // secondary purpose whereby streaming is throttled if it is not
+            // correct, but in this case, if `n` is missing, the server outright
+            // rejects the video request.
+            var base = map[i].url;
+
+            var nParam = "";
+            var originalN = "";
+            var newN = "";
+            if (
+                ((nParam = "&n=") && (base.indexOf(nParam) > -1)) ||
+                ((nParam = "?n=") && (base.indexOf(nParam) > -1))
+            )
+            {
+                var value = base.split(nParam)[1].split("&")[0];
+                originalN = value;
+                var decodedValue = fnDecodeN(value);
+                newN = decodedValue;
+            }
+
+            map[i].url = base.replace(
+                nParam + originalN,
+                nParam + newN
+            );
+
+            map[i].rhDecorated = true;
+        }
+    }
+}
+
+/**
+ * Reformats player stream information into the format expected by classic
+ * players.
+ * 
+ * @param {object} newMapFormatData New player stream info format
+ * @returns {object} Classic player stream info format
+ */
+function buildClassicStreamMap(newMapFormatData, opt_param)
+{
+    var out = {};
+
+    if (opt_param == "IS_STANDARD_STREAM" && newMapFormatData.url)
+    {
+        out.fallback_host = newMapFormatData.url.split("://")[1].split("/")[0];
+    }
+
+    out.type = newMapFormatData.mimeType;
+    out.url = newMapFormatData.url;
+    if ("initRange" in newMapFormatData)
+        out.init = newMapFormatData.initRange.start + "-" + newMapFormatData.initRange.end;
+    if ("width" in newMapFormatData)
+        out.size = newMapFormatData.width + "x" + newMapFormatData.height;
+    out.lmt = newMapFormatData.lastModified;
+    out.fps = newMapFormatData.fps;
+    if ("indexRange" in newMapFormatData)
+        out.index = newMapFormatData.indexRange.start + "-" + newMapFormatData.indexRange.end;
+    if ("contentLength" in newMapFormatData)
+        out.clen = newMapFormatData.contentLength;
+    if ("projectionType" in newMapFormatData && "MESH" == newMapFormatData.projectionType)
+    {
+        out.projection_type = "1";
+    }
+    out.bitrate = newMapFormatData.bitrate;
+    out.itag = newMapFormatData.itag;
+
+    return out;
+}
+
+/**
+ * Converts modern stream map definitions into one compatible with the classic
+ * player.
+ * 
+ * @param {object} streamMaps 
+ * @returns {string}
+ */
+function buildUrlFormattedStreamMap(streamMaps, opt_param)
+{
+    var out = "";
+    
+    var first = true;
+    for (var i = 0, j = streamMaps.length; i < j; i++)
+    {
+        if (streamMaps[i].mimeType.indexOf("vp9") > 0)
+            continue;
+
+        if (!first)
+        {
+            out += ",";
+        }
+
+        var map = buildClassicStreamMap(streamMaps[i], opt_param);
+        out += buildUrlFormattedMap(map);
+
+        if (first)
+            first = false;
+    }
+
+    return out;
+}
+
+/**
+ * Encodes a JSON object into a URL-formatted map, like the search parameters.
+ * This is what the YouTube player expects much of the data it receives to be
+ * encoded in.
+ * 
+ * @param {object} map A JSON object. 
+ * @returns {string} A URL-search-parameters-like encoded map.
+ */
+function buildUrlFormattedMap(map)
+{
+    var out = "";    
+
+    var firstKey = true;
+    for (var key in map)
+    {
+        var original = map[key];
+        var encodedKeyValue = "";
+
+        switch (typeof original)
+        {
+            case "object":
+            case "array":
+            case "function":
+            case "bigint":
+            case "symbol":
+            case "undefined":
+                // Unsupported types, skip.
+                continue;
+            case "string":
+                encodedKeyValue = original;
+                break;
+            case "number":
+                encodedKeyValue = String(original);
+                break;
+            case "boolean":
+                encodedKeyValue = original ? "true" : "false";
+                break;
+        }
+
+        if (!firstKey)
+            out += "\u0026"; // "&"
+        else
+            firstKey = false;
+
+        out += key + "=" + encodeURIComponent(encodedKeyValue).replace(/\%20/g, "+");
+    }
+
+    return out;
+}
+
+/**
+ * Converts a modern related videos section map (from InnerTube) to the classic
+ * style.
+ * 
+ * @param {object} newRvs InnerTube related videos section (browse endpoint)
+ * @returns {string} Formatted classic related videos section map
+ */
+function buildRelatedVideosSection(newRvs)
+{
+    var out = "";
+
+    var first = true;
+    for (var i = 0, j = newRvs.length; i < j; i++)
+    {
+        var cur = newRvs[i];
+
+        var src = cur.compactVideoRenderer || null;
+        if (!src)
+            continue;
+
+        // We do this after precondition checking, otherwise we make an empty
+        // object by adding an extraneous comma.
+        if (!first)
+        {
+            out += ",";
+        }
+
+        var info = {};
+
+        info.id = src.videoId;
+
+        var timestamp = parseText(src.lengthText);
+        info.length_seconds = parseTimestamp(timestamp);
+
+        info.title = parseText(src.title);
+        info.view_count = parseText(src.viewCountText);
+
+        if (first)
+        {
+            info.endscreen_autoplay_session_data = "autonav=1&feature=related-auto&playnext=1";
+            
+            // We set it to false in the last first check, otherwise it would
+            // break subsequent checks (obviously)
+            first = false;
+        }
+
+        out += buildUrlFormattedMap(info);
+    }
+
+    return out;
+}
+
+/**
+ * Parses a timestamp into a number of seconds.
+ * 
+ * @param {string} timestamp 
+ * @returns {number}
+ */
+function parseTimestamp(timestamp)
+{
+    var bits = timestamp.split(":");
+    var result = 0;
+
+    for (var i = 0, j = bits.length; i < j; i++)
+    {
+        result += bits[i] * (Math.pow(60, i));
+    }
+    
+    return result;
+}
+
+/**
+ * Parses an InnerTube text response.
+ * 
+ * @param {object} textObj A text response from InnerTube.
+ * @return {string}
+ */
+function parseText(textObj)
+{
+    if (!textObj)
+    {
+        return "<null>";
+    }
+
+    if (textObj.simpleText)
+    {
+        return textObj.simpleText;
+    }
+    else if (typeof textObj == "string")
+    {
+        return textObj;
+    }
+    else if (textObj.runs)
+    {
+        return textObj.runs[0].text;
+    }
+    
+    return "<null>";
+}
+
+window.ytplayer = window.ytplayer || {};
+window.ytplayer.config = {
+    "args": {
+       
+        // TODO: Player currently fails to load if these playlist parameters are
+        // set. Even V3 doesn't handle it like this, so for the initial release,
+        // I will just make it load the video normally even if the video is in a
+        // playlist. This needs to be looked into later.
+
+       {%- if yt.page.playlist -%}
+         "swf_player_response": "1",
+         "list": "{{ yt.playlistId }}",
+         "external_list": "1",
+         "is_listed": "1",
+       {%- endif -%}
+
+       
+        "autoplay": "1",
+        "autonav": {{ yt.page.autonavEnabled ? "1" : "0" }},
+        "idpj": "0", // *I*dpj and *L*dpj are different? "I" version is used in
+                     // V3... idk if erronenously?
+        "no_get_video_log": "1",
+        "t": "1",
+        "hl": "{{ yt.hl }}",
+        "host_language": "{{ yt.hl }}",
+        "plid": "AAVm9hRW-h1RWxWz",
+        "ldpj": "-31",
+        "ptk": "youtube_multi",
+        "pltype": "content",
+        "video_id": "{{ yt.videoId }}",
+        "player_wide": {{ yt.theaterMode ? "true" : "false" }},
+        "rvs": undefined,
+        "adaptive_fmts": undefined,
+        "url_encoded_fmt_stream_map": undefined,
+        "storyboard_spec": undefined,
+        "fexp": "908547,914099,927622,930666,930672,932404,934040,940247,940642,947209,947215,949424,951701,952302,952901,953000,953912,957103,957201,958600,913436,951502",
+        "player_error_log_fraction": "1.0",
+        "dash": "1",
+        "enablejsapi": "1",
+        "sw": "0.1",
+        "ttsurl": undefined,
+        "c": "WEB",
+        "innertube_context_client_version": "2.20210623.00.00",
+        "gapi_hint_params": "m;\/_\/scs\/abc-static\/_\/js\/k=gapi.gapi.en.fXLlmSb25lg.O\/m=__features__\/rt=j\/d=1\/rs=AHpOoo87O_nfyKCryZ5rvwwhVwktxKhiRA",
+        "autoplay": "1",
+        "oid": "",
+        "startSeconds": 0,
+        "external_play_video": "0",
+        "cver": "2.20210623.00.00",
+        "cr": "US",
+        "is_html5_mobile_device": false,
+        "fmt_list": "22/1280x720/9/0/115,18/640x360/9/0/115,17/256x144/99/1/0",
+        "length_seconds": undefined,
+        "vq": "auto",
+        "tmi": "1"
+    },
+    "params": {
+        "allowfullscreen": "true",
+        "allowscriptaccess": "always",
+        "bgcolor": "#000000"
+    },
+    "assets": {
+        "css": {{ (yt.playerConfig.baseCssUrl)|json_encode|raw }},
+        "js": {{ (yt.playerConfig.baseJsUrl)|json_encode|raw }}
+    },
+    "html5": true,
+    "url": "",
+    "sts": {{ yt.playerConfig.signatureTimestamp }},
+    "attrs": {
+        "id": "movie_player",
+        "class": "ytp-embed"
+    }
+};
+
+{% include "player/classic_player_mods.js.twig" %}
+
+function buildPlayer()
+{
+    getLatestPlayerJsInfo().then(function(playerUtils) {
+        // Cancel if the player information isn't available. If this is the case,
+        // then we're likely not on the watch page:
+        if (typeof RAW_PLAYER_RESPONSE != "object" || !RAW_PLAYER_RESPONSE)
+        {
+            return;
+        }
+
+        // Modify the stream URLs so that they can be played back. Specifically,
+        // we must decode them with the latest player revision first.
+        if (RAW_PLAYER_RESPONSE.streamingData.adaptiveFormats)
+        {
+            streamUrlVisitor(
+                RAW_PLAYER_RESPONSE.streamingData.adaptiveFormats,
+                playerUtils.cbDecodeSig, playerUtils.cbDecodeN
+            );
+        }
+        streamUrlVisitor(
+            RAW_PLAYER_RESPONSE.streamingData.formats,
+            playerUtils.cbDecodeSig, playerUtils.cbDecodeN
+        );
+
+        window.ytplayer.config.args.adaptive_fmts = buildUrlFormattedStreamMap(
+            RAW_PLAYER_RESPONSE.streamingData.adaptiveFormats
+        );
+        window.ytplayer.config.args.url_encoded_fmt_stream_map = buildUrlFormattedStreamMap(
+            RAW_PLAYER_RESPONSE.streamingData.formats,
+            "IS_STANDARD_STREAM"
+        );
+
+        // Finding the index of the recommendations is real fun.
+        var wnContents;
+        if (RAW_WATCH_NEXT_RESPONSE)
+        {
+            wnContents = RAW_WATCH_NEXT_RESPONSE.contents;
+        }
+        var wnResults;
+        var wnSecondaryResults;
+        var wnSecondaryResults2;
+        var wnSecondaryResults3;
+        if (
+            wnContents &&
+            (wnResults = wnContents.twoColumnWatchNextResults) &&
+            (wnSecondaryResults = wnResults.secondaryResults) &&
+            (wnSecondaryResults2 = wnSecondaryResults.secondaryResults) &&
+            (wnSecondaryResults3 = wnSecondaryResults2.results)
+        )
+        {
+            for (var i = 0, j = wnSecondaryResults3.length; i < j; i++)
+            {
+                if ("itemSectionRenderer" in wnSecondaryResults3[i])
+                {
+                    var itemSectionRenderer = wnSecondaryResults3[i].itemSectionRenderer;
+
+                    if (itemSectionRenderer.contents)
+                    {
+                        window.ytplayer.config.args.rvs = buildRelatedVideosSection(
+                            itemSectionRenderer.contents
+                        );
+                    }
+                }
+                else
+                {
+                    // If we have no itemSectionRenderer, then the results object
+                    // (what I titled wnSecondaryResults3) contains the videos.
+                    window.ytplayer.config.args.rvs = buildRelatedVideosSection(
+                        wnSecondaryResults3
+                    );
+                }
+            }
+        }
+
+        if (
+            RAW_PLAYER_RESPONSE.storyboards &&
+            RAW_PLAYER_RESPONSE.storyboards.playerStoryboardSpecRenderer
+        )
+        {
+            window.ytplayer.config.args.storyboard_spec =
+                RAW_PLAYER_RESPONSE.storyboards.playerStoryboardSpecRenderer.spec || null;
+        }
+
+        if (RAW_PLAYER_RESPONSE.videoDetails)
+        {
+            window.ytplayer.config.args.length_seconds =
+                RAW_PLAYER_RESPONSE.videoDetails.lengthSeconds || null;
+        }
+
+        if (RAW_PLAYER_RESPONSE.captions && RAW_PLAYER_RESPONSE.captions.playerCaptionsTracklistRenderer)
+        {
+            var caps = RAW_PLAYER_RESPONSE.captions.playerCaptionsTracklistRenderer;
+
+            if (caps.captionTracks && caps.captionTracks[0])
+            {
+                window.ytplayer.config.args.ttsurl = caps.captionTracks[0].baseUrl;
+            }
+        }
+
+        /*
+         * I'll leave this in just in case, I'm not sure how well my implementation will work.
+         *
+         * Source code originally by Reprety and Ciulin, taken from Cosmic Cat.
+         */
+        // var n = "";
+
+		// if (void 0 === RAW_PLAYER_RESPONSE.streamingData.hlsManifestUrl) {
+        //     try {
+        //         for (
+        //             var i = 0, j = RAW_PLAYER_RESPONSE.streamingData.formats.length;
+        //             i < j;
+        //             i++
+        //         )
+        //             (n +=
+        //                 "fallback_host=" +
+        //                 RAW_PLAYER_RESPONSE.streamingData.formats[i].url
+        //                 .split("://")[1]
+        //                 .split(".com")[0] +
+        //                 ".com&type=" +
+        //                 encodeURIComponent(
+        //                 RAW_PLAYER_RESPONSE.streamingData.formats[i].mimeType
+        //             ).replace("%20", "+") +
+        //                 "&url=" +
+        //                 encodeURIComponent(RAW_PLAYER_RESPONSE.streamingData.formats[i].url) +
+        //                 "&quality=" +
+        //                 RAW_PLAYER_RESPONSE.streamingData.formats[i].quality +
+        //                 "&itag=" +
+        //                 RAW_PLAYER_RESPONSE.streamingData.formats[i].itag),
+        //                 i < parseInt(RAW_PLAYER_RESPONSE.streamingData.formats.length - 1) &&
+        //                 (n += ",");
+        //     } catch {
+        //         // Try again with adaptiveFormats instead.
+        //         try {
+        //             for (
+        //                 var i = 0, j = RAW_PLAYER_RESPONSE.streamingData.adaptiveFormats.length;
+        //                 i < j;
+        //                 i++
+        //             )
+        //                 (n +=
+        //                     "fallback_host=" +
+        //                     RAW_PLAYER_RESPONSE.streamingData.adaptiveFormats[i].url
+        //                     .split("://")[1]
+        //                     .split(".com")[0] +
+        //                     ".com&type=" +
+        //                     encodeURIComponent(
+        //                     RAW_PLAYER_RESPONSE.streamingData.adaptiveFormats[i].mimeType
+        //                 ).replace("%20", "+") +
+        //                     "&url=" +
+        //                     encodeURIComponent(RAW_PLAYER_RESPONSE.streamingData.adaptiveFormats[i].url) +
+        //                     "&quality=" +
+        //                     RAW_PLAYER_RESPONSE.streamingData.adaptiveFormats[i].quality +
+        //                     "&itag=" +
+        //                     RAW_PLAYER_RESPONSE.streamingData.adaptiveFormats[i].itag),
+        //                     i < parseInt(RAW_PLAYER_RESPONSE.streamingData.adaptiveFormats.length - 1) &&
+        //                     (n += ",");
+        //         } catch (e) {
+        //             console.error("[Vorapis Player] could not craft legacy stream url", e);
+        //         }
+        //     }
+        // }
+
+        // window.ytplayer.config.args.url_encoded_fmt_stream_map = n;
+
+        {% if not yt.spf %}
+        window.ytplayer.load = function() {
+            window.yt.player.Application.create("player-api", window.ytplayer.config);
+            window.ytplayer.config.loaded = true;
+        };
+
+        // Continue with loading the player if we're delayloading:
+        if (g_playerLoadRequestCb)
+        {
+            g_playerLoadRequestCb();
+        }
+        {% endif %}
+
+        {% if yt.spf %}
+        var playerApi = document.getElementById("movie_player");
+        playerApi.loadVideoByPlayerVars(window.ytplayer.config.args);
+        {% endif %}
+
+        // From classic_player_mods:
+        initClassicPlayerMods();
+    });
+}
+
+buildPlayer();
+
+})();
+{% endapply %}

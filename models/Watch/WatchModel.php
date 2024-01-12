@@ -3,6 +3,7 @@ namespace Rehike\Model\Watch;
 
 use Rehike\ConfigManager\Config;
 use Rehike\Signin\API as SignIn;
+use Rehike\Util\PrefUtils;
 
 use Rehike\Model\Watch\AgeGate\MPlayerAgeGate;
 use Rehike\Model\Watch\AgeGate\MPlayerContentGate;
@@ -112,6 +113,15 @@ class WatchModel
                 }
             }
 
+            if (isset($_COOKIE["PREF"]))
+            {
+                $pref = PrefUtils::parse($_COOKIE["PREF"]);
+            }
+            else
+            {
+                $pref = (object) [];
+            }
+
             // Model baking logic
             return (object) [
                 "isLive" => self::$isLive,
@@ -120,7 +130,8 @@ class WatchModel
                 "secondaryResults" => self::bakeSecondaryResults($data),
                 "title" => self::$title,
                 "playlist" => self::bakePlaylist(),
-                "liveChat" => self::$liveChat
+                "liveChat" => self::$liveChat,
+                "autonavEnabled" => PrefUtils::autoplayEnabled($pref)
             ];
         });
     }

@@ -1,19 +1,18 @@
 <?php
-namespace Rehike;
+namespace Rehike\Ds;
 
 use ArrayAccess, ArrayIterator, IteratorAggregate;
-use ReturnTypeWillChange; // PHP 8.1+
 
 /**
- * Implements a general data array object that can be
- * accessed both an array and an object.
+ * Implements a general data array object that can be accessed both an array
+ * and an object.
  * 
  * This is currently implemented as read-only.
  * 
  * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
-class DataArray implements ArrayAccess, IteratorAggregate
+class EasyAccessMap implements ArrayAccess, IteratorAggregate
 {
     /**
      * Bound array that stores definitions.
@@ -78,7 +77,10 @@ class DataArray implements ArrayAccess, IteratorAggregate
 
     public function offsetSet(mixed $offset, mixed $value): void
     {
-        trigger_error("RequestMetadata->headers is read only.", E_USER_WARNING);
+        trigger_error(
+            "Rehike\Ds\EasyAccessMap is read only.", 
+            E_USER_WARNING
+        );
     }
 
     public function offsetUnset(mixed $offset): void
