@@ -1,0 +1,236 @@
+# Classic video player messages. Since these were baked into the binary,
+# and we use one modified binary, the messages are loaded dynamically.
+#
+# Rather than translating these by hand, which is an admittedly tedious process,
+# you can use Wayback Machine CDX search to find an archive of the player with
+# your specific language code, then copy them here. The classic player binary is
+# called "html5player", followed by the language code. Although the source data
+# will be a JavaScript object, you can convert it to a translation file simply
+# by running it through beautifier.io and then removing all commas after quotes.
+#
+# The player version that we use is from November 2014, and uses a VFL set, so
+# the URL goes: s.ytimg.com/yts/jsbin/html5player-LANGUAGE-vflID/html5player.js
+#
+# The strings are a little scattered (I think this is because they come from
+# multiple different modules which were concatenated together), so there are a
+# few different sources from which you'll have to take.
+#
+# From what I can tell, there are five main sources of string registration:
+#    - Main strings (the massive one)
+#    - Fresca (live) module
+#    - Subtitles (captions) module
+#    - 3D module
+#    - YTP (paid content) module
+#
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+# If you don't know how to do that, then you can simply leave it unmodified when
+# submitting a translation, and a Rehike maintainer will add them for you.
+#
+# We are happy to do this work for you!
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+#
+# There are only a few unique strings here that will require manual translation.
+# The convention that will be used for this file will use camelCase names for
+# custom messages, and CONSTANT_CASE names for official player messages that you
+# can get from the JS.
+
+# BEGIN UNIQUE STRINGS
+
+# Looping wasn't supported in this player revision, so we had to add a custom
+# implementation. As such, a custom string is also required.
+playerClassicLoop: "Pętla"
+
+# END UNIQUE STRINGS
+
+# Binary main strings:
+YTP_ADVERTISEMENT: "Reklama"
+YTP_AUDIO_TRACK_TITLE: "Ścieżka dźwiękowa"
+YTP_AUTO: "Automatyczna"
+YTP_AUTO_WITH_QUALITY_2: "Automatyczna ($VIDEO_QUALITY)"
+YTP_CHANGE_QUALITY_WITH_QUALITY_2: "Zmień jakość ($VIDEO_QUALITY)"
+YTP_COPY_DEBUG_INFO: "Kopiuj informacje debugowania"
+YTP_COPY_VIDEO_URL: "Kopiuj adres URL filmu"
+YTP_COPY_VIDEO_URL_AT_TIME: "Kopiuj adres URL bieżącego momentu"
+YTP_DRAWER_HEADER_TEXT: "W tym filmie"
+YTP_DRAWER_POLL_SUBMIT: "Prześlij"
+YTP_GET_DEBUG_INFO: "Zobacz dane debugowania"
+YTP_GET_VIDEO_URL: "Pokaż URL filmu"
+YTP_GET_VIDEO_URL_AT_TIME: "Pokaż URL bieżącego momentu"
+YTP_GET_EMBED: "Pokaż kod do umieszczenia na stronie"
+YTP_DECREASE_PLAYBACK_SPEED: "Zmniejsz prędkość odtwarzania"
+YTP_DEFAULT_VIEW: "Widok domyślny"
+YTP_EMBED_COPY: "Skopiuj kod do umieszczenia na stronie"
+YTP_ERROR_GENERIC: "Wystąpił błąd. Spróbuj ponownie później."
+YTP_ERROR_GENERIC_WITH_LINK_2: "Wystąpił błąd, spróbuj ponownie później. $BEGIN_LINKDowiedz się więcej$END_LINK"
+YTP_EXIT_FULLSCREEN: "Zamknij pełny ekran"
+YTP_FEATURED: "Polecane"
+YTP_FULLSCREEN: "Pełny ekran"
+YTP_INCREASE_PLAYBACK_SPEED: "Zwiększ prędkość odtwarzania"
+YTP_KEYBOARD_SHORTCUTS: "Skróty klawiszowe"
+YTP_LIVE_NOW: "AKTUALNIE NA ŻYWO"
+YTP_MIX: "Składanka"
+YTP_MORE: "Więcej"
+YTP_MDX_TITLE: "Odtwórz na"
+YTP_MDX_TOOLTIP: "Odtwórz na telewizorze"
+YTP_MDX_MY_COMPUTER: "Ten komputer"
+YTP_MUTE: "Wycisz"
+YTP_NEXT: "Dalej"
+YTP_NEXT_VIDEO_IN: "Następny film zacznie się za $TIME_LEFT"
+YTP_NORMAL_SPEED: "Normalna"
+YTP_ON: "Wł."
+YTP_OFF: "Wył."
+YTP_OPTIONS: "Opcje"
+YTP_PLAY_ALL: "Odtwórz wszystkie"
+YTP_PLAY_PAUSE: "Odtwarzaj/wstrzymaj"
+YTP_PREVIOUS: "Poprzedni"
+YTP_PLAYLIST: "Playlista"
+YTP_PLAYLIST_UP_NEXT: "Następny"
+YTP_QUALITY_TITLE: "Jakość"
+YTP_REPLAY: "jeszcze raz"
+YTP_REPORT_ISSUE: "Zgłoś problem z odtwarzaniem"
+YTP_SEEK_BACK: "Do tyłu o 10 s"
+YTP_SEEK_FORWARD: "Do przodu o 10 s"
+YTP_SEEK_PERCENT: "Szukaj w zakresie od 0 do 90%."
+YTP_SETTINGS: "Ustawienia"
+YTP_SHARE: "udostępnij"
+YTP_SHARE_WITH_PLAYLIST: "Udostępnij na playliście"
+YTP_SHOW_VIDEO_INFO: "Statystyki dla nerdów"
+YTP_SPEED_TITLE: "Szybkość"
+YTP_ST_COLLAPSE: "Zwiń"
+YTP_ST_EXPAND: "Rozwiń"
+YTP_SUBTITLES: "Napisy"
+YTP_THREED_SHORT: "3D"
+YTP_THEATER_MODE: "Tryb kinowy"
+YTP_TOGGLE_FULLSCREEN: "Przełącz tryb pełnoekranowy."
+YTP_TOGGLE_MUTE: "Włącz/wyłącz dźwięk"
+YTP_UNMUTE: "Wyłącz wyciszenie"
+YTP_URL_NAVIGATE: "Obejrzyj w witrynie YouTube.com"
+YTP_WATCH_ALL: "Obejrzyj cały film"
+YTP_WATCH_LATER: "Do obejrzenia"
+YTP_WATCH_LATER_AS_2: "Obejrzyj później jako $USER_NAME"
+YTP_WEBGL_3D_ANAGLYPH: "Anaglif"
+YTP_WEBGL_3D_2D: "2D"
+YTP_SUBSCRIBE_AS: "Zasubskrybuj jako $USER_NAME"
+YTP_LIKE_AS: "Zagłosuj na tak jako $USER_NAME"
+YTP_DISLIKE_AS: "Zagłosuj na nie jako $USER_NAME"
+YTP_WATCH_NEXT: "Warte obejrzenia"
+YTP_PLAY: "Odtwórz"
+YTP_WATERMARK: "Znak wodny"
+YTP_ERROR_STREAMING_UNAVAILABLE: "Odtwarzanie filmu jest niedostępne, ponieważ film został pobrany do wyświetlenia offline."
+YTP_ERROR_LICENSE: "Podczas licencjonowania filmu wystąpił błąd."
+YTP_ERROR_VIDEO_NOT_FOUND: "Nie można znaleźć tego filmu."
+YTP_ERROR_ALREADY_PINNED_ON_A_DEVICE: "Ten film został już pobrany na maksymalną liczbę urządzeń dozwoloną przez właściciela praw autorskich. Aby go odtworzyć tutaj, musisz go odpiąć z innego urządzenia."
+YTP_ERROR_CANNOT_ACTIVATE_RENTAL: "Podczas aktywowania wypożyczenia wystąpił błąd. Załaduj tę stronę ponownie lub spróbuj później."
+YTP_ERROR_PURCHASE_NOT_FOUND: "Za ten film musisz zapłacić."
+YTP_ERROR_PURCHASE_REFUNDED: "Pieniądze za zakup tego filmu zostały zwrócone."
+YTP_ERROR_STOPPED_BY_ANOTHER_PLAYBACK: "Ten film jest odtwarzany na Twoim koncie w innym miejscu. Aby kontynuować oglądanie, załaduj tę stronę ponownie."
+YTP_ERROR_TOO_MANY_STREAMS_PER_USER: "Odtwarzanie zostało zatrzymane, bo oglądasz zbyt wiele filmów z tego samego konta."
+YTP_ERROR_TOO_MANY_STREAMS_PER_ENTITLEMENT: "Odtwarzanie zostało zatrzymane, bo film jest odtwarzany na zbyt wielu urządzeniach."
+YTP_ERROR_STREAMING_DEVICES_QUOTA_PER_24H_EXCEEDED: "Użyłeś zbyt wielu urządzeń/adresów IP w ciągu 24 godzin."
+YTP_ERROR_UNUSUAL_ACTIVITY: "Ten film nie jest obecnie dostępny z powodu nietypowej aktywności na koncie."
+YTP_ERROR_NOT_SIGNED_IN: "Zaloguj się, by kontynuować oglądanie."
+YTP_CLOSE: "Zamknij"
+YTP_ANNOTATIONS: "Adnotacje"
+YTP_DONE: "Gotowe"
+YTP_SHARE_THIS_PLAYLIST: "Udostępnij tę playlistę"
+YTP_UPLOADED_BY_2: "Autor: $AUTHOR"
+YTP_SEEK_SLIDER: "Suwak przewijania"
+YTP_PAUSE: "Wstrzymaj"
+YTP_AUTOPLAY: "Autoodtwarzanie"
+YTP_AUTOPLAY_COUNTDOWN_2: "Kolejny film za $SECONDS_LEFT"
+YTP_AUTOPLAY_PAUSED: "Busy? We've paused autoplay."
+YTP_CANCEL: "Anuluj"
+YTP_ON_GOOGLE_PLUS: "W Google+"
+YTP_STILL_THERE: "Jesteś tam jeszcze? Jeśli tak, kliknij przycisk poniżej, aby kontynuować oglądanie filmów z playlisty."
+YTP_DISMISS: "OK"
+YTP_RESET: "Resetuj"
+YTP_STOP: "Zatrzymaj odtwarzanie na żywo"
+YTP_LIKE: "Fajne"
+YTP_DISLIKE: "Niefajne"
+YTP_MORE_INFO: "Więcej informacji"
+YTP_SCREENREADER_VOLUME_SETTING: "głośność"
+YTP_SCREENREADER_VOLUME_MUTED: "wyciszony"
+YTP_SCREENREADER_VOLUME_MUTE: "wycisz"
+YTP_SCREENREADER_VOLUME_UNMUTE: "włącz dźwięk"
+YTP_SCREENREADER_CONTROL_TOGGLE: "przełącz"
+YTP_SAMPLE_SUBTITLES: "Napisy będą wyglądały tak"
+YTP_HTML5_CONTEXT_MENU_LINK: "Informacje o odtwarzaczu HTML5"
+YTP_HTML5_NO_AVAILABLE_FORMATS_FALLBACK: "Ten format wideo nie jest obsługiwany."
+YTP_HTML5_NO_AVAILABLE_FORMATS_FALLBACK_WITH_LINK: "Twoja przeglądarka nie rozpoznaje obecnie żadnego z dostępnych formatów wideo. $BEGIN_LINKKliknij tutaj, aby wyświetlić najczęstsze pytania na temat filmów w standardzie HTML5.$END_LINK"
+YTP_HTML5_NO_AVAILABLE_FORMATS_FALLBACK_FLASH: "Do odtworzenia filmu potrzebny jest Adobe Flash Player. $BEGIN_LINKPobierz najnowszą wersję Flash Playera$END_LINK."
+YTP_ERROR_CAST_SESSION_DEVICE_MISMATCHED: "Urządzenie w sesji transmisji nie zgadza się z żądanym urządzeniem."
+YTP_ERROR_CAST_SESSION_VIDEO_MISMATCHED: "Film w sesji transmisji nie zgadza się z żądanym filmem."
+YTP_ERROR_CAST_TOKEN_EXPIRED: "Sesja transmisji wygasła. Odśwież ją."
+YTP_ERROR_CAST_TOKEN_FAILED: "Sesja transmisji niedostępna. Odśwież lub spróbuj jeszcze raz później."
+YTP_ERROR_CAST_TOKEN_MALFORMED: "Nieprawidłowa sesja transmisji. Odśwież lub spróbuj jeszcze raz później."
+YTP_ERROR_GEO_FAILURE: "Ten film jest niedostępny w Twoim kraju."
+YTP_ERROR_INVALID_DRM_MESSAGE: "Wiadomość dotycząca systemu DRM jest nieprawidłowa."
+YTP_ERROR_RENTAL_EXPIRED: "Upłynął termin wypożyczenia tego filmu."
+YTP_ERROR_RETRYABLE_ERROR: "Wystąpił tymczasowy błąd serwera. Spróbuj jeszcze raz później."
+YTP_ERROR_SERVER_ERROR: "Wystąpił wewnętrzny błąd serwera. Spróbuj jeszcze raz później."
+YTP_ERROR_STREAMING_NOT_ALLOWED: "Odtwarzanie nie jest dozwolone, bo ten film jest przypięty na innym urządzeniu."
+YTP_ERROR_UNSUPPORTED_DEVICE: "Na tym urządzeniu nie można odtworzyć filmu."
+YTP_ERROR_VIDEO_FORBIDDEN: "Nie masz dostępu do tego filmu."
+YTP_MDX_STATUS_CONNECTED: "Odtwarzanie na"
+YTP_MDX_STATUS_CONNECTING: "Łączenie z"
+YTP_MDX_STATUS_ERROR: "Błąd w"
+YTP_MDX_PLAYER_ERROR: "Zdalne odtwarzanie tego filmu jest niemożliwe."
+YTP_MDX_PLAYER_RECONNECT_TIME: "Sprawdź swoje połączenie internetowe. Ponowna próba za $FORMATTED_TIME..."
+YTP_MDX_PLAYER_RECONNECT_BUTTON: "Połącz ponownie"
+YTP_DEVICE_FALLBACK: "Ten film jest niedostępny na tym urządzeniu."
+YTP_AD_INTERRUPT_MESSAGE: "Twój film zostanie wyświetlony po tej reklamie."
+YTP_VISIT_ADVERTISERS_SITE: "Odwiedź stronę reklamodawcy"
+YTP_PROGRESS_LABEL: "$PLAY_PROGRESS z $DURATION s"
+
+# Binary Fresca (Live) strings:
+YTP_FRESCA_STARTING_SOON_MESSAGE: "Już za chwilę..."
+YTP_FRESCA_EVENT_OVER_MESSAGE: "Wydarzenie na żywo skończyło się."
+YTP_FRESCA_COMPLETE_MESSAGE: "Dziękujemy!"
+YTP_FRESCA_STAND_BY_MESSAGE: "Prosimy o chwilę cierpliwości."
+YTP_FRESCA_TECHNICAL_DIFFICULTIES_MESSAGE: "Mamy problemy techniczne."
+
+# Binary Subtitles (captions) strings:
+YTP_TRANSLATE_MENU_ITEM: "Przetłumacz napisy"
+YTP_CONTRIBUTE_MENU_ITEM: "Dodaj napisy"
+YTP_TRANSLATE_DIALOG_TITLE: "Tłumacz..."
+YTP_ASR_SETTINGS_LABEL: "Napisy automatyczne"
+YTP_LANGUAGE_OFF: "Wyłącz"
+YTP_FONT_FAMILY: "Rodzina czcionek"
+YTP_FONT_SIZE: "Rozmiar czcionki"
+YTP_FONT_COLOR: "Kolor czcionki"
+YTP_FONT_OPACITY: "Przezroczystość czcionki"
+YTP_BACKGROUND_COLOR: "Kolor tła"
+YTP_BACKGROUND_OPACITY: "Przezroczystość tła"
+YTP_WINDOW_COLOR: "Kolor okna"
+YTP_WINDOW_OPACITY: "Przezroczystość okna"
+YTP_COLOR_WHITE: "Biały"
+YTP_COLOR_YELLOW: "Żółty"
+YTP_COLOR_GREEN: "Zielony"
+YTP_COLOR_CYAN: "Turkusowy"
+YTP_COLOR_BLUE: "Niebieski"
+YTP_COLOR_MAGENTA: "Magenta"
+YTP_COLOR_RED: "Czerwony"
+YTP_COLOR_BLACK: "Czarny"
+YTP_FONT_FAMILY_MONO_SERIF: "Szeryfowa o stałej szerokości"
+YTP_FONT_FAMILY_PROP_SERIF: "Szeryfowa proporcjonalna"
+YTP_FONT_FAMILY_MONO_SANS: "Bezszeryfowa o stałej szerokości"
+YTP_FONT_FAMILY_PROP_SANS: "Bezszeryfowa proporcjonalna"
+YTP_FONT_FAMILY_CASUAL: "Zwykła"
+YTP_FONT_FAMILY_CURSIVE: "Kursywa"
+YTP_FONT_FAMILY_SMALL_CAPS: "Kapitaliki"
+YTP_CHAR_EDGE_STYLE: "Style krawędzi znaków"
+YTP_EDGE_STYLE_NONE: "Brak"
+YTP_EDGE_STYLE_RAISED: "Uniesione"
+YTP_EDGE_STYLE_DEPRESSED: "Opuszczone"
+YTP_EDGE_STYLE_OUTLINE: "Obrys"
+YTP_EDGE_STYLE_DROP_SHADOW: "Z cieniem"
+YTP_CLICK_FOR_SETTINGS: "Kliknij $GEAR_ICON, by przejść do ustawień"
+
+# Binary 3D strings:
+YTP_THREED_HTML5_WARNING_DIALOG_TITLE: "Nie wykryto sprzętu 3D HTML5"
+YTP_THREED_HTML5_WARNING_DIALOG_MESSAGE: "Uzyskaj $BEGIN_LINKpomoc w konfiguracji HTML5 3D$END_LINK lub zmień tryby wyświetlania 3D."
+YTP_THREED_HTML5_WARNING_DIALOG_CHANGE_MODE: "Zmień tryb oglądania 3D"
+
+# Binary YPC (paid content) strings:
+YTP_YPC_START_RENTAL_HEADER: "Czy chcesz rozpocząć okres wypożyczenia?"
+YTP_YPC_START_RENTAL_BUTTON: "Rozpocznij okres wypożyczenia"
