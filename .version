@@ -1,10 +1,10 @@
 {
-	"previousHash": "cbdb7bcd73feaa7133edf27d9d022505b42ed4fd",
-	"currentRevisionId": 1264,
-	"subject": "[i18n/en] Add strings for classicPlayerForcePersitentControls config option",
-	"body": "[i18n/en] Add strings for classicPlayerForcePersitentControls config option",
+	"previousHash": "fa49c706675b5aac644bc62a7aeb04905ce3e27f",
+	"currentRevisionId": 1267,
+	"subject": "Fixed crash on PHP 8.0",
+	"body": "Fixed crash on PHP 8.0",
 	"branch": "master",
-	"committerName": "Taniko Yamamoto",
-	"committerEmail": "kirasicecreamm@gmail.com",
-	"time": 1705053706
+	"committerName": "Daylin Cooper",
+	"committerEmail": "dcoop2004@gmail.com",
+	"time": 1705091613
 }
