@@ -2,8 +2,8 @@ languageName: "Português"
 expandedLanguageName: "Português (Brasil)"
 writingDirection: ltr
 
-thousandsSeparator: ","
-decimalSeparator: "."
+thousandsSeparator: "."
+decimalSeparator: ","
 
 numberOfMonths: 12
 daysInWeek: 7
