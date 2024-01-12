@@ -1,10 +1,10 @@
 {
-	"previousHash": "f19c604dce8b76fddc5a94729cf5631fc562989c",
-	"currentRevisionId": 1259,
-	"subject": "Added 2014 player",
-	"body": "Added 2014 player",
-	"branch": "dev-0.8-player-switcher",
+	"previousHash": "cbdb7bcd73feaa7133edf27d9d022505b42ed4fd",
+	"currentRevisionId": 1264,
+	"subject": "[i18n/en] Add strings for classicPlayerForcePersitentControls config option",
+	"body": "[i18n/en] Add strings for classicPlayerForcePersitentControls config option",
+	"branch": "master",
 	"committerName": "Taniko Yamamoto",
 	"committerEmail": "kirasicecreamm@gmail.com",
-	"time": 1705053315
+	"time": 1705053706
 }

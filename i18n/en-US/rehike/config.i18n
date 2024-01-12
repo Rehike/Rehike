@@ -17,6 +17,11 @@ props:
         PLAYER_2022: "2022 - Square edges, old storyboard"
         PLAYER_2020: "2020 - Smaller UI"
         PLAYER_2014: "2014 - Classic UI, old buffering behavior"
+    classicPlayerForcePersistentControls:
+      title: "Always show controls"
+      subtitle: >
+        May cause issues with custom CSS because this is designed for the latest
+        official Hitchhiker CSS version.
     modernLogo:
       title: "Use the current YouTube logo"
       subtitle: >
