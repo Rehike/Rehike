@@ -1,10 +1,10 @@
 {
-	"previousHash": "83855b0407021b1a037cf12c950a3867ff0e1751",
-	"currentRevisionId": 1255,
-	"subject": "Improve configuration system, support groups and conditional options",
-	"body": "Improve configuration system, support groups and conditional options",
-	"branch": "master",
+	"previousHash": "f19c604dce8b76fddc5a94729cf5631fc562989c",
+	"currentRevisionId": 1259,
+	"subject": "Added 2014 player",
+	"body": "Added 2014 player",
+	"branch": "dev-0.8-player-switcher",
 	"committerName": "Taniko Yamamoto",
 	"committerEmail": "kirasicecreamm@gmail.com",
-	"time": 1704868725
+	"time": 1705053315
 }

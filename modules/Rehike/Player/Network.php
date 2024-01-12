@@ -1,8 +1,12 @@
 <?php
 namespace Rehike\Player;
 
+require_once "Constants.php";
+
+// --- REHIKE-SPECIFIC IMPORTS ---
 use YukisCoffee\CoffeeRequest\CoffeeRequest;
 use YukisCoffee\CoffeeRequest\Enum\PromiseStatus;
+// -------------------------------
 
 /**
  * A wrapper class for networking. 

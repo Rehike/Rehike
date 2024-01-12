@@ -5,6 +5,8 @@
  * 
  * - Patched qn @ "qn=function(a,b,c)"... to support newer player
  *   versions.
+ * - Patched en @ "en=function(a)"... to support delayloading for loading
+ *   old player revisions whose arguments are built asynchronously by Rehike.
  */
 var _yt_www={};(function(g){var window=this;/*
 
@@ -675,8 +677,56 @@ this.ra=0;c?this.ra=g.Uh(function(){e.loadNewVideoConfig(c)},0):d&&(dn(this),en(
 dn=function(a){var b;a.l?b=a.l.rootElementId:b=a.i.attrs.id;a.j=b||a.j;"video-player"==a.j&&(a.j=a.N,a.l?a.l.rootElementId=a.N:a.i.attrs.id=a.N);a.H.id==a.j&&(a.j+="-player",a.l?a.l.rootElementId=a.j:a.i.attrs.id=a.j)};
 gn=function(a){a.i&&!a.i.loaded&&(a.i.loaded=!0,"0"!=a.i.args.autoplay?a.api.loadVideoByPlayerVars(a.i.args):a.api.cueVideoByPlayerVars(a.i.args))};
 kn=function(a){var b=!0,c=hn(a);c&&a.i&&(a=jn(a),b=g.J(c,"version")===a);return b&&!!g.u("yt.player.Application.create")};
-en=function(a){if(!a.Ha()&&!a.V){var b=kn(a);if(b&&"html5"==(hn(a)?"html5":null))a.aa="html5",a.F||ln(a);else if(mn(a),a.aa="html5",b&&a.D)a.Pa.appendChild(a.D),ln(a);else{a.i&&(a.i.loaded=!0);var c=!1;a.M=function(){c=!0;var d=nn(a,"player_bootstrap_method")?g.u("yt.player.Application.createAlternate")||g.u("yt.player.Application.create"):g.u("yt.player.Application.create");var e=a.i?a.i.clone():void 0;d(a.Pa,e,a.l);ln(a)};
-a.V=!0;b?a.M():(g.Sl(jn(a),a.M),(b=a.l?a.l.cssUrl:a.i.assets.css)&&g.Ym(b),on(a)&&!c&&g.r("yt.player.Application.create",null,void 0))}}};
+
+/**
+ * Rehike-specific change: Support delayed player bootstrapping when Rehike is
+ * using the legacy player.
+ */
+en = function(a) {
+    if (!a.Ha() && !a.V) {
+        var b = kn(a);
+        if (b && "html5" == (hn(a) ? "html5" : null)) a.aa = "html5", a.F || ln(a);
+        else if (mn(a), a.aa = "html5", b && a.D) a.Pa.appendChild(a.D), ln(a);
+        else {
+            a.i && (a.i.loaded = !0);
+            var c = !1;
+            a.M = function() {
+                c = !0;
+                var d = nn(a, "player_bootstrap_method") ? g.u("yt.player.Application.createAlternate") || g.u("yt.player.Application.create") : g.u("yt.player.Application.create");
+
+                if (
+                    window.yt && 
+                    window.yt.config_ && 
+                    window.yt.config_.REHIKE_CLASSIC_PLAYER &&
+                    a.i.args &&
+                    !(a.i.args.adaptive_fmts || a.i.args.url_encoded_fmt_stream_map)
+                )
+                {
+                    var delayLoadEvent = document.createEvent("event");
+                    delayLoadEvent.initEvent("rh-classic-player-request-load", false, false);
+                    delayLoadEvent.detail = {
+                        cb: function() {
+                            var e = a.i ? a.i.clone() : void 0;
+                            e.args = window.ytplayer.config.args;
+                            d(a.Pa, e, a.l);
+                            ln(a);
+                        }
+                    };
+                    document.dispatchEvent(delayLoadEvent);
+                }
+                else
+                {
+                    var e = a.i ? a.i.clone() : void 0;
+                    d(a.Pa, e, a.l);
+                    ln(a)
+                }
+            };
+            a.V = !0;
+            b ? a.M() : (g.Sl(jn(a), a.M), (b = a.l ? a.l.cssUrl : a.i.assets.css) && g.Ym(b), on(a) && !c && g.r("yt.player.Application.create", null, void 0))
+        }
+    }
+};
+
 hn=function(a){var b=g.z(a.j);!b&&a.H&&a.H.querySelector&&(b=a.H.querySelector("#"+a.j));return b};
 ln=function(a){if(!a.Ha()){var b=hn(a),c=!1;b&&b.getApiInterface&&b.getApiInterface()&&(c=!0);c?(a.V=!1,!nn(a,"html5_remove_not_servable_check_killswitch")&&b.isNotServable&&a.i&&b.isNotServable(a.i.args.video_id)||pn(a)):a.xb=g.Uh(function(){ln(a)},50)}};
 pn=function(a){cn(a);a.F=!0;var b=hn(a);b.addEventListener&&(a.K=qn(a,b,"addEventListener"));b.removeEventListener&&(a.wa=qn(a,b,"removeEventListener"));var c=b.getApiInterface();c=c.concat(b.getInternalApiInterface());for(var d=0;d<c.length;d++){var e=c[d];a.api[e]||(a.api[e]=qn(a,b,e))}for(var f in a.C)a.K(f,a.C[f]);gn(a);a.Ka&&a.Ka(a.api);a.R.ea("onReady",a.api)};

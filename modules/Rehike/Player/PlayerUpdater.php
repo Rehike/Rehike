@@ -1,7 +1,13 @@
 <?php
 namespace Rehike\Player;
 
+require_once "Constants.php";
+
 use Rehike\Player\Exception\UpdaterException;
+
+// --- REHIKE-SPECIFIC IMPORTS ---
+use Rehike\ConfigManager\Config;
+// -------------------------------
 
 /**
  * Retrieve information about the current player.
@@ -42,8 +48,8 @@ class PlayerUpdater
     protected static string $sourceUrl = "https://www.youtube.com/embed/jNQXAC9IVRw?hl=en&gl=US";
 
     /**
-     * Request all necessary player information for the latest
-     * version.
+     * Request all necessary player information for the requested player
+     * revision.
      */
     public static function requestPlayerInfo(): object
     {
@@ -51,21 +57,50 @@ class PlayerUpdater
 
         // Attempt to get application URLs from the
         // response.
-        $jsUrl = self::extractApplicationUrl($html);
-        $cssUrl = self::extractApplicationCss($html);
+        $latestJsUrl = self::extractApplicationUrl($html);
+        $latestCssUrl = self::extractApplicationCss($html);
         $embedJsUrl = self::extractEmbedUrl($html);
 
         // Now get the sts from the application itself.
-        $js = self::requestApplication(self::unrelativize($jsUrl));
+        $js = self::requestApplication(self::unrelativize($latestJsUrl));
 
         $sts = self::extractSts($js);
 
+        if (IS_REHIKE)
+            $playerChoice = Config::getConfigProp("appearance.playerChoice");
+        else
+            $playerChoice = "CURRENT";
+
+
+        if ("CURRENT" === $playerChoice)
+        {
+            $effectiveJsUrl = $latestJsUrl;
+            $effectiveCssUrl = $latestCssUrl;
+        }
+        else if ("PLAYER_2022" === $playerChoice)
+        {
+            $effectiveJsUrl = "/s/player/c57c113c/player_ias.vflset/en_US/base.js";
+            $effectiveCssUrl = "/s/player/c57c113c/www-player.css";
+        }
+        else if ("PLAYER_2020" === $playerChoice)
+        {
+            $effectiveJsUrl = "/yts/jsbin/player_ias-vfl1Ng2HU/en_US/base.js";
+            $effectiveCssUrl = "/yts/cssbin/player-vflfo9Nwd/www-player-webp.css";
+        }
+        else if ("PLAYER_2014" === $playerChoice)
+        {
+            $effectiveJsUrl = "/rehike/static/js/html5player-2014.js";
+            $effectiveCssUrl = "//s.ytimg.com/yts/cssbin/www-player-vfluwFMix.css";
+        }
+
         // Pack these up and return:
         return (object)[
-            "baseJsUrl" => $jsUrl,
-            "baseCssUrl" => $cssUrl,
+            "baseJsUrl" => $effectiveJsUrl,
+            "baseCssUrl" => $effectiveCssUrl,
             "embedJsUrl" => $embedJsUrl,
-            "signatureTimestamp" => $sts
+            "signatureTimestamp" => $sts,
+            "latestJsUrl" => $latestJsUrl,
+            "latestCssUrl" => $latestCssUrl
         ];
     }
     

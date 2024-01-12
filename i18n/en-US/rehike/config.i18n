@@ -10,6 +10,13 @@ tabs:
 
 props:
   appearance:
+    playerChoice:
+      title: "Choose video player revision:"
+      values:
+        CURRENT: "Latest player" # No specific date; true latest player.
+        PLAYER_2022: "2022 - Square edges, old storyboard"
+        PLAYER_2020: "2020 - Smaller UI"
+        PLAYER_2014: "2014 - Classic UI, old buffering behavior"
     modernLogo:
       title: "Use the current YouTube logo"
       subtitle: >
@@ -79,6 +86,11 @@ props:
         Provides a stable adblocker for ads in the video player.
   
   experiments:
+    displayPlayerChoice:
+      title: "Enable the use of older players"
+      subtitle: >
+        Enables the option to change the YouTube player revision on the
+        appearance page.
     useSignInV2:
       title: "Use sign in v2"
       subtitle: >
@@ -91,7 +103,12 @@ props:
         Makes the home page signed out. This is a workaround for YouTube 
         blocking homepage access if you have watch history disabled 
         (2023/08/18).
-  
+    encryptedStreams:
+      title: "Use encrypted video streams"
+      subtitle: >
+        Required for proper functioning of older players! Uses ANDROID
+        for requests to get video streams without encryption.
+
   advanced:
     enableDebugger:
       title: "Enable the debugger"

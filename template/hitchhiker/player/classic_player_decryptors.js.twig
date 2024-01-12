@@ -1,0 +1,406 @@
+/**
+ * Extract the signature cipher from a given player script.
+ * 
+ * Special thanks to Reprety (V3) for providing a reference implementation.
+ * 
+ * @argument {string} playerScript A copy of the text content of the latest YouTube player
+ *                                 binary.
+ * 
+ * @returns {
+ *      {
+ *          status: string,
+ *          reason: string, 
+ *          extractCb: ?function(string),
+ *          cacheParams: { args: string, body: string }|null
+ *      }
+ * }
+ */
+function getDecryptorForPlayerSig(playerScript)
+{
+    var DEBUG = false;
+
+    if (DEBUG)
+        console.log("[SigDecode] Using player script:", playerScript);
+
+    // Resulting groups:
+    //   [0]: Entire function declaration
+    //   [1]: Arguments only
+    //   [2]: Body only
+    //   [3]: Decode calls only
+    var DECODER_PATTERN =
+        "function\\((.*?)\\){(a=a\\.split\\(\\\"\\\"\\);(.*?)return a\\.join\\(\\\"\\\"\\))}";
+
+    // Base result.
+    var result = {
+        status: "FAILURE",
+        reason: "No reason provided.",
+        extractCb: null,
+        cacheParams: null
+    };
+
+    var decoderMatches = playerScript.match(new RegExp(DECODER_PATTERN));
+    if (DEBUG)
+        console.log("[SigDecode] decoderMatches ==", decoderMatches);
+
+    if (!decoderMatches)
+    {
+        result.reason = "Failed to extract decode function.";
+        console.error("[Rehike.SigDecode]" + result.reason);
+        return result;
+    }
+
+    var sourceDeclaration = decoderMatches[0];
+    var sourceArguments   = decoderMatches[1].split(",");
+    var sourceBody        = decoderMatches[2].split(";");
+    var sourceCalls       = decoderMatches[3].split(";");
+
+    var lookupList = [];
+
+    // Parse the source function body:
+    for (var i = 0, j = sourceBody.length; i < j; i++)
+    {
+        // See if a foreign variable is being used for assignment,
+        // and add it to the lookup list if so.
+        var varName = sourceBody[i].split(".")[0].split("=")[0].split(",")[0];
+        if (DEBUG)
+            console.log("[SigDecode.ForeignIterator] Iterating #" + i + " (" + varName + ").");
+        if (
+            varName != sourceBody[i] && 
+            (varName.indexOf(" ") == -1) && 
+            !sourceArguments.includes(varName)
+        )
+        {
+            if (!lookupList.includes(varName))
+            {
+                if (DEBUG)
+                    console.log("[SigDecode.ForeignIterator] Adding #" + i + " (" + varName + ") to lookup list.");
+                lookupList.push(varName);
+            }
+        }
+    }
+
+    if (DEBUG)
+        console.log("[SigDecode] lookupList ==", lookupList);
+
+    // Iterate the lookup list and search the player JS for the declarations:
+    var successfulLookups = 0;
+    var lookupResults = [];
+    for (var i = 0, j = lookupList.length; i < j; i++)
+    {
+        // Firstly, objects are searched for. The obfuscator routine is often in
+        // an object literal, so they're the only thing we're looking for.
+        var curName = lookupList[i];
+        var text = playerScript.split("var " + curName + "=")[1];
+        
+        if (!text)
+            text = playerScript.split(";" + curName + "=")[1];
+    
+        if (!text)
+            text = playerScript.split("\n" + obfuscator + "=")[1];
+
+        if (!text)
+            // Out of possibilities, so just skip this iteration.
+            continue;
+
+        // Parse to the last unclosed "}" character (terminator)
+        var endIndex = 0;
+        var depth = 0;
+
+        for (var k = 0, l = text.length; k < l; k++)
+        {
+            if (depth < 0)
+            {
+                // Parse error, break.
+                endIndex = -1;
+                depth = 0;
+                break;
+            }
+            else if (text[k] == "{")
+            {
+                ++depth;
+            }
+            else if (text[k] == "}")
+            {
+                if (--depth == 0)
+                {
+                    endIndex = k + 1;
+                    break;
+                }
+            }
+        }
+
+        // If we had any problems, skip the result.
+        if (endIndex < 0)
+            continue;
+
+        var resultObj = text.substr(0, endIndex);
+        var resultText = "var " + curName + "=" + resultObj;
+        lookupResults.push(resultText);
+    }
+
+    if (DEBUG)
+        console.log("[SigDecode] lookupResults ==", lookupResults);
+
+    if (lookupResults.length == 0)
+    {
+        result.reason = "Failed to lookup required external functions.";
+        console.error("[Rehike.SigDecode]" + result.reason);
+        return result;
+    }
+
+    // Generate the function:
+    var resultFunctionBody =
+        lookupResults.join(";") +
+        ";var decodeSignature = " + sourceDeclaration +
+        ";return decodeSignature(sourceSignature);"; // sourceSignature declared below.
+
+    if (DEBUG)
+        console.log("[SigDecode] resultFunctionBody ==", resultFunctionBody);
+
+    result.cacheParams = {
+        args: "sourceSignature",
+        body: resultFunctionBody
+    };
+
+    result.extractCb = new Function(
+        // Arguments:
+        result.cacheParams.args,
+        // Function body:
+        result.cacheParams.body
+    );
+    result.status = "SUCCESS";
+
+    return result;
+}
+
+/**
+ * Extract the "n" parameter decryptor from a given player script.
+ * 
+ * Special thanks to Reprety (V3) for providing a reference implementation.
+ * 
+ * @argument {string} playerScript A copy of the text content of the latest YouTube player
+ *                                 binary.
+ * 
+ * @returns {
+ *      {
+ *          status: string,
+ *          reason: string, 
+ *          extractCb: ?function(string),
+ *          cacheParams: { args: string, body: string }|null
+ *      }
+ * }
+ */
+function getDecryptorForPlayerN(playerScript)
+{
+    var DEBUG = false;
+
+    if (DEBUG)
+        console.log("[NDecode] Using player script:", playerScript);
+
+    // Resulting groups:
+    //   [0]: Entire expression
+    //   [1]: Assigned variable name.
+    var BASE_CALL_PATTERN = "([a-zA-Z0-9_$]*?)\\=[a-zA-Z0-9_$]*?\\.get\\(\\\"n\\\"\\)";
+
+    // Resulting groups:
+    //   [0]: Entire expression
+    //   [1]: Obfuscator function name
+    //   [2]: Only the array index
+    var OBFUSCATOR_CALL_PATTERN_TEMPLATE =
+        "__NAME__=([a-zA-Z0-9_$]*?(\\[[a-zA-Z0-9_$]*\\])?)\\(.*\\)";
+
+    // Base result.
+    var result = {
+        status: "FAILURE",
+        reason: "No reason provided.",
+        extractCb: null,
+        cacheParams: null
+    };
+
+    var declarationMatches = playerScript.match(new RegExp(BASE_CALL_PATTERN));
+
+    if (DEBUG)
+        console.log("[NDecode] declarationMatches ==", declarationMatches);
+
+    if (!declarationMatches)
+    {
+        result.reason = "Failed to extract decode expression.";
+        console.error("[Rehike.NDecode]" + result.reason);
+        return result;
+    }
+
+    var declarationExpression = declarationMatches[0];
+    var declarationVarName    = declarationMatches[1];
+
+    // The next use of the declaration variable should be to another
+    // function. This can become a bit of a mess.
+    var searchIndex = declarationMatches.index;
+    var subsequentText = playerScript.slice(searchIndex);
+
+    var obfuscatorCallPattern =
+        OBFUSCATOR_CALL_PATTERN_TEMPLATE.replace("__NAME__", declarationVarName);
+
+    var obfuscatorCallMatches = subsequentText.match(new RegExp(obfuscatorCallPattern));
+    if (DEBUG)
+        console.log("[NDecode] obfuscatorCallMatches ==", obfuscatorCallMatches);
+    var obfuscatorFnName = obfuscatorCallMatches[1];
+
+    var obfuscatorFnNameSymbol = obfuscatorFnName.split("[")[0];
+
+    var obfuscatorFnText = null;
+    var obfuscatorArrayText = null;
+    var lookupName = obfuscatorFnName;
+
+    if (obfuscatorFnNameSymbol != obfuscatorFnName)
+    {
+        // The obfuscator is referenced through an array, so we need to do some
+        // additional work.
+        obfuscatorArrayText = playerScript.slice(
+            playerScript.indexOf("var " + obfuscatorFnNameSymbol + "=")
+        );
+        obfuscatorArrayText = obfuscatorArrayText.slice(
+            0,
+            obfuscatorArrayText.indexOf("]") + 2
+        );
+
+        if (DEBUG)
+            console.log("[NDecode] (mid) obfuscatorFnNameSymbol ==", obfuscatorFnNameSymbol);
+
+        if (DEBUG)
+            console.log("[NDecode] (mid) obfuscatorArrayText ==", obfuscatorArrayText);
+
+        // Set lookupName to the content between the array tokens:
+        lookupName = obfuscatorArrayText.split("[")[1].split("]")[0];
+    }
+
+    obfuscatorFnText = playerScript.slice(playerScript.indexOf(lookupName + "="));
+    if (DEBUG)
+        console.log("[NDecode] obfuscatorFnText ==", obfuscatorFnText);
+    var flow = [];
+    var shouldContinue = true;
+    var parseError = false;
+    var i = 0;
+
+    while (typeof obfuscatorFnText[i] == "string" && shouldContinue)
+    {
+        var cur = obfuscatorFnText[i];
+        switch (cur)
+        {
+            case "'":
+                if (flow[flow.length - 1] == "'")
+                {
+                    flow.pop();
+                    break;
+                }
+            case "\"":
+                if (flow[flow.length - 1] == "\"")
+                {
+                    flow.pop();
+                    break;
+                }
+            case "`":
+                if (flow[flow.length - 1] == "`")
+                {
+                    flow.pop();
+                    break;
+                }
+            case "{":
+            case "[":
+                flow.push(cur);
+                break;
+            case "]":
+                if (flow[flow.length - 1] == "[")
+                {
+                    flow.pop();
+                }
+                else if (!flow.length)
+                {
+                    console.error(
+                        "[Rehike.NDecode.ParseDefinition] Parse error at \"" +
+                        cur + "\" at index " + i + ". Used to terminate " + flow[flow.length - 1]
+                    );
+                    shouldContinue = false;
+                    parseError = true; 
+                }
+                break;
+            case "}":
+                if (flow[flow.length - 1] == "{")
+                {
+                    flow.pop();
+                }
+                else if (!flow.length)
+                {
+                    console.error(
+                        "[Rehike.NDecode.ParseDefinition] Parse error at \"" +
+                        cur + "\" at index " + i + ". Used to terminate " + flow[flow.length - 1]
+                    );
+                    shouldContinue = false;
+                    parseError = true; 
+                }
+                break;
+        }
+        i++;
+    }
+
+    if (i && parseError)
+    {
+        console.error(
+            "[Rehike.NDecode.ParseDefinition] Parse error occurred at: " +
+            obfuscatorFnText.substr(0, i + 1)
+        );
+
+        result.reason = "Parse error at " + obfuscatorFnText.substr(0, i + 1);
+        return result;
+    }
+
+    if (obfuscatorFnText.indexOf("};]();/") > -1)
+    {
+        // Honestly, I don't understand this part one bit, so I just copied
+        // the implementation from Reprety. Parse error correction?
+        var obfBits = obfuscatorFnText.split("};]();/");
+        var obfEnd = obfBits[1].slice(0, obfBits[1].search("\\}\\;") + 2);
+        var obfNew = obfBits[0] + "};]();/" + obfEnd;
+        obfuscatorFnText = obfNew;
+    }
+    else
+    {
+        obfuscatorFnText = obfuscatorFnText.slice(
+            0,
+            obfuscatorFnText.search("\\}\\;") + 2
+        );
+    }
+
+    if (DEBUG)
+        console.log("[NDecode] (final) obfuscatorFnText ==", obfuscatorFnText);
+
+    var bakedFunctionString = "";
+
+    bakedFunctionString += obfuscatorFnText + ";";
+
+    if (obfuscatorArrayText)
+    {
+        bakedFunctionString += obfuscatorArrayText + ";";
+    }
+
+    bakedFunctionString += "return " + obfuscatorFnName + "(encryptedN);";
+
+    if (DEBUG)
+        console.log("[NDecode] bakedFunctionString ==", bakedFunctionString);
+
+    result.cacheParams = {
+        args: "encryptedN",
+        body: bakedFunctionString
+    };
+
+    var bakedFunction = new Function(
+        // Arguments:
+        result.cacheParams.args,
+        // Function body:
+        result.cacheParams.body
+    );
+
+    result.status = "SUCCESS";
+    result.extractCb = bakedFunction;
+
+    return result;
+}

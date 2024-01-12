@@ -1,0 +1,235 @@
+# Classic video player messages. Since these were baked into the binary,
+# and we use one modified binary, the messages are loaded dynamically.
+#
+# Rather than translating these by hand, which is an admittedly tedious process,
+# you can use Wayback Machine CDX search to find an archive of the player with
+# your specific language code, then copy them here. The classic player binary is
+# called "html5player" followed by the language code. Although the source data
+# will be a JavaScript object, you can convert it to a translation file simply
+# by running it through beautifier.io and then removing all commas after quotes.
+#
+# The player version that we use is from November 2014, and uses a VFL set, so
+# the URL goes: s.ytimg.com/yts/jsbin/html5player-LANGUAGE-vflID/html5player.js
+#
+# The strings are a little scattered (I think this is because they come from
+# multiple different modules which were concatenated together), so there are a
+# few different sources from which you'll have to take.
+#
+# From what I can tell, there are five main sources of string registration:
+#    - Main strings (the massive one)
+#    - Fresca (live) module
+#    - Subtitles (captions) module
+#    - 3D module
+#    - YTP (paid content) module
+#
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+# If you don't know how to do that, then you can simply leave it unmodified when
+# submitting a translation, and a Rehike maintainer will add them for you.
+#
+# We are happy to do this work for you!
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+#
+# There are only a few unique strings here that will require manual translation.
+# The convention that will be used for this file will use camelCase names for
+# custom messages, and CONSTANT_CASE names for official player messages that you
+# can get from the JS.
+
+# BEGIN UNIQUE STRINGS
+
+# Looping wasn't supported in this player revision, so we had to add a custom
+# implementation. As such, a custom string is also required.
+playerClassicLoop: "ループ再生"
+
+# END UNIQUE STRINGS
+
+# Binary main strings:
+YTP_ADVERTISEMENT: "広告"
+YTP_AUDIO_TRACK_TITLE: "音声トラック"
+YTP_AUTO: "自動"
+YTP_AUTO_WITH_QUALITY_2: "自動（$VIDEO_QUALITY）"
+YTP_CHANGE_QUALITY_WITH_QUALITY_2: "画質を変更します（$VIDEO_QUALITY）"
+YTP_COPY_DEBUG_INFO: "デバッグ情報をコピー"
+YTP_COPY_VIDEO_URL: "動画の URL をコピー"
+YTP_COPY_VIDEO_URL_AT_TIME: "現時点の動画の URL をコピー"
+YTP_DRAWER_HEADER_TEXT: "この動画では"
+YTP_DRAWER_POLL_SUBMIT: "送信"
+YTP_GET_DEBUG_INFO: "デバッグ情報を取得"
+YTP_GET_VIDEO_URL: "動画の URL を取得"
+YTP_GET_VIDEO_URL_AT_TIME: "この場所の動画 URL を取得"
+YTP_GET_EMBED: "埋め込みコードを取得"
+YTP_DECREASE_PLAYBACK_SPEED: "再生速度を下げる"
+YTP_DEFAULT_VIEW: "デフォルト表示"
+YTP_EMBED_COPY: "埋め込みコードをコピー"
+YTP_ERROR_GENERIC: "エラーが発生しました。しばらくしてからもう一度お試しください。"
+YTP_ERROR_GENERIC_WITH_LINK_2: "エラーが発生しました。後でもう一度お試しください。$BEGIN_LINK詳細$END_LINK"
+YTP_EXIT_FULLSCREEN: "全画面モードの終了"
+YTP_FEATURED: "おすすめ"
+YTP_FULLSCREEN: "全画面"
+YTP_INCREASE_PLAYBACK_SPEED: "再生速度を上げる"
+YTP_KEYBOARD_SHORTCUTS: "キーボード ショートカット"
+YTP_LIVE_NOW: "ライブ配信中"
+YTP_MIX: "ミックスリスト"
+YTP_MORE: "もっと見る"
+YTP_MDX_TITLE: "再生デバイス"
+YTP_MDX_TOOLTIP: "テレビで再生"
+YTP_MDX_MY_COMPUTER: "このパソコン"
+YTP_MUTE: "ミュート（消音）"
+YTP_NEXT: "次へ"
+YTP_NEXT_VIDEO_IN: "次の動画は $TIME_LEFT 秒後に始まります"
+YTP_NORMAL_SPEED: "標準"
+YTP_ON: "オン"
+YTP_OFF: "オフ"
+YTP_OPTIONS: "オプション"
+YTP_PLAY_ALL: "すべて再生"
+YTP_PLAY_PAUSE: "再生/一時停止の切り替え"
+YTP_PREVIOUS: "前へ"
+YTP_PLAYLIST: "再生リスト"
+YTP_PLAYLIST_UP_NEXT: "次の動画"
+YTP_QUALITY_TITLE: "画質"
+YTP_REPLAY: "もう一回見る"
+YTP_REPORT_ISSUE: "再生に関する問題を報告する"
+YTP_SEEK_BACK: "10 秒巻き戻し"
+YTP_SEEK_FORWARD: "10 秒早送り"
+YTP_SEEK_PERCENT: "0%～90% にジャンプします。"
+YTP_SETTINGS: "設定"
+YTP_SHARE: "共有"
+YTP_SHARE_WITH_PLAYLIST: "再生リストを共有する"
+YTP_SHOW_VIDEO_INFO: "詳細統計情報"
+YTP_SPEED_TITLE: "速度"
+YTP_ST_COLLAPSE: "折りたたむ"
+YTP_ST_EXPAND: "展開"
+YTP_SUBTITLES: "字幕"
+YTP_THREED_SHORT: "3D"
+YTP_THEATER_MODE: "シアター モード"
+YTP_TOGGLE_FULLSCREEN: "全画面に切り替えます。"
+YTP_TOGGLE_MUTE: "ミュートの切り替え"
+YTP_UNMUTE: "ミュート解除"
+YTP_URL_NAVIGATE: "YouTube.com で見る"
+YTP_WATCH_ALL: "動画全体を再生する"
+YTP_WATCH_LATER: "後で見る"
+YTP_WATCH_LATER_AS_2: "$USER_NAME として後で再生します"
+YTP_WEBGL_3D_ANAGLYPH: "アナグリフ"
+YTP_WEBGL_3D_2D: "2D"
+YTP_SUBSCRIBE_AS: "$USER_NAME としてチャンネル登録する"
+YTP_LIKE_AS: "$USER_NAME として高く評価する"
+YTP_DISLIKE_AS: "$USER_NAME として低く評価する"
+YTP_WATCH_NEXT: "次のおすすめ"
+YTP_PLAY: "再生"
+YTP_WATERMARK: "透かし"
+YTP_ERROR_STREAMING_UNAVAILABLE: "この動画はオフライン再生用にダウンロードされたため、現在再生できません。"
+YTP_ERROR_LICENSE: "この動画のライセンスに問題が発生しました。"
+YTP_ERROR_VIDEO_NOT_FOUND: "この動画が見つかりません。"
+YTP_ERROR_ALREADY_PINNED_ON_A_DEVICE: "この動画のダウンロード数は、著作権所有者が許可している最大端末数に既に達しています。ここで動画を再生する前に、別の端末で登録を解除する必要があります。"
+YTP_ERROR_CANNOT_ACTIVATE_RENTAL: "レンタルした動画を有効にするときにエラーが発生しました。このページを再読み込みするか、しばらくしてからもう一度お試しください。"
+YTP_ERROR_PURCHASE_NOT_FOUND: "この動画は有料です。"
+YTP_ERROR_PURCHASE_REFUNDED: "この動画の代金は払い戻されました。"
+YTP_ERROR_STOPPED_BY_ANOTHER_PLAYBACK: "この動画は別の場所で同じアカウントで再生されています。再生を再開するには、このページを再読み込みしてください。"
+YTP_ERROR_TOO_MANY_STREAMS_PER_USER: "同じアカウントで再生している動画の数が多すぎるため、再生が停止しました。"
+YTP_ERROR_TOO_MANY_STREAMS_PER_ENTITLEMENT: "この動画を再生した端末の数が多すぎるため、再生が停止しました。"
+YTP_ERROR_STREAMING_DEVICES_QUOTA_PER_24H_EXCEEDED: "24 時間に使われた端末/IP アドレスの数が多すぎます。"
+YTP_ERROR_UNUSUAL_ACTIVITY: "不正なアカウント操作が行われたため、この動画は現在ご利用いただけません。"
+YTP_ERROR_NOT_SIGNED_IN: "再生を再開するには、ログインしてください。"
+YTP_CLOSE: "閉じる"
+YTP_ANNOTATIONS: "アノテーション"
+YTP_DONE: "完了"
+YTP_SHARE_THIS_PLAYLIST: "この再生リストを共有"
+YTP_UPLOADED_BY_2: "投稿者: $AUTHOR"
+YTP_SEEK_SLIDER: "シーク バー"
+YTP_PAUSE: "一時停止"
+YTP_AUTOPLAY: "自動再生"
+YTP_AUTOPLAY_COUNTDOWN_2: "次の動画は $SECONDS_LEFT 秒後に始まります"
+YTP_CANCEL: "キャンセル"
+YTP_ON_GOOGLE_PLUS: "Google+ で見る"
+YTP_STILL_THERE: "引き続き再生リストの動画をご覧になる場合は、下のボタンをクリックしてください。"
+YTP_DISMISS: "OK"
+YTP_RESET: "リセット"
+YTP_STOP: "ライブ再生を停止"
+YTP_LIKE: "高評価"
+YTP_DISLIKE: "低評価"
+YTP_MORE_INFO: "詳細情報"
+YTP_SCREENREADER_VOLUME_SETTING: "音量"
+YTP_SCREENREADER_VOLUME_MUTED: "ミュート済み"
+YTP_SCREENREADER_VOLUME_MUTE: "ミュート"
+YTP_SCREENREADER_VOLUME_UNMUTE: "ミュート解除"
+YTP_SCREENREADER_CONTROL_TOGGLE: "切り替え"
+YTP_SAMPLE_SUBTITLES: "字幕は次のようになります"
+YTP_HTML5_CONTEXT_MENU_LINK: "HTML5 プレーヤーについて"
+YTP_HTML5_NO_AVAILABLE_FORMATS_FALLBACK: "この動画形式はサポートされていません。"
+YTP_HTML5_NO_AVAILABLE_FORMATS_FALLBACK_WITH_LINK: "お使いのブラウザは、使用可能な動画フォーマットを認識できません。$BEGIN_LINKここをクリックして、HTML5 の動画についてのよくある質問をご覧ください。$END_LINK"
+YTP_HTML5_NO_AVAILABLE_FORMATS_FALLBACK_FLASH: "動画の再生には Adobe Flash Player が必要です。$BEGIN_LINK最新の Flash Player をご利用ください$END_LINK。"
+YTP_ERROR_CAST_SESSION_DEVICE_MISMATCHED: "キャスト セッションの端末が、リクエストされた端末と一致しません。"
+YTP_ERROR_CAST_SESSION_VIDEO_MISMATCHED: "キャスト セッションの動画が、リクエストされた動画と一致しません。"
+YTP_ERROR_CAST_TOKEN_EXPIRED: "キャスト セッションの有効期限が切れました。更新してください。"
+YTP_ERROR_CAST_TOKEN_FAILED: "キャスト セッションを使用できません。更新するか、しばらくしてからもう一度お試しください。"
+YTP_ERROR_CAST_TOKEN_MALFORMED: "無効なキャスト セッションです。更新するか、しばらくしてからもう一度お試しください。"
+YTP_ERROR_GEO_FAILURE: "この動画はお住まいの地域ではご利用いただけません。"
+YTP_ERROR_INVALID_DRM_MESSAGE: "DRM システム固有のメッセージが無効です。"
+YTP_ERROR_RENTAL_EXPIRED: "この動画のレンタルは終了しました。"
+YTP_ERROR_RETRYABLE_ERROR: "一時的なサーバー エラーが発生しました。しばらくしてからもう一度お試しください。"
+YTP_ERROR_SERVER_ERROR: "サーバーの内部エラーが発生しました。しばらくしてからもう一度お試しください。"
+YTP_ERROR_STREAMING_NOT_ALLOWED: "この動画は別の端末で登録されているため再生できません。"
+YTP_ERROR_UNSUPPORTED_DEVICE: "この端末では再生できません。"
+YTP_ERROR_VIDEO_FORBIDDEN: "この動画へのアクセスは禁止されています。"
+YTP_MDX_STATUS_CONNECTED: "再生中:"
+YTP_MDX_STATUS_CONNECTING: "接続先"
+YTP_MDX_STATUS_ERROR: "エラー発生箇所:"
+YTP_MDX_PLAYER_ERROR: "この動画はリモート再生できません。"
+YTP_MDX_PLAYER_RECONNECT_TIME: "インターネット接続をご確認ください。$FORMATTED_TIME 後に再試行します。"
+YTP_MDX_PLAYER_RECONNECT_BUTTON: "再接続"
+YTP_DEVICE_FALLBACK: "この動画は、お使いの端末ではご利用いただけません。"
+YTP_AD_INTERRUPT_MESSAGE: "動画はこの広告の後に再生されます"
+YTP_VISIT_ADVERTISERS_SITE: "広告主のサイトにアクセス"
+YTP_PROGRESS_LABEL: "$PLAY_PROGRESS/$DURATION 秒"
+
+# Binary Fresca (Live) strings:
+YTP_FRESCA_STARTING_SOON_MESSAGE: "まもなく開始します..."
+YTP_FRESCA_EVENT_OVER_MESSAGE: "このライブ イベントは終了しました。"
+YTP_FRESCA_COMPLETE_MESSAGE: "ご視聴ありがとうございました"
+YTP_FRESCA_STAND_BY_MESSAGE: "しばらくお待ちください。"
+YTP_FRESCA_TECHNICAL_DIFFICULTIES_MESSAGE: "技術的な問題が発生しています。"
+
+# Binary Subtitles (captions) strings:
+YTP_TRANSLATE_MENU_ITEM: "字幕を翻訳"
+YTP_CONTRIBUTE_MENU_ITEM: "字幕を追加"
+YTP_TRANSLATE_DIALOG_TITLE: "翻訳..."
+YTP_ASR_SETTINGS_LABEL: "自動字幕起こし"
+YTP_LANGUAGE_OFF: "オフ"
+YTP_FONT_FAMILY: "フォント ファミリー"
+YTP_FONT_SIZE: "フォント サイズ"
+YTP_FONT_COLOR: "フォントの色"
+YTP_FONT_OPACITY: "フォントの透過度"
+YTP_BACKGROUND_COLOR: "背景色"
+YTP_BACKGROUND_OPACITY: "背景の透過度"
+YTP_WINDOW_COLOR: "ウィンドウの色"
+YTP_WINDOW_OPACITY: "ウィンドウの透過度"
+YTP_COLOR_WHITE: "白"
+YTP_COLOR_YELLOW: "黄"
+YTP_COLOR_GREEN: "緑"
+YTP_COLOR_CYAN: "シアン"
+YTP_COLOR_BLUE: "青"
+YTP_COLOR_MAGENTA: "マゼンタ"
+YTP_COLOR_RED: "赤"
+YTP_COLOR_BLACK: "黒"
+YTP_FONT_FAMILY_MONO_SERIF: "等幅セリフ"
+YTP_FONT_FAMILY_PROP_SERIF: "プロポーショナル セリフ"
+YTP_FONT_FAMILY_MONO_SANS: "等幅サンセリフ"
+YTP_FONT_FAMILY_PROP_SANS: "プロポーショナル サンセリフ"
+YTP_FONT_FAMILY_CASUAL: "カジュアル"
+YTP_FONT_FAMILY_CURSIVE: "草書体"
+YTP_FONT_FAMILY_SMALL_CAPS: "スモール キャピタル"
+YTP_CHAR_EDGE_STYLE: "文字装飾スタイル"
+YTP_EDGE_STYLE_NONE: "なし"
+YTP_EDGE_STYLE_RAISED: "浮き彫り"
+YTP_EDGE_STYLE_DEPRESSED: "沈み彫り"
+YTP_EDGE_STYLE_OUTLINE: "アウトライン"
+YTP_EDGE_STYLE_DROP_SHADOW: "ドロップ シャドウ"
+YTP_CLICK_FOR_SETTINGS: "$GEAR_ICON をクリックして設定"
+
+# Binary 3D strings:
+YTP_THREED_HTML5_WARNING_DIALOG_TITLE: "HTML5 3D ハードウェアが検出されませんでした"
+YTP_THREED_HTML5_WARNING_DIALOG_MESSAGE: "$BEGIN_LINKHTML5 3D の設定方法$END_LINKをご覧になるか、3D 表示モードを変更してください。"
+YTP_THREED_HTML5_WARNING_DIALOG_CHANGE_MODE: "3D 表示モードを変更"
+
+# Binary YPC (paid content) strings:
+YTP_YPC_START_RENTAL_HEADER: "このレンタルの再生を開始しますか？"
+YTP_YPC_START_RENTAL_BUTTON: "レンタル期間を開始"

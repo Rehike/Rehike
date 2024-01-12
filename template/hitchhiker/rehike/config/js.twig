@@ -21,6 +21,12 @@ var rehike = rehike || {};
 rehike.config = {};
 
 /**
+ * @private
+ * @type {Element}
+ */
+rehike.config.container_ = null;
+
+/**
  *  @private
  *  @type {Element[]} 
  */
@@ -47,6 +53,8 @@ rehike.config.init = function() {
     var container = document.querySelector('.rehike-config-options-container');
     var props = container.querySelectorAll('.rehike-config-option');
 
+    rehike.config.container_ = container;
+
     for (var i = 0, j = props.length; i < j; i++) {
         rehike.config.props_.push(props[i]);
     }
@@ -62,6 +70,9 @@ rehike.config.init = function() {
 
     rehike.config.saveButton_ = document.querySelector(
         '.rehike-config-save-button');
+
+    rehike.config.updateDependentProperties_();
+    rehike.config.updatePropertyGroupDisplayStates_();
 };
 
 window.rehike = window.rehike || {};
@@ -111,6 +122,8 @@ rehike.config.onModifyEnum_ = function(prop) {
 rehike.config.modifyProp_ = function(prop, value) {
     rehike.config.saveButton_.disabled = false;
     rehike.config.modifications_[prop] = value;
+
+    rehike.config.updateDependentProperties_();
 };
 
 /**
@@ -139,6 +152,264 @@ rehike.config.submit_ = function(onLoadCb) {
     };
     xhr.setRequestHeader('Content-Type', 'application/json')
     xhr.send(json);
+};
+
+/**
+ * Gets the local value of a property, which is the one matching the current
+ * configuration on the page.
+ * 
+ * @param {string} prop Path of the property 
+ * @returns {any} Value of the property, typically a string.
+ */
+rehike.config.getLocalPropValue_ = function(prop)
+{
+    if (rehike.config.modifications_[prop])
+    {
+        return rehike.config.modifications_[prop];
+    }
+    else
+    {
+        var configEl = rehike.config.container_.querySelector(
+            "[data-cfg-name=\"" + prop + "\"]"
+        );
+
+        if (configEl)
+        {
+            var originalValue = configEl.getAttribute("data-original-value");
+
+            if (originalValue)
+            {
+                return originalValue;
+            }
+        }
+        else
+        {
+            var globalCfg = window._rehikeFullConfig || {};
+            var bits = prop.split(".");
+
+            var curRoot = globalCfg;
+            for (var i = 0, j = bits.length; i < j; i++)
+            {
+                var curBit = bits[i];
+                if (curRoot[curBit])
+                {
+                    curRoot = curRoot[curBit];
+
+                    if (typeof curRoot != "object")
+                    {
+                        return curRoot;
+                    }
+                }
+                else
+                {
+                    break;
+                }
+            }
+        }
+    }
+
+    return null;
+};
+
+/**
+ * Updates the display state of each property group.
+ * 
+ * We want the group border to only display if all children of the group are
+ * visible. This makes groups where there's only one visible child (i.e. due to
+ * dependent properties whose conditions have not been met) look nicer.
+ */
+rehike.config.updatePropertyGroupDisplayStates_ = function()
+{
+    var items = rehike.config.container_.querySelectorAll(".property-group");
+
+    for (var i = 0, j = items.length; i < j; i++)
+    {
+        var cur = items[i];
+        var parent = cur.parentNode;
+        var numVisibleChildren = 0;
+
+        for (var i2 = 0, j2 = cur.children.length; i2 < j2; i2++)
+        {
+            var curChild = cur.children[i2];
+
+            if (
+                getComputedStyle(curChild).display != "none" &&
+                curChild.clientWidth > 0 &&
+                curChild.clientHeight > 0
+            )
+            {
+                numVisibleChildren++;
+            }
+        }
+
+        if (numVisibleChildren != 0)
+        {
+            if (rehike.class.has(parent, "hid"))
+            {
+                rehike.class.remove(parent, "hid");
+            }
+        }
+        else
+        {
+            if (!rehike.class.has(parent, "hid"))
+            {
+                rehike.class.add(parent, "hid");
+            }
+        }
+
+        if (numVisibleChildren > 1)
+        {
+            if (!rehike.class.has(cur, "multiple-children-visible"))
+            {
+                rehike.class.add(cur, "multiple-children-visible");
+            }
+        }
+        else
+        {
+            if (rehike.class.has(cur, "multiple-children-visible"))
+            {
+                rehike.class.remove(cur, "multiple-children-visible");
+            }
+        }
+    }
+};
+
+/**
+ * Updates the display states of each dependent property using the current local
+ * configuration state.
+ */
+rehike.config.updateDependentProperties_ = function()
+{
+    var items = rehike.config.container_.querySelectorAll(".dependent-property");
+
+    for (var i = 0, j = items.length; i < j; i++)
+    {
+        var cur = items[i];
+
+        if (true == rehike.config.evaluateCondition_(cur.getAttribute("data-condition")))
+        {
+            if (rehike.class.has(cur, "hid"))
+            {
+                rehike.class.remove(cur, "hid");
+            }
+        }
+        else
+        {
+            if (!rehike.class.has(cur, "hid"))
+            {
+                rehike.class.add(cur, "hid");
+            }
+        }
+    }
+
+    rehike.config.updatePropertyGroupDisplayStates_();
+};
+
+/**
+ * Evaluates a condition expression for truthiness.
+ * 
+ * The condition expression format is rather simple (I didn't want to spend too
+ * much time making something exhaustive). The properties are always defined as
+ * the lefthand operand, and the values with which to compare are always the
+ * righthand operand.
+ * 
+ * The conditions themselves are defined in modules/ConfigDefinitions.php.
+ * 
+ * @param {string} condition 
+ * @returns {boolean} Truthiness of the evaluated condition.
+ */
+rehike.config.evaluateCondition_ = function(condition)
+{
+    var COMPARISON_PATTERN = new RegExp(
+        "([A-Za-z0-9\.]*)\\s?(==|\\!=|)\\s?(.*)"
+    );
+    var PARSE_ERROR_MSG = "[rehike.config.evaluateCondition_] Parse error";
+    var ors = condition.split("||");
+
+    for (var or_i = 0, or_len = ors.length; or_i < or_len; or_i++)
+    {
+        var curOr = ors[or_i];
+        var ands = curOr.split("&&");
+        var compositeResult = false;
+
+        for (var and_i = 0, and_len = ands.length; and_i < and_len; and_i++)
+        {
+            var words = [];
+            var curAnd = ands[and_i].trim();
+            
+            var match = curAnd.match(COMPARISON_PATTERN);
+            words = match.splice(1);
+
+            console.log(match, words);
+
+            if (words.length < 1 || words.length > 3)
+            {
+                console.log(PARSE_ERROR_MSG);
+                return false;
+            }
+
+            // We use the local version, since we want the configuration option
+            // to appear if the dependent property has changed, even if the user
+            // doesn't save changes first. If we don't have this, it's not
+            // technically a parse error, we just handle it a little differently.
+            var propValue = rehike.config.getLocalPropValue_(words[0]);
+            var operator = words[1];
+
+            if (curAnd[0] == '!')
+            {
+                // Beginning with a unary negation, so we're not expecting any
+                // second operand. A better parser could be written, but I don't
+                // care to do so.
+                if (words.length > 1)
+                {
+                    // Because this is a unary operator, this is a parse error.
+                    console.log(PARSE_ERROR_MSG);
+                    return false;
+                }
+
+                operator = "==";
+                words[2] = "false";
+            }
+            else if (operator == "")
+            {
+                operator = "==";
+                words[2] = "true";
+            }
+            
+            // Equality comparisons:
+            if (operator == "==" || operator == "!=")
+            {
+                var comparisonValue = words[2];
+                var equality = false;
+
+                console.log(words);
+                console.log(propValue, comparisonValue);
+
+                if (String(propValue) == comparisonValue)
+                {
+                    equality = true;
+                }
+                else
+                {
+                    equality = false;
+                }
+
+                if (operator == "!=")
+                {
+                    equality = !equality;
+                }
+
+                return equality;
+            }
+        }
+
+        if (compositeResult)
+        {
+            return true;
+        }
+    }
+
+    return false;
 };
 
 })();

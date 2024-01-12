@@ -18,7 +18,11 @@
             "playerResponse": {{ yt.playerResponse|json_encode|raw }}
          };
       </script>
-      <script>{% apply spaceless %}
+      <script>
+{% if rehike.config.appearance.playerChoice == "PLAYER_2014" %}
+   {% include "player/classic_player_boot.twig" %}
+{% else %}
+{% apply spaceless %}
 var ytplayer = ytplayer || {};
 ytplayer.config = {
     "args": {
@@ -85,6 +89,7 @@ ytplayer.load = function() {
     yt.player.Application.create("player-api", ytplayer.config);
     ytplayer.config.loaded = true;
 };
+{% endif %}
 </script>
       <div id="player-playlist" class="{{ include("page_fragments/player_playlist.class.twig") }}">
          {% include 'page_fragments/player_playlist.twig' %}
@@ -104,8 +109,14 @@ ytplayer.load = function() {
       document.body.appendChild(a);
    }
 </script>
-{% if rehike.config.appearance.smallPlayer %}
+{% if rehike.config.appearance.smallPlayer and rehike.config.appearance.playerChoice == "CURRENT" %}
    <style id="rehike-ext-config-small-player">
       {% include "player/small_style.css.twig" %}
+   </style>
+{% endif %}
+{% if rehike.config.appearance.playerChoice == "PLAYER_2014" and
+      rehike.config.appearance.classicPlayerForcePersistentControls %}
+   <style id="rehike-ext-config-classic-player-persistent-controls">
+      {% include "player/classic_player_persistent_controls.css.twig" %}
    </style>
 {% endif %}
