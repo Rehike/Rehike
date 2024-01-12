@@ -38,7 +38,7 @@
 
 # Looping wasn't supported in this player revision, so we had to add a custom
 # implementation. As such, a custom string is also required.
-playerClassicLoop: "Pętla"
+playerClassicLoop: "Odtwarzaj w pętli"
 
 # END UNIQUE STRINGS
 
