@@ -1,10 +1,10 @@
 {
-	"previousHash": "cbdb7bcd73feaa7133edf27d9d022505b42ed4fd",
-	"currentRevisionId": 1264,
-	"subject": "[i18n/en] Add strings for classicPlayerForcePersitentControls config option",
-	"body": "[i18n/en] Add strings for classicPlayerForcePersitentControls config option",
+	"previousHash": "33a13d534d5c02f828e3b4edb1a48ee87bc7a05b",
+	"currentRevisionId": 1271,
+	"subject": "[classicplayer] Fix player load failure on initial non-player page to watch navigation",
+	"body": "[classicplayer] Fix player load failure on initial non-player page to watch navigation",
 	"branch": "master",
-	"committerName": "Taniko Yamamoto",
-	"committerEmail": "kirasicecreamm@gmail.com",
-	"time": 1705053706
+	"committerName": "Daylin Cooper",
+	"committerEmail": "dcoop2004@gmail.com",
+	"time": 1705107616
 }

@@ -32,7 +32,7 @@ var LATEST_PLAYER_JS_URL = "{{ yt.playerConfig.latestJsUrl }}";
 window._rehikeClassicPlayerListsGetState = function()
 {
     // Get the native state from watch module:
-    var nativeState = yt.www.watch.lists.getState();
+    var nativeState = yt && yt.www && yt.www.watch && yt.www.watch.lists.getState();
 
     if (!nativeState)
         return {};
@@ -503,7 +503,8 @@ window.ytplayer.config = {
          "is_listed": "1",
        {%- endif -%}
 
-       
+        "author": "{{ rehike.getText(yt.page.results[0].videoPrimaryInfoRenderer.owner.title) ?? "" }}",
+        "title": "{{ rehike.getText(yt.page.title) ?? "" }}",
         "autoplay": "1",
         "autonav": {{ yt.page.autonavEnabled ? "1" : "0" }},
         "idpj": "0", // *I*dpj and *L*dpj are different? "I" version is used in
@@ -731,13 +732,16 @@ function buildPlayer()
             window.yt.player.Application.create("player-api", window.ytplayer.config);
             window.ytplayer.config.loaded = true;
         };
+        {% endif %}
 
         // Continue with loading the player if we're delayloading:
+        // PATCH(ev): This was originally not compiled for the SPF script, but
+        //            it is required in order to load the player if the initial
+        //            page was not watch.
         if (g_playerLoadRequestCb)
         {
             g_playerLoadRequestCb();
         }
-        {% endif %}
 
         {% if yt.spf %}
         var playerApi = document.getElementById("movie_player");

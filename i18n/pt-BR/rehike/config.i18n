@@ -10,6 +10,18 @@ tabs:
 
 props:
   appearance:
+    playerChoice:
+      title: "Choose video player revision:"
+      values:
+        CURRENT: "Player " # Sem data específica; verdadeiro player mais recente.
+        PLAYER_2022: "2022 - Cantos quadrados, storyboard antiga"
+        PLAYER_2020: "2020 - UI menor"
+        PLAYER_2014: "2014 - UI clássica, comportamento de buffering antigo"
+    classicPlayerForcePersistentControls:
+      title: "Sempre mostrar controles"
+      subtitle: >
+        Pode causar problemas com CSS customizado já que isso foi feito pra
+        versão mais recente do CSS oficial do Hitchhiker.
     modernLogo:
       title: "Usar a logo atual do YouTube"
       subtitle: >
@@ -55,7 +67,7 @@ props:
       title: "Consertos no CSS do YouTube"
       subtitle: >
         Conserta bugs ou inconsistências com o CSS original do Hitchhiker. Talvez 
-        Quebre compatibilidade com alguns userstyles.
+        quebre compatibilidade com alguns userstyles.
     watchSidebarDates:
       title: "Mostrar data dos uploads nas recomendações"
       subtitle: >

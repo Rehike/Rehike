@@ -33,6 +33,9 @@ class PlayerInfo
      */
     public string $embedJsUrl;
 
+    public string $latestJsUrl;
+    public string $latestCssUrl;
+
     /**
      * PHP does not have native object casting (whyyyyyyyyy)
      * 

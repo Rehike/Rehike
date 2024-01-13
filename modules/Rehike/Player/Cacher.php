@@ -93,14 +93,17 @@ class Cacher
         if (IS_REHIKE)
             $playerChoice = Config::getConfigProp("appearance.playerChoice");
 
-        return (object)[
+        $result = (object)[
             "expire" => $expireTime,
-            ...(IS_REHIKE
-                    ? ["conditionPlayerChoice" => $playerChoice]
-                    : []
-            ),
             "content" => $object
         ];
+
+        if (IS_REHIKE)
+        {
+            $result->conditionPlayerChoice = $playerChoice;
+        }
+
+        return $result;
     }
 
     /**
