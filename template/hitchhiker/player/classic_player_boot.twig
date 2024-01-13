@@ -490,11 +490,6 @@ function parseText(textObj)
 window.ytplayer = window.ytplayer || {};
 window.ytplayer.config = {
     "args": {
-       
-        // TODO: Player currently fails to load if these playlist parameters are
-        // set. Even V3 doesn't handle it like this, so for the initial release,
-        // I will just make it load the video normally even if the video is in a
-        // playlist. This needs to be looked into later.
 
        {%- if yt.page.playlist -%}
          "swf_player_response": "1",
@@ -502,6 +497,10 @@ window.ytplayer.config = {
          "external_list": "1",
          "is_listed": "1",
        {%- endif -%}
+
+       {% if yt.playerResponse.streamingData.dashManifestUrl %}
+           "dashmpd": "{{ yt.playerResponse.streamingData.dashManifestUrl }}",
+       {% endif %}
 
         "author": "{{ rehike.getText(yt.page.results[0].videoPrimaryInfoRenderer.owner.title) ?? "" }}",
         "title": "{{ rehike.getText(yt.page.title) ?? "" }}",
@@ -588,13 +587,22 @@ function buildPlayer()
             playerUtils.cbDecodeSig, playerUtils.cbDecodeN
         );
 
-        window.ytplayer.config.args.adaptive_fmts = buildUrlFormattedStreamMap(
-            RAW_PLAYER_RESPONSE.streamingData.adaptiveFormats
-        );
-        window.ytplayer.config.args.url_encoded_fmt_stream_map = buildUrlFormattedStreamMap(
-            RAW_PLAYER_RESPONSE.streamingData.formats,
-            "IS_STANDARD_STREAM"
-        );
+        /*
+         * PATCH(ev): Format stream maps (formats, adaptiveFormats) should be
+         * ignored if dashManifestUrl (flashargs: dashmpd) is provided.
+         *
+         * Otherwise, the player will fail to load.
+         */
+        if (!"dashmpd" in window.ytplayer.config.args)
+        {
+            window.ytplayer.config.args.adaptive_fmts = buildUrlFormattedStreamMap(
+                RAW_PLAYER_RESPONSE.streamingData.adaptiveFormats
+            );
+            window.ytplayer.config.args.url_encoded_fmt_stream_map = buildUrlFormattedStreamMap(
+                RAW_PLAYER_RESPONSE.streamingData.formats,
+                "IS_STANDARD_STREAM"
+            );
+        }
 
         // Finding the index of the recommendations is real fun.
         var wnContents;

@@ -1,10 +1,10 @@
 {
-	"previousHash": "33a13d534d5c02f828e3b4edb1a48ee87bc7a05b",
-	"currentRevisionId": 1271,
-	"subject": "[classicplayer] Fix player load failure on initial non-player page to watch navigation",
-	"body": "[classicplayer] Fix player load failure on initial non-player page to watch navigation",
+	"previousHash": "e0d21fb4d673c79b949052ec809866b01b50e7f6",
+	"currentRevisionId": 1273,
+	"subject": "[classicplayer] Fix dashManifestUrl video playback",
+	"body": "[classicplayer] Fix dashManifestUrl video playback",
 	"branch": "master",
 	"committerName": "Daylin Cooper",
 	"committerEmail": "dcoop2004@gmail.com",
-	"time": 1705107616
+	"time": 1705179366
 }

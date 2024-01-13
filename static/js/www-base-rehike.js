@@ -699,7 +699,7 @@ en = function(a) {
                     window.yt.config_ && 
                     window.yt.config_.REHIKE_CLASSIC_PLAYER &&
                     a.i.args &&
-                    !(a.i.args.adaptive_fmts || a.i.args.url_encoded_fmt_stream_map)
+                    !(a.i.args.adaptive_fmts || a.i.args.url_encoded_fmt_stream_map || a.i.args.dashmpd)
                 )
                 {
                     var delayLoadEvent = document.createEvent("event");
