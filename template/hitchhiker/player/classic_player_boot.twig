@@ -503,7 +503,8 @@ window.ytplayer.config = {
          "is_listed": "1",
        {%- endif -%}
 
-       
+        "author": "{{ rehike.getText(yt.page.results[0].videoPrimaryInfoRenderer.owner.title) ?? "" }}",
+        "title": "{{ rehike.getText(yt.page.title) ?? "" }}",
         "autoplay": "1",
         "autonav": {{ yt.page.autonavEnabled ? "1" : "0" }},
         "idpj": "0", // *I*dpj and *L*dpj are different? "I" version is used in

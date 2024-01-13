@@ -1,10 +1,10 @@
 {
-	"previousHash": "7d908e05e92bc9c4312add0c988faeb76678bfd8",
-	"currentRevisionId": 1268,
-	"subject": "Correct crash if 2014 player loads earlier than watch module",
-	"body": "Correct crash if 2014 player loads earlier than watch module",
+	"previousHash": "3b72e5bc54579c9262601a9f176eda75c3e6e2a1",
+	"currentRevisionId": 1270,
+	"subject": "Fix classic player author/title",
+	"body": "Fix classic player author/title",
 	"branch": "master",
 	"committerName": "Daylin Cooper",
 	"committerEmail": "dcoop2004@gmail.com",
-	"time": 1705091808
+	"time": 1705106253
 }
