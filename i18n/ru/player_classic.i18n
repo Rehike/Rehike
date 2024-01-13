@@ -1,0 +1,236 @@
+# Classic video player messages. Since these were baked into the binary,
+# and we use one modified binary, the messages are loaded dynamically.
+#
+# Rather than translating these by hand, which is an admittedly tedious process,
+# you can use Wayback Machine CDX search to find an archive of the player with
+# your specific language code, then copy them here. The classic player binary is
+# called "html5player", followed by the language code. Although the source data
+# will be a JavaScript object, you can convert it to a translation file simply
+# by running it through beautifier.io and then removing all commas after quotes.
+#
+# The player version that we use is from November 2014, and uses a VFL set, so
+# the URL goes: s.ytimg.com/yts/jsbin/html5player-LANGUAGE-vflID/html5player.js
+#
+# The strings are a little scattered (I think this is because they come from
+# multiple different modules which were concatenated together), so there are a
+# few different sources from which you'll have to take.
+#
+# From what I can tell, there are five main sources of string registration:
+#    - Main strings (the massive one)
+#    - Fresca (live) module
+#    - Subtitles (captions) module
+#    - 3D module
+#    - YTP (paid content) module
+#
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+# If you don't know how to do that, then you can simply leave it unmodified when
+# submitting a translation, and a Rehike maintainer will add them for you.
+#
+# We are happy to do this work for you!
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+#
+# There are only a few unique strings here that will require manual translation.
+# The convention that will be used for this file will use camelCase names for
+# custom messages, and CONSTANT_CASE names for official player messages that you
+# can get from the JS.
+
+# BEGIN UNIQUE STRINGS
+
+# Looping wasn't supported in this player revision, so we had to add a custom
+# implementation. As such, a custom string is also required.
+playerClassicLoop: "Повтор"
+
+# END UNIQUE STRINGS
+
+# Binary main strings:
+YTP_ADVERTISEMENT: "Реклама"
+YTP_AUDIO_TRACK_TITLE: "Звуковая дорожка"
+YTP_AUTO: "Автонастройка"
+YTP_AUTO_WITH_QUALITY_2: "Автонастройка ($VIDEO_QUALITY)"
+YTP_CHANGE_QUALITY_WITH_QUALITY_2: "Изменить качество ($VIDEO_QUALITY)"
+YTP_COPY_DEBUG_INFO: "Скопировать данные для отладки"
+YTP_COPY_VIDEO_URL: "Копировать URL видео"
+YTP_COPY_VIDEO_URL_AT_TIME: "Копировать URL видео с привязкой ко времени"
+YTP_DRAWER_HEADER_TEXT: "В этом видео"
+YTP_DRAWER_POLL_SUBMIT: "Отправить"
+YTP_GET_DEBUG_INFO: "Получить информацию об отладке"
+YTP_GET_VIDEO_URL: "Получить URL видео"
+YTP_GET_VIDEO_URL_AT_TIME: "Получить URL видео с привязкой ко времени"
+YTP_GET_EMBED: "Получить код для встраивания"
+YTP_DECREASE_PLAYBACK_SPEED: "Уменьшить скорость воспроизведения"
+YTP_DEFAULT_VIEW: "Режим просмотра по умолчанию"
+YTP_EMBED_COPY: "Копировать HTML-код"
+YTP_ERROR_GENERIC: "Произошла ошибка. Повторите попытку позже."
+YTP_ERROR_GENERIC_WITH_LINK_2: "Произошла ошибка. Повторите попытку позже. $BEGIN_LINKПодробнее...$END_LINK"
+YTP_EXIT_FULLSCREEN: "Выход из полноэкранного режима"
+YTP_FEATURED: "Интересное"
+YTP_FULLSCREEN: "Во весь экран"
+YTP_INCREASE_PLAYBACK_SPEED: "Увеличить скорость воспроизведения"
+YTP_KEYBOARD_SHORTCUTS: "Быстрые клавиши"
+YTP_LIVE_NOW: "СЕЙЧАС В ПРЯМОМ ЭФИРЕ"
+YTP_MIX: "Микс"
+YTP_MORE: "Ещё"
+YTP_MDX_TITLE: "Выберите устройство для просмотра"
+YTP_MDX_TOOLTIP: "Воспроизвести на телевизоре"
+YTP_MDX_MY_COMPUTER: "Этот компьютер"
+YTP_MUTE: "Отключение звука"
+YTP_NEXT: "Следующее"
+YTP_NEXT_VIDEO_IN: "Следующее видео через $TIME_LEFT"
+YTP_NORMAL_SPEED: "Обычная"
+YTP_ON: "ВКЛ"
+YTP_OFF: "ВЫКЛ"
+YTP_OPTIONS: "Параметры"
+YTP_PLAY_ALL: "Воспроизвести все"
+YTP_PLAY_PAUSE: "Воспроизведение/пауза"
+YTP_PREVIOUS: "Назад"
+YTP_PLAYLIST: "Плейлист"
+YTP_PLAYLIST_UP_NEXT: "Следующее"
+YTP_QUALITY_TITLE: "Качество"
+YTP_REPLAY: "Повторить"
+YTP_REPORT_ISSUE: "Сообщить о проблеме воспроизведения"
+YTP_SEEK_BACK: "Назад на 10 секунд"
+YTP_SEEK_FORWARD: "Вперед на 10 секунд"
+YTP_SEEK_PERCENT: "Перейти к 0%-90%."
+YTP_SETTINGS: "Настройки"
+YTP_SHARE: "поделиться"
+YTP_SHARE_WITH_PLAYLIST: "Поделиться в плейлисте"
+YTP_SHOW_VIDEO_INFO: "Статистика для сисадминов"
+YTP_SPEED_TITLE: "Скорость"
+YTP_ST_COLLAPSE: "Свернуть"
+YTP_ST_EXPAND: "Развернуть"
+YTP_SUBTITLES: "Субтитры"
+YTP_THREED_SHORT: "3D"
+YTP_THEATER_MODE: "Широкий экран"
+YTP_TOGGLE_FULLSCREEN: "Во весь экран"
+YTP_TOGGLE_MUTE: "Перевести в беззвучный режим"
+YTP_UNMUTE: "Включить звук"
+YTP_URL_NAVIGATE: "Смотреть на YouTube.com"
+YTP_WATCH_ALL: "Просмотреть видео полностью"
+YTP_WATCH_LATER: "Посмотреть позже"
+YTP_WATCH_LATER_AS_2: "Просмотреть позже как $USER_NAME"
+YTP_WEBGL_3D_ANAGLYPH: "Анаглиф"
+YTP_WEBGL_3D_2D: "2D"
+YTP_SUBSCRIBE_AS: "Подписаться как $USER_NAME"
+YTP_LIKE_AS: 'Поставить отметку "Нравится" как $USER_NAME',
+YTP_DISLIKE_AS: 'Поставить отметку "Не нравится" как $USER_NAME',
+YTP_WATCH_NEXT: "Рекомендации"
+YTP_PLAY: "Смотреть"
+YTP_WATERMARK: "Водяной знак"
+YTP_ERROR_STREAMING_UNAVAILABLE: "Сейчас воспроизвести видео невозможно, так как оно было скачано для офлайн-просмотра."
+YTP_ERROR_LICENSE: "Не удалось воспроизвести видео из-за проблем с лицензией."
+YTP_ERROR_VIDEO_NOT_FOUND: "Не удается найти видео."
+YTP_ERROR_ALREADY_PINNED_ON_A_DEVICE: "Вы уже скачали это видео на максимальное количество устройств, разрешенное правообладателем. Чтобы просмотреть это видео здесь, открепите его от другого устройства."
+YTP_ERROR_CANNOT_ACTIVATE_RENTAL: "Ошибка активации платного просмотра. Перезагрузите эту страницу или повторите попытку позже."
+YTP_ERROR_PURCHASE_NOT_FOUND: "Требуется оплатить просмотр этого видео."
+YTP_ERROR_PURCHASE_REFUNDED: "По данной покупке выполнен возврат средств."
+YTP_ERROR_STOPPED_BY_ANOTHER_PLAYBACK: "Видео воспроизводится с помощью вашего аккаунта в другом месте. Перезагрузите страницу, чтобы продолжить просмотр."
+YTP_ERROR_TOO_MANY_STREAMS_PER_USER: "Воспроизведение остановлено, так как воспроизводится слишком много видео, относящихся к одному аккаунту."
+YTP_ERROR_TOO_MANY_STREAMS_PER_ENTITLEMENT: "Воспроизведение остановлено, так как слишком много устройств воспроизводит это видео."
+YTP_ERROR_STREAMING_DEVICES_QUOTA_PER_24H_EXCEEDED: "За сутки использовано слишком большое количество устройств/IP-адресов."
+YTP_ERROR_UNUSUAL_ACTIVITY: "Видео сейчас недоступно из-за необычной активности в аккаунте."
+YTP_ERROR_NOT_SIGNED_IN: "Чтобы продолжить просмотр, войдите в аккаунт."
+YTP_CLOSE: "Закрыть"
+YTP_ANNOTATIONS: "Аннотации"
+YTP_DONE: "Готово"
+YTP_SHARE_THIS_PLAYLIST: "Поделиться плейлистом"
+YTP_UPLOADED_BY_2: "Автор: $AUTHOR"
+YTP_SEEK_SLIDER: "Ползунок поиска"
+YTP_PAUSE: "Пауза"
+YTP_AUTOPLAY: "Автовоспроизведение"
+YTP_AUTOPLAY_COUNTDOWN_2: "Следующее видео через $SECONDS_LEFT"
+YTP_AUTOPLAY_PAUSED: "Busy? We've paused autoplay."
+YTP_CANCEL: "Отмена"
+YTP_ON_GOOGLE_PLUS: "На Google+"
+YTP_STILL_THERE: "Чтобы продолжить просмотр плейлиста, нажмите кнопку ниже."
+YTP_DISMISS: "ОК"
+YTP_RESET: "Сбросить"
+YTP_STOP: "Остановить прямую трансляцию"
+YTP_LIKE: "Нравится"
+YTP_DISLIKE: "Не нравится"
+YTP_MORE_INFO: "Подробнее…"
+YTP_SCREENREADER_VOLUME_SETTING: "громкость"
+YTP_SCREENREADER_VOLUME_MUTED: "звук отключен"
+YTP_SCREENREADER_VOLUME_MUTE: "отключить звук"
+YTP_SCREENREADER_VOLUME_UNMUTE: "включить звук"
+YTP_SCREENREADER_CONTROL_TOGGLE: "переключить"
+YTP_SAMPLE_SUBTITLES: "Субтитры будут выглядеть так"
+YTP_HTML5_CONTEXT_MENU_LINK: "О проигрывателе HTML5"
+YTP_HTML5_NO_AVAILABLE_FORMATS_FALLBACK: "Этот формат видео не поддерживается"
+YTP_HTML5_NO_AVAILABLE_FORMATS_FALLBACK_WITH_LINK: "В настоящее время ваш браузер не распознает ни один из доступных видеоформатов. $BEGIN_LINKНажмите здесь, чтобы посмотреть ответы на часто задаваемые вопросы о видео HTML5.$END_LINK"
+YTP_HTML5_NO_AVAILABLE_FORMATS_FALLBACK_FLASH: "Для воспроизведения видео требуется проигрыватель Adobe Flash Player. $BEGIN_LINKЗагрузить последнюю версию$END_LINK."
+YTP_ERROR_CAST_SESSION_DEVICE_MISMATCHED: "Устройство в сеансе не соответствует запрашиваемому."
+YTP_ERROR_CAST_SESSION_VIDEO_MISMATCHED: "Видео в сеансе не соответствует запрашиваемому."
+YTP_ERROR_CAST_TOKEN_EXPIRED: "Время сеанса истекло. Обновите страницу."
+YTP_ERROR_CAST_TOKEN_FAILED: "Сеанс недоступен. Обновите страницу или повторите попытку позже."
+YTP_ERROR_CAST_TOKEN_MALFORMED: "Неверный сеанс. Обновите страницу или повторите попытку позже."
+YTP_ERROR_GEO_FAILURE: "Это видео недоступно для просмотра в вашей стране."
+YTP_ERROR_INVALID_DRM_MESSAGE: "Недопустимое специальное сообщение системы DRM."
+YTP_ERROR_RENTAL_EXPIRED: "Время проката закончилось."
+YTP_ERROR_RETRYABLE_ERROR: "Произошла временная ошибка сервера, повторите попытку позже."
+YTP_ERROR_SERVER_ERROR: "Произошла внутренняя ошибка. Повторите попытку позже."
+YTP_ERROR_STREAMING_NOT_ALLOWED: "Воспроизведение недоступно, так как видео прикреплено к другому устройству."
+YTP_ERROR_UNSUPPORTED_DEVICE: "Воспроизведение не поддерживается данным устройством."
+YTP_ERROR_VIDEO_FORBIDDEN: "Доступ к видео запрещен."
+YTP_MDX_STATUS_CONNECTED: "Воспроизводится на"
+YTP_MDX_STATUS_CONNECTING: "Подключение к"
+YTP_MDX_STATUS_ERROR: "Ошибка"
+YTP_MDX_PLAYER_ERROR: "Видео недоступно для удаленного воспроизведения."
+YTP_MDX_PLAYER_RECONNECT_TIME: "Проверьте подключение к Интернету. Повторная попытка через $FORMATTED_TIME..."
+YTP_MDX_PLAYER_RECONNECT_BUTTON: "Подключиться повторно"
+YTP_DEVICE_FALLBACK: "Видео недоступно на этом устройстве."
+YTP_AD_INTERRUPT_MESSAGE: "Эта реклама будет показываться перед вашим видео."
+YTP_VISIT_ADVERTISERS_SITE: "Посетить сайт рекламодателя"
+YTP_PROGRESS_LABEL: "$PLAY_PROGRESS из $DURATION сек."
+
+# Binary Fresca (Live) strings:
+YTP_FRESCA_STARTING_SOON_MESSAGE: "Трансляция скоро начнется..."
+YTP_FRESCA_EVENT_OVER_MESSAGE: "Трансляция закончена."
+YTP_FRESCA_COMPLETE_MESSAGE: "Благодарим за просмотр!"
+YTP_FRESCA_STAND_BY_MESSAGE: "Пожалуйста, подождите."
+YTP_FRESCA_TECHNICAL_DIFFICULTIES_MESSAGE: "К сожалению, у нас возникли технические проблемы."
+
+# Binary Subtitles (captions) strings:
+YTP_TRANSLATE_MENU_ITEM: "Перевести субтитры"
+YTP_CONTRIBUTE_MENU_ITEM: "Добавить субтитры"
+YTP_TRANSLATE_DIALOG_TITLE: "Переводчик..."
+YTP_ASR_SETTINGS_LABEL: "Автоматически созданные титры"
+YTP_LANGUAGE_OFF: "Выкл."
+YTP_FONT_FAMILY: "Семейство шрифтов"
+YTP_FONT_SIZE: "Размер шрифта"
+YTP_FONT_COLOR: "Цвет шрифта"
+YTP_FONT_OPACITY: "Прозрачность шрифта"
+YTP_BACKGROUND_COLOR: "Цвет фона"
+YTP_BACKGROUND_OPACITY: "Прозрачность фона"
+YTP_WINDOW_COLOR: "Цвет окна"
+YTP_WINDOW_OPACITY: "Прозрачность окна"
+YTP_COLOR_WHITE: "Белый"
+YTP_COLOR_YELLOW: "Желтый"
+YTP_COLOR_GREEN: "Зеленый"
+YTP_COLOR_CYAN: "Голубой"
+YTP_COLOR_BLUE: "Синий"
+YTP_COLOR_MAGENTA: "Пурпурный"
+YTP_COLOR_RED: "Красный"
+YTP_COLOR_BLACK: "Черный"
+YTP_FONT_FAMILY_MONO_SERIF: "Моноширинный с засечками"
+YTP_FONT_FAMILY_PROP_SERIF: "Пропорциональный с засечками"
+YTP_FONT_FAMILY_MONO_SANS: "Моноширинный без засечек"
+YTP_FONT_FAMILY_PROP_SANS: "Пропорциональный без засечек"
+YTP_FONT_FAMILY_CASUAL: "Обычный"
+YTP_FONT_FAMILY_CURSIVE: "Курсив"
+YTP_FONT_FAMILY_SMALL_CAPS: "Малые прописные"
+YTP_CHAR_EDGE_STYLE: "Стиль контура символов"
+YTP_EDGE_STYLE_NONE: "Без контура"
+YTP_EDGE_STYLE_RAISED: "Приподнятый"
+YTP_EDGE_STYLE_DEPRESSED: "Утопленный"
+YTP_EDGE_STYLE_OUTLINE: "Границы"
+YTP_EDGE_STYLE_DROP_SHADOW: "С тенью"
+YTP_CLICK_FOR_SETTINGS: "Для настройки нажмите на значок $GEAR_ICON"
+
+# Binary 3D strings:
+YTP_THREED_HTML5_WARNING_DIALOG_TITLE: "Аппаратное обеспечение для HTML5 3D не обнаружено"
+YTP_THREED_HTML5_WARNING_DIALOG_MESSAGE: "Прочтите справку о $BEGIN_LINKнастройке просмотра 3D-видео с помощью HTML5$END_LINK или измените режимы просмотра 3D."
+YTP_THREED_HTML5_WARNING_DIALOG_CHANGE_MODE: "Изменить режим просмотра 3D-видео"
+
+# Binary YPC (paid content) strings:
+YTP_YPC_START_RENTAL_HEADER: "Начать воспроизведение видео, взятого напрокат?"
+YTP_YPC_START_RENTAL_BUTTON: "Начать срок проката"
