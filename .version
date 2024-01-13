@@ -1,10 +1,10 @@
 {
-	"previousHash": "3b72e5bc54579c9262601a9f176eda75c3e6e2a1",
-	"currentRevisionId": 1270,
-	"subject": "Fix classic player author/title",
-	"body": "Fix classic player author/title",
+	"previousHash": "33a13d534d5c02f828e3b4edb1a48ee87bc7a05b",
+	"currentRevisionId": 1271,
+	"subject": "[classicplayer] Fix player load failure on initial non-player page to watch navigation",
+	"body": "[classicplayer] Fix player load failure on initial non-player page to watch navigation",
 	"branch": "master",
 	"committerName": "Daylin Cooper",
 	"committerEmail": "dcoop2004@gmail.com",
-	"time": 1705106253
+	"time": 1705107616
 }
