@@ -22,6 +22,7 @@ props:
       subtitle: >
         Pode causar problemas com CSS customizado já que isso foi feito pra
         versão mais recente do CSS oficial do Hitchhiker.
+    modernLogo:
       title: "Usar a logo atual do YouTube"
       subtitle: >
         Usado desde 2017. Habilitar essa opção pode quebrar alguns temas feitos 
