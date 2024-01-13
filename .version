@@ -1,10 +1,10 @@
 {
-	"previousHash": "e0d21fb4d673c79b949052ec809866b01b50e7f6",
-	"currentRevisionId": 1273,
-	"subject": "[classicplayer] Fix dashManifestUrl video playback",
-	"body": "[classicplayer] Fix dashManifestUrl video playback",
+	"previousHash": "1bf94a1c6a4f07ef05c8df2b2421234e9f514ae3",
+	"currentRevisionId": 1274,
+	"subject": "a",
+	"body": "a",
 	"branch": "master",
 	"committerName": "Daylin Cooper",
 	"committerEmail": "dcoop2004@gmail.com",
-	"time": 1705179366
+	"time": 1705184674
 }

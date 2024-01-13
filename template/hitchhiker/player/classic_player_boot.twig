@@ -95,7 +95,7 @@ var RAW_WATCH_NEXT_RESPONSE = {{ yt.watchNextResponse|json_encode|raw }};
 
 /**
  * Gets necessary information from the latest player revision.
- * 
+ *
  * @returns {
  *      {
  *          cbDecodeSig: function(sourceSignature),
@@ -593,7 +593,7 @@ function buildPlayer()
          *
          * Otherwise, the player will fail to load.
          */
-        if (!"dashmpd" in window.ytplayer.config.args)
+        if (!("dashmpd" in window.ytplayer.config.args))
         {
             window.ytplayer.config.args.adaptive_fmts = buildUrlFormattedStreamMap(
                 RAW_PLAYER_RESPONSE.streamingData.adaptiveFormats
