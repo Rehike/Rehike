@@ -4,6 +4,7 @@ namespace YukisCoffee\CoffeeRequest\Network;
 use YukisCoffee\CoffeeRequest\Exception\GeneralException;
 use YukisCoffee\CoffeeRequest\Exception\RequestFailedResponseCodeException;
 use YukisCoffee\CoffeeRequest\Enum\RequestErrorPolicy;
+use YukisCoffee\CoffeeRequest\Enum\NetworkResult;
 
 use function json_decode;
 
@@ -23,6 +24,13 @@ class Response
      * The response status.
      */
     public int $status = 0;
+
+    /**
+     * Result status of the network request itself.
+     *
+     * @var NetworkResult
+     */
+    public int $resultCode = NetworkResult::E_UNIMPL;
 
     /**
      * An array of HTTP headers sent back from the server with the

@@ -8,6 +8,7 @@ use Rehike\Exception\AbstractException;
  * DNS lookup.
  * 
  * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
+ * @author The Rehike Maintainers
  */
 class DnsLookupException extends AbstractException
 {

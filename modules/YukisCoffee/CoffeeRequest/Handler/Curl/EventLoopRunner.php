@@ -106,6 +106,7 @@ trait EventLoopRunner // implements Event::onRun()
         foreach ($requests as $index => $request)
         {
             $response = $this->makeResponse(
+                curl_errno($request->handle),
                 curl_getinfo($request->handle, CURLINFO_HTTP_CODE),
                 curl_multi_getcontent($request->handle),
                 $request
@@ -154,16 +155,20 @@ trait EventLoopRunner // implements Event::onRun()
         }
 
         $mh = curl_multi_init();
+        $codesMap = [];
 
         // Register all queued requests in the handle array
         foreach ($requests as $request)
         {
             curl_multi_add_handle($mh, $request->handle);
+            $codesMap[(int)$request->handle] = 0;
         }
 
         do
         {
             $status = curl_multi_exec($mh, $active);
+            $info = curl_multi_info_read($mh);
+            $codesMap[(int)$info["handle"]] = $info["result"];
 
             if ($active)
             {
@@ -179,10 +184,17 @@ trait EventLoopRunner // implements Event::onRun()
         }
         while ($active && CURLM_OK == $status);
 
+        \Rehike\Logging\DebugLogger::print("\$status: %s", $status);
+
         // Report each of the responses.
         foreach ($requests as $request)
         {
+            $code = isset($codesMap[(int)$request->handle])
+                ? $codesMap[(int)$request->handle]
+                : 0;
+
             $response = $this->makeResponse(
+                $code,
                 curl_getinfo($request->handle, CURLINFO_HTTP_CODE),
                 curl_multi_getcontent($request->handle),
                 $request
