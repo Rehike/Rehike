@@ -4,11 +4,9 @@ use Rehike\ControllerV2\RequestMetadata;
 use Rehike\YtApp;
 
 /**
- * Controller for the oops (error) page.
+ * Annotations invideo controller.
  * 
- * Very simple one, I know. All it's needed for is making a bridge between
- * CV2 and the static error page.
- * 
+ * @author Toru the Red Fox
  * @author The Rehike Maintainers
  */
 return new class extends HitchhikerController {
