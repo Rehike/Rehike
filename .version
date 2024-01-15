@@ -1,10 +1,10 @@
 {
-	"previousHash": "f933ad1fe5f5c986ca133ebe4989959c81f3a8ea",
-	"currentRevisionId": 1279,
-	"subject": "Addressing the two recent issues",
-	"body": "Addressing the two recent issues",
+	"previousHash": "8bb116f8a66b93bc2623505bf9df3986a9f91e16",
+	"currentRevisionId": 1290,
+	"subject": "[CoffeeTranslation] Improve error messaging for bad whitespace characters",
+	"body": "[CoffeeTranslation] Improve error messaging for bad whitespace characters",
 	"branch": "master",
 	"committerName": "Daylin Cooper",
 	"committerEmail": "dcoop2004@gmail.com",
-	"time": 1705284951
+	"time": 1705362840
 }

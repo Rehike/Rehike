@@ -97,7 +97,16 @@ class RecordFileParser
                 case Tokens::TOKEN_LINE_BREAK:
                     $this->parseLineBreak();
                     break;
-                
+
+                case chr(0xC2):
+                case chr(0xC3):
+                    // Replace the character as a UTF-8 control character. This
+                    // is a hack because the underlying string parser doesn't
+                    // actually account for UTF-8 encoding, only raw bytes
+                    // (ASCII).
+                    $t = chr(mb_ord($this->parser->read(0, 2), "UTF-8"));
+                    // fallthrough]
+
                 default:
                     // Top-level definitions may not be arrays, so numbers will
                     // be skipped anyways.
@@ -106,11 +115,21 @@ class RecordFileParser
                         $this->parseDeclaration($parsedEntries);
                         break;
                     }
+                    else if (($fakeSpace = ParserUtils::isFakeSpaceChar($t)) > 0)
+                    {
+                        throw new ParserException(sprintf(
+                            "Wrong space character (%s, not 0x20) used at %s. Please " .
+                            "replace it with the ASCII space (32 or 0x20).",
+                            $fakeSpace,
+                            $this->getFormattedErrorLocation()
+                        ));
+                    }
 
                     // Anything else is invalid, so I error.
                     throw new ParserException(sprintf(
-                        "Unexpected character \"%s\" at %s",
+                        "Unexpected character \"%s\" (0x%x) at %s",
                         $t,
+                        ord($t),
                         $this->getFormattedErrorLocation()
                     ));
             }

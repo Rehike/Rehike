@@ -78,4 +78,48 @@ final class ParserUtils
             '@' == $char
         );
     }
+
+    /**
+     * Determines if a given character is a non-0x20 space.
+     */
+    public static function isFakeSpaceChar(string $char): int
+    {
+        $code = ord($char);
+        $fakeSpaces = [
+            // NO-BREAK SPACE
+            0xA0,
+            // ORGHAM SPACE MARK
+            0x1680,
+            // EN QUAD
+            0x2000,
+            // EM QUAD
+            0x2001,
+            // EN SPACE
+            0x2002,
+            // EM SPACE
+            0x2003,
+            // THREE-PER-EM SPACE
+            0x2004,
+            // FOUR-PER-EM SPACE
+            0x2005,
+            // SIX-PER-EM SPACE
+            0x2006,
+            // FIGURE SPACE
+            0x2007,
+            // PUNCTUATION SPACE
+            0x2008,
+            // THIN SPACE
+            0x2009,
+            // HAIR SPACE
+            0x200A,
+            // NARROW NO-BREAK SPACE
+            0x202F,
+            // MEDIUM MATHEMATICAL SPACE
+            0x205F,
+            // IDEOGRAPHIC SPACE (CJK)
+            0x3000
+        ];
+
+        return in_array($code, $fakeSpaces) ? $code : 0;
+    }
 }
