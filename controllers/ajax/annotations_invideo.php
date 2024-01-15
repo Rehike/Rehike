@@ -161,11 +161,10 @@ return new class extends HitchhikerController {
 				//http_response_code(404);
 				//ob_end_clean();
 				$xml = new SimpleXMLElement("<document><annotations></annotations></document>");
-				echo $iv_url;
 			} else {
 				$xml = simplexml_load_string($out);
 				foreach ($xml->xpath("//annotation[@style='branding']") as $node) { // remove any existing branding
-					//unset($node[0]); // remove the original annotation if present as we're going to be making our own
+					unset($node[0]); // remove the original annotation if present as we're going to be making our own
 				}
 			}
 			
