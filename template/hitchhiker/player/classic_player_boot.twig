@@ -528,6 +528,8 @@ window.ytplayer.config = {
         "enablejsapi": "1",
         "sw": "0.1",
         "ttsurl": undefined,
+		"invideo": true,
+		"iv_module":"http:\/\/s.ytimg.com\/yts\/swfbin\/player-vflNzsCMr\/iv_module.swf",
         "c": "WEB",
         "innertube_context_client_version": "2.20210623.00.00",
         "gapi_hint_params": "m;\/_\/scs\/abc-static\/_\/js\/k=gapi.gapi.en.fXLlmSb25lg.O\/m=__features__\/rt=j\/d=1\/rs=AHpOoo87O_nfyKCryZ5rvwwhVwktxKhiRA",
@@ -541,6 +543,9 @@ window.ytplayer.config = {
         "fmt_list": "22/1280x720/9/0/115,18/640x360/9/0/115,17/256x144/99/1/0",
         "length_seconds": undefined,
         "vq": "auto",
+		"iv_invideo_url": undefined,
+		"iv_load_policy": "0",
+		"iv3_module":"1",
         "tmi": "1"
     },
     "params": {
@@ -659,6 +664,8 @@ function buildPlayer()
         {
             window.ytplayer.config.args.length_seconds =
                 RAW_PLAYER_RESPONSE.videoDetails.lengthSeconds || null;
+			window.ytplayer.config.args.iv_invideo_url = "https://www.youtube.com/annotations_invideo?video_id=" + RAW_PLAYER_RESPONSE.videoDetails.videoId;
+			window.ytplayer.config.args.iv_load_policy = "1";
         }
 
         if (RAW_PLAYER_RESPONSE.captions && RAW_PLAYER_RESPONSE.captions.playerCaptionsTracklistRenderer)
