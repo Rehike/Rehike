@@ -11,7 +11,7 @@ tabs:
 props:
   appearance:
     playerChoice:
-      title: "Choose video player revision:"
+      title: "Escolha uma revisão do player de vídeo:"
       values:
         CURRENT: "Player " # Sem data específica; verdadeiro player mais recente.
         PLAYER_2022: "2022 - Cantos quadrados, storyboard antiga"
@@ -92,6 +92,11 @@ props:
         Providência um ad-blocker estável pro player.
   
   experiments:
+    displayPlayerChoice:
+      title: "Habilita o uso de players mais antigos."
+      subtitle: >
+        Habilita a opção de mudar a revisão do player do YouTube na
+        página de aparência.
     useSignInV2:
       title: "Usar o sign in V2"
       subtitle: >
@@ -106,7 +111,13 @@ props:
         de quebra-galho pro YouTube bloqueando acesso caso
         não tenha o histórico de vídeo ativado.
         (2023/08/18).
-  
+    encryptedStreamsDO_NOT_USE_UNLESS_YOU_KNOW_WHAT_YOU_ARE_DOING:
+      title: "Usar streams de vídeo encriptadas"
+      subtitle: >
+        Pelo amor de Deus, não desativa isso se não souber o que está fazendo.
+        Vai quebrar a watch page. Isso é pra ser usado pelos desenvolvedores até
+        eles consertarem.
+
   advanced:
     enableDebugger:
       title: "Ativar o debugger"
