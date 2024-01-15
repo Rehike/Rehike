@@ -13,7 +13,7 @@ props:
     playerChoice:
       title: "Escolha uma revisão do player de vídeo:"
       values:
-        CURRENT: "Player " # Sem data específica; verdadeiro player mais recente.
+        CURRENT: "Player atual" # Sem data específica; verdadeiro player mais recente.
         PLAYER_2022: "2022 - Cantos quadrados, storyboard antiga"
         PLAYER_2020: "2020 - UI menor"
         PLAYER_2014: "2014 - UI clássica, comportamento de buffering antigo"
