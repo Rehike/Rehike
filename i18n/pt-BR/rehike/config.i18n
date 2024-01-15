@@ -92,7 +92,7 @@ props:
         Providência um ad-blocker estável pro player.
   
   experiments:
-    displayPlayerChoice:
+    displayPlayerChoice:
       title: "Habilita o uso de players mais antigos."
       subtitle: >
         Habilita a opção de mudar a revisão do player do YouTube na
