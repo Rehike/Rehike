@@ -36,7 +36,6 @@ return new class extends HitchhikerController {
     public function onGet(YtApp $yt, RequestMetadata $request): void
     {
 		$videoId = $request->params->video_id; 
-		$iv_url = "https://storage.googleapis.com/biggest_bucket/annotations/".substr($videoId,0,1)."/".substr($videoId,0,3)."/".$videoId.".xml.gz";
 		if ($videoId == null && $videoId !== "") {
 			http_response_code(400);
 			die();
@@ -134,6 +133,8 @@ return new class extends HitchhikerController {
 			$yt->watchNextResponse = $nextResponse;
 			
 			ob_start();
+			$videoId = $yt->videoId; 
+			$iv_url = "https://storage.googleapis.com/biggest_bucket/annotations/".substr($videoId,0,1)."/".substr($videoId,0,3)."/".$videoId.".xml.gz";
 			$ch = curl_init($iv_url);
 			$options = array(
 				CURLOPT_RETURNTRANSFER => true,  // don't echo web page
@@ -146,7 +147,6 @@ return new class extends HitchhikerController {
 				CURLOPT_CONNECTTIMEOUT => 120,    // time-out on connect
 				CURLOPT_TIMEOUT        => 120,    // time-out on response
 				CURLOPT_ENCODING	   => '',
-				CURLOPT_MAX_RECV_SPEED_LARGE => 56000 // 56kb/s max
 			);
 			curl_setopt_array($ch, $options);
 			$out = curl_exec($ch);
@@ -160,12 +160,12 @@ return new class extends HitchhikerController {
 			if ($code !== 200) {
 				//http_response_code(404);
 				//ob_end_clean();
-				//die();
 				$xml = new SimpleXMLElement("<document><annotations></annotations></document>");
+				echo $iv_url;
 			} else {
 				$xml = simplexml_load_string($out);
 				foreach ($xml->xpath("//annotation[@style='branding']") as $node) { // remove any existing branding
-					unset($node[0]);
+					//unset($node[0]); // remove the original annotation if present as we're going to be making our own
 				}
 			}
 			
@@ -210,7 +210,7 @@ return new class extends HitchhikerController {
             ;
 			$image_url = 'https://i.ytimg.com/an/'.substr($authorUid, 2).'/featured_channel.jpg?v='.substr(bin2hex(random_bytes(4)), 2);
 			
-			$ch = curl_init($image_url);
+			$ch2 = curl_init($image_url);
 			$options = array(
 				CURLOPT_RETURNTRANSFER => true,   // don't echo web page
 				CURLOPT_HEADER         => false,  // don't return headers
@@ -224,14 +224,13 @@ return new class extends HitchhikerController {
 				CURLOPT_HEADER		   => true,
 				CURLOPT_CUSTOMREQUEST  => 'HEAD',
 				CURLOPT_ENCODING	   => '',
-				CURLOPT_MAX_RECV_SPEED_LARGE => 56000 // 56kb/s max
 			);
-			curl_setopt_array($ch, $options);
-			$out = curl_exec($ch);
-			$code = curl_getinfo($ch)["http_code"];
+			curl_setopt_array($ch2, $options);
+			curl_exec($ch2);
+			$code = curl_getinfo($ch2)["http_code"];
 			
 			// Close the cURL resource, and free system resources
-			curl_close($ch);
+			curl_close($ch2);
 			
 			$hasBranding = $code !== 404;
 			
@@ -291,7 +290,7 @@ return new class extends HitchhikerController {
 				$brandingAnnotation->addChild('segment');
 				$brandingAnnotation->addChild('action');
 				$brandingAnnotation->action->addAttribute('trigger', 'click');
-				$brandingAnnotation->action->addAttribute('action', 'openUrl');
+				$brandingAnnotation->action->addAttribute('type', 'openUrl');
 				$brandingAnnotation->action->addChild('url');
 				$brandingAnnotation->action->url->addAttribute('type', 'hyperlink');
 				$brandingAnnotation->action->url->addAttribute('target', 'new');
