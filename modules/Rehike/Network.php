@@ -134,6 +134,11 @@ class Network
                 {
                     $resolve($response);
                 }
+                else if (NoInternetPage::isNoInternetResult($response->resultCode))
+                {
+                    NoInternetPage::render();
+                    \Rehike\Boot\Bootloader::doEarlyShutdown();
+                }
                 else
                 {
                     $reject(new InnertubeFailedRequestException(

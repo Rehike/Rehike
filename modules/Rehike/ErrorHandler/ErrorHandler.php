@@ -28,6 +28,7 @@ final class ErrorHandler
     public const handleUncaughtException = self::class."::handleUncaughtException";
     public const handleShutdown = self::class."::handleShutdown";
 
+    private static bool $isEnabled = true;
     private static AbstractErrorPage $pageModel;
 
     public static function getErrorPageModel(): AbstractErrorPage
@@ -35,8 +36,29 @@ final class ErrorHandler
         return self::$pageModel;
     }
 
+    /**
+     * Enables the global error handler. This is the default option.
+     */
+    public static function enable(): void
+    {
+        self::$isEnabled = true;
+    }
+
+    /**
+     * Disables the global error handler.
+     *
+     * This should only be used during premature shutdown events.
+     */
+    public static function disable(): void
+    {
+        self::$isEnabled = false;
+    }
+
     public static function handleUncaughtException(Throwable $e): void
     {
+        if (!self::$isEnabled)
+            return;
+
         if (class_exists("YukisCoffee\\CoffeeRequest\\Util\\PromiseResolutionTracker", false))
         {
             // Disable promise resolution tracker because it may trigger additional
@@ -53,7 +75,7 @@ final class ErrorHandler
         }
 
         /*
-         * BUG (kirasicecreamm): Unhandled Promises are not compatible with the custom 
+         * BUG (kirasicecreamm): Unhandled Promises are not compatible with the custom
          * error page yet because they are triggered during the cleanup at the end of
          * the script.
          * 
@@ -89,6 +111,9 @@ final class ErrorHandler
 
     public static function handleShutdown(): void
     {
+        if (!self::$isEnabled)
+            return;
+
         $e = error_get_last();
 
         if ($e != null && isset($e["type"]) && self::isErrorFatal($e["type"]))

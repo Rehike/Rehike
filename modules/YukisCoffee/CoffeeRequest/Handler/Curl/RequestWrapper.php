@@ -27,6 +27,11 @@ class RequestWrapper
     public $handle;
 
     /**
+     * The last error code, or 0 if none occurred.
+     */
+    public int $lastErrorCode = 0;
+
+    /**
      * An array of response headers.
      * 
      * This is a hacky solution, but it's required in order to work around

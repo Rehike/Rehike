@@ -25,8 +25,9 @@ use const DNS_AAAA as DNS_IPV6;
  * 
  * Since IPv6 is largely backwards compatible with IPv4 and most
  * servers support IPv4, IPv6 support is currently limited.
- * 
+ *
  * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
+ * @author The Rehike Maintainers
  */
 class Nameserver
 {

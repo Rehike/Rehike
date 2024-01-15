@@ -28,6 +28,35 @@ final class Bootloader
     }
 
     /**
+     * Performs an early shutdown.
+     */
+    public static function doEarlyShutdown(): void
+    {
+        // Silence shutdown errors such as the unhandled promise error
+        if (class_exists("YukisCoffee\\CoffeeRequest\\Promise", false))
+        {
+            if (\YukisCoffee\CoffeeRequest\Promise::isCurrentlyInPromise())
+            {
+                if (class_exists("YukisCoffee\\CoffeeRequest\\Util\\PromiseResolutionTracker", false))
+                {
+                    \YukisCoffee\CoffeeRequest\Util\PromiseResolutionTracker::disable();
+                }
+            }
+        }
+
+        if (class_exists("Rehike\\ErrorHandler\\ErrorHandler"))
+        {
+            \Rehike\ErrorHandler\ErrorHandler::disable();
+        }
+
+        // Perform general shutdown tasks.
+        self::shutdown(true);
+
+        // Close the server
+        exit();
+    }
+
+    /**
      * Sets up everything necessary to load a Rehike page.
      */
     private static function boot(): void
@@ -63,7 +92,7 @@ final class Bootloader
     /**
      * Ran after all page logic is done.
      */
-    private static function shutdown(): void
+    private static function shutdown(bool $early = false): void
     {
         Debugger::shutdown();
         
@@ -75,7 +104,8 @@ final class Bootloader
             );
         }
 
-        ob_end_flush();
+        if (ob_get_level() > 1)
+            ob_end_flush();
     }
 
     /**
