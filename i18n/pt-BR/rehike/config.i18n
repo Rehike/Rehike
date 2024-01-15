@@ -93,10 +93,10 @@ props:
   
   experiments:
     displayPlayerChoice:
-      title: "Habilita o uso de players mais antigos."
-      subtitle: >
-        Habilita a opção de mudar a revisão do player do YouTube na
-        página de aparência.
+      title: "Habilita o uso de players mais antigos"
+      subtitle: >
+        Habilita a opção de mudar a revisão do player do YouTube na
+        página de aparência.
     useSignInV2:
       title: "Usar o sign in V2"
       subtitle: >
