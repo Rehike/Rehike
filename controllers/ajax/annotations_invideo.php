@@ -165,7 +165,7 @@ return new class extends HitchhikerController {
 			} else {
 				$xml = simplexml_load_string($out);
 				foreach ($xml->xpath("//annotation[@style='branding']") as $node) { // remove any existing branding
-					unset($node[0]);
+					//unset($node[0]); // remove the original annotation if present as we're going to be making our own
 				}
 			}
 			
@@ -290,7 +290,7 @@ return new class extends HitchhikerController {
 				$brandingAnnotation->addChild('segment');
 				$brandingAnnotation->addChild('action');
 				$brandingAnnotation->action->addAttribute('trigger', 'click');
-				$brandingAnnotation->action->addAttribute('action', 'openUrl');
+				$brandingAnnotation->action->addAttribute('type', 'openUrl');
 				$brandingAnnotation->action->addChild('url');
 				$brandingAnnotation->action->url->addAttribute('type', 'hyperlink');
 				$brandingAnnotation->action->url->addAttribute('target', 'new');
