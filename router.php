@@ -101,8 +101,8 @@ Router::get([
     "/rehike/config/**" => "rehike/config",
     "/rehike/ajax/git_ajax" => "rehike/ajax/git_ajax",
     "/rehike/server_info" => "rehike/server_info",
-	  "/watch" => "watch",
-	  "/annotations_invideo" => "annotations/annotations_invideo",
+	"/watch" => "watch",
+	"/annotations_invideo" => "ajax/annotations_invideo",
     "/player_204" => function() { exit(); },
     "default" => "channel"
 ]);
@@ -122,7 +122,7 @@ Router::post([
     "/live_events_reminders_ajax" => "ajax/live_events_reminders",
     "/delegate_account_ajax" => "ajax/delegate_account",
     "/rehike/update_config" => "rehike/update_config",
-	  "/annotations_invideo" => "annotations/annotations_invideo",
+	"/annotations_invideo" => "ajax/annotations_invideo",
     "/player_204" => function() { exit(); },
     "default" => "channel"
 ]);
