@@ -11,7 +11,7 @@ tabs:
 props:
   appearance:
     playerChoice:
-      title: "Choose video player revision:"
+      title: "Escolha uma revisão do player de vídeo:"
       values:
         CURRENT: "Player " # Sem data específica; verdadeiro player mais recente.
         PLAYER_2022: "2022 - Cantos quadrados, storyboard antiga"
