@@ -57,6 +57,7 @@ trait EventLoopRunner // implements Event::onRun()
 
         $mhFiber = curl_multi_init();
         $mhNormal = curl_multi_init();
+        $codesMap = [];
 
         // Register all queued requests in the handle array
         foreach ($requests as $index => $request)
@@ -73,6 +74,9 @@ trait EventLoopRunner // implements Event::onRun()
             do
             {
                 curl_multi_exec($mh, $active);
+                $info = curl_multi_info_read($mh);
+                if ($info)
+                    $codesMap[(int)$info["handle"]] = $info["result"];
                 curl_multi_select($mh);
                 Fiber::suspend();
             }
@@ -83,6 +87,9 @@ trait EventLoopRunner // implements Event::onRun()
         do
         {
             $status = curl_multi_exec($mhNormal, $active);
+            $info = curl_multi_info_read($mhNormal);
+            if ($info)
+                $codesMap[(int)$info["handle"]] = $info["result"];
 
             if ($active)
             {
@@ -105,8 +112,12 @@ trait EventLoopRunner // implements Event::onRun()
         // Report each of the responses.
         foreach ($requests as $index => $request)
         {
+            $code = isset($codesMap[(int)$request->handle])
+                ? $codesMap[(int)$request->handle]
+                : 0;
+
             $response = $this->makeResponse(
-                curl_errno($request->handle),
+                $code,
                 curl_getinfo($request->handle, CURLINFO_HTTP_CODE),
                 curl_multi_getcontent($request->handle),
                 $request
@@ -168,7 +179,8 @@ trait EventLoopRunner // implements Event::onRun()
         {
             $status = curl_multi_exec($mh, $active);
             $info = curl_multi_info_read($mh);
-            $codesMap[(int)$info["handle"]] = $info["result"];
+            if ($info)
+                $codesMap[(int)$info["handle"]] = $info["result"];
 
             if ($active)
             {
@@ -183,8 +195,6 @@ trait EventLoopRunner // implements Event::onRun()
             }
         }
         while ($active && CURLM_OK == $status);
-
-        \Rehike\Logging\DebugLogger::print("\$status: %s", $status);
 
         // Report each of the responses.
         foreach ($requests as $request)

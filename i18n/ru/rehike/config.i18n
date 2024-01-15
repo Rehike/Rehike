@@ -105,8 +105,7 @@ props:
     encryptedStreams:
       title: "Используйте зашифрованные видеопотоки"
       subtitle: >
-        Требуется для правильной работы старых плееров! Использует ANDROID
-        для запросов на получение видеопотока без шифрования.
+        Do not use.
 	  
   advanced:
     displayPlayerChoice:

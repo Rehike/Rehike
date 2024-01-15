@@ -111,8 +111,7 @@ props:
     encryptedStreams:
       title: "Użyj szyfrowanych strumieni wideo"
       subtitle: >
-        Wymagane do prawidłowego działania starszych odtwarzaczy! Używa ANDROID
-        dla żądań uzyskania strumieni wideo bez szyfrowania.
+        Do not use.
   
   advanced:
     enableDebugger:

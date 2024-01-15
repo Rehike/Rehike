@@ -66,7 +66,7 @@ class ConfigDefinitions
                 "displayPlayerChoice" => new BoolProp(false),
                 "useSignInV2" => new BoolProp(false),
                 "disableSignInOnHome" => new BoolProp(false),
-                "encryptedStreams" => new BoolProp(true)
+                "encryptedStreamsDO_NOT_USE_UNLESS_YOU_KNOW_WHAT_YOU_ARE_DOING" => new BoolProp(true)
             ],
             "advanced" => [
                 "enableDebugger" => new BoolProp(false)

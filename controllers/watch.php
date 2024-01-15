@@ -75,7 +75,7 @@ return new class extends NirvanaController {
         ];
 
         // Content restriction
-        if (isset($_GET["has_verified"]) && ($_GET["has_verified"] == "1" || $_GET["has_verified"] == true) or false === Config::getConfigProp("experiments.encryptedStreams"))
+        if (isset($_GET["has_verified"]) && ($_GET["has_verified"] == "1" || $_GET["has_verified"] == true) or false === Config::getConfigProp("experiments.encryptedStreamsDO_NOT_USE_UNLESS_YOU_KNOW_WHAT_YOU_ARE_DOING"))
         {
             $sharedRequestParams += ["racyCheckOk" => true];
             $sharedRequestParams += ["contentCheckOk" => true];
@@ -152,7 +152,7 @@ return new class extends NirvanaController {
         // Unlike Polymer, Hitchhiker had all of the player data already
         // available in the initial response. So an additional player request
         // is used.
-        if (false === Config::getConfigProp("experiments.encryptedStreams")){
+        if (false === Config::getConfigProp("experiments.encryptedStreamsDO_NOT_USE_UNLESS_YOU_KNOW_WHAT_YOU_ARE_DOING")){
             $playerRequest = Network::innertubeRequest(
                 "player",
                 [
@@ -244,7 +244,7 @@ return new class extends NirvanaController {
             \Rehike\Profiler::end("watch_requests");
             $nextResponse = $responses["next"]->getJson();
             $playerResponse = $responses["player"]->getJson();
-            if (false === Config::getConfigProp("experiments.encryptedStreams")){
+            if (false === Config::getConfigProp("experiments.encryptedStreamsDO_NOT_USE_UNLESS_YOU_KNOW_WHAT_YOU_ARE_DOING")){
                 $storyboardResponse = $responses["storyboard"]->getJson();
                 $playerResponse->storyboards = $storyboardResponse->storyboards;
             }
