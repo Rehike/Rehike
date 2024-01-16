@@ -154,13 +154,14 @@ function getLatestPlayerJsInfo()
 
                 var cbDecodeSig, cbDecodeN;
                 var cacheObj = {};
+                cacheObj[CACHE_INDEX] = {};
 
                 var signatureResult = getDecryptorForPlayerSig(text);
                 var fnDecodeSig = null;
                 if (signatureResult.status == "SUCCESS")
                 {
                     cbDecodeSig = signatureResult.extractCb;
-                    cacheObj.decodeSig = signatureResult.cacheParams;
+                    cacheObj[CACHE_INDEX].decodeSig = signatureResult.cacheParams;
                 }
 
                 var nDecoderResult = getDecryptorForPlayerN(text);
@@ -168,7 +169,7 @@ function getLatestPlayerJsInfo()
                 if (nDecoderResult.status == "SUCCESS")
                 {
                     cbDecodeN = nDecoderResult.extractCb;
-                    cacheObj.decodeN = nDecoderResult.cacheParams;
+                    cacheObj[CACHE_INDEX].decodeN = nDecoderResult.cacheParams;
                 }
 
                 // Store the cache:

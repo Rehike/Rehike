@@ -1,10 +1,10 @@
 {
-	"previousHash": "0b2ed9a8760ee8aeab3124de115570615dbdb40e",
-	"currentRevisionId": 1292,
-	"subject": "Refactor category retrieval code",
-	"body": "Refactor category retrieval code",
+	"previousHash": "4720933b62e92d9737aedc1a6073a0a9c058d4a8",
+	"currentRevisionId": 1293,
+	"subject": "[classicplayer] Fix latest player JS caching",
+	"body": "[classicplayer] Fix latest player JS caching",
 	"branch": "master",
 	"committerName": "Taniko Yamamoto",
 	"committerEmail": "kirasicecreamm@gmail.com",
-	"time": 1705390111
+	"time": 1705394898
 }
