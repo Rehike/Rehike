@@ -182,6 +182,8 @@ class MMetadataRowContainer
                 return $i18n->get("categoryComedy");
             case "Education":
                 return $i18n->get("categoryEducation");
+            case "Entertainment":
+                return $i18n->get("categoryEntertainment");
             case "Film & Animation":
                 return $i18n->get("categoryFilmAndAnimation");
             case "Gaming":
