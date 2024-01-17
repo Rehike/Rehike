@@ -503,8 +503,10 @@ window.ytplayer.config = {
            "dashmpd": "{{ yt.playerResponse.streamingData.dashManifestUrl }}",
        {% endif %}
 
-        "author": "{{ rehike.getText(yt.page.results[0].videoPrimaryInfoRenderer.owner.title) ?? "" }}",
-        "title": "{{ rehike.getText(yt.page.title) ?? "" }}",
+        {% set authorText = rehike.getText(yt.page.results[0].videoPrimaryInfoRenderer.owner.title) %}
+        {% set titleText = rehike.getText(yt.page.title) %}
+        "author": {{ authorText ? authorText|json_encode|raw : "null" }},
+        "title": {{ titleText ? titleText|json_encode|raw : "null" }},
         "autoplay": "1",
         "autonav": {{ yt.page.autonavEnabled ? "1" : "0" }},
         "idpj": "0", // *I*dpj and *L*dpj are different? "I" version is used in

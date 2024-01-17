@@ -1,10 +1,10 @@
 {
-	"previousHash": "4720933b62e92d9737aedc1a6073a0a9c058d4a8",
-	"currentRevisionId": 1293,
-	"subject": "[classicplayer] Fix latest player JS caching",
-	"body": "[classicplayer] Fix latest player JS caching",
+	"previousHash": "df55fc365a1f99e8f758e096e1e90ca607a8b6e0",
+	"currentRevisionId": 1294,
+	"subject": "[classicplayer] Revise title retrieval",
+	"body": "[classicplayer] Revise title retrieval",
 	"branch": "master",
-	"committerName": "Taniko Yamamoto",
-	"committerEmail": "kirasicecreamm@gmail.com",
-	"time": 1705394898
+	"committerName": "Daylin Cooper",
+	"committerEmail": "dcoop2004@gmail.com",
+	"time": 1705459830
 }
