@@ -234,7 +234,7 @@ return new class extends HitchhikerController {
 			$hasBranding = $code !== 404;
 			
 			// Generate 16 bytes (128 bits) of random data or use the data passed into the function.
-			$data = $videoId . 'AJKwieuISJDHGBiueSajsghkEWUIO';
+			$data = substr($videoId . 'AJKwieuISJDHGBiueSajsghkEWUIOASHerahzSHF',1,16);
 			$data = $data ?? random_bytes(16);
 			assert(strlen($data) == 16);
 			
