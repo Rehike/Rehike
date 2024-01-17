@@ -107,7 +107,7 @@ function getLatestPlayerJsInfo()
 {
     var CACHE_INDEX = LATEST_PLAYER_JS_URL;
 
-    return new Promise(function(resolve, reject) {
+    //return new Promise(function(resolve, reject) {
         var cacheStr;
         if (cacheStr = localStorage.getItem("rh-classic-player-cache"))
         {
@@ -125,10 +125,15 @@ function getLatestPlayerJsInfo()
                         cache[CACHE_INDEX].decodeN.body
                     );
 
-                    resolve({
+                    /*resolve({
                         cbDecodeSig: cbDecodeSig,
                         cbDecodeN: cbDecodeN
-                    });
+                    });*/
+					var decode = {
+						cbDecodeSig: cbDecodeSig,
+						cbDecodeN: cbDecodeN
+					};
+					return decode;
                 }
                 else
                 {
@@ -178,19 +183,24 @@ function getLatestPlayerJsInfo()
                     JSON.stringify(cacheObj)
                 );
 
-                resolve({
+                /*resolve({
                     cbDecodeSig: cbDecodeSig,
                     cbDecodeN: cbDecodeN
-                });
+                });*/
+				var decode = {
+					cbDecodeSig: cbDecodeSig,
+					cbDecodeN: cbDecodeN
+				};
+				return decode;
             }
             else
             {
                 console.error("[Rehike.ClassicPlayer] Failed to download latest player.");
-                reject();
+                return; //reject();
             }
         };
         xhr.send();
-    });
+    //});
 }
 
 /**
@@ -573,7 +583,8 @@ window.ytplayer.config = {
 
 function buildPlayer()
 {
-    getLatestPlayerJsInfo().then(function(playerUtils) {
+    var playerUtils = getLatestPlayerJsInfo();//.then(function(playerUtils)
+	{
         // Cancel if the player information isn't available. If this is the case,
         // then we're likely not on the watch page:
         if (typeof RAW_PLAYER_RESPONSE != "object" || !RAW_PLAYER_RESPONSE)
@@ -768,7 +779,7 @@ function buildPlayer()
 
         // From classic_player_mods:
         initClassicPlayerMods();
-    });
+    }//);
 }
 
 buildPlayer();

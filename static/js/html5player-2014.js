@@ -685,13 +685,14 @@ f.getVideoData=function(){var a=ow(this.app,this.playerType);return a&&a.getVide
 function ox(a) {
     a.ended && mx(a, 0);
     !a.hasAttribute("src") && a.rd && (a.src = Nu(a.rd), a.rd.g || a.load());
-
-    a.play().catch(function(e) {
-        // Message the error event for external handling.
-        var event = document.createEvent("Event");
-        event.initEvent("rh-classic-player-fail-play-video", false, true);
-        document.dispatchEvent(event);
-    });
+	if (a && a.play()) {
+		a.play().catch(function(e) {
+			// Message the error event for external handling.
+			var event = document.createEvent("Event");
+			event.initEvent("rh-classic-player-fail-play-video", false, true);
+			document.dispatchEvent(event);
+		});
+	}
 
     au && 7 <= $t && bh(a, x(function() {
         L(x(this.Us, this, this.currentTime, 0), 500)

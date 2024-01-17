@@ -9,6 +9,8 @@ use Com\Youtube\Innertube\Request\NextRequestParams\UnknownThing;
 use Rehike\Network;
 use Rehike\Async\Promise;
 
+use Rehike\i18n\i18n;
+
 use Rehike\Util\Base64Url;
 use Rehike\ConfigManager\Config;
 use Rehike\Util\WatchUtils;
@@ -122,12 +124,83 @@ return new class extends HitchhikerController {
             "next",
             $sharedRequestParams + $nextOnlyParams
         );
+		
+		// Unlike Polymer, Hitchhiker had all of the player data already
+        // available in the initial response. So an additional player request
+        // is used.
+        if (false === Config::getConfigProp("experiments.encryptedStreamsDO_NOT_USE_UNLESS_YOU_KNOW_WHAT_YOU_ARE_DOING")){
+            $playerRequest = Network::innertubeRequest(
+                "player",
+                [
+                    "playbackContext" => [
+                        'contentPlaybackContext' => (object) [
+                            'autoCaptionsDefaultOn' => false,
+                            'autonavState' => 'STATE_OFF',
+                            'html5Preference' => 'HTML5_PREF_WANTS',
+                            'lactMilliseconds' => '13407',
+                            'mdxContext' => (object) [],
+                            'playerHeightPixels' => 1080,
+                            'playerWidthPixels' => 1920,
+                            'signatureTimestamp' => $yt->playerConfig->signatureTimestamp
+                        ]   
+                    ],
+                    "startTimeSecs" => $startTime ?? 0,
+                    "params" => 'CgIQBg=='
+                ] + $sharedRequestParams,
+                    clientName: "ANDROID",
+                    clientVersion: "16.02.00"
+            );
+            $storyboardRequest = Network::innertubeRequest(
+                "player",
+                [
+                    "playbackContext" => [
+                        'contentPlaybackContext' => (object) [
+                            'autoCaptionsDefaultOn' => false,
+                            'autonavState' => 'STATE_OFF',
+                            'html5Preference' => 'HTML5_PREF_WANTS',
+                            'lactMilliseconds' => '13407',
+                            'mdxContext' => (object) [],
+                            'playerHeightPixels' => 1080,
+                            'playerWidthPixels' => 1920,
+                            'signatureTimestamp' => $yt->playerConfig->signatureTimestamp
+                        ]
+                    ],
+                    "startTimeSecs" => $startTime ?? 0
+                ] + $sharedRequestParams,
+                clientName: "XBOXONEGUIDE",
+                clientVersion: "1.0"
+            );
+        }
+        else{
+            $playerRequest = Network::innertubeRequest(
+                "player",
+                [
+                    "playbackContext" => [
+                        'contentPlaybackContext' => (object) [
+                            'autoCaptionsDefaultOn' => false,
+                            'autonavState' => 'STATE_OFF',
+                            'html5Preference' => 'HTML5_PREF_WANTS',
+                            'lactMilliseconds' => '13407',
+                            'mdxContext' => (object) [],
+                            'playerHeightPixels' => 1080,
+                            'playerWidthPixels' => 1920,
+                            'signatureTimestamp' => $yt->playerConfig->signatureTimestamp
+                        ]   
+                    ],
+                    "startTimeSecs" => $startTime ?? 0,
+                    "params" => $yt->playerParams
+                ] + $sharedRequestParams
+            );
+            $storyboardRequest = new Promise(fn($r) => $r());
+        }
 
         Promise::all([
+			"player"     => $playerRequest,
             "next"       => $nextRequest,
         ])->then(function ($responses) use ($yt) {
             \Rehike\Profiler::end("watch_requests");
             $nextResponse = $responses["next"]->getJson();
+			$playerResponse = $responses["player"]->getJson();
 	
 			// Push these over to the global object.
 			$yt->watchNextResponse = $nextResponse;
@@ -158,8 +231,6 @@ return new class extends HitchhikerController {
 			$xml;
 			
 			if ($code !== 200) {
-				//http_response_code(404);
-				//ob_end_clean();
 				$xml = new SimpleXMLElement("<document><annotations></annotations></document>");
 			} else {
 				$xml = simplexml_load_string($out);
@@ -167,8 +238,6 @@ return new class extends HitchhikerController {
 					unset($node[0]); // remove the original annotation if present as we're going to be making our own
 				}
 			}
-			
-			//self::destructureData($yt->watchNextResponse->contents);
 			
 			// Wrapped in isset to prevent crashes
 			if (isset($yt->watchNextResponse->contents->twoColumnWatchNextResults->results->results))
@@ -207,83 +276,46 @@ return new class extends HitchhikerController {
                 ? ExtractUtils::isolateSubCnt(ParsingUtils::getText($secondaryInfo->owner->videoOwnerRenderer->subscriberCountText))
                 : null
             ;
-			$image_url = 'https://i.ytimg.com/an/'.substr($authorUid, 2).'/featured_channel.jpg?v='.substr(bin2hex(random_bytes(4)), 2);
-			
-			$ch2 = curl_init($image_url);
-			$options = array(
-				CURLOPT_RETURNTRANSFER => true,   // don't echo web page
-				CURLOPT_HEADER         => false,  // don't return headers
-				CURLOPT_FOLLOWLOCATION => true,   // follow redirects
-				CURLOPT_MAXREDIRS      => 10,     // stop after 10 redirects
-				CURLOPT_ENCODING       => "",     // handle compressed
-				CURLOPT_USERAGENT      => "test", // name of client
-				CURLOPT_AUTOREFERER    => true,   // set referrer on redirect
-				CURLOPT_CONNECTTIMEOUT => 120,    // time-out on connect
-				CURLOPT_TIMEOUT        => 120,    // time-out on response
-				CURLOPT_HEADER		   => true,
-				CURLOPT_CUSTOMREQUEST  => 'HEAD',
-				CURLOPT_ENCODING	   => '',
-			);
-			curl_setopt_array($ch2, $options);
-			curl_exec($ch2);
-			$code = curl_getinfo($ch2)["http_code"];
-			
-			// Close the cURL resource, and free system resources
-			curl_close($ch2);
-			
-			$hasBranding = $code !== 404;
-			
-			// Generate 16 bytes (128 bits) of random data or use the data passed into the function.
-			$data = substr($videoId . 'AJKwieuISJDHGBiueSajsghkEWUIOASHerahzSHF',1,16);
-			$data = $data ?? random_bytes(16);
-			assert(strlen($data) == 16);
-			
-			// Set version to 0100
-			$data[6] = chr(ord($data[6]) & 0x0f | 0x40);
-			// Set bits 6-7 to 10
-			$data[8] = chr(ord($data[8]) & 0x3f | 0x80);
-			
-			// Output the 36 character UUID.
-			$brandingAnnotationUid = vsprintf('%s%s-%s-%s-%s-%s%s%s', str_split(bin2hex($data), 4));
+			$i18n = i18n::getNamespace("channels");
+			if ($subscribeCount === "1")
+            {
+                $subscribeCount = i18n::getFormattedString(
+                    "misc", 
+                    "subscriberTextSingular", 
+                    $subscribeCount
+                );
+            }
+            else
+            {
+                $subscribeCount = i18n::getFormattedString(
+                    "misc", 
+                    "subscriberTextPlural", 
+                    $subscribeCount
+                );
+            }
+
+			$hasBranding = $playerResponse->annotations !== null;
 			
 			if ($hasBranding) {
+				$brandingData = $playerResponse->annotations[0]->playerAnnotationsExpandedRenderer;
+				$brandingAnnotationUid = $brandingData->annotationId;
+				$thumbnail = $brandingData->featuredChannel->watermark->thumbnails[0];
 				$brandingAnnotation = $xml->annotations->addChild('annotation');
 				$brandingAnnotation->addAttribute('id','channel:'.$brandingAnnotationUid);
 				$brandingAnnotation->addAttribute('style','branding');
 				$brandingAnnotation->addAttribute('type','branding');
 				$data = '{
-					"end_ms":215000,
-					"standalone_subscribe_button_data":
-					{
-						"subscribeCount":"'.$subscribeCount.'",
-						"classic":true,
-						"signinUrl":"https:\/\/accounts.google.com\/ServiceLogin?uilel=3\u0026service=youtube\u0026hl=en\u0026continue=http%3A%2F%2Fwww.youtube.com%2Fsignin%3Fcontinue_action%3DQUFFLUhqbjZ1eldPMHJUYlFYb1Y1WFRXdGJpNGdXQzItUXxBQ3Jtc0tuUVJNY1ZCMHB0eXN2OXZqWE5VNnVXeF9UMS1ibXRHaGlHY3FWS01tVWpmTnNDOHVZQWFjamg3VTFabHBBNW1mZ2ViaklhaThrUDIzQjFuUGJDdFEtbDlDUnQ3MnZyZHVjQU1PMWpHQmhXdzJPVFBiRmhRTEZ2ZVBmb2F2d19KNWZMQmpGTWk5cWdvTENkcmNDd19hN0RET3RSVlBtMk5sYUNUT0VwMzNwZFVhSGJ6b3Z6ekhEcEdTUEpuZlUwVXBOZ21uWncxRDFRal85eUVHeC1RMjlmdVdvVTdXc01Sc2prZUt2ZEg0SGxYQWEwY05z%26app%3Ddesktop%26feature%3Div%26hl%3Den%26action_handle_signin%3Dtrue%26next%3D'.urlencode(urlencode($authorUrl)).'\u0026passive=true",
-						"subscribeText":"Subscribe",
-						"feature":"iv",
-						"unsubscribeText":"Subscribed",
-						"subscribed":false,
-						"unsubscribeCount":"'.($subscribeCount+1).'",
-						"enabled":false
-					},
+					"end_ms":'.$brandingData->featuredChannel->endTimeMs.',
 					"num_subscribers":"'.$subscribeCount.'",
-					"start_ms":1000,
-					"image_url":'.json_encode($image_url).',
-					"image_type":1,
-					"image_width":40,
-					"use_standalone_subscribe_button":true,
-					"image_height":40,
+					"start_ms":'.$brandingData->featuredChannel->startTimeMs.',
+					"image_url":'.json_encode($thumbnail->url).',
+					"image_type":0,
+					"image_width":'.$thumbnail->width.',
+					"image_height":'.$thumbnail->height.',
 					"channel_name":"'.$authorName.'",
-					"subscription_token":["",
-					""],
+					"subscription_token": "",
 					"is_mobile":false,
 					"channel_id":"'.$authorUid.'",
-					"session_data":{
-						"ei":"YvQrXPT4C-GC8gSw46e4Cg",
-						"feature":"iv",
-						"itct":"CAMQ8zcY____________ASITCPSx_Y3bzd8CFWGBnAodsPEJpyj4HTICaXZIvrXYroe2wflS",
-						"src_vid":"'.$videoId.'",
-						"annotation_id":"'.$brandingAnnotationUid.'"
-					}
 				}';
 				$brandingAnnotation->addChild('data',$data);
 				$brandingAnnotation->addChild('segment');
