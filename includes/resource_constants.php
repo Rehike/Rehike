@@ -43,6 +43,7 @@ return (object) [
         "www-searchbox/www-searchbox" => "{$js}www-searchbox-vflV_B8yT/www-searchbox.js",
         "www-notfound/www-notfound" => "{$js}www-notfound-vflsu8ylX/www-notfound.js",
         "www/base" => "/rehike/static/js/www-base-rehike.js",
+		"www/promise-polyfill" => "/rehike/static/js/es6-promise.auto.min.js",
         "www/common" => "{$mod}common.js",
         "www/angular_base" => "{$mod}angular_base.js",
         "www/channels_accountupload" => "{$mod}channels_accountupload.js",
