@@ -16,6 +16,7 @@
          scripts in order to properly hijack XHR, this is injected if the
          debugger is enabled.
       #}
+	  {{ core.js('www/promise-polyfill') }}
       {% if rehikeDebugger and not rehikeDebugger.condensed and not yt.spf %}
          <script>{% include "rehike/debugger/js/xhook.js" %}</script>
       {% endif %}
