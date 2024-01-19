@@ -102,6 +102,7 @@ Router::get([
     "/rehike/ajax/git_ajax" => "rehike/ajax/git_ajax",
     "/rehike/server_info" => "rehike/server_info",
 	"/watch" => "watch",
+	"/html5" => "html5",
 	"/annotations_invideo" => "ajax/annotations_invideo",
     "/player_204" => function() { exit(); },
     "default" => "channel"

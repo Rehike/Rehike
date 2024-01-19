@@ -15,7 +15,7 @@ site-as-giant-card
 {{ (appbarEnabled and defaultGuideVisibility) ? 'guide-pinning-enabled' }}   
 {{ (appbarEnabled and not defaultAppbarVisibility) ? 'appbar-hidden' }}
 not-nirvana-dogfood    
-flex-width-enabled      
+{{ flexWidthDisabled ? '' : "flex-width-enabled" }}      
 {{ flexWidthSnapDisabled ? '' : "flex-width-enabled-snap" }}    
 {{ yt.spf ? '' : 'delayed-frame-styles-not-in' }}
 {{ yt.page.ticker ? "sitewide-ticker-visible" }}

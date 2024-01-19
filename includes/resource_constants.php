@@ -24,7 +24,8 @@ return (object) [
         "www-channels4edit" => "{$css}www-channels4edit-vflUEQcbz.css",
         "www-watch-inlineedit" => "{$css}www-watch-inlineedit-vflpewV3h.css",
         "www-watch-transcript" => "{$css}www-watch-transcript-vflp9_n_i.css",
-        "www-channelswitcher" => "{$css}www-channelswitcher-webp-vflMtLwIV.css"
+        "www-channelswitcher" => "{$css}www-channelswitcher-webp-vflMtLwIV.css",
+		"www-the-rest" => "{$css}www-the-rest-vflC_SdHT.css",
     ],
     "css2x" => (object) [
         "www-core" => "{$css}www-core-2x-vflNAXaGB.css",
