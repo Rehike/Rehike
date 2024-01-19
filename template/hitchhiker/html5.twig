@@ -1,0 +1,211 @@
+{#
+    Implements a general insertion point for error pages.
+#}
+{% extends "core.twig" %}
+{% import "core/macros.twig" as core %}
+
+{% set enableSnapScaling = false %}
+{% set flexWidthDisabled = true %}
+{% set flexWidthSnapDisabled = true %}
+
+{%- block head_css -%}
+{{ core.css("www-the-rest") }}
+<style>
+    h1 {
+      font-size: 28px;
+      margin: 20px 0;
+    }
+
+    h3 {
+      font-size: 20px;
+      margin-bottom: 8px;
+    }
+
+    p {
+      font-size: 16px;
+      line-height: 25px;
+      margin-bottom: 20px;
+      color: #666;
+    }
+
+    ul.bulleted {
+      margin: 20px 0 20px 30px;
+      list-style-type: disc;
+    }
+
+    ul.bulleted li {
+      line-height: 20px;
+      font-size: 15px;
+      color: #666;
+      margin-bottom: 5px;
+    }
+
+    .html5-compatibility-table {
+      overflow: hidden;
+    }
+
+    .html5-compatibility-table li {
+      width: 20%;
+      margin: 0 20px 35px 0;
+      float: left;
+      padding: 15px;
+      background: #fff;
+      box-shadow: 0 1px 1px #ccc;
+      border-radius: 2px;
+    }
+
+#html5-join-link {
+      margin-bottom: 35px;
+    }
+
+#html5-join-link .yt-alert {
+      margin: 15px 0;
+    }
+  </style>
+{%- endblock -%}
+
+{%- block foot_scripts -%}
+<script>
+
+  function checkFormats() {
+    var videoElement = document.createElement('video');
+
+    var setCompatibility = function(id, isCompatible) {
+      var el = document.getElementById(id);
+      el.className = el.className.replace(
+          /\bunknown\b/, isCompatible ? 'success' : 'error');
+    };
+
+    var videoCompatible = videoElement && videoElement.canPlayType;
+    setCompatibility('c-video', videoCompatible);
+    if (!videoCompatible) {
+      var join = document.getElementById('html5-join-link');
+      join.className = 'hid';
+      var unsupported = document.getElementById('html5-unsupported');
+      unsupported.className =
+          unsupported.className = cVideo.className.replace(/\bhid\b/, '');
+    }
+
+    setCompatibility('c-h264',
+      videoElement && videoElement.canPlayType &&
+      videoElement.canPlayType('video/mp4; codecs="avc1.42001E, mp4a.40.2"'));
+
+    setCompatibility('c-webm',
+      videoElement && videoElement.canPlayType &&
+      videoElement.canPlayType('video/webm; codecs="vp8.0, vorbis"'));
+
+    var mse = window['MediaSource'] || window['WebKitMediaSource'];
+    setCompatibility('c-mse', !!mse);
+    var checkMSECompatibility = function(mimeType) {
+      if (mse && !mse.isTypeSupported) {
+        // When async type detection is required, fall back to canPlayType.
+        return videoElement.canPlayType(mimeType);
+      } else {
+        return mse && mse.isTypeSupported(mimeType);
+      }
+    };
+
+    setCompatibility('c-mse-h264',
+        checkMSECompatibility('video/mp4; codecs="avc1.4d401e"'));
+    setCompatibility('c-mse-webm',
+        checkMSECompatibility('video/webm; codecs="vp9"'));
+  }
+
+  function submitForm() {
+    document.getElementById('html5form').submit();
+    return false;
+  }
+  checkFormats();
+
+</script>
+{%- endblock -%}
+
+{% set pageType = "page-default" %}
+
+{%- block content -%}
+<h1><img src="/yts/img/HTML5_1Color_Black-vfl902gVJ.png" style="vertical-align:middle;height:1.2em;padding:4px">YouTube HTML5 Video Player</h1>
+  <p>Many YouTube videos will play using HTML5 in supported browsers. You can request that the HTML5 player be used if your browser doesn't use it by default.</p>
+
+    <p>If you encounter any problems, right-click on the player and choose "report playback issue", or let us know on the <a href="//www.google.com/support/forum/p/youtube?hl=en">user support forums</a>. Your feedback will help us continue to improve the player.</p>
+
+  <form id="html5form" action="/html5" method="post">
+
+  <h3>What does this browser support?</h3>
+  <ul class="html5-compatibility-table">
+    <li><div class="yt-alert yt-alert-naked yt-alert-unknown  " id="c-video">  <div class="yt-alert-icon">
+    <span class="icon master-sprite yt-sprite"></span>
+  </div>
+<div class="yt-alert-content" role="alert">    <div class="yt-alert-message" tabindex="0">
+            HTMLVideoElement
+    </div>
+</div></div></li>
+    <li><div class="yt-alert yt-alert-naked yt-alert-unknown  " id="c-h264">  <div class="yt-alert-icon">
+    <span class="icon master-sprite yt-sprite"></span>
+  </div>
+<div class="yt-alert-content" role="alert">    <div class="yt-alert-message" tabindex="0">
+            H.264
+    </div>
+</div></div></li>
+    <li><div class="yt-alert yt-alert-naked yt-alert-unknown  " id="c-webm">  <div class="yt-alert-icon">
+    <span class="icon master-sprite yt-sprite"></span>
+  </div>
+<div class="yt-alert-content" role="alert">    <div class="yt-alert-message" tabindex="0">
+            WebM VP8
+    </div>
+</div></div></li>
+  </ul>
+  <ul class="html5-compatibility-table">
+    <li><div class="yt-alert yt-alert-naked yt-alert-unknown  " id="c-mse">  <div class="yt-alert-icon">
+    <span class="icon master-sprite yt-sprite"></span>
+  </div>
+<div class="yt-alert-content" role="alert">    <div class="yt-alert-message" tabindex="0">
+            Media Source Extensions
+    </div>
+</div></div></li>
+    <li><div class="yt-alert yt-alert-naked yt-alert-unknown  " id="c-mse-h264">  <div class="yt-alert-icon">
+    <span class="icon master-sprite yt-sprite"></span>
+  </div>
+<div class="yt-alert-content" role="alert">    <div class="yt-alert-message" tabindex="0">
+            MSE &amp; H.264
+    </div>
+</div></div></li>
+    <li><div class="yt-alert yt-alert-naked yt-alert-unknown  " id="c-mse-webm">  <div class="yt-alert-icon">
+    <span class="icon master-sprite yt-sprite"></span>
+  </div>
+<div class="yt-alert-content" role="alert">    <div class="yt-alert-message" tabindex="0">
+            MSE &amp; WebM VP9
+    </div>
+</div></div></li>
+  </ul>
+
+  <div id="html5-join-link">
+
+  <div class="yt-alert yt-alert-naked yt-alert-success  ">  <div class="yt-alert-icon">
+    <span class="icon master-sprite yt-sprite"></span>
+  </div>
+<div class="yt-alert-content" role="alert">    <div class="yt-alert-message" tabindex="0">
+            The HTML5 player is currently used when possible.
+    </div>
+</div></div>
+  </div>
+  <div class="yt-alert yt-alert-naked yt-alert-error  hid" id="html5-unsupported">  <div class="yt-alert-icon">
+    <span class="icon master-sprite yt-sprite"></span>
+  </div>
+<div class="yt-alert-content" role="alert">    <div class="yt-alert-message" tabindex="0">
+            Your browser does not support HTML5 video.
+    </div>
+</div></div>
+
+  <h3>Supported Browsers</h3>
+  <p>Many browsers support both the video element in HTML5 and either the H.264 video codec or the <a href="http://webmproject.org">WebM</a> format. These include:</p>
+  <ul class="bulleted">
+    <li><a href="//www.google.com/chrome">Google Chrome</a></li>
+    <li><a href="https://www.microsoft.com/en-us/windows/microsoft-edge">Microsoft Edge</a></li>
+    <li><a href="http://www.mozilla.com/?WT.mc_id=youtube">Firefox</a> *</li>
+    <li><a href="http://www.opera.com/browser/download/">Opera</a></li>
+    <li><a href="http://www.apple.com/safari/">Apple Safari</a></li>
+  </ul>
+  <div>* H.264 playback depends on hardware and operating system support.</div>
+  </form>
+
+{%- endblock -%}
