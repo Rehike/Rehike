@@ -104,6 +104,7 @@ Router::get([
 	"/watch" => "watch",
 	"/html5" => "html5",
 	"/annotations_invideo" => "ajax/annotations_invideo",
+	"/get_video_metadata" => "ajax/get_video_metadata",
     "/player_204" => function() { exit(); },
     "default" => "channel"
 ]);
@@ -124,6 +125,7 @@ Router::post([
     "/delegate_account_ajax" => "ajax/delegate_account",
     "/rehike/update_config" => "rehike/update_config",
 	"/annotations_invideo" => "ajax/annotations_invideo",
+	"/get_video_metadata" => "ajax/get_video_metadata",
     "/player_204" => function() { exit(); },
     "default" => "channel"
 ]);
