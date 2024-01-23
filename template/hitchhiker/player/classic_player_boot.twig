@@ -556,7 +556,13 @@ window.ytplayer.config = {
 		"iv_invideo_url": undefined,
 		"iv_load_policy": "0",
 		"iv3_module":"1",
-        "tmi": "1"
+        "tmi": "1",
+		{% if rehike.config.appearance.classicPlayerTheme == "LIGHT" %}
+		"theme": "light",
+		{% endif %}
+		{% if rehike.config.appearance.classicPlayerColor == "WHITE" %}
+		"color": "white",
+		{% endif %}
     },
     "params": {
         "allowfullscreen": "true",

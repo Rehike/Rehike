@@ -40,6 +40,22 @@ class ConfigDefinitions
                         new DependentProp(
                             "appearance.playerChoice == PLAYER_2014",
                             new BoolProp(true)
+                        ),
+					"classicPlayerTheme" =>
+                        new DependentProp(
+                            "appearance.playerChoice == PLAYER_2014", // deprecated when they introduced the current player design
+                            new EnumProp("DARK", [
+								"DARK",
+								"LIGHT"
+							])
+                        ),
+					"classicPlayerColor" =>
+                        new DependentProp(
+                            "appearance.playerChoice == PLAYER_2014", // temporarily 2014 player only as idk how to set it on newer players
+                            new EnumProp("RED", [
+								"RED",
+								"WHITE"
+							])
                         )
                 ]),
                 "modernLogo" => new BoolProp(true),

@@ -22,6 +22,16 @@ props:
       subtitle: >
         Może powodować problemy z niestandardowym CSS, ponieważ jest przeznaczony dla najnowszej
         oficjalnej wersji CSS Hitchhikera.
+    classicPlayerTheme:
+      title: "Motyw odtwarzacza:"
+      values:
+        DARK: "Ciemny motyw" # The default theme used since about 2012, but was introduced in 2011
+        LIGHT: "Jasny motyw"
+    classicPlayerColor:
+      title: "Kolor paska postępu:"
+      values:
+        RED: "Czerwony"
+        WHITE: "Biały" # For whatever reason this is a thing
     modernLogo:
       title: "Użyj aktualnego logo YouTube"
       subtitle: >
