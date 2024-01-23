@@ -762,7 +762,7 @@ function buildPlayer()
             }
         }
 
-        // window.ytplayer.config.args.url_encoded_fmt_stream_map = n;
+        window.ytplayer.config.args.url_encoded_fmt_stream_map = n;
 
         {% if not yt.spf %}
         window.ytplayer.load = function() {
