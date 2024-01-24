@@ -228,7 +228,6 @@ class CommentThread
         // standard InnerTube response.
 
         $context->isReply = $isReply;
-        if (isset($context->voteCount)) self::addLikeCount($context);
 
         if ($data = @self::$dataApiData[$context->authorEndpoint->browseEndpoint->browseId]) {
             $context->authorText = (object) [
@@ -264,7 +263,8 @@ class CommentThread
 
         $context->likeButton = VoteButton::fromData(PropertyAtPath::get($context, self::LIKE_BUTTON_PATH));
         $context->dislikeButton = VoteButton::fromData(PropertyAtPath::get($context, self::DISLIKE_BUTTON_PATH));
-        
+		if (isset($context->voteCount)) self::addLikeCount($context);
+		
         try {
             $context->replyButton = ReplyButton::fromData(PropertyAtPath::get($context, self::REPLY_BUTTON_PATH), $context->commentId);
         } catch(\YukisCoffee\PropertyAtPathException $e) {
@@ -374,11 +374,18 @@ class CommentThread
         );
         
         $count = (int)self::getLikeCountFromLabel($likeAriaLabel);
-
-        $context->voteCount = [
-            "indifferentText" => (string)$count,
-            "likedText" => (string)($count + 1)
-        ];
+		
+		if (@$context->likeButton->checked) {
+			$context->voteCount = [
+				"indifferentText" => (string)($count - 1),
+				"likedText" => (string)$count
+			];
+		} else {
+			$context->voteCount = [
+				"indifferentText" => (string)$count,
+				"likedText" => (string)($count + 1)
+			];
+		}
     }
 
     public static function getLikeCountFromLabel($label)

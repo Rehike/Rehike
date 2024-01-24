@@ -13,14 +13,11 @@ class MCommentVoteButton extends MButton {
         "url" => "/comment_service_ajax?action_perform_comment_action=1"
     ];
 
-    /** @var string */
-    public $type;
-
-    /** @var string */
-    public $action;
-
-    /** @var string */
-    public $a11yLabel;
+ 
+    public string $type;
+    public string $action;
+    public string $a11yLabel;
+	public bool $checked;
 
     public function __construct($data) {
         $this->a11yLabel = $data["a11yLabel"] ?? null;
@@ -36,6 +33,7 @@ class MCommentVoteButton extends MButton {
                 "checked" => $data["checked"] ? "true" : "false"
             ]
         ];
+		$this->checked = $data["checked"];
     }
 
     public static function fromData($data) {
