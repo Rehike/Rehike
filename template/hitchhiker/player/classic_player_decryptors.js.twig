@@ -192,7 +192,7 @@ function getDecryptorForPlayerSig(playerScript)
  */
 function getDecryptorForPlayerN(playerScript)
 {
-    var DEBUG = false;
+    var DEBUG = true;
 
     if (DEBUG)
         console.log("[NDecode] Using player script:", playerScript);
@@ -369,6 +369,8 @@ function getDecryptorForPlayerN(playerScript)
             obfuscatorFnText.search("\\}\\;") + 2
         );
     }
+	
+	obfuscatorFnText = obfuscatorFnText.replace('"/,)',"]"); // why 
 
     if (DEBUG)
         console.log("[NDecode] (final) obfuscatorFnText ==", obfuscatorFnText);
@@ -391,7 +393,7 @@ function getDecryptorForPlayerN(playerScript)
         args: "encryptedN",
         body: bakedFunctionString
     };
-
+	
     var bakedFunction = new Function(
         // Arguments:
         result.cacheParams.args,

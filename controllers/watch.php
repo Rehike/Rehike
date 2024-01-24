@@ -256,6 +256,15 @@ return new class extends NirvanaController {
             {
                 $rydResponse = (object) [];
             }
+			
+			$renderer = (object) [];
+			
+			$renderer->invideoUrl = "//www.youtube.com/annotations_invideo?video_id=".$yt->videoId;
+			$renderer->loadPolicy = "ALWAYS";
+			$renderer->allowInPlaceSwitch = false;
+			
+			$playerResponse->annotations = array((object) []);
+			$playerResponse->annotations[0]->playerAnnotationsUrlsRenderer = $renderer;
 
             if (Config::getConfigProp("appearance.enableAdblock"))
             {
