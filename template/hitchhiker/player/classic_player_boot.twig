@@ -550,7 +550,7 @@ window.ytplayer.config = {
         "cver": "2.20210623.00.00",
         "cr": "US",
         "is_html5_mobile_device": false,
-        "fmt_list": "22/1280x720/9/0/115,18/640x360/9/0/115,17/256x144/99/1/0",
+        "fmt_list": "22/1280x720/9/0/115,18/640x360/9/0/115,18/320x240/9/0/11517/256x144/99/1/0",
         "length_seconds": undefined,
         "vq": "auto",
 		"iv_invideo_url": undefined,
@@ -563,6 +563,8 @@ window.ytplayer.config = {
 		{% if rehike.config.appearance.classicPlayerColor == "WHITE" %}
 		"color": "white",
 		{% endif %}
+		"loudness": undefined,
+		"thumbnail_url": undefined,
     },
     "params": {
         "allowfullscreen": "true",
@@ -688,7 +690,15 @@ function buildPlayer()
 			if (RAW_PLAYER_RESPONSE.videoDetails.isLiveDvrEnabled == true) {
 				window.ytplayer.config.args.hlsdvr = "1";
 			}
+			var thumbnails = RAW_PLAYER_RESPONSE.videoDetails.thumbnail.thumbnails;
+			window.ytplayer.config.args.thumbnail_url = thumbnails[thumbnails.length-1].url;
         }
+		
+		if (RAW_PLAYER_RESPONSE.playerConfig.audioConfig) { // loudness eq
+			window.ytplayer.config.args.relative_loudness = (RAW_PLAYER_RESPONSE.playerConfig.audioConfig.loudnessDb).toString() || null;
+			window.ytplayer.config.args.loudness = (RAW_PLAYER_RESPONSE.playerConfig.audioConfig.perceptualLoudnessDb).toString() || null;
+		}
+		
 
         if (RAW_PLAYER_RESPONSE.captions && RAW_PLAYER_RESPONSE.captions.playerCaptionsTracklistRenderer)
         {
