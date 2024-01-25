@@ -310,7 +310,7 @@ return new class extends NirvanaController {
 
         $data = null;
 
-        if ("PLAYER_2014" != Config::getConfigProp("appearance.playerChoice"))
+        if ("PLAYER_2014" != Config::getConfigProp("appearance.playerChoice") && "PLAYER_2015" != Config::getConfigProp("appearance.playerChoice") && "PLAYER_2015_NEW" != Config::getConfigProp("appearance.playerChoice"))
         {
             if (isset($yt->playerResponse))
             {

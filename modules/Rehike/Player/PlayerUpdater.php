@@ -91,7 +91,15 @@ class PlayerUpdater
         {
             $effectiveJsUrl = "/rehike/static/js/html5player-2014.js";
             $effectiveCssUrl = "//s.ytimg.com/yts/cssbin/www-player-vfluwFMix.css";
-        }
+        } else if("PLAYER_2015" === $playerChoice)
+		{
+			$effectiveJsUrl = "//s.ytimg.com/yts/jsbin/html5player-en_US-vfl1r59NI/html5player.js";
+			$effectiveCssUrl = "//s.ytimg.com/yts/cssbin/www-player-vflgv54Kk.css";//"//s.ytimg.com/yts/cssbin/www-player-vfl3TDeje.css";
+		} else if("PLAYER_2015_NEW" === $playerChoice)
+		{
+			$effectiveJsUrl = "//s.ytimg.com/yts/jsbin/html5player-new-en_US-vflJLt_ns/html5player-new.js";
+			$effectiveCssUrl = "//s.ytimg.com/yts/cssbin/www-player-new-vfliB0u8F.css";//"//s.ytimg.com/yts/cssbin/www-player-vfl3TDeje.css";
+		}
 
         // Pack these up and return:
         return (object)[

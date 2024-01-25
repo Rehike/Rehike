@@ -16,6 +16,8 @@ props:
         CURRENT: "Latest player" # No specific date; true latest player.
         PLAYER_2022: "2022 - Square edges, old storyboard"
         PLAYER_2020: "2020 - Smaller UI"
+        PLAYER_2015_NEW: "2015 - Modern UI"
+        PLAYER_2015: "2015 - Classic UI, more features"
         PLAYER_2014: "2014 - Classic UI, old buffering behavior"
     classicPlayerForcePersistentControls:
       title: "Always show controls"

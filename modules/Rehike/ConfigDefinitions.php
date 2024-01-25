@@ -32,18 +32,20 @@ class ConfigDefinitions
                         new EnumProp("CURRENT", [
                             "CURRENT",
                             "PLAYER_2014",
+							"PLAYER_2015",
+							"PLAYER_2015_NEW",
                             "PLAYER_2020",
                             "PLAYER_2022"
                         ])
                     ),
                     "classicPlayerForcePersistentControls" =>
                         new DependentProp(
-                            "appearance.playerChoice == PLAYER_2014",
+                            "appearance.playerChoice == PLAYER_2014 || appearance.playerChoice == PLAYER_2015",
                             new BoolProp(true)
                         ),
 					"classicPlayerTheme" =>
                         new DependentProp(
-                            "appearance.playerChoice == PLAYER_2014", // deprecated when they introduced the current player design
+                            "appearance.playerChoice == PLAYER_2014 || appearance.playerChoice == PLAYER_2015", // deprecated when they introduced the current player design
                             new EnumProp("DARK", [
 								"DARK",
 								"LIGHT"
@@ -51,7 +53,7 @@ class ConfigDefinitions
                         ),
 					"classicPlayerColor" =>
                         new DependentProp(
-                            "appearance.playerChoice == PLAYER_2014", // temporarily 2014 player only as idk how to set it on newer players
+                            "appearance.playerChoice == PLAYER_2014 || appearance.playerChoice == PLAYER_2015 || appearance.playerChoice == PLAYER_2015_NEW", // temporarily 2014 player only as idk how to set it on newer players
                             new EnumProp("RED", [
 								"RED",
 								"WHITE"
