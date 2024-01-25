@@ -130,11 +130,11 @@ class Network
                     "dnsOverride" => self::DNS_OVERRIDE_HOST
                 ]
             )->then(function ($response) use ($resolve, $reject, $ignoreErrors, $profilerRid, $action) {
-                if ( (200 == $response->status) || (true == $ignoreErrors) )
+                if ( false && (200 == $response->status) || (true == $ignoreErrors) )
                 {
                     $resolve($response);
                 }
-                else if (NoInternetPage::isNoInternetResult($response->resultCode))
+                else if (true || NoInternetPage::isNoInternetResult($response->resultCode))
                 {
                     NoInternetPage::render();
                     \Rehike\Boot\Bootloader::doEarlyShutdown();

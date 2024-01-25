@@ -1,10 +1,10 @@
 {
-	"previousHash": "70e842fe021f6767b1a520b881b204c851e20b0e",
-	"currentRevisionId": 1311,
-	"subject": "[classicplayer] Reprety's stable N decryption algorithm",
-	"body": "[classicplayer] Reprety's stable N decryption algorithm",
+	"previousHash": "f0dcf010445302f912798213d2931f12c6fa929a",
+	"currentRevisionId": 1315,
+	"subject": "i18n support for no internet page",
+	"body": "i18n support for no internet page",
 	"branch": "master",
 	"committerName": "Taniko Yamamoto",
 	"committerEmail": "kirasicecreamm@gmail.com",
-	"time": 1706135499
+	"time": 1706169789
 }
