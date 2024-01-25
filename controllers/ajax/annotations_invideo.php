@@ -304,20 +304,21 @@ return new class extends HitchhikerController {
 				$brandingAnnotation->addAttribute('id','channel:'.$brandingAnnotationUid);
 				$brandingAnnotation->addAttribute('style','branding');
 				$brandingAnnotation->addAttribute('type','branding');
-				$data = '{
-					"end_ms":'.$brandingData->featuredChannel->endTimeMs.',
-					"num_subscribers":"'.$subscribeCount.'",
-					"start_ms":'.$brandingData->featuredChannel->startTimeMs.',
-					"image_url":'.json_encode($thumbnail->url).',
-					"image_type":0,
-					"image_width":'.$thumbnail->width.',
-					"image_height":'.$thumbnail->height.',
-					"channel_name":"'.$authorName.'",
-					"subscription_token": "",
-					"is_mobile":false,
-					"channel_id":"'.$authorUid.'",
-				}';
-				$brandingAnnotation->addChild('data',$data);
+				
+				$json = (object) [];
+				$json->end_ms = intval($brandingData->featuredChannel->endTimeMs);
+				$json->num_subscribers = $subscribeCount;
+				$json->start_ms = intval($brandingData->featuredChannel->startTimeMs);
+				$json->image_url = $thumbnail->url;
+				$json->image_type = 0;
+				$json->image_width = intval($thumbnail->width);
+				$json->image_height = intval($thumbnail->height);
+				$json->channel_name = $authorName;
+				$json->subscription_token = ""; // figure out how to get this, if necessary at all?
+				$json->is_mobile = false; // probably should determine this using useragent
+				$json->channel_id = $authorUid;
+				
+				$brandingAnnotation->addChild('data',json_encode($json));
 				$brandingAnnotation->addChild('segment');
 				$brandingAnnotation->addChild('action');
 				$brandingAnnotation->action->addAttribute('trigger', 'click');
