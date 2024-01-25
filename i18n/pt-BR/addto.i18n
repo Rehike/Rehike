@@ -1,6 +1,6 @@
 # Add to definitions
 
-addToHeading: "Adicionar à"
+addToHeading: "Adicionar a"
 searchPlaylists: "Encontrar playlists"
 createNewPlaylist: "Criar nova playlist"
 createNewPlaylistDynamic: "%s (criar nova)"

@@ -24,7 +24,8 @@ return (object) [
         "www-channels4edit" => "{$css}www-channels4edit-vflUEQcbz.css",
         "www-watch-inlineedit" => "{$css}www-watch-inlineedit-vflpewV3h.css",
         "www-watch-transcript" => "{$css}www-watch-transcript-vflp9_n_i.css",
-        "www-channelswitcher" => "{$css}www-channelswitcher-webp-vflMtLwIV.css"
+        "www-channelswitcher" => "{$css}www-channelswitcher-webp-vflMtLwIV.css",
+		"www-the-rest" => "{$css}www-the-rest-vflC_SdHT.css",
     ],
     "css2x" => (object) [
         "www-core" => "{$css}www-core-2x-vflNAXaGB.css",
@@ -43,6 +44,7 @@ return (object) [
         "www-searchbox/www-searchbox" => "{$js}www-searchbox-vflV_B8yT/www-searchbox.js",
         "www-notfound/www-notfound" => "{$js}www-notfound-vflsu8ylX/www-notfound.js",
         "www/base" => "/rehike/static/js/www-base-rehike.js",
+		"www/promise-polyfill" => "/rehike/static/js/es6-promise.auto.min.js",
         "www/common" => "{$mod}common.js",
         "www/angular_base" => "{$mod}angular_base.js",
         "www/channels_accountupload" => "{$mod}channels_accountupload.js",

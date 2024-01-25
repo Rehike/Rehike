@@ -27,7 +27,7 @@ use YukisCoffee\CoffeeRequest\Exception\GeneralException;
  * @author The Rehike Maintainers
  */
 return new class extends HitchhikerController {
-	public string $contentType = "application/xml";
+	public string $contentType = "application/json";
 	public bool $useTemplate = false;
 	
 	public function onPost(YtApp $yt, RequestMetadata $request): void
@@ -49,86 +49,18 @@ return new class extends HitchhikerController {
 		$sharedRequestParams = [
 			'videoId' => $yt->videoId
 		];
-		
-		// Content restriction
-        if (isset($_GET["has_verified"]) && ($_GET["has_verified"] == "1" || $_GET["has_verified"] == true) or false === Config::getConfigProp("experiments.encryptedStreamsDO_NOT_USE_UNLESS_YOU_KNOW_WHAT_YOU_ARE_DOING"))
-        {
-            $sharedRequestParams += ["racyCheckOk" => true];
-            $sharedRequestParams += ["contentCheckOk" => true];
-        }
-
-        // Defines parameters to be sent only to the next (watch data) API.
-        // Required for LC link implementation.
-        $nextOnlyParams = [];
-
-        $lc = $request->params->lc ?? $request->params->google_comment_id ?? null;
-
-        /*
-         * Generate LC (linked comment) param.
-         * 
-         * This is handled by InnerTube as a next parameter, which is base64-
-         * encoded as with similar params. As such, it needs to be encoded like
-         * any other protobuf/base64 parameter (ugly).
-         * 
-         * LC itself simply modifies the comment continuation that's provided
-         * to link to a specific comment.
-         */
-        if (isset($lc))
-        {
-            $param = new NextRequestParams();
-            
-            // I don't know if this is needed, but I want to include it
-            // anyways.
-            $param->setUnknownThing(new UnknownThing(["a" => 0]));
-
-            $param->setLinkedCommentId($lc);
-
-            $nextOnlyParams += [
-                "params" => Base64Url::encode($param->serializeToString())
-            ];
-        }
-
-        if (!is_null($yt->playlistId))
-        {
-            $sharedRequestParams['playlistId'] = $yt->playlistId;
-            $sharedRequestParams['playlistIndex'] = $yt->playlistIndex;
-        }
-
-        // TODO (kirasicecreamm): Clean up this algo, make better
-        if (isset($request->params->t))
-        {
-            preg_match_all("/\d{1,6}/", $request->params->t, $times);
-            $times = $times[0];
-            if (count($times) == 1)
-            {
-                // before you whine "waaahh use case" I CAN'T IT BREAKS IT FOR NO FUCKING REASON, if you wanna make this better, go ahead
-                $startTime = (int) $times[0];
-            } 
-            else if (count($times) == 2)
-            {
-                $startTime = ((int) $times[0] * 60) + (int) $times[0];
-            } 
-            else if (count($times) == 3)
-            {
-                $startTime = ((int) $times[0] * 3600) + ((int) $times[1] * 60) + (int) $times[2];
-            } 
-            else
-            {
-                $startTime = 0;
-            }
-        }
 
         \Rehike\Profiler::start("watch_requests");
         // Makes the main watch request.
         $nextRequest = Network::innertubeRequest(
             "next",
-            $sharedRequestParams + $nextOnlyParams
+            $sharedRequestParams
         );
 		
 		// Unlike Polymer, Hitchhiker had all of the player data already
         // available in the initial response. So an additional player request
         // is used.
-        if (false === Config::getConfigProp("experiments.encryptedStreamsDO_NOT_USE_UNLESS_YOU_KNOW_WHAT_YOU_ARE_DOING")){
+        /*if (false === Config::getConfigProp("experiments.encryptedStreamsDO_NOT_USE_UNLESS_YOU_KNOW_WHAT_YOU_ARE_DOING")){
             $playerRequest = Network::innertubeRequest(
                 "player",
                 [
@@ -192,52 +124,47 @@ return new class extends HitchhikerController {
                 ] + $sharedRequestParams
             );
             $storyboardRequest = new Promise(fn($r) => $r());
+        }*/
+		
+		/**
+         * Determine whether or not to use the Return YouTube Dislike
+         * API to return dislikes. Retrieved from application config.
+         */
+        if (true === Config::getConfigProp("appearance.useRyd"))
+        {
+            $rydUrl = "https://returnyoutubedislikeapi.com/votes?videoId=" . $yt->videoId;
+
+            $rydRequest = Network::urlRequest($rydUrl);
+        }
+        else
+        {
+            // If RYD is disabled, then send a void Promise that instantly
+            // resolves itself.
+            $rydRequest = new Promise(fn($r) => $r());
         }
 
         Promise::all([
-			"player"     => $playerRequest,
+			//"player"     => $playerRequest,
             "next"       => $nextRequest,
+			"ryd"        => $rydRequest,
         ])->then(function ($responses) use ($yt) {
             \Rehike\Profiler::end("watch_requests");
             $nextResponse = $responses["next"]->getJson();
-			$playerResponse = $responses["player"]->getJson();
+			//$playerResponse = $responses["player"]->getJson();
 	
 			// Push these over to the global object.
 			$yt->watchNextResponse = $nextResponse;
 			
-			ob_start();
+			try
+            {
+                $rydResponse = $responses["ryd"]?->getJson() ?? (object)[];
+            }
+            catch (GeneralException $e)
+            {
+                $rydResponse = (object) [];
+            }
+			
 			$videoId = $yt->videoId; 
-			$iv_url = "https://storage.googleapis.com/biggest_bucket/annotations/".substr($videoId,0,1)."/".substr($videoId,0,3)."/".$videoId.".xml.gz";
-			$ch = curl_init($iv_url);
-			$options = array(
-				CURLOPT_RETURNTRANSFER => true,  // don't echo web page
-				CURLOPT_HEADER         => false,  // don't return headers
-				CURLOPT_FOLLOWLOCATION => true,   // follow redirects
-				CURLOPT_MAXREDIRS      => 10,     // stop after 10 redirects
-				CURLOPT_ENCODING       => "",     // handle compressed
-				CURLOPT_USERAGENT      => "test", // name of client
-				CURLOPT_AUTOREFERER    => true,   // set referrer on redirect
-				CURLOPT_CONNECTTIMEOUT => 120,    // time-out on connect
-				CURLOPT_TIMEOUT        => 120,    // time-out on response
-				CURLOPT_ENCODING	   => '',
-			);
-			curl_setopt_array($ch, $options);
-			$out = curl_exec($ch);
-			$code = curl_getinfo($ch)["http_code"];
-			
-			// Close the cURL resource, and free system resources
-			curl_close($ch);
-			
-			$xml;
-			
-			if ($code !== 200) {
-				$xml = new SimpleXMLElement("<document><annotations></annotations></document>");
-			} else {
-				$xml = simplexml_load_string($out);
-				foreach ($xml->xpath("//annotation[@style='branding']") as $node) { // remove any existing branding
-					unset($node[0]); // remove the original annotation if present as we're going to be making our own
-				}
-			}
 			
 			// Wrapped in isset to prevent crashes
 			if (isset($yt->watchNextResponse->contents->twoColumnWatchNextResults->results->results))
@@ -282,7 +209,7 @@ return new class extends HitchhikerController {
                 $subscribeCount = i18n::getFormattedString(
                     "misc", 
                     "subscriberTextSingular", 
-                    $subscribeCount
+                    "<strong>".$subscribeCount."</strong>"
                 );
             }
             else
@@ -290,49 +217,44 @@ return new class extends HitchhikerController {
                 $subscribeCount = i18n::getFormattedString(
                     "misc", 
                     "subscriberTextPlural", 
-                    $subscribeCount
+                    "<strong>".$subscribeCount."</strong>"
                 );
             }
-
-			$hasBranding = $playerResponse->annotations !== null;
 			
-			if ($hasBranding) {
-				$brandingData = $playerResponse->annotations[0]->playerAnnotationsExpandedRenderer;
-				$brandingAnnotationUid = $brandingData->annotationId;
-				$thumbnail = $brandingData->featuredChannel->watermark->thumbnails[0];
-				$brandingAnnotation = $xml->annotations->addChild('annotation');
-				$brandingAnnotation->addAttribute('id','channel:'.$brandingAnnotationUid);
-				$brandingAnnotation->addAttribute('style','branding');
-				$brandingAnnotation->addAttribute('type','branding');
-				
-				$json = (object) [];
-				$json->end_ms = intval($brandingData->featuredChannel->endTimeMs);
-				$json->num_subscribers = $subscribeCount;
-				$json->start_ms = intval($brandingData->featuredChannel->startTimeMs);
-				$json->image_url = $thumbnail->url;
-				$json->image_type = 0;
-				$json->image_width = intval($thumbnail->width);
-				$json->image_height = intval($thumbnail->height);
-				$json->channel_name = $authorName;
-				$json->subscription_token = ""; // figure out how to get this, if necessary at all?
-				$json->is_mobile = false; // probably should determine this using useragent
-				$json->channel_id = $authorUid;
-				
-				$brandingAnnotation->addChild('data',json_encode($json));
-				$brandingAnnotation->addChild('segment');
-				$brandingAnnotation->addChild('action');
-				$brandingAnnotation->action->addAttribute('trigger', 'click');
-				$brandingAnnotation->action->addAttribute('type', 'openUrl');
-				$brandingAnnotation->action->addChild('url');
-				$brandingAnnotation->action->url->addAttribute('type', 'hyperlink');
-				$brandingAnnotation->action->url->addAttribute('target', 'new');
-				$brandingAnnotation->action->url->addAttribute('value', $authorUrl);
-			}
+			$metadata = (object) [];
 			
-			$doc = new DOMDocument();
-			$doc->formatOutput = TRUE;
-			$doc->loadXML($xml->asXML());
-			$out = $doc->saveXML();
+			$brandingData = $playerResponse->annotations[0]->playerAnnotationsExpandedRenderer;
+			
+			$metadata->video_info = (object) [];
+			$metadata->user_info = (object) [];
+			//$metadata->primary_info = $primaryInfo;
+			//$metadata->secondary_info = $secondaryInfo;
+			//$metadata->ryd_data = $rydResponse;
+			
+			$metadata->video_info->likes_count_unformatted = (int) filter_var($primaryInfo->videoActions->menuRenderer->topLevelButtons[0]->segmentedLikeDislikeButtonRenderer->likeButton->toggleButtonRenderer->defaultText->accessibility->accessibilityData->label, FILTER_SANITIZE_NUMBER_INT);
+			$metadata->video_info->view_count_string = $primaryInfo->viewCount->videoViewCountRenderer->viewCount->simpleText;
+			$metadata->video_info->view_count = (int) filter_var($metadata->video_info->view_count_string, FILTER_SANITIZE_NUMBER_INT);
+			$metadata->video_info->subscription_ajax_token = "QUFFLUhqa05hcW1pNEUtYXJtVDV2Y0QtcXM0Nmppb2RHZ3xBQ3Jtc0trSHZ3NXp3eUdDVDdKYTI2WlB2VWFnRkxvQUJBbU52ZGdKWEh1UXRRWEl2QmJfbnFWSnlCNEpjLUEtX254S09scnN5YzdwbVpHWEdNdXdqZ1RyaHh1azRGVGlQQ0d6TThnTVhtNUJ4cFRHZjdvX09zYm5sNkplbHNtVURCVE1QZjZMY0cwT3VWMkJQendOajJlZmpBOFVuYWxUNFE=";
+			$metadata->video_info->likes_dislikes_string = null;//"Likes: 2. Dislikes: 0.";
+			$metadata->video_info->description = $secondaryInfo->attributedDescription->content;
+			$metadata->video_info->dislikes_count_unformatted = $rydResponse->dislikes;
+			
+			$metadata->user_info->channel_logo_url = $secondaryInfo->owner->videoOwnerRenderer->thumbnail->thumbnails[1]->url;
+			$metadata->user_info->external_channel_id = $authorUid;
+			$metadata->user_info->public_name = $authorName;
+			$metadata->user_info->public_title = $authorName;
+			$metadata->user_info->external_id = substr($authorUid,2);
+			//$metadata->user_info->subscription_button_html = "<span class=\" yt-uix-button-subscription-container\" ><button class=\"yt-uix-button yt-uix-button-size-default yt-uix-button-subscribe-branded yt-uix-button-has-icon yt-uix-subscription-button yt-can-buffer\" type=\"button\" onclick=\";return false;\" aria-busy=\"false\" aria-live=\"polite\" aria-role=\"button\" data-channel-external-id=\"UCM9gXqO8VQKZDrnOdRweqIQ\" data-href=\"https://accounts.google.com/ServiceLogin?passive=true&amp;continue=http%3A%2F%2Fwww.youtube.com%2Fsignin%3Faction_handle_signin%3Dtrue%26app%3Ddesktop%26continue_action%3DQUFFLUhqa1VzZ05DNXJiRzAyMG9aekNZLTRSaVhqd0F6QXxBQ3Jtc0trYnJETWRqbkhlZlNhNHJ1Q1F4YkJhQUlnZEZMWEdXWV9WRVVLMThHdVhuWVpZeTVRSXZ2TEdmZFpzNDBCV3MtN2dCc3NjOGZkclF5TDU5SjRlM1JFLW11djFDQzFkbEhFbzFvYk1QSk5EN3pJLV9rekYtXzFFR1ZDNUFKei1TVUdHNnI3UzBTeFZEQlNscHZZS3dXSTVNZXB5aEVESGlDaHQ3UUhSeE1KRkNmSHRlUy1aNDMyUXFjTFlhWUVER1k5OFhFeTU%253D%26feature%3Dsubscribe%26hl%3Dru%26next%3D%252Fchannel%252FUCM9gXqO8VQKZDrnOdRweqIQ&amp;hl=ru&amp;service=youtube&amp;uilel=3\" data-style-type=\"branded\" data-sessionlink=\"feature=trailer-endscreen&amp;ei=Om6kU7-tL8KwqAPNjYCoBA\"><span class=\"yt-uix-button-icon-wrapper\"><img src=\"http://s.ytimg.com/yts/img/pixel-vfl3z5WfW.gif\" class=\"yt-uix-button-icon yt-uix-button-icon-subscribe\"></span><span class=\"yt-uix-button-content\"><span class=\"subscribe-label\" aria-label=\"Подписаться\">Подписаться</span><span class=\"subscribed-label\" aria-label=\"Отменить подписку\">Подписка оформлена</span><span class=\"unsubscribe-label\" aria-label=\"Отменить подписку\">Отменить подписку</span> </span></button><span class=\"yt-subscription-button-subscriber-count-branded-horizontal\" >30</span>  <span class=\"yt-subscription-button-disabled-mask\" title=\"\"></span>\n</span>";
+			$metadata->user_info->image_url = $secondaryInfo->owner->videoOwnerRenderer->thumbnail->thumbnails[0]->url;
+			$metadata->user_info->subscriber_count_string = $num_subscribers;
+			$metadata->user_info->channel_paid = 0;
+			$metadata->user_info->channel_url = $secondaryInfo->owner->videoOwnerRenderer->navigationEndpoint->commandMetadata->webCommandMetadata->url;
+			$metadata->user_info->username = null;
+			$metadata->user_info->channel_banner_url = null;
+			$metadata->user_info->channel_external_id = $authorUid; // they list this twice under a slightly rearranged name????
+			
+			
+			$out = json_encode($metadata);
 	
 			echo $out;
 		});

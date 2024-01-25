@@ -702,7 +702,7 @@ en = function(a) {
                     !(a.i.args.adaptive_fmts || a.i.args.url_encoded_fmt_stream_map || a.i.args.dashmpd)
                 )
                 {
-                    var delayLoadEvent = document.createEvent("event");
+                    var delayLoadEvent = document.createEvent("Event");
                     delayLoadEvent.initEvent("rh-classic-player-request-load", false, false);
                     delayLoadEvent.detail = {
                         cb: function() {

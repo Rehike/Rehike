@@ -10,6 +10,28 @@ tabs:
 
 props:
   appearance:
+    playerChoice:
+      title: "動画プレーヤーのバージョンを選択:"
+      values:
+        CURRENT: "最新プレーヤー" # No specific date; true latest player.
+        PLAYER_2022: "2022 - 角が丸くない、古いプレビュー"
+        PLAYER_2020: "2020 - 小さいUI"
+        PLAYER_2014: "2014 - 黒いUI、古いバッファリング動作"
+    classicPlayerForcePersistentControls:
+      title: "常にコントロールを表示"
+      subtitle: >
+        最新のHitchhiker公式CSSバージョン用に設計されているため、カスタムCSSで問題が
+        発生する可能性があります。
+    classicPlayerTheme:
+      title: "プレーヤーのテーマ:"
+      values:
+        DARK: "ダークモード" # The default theme used since about 2012, but was introduced in 2011
+        LIGHT: "ライトモード"
+    classicPlayerColor:
+      title: "動画プレーヤーにプログレスバーの色:"
+      values:
+        RED: "赤"
+        WHITE: "白" # For whatever reason this is a thing
     modernLogo:
       title: "現行のYouTubeロゴを使用"
       subtitle: >

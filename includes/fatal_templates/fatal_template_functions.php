@@ -13,7 +13,7 @@ function simpleFormattedStringToHtml(FormattedString $fs): string
         {
             $out .= 
                 "<span class=\"" . htmlspecialchars($run["tag"]) . "\">" .
-                htmlspecialchars($run["text"]) .
+                htmlspecialchars($run["text"], ENT_QUOTES | ENT_SUBSTITUTE, "utf-8") .
                 "</span>";
         }
         else

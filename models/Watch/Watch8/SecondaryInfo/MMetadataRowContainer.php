@@ -174,39 +174,27 @@ class MMetadataRowContainer
     {
         $i18n = i18n::getNamespace("watch");
 
-        switch ($playerStr)
+        return match ($playerStr)
         {
-            case "Autos & Vehicles":
-                return $i18n->get("categoryAutosAndVehicles");
-            case "Comedy":
-                return $i18n->get("categoryComedy");
-            case "Education":
-                return $i18n->get("categoryEducation");
-            case "Film & Animation":
-                return $i18n->get("categoryFilmAndAnimation");
-            case "Gaming":
-                return $i18n->get("categoryGaming");
-            case "Howto & Style":
-                return $i18n->get("categoryHowtoAndStyle");
-            case "Music":
-                return $i18n->get("categoryMusic");
-            case "News & Politics":
-                return $i18n->get("categoryNewsAndPolitics");
-            case "Nonprofits & Activism":
-                return $i18n->get("categoryNonprofitsAndActivism");
-            case "People & Blogs":
-                return $i18n->get("categoryPeopleAndBlogs");
-            case "Pets & Animals":
-                return $i18n->get("categoryPetsAndAnimals");
-            case "Science & Technology":
-                return $i18n->get("categoryScienceAndTechnology");
-            case "Sports":
-                return $i18n->get("categorySports");
-            case "Travel & Events":
-                return $i18n->get("categoryTravelAndEvents");
-        }
+            "Autos & Vehicles" => $i18n->get("categoryAutosAndVehicles"),
+            "Comedy" => $i18n->get("categoryComedy"),
+            "Education" => $i18n->get("categoryEducation"),
+            "Entertainment" => $i18n->get("categoryEntertainment"),
+            "Film & Animation" => $i18n->get("categoryFilmAndAnimation"),
+            "Gaming" => $i18n->get("categoryGaming"),
+            "Howto & Style" => $i18n->get("categoryHowtoAndStyle"),
+            "Music" => $i18n->get("categoryMusic"),
+            "News & Politics" => $i18n->get("categoryNewsAndPolitics"),
+            "Nonprofits & Activism" => $i18n->get("categoryNonprofitsAndActivism"),
+            "People & Blogs" => $i18n->get("categoryPeopleAndBlogs"),
+            "Pets & Animals" => $i18n->get("categoryPetsAndAnimals"),
+            "Science & Technology" => $i18n->get("categoryScienceAndTechnology"),
+            "Sports" => $i18n->get("categorySports"),
+            "Travel & Events" => $i18n->get("categoryTravelAndEvents"),
 
-        return $playerStr;
+            // If there is no i18n string, then just return the input.
+            default => $playerStr
+        };
     }
 
     protected function getLicenseField()

@@ -79,10 +79,11 @@ class ExceptionLogger
         $file = FileSystem::getRehikeRelativePath($e->getFile());
         $line = $e->getLine();
         $skipArgs = false;
+        $message = $e->getMessage();
 
         $out->addTaggedText(get_class($e), "exception_class");
         $out->addText(": ");
-        $out->addTaggedText($e->getMessage(), "exception_message");
+        $out->addTaggedText($message, "exception_message");
 
         while (true)
         {

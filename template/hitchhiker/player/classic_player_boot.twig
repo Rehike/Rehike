@@ -32,7 +32,7 @@ var LATEST_PLAYER_JS_URL = "{{ yt.playerConfig.latestJsUrl }}";
 window._rehikeClassicPlayerListsGetState = function()
 {
     // Get the native state from watch module:
-    var nativeState = yt && yt.www && yt.www.watch && yt.www.watch.lists.getState();
+    var nativeState = yt && yt.www && yt.www.watch && yt.www.watch.lists && yt.www.watch.lists.getState();
 
     if (!nativeState)
         return {};
@@ -154,13 +154,14 @@ function getLatestPlayerJsInfo()
 
                 var cbDecodeSig, cbDecodeN;
                 var cacheObj = {};
+                cacheObj[CACHE_INDEX] = {};
 
                 var signatureResult = getDecryptorForPlayerSig(text);
                 var fnDecodeSig = null;
                 if (signatureResult.status == "SUCCESS")
                 {
                     cbDecodeSig = signatureResult.extractCb;
-                    cacheObj.decodeSig = signatureResult.cacheParams;
+                    cacheObj[CACHE_INDEX].decodeSig = signatureResult.cacheParams;
                 }
 
                 var nDecoderResult = getDecryptorForPlayerN(text);
@@ -168,7 +169,7 @@ function getLatestPlayerJsInfo()
                 if (nDecoderResult.status == "SUCCESS")
                 {
                     cbDecodeN = nDecoderResult.extractCb;
-                    cacheObj.decodeN = nDecoderResult.cacheParams;
+                    cacheObj[CACHE_INDEX].decodeN = nDecoderResult.cacheParams;
                 }
 
                 // Store the cache:
@@ -205,6 +206,10 @@ function getLatestPlayerJsInfo()
  */
 function streamUrlVisitor(map, fnDecodeSig, fnDecodeN)
 {
+	if (map == null) {
+		console.log("map is null");
+		return;
+	}
     for (var i = 0, j = map.length; i < j; i++)
     {
         if ("signatureCipher" in map[i])
@@ -502,8 +507,10 @@ window.ytplayer.config = {
            "dashmpd": "{{ yt.playerResponse.streamingData.dashManifestUrl }}",
        {% endif %}
 
-        "author": "{{ rehike.getText(yt.page.results[0].videoPrimaryInfoRenderer.owner.title) ?? "" }}",
-        "title": "{{ rehike.getText(yt.page.title) ?? "" }}",
+        {% set authorText = rehike.getText(yt.page.results[0].videoPrimaryInfoRenderer.owner.title) %}
+        {% set titleText = rehike.getText(yt.page.title) %}
+        "author": {{ authorText ? authorText|json_encode|raw : "null" }},
+        "title": {{ titleText ? titleText|json_encode|raw : "null" }},
         "autoplay": "1",
         "autonav": {{ yt.page.autonavEnabled ? "1" : "0" }},
         "idpj": "0", // *I*dpj and *L*dpj are different? "I" version is used in
@@ -525,8 +532,11 @@ window.ytplayer.config = {
         "fexp": "908547,914099,927622,930666,930672,932404,934040,940247,940642,947209,947215,949424,951701,952302,952901,953000,953912,957103,957201,958600,913436,951502",
         "player_error_log_fraction": "1.0",
         "dash": "1",
+		"live_playback": undefined,
+		"hlsdvr": undefined,
+		"livemonitor": undefined,
         "enablejsapi": "1",
-        "sw": "0.1",
+		"sw": "0.1",
         "ttsurl": undefined,
 		"invideo": true,
 		"iv_module":"http:\/\/s.ytimg.com\/yts\/swfbin\/player-vflNzsCMr\/iv_module.swf",
@@ -546,7 +556,13 @@ window.ytplayer.config = {
 		"iv_invideo_url": undefined,
 		"iv_load_policy": "0",
 		"iv3_module":"1",
-        "tmi": "1"
+        "tmi": "1",
+		{% if rehike.config.appearance.classicPlayerTheme == "LIGHT" %}
+		"theme": "light",
+		{% endif %}
+		{% if rehike.config.appearance.classicPlayerColor == "WHITE" %}
+		"color": "white",
+		{% endif %}
     },
     "params": {
         "allowfullscreen": "true",
@@ -666,6 +682,12 @@ function buildPlayer()
                 RAW_PLAYER_RESPONSE.videoDetails.lengthSeconds || null;
 			window.ytplayer.config.args.iv_invideo_url = "https://www.youtube.com/annotations_invideo?video_id=" + RAW_PLAYER_RESPONSE.videoDetails.videoId;
 			window.ytplayer.config.args.iv_load_policy = "1";
+			if (RAW_PLAYER_RESPONSE.videoDetails.isLive == true) {
+				window.ytplayer.config.args.live_playback = "1";
+			}
+			if (RAW_PLAYER_RESPONSE.videoDetails.isLiveDvrEnabled == true) {
+				window.ytplayer.config.args.hlsdvr = "1";
+			}
         }
 
         if (RAW_PLAYER_RESPONSE.captions && RAW_PLAYER_RESPONSE.captions.playerCaptionsTracklistRenderer)
@@ -683,64 +705,64 @@ function buildPlayer()
          *
          * Source code originally by Reprety and Ciulin, taken from Cosmic Cat.
          */
-        // var n = "";
+        var n = "";
 
-		// if (void 0 === RAW_PLAYER_RESPONSE.streamingData.hlsManifestUrl) {
-        //     try {
-        //         for (
-        //             var i = 0, j = RAW_PLAYER_RESPONSE.streamingData.formats.length;
-        //             i < j;
-        //             i++
-        //         )
-        //             (n +=
-        //                 "fallback_host=" +
-        //                 RAW_PLAYER_RESPONSE.streamingData.formats[i].url
-        //                 .split("://")[1]
-        //                 .split(".com")[0] +
-        //                 ".com&type=" +
-        //                 encodeURIComponent(
-        //                 RAW_PLAYER_RESPONSE.streamingData.formats[i].mimeType
-        //             ).replace("%20", "+") +
-        //                 "&url=" +
-        //                 encodeURIComponent(RAW_PLAYER_RESPONSE.streamingData.formats[i].url) +
-        //                 "&quality=" +
-        //                 RAW_PLAYER_RESPONSE.streamingData.formats[i].quality +
-        //                 "&itag=" +
-        //                 RAW_PLAYER_RESPONSE.streamingData.formats[i].itag),
-        //                 i < parseInt(RAW_PLAYER_RESPONSE.streamingData.formats.length - 1) &&
-        //                 (n += ",");
-        //     } catch {
-        //         // Try again with adaptiveFormats instead.
-        //         try {
-        //             for (
-        //                 var i = 0, j = RAW_PLAYER_RESPONSE.streamingData.adaptiveFormats.length;
-        //                 i < j;
-        //                 i++
-        //             )
-        //                 (n +=
-        //                     "fallback_host=" +
-        //                     RAW_PLAYER_RESPONSE.streamingData.adaptiveFormats[i].url
-        //                     .split("://")[1]
-        //                     .split(".com")[0] +
-        //                     ".com&type=" +
-        //                     encodeURIComponent(
-        //                     RAW_PLAYER_RESPONSE.streamingData.adaptiveFormats[i].mimeType
-        //                 ).replace("%20", "+") +
-        //                     "&url=" +
-        //                     encodeURIComponent(RAW_PLAYER_RESPONSE.streamingData.adaptiveFormats[i].url) +
-        //                     "&quality=" +
-        //                     RAW_PLAYER_RESPONSE.streamingData.adaptiveFormats[i].quality +
-        //                     "&itag=" +
-        //                     RAW_PLAYER_RESPONSE.streamingData.adaptiveFormats[i].itag),
-        //                     i < parseInt(RAW_PLAYER_RESPONSE.streamingData.adaptiveFormats.length - 1) &&
-        //                     (n += ",");
-        //         } catch (e) {
-        //             console.error("[Vorapis Player] could not craft legacy stream url", e);
-        //         }
-        //     }
-        // }
+		if (void 0 === RAW_PLAYER_RESPONSE.streamingData.hlsManifestUrl) {
+            try {
+                for (
+                    var i = 0, j = RAW_PLAYER_RESPONSE.streamingData.formats.length;
+                    i < j;
+                    i++
+                )
+                    (n +=
+                        "fallback_host=" +
+                        RAW_PLAYER_RESPONSE.streamingData.formats[i].url
+                        .split("://")[1]
+                        .split(".com")[0] +
+                        ".com&type=" +
+                        encodeURIComponent(
+                        RAW_PLAYER_RESPONSE.streamingData.formats[i].mimeType
+                    ).replace("%20", "+") +
+                        "&url=" +
+                        encodeURIComponent(RAW_PLAYER_RESPONSE.streamingData.formats[i].url) +
+                        "&quality=" +
+                        RAW_PLAYER_RESPONSE.streamingData.formats[i].quality +
+                        "&itag=" +
+                        RAW_PLAYER_RESPONSE.streamingData.formats[i].itag),
+                        i < parseInt(RAW_PLAYER_RESPONSE.streamingData.formats.length - 1) &&
+                        (n += ",");
+            } catch (e) {
+                // Try again with adaptiveFormats instead.
+                try {
+                    for (
+                        var i = 0, j = RAW_PLAYER_RESPONSE.streamingData.adaptiveFormats.length;
+                        i < j;
+                        i++
+                    )
+                        (n +=
+                            "fallback_host=" +
+                            RAW_PLAYER_RESPONSE.streamingData.adaptiveFormats[i].url
+                            .split("://")[1]
+                            .split(".com")[0] +
+                            ".com&type=" +
+                            encodeURIComponent(
+                            RAW_PLAYER_RESPONSE.streamingData.adaptiveFormats[i].mimeType
+                        ).replace("%20", "+") +
+                            "&url=" +
+                            encodeURIComponent(RAW_PLAYER_RESPONSE.streamingData.adaptiveFormats[i].url) +
+                            "&quality=" +
+                            RAW_PLAYER_RESPONSE.streamingData.adaptiveFormats[i].quality +
+                            "&itag=" +
+                            RAW_PLAYER_RESPONSE.streamingData.adaptiveFormats[i].itag),
+                            i < parseInt(RAW_PLAYER_RESPONSE.streamingData.adaptiveFormats.length - 1) &&
+                            (n += ",");
+                } catch (e) {
+                    console.error("[Vorapis Player] could not craft legacy stream url", e);
+                }
+            }
+        }
 
-        // window.ytplayer.config.args.url_encoded_fmt_stream_map = n;
+        window.ytplayer.config.args.url_encoded_fmt_stream_map = n;
 
         {% if not yt.spf %}
         window.ytplayer.load = function() {

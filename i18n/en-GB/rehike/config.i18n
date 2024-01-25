@@ -28,7 +28,7 @@ props:
         DARK: "Dark theme" # The default theme used since about 2012, but was introduced in 2011
         LIGHT: "Light theme"
     classicPlayerColor:
-      title: "Player progress bar color:"
+      title: "Player progress bar colour:" # people can't agree on the spelling of color
       values:
         RED: "Red"
         WHITE: "White" # For whatever reason this is a thing

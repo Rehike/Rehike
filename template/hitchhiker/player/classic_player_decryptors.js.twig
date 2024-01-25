@@ -276,99 +276,20 @@ function getDecryptorForPlayerN(playerScript)
     obfuscatorFnText = playerScript.slice(playerScript.indexOf(lookupName + "="));
     if (DEBUG)
         console.log("[NDecode] obfuscatorFnText ==", obfuscatorFnText);
-    var flow = [];
-    var shouldContinue = true;
-    var parseError = false;
-    var i = 0;
 
-    while (typeof obfuscatorFnText[i] == "string" && shouldContinue)
+    // Thanks reprety!
+    // This code was broken in late January 2024 for some reason, but this much
+    // simpler code from Reprety seems to find the pattern more reliably.
+    var nextVariableDef = obfuscatorFnText.search("var ");
+    var patternSearch = obfuscatorFnText.slice(nextVariableDef);
+    nextVariableDef = patternSearch.search("=");
+    patternSearch = patternSearch.slice(0, nextVariableDef).slice(4);
+    var endPattern = 'return ' + patternSearch + '.join("")};';
+    try
     {
-        var cur = obfuscatorFnText[i];
-        switch (cur)
-        {
-            case "'":
-                if (flow[flow.length - 1] == "'")
-                {
-                    flow.pop();
-                    break;
-                }
-            case "\"":
-                if (flow[flow.length - 1] == "\"")
-                {
-                    flow.pop();
-                    break;
-                }
-            case "`":
-                if (flow[flow.length - 1] == "`")
-                {
-                    flow.pop();
-                    break;
-                }
-            case "{":
-            case "[":
-                flow.push(cur);
-                break;
-            case "]":
-                if (flow[flow.length - 1] == "[")
-                {
-                    flow.pop();
-                }
-                else if (!flow.length)
-                {
-                    console.error(
-                        "[Rehike.NDecode.ParseDefinition] Parse error at \"" +
-                        cur + "\" at index " + i + ". Used to terminate " + flow[flow.length - 1]
-                    );
-                    shouldContinue = false;
-                    parseError = true; 
-                }
-                break;
-            case "}":
-                if (flow[flow.length - 1] == "{")
-                {
-                    flow.pop();
-                }
-                else if (!flow.length)
-                {
-                    console.error(
-                        "[Rehike.NDecode.ParseDefinition] Parse error at \"" +
-                        cur + "\" at index " + i + ". Used to terminate " + flow[flow.length - 1]
-                    );
-                    shouldContinue = false;
-                    parseError = true; 
-                }
-                break;
-        }
-        i++;
+        obfuscatorFnText = obfuscatorFnText.split(endPattern)[0] + endPattern;
     }
-
-    if (i && parseError)
-    {
-        console.error(
-            "[Rehike.NDecode.ParseDefinition] Parse error occurred at: " +
-            obfuscatorFnText.substr(0, i + 1)
-        );
-
-        result.reason = "Parse error at " + obfuscatorFnText.substr(0, i + 1);
-        return result;
-    }
-
-    if (obfuscatorFnText.indexOf("};]();/") > -1)
-    {
-        // Honestly, I don't understand this part one bit, so I just copied
-        // the implementation from Reprety. Parse error correction?
-        var obfBits = obfuscatorFnText.split("};]();/");
-        var obfEnd = obfBits[1].slice(0, obfBits[1].search("\\}\\;") + 2);
-        var obfNew = obfBits[0] + "};]();/" + obfEnd;
-        obfuscatorFnText = obfNew;
-    }
-    else
-    {
-        obfuscatorFnText = obfuscatorFnText.slice(
-            0,
-            obfuscatorFnText.search("\\}\\;") + 2
-        );
-    }
+    catch(e) {}
 
     if (DEBUG)
         console.log("[NDecode] (final) obfuscatorFnText ==", obfuscatorFnText);
@@ -391,7 +312,7 @@ function getDecryptorForPlayerN(playerScript)
         args: "encryptedN",
         body: bakedFunctionString
     };
-
+	
     var bakedFunction = new Function(
         // Arguments:
         result.cacheParams.args,

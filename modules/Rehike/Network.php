@@ -130,7 +130,7 @@ class Network
                     "dnsOverride" => self::DNS_OVERRIDE_HOST
                 ]
             )->then(function ($response) use ($resolve, $reject, $ignoreErrors, $profilerRid, $action) {
-                if ( (200 == $response->status) || (true == $ignoreErrors) )
+                if ((200 == $response->status) || (true == $ignoreErrors) )
                 {
                     $resolve($response);
                 }
