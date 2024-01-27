@@ -2223,6 +2223,7 @@ if (document.fullscreenElement == undefined && document.body.webkitRequestFullSc
         throw Error("Invalid JSON string: " + a);
     }
     function ug(a) {
+		console.log(a);
         return eval("(" + a + ")")
     }
     function vg(a) {

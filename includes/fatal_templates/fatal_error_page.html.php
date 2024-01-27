@@ -47,6 +47,8 @@
                     <button class="fatal-button" onclick="fatalDisableRehikeOnce()">Disable Rehike (just this time)</button>
                     <button class="fatal-button" onclick="fatalDisableRehike()">Disable Rehike (persistently)</button>
                 </div>
+				
+				<?php echo $_SERVER['REQUEST_URI']; ?>
 
                 <?php if ($page instanceof InnertubeFailedRequestPage): ?>
                     <?php $e = $page->getInnertubeFailedException()->failedResponse ?>
