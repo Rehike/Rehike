@@ -4,6 +4,22 @@
  * 
  * Current changes:
  * 
+ * - Added setSizeStyle() method stub to player API to prevent JS error.
+ * - Modified `function Cr()` to handle VideoElement.play() promise rejection.
+ * - Support dynamic translations loaded from a globally-accessible JS object
+ *   rather than needing to have a translation-specific distribution. See:
+ *   `rehikeGetTranslation()`
+ * - Modified itag table from V3.
+ * - Recognition of av01 streams.
+ * - Backported a fix @`GB.prototype.$f=function(a)` to prevent a crash on
+ *   certain videos on Firefox.
+ * - Redirected playlist state retrieval to allow a custom function to be used,
+ *   allowing the player to load playlists on modern Hitchhiker.
+ * - Added handleGlobalKeyDown() API method, which modern Hitchhiker JS expects.
+ *   This fires an event on document which other code can listen for to handle
+ *   it.
+ * - Added a custom rhGetInternalApi() API method. This exposes certain useful
+ *   things that aren't easy to access, such as the video's current framerate.
  * - Polyfill fullscreen functions for older WebKit versions that have an incomplete custom spec
  */
 
@@ -9671,11 +9687,27 @@ if (document.fullscreenElement == undefined && document.body.webkitRequestFullSc
     function Br(a) {
         return a.paused || a.ended
     }
+	
+	/**
+	* Rehike-specific change: Catch playback errors and report them to our own code.
+	* 
+	* This primarily helps in handling playback errors from browser blocking autoplay,
+	* which only became a relevant feature in recent years.
+	*/
     function Cr(a) {
         a.ended && yr(a, 0);
-        !a.hasAttribute("src") && a.Tc && (a.src = xr(a.Tc),
-        a.Tc.j || a.load());
-        a.play();
+        !a.hasAttribute("src") && a.Tc && (a.src = xr(a.Tc), a.Tc.j || a.load());
+		setTimeout(function () { // prevent interrupted by pause error
+			if (a && a.play()) {
+				a.play().catch(function(e) {// Message the error event for external handling.
+					console.log(e);
+					var event = document.createEvent("Event");
+					event.initEvent("rh-classic-player-fail-play-video", false, true);
+					document.dispatchEvent(event);
+				});
+			}
+		}, 150);
+		
         jr && 7 <= ir && Qh(a, y(function() {
             L(y(this.Go, this, this.currentTime, 0), 500)
         }, a))
@@ -9692,7 +9724,7 @@ if (document.fullscreenElement == undefined && document.body.webkitRequestFullSc
     function Dr(a) {
         a.src && (nr && yr(a, 0),
         a.removeAttribute("src"),
-        a.load(),
+        //a.load(),
         a.Tc && a.Tc.j && wr(a, null))
     }
     f.setVolume = function(a, b) {
@@ -18930,28 +18962,28 @@ if (document.fullscreenElement == undefined && document.body.webkitRequestFullSc
     ;function RD(a) {
         Wr.call(this, a);
         dg({
-            YTP_FRESCA_STARTING_SOON_MESSAGE: "Starting soon...",
-            YTP_FRESCA_EVENT_OVER_MESSAGE: "This live event is over.",
-            YTP_FRESCA_COMPLETE_MESSAGE: "Thanks for watching!",
-            YTP_FRESCA_STAND_BY_MESSAGE: "Please stand by.",
-            YTP_FRESCA_TECHNICAL_DIFFICULTIES_MESSAGE: "We're experiencing technical difficulties.",
-            YTP_FRESCA_EVENT_OFFLINE: "Offline",
-            YTP_FRESCA_EVENT_OFFLINE_PREAMBLE: "This stream is",
-            YTP_FRESCA_EVENT_STARTS_IN: "Watch the live broadcast!",
-            YTP_FRESCA_EVENT_STARTING_SOON: "Broadcast is starting soon",
-            YTP_FRESCA_EVENT_HASNT_STARTED: "This scheduled broadcast hasn't started yet",
-            YTP_FRESCA_CENTRAL_PROMO_HEADER: "$STREAMER_NAME is streaming now!",
-            YTP_FRESCA_SIDEBAR_PROMO_HEADER: "Other broadcasts by $STREAMER_NAME",
-            YTP_FRESCA_LIVE_BADGE: "Live",
-            YTP_FRESCA_LIVE_DAYS_AGO: "Streamed $DAYS days ago",
-            YTP_FRESCA_LIVE_HOURS_AGO: "Streamed $HOURS hours ago",
-            YTP_FRESCA_LIVE_RECENTLY: "Recently live",
-            YTP_FRESCA_LIVE_IN_DAYS: "Live in $DAYS days",
-            YTP_FRESCA_LIVE_IN_HOURS: "Live in $HOURS hours",
-            YTP_FRESCA_VIEWERS_WATCHING_NOW: "$VIEWER_COUNT watching now",
-            YTP_FRESCA_NO_VIEWERS_STREAMING_NOW: "Streaming now",
-            YTP_FRESCA_COUNTDOWN_DAYS: "$DAYS days",
-            YTP_FRESCA_COUNTDOWN_HOURS: "$HOURS hours"
+            YTP_FRESCA_STARTING_SOON_MESSAGE: rehikeGetTranslation("YTP_FRESCA_STARTING_SOON_MESSAGE", "Starting soon..."),
+            YTP_FRESCA_EVENT_OVER_MESSAGE: rehikeGetTranslation("YTP_FRESCA_EVENT_OVER_MESSAGE", "This live event is over."),
+            YTP_FRESCA_COMPLETE_MESSAGE: rehikeGetTranslation("YTP_FRESCA_COMPLETE_MESSAGE", "Thanks for watching!"),
+            YTP_FRESCA_STAND_BY_MESSAGE: rehikeGetTranslation("YTP_FRESCA_STAND_BY_MESSAGE", "Please stand by."),
+            YTP_FRESCA_TECHNICAL_DIFFICULTIES_MESSAGE: rehikeGetTranslation("YTP_FRESCA_TECHNICAL_DIFFICULTIES_MESSAGE", "We're experiencing technical difficulties."),
+            YTP_FRESCA_EVENT_OFFLINE: rehikeGetTranslation("YTP_FRESCA_EVENT_OFFLINE", "Offline"),
+            YTP_FRESCA_EVENT_OFFLINE_PREAMBLE: rehikeGetTranslation("YTP_FRESCA_EVENT_OFFLINE_PREAMBLE", "This stream is"),
+            YTP_FRESCA_EVENT_STARTS_IN: rehikeGetTranslation("YTP_FRESCA_EVENT_STARTS_IN", "Watch the live broadcast!"),
+            YTP_FRESCA_EVENT_STARTING_SOON: rehikeGetTranslation("YTP_FRESCA_EVENT_STARTING_SOON", "Broadcast is starting soon"),
+            YTP_FRESCA_EVENT_HASNT_STARTED: rehikeGetTranslation("YTP_FRESCA_EVENT_HASNT_STARTED", "This scheduled broadcast hasn't started yet"),
+            YTP_FRESCA_CENTRAL_PROMO_HEADER: rehikeGetTranslation("YTP_FRESCA_CENTRAL_PROMO_HEADER", "$STREAMER_NAME is streaming now!"),
+            YTP_FRESCA_SIDEBAR_PROMO_HEADER: rehikeGetTranslation("YTP_FRESCA_SIDEBAR_PROMO_HEADER", "Other broadcasts by $STREAMER_NAME"),
+            YTP_FRESCA_LIVE_BADGE: rehikeGetTranslation("YTP_FRESCA_LIVE_BADGE", "Live"),
+            YTP_FRESCA_LIVE_DAYS_AGO: rehikeGetTranslation("YTP_FRESCA_LIVE_DAYS_AGO", "Streamed $DAYS days ago"),
+            YTP_FRESCA_LIVE_HOURS_AGO: rehikeGetTranslation("YTP_FRESCA_LIVE_HOURS_AGO", "Streamed $HOURS hours ago"),
+            YTP_FRESCA_LIVE_RECENTLY: rehikeGetTranslation("YTP_FRESCA_LIVE_RECENTLY", "Recently live"),
+            YTP_FRESCA_LIVE_IN_DAYS: rehikeGetTranslation("YTP_FRESCA_LIVE_IN_DAYS", "Live in $DAYS days"),
+            YTP_FRESCA_LIVE_IN_HOURS: rehikeGetTranslation("YTP_FRESCA_LIVE_IN_HOURS", "Live in $HOURS hours"),
+            YTP_FRESCA_VIEWERS_WATCHING_NOW: rehikeGetTranslation("YTP_FRESCA_VIEWERS_WATCHING_NOW", "$VIEWER_COUNT watching now"),
+            YTP_FRESCA_NO_VIEWERS_STREAMING_NOW: rehikeGetTranslation("YTP_FRESCA_NO_VIEWERS_STREAMING_NOW", "Streaming now"),
+            YTP_FRESCA_COUNTDOWN_DAYS: rehikeGetTranslation("YTP_FRESCA_COUNTDOWN_DAYS", "$DAYS days"),
+            YTP_FRESCA_COUNTDOWN_HOURS: rehikeGetTranslation("YTP_FRESCA_COUNTDOWN_HOURS", "$HOURS hours")
         })
     }
     A(RD, Wr);
@@ -20847,41 +20879,41 @@ if (document.fullscreenElement == undefined && document.body.webkitRequestFullSc
     function $F(a) {
         Wr.call(this, a);
         dg({
-            YTP_TRANSLATE_MENU_ITEM: "Translate captions",
-            YTP_CONTRIBUTE_MENU_ITEM: "Add subtitles/CC",
-            YTP_TRANSLATE_DIALOG_TITLE: "Translate...",
-            YTP_ASR_SETTINGS_LABEL: "Automatic Captions",
-            YTP_LANGUAGE_OFF: "Off",
-            YTP_FONT_FAMILY: "Font family",
-            YTP_FONT_SIZE: "Font size",
-            YTP_FONT_COLOR: "Font color",
-            YTP_FONT_OPACITY: "Font opacity",
-            YTP_BACKGROUND_COLOR: "Background color",
-            YTP_BACKGROUND_OPACITY: "Background opacity",
-            YTP_WINDOW_COLOR: "Window color",
-            YTP_WINDOW_OPACITY: "Window opacity",
-            YTP_COLOR_WHITE: "White",
-            YTP_COLOR_YELLOW: "Yellow",
-            YTP_COLOR_GREEN: "Green",
-            YTP_COLOR_CYAN: "Cyan",
-            YTP_COLOR_BLUE: "Blue",
-            YTP_COLOR_MAGENTA: "Magenta",
-            YTP_COLOR_RED: "Red",
-            YTP_COLOR_BLACK: "Black",
-            YTP_FONT_FAMILY_MONO_SERIF: "Monospaced Serif",
-            YTP_FONT_FAMILY_PROP_SERIF: "Proportional Serif",
-            YTP_FONT_FAMILY_MONO_SANS: "Monospaced Sans-Serif",
-            YTP_FONT_FAMILY_PROP_SANS: "Proportional Sans-Serif",
-            YTP_FONT_FAMILY_CASUAL: "Casual",
-            YTP_FONT_FAMILY_CURSIVE: "Cursive",
-            YTP_FONT_FAMILY_SMALL_CAPS: "Small Capitals",
-            YTP_CHAR_EDGE_STYLE: "Character edge style",
-            YTP_EDGE_STYLE_NONE: "None",
-            YTP_EDGE_STYLE_RAISED: "Raised",
-            YTP_EDGE_STYLE_DEPRESSED: "Depressed",
-            YTP_EDGE_STYLE_OUTLINE: "Outline",
-            YTP_EDGE_STYLE_DROP_SHADOW: "Drop Shadow",
-            YTP_CLICK_FOR_SETTINGS: "Click $GEAR_ICON for settings"
+            YTP_TRANSLATE_MENU_ITEM: rehikeGetTranslation("YTP_TRANSLATE_MENU_ITEM", "Translate captions"),
+            YTP_CONTRIBUTE_MENU_ITEM: rehikeGetTranslation("YTP_CONTRIBUTE_MENU_ITEM", "Add subtitles/CC"),
+            YTP_TRANSLATE_DIALOG_TITLE: rehikeGetTranslation("YTP_TRANSLATE_DIALOG_TITLE", "Translate..."),
+            YTP_ASR_SETTINGS_LABEL: rehikeGetTranslation("YTP_ASR_SETTINGS_LABEL", "Automatic Captions"),
+            YTP_LANGUAGE_OFF: rehikeGetTranslation("YTP_LANGUAGE_OFF", "Off"),
+            YTP_FONT_FAMILY: rehikeGetTranslation("YTP_FONT_FAMILY", "Font family"),
+            YTP_FONT_SIZE: rehikeGetTranslation("YTP_FONT_SIZE", "Font size"),
+            YTP_FONT_COLOR: rehikeGetTranslation("YTP_FONT_COLOR", "Font color"),
+            YTP_FONT_OPACITY: rehikeGetTranslation("YTP_FONT_OPACITY", "Font opacity"),
+            YTP_BACKGROUND_COLOR: rehikeGetTranslation("YTP_BACKGROUND_COLOR", "Background color"),
+            YTP_BACKGROUND_OPACITY: rehikeGetTranslation("YTP_BACKGROUND_OPACITY", "Background opacity"),
+            YTP_WINDOW_COLOR: rehikeGetTranslation("YTP_WINDOW_COLOR", "Window color"),
+            YTP_WINDOW_OPACITY: rehikeGetTranslation("YTP_WINDOW_OPACITY", "Window opacity"),
+            YTP_COLOR_WHITE: rehikeGetTranslation("YTP_COLOR_WHITE", "White"),
+            YTP_COLOR_YELLOW: rehikeGetTranslation("YTP_COLOR_YELLOW", "Yellow"),
+            YTP_COLOR_GREEN: rehikeGetTranslation("YTP_COLOR_GREEN", "Green"),
+            YTP_COLOR_CYAN: rehikeGetTranslation("YTP_COLOR_CYAN", "Cyan"),
+            YTP_COLOR_BLUE: rehikeGetTranslation("YTP_COLOR_BLUE", "Blue"),
+            YTP_COLOR_MAGENTA: rehikeGetTranslation("YTP_COLOR_MAGENTA", "Magenta"),
+            YTP_COLOR_RED: rehikeGetTranslation("YTP_COLOR_RED", "Red"),
+            YTP_COLOR_BLACK: rehikeGetTranslation("YTP_COLOR_BLACK", "Black"),
+            YTP_FONT_FAMILY_MONO_SERIF: rehikeGetTranslation("YTP_FONT_FAMILY_MONO_SERIF", "Monospaced Serif"),
+            YTP_FONT_FAMILY_PROP_SERIF: rehikeGetTranslation("YTP_FONT_FAMILY_PROP_SERIF", "Proportional Serif"),
+            YTP_FONT_FAMILY_MONO_SANS: rehikeGetTranslation("YTP_FONT_FAMILY_MONO_SANS", "Monospaced Sans-Serif"),
+            YTP_FONT_FAMILY_PROP_SANS: rehikeGetTranslation("YTP_FONT_FAMILY_PROP_SANS", "Proportional Sans-Serif"),
+            YTP_FONT_FAMILY_CASUAL: rehikeGetTranslation("YTP_FONT_FAMILY_CASUAL", "Casual"),
+            YTP_FONT_FAMILY_CURSIVE: rehikeGetTranslation("YTP_FONT_FAMILY_CURSIVE", "Cursive"),
+            YTP_FONT_FAMILY_SMALL_CAPS: rehikeGetTranslation("YTP_FONT_FAMILY_SMALL_CAPS", "Small Capitals"),
+            YTP_CHAR_EDGE_STYLE: rehikeGetTranslation("YTP_CHAR_EDGE_STYLE", "Character edge style"),
+            YTP_EDGE_STYLE_NONE: rehikeGetTranslation("YTP_EDGE_STYLE_NONE", "None"),
+            YTP_EDGE_STYLE_RAISED: rehikeGetTranslation("YTP_EDGE_STYLE_RAISED", "Raised"),
+            YTP_EDGE_STYLE_DEPRESSED: rehikeGetTranslation("YTP_EDGE_STYLE_DEPRESSED", "Depressed"),
+            YTP_EDGE_STYLE_OUTLINE: rehikeGetTranslation("YTP_EDGE_STYLE_OUTLINE", "Outline"),
+            YTP_EDGE_STYLE_DROP_SHADOW: rehikeGetTranslation("YTP_EDGE_STYLE_DROP_SHADOW", "Drop Shadow"),
+            YTP_CLICK_FOR_SETTINGS: rehikeGetTranslation("YTP_CLICK_FOR_SETTINGS", "Click $GEAR_ICON for settings")
         });
         this.gi = !0;
         this.na = this.W = this.ua = !1;
@@ -22231,8 +22263,8 @@ if (document.fullscreenElement == undefined && document.body.webkitRequestFullSc
     function eH(a) {
         Wr.call(this, a);
         dg({
-            YTP_YPC_START_RENTAL_HEADER: "Would you like to start this rental?",
-            YTP_YPC_START_RENTAL_BUTTON: "Start rental period"
+            YTP_YPC_START_RENTAL_HEADER: rehikeGetTranslation("YTP_YPC_START_RENTAL_HEADER", "Would you like to start this rental?"),
+            YTP_YPC_START_RENTAL_BUTTON: rehikeGetTranslation("YTP_YPC_START_RENTAL_BUTTON", "Start rental period")
         });
         this.A = this.o = null
     }
@@ -23290,7 +23322,7 @@ if (document.fullscreenElement == undefined && document.body.webkitRequestFullSc
     }
     function HI(a) {
         for (var b = EI(a, !0), c = II(a), d = 1; d < b; d++)
-            c = 256 * c + II(a);
+            c = (256 * c) + II(a);
         return c
     }
     function FI(a) {
@@ -36558,7 +36590,7 @@ if (document.fullscreenElement == undefined && document.body.webkitRequestFullSc
         this.B.da(),
         this.B = null);
         this.T && (this.T = !1,
-        this.j.bh() || this.j.Ye() || this.j.pause(),
+        this.j.bh() || this.j.Ye() || /*this.j.pause()*,*/
         $M() && !a && (this.j.Hf(.001),
         this.j.load("", "")),
         ZM() && this.j.ce() && !a && this.j.fl(),
@@ -47567,161 +47599,161 @@ if (document.fullscreenElement == undefined && document.body.webkitRequestFullSc
         this.B = new i8;
         this.Nm();
         dg({
-            YTP_ADVERTISEMENT: "Advertisement",
-            YTP_AUDIO_TRACK_TITLE: "Audio track",
-            YTP_AUTO: "Auto",
-            YTP_AUTO_WITH_QUALITY_2: "Auto ($VIDEO_QUALITY)",
-            YTP_CHANGE_QUALITY_WITH_QUALITY_2: "Change quality ($VIDEO_QUALITY)",
-            YTP_COPY_DEBUG_INFO: "Copy debug info",
-            YTP_COPY_VIDEO_URL: "Copy video URL",
-            YTP_COPY_VIDEO_URL_AT_TIME: "Copy video URL at current time",
-            YTP_DRAWER_HEADER_TEXT: "In this video",
-            YTP_DRAWER_POLL_SUBMIT: "Submit",
-            YTP_GET_DEBUG_INFO: "Get debug info",
-            YTP_GET_VIDEO_URL: "Get video URL",
-            YTP_GET_VIDEO_URL_AT_TIME: "Get video URL at current time",
-            YTP_GET_EMBED: "Get embed code",
-            YTP_DECREASE_PLAYBACK_SPEED: "Decrease playback speed",
-            YTP_DEFAULT_VIEW: "Default view",
-            YTP_EMBED_COPY: "Copy embed code",
-            YTP_ERROR_GENERIC: "An error occurred, please try again later.",
-            YTP_ERROR_GENERIC_WITH_LINK_2: "An error occurred, please try again later. $BEGIN_LINKLearn More$END_LINK",
-            YTP_ERROR_GENERIC_WITHOUT_LINK: "An error occurred. Please try again later.",
-            YTP_ERROR_GENERIC_WITH_LINK: "An error occurred. Please try again later. $BEGIN_LINKLearn More$END_LINK",
-            YTP_EXIT_FULLSCREEN: "Exit full screen",
-            YTP_FEATURED: "Featured",
-            YTP_FULLSCREEN: "Full screen",
-            YTP_INCREASE_PLAYBACK_SPEED: "Increase playback speed",
-            YTP_GOTO_LIVE_TOOLTIP: "Skip ahead to live broadcast.",
-            YTP_KEYBOARD_SHORTCUTS: "Keyboard shortcuts",
-            YTP_LIVE: "Live",
-            YTP_LIVE_NOW: "LIVE NOW",
-            YTP_MIX: "Mix",
-            YTP_MORE: "More",
-            YTP_MDX_TITLE: "Play on",
-            YTP_MDX_TOOLTIP: "Play on TV",
-            YTP_MDX_MY_COMPUTER: "This computer",
-            YTP_MUTE: "Mute",
-            YTP_NEXT: "Next",
-            YTP_NEXT_VIDEO_IN: "Next video in $TIME_LEFT",
-            YTP_NORMAL_SPEED: "Normal",
-            YTP_ON: "On",
-            YTP_OFF: "Off",
-            YTP_OPTIONS: "Options",
-            YTP_PLAY_ALL: "Play all",
-            YTP_PLAY_PAUSE: "Toggle play/pause",
-            YTP_PREVIOUS: "Previous",
-            YTP_PLAYLIST: "Playlist",
-            YTP_PLAYLIST_UP_NEXT: "Up Next",
-            YTP_QUALITY_TITLE: "Quality",
-            YTP_SUGGESTED_VIDEOS: "Suggested videos",
-            YTP_REPLAY: "Replay",
-            YTP_REPORT_ISSUE: "Report playback issue",
-            YTP_SEEK_BACK: "Seek back 10 seconds",
-            YTP_SEEK_FORWARD: "Seek forward 10 seconds",
-            YTP_SEEK_PERCENT: "Seek to 0%-90%.",
-            YTP_SETTINGS: "Settings",
-            YTP_SHARE: "Share",
-            YTP_SHARE_LINK: "Share link",
-            YTP_SHARE_WITH_PLAYLIST: "Share with playlist",
-            YTP_SHOW_VIDEO_INFO: "Stats for nerds",
-            YTP_SPHERICAL_CONTROL: "Spherical video control. Use the arrow keys to pan the video.",
-            YTP_SPEED_TITLE: "Speed",
-            YTP_ST_COLLAPSE: "Collapse",
-            YTP_ST_EXPAND: "Expand",
-            YTP_SUBTITLES: "Subtitles/CC",
-            YTP_THREED_SHORT: "3D",
-            YTP_THEATER_MODE: "Theater mode",
-            YTP_TOGGLE_FULLSCREEN: "Toggle fullscreen.",
-            YTP_TOGGLE_MUTE: "Toggle mute",
-            YTP_UNMUTE: "Unmute",
-            YTP_URL_NAVIGATE: "Watch on YouTube.com",
-            YTP_WATCH_ALL: "Watch entire video",
-            YTP_WATCH_LATER: "Watch Later",
-            YTP_WATCH_LATER_AS_2: "Watch later as $USER_NAME",
-            YTP_WEBGL_3D_ANAGLYPH: "Anaglyph",
-            YTP_WEBGL_3D_2D: "2D",
-            YTP_SUBSCRIBE_AS: "Subscribe as $USER_NAME",
-            YTP_LIKE_AS: "Like as $USER_NAME",
-            YTP_DISLIKE_AS: "Dislike as $USER_NAME",
-            YTP_WATCH_NEXT: "Watch next",
-            YTP_PLAY: "Play",
-            YTP_WATERMARK: "Watermark",
-            YTP_ERROR_STREAMING_UNAVAILABLE: "Video playback is unavailable right now because this video has been downloaded for offline viewing.",
-            YTP_ERROR_LICENSE: "Sorry, there was an error licensing this video.",
-            YTP_ERROR_VIDEO_NOT_FOUND: "This video can not be found.",
-            YTP_ERROR_ALREADY_PINNED_ON_A_DEVICE: "This video has already been downloaded on the maximum number of devices allowed by the copyright holder. Before you can play the video here, it needs to be unpinned on another device.",
-            YTP_ERROR_CANNOT_ACTIVATE_RENTAL: "An error occurred when activating your rental. Please reload this page or try again later.",
-            YTP_ERROR_PURCHASE_NOT_FOUND: "This video requires payment.",
-            YTP_ERROR_PURCHASE_REFUNDED: "This video's purchase has been refunded.",
-            YTP_ERROR_STOPPED_BY_ANOTHER_PLAYBACK: "Your account is playing this video in another location. Please reload this page to resume watching.",
-            YTP_ERROR_TOO_MANY_STREAMS_PER_USER: "Playback stopped because too many videos belonging to the same account are playing.",
-            YTP_ERROR_TOO_MANY_STREAMS_PER_ENTITLEMENT: "Playback stopped because this video has been played on too many devices.",
-            YTP_ERROR_STREAMING_DEVICES_QUOTA_PER_24H_EXCEEDED: "Too many devices/IP addresses have been used over the 24 hour period.",
-            YTP_ERROR_UNUSUAL_ACTIVITY: "Due to unusual account activity, this video is not currently available.",
-            YTP_ERROR_NOT_SIGNED_IN: "Please sign in to resume watching.",
-            YTP_CLOSE: "Close",
-            YTP_ANNOTATIONS: "Annotations",
-            YTP_DONE: "Done",
-            YTP_SHARE_THIS_PLAYLIST: "Share this playlist",
-            YTP_UPLOADED_BY_2: "by $AUTHOR",
-            YTP_SEEK_SLIDER: "Seek slider",
-            YTP_PAUSE: "Pause",
-            YTP_AUTOPLAY: "Autoplay",
-            YTP_AUTOPLAY_COUNTDOWN_2: "Next video in $SECONDS_LEFT",
-            YTP_AUTOPLAY_PAUSED: "Busy? We've paused autoplay.",
-            YTP_AUTOPLAY_PAUSED_2: "Autoplay is paused.",
-            YTP_AUTOPLAY_CANCEL: "Cancel autoplay",
-            YTP_WATCH_VIDEO_OR_PLAYLIST: "Watch $TITLE",
-            YTP_CANCEL: "Cancel",
-            YTP_ON_GOOGLE_PLUS: "On Google+",
-            YTP_STILL_THERE: "Are you still there? If so, please click the button below to continue watching the playlist.",
-            YTP_DISMISS: "OK",
-            YTP_RESET: "Reset",
-            YTP_STOP: "Stop live playback",
-            YTP_LIKE: "Like",
-            YTP_DISLIKE: "Dislike",
-            YTP_SCREENREADER_VOLUME_SETTING: "volume",
-            YTP_SCREENREADER_VOLUME_MUTED: "muted",
-            YTP_SCREENREADER_VOLUME_MUTE: "mute",
-            YTP_SCREENREADER_VOLUME_UNMUTE: "unmute",
-            YTP_SCREENREADER_CONTROL_TOGGLE: "toggle",
-            YTP_SAMPLE_SUBTITLES: "Captions look like this",
-            YTP_HTML5_CONTEXT_MENU_LINK: "About the HTML5 player",
-            YTP_HTML5_NO_AVAILABLE_FORMATS_FALLBACK: "This video format is not supported.",
-            YTP_HTML5_NO_AVAILABLE_FORMATS_FALLBACK_WITH_LINK: "Your browser does not currently recognize any of the video formats available. $BEGIN_LINKClick here to visit our frequently asked questions about HTML5 video.$END_LINK",
-            YTP_HTML5_NO_AVAILABLE_FORMATS_FALLBACK_FLASH: "The Adobe Flash Player is required for video playback. $BEGIN_LINKGet the latest Flash Player$END_LINK.",
-            YTP_ERROR_CAST_SESSION_DEVICE_MISMATCHED: "The device in the cast session doesn't match the requested one.",
-            YTP_ERROR_CAST_SESSION_VIDEO_MISMATCHED: "The video in the cast session doesn't match the requested one.",
-            YTP_ERROR_CAST_TOKEN_EXPIRED: "Cast session was expired. Please refresh.",
-            YTP_ERROR_CAST_TOKEN_FAILED: "Cast session not available. Please refresh or try again later.",
-            YTP_ERROR_CAST_TOKEN_MALFORMED: "Invalid cast session. Please refresh or try again later.",
-            YTP_ERROR_GEO_FAILURE: "This video isn't available in your country.",
-            YTP_ERROR_INVALID_DRM_MESSAGE: "The DRM system specific message is invalid.",
-            YTP_ERROR_RENTAL_EXPIRED: "This video's rental has expired.",
-            YTP_ERROR_RETRYABLE_ERROR: "There was a temporary server error. Please try again later.",
-            YTP_ERROR_SERVER_ERROR: "There was an internal server error. Please try again later.",
-            YTP_ERROR_STREAMING_NOT_ALLOWED: "Playback not allowed because this video is pinned on another device.",
-            YTP_ERROR_UNSUPPORTED_DEVICE: "Playback isn't supported on this device.",
-            YTP_ERROR_VIDEO_FORBIDDEN: "Access to this video is forbidden.",
-            YTP_MDX_STATUS_CONNECTED: "Playing on",
-            YTP_MDX_STATUS_CONNECTING: "Connecting to",
-            YTP_MDX_STATUS_ERROR: "Error on",
-            YTP_MDX_PLAYER_ERROR: "This video is not available for remote playback.",
-            YTP_MDX_PLAYER_RECONNECT_TIME: "Please check your Internet connection. Retrying in $FORMATTED_TIME...",
-            YTP_MDX_PLAYER_RECONNECT_BUTTON: "Reconnect",
-            YTP_DEVICE_FALLBACK: "Sorry, this video is not available on this device.",
-            YTP_AD_INTERRUPT_MESSAGE: "Your video will play after this ad.",
-            YTP_VISIT_ADVERTISERS_SITE: "Visit advertiser's site",
-            YTP_PROGRESS_LABEL_2: "$PLAY_PROGRESS of $DURATION",
-            YTP_PLAYLIST_NAME: "Playlist: $PLAYLIST_NAME",
-            YTP_PLAYLIST_POSITION: "$CURRENT_POSITION/$PLAYLIST_LENGTH",
-            YTP_SHARE_PANEL_ERROR: "An error occurred while retrieving sharing information. Please try again later.",
-            YTP_PLAYLIST_AUTHOR_AND_POSITION: "by $AUTHOR \u2022 $CURRENT_POSITION/$PLAYLIST_LENGTH",
-            YTP_PLAYER_NORMAL: "YouTube Video Player",
-            YTP_PLAYER_FULLSCREEN: "YouTube Video Player in Fullscreen",
-            YTP_SPONSORED: "Sponsored",
-            YTP_AD_SETTINGS_INFO: "Visit Google's $BEGIN_FORMATAd Settings$END_FORMAT to learn more about how ads are targeted or to opt out of personalized ads."
+            YTP_ADVERTISEMENT: rehikeGetTranslation("YTP_ADVERTISEMENT", "Advertisement"),
+            YTP_AUDIO_TRACK_TITLE: rehikeGetTranslation("YTP_AUDIO_TRACK_TITLE", "Audio track"),
+            YTP_AUTO: rehikeGetTranslation("YTP_AUTO", "Auto"),
+            YTP_AUTO_WITH_QUALITY_2: rehikeGetTranslation("YTP_AUTO_WITH_QUALITY_2", "Auto ($VIDEO_QUALITY)"),
+            YTP_CHANGE_QUALITY_WITH_QUALITY_2: rehikeGetTranslation("YTP_CHANGE_QUALITY_WITH_QUALITY_2", "Change quality ($VIDEO_QUALITY)"),
+            YTP_COPY_DEBUG_INFO: rehikeGetTranslation("YTP_COPY_DEBUG_INFO", "Copy debug info"),
+            YTP_COPY_VIDEO_URL: rehikeGetTranslation("YTP_COPY_VIDEO_URL", "Copy video URL"),
+            YTP_COPY_VIDEO_URL_AT_TIME: rehikeGetTranslation("YTP_COPY_VIDEO_URL_AT_TIME", "Copy video URL at current time"),
+            YTP_DRAWER_HEADER_TEXT: rehikeGetTranslation("YTP_DRAWER_HEADER_TEXT", "In this video"),
+            YTP_DRAWER_POLL_SUBMIT: rehikeGetTranslation("YTP_DRAWER_POLL_SUBMIT", "Submit"),
+            YTP_GET_DEBUG_INFO: rehikeGetTranslation("YTP_GET_DEBUG_INFO", "Get debug info"),
+            YTP_GET_VIDEO_URL: rehikeGetTranslation("YTP_GET_VIDEO_URL", "Get video URL"),
+            YTP_GET_VIDEO_URL_AT_TIME: rehikeGetTranslation("YTP_GET_VIDEO_URL_AT_TIME", "Get video URL at current time"),
+            YTP_GET_EMBED: rehikeGetTranslation("YTP_GET_EMBED", "Get embed code"),
+            YTP_DECREASE_PLAYBACK_SPEED: rehikeGetTranslation("YTP_DECREASE_PLAYBACK_SPEED", "Decrease playback speed"),
+            YTP_DEFAULT_VIEW: rehikeGetTranslation("YTP_DEFAULT_VIEW", "Default view"),
+            YTP_EMBED_COPY: rehikeGetTranslation("YTP_EMBED_COPY", "Copy embed code"),
+            YTP_ERROR_GENERIC: rehikeGetTranslation("YTP_ERROR_GENERIC", "An error occurred, please try again later."),
+            YTP_ERROR_GENERIC_WITH_LINK_2: rehikeGetTranslation("YTP_ERROR_GENERIC_WITH_LINK_2", "An error occurred, please try again later. $BEGIN_LINKLearn More$END_LINK"),
+            YTP_ERROR_GENERIC_WITHOUT_LINK: rehikeGetTranslation("YTP_ERROR_GENERIC_WITHOUT_LINK", "An error occurred. Please try again later."),
+            YTP_ERROR_GENERIC_WITH_LINK: rehikeGetTranslation("YTP_ERROR_GENERIC_WITH_LINK", "An error occurred. Please try again later. $BEGIN_LINKLearn More$END_LINK"),
+            YTP_EXIT_FULLSCREEN: rehikeGetTranslation("YTP_EXIT_FULLSCREEN", "Exit full screen"),
+            YTP_FEATURED: rehikeGetTranslation("YTP_FEATURED", "Featured"),
+            YTP_FULLSCREEN: rehikeGetTranslation("YTP_FULLSCREEN", "Full screen"),
+            YTP_INCREASE_PLAYBACK_SPEED: rehikeGetTranslation("YTP_INCREASE_PLAYBACK_SPEED", "Increase playback speed"),
+            YTP_GOTO_LIVE_TOOLTIP: rehikeGetTranslation("YTP_GOTO_LIVE_TOOLTIP", "Skip ahead to live broadcast."),
+            YTP_KEYBOARD_SHORTCUTS: rehikeGetTranslation("YTP_KEYBOARD_SHORTCUTS", "Keyboard shortcuts"),
+            YTP_LIVE: rehikeGetTranslation("YTP_LIVE", "Live"),
+            YTP_LIVE_NOW: rehikeGetTranslation("YTP_LIVE_NOW", "LIVE NOW"),
+            YTP_MIX: rehikeGetTranslation("YTP_MIX", "Mix"),
+            YTP_MORE: rehikeGetTranslation("YTP_MORE", "More"),
+            YTP_MDX_TITLE: rehikeGetTranslation("YTP_MDX_TITLE", "Play on"),
+            YTP_MDX_TOOLTIP: rehikeGetTranslation("YTP_MDX_TOOLTIP", "Play on TV"),
+            YTP_MDX_MY_COMPUTER: rehikeGetTranslation("YTP_MDX_MY_COMPUTER", "This computer"),
+            YTP_MUTE: rehikeGetTranslation("YTP_MUTE", "Mute"),
+            YTP_NEXT: rehikeGetTranslation("YTP_NEXT", "Next"),
+            YTP_NEXT_VIDEO_IN: rehikeGetTranslation("YTP_NEXT_VIDEO_IN", "Next video in $TIME_LEFT"),
+            YTP_NORMAL_SPEED: rehikeGetTranslation("YTP_NORMAL_SPEED", "Normal"),
+            YTP_ON: rehikeGetTranslation("YTP_ON", "On"),
+            YTP_OFF: rehikeGetTranslation("YTP_OFF", "Off"),
+            YTP_OPTIONS: rehikeGetTranslation("YTP_OPTIONS", "Options"),
+            YTP_PLAY_ALL: rehikeGetTranslation("YTP_PLAY_ALL", "Play all"),
+            YTP_PLAY_PAUSE: rehikeGetTranslation("YTP_PLAY_PAUSE", "Toggle play/pause"),
+            YTP_PREVIOUS: rehikeGetTranslation("YTP_PREVIOUS", "Previous"),
+            YTP_PLAYLIST: rehikeGetTranslation("YTP_PLAYLIST", "Playlist"),
+            YTP_PLAYLIST_UP_NEXT: rehikeGetTranslation("YTP_PLAYLIST_UP_NEXT", "Up Next"),
+            YTP_QUALITY_TITLE: rehikeGetTranslation("YTP_QUALITY_TITLE", "Quality"),
+            YTP_SUGGESTED_VIDEOS: rehikeGetTranslation("YTP_SUGGESTED_VIDEOS", "Suggested videos"),
+            YTP_REPLAY: rehikeGetTranslation("YTP_REPLAY", "Replay"),
+            YTP_REPORT_ISSUE: rehikeGetTranslation("YTP_REPORT_ISSUE", "Report playback issue"),
+            YTP_SEEK_BACK: rehikeGetTranslation("YTP_SEEK_BACK", "Seek back 10 seconds"),
+            YTP_SEEK_FORWARD: rehikeGetTranslation("YTP_SEEK_FORWARD", "Seek forward 10 seconds"),
+            YTP_SEEK_PERCENT: rehikeGetTranslation("YTP_SEEK_PERCENT", "Seek to 0%-90%."),
+            YTP_SETTINGS: rehikeGetTranslation("YTP_SETTINGS", "Settings"),
+            YTP_SHARE: rehikeGetTranslation("YTP_SHARE", "Share"),
+            YTP_SHARE_LINK: rehikeGetTranslation("YTP_SHARE_LINK", "Share link"),
+            YTP_SHARE_WITH_PLAYLIST: rehikeGetTranslation("YTP_SHARE_WITH_PLAYLIST", "Share with playlist"),
+            YTP_SHOW_VIDEO_INFO: rehikeGetTranslation("YTP_SHOW_VIDEO_INFO", "Stats for nerds"),
+            YTP_SPHERICAL_CONTROL: rehikeGetTranslation("YTP_SPHERICAL_CONTROL", "Spherical video control. Use the arrow keys to pan the video."),
+            YTP_SPEED_TITLE: rehikeGetTranslation("YTP_SPEED_TITLE", "Speed"),
+            YTP_ST_COLLAPSE: rehikeGetTranslation("YTP_ST_COLLAPSE", "Collapse"),
+            YTP_ST_EXPAND: rehikeGetTranslation("YTP_ST_EXPAND", "Expand"),
+            YTP_SUBTITLES: rehikeGetTranslation("YTP_SUBTITLES", "Subtitles/CC"),
+            YTP_THREED_SHORT: rehikeGetTranslation("YTP_THREED_SHORT", "3D"),
+            YTP_THEATER_MODE: rehikeGetTranslation("YTP_THEATER_MODE", "Theater mode"),
+            YTP_TOGGLE_FULLSCREEN: rehikeGetTranslation("YTP_TOGGLE_FULLSCREEN", "Toggle fullscreen."),
+            YTP_TOGGLE_MUTE: rehikeGetTranslation("YTP_TOGGLE_MUTE", "Toggle mute"),
+            YTP_UNMUTE: rehikeGetTranslation("YTP_UNMUTE", "Unmute"),
+            YTP_URL_NAVIGATE: rehikeGetTranslation("YTP_URL_NAVIGATE", "Watch on YouTube.com"),
+            YTP_WATCH_ALL: rehikeGetTranslation("YTP_WATCH_ALL", "Watch entire video"),
+            YTP_WATCH_LATER: rehikeGetTranslation("YTP_WATCH_LATER", "Watch Later"),
+            YTP_WATCH_LATER_AS_2: rehikeGetTranslation("YTP_WATCH_LATER_AS_2", "Watch later as $USER_NAME"),
+            YTP_WEBGL_3D_ANAGLYPH: rehikeGetTranslation("YTP_WEBGL_3D_ANAGLYPH", "Anaglyph"),
+            YTP_WEBGL_3D_2D: rehikeGetTranslation("YTP_WEBGL_3D_2D", "2D"),
+            YTP_SUBSCRIBE_AS: rehikeGetTranslation("YTP_SUBSCRIBE_AS", "Subscribe as $USER_NAME"),
+            YTP_LIKE_AS: rehikeGetTranslation("YTP_LIKE_AS", "Like as $USER_NAME"),
+            YTP_DISLIKE_AS: rehikeGetTranslation("YTP_DISLIKE_AS", "Dislike as $USER_NAME"),
+            YTP_WATCH_NEXT: rehikeGetTranslation("YTP_WATCH_NEXT", "Watch next"),
+            YTP_PLAY: rehikeGetTranslation("YTP_PLAY", "Play"),
+            YTP_WATERMARK: rehikeGetTranslation("YTP_WATERMARK", "Watermark"),
+            YTP_ERROR_STREAMING_UNAVAILABLE: rehikeGetTranslation("YTP_ERROR_STREAMING_UNAVAILABLE", "Video playback is unavailable right now because this video has been downloaded for offline viewing."),
+            YTP_ERROR_LICENSE: rehikeGetTranslation("YTP_ERROR_LICENSE", "Sorry, there was an error licensing this video."),
+            YTP_ERROR_VIDEO_NOT_FOUND: rehikeGetTranslation("YTP_ERROR_VIDEO_NOT_FOUND", "This video can not be found."),
+            YTP_ERROR_ALREADY_PINNED_ON_A_DEVICE: rehikeGetTranslation("YTP_ERROR_ALREADY_PINNED_ON_A_DEVICE", "This video has already been downloaded on the maximum number of devices allowed by the copyright holder. Before you can play the video here, it needs to be unpinned on another device."),
+            YTP_ERROR_CANNOT_ACTIVATE_RENTAL: rehikeGetTranslation("YTP_ERROR_CANNOT_ACTIVATE_RENTAL", "An error occurred when activating your rental. Please reload this page or try again later."),
+            YTP_ERROR_PURCHASE_NOT_FOUND: rehikeGetTranslation("YTP_ERROR_PURCHASE_NOT_FOUND", "This video requires payment."),
+            YTP_ERROR_PURCHASE_REFUNDED: rehikeGetTranslation("YTP_ERROR_PURCHASE_REFUNDED", "This video's purchase has been refunded."),
+            YTP_ERROR_STOPPED_BY_ANOTHER_PLAYBACK: rehikeGetTranslation("YTP_ERROR_STOPPED_BY_ANOTHER_PLAYBACK", "Your account is playing this video in another location. Please reload this page to resume watching."),
+            YTP_ERROR_TOO_MANY_STREAMS_PER_USER: rehikeGetTranslation("YTP_ERROR_TOO_MANY_STREAMS_PER_USER", "Playback stopped because too many videos belonging to the same account are playing."),
+            YTP_ERROR_TOO_MANY_STREAMS_PER_ENTITLEMENT: rehikeGetTranslation("YTP_ERROR_TOO_MANY_STREAMS_PER_ENTITLEMENT", "Playback stopped because this video has been played on too many devices."),
+            YTP_ERROR_STREAMING_DEVICES_QUOTA_PER_24H_EXCEEDED: rehikeGetTranslation("YTP_ERROR_STREAMING_DEVICES_QUOTA_PER_24H_EXCEEDED", "Too many devices/IP addresses have been used over the 24 hour period."),
+            YTP_ERROR_UNUSUAL_ACTIVITY: rehikeGetTranslation("YTP_ERROR_UNUSUAL_ACTIVITY", "Due to unusual account activity, this video is not currently available."),
+            YTP_ERROR_NOT_SIGNED_IN: rehikeGetTranslation("YTP_ERROR_NOT_SIGNED_IN", "Please sign in to resume watching."),
+            YTP_CLOSE: rehikeGetTranslation("YTP_CLOSE", "Close"),
+            YTP_ANNOTATIONS: rehikeGetTranslation("YTP_ANNOTATIONS", "Annotations"),
+            YTP_DONE: rehikeGetTranslation("YTP_DONE", "Done"),
+            YTP_SHARE_THIS_PLAYLIST: rehikeGetTranslation("YTP_SHARE_THIS_PLAYLIST", "Share this playlist"),
+            YTP_UPLOADED_BY_2: rehikeGetTranslation("YTP_UPLOADED_BY_2", "by $AUTHOR"),
+            YTP_SEEK_SLIDER: rehikeGetTranslation("YTP_SEEK_SLIDER", "Seek slider"),
+            YTP_PAUSE: rehikeGetTranslation("YTP_PAUSE", "Pause"),
+            YTP_AUTOPLAY: rehikeGetTranslation("YTP_AUTOPLAY", "Autoplay"),
+            YTP_AUTOPLAY_COUNTDOWN_2: rehikeGetTranslation("YTP_AUTOPLAY_COUNTDOWN_2", "Next video in $SECONDS_LEFT"),
+            YTP_AUTOPLAY_PAUSED: rehikeGetTranslation("YTP_AUTOPLAY_PAUSED", "Busy? We've paused autoplay."),
+            YTP_AUTOPLAY_PAUSED_2: rehikeGetTranslation("YTP_AUTOPLAY_PAUSED_2", "Autoplay is paused."),
+            YTP_AUTOPLAY_CANCEL: rehikeGetTranslation("YTP_AUTOPLAY_CANCEL", "Cancel autoplay"),
+            YTP_WATCH_VIDEO_OR_PLAYLIST: rehikeGetTranslation("YTP_WATCH_VIDEO_OR_PLAYLIST", "Watch $TITLE"),
+            YTP_CANCEL: rehikeGetTranslation("YTP_CANCEL", "Cancel"),
+            YTP_ON_GOOGLE_PLUS: rehikeGetTranslation("YTP_ON_GOOGLE_PLUS", "On Google+"),
+            YTP_STILL_THERE: rehikeGetTranslation("YTP_STILL_THERE", "Are you still there? If so, please click the button below to continue watching the playlist."),
+            YTP_DISMISS: rehikeGetTranslation("YTP_DISMISS", "OK"),
+            YTP_RESET: rehikeGetTranslation("YTP_RESET", "Reset"),
+            YTP_STOP: rehikeGetTranslation("YTP_STOP", "Stop live playback"),
+            YTP_LIKE: rehikeGetTranslation("YTP_LIKE", "Like"),
+            YTP_DISLIKE: rehikeGetTranslation("YTP_DISLIKE", "Dislike"),
+            YTP_SCREENREADER_VOLUME_SETTING: rehikeGetTranslation("YTP_SCREENREADER_VOLUME_SETTING", "volume"),
+            YTP_SCREENREADER_VOLUME_MUTED: rehikeGetTranslation("YTP_SCREENREADER_VOLUME_MUTED", "muted"),
+            YTP_SCREENREADER_VOLUME_MUTE: rehikeGetTranslation("YTP_SCREENREADER_VOLUME_MUTE", "mute"),
+            YTP_SCREENREADER_VOLUME_UNMUTE: rehikeGetTranslation("YTP_SCREENREADER_VOLUME_UNMUTE", "unmute"),
+            YTP_SCREENREADER_CONTROL_TOGGLE: rehikeGetTranslation("YTP_SCREENREADER_CONTROL_TOGGLE", "toggle"),
+            YTP_SAMPLE_SUBTITLES: rehikeGetTranslation("YTP_SAMPLE_SUBTITLES", "Captions look like this"),
+            YTP_HTML5_CONTEXT_MENU_LINK: rehikeGetTranslation("YTP_HTML5_CONTEXT_MENU_LINK", "About the HTML5 player"),
+            YTP_HTML5_NO_AVAILABLE_FORMATS_FALLBACK: rehikeGetTranslation("YTP_HTML5_NO_AVAILABLE_FORMATS_FALLBACK", "This video format is not supported."),
+            YTP_HTML5_NO_AVAILABLE_FORMATS_FALLBACK_WITH_LINK: rehikeGetTranslation("YTP_HTML5_NO_AVAILABLE_FORMATS_FALLBACK_WITH_LINK", "Your browser does not currently recognize any of the video formats available. $BEGIN_LINKClick here to visit our frequently asked questions about HTML5 video.$END_LINK"),
+            YTP_HTML5_NO_AVAILABLE_FORMATS_FALLBACK_FLASH: rehikeGetTranslation("YTP_HTML5_NO_AVAILABLE_FORMATS_FALLBACK_FLASH", "The Adobe Flash Player is required for video playback. $BEGIN_LINKGet the latest Flash Player$END_LINK."),
+            YTP_ERROR_CAST_SESSION_DEVICE_MISMATCHED: rehikeGetTranslation("YTP_ERROR_CAST_SESSION_DEVICE_MISMATCHED", "The device in the cast session doesn't match the requested one."),
+            YTP_ERROR_CAST_SESSION_VIDEO_MISMATCHED: rehikeGetTranslation("YTP_ERROR_CAST_SESSION_VIDEO_MISMATCHED", "The video in the cast session doesn't match the requested one."),
+            YTP_ERROR_CAST_TOKEN_EXPIRED: rehikeGetTranslation("YTP_ERROR_CAST_TOKEN_EXPIRED", "Cast session was expired. Please refresh."),
+            YTP_ERROR_CAST_TOKEN_FAILED: rehikeGetTranslation("YTP_ERROR_CAST_TOKEN_FAILED", "Cast session not available. Please refresh or try again later."),
+            YTP_ERROR_CAST_TOKEN_MALFORMED: rehikeGetTranslation("YTP_ERROR_CAST_TOKEN_MALFORMED", "Invalid cast session. Please refresh or try again later."),
+            YTP_ERROR_GEO_FAILURE: rehikeGetTranslation("YTP_ERROR_GEO_FAILURE", "This video isn't available in your country."),
+            YTP_ERROR_INVALID_DRM_MESSAGE: rehikeGetTranslation("YTP_ERROR_INVALID_DRM_MESSAGE", "The DRM system specific message is invalid."),
+            YTP_ERROR_RENTAL_EXPIRED: rehikeGetTranslation("YTP_ERROR_RENTAL_EXPIRED", "This video's rental has expired."),
+            YTP_ERROR_RETRYABLE_ERROR: rehikeGetTranslation("YTP_ERROR_RETRYABLE_ERROR", "There was a temporary server error. Please try again later."),
+            YTP_ERROR_SERVER_ERROR: rehikeGetTranslation("YTP_ERROR_SERVER_ERROR", "There was an internal server error. Please try again later."),
+            YTP_ERROR_STREAMING_NOT_ALLOWED: rehikeGetTranslation("YTP_ERROR_STREAMING_NOT_ALLOWED", "Playback not allowed because this video is pinned on another device."),
+            YTP_ERROR_UNSUPPORTED_DEVICE: rehikeGetTranslation("YTP_ERROR_UNSUPPORTED_DEVICE", "Playback isn't supported on this device."),
+            YTP_ERROR_VIDEO_FORBIDDEN: rehikeGetTranslation("YTP_ERROR_VIDEO_FORBIDDEN", "Access to this video is forbidden."),
+            YTP_MDX_STATUS_CONNECTED: rehikeGetTranslation("YTP_MDX_STATUS_CONNECTED", "Playing on"),
+            YTP_MDX_STATUS_CONNECTING: rehikeGetTranslation("YTP_MDX_STATUS_CONNECTING", "Connecting to"),
+            YTP_MDX_STATUS_ERROR: rehikeGetTranslation("YTP_MDX_STATUS_ERROR", "Error on"),
+            YTP_MDX_PLAYER_ERROR: rehikeGetTranslation("YTP_MDX_PLAYER_ERROR", "This video is not available for remote playback."),
+            YTP_MDX_PLAYER_RECONNECT_TIME: rehikeGetTranslation("YTP_MDX_PLAYER_RECONNECT_TIME", "Please check your Internet connection. Retrying in $FORMATTED_TIME..."),
+            YTP_MDX_PLAYER_RECONNECT_BUTTON: rehikeGetTranslation("YTP_MDX_PLAYER_RECONNECT_BUTTON", "Reconnect"),
+            YTP_DEVICE_FALLBACK: rehikeGetTranslation("YTP_DEVICE_FALLBACK", "Sorry, this video is not available on this device."),
+            YTP_AD_INTERRUPT_MESSAGE: rehikeGetTranslation("YTP_AD_INTERRUPT_MESSAGE", "Your video will play after this ad."),
+            YTP_VISIT_ADVERTISERS_SITE: rehikeGetTranslation("YTP_VISIT_ADVERTISERS_SITE", "Visit advertiser's site"),
+            YTP_PROGRESS_LABEL_2: rehikeGetTranslation("YTP_PROGRESS_LABEL_2", "$PLAY_PROGRESS of $DURATION"),
+            YTP_PLAYLIST_NAME: rehikeGetTranslation("YTP_PLAYLIST_NAME", "Playlist: $PLAYLIST_NAME"),
+            YTP_PLAYLIST_POSITION: rehikeGetTranslation("YTP_PLAYLIST_POSITION", "$CURRENT_POSITION/$PLAYLIST_LENGTH"),
+            YTP_SHARE_PANEL_ERROR: rehikeGetTranslation("YTP_SHARE_PANEL_ERROR", "An error occurred while retrieving sharing information. Please try again later."),
+            YTP_PLAYLIST_AUTHOR_AND_POSITION: rehikeGetTranslation("YTP_PLAYLIST_AUTHOR_AND_POSITION", "by $AUTHOR \u2022 $CURRENT_POSITION/$PLAYLIST_LENGTH"),
+            YTP_PLAYER_NORMAL: rehikeGetTranslation("YTP_PLAYER_NORMAL", "YouTube Video Player"),
+            YTP_PLAYER_FULLSCREEN: rehikeGetTranslation("YTP_PLAYER_FULLSCREEN", "YouTube Video Player in Fullscreen"),
+            YTP_SPONSORED: rehikeGetTranslation("YTP_SPONSORED", "Sponsored"),
+            YTP_AD_SETTINGS_INFO: rehikeGetTranslation("YTP_AD_SETTINGS_INFO", "Visit Google's $BEGIN_FORMATAd Settings$END_FORMAT to learn more about how ads are targeted or to opt out of personalized ads.")
         });
         this.Ak()
     }
@@ -52288,9 +52320,24 @@ if (document.fullscreenElement == undefined && document.body.webkitRequestFullSc
         a.A && (a.A.gf ? O$(a, lA(a.A, b), 1) : a.W = !1,
         WK(a.A, b))
     }
+	
+	/**
+	 * Rehike-specific change: Ability to change source of playlist state.
+	 * 
+	 * Native player implementation uses yt.www.watch.lists.getState from www/watch
+	 * module, but the implementation has diverged for modern player versions, so
+	 * it is no longer compatible with the 2014 player.
+	 * 
+	 * classic_player_mods implements the source function, which is pointed to here.
+	 */
     function M$() {
-        var a = u("yt.www.watch.lists.getState");
-        return a ? a() : null
+        var src = (window.yt && 
+        window.yt.config_ && 
+        window.yt.config_.REHIKE_CLASSIC_PLAYER_LISTS_GET_STATE)
+        || "yt.www.watch.lists.getState";
+
+		var a = u(src);
+		return a ? a() : null
     }
     function aA(a) {
         return a.A && a.A.A ? a.A.A.toString() : null
