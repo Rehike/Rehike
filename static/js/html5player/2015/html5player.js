@@ -3016,10 +3016,10 @@ if (document.fullscreenElement == undefined && document.body.webkitRequestFullSc
             a.fireEvent("on" + b, c)
     }
     ;function $h() {
-        return !!Gh(["fullscreenEnabled", "fullScreenEnabled"], document)
+        return !!Gh(["fullscreenEnabled", "fullScreenEnabled", "webkitFullscreenEnabled"], document)
     }
     function ai() {
-        return Gh(["fullscreenElement", "fullScreenElement"], document)
+        return Gh(["fullscreenElement", "fullScreenElement", "webkitFullScreenElement"], document)
     }
     ;function bi(a) {
         a = a || {};
@@ -16144,6 +16144,45 @@ if (document.fullscreenElement == undefined && document.body.webkitRequestFullSc
         Dz(this, "apiProxyReady", this.LD);
         Dz(this, "getInternalApiInterface", this.UD);
         Dz(this, "getAdState", this.getAdState);
+		/**
+		* Rehike-specific change: setSizeStyle stub to prevent JS error.
+		*/
+		Y(this, "setSizeStyle", function() {});
+		/**
+		* Rehike-specific change: handleGlobalKeyDown patchup:
+		*/
+		Y(this, "handleGlobalKeyDown", function(keyCode, modifier) {
+			var event = document.createEvent("Event");
+			event.initEvent("rh-classic-player-global-key-down", false, true);
+			event.detail = {
+				keyCode: keyCode,
+				modifier: modifier
+			};
+			document.dispatchEvent(event);
+		});
+		
+		/**
+		* Rehike-specific change: rhGetInternalApi export:
+		*/
+		Y(this, "rhGetInternalApi", function() {
+			var outerThis = this;
+			return new function() {
+				this.data = outerThis;
+		
+				this.getApp = function() {
+					return this.data.app;
+				};
+		
+				this.getVideoData = function() {
+					return this.getApp().getVideoData();
+				};
+		
+				this.getVideoFps = function() {
+					var data = this.getVideoData();
+					return (data.g && data.j.video.fps) || 0;
+				};
+			};
+		});
         Dz(this, "isNotServable", this.dE);
         Dz(this, "getUpdatedConfigurationData", this.YD);
         Dz(this, "updateRemoteReceivers", this.rE);
@@ -16964,67 +17003,97 @@ if (document.fullscreenElement == undefined && document.body.webkitRequestFullSc
     };
     function RA(a) {
         return (a = QA[a.toString()]) ? a : "YTP_ERROR_LICENSE"
-    }
-    ;var SA = {
+    };
+	/**
+	* Rehike-specific change: Updated itag table.
+	* 
+	* Taken from V3.
+	*/
+	var SA = {
         160: "h",
-        133: "h",
-        134: "h",
-        135: "h",
-        136: "h",
-        137: "h",
-        264: "h",
-        266: "h",
-        138: "h",
-        298: "h",
-        299: "h",
-        304: "h",
-        305: "h",
-        140: "a",
-        161: "H",
-        142: "H",
-        143: "H",
-        144: "H",
-        222: "H",
-        223: "H",
-        145: "H",
-        224: "H",
-        225: "H",
-        146: "H",
-        226: "H",
-        147: "H",
-        149: "A",
-        261: "M",
-        278: "9",
-        242: "9",
-        243: "9",
-        244: "9",
-        247: "9",
-        248: "9",
-        271: "9",
-        313: "9",
-        272: "9",
-        302: "9",
-        303: "9",
-        308: "9",
-        315: "9",
-        171: "v",
-        250: "o",
-        251: "o",
-        194: "*",
-        195: "*",
-        220: "*",
-        221: "*",
-        196: "*",
-        197: "*",
-        198: "V",
-        279: "(",
-        280: "(",
-        273: "(",
-        274: "(",
-        275: "(",
-        276: "(",
-        314: "(",
-        277: "("
+		133: "h",
+		134: "h",
+		135: "h",
+		136: "h",
+		137: "h",
+		264: "h",
+		266: "h",
+		138: "h",
+		298: "h",
+		299: "h",
+		304: "h",
+		305: "h",
+		140: "a",
+		256: "a",
+		258: "a",
+		161: "H",
+		142: "H",
+		143: "H",
+		144: "H",
+		222: "H",
+		223: "H",
+		145: "H",
+		224: "H",
+		225: "H",
+		146: "H",
+		226: "H",
+		147: "H",
+		149: "A",
+		261: "M",
+		278: "9",
+		394: "9",
+		242: "9",
+		395: "9",
+		243: "9",
+		396: "9",
+		244: "9",
+		397: "9",
+		247: "9",
+		398: "9",
+		248: "9",
+		399: "9",
+		271: "9",
+		400: "9",
+		313: "9",
+		401: "9",
+		272: "9",
+		302: "9",
+		303: "9",
+		308: "9",
+		315: "9",
+		571: "9",
+		702: "9",
+		701: "9",
+		700: "9",
+		699: "9",
+		698: "9",
+		697: "9",
+		696: "9",
+		695: "9",
+		694: "9",
+		623: "9",
+		171: "v",
+		250: "o",
+		251: "o",
+		194: "*",
+		195: "*",
+		220: "*",
+		221: "*",
+		196: "*",
+		197: "*",
+		198: "V",
+		279: "(",
+		280: "(",
+		273: "(",
+		274: "(",
+		275: "(",
+		276: "(",
+		314: "(",
+		277: "(",
+		170: "8",
+		169: "8",
+		168: "8",
+		167: "8"
     };
     function TA(a, b, c) {
         this.o = a;
@@ -17491,11 +17560,22 @@ if (document.fullscreenElement == undefined && document.body.webkitRequestFullSc
         }
         return a.G
     }
+	
+	/**
+	* Rehike-specific change: This piece of shit caused the player to crash on
+	* Firefox unless wrapped in a try/catch.
+	* 
+	* In modern player versions, even YouTube's own developers just wrapped this in
+	* a try/catch to prevent crashing.
+	*/
     GB.prototype.$f = function(a) {
         isFinite(a) || (a = HB);
-        KB(this) ? this.A.duration = a : this.C = a
-    }
-    ;
+		try
+		{
+			KB(this) ? this.A.duration = a : this.C = a
+		}
+		catch (e) {}
+    };
     function KB(a) {
         try {
             return "open" == a.A.readyState
@@ -22298,8 +22378,11 @@ if (document.fullscreenElement == undefined && document.body.webkitRequestFullSc
     function mH(a) {
         return 0 <= a.indexOf("opus") || 0 <= a.indexOf("vorbis") || 0 <= a.indexOf("mp4a")
     }
+	/**
+	* Rehike-specific change: Support av01 streams.
+	*/
     function nH(a) {
-        return 0 <= a.indexOf("vp9") || 0 <= a.indexOf("vp8") || 0 <= a.indexOf("avc1")
+        return 0 <= a.indexOf("vp9") || 0 <= a.indexOf("vp8") || 0 <= a.indexOf("avc1") || 0 <= a.indexOf("av01")
     }
     ;function oH(a, b, c) {
         this.name = a;

@@ -539,6 +539,7 @@ window.ytplayer.config = {
 		"sw": "0.1",
         "ttsurl": undefined,
 		"invideo": true,
+		"instream_long": false,
 		"iv_module":"http:\/\/s.ytimg.com\/yts\/swfbin\/player-vflNzsCMr\/iv_module.swf",
         "c": "WEB",
         "innertube_context_client_version": "2.20210623.00.00",
@@ -687,6 +688,7 @@ function buildPlayer()
 			window.ytplayer.config.args.iv_load_policy = "1";
 			if (RAW_PLAYER_RESPONSE.videoDetails.isLive == true) {
 				window.ytplayer.config.args.live_playback = "1";
+				window.ytplayer.config.args.instream_long = true;
 			}
 			if (RAW_PLAYER_RESPONSE.videoDetails.isLiveDvrEnabled == true) {
 				window.ytplayer.config.args.hlsdvr = "1";
@@ -695,7 +697,7 @@ function buildPlayer()
 			window.ytplayer.config.args.thumbnail_url = thumbnails[thumbnails.length-1].url;
         }
 		
-		if (RAW_PLAYER_RESPONSE.playerConfig.audioConfig) { // loudness eq
+		if (RAW_PLAYER_RESPONSE.playerConfig.audioConfig && RAW_PLAYER_RESPONSE.playerConfig.audioConfig.loudnessDb && RAW_PLAYER_RESPONSE.playerConfig.audioConfig.perceptualLoudnessDb) { // loudness eq
 			window.ytplayer.config.args.relative_loudness = (RAW_PLAYER_RESPONSE.playerConfig.audioConfig.loudnessDb).toString() || null;
 			window.ytplayer.config.args.loudness = (RAW_PLAYER_RESPONSE.playerConfig.audioConfig.perceptualLoudnessDb).toString() || null;
 		}
