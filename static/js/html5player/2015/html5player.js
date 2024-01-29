@@ -3035,7 +3035,7 @@ if (document.fullscreenElement == undefined && document.body.webkitRequestFullSc
         return !!Gh(["fullscreenEnabled", "fullScreenEnabled", "webkitFullscreenEnabled"], document)
     }
     function ai() {
-        return Gh(["fullscreenElement", "fullScreenElement", "webkitFullScreenElement"], document)
+        return Gh(["fullscreenElement", "fullScreenElement", "webkitFullScreenElement", "webkitFullScreenElement", "webkitCurrentFullScreenElement"], document)
     }
     ;function bi(a) {
         a = a || {};
