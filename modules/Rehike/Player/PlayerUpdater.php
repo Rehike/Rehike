@@ -72,12 +72,7 @@ class PlayerUpdater
             $playerChoice = "CURRENT";
 
 
-        if ("CURRENT" === $playerChoice)
-        {
-            $effectiveJsUrl = $latestJsUrl;
-            $effectiveCssUrl = $latestCssUrl;
-        }
-        else if ("PLAYER_2022" === $playerChoice)
+        if ("PLAYER_2022" === $playerChoice)
         {
             $effectiveJsUrl = "/s/player/c57c113c/player_ias.vflset/en_US/base.js";
             $effectiveCssUrl = "/s/player/c57c113c/www-player.css";
@@ -91,6 +86,10 @@ class PlayerUpdater
         {
             $effectiveJsUrl = "/rehike/static/js/html5player-2014.js";
             $effectiveCssUrl = "//s.ytimg.com/yts/cssbin/www-player-vfluwFMix.css";
+        } else // CURRENT player, also as fallback for invalid player choice values
+        {
+            $effectiveJsUrl = $latestJsUrl;
+            $effectiveCssUrl = $latestCssUrl;
         }
 
         // Pack these up and return:
