@@ -22,6 +22,16 @@ props:
       subtitle: >
         Pode causar problemas com CSS customizado já que isso foi feito pra
         versão mais recente do CSS oficial do Hitchhiker.
+    classicPlayerTheme:
+      title: "Tema do player:"
+      values:
+        DARK: "Tema escuro" # O tema padrão utilizado praticamente desde 2012, mas foi introduzido em 2011.
+        LIGHT: "Tema claro"
+    classicPlayerColor:
+      title: "Cor da barra de progresso do player:"
+      values:
+        RED: "Vermelho"
+        WHITE: "Branco" # Por algum motivo isso existe
     modernLogo:
       title: "Usar a logo atual do YouTube"
       subtitle: >
