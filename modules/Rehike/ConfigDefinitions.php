@@ -56,6 +56,11 @@ class ConfigDefinitions
 								"RED",
 								"WHITE"
 							])
+                        ),
+					"smallPlayer" =>
+                        new DependentProp(
+                            "appearance.playerChoice == CURRENT",
+                            new BoolProp(false)
                         )
                 ]),
                 "modernLogo" => new BoolProp(true),
@@ -75,7 +80,6 @@ class ConfigDefinitions
                 "watchSidebarDates" => new BoolProp(false),
                 "watchSidebarVerification" => new BoolProp(false),
                 "oldBestOfYouTubeIcons" => new BoolProp(false),
-                "smallPlayer" => new BoolProp(true),
                 "enableAdblock" => new BoolProp(true)
             ],
             "experiments" => [
