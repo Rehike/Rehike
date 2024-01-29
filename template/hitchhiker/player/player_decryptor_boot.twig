@@ -229,6 +229,11 @@ function buildPlayer()
     });
 }
 
+document.addEventListener('spfdone', function() {
+	console.log("Rebuilding player decryptors");
+    buildPlayer(); // handle refresh
+});
+
 buildPlayer();
 
 })();
