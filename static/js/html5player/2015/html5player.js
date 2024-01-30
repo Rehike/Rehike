@@ -9689,11 +9689,11 @@ if (document.fullscreenElement == undefined && document.body.webkitRequestFullSc
     }
 	
 	/**
-	* Rehike-specific change: Catch playback errors and report them to our own code.
-	* 
-	* This primarily helps in handling playback errors from browser blocking autoplay,
-	* which only became a relevant feature in recent years.
-	*/
+	 * Rehike-specific change: Catch playback errors and report them to our own code.
+	 * 
+	 * This primarily helps in handling playback errors from browser blocking autoplay,
+	 * which only became a relevant feature in recent years.
+	 */
     function Cr(a) {
         a.ended && yr(a, 0);
         !a.hasAttribute("src") && a.Tc && (a.src = xr(a.Tc), a.Tc.j || a.load());
@@ -16177,12 +16177,12 @@ if (document.fullscreenElement == undefined && document.body.webkitRequestFullSc
         Dz(this, "getInternalApiInterface", this.UD);
         Dz(this, "getAdState", this.getAdState);
 		/**
-		* Rehike-specific change: setSizeStyle stub to prevent JS error.
-		*/
+		 * Rehike-specific change: setSizeStyle stub to prevent JS error.
+		 */
 		Y(this, "setSizeStyle", function() {});
 		/**
-		* Rehike-specific change: handleGlobalKeyDown patchup:
-		*/
+		 * Rehike-specific change: handleGlobalKeyDown patchup:
+		 */
 		Y(this, "handleGlobalKeyDown", function(keyCode, modifier) {
 			var event = document.createEvent("Event");
 			event.initEvent("rh-classic-player-global-key-down", false, true);
@@ -16194,8 +16194,8 @@ if (document.fullscreenElement == undefined && document.body.webkitRequestFullSc
 		});
 		
 		/**
-		* Rehike-specific change: rhGetInternalApi export:
-		*/
+		 * Rehike-specific change: rhGetInternalApi export:
+		 */
 		Y(this, "rhGetInternalApi", function() {
 			var outerThis = this;
 			return new function() {
@@ -16211,7 +16211,7 @@ if (document.fullscreenElement == undefined && document.body.webkitRequestFullSc
 		
 				this.getVideoFps = function() {
 					var data = this.getVideoData();
-					return (data.g && data.j.video.fps) || 0;
+					return (data.j && data.j.video.fps) || 0;
 				};
 			};
 		});
@@ -17037,11 +17037,12 @@ if (document.fullscreenElement == undefined && document.body.webkitRequestFullSc
         return (a = QA[a.toString()]) ? a : "YTP_ERROR_LICENSE"
     };
 	/**
-	* Rehike-specific change: Updated itag table.
-	* 
-	* Taken from V3.
-	*/
+	 * Rehike-specific change: Updated itag table.
+	 * 
+	 * Taken from V3.
+	 */
 	var SA = {
+		  0: "f",
         160: "h",
 		133: "h",
 		134: "h",
@@ -17594,12 +17595,12 @@ if (document.fullscreenElement == undefined && document.body.webkitRequestFullSc
     }
 	
 	/**
-	* Rehike-specific change: This piece of shit caused the player to crash on
-	* Firefox unless wrapped in a try/catch.
-	* 
-	* In modern player versions, even YouTube's own developers just wrapped this in
-	* a try/catch to prevent crashing.
-	*/
+	 * Rehike-specific change: This piece of shit caused the player to crash on
+	 * Firefox unless wrapped in a try/catch.
+	 * 
+	 * In modern player versions, even YouTube's own developers just wrapped this in
+	 * a try/catch to prevent crashing.
+	 */
     GB.prototype.$f = function(a) {
         isFinite(a) || (a = HB);
 		try
@@ -22411,8 +22412,8 @@ if (document.fullscreenElement == undefined && document.body.webkitRequestFullSc
         return 0 <= a.indexOf("opus") || 0 <= a.indexOf("vorbis") || 0 <= a.indexOf("mp4a")
     }
 	/**
-	* Rehike-specific change: Support av01 streams.
-	*/
+	 * Rehike-specific change: Support av01 streams.
+	 */
     function nH(a) {
         return 0 <= a.indexOf("vp9") || 0 <= a.indexOf("vp8") || 0 <= a.indexOf("avc1") || 0 <= a.indexOf("av01")
     }

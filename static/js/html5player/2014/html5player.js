@@ -418,6 +418,7 @@ function Bq(){var a=ql();a&&!Nq()&&(Sq("Dropping current screen with id: "+a),Uq
  * Taken from V3.
  */
 var hr = {
+	  0: "f",
     160: "h",
     133: "h",
     134: "h",

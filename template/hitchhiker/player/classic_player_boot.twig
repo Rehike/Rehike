@@ -539,11 +539,15 @@ window.ytplayer.config = {
 		"sw": "0.1",
         "ttsurl": undefined,
 		"invideo": true,
+		"cafe_experiment_id": "37567045",
+		"darude": "1",
+		"trueview": true,
 		"instream_long": false,
 		"iv_module":"http:\/\/s.ytimg.com\/yts\/swfbin\/player-vflNzsCMr\/iv_module.swf",
         "c": "WEB",
         "innertube_context_client_version": "2.20210623.00.00",
         "gapi_hint_params": "m;\/_\/scs\/abc-static\/_\/js\/k=gapi.gapi.en.fXLlmSb25lg.O\/m=__features__\/rt=j\/d=1\/rs=AHpOoo87O_nfyKCryZ5rvwwhVwktxKhiRA",
+		"player_response": JSON.stringify(RAW_PLAYER_RESPONSE),
         "autoplay": "1",
         "oid": "",
         "startSeconds": 0,
@@ -683,7 +687,7 @@ function buildPlayer()
         if (RAW_PLAYER_RESPONSE.videoDetails)
         {
             window.ytplayer.config.args.length_seconds =
-                RAW_PLAYER_RESPONSE.videoDetails.lengthSeconds || null;
+                RAW_PLAYER_RESPONSE.videoDetails.lengthSeconds || "1";
 			window.ytplayer.config.args.iv_invideo_url = "https://www.youtube.com/annotations_invideo?video_id=" + RAW_PLAYER_RESPONSE.videoDetails.videoId;
 			window.ytplayer.config.args.iv_load_policy = "1";
 			if (RAW_PLAYER_RESPONSE.videoDetails.isLive == true) {
