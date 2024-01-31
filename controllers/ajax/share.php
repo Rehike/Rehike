@@ -19,6 +19,7 @@ return new class extends AjaxController
 {
     private ?string $videoId;
     private ?string $listId;
+	public bool $useTemplate = false;
 
     public function onGet(YtApp $yt, RequestMetadata $request): void 
     {

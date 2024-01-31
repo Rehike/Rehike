@@ -10,7 +10,7 @@ use \Rehike\Network;
 
 /**
  * Controller for the primary comment service AJAX.
- * 
+ *
  * @author Aubrey Pankow <aubyomori@gmail.com>
  * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
@@ -85,12 +85,13 @@ return new class extends AjaxController
                     $cids[] = $a;
                 }
             }
-            
-            CommentThread::populateDataApiData($cids)
-            ->then(function() use (&$yt, $data) {
+
+            $commentsBakery = new CommentThread($ytdata);
+
+            $commentsBakery->populateDataApiData($cids)->then(function() use (&$yt, $data, $commentsBakery) {
                 if (null != $data)
                 {
-                    $yt->page = CommentThread::commentThreadRenderer($data);
+                    $yt->page = $commentsBakery->commentThreadRenderer($data);
                 }
                 else
                 {
@@ -142,11 +143,11 @@ return new class extends AjaxController
                     }
                 }
 
-            CommentThread::populateDataApiData($cids)
-            ->then(function() use (&$yt, $data) {
+            $commentsBakery = new CommentThread($ytdata);
+            $commentsBakery->populateDataApiData($cids)->then(function() use (&$yt, $data, $commentsBakery) {
                 if (null != $data)
                 {
-                    $yt->page = CommentThread::commentRenderer($data, true);
+                    $yt->page = $commentsBakery->commentRenderer($data, true);
                 }
                 else
                 {
@@ -191,8 +192,8 @@ return new class extends AjaxController
 
             if (!is_null($data))
             {
-                CommentThread::bakeComments($data)->then(function ($response)
-                        use ($yt)
+                $commentsBakery = new CommentThread($ytdata);
+                $commentsBakery->bakeComments($data)->then(function ($response) use ($yt)
                 {
                     $yt->page = $response;
                 });
@@ -234,8 +235,8 @@ return new class extends AjaxController
 
             if (!is_null($data))
             {
-                CommentThread::bakeReplies($data)->then(function ($response)
-                        use ($yt)
+                $commentsBakery = new CommentThread($ytdata);
+                $commentsBakery->bakeReplies($data)->then(function ($response) use ($yt)
                 {
                     $yt->page = $response;
                 });
