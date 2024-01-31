@@ -14,6 +14,7 @@
     $page = ErrorHandler::getErrorPageModel();
 ?>
 <!DOCTYPE html>
+<!-- Page URL: <?php echo $_SERVER['REQUEST_URI']; ?> -->
 <!-- thanks aubrey <33 -->
 <html>
     <head>
