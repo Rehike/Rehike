@@ -229,10 +229,38 @@ function buildPlayer()
     });
 }
 
-document.addEventListener('spfdone', function() {
+(function(yt){
+	var playerApi = yt.www.getAPI('player-api');
+	
+	if (playerApi)
+	{
+	playerApi.addEventListener('spfdone', function() {
+			console.log("Rebuilding player decryptors");
+			buildPlayer(); // handle refresh
+		});
+	} else {
+		console.log("No player API found");
+	}
+})((function(){
+   // Create a _yt_www API:
+   var a = _yt_www;
+   return {
+      www: {
+         getAPI: a.yn, // Formerly Ci
+         schedulerAvailable: a.fi,
+         logSchedulerTime: a.ci,
+         fireEvent: a.H,
+         getSchedulerEvent: a.ri,
+         bindArgument: a.Ua,
+         runScheduler: a.bi
+      }
+   };
+})());
+
+/*document.addEventListener('spfdone', function() {
 	console.log("Rebuilding player decryptors");
     buildPlayer(); // handle refresh
-});
+});*/
 
 buildPlayer();
 
