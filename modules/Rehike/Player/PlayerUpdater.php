@@ -85,12 +85,12 @@ class PlayerUpdater
 		else if("PLAYER_2015_NEW" === $playerChoice)
 		{
 			$effectiveJsUrl = "/rehike/static/js/html5player/2015/html5player-new.js";
-			$effectiveCssUrl = "//s.ytimg.com/yts/cssbin/www-player-new-vfliB0u8F.css";//"//s.ytimg.com/yts/cssbin/www-player-vfl3TDeje.css";
+			$effectiveCssUrl = "//s.ytimg.com/yts/cssbin/www-player-new-vfliB0u8F.css";
         }
 		else if("PLAYER_2015" === $playerChoice)
 		{
 			$effectiveJsUrl = "/rehike/static/js/html5player/2015/html5player.js";
-			$effectiveCssUrl = "//s.ytimg.com/yts/cssbin/www-player-vflgv54Kk.css";//"//s.ytimg.com/yts/cssbin/www-player-vfl3TDeje.css";
+			$effectiveCssUrl = "//s.ytimg.com/yts/cssbin/www-player-vflgv54Kk.css";
 		} 
         else if ("PLAYER_2014" === $playerChoice)
         {
