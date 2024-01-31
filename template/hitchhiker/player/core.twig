@@ -85,9 +85,6 @@ ytplayer.config = {
     }
 };
 {% endapply %}
-{% if rehike.config.appearance.playerChoice != "LATEST" %}
-	{% include "player/player_decryptor_boot.twig" %}
-{% endif %}
 ytplayer.load = function() {
     yt.player.Application.create("player-api", ytplayer.config);
     ytplayer.config.loaded = true;
