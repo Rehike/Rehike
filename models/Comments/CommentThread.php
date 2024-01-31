@@ -234,8 +234,8 @@ class CommentThread
 
         // PLEASE NOTE:
         // The extra preceding property "comment"/"replies" is removed by this.
-        if (isset($context->comment)) {
-            $out['commentRenderer'] = $this->commentRenderer($context->comment->commentRenderer);
+        if (isset($context->comment) || isset($rendererData)) {
+            $out['commentRenderer'] = $this->commentRenderer($rendererData);
         }
 
         if (isset($context->replies)) {
@@ -396,6 +396,9 @@ class CommentThread
     {
         $parser = new ViewModelParser($this->data);
 
+        // This is to report to the user that the experiment is active in the GUI:
+        \Rehike\YtApp::getInstance()->hasEvilCommentsExperimentBySatan = true;
+
         $entData = $parser->getViewModelEntities($context, [
             "commentKey" => "comment",
             "sharedKey" => "shared",
@@ -404,18 +407,84 @@ class CommentThread
             "commentSurfaceKey" => "commentSurface"
         ]);
 
+        $commentPayload = $entData["comment"]->payload->commentEntityPayload;
+        $toolbarPayload = $entData["toolbarSurface"]->payload->engagementToolbarSurfaceEntityPayload;
 
+        //\Rehike\Logging\DebugLogger::print("%s", var_export($entData, true));
+        \Rehike\Logging\DebugLogger::print("%s", var_export($toolbarPayload, true));
+
+        $out = [];
 
         // To add insult to injury, they also moved comment text to use commandRuns.
         // I call for a firebombing on YouTube's offices tbh
-        $commentText = ParsingUtils::commandRunsToRuns($entData["comment"]->payload->properties->content);
-        $publishedTime = $entData["comment"]->payload->properties->publishedTime;
-        $commentId = $entData["comment"]->payload->properties->commentId;
+        $commentText = ParsingUtils::commandRunsToRuns($commentPayload->properties->content);
+        $publishedTime = $commentPayload->properties->publishedTime;
+        $commentId = $commentPayload->properties->commentId;
 
-        $isLiked = $entData["toolbarState"]->payload->engagementToolbarStateEntityPayload->likeState != "TOOLBAR_LIKE_STATE_INDIFFERENT";
-        $isHearted = $entData["toolbarState"]->payload->engagementToolbarStateEntityPayload->heartState != "TOOLBAR_HEART_STATE_UNHEARTED";
+        $isLiked = $commentPayload->engagementToolbarStateEntityPayload->likeState != "TOOLBAR_LIKE_STATE_INDIFFERENT";
+        $isDisliked = $commentPayload->engagementToolbarStateEntityPayload->dislikeState == "TOOLBAR_LIKE_STATE_DISLIKE";
+        $isHearted = $commentPayload->engagementToolbarStateEntityPayload->heartState != "TOOLBAR_HEART_STATE_UNHEARTED";
+
+        $isOwnComment = $commentPayload->author->isCurrentUser;
+        $isCreatorComment = $commentPayload->author->isCreator;
+        $isVerifiedAuthor = $commentPayload->author->isVerified;
 
 
+        $out["commentId"] = $commentId;
+        $out["publishedTimeText"] = $publishedTime;
+        $out["contentText"] = $commentText;
+        $out["authorText"] = $commentPayload->author->displayName;
+        $out["actionButtons"] = (object)[
+            "commentActionButtonsRenderer" => (object)[
+                "likeButton" => (object)[
+                    "toggleButtonRenderer" => (object)[
+                        "defaultIcon" => (object)[
+                            "iconType" => "LIKE"
+                        ],
+                        "isToggled" => $isLiked,
+                        "defaultServiceEndpoint" => (object)[
+                            "performCommentActionEndpoint" => $toolbarPayload->likeCommand->performCommentActionEndpoint
+                        ],
+                        "toggledServiceEndpoint" => (object)[
+                            "performCommentActionEndpoint" => $toolbarPayload->unlikeCommand->performCommentActionEndpoint
+                        ],
+                        "defaultTooltip" => $commentPayload->toolbar->likeInactiveTooltip,
+                        "toggledTooltip" => $commentPayload->toolbar->likeActiveTooltip,
+                    ]
+                ],
+                "dislikeButton" => (object)[
+                    "toggleButtonRenderer" => (object)[
+                        "defaultIcon" => (object)[
+                            "iconType" => "DISLIKE"
+                        ],
+                        "isToggled" => $isDisliked,
+                        "defaultServiceEndpoint" => (object)[
+                            "performCommentActionEndpoint" => $toolbarPayload->dislikeCommand->performCommentActionEndpoint
+                        ],
+                        "toggledServiceEndpoint" => (object)[
+                            "performCommentActionEndpoint" => $toolbarPayload->undislikeCommand->performCommentActionEndpoint
+                        ],
+                        "defaultTooltip" => $commentPayload->toolbar->dislikeInactiveTooltip,
+                        "toggledTooltip" => $commentPayload->toolbar->dislikeActiveTooltip,
+                    ]
+                ],
+                "creatorHeart" => (object)[
+                    "creatorHeartRenderer" => (object)[
+                        
+                    ]
+                ],
+                "replyButton" => (object)[
+                    "buttonRenderer" => (object)[
+                        
+                    ]
+                ]
+            ]
+        ];
+
+        \Rehike\Logging\DebugLogger::print("%s", var_export((object)$out, true));
+        // throw new \Exception;
+
+        return (object)$out;
     }
     
     private function addLikeCount(&$context)

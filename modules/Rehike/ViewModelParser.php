@@ -25,7 +25,7 @@ class ViewModelParser
     {
         $entities = $this->innertubeData->frameworkUpdates->entityBatchUpdate->mutations;
 
-        foreach ($entities as $entity)
+        foreach ($entities as &$entity)
         {
             $this->entities[$entity->entityKey] = &$entity;
         }
@@ -42,7 +42,7 @@ class ViewModelParser
         {
             if (isset($viewModel->{$propertyName}))
             {
-                $out[$accessorName] = $viewModel->{$propertyName};
+                $out[$accessorName] = $this->entities[$viewModel->{$propertyName}];
             }
             else
             {
