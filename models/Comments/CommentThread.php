@@ -394,12 +394,12 @@ class CommentThread
      */
     private function convertViewModel(object $context): object
     {
-        $parser = new ViewModelParser($this->data);
+        $parser = new ViewModelParser($context, $this->data->frameworkUpdates);
 
         // This is to report to the user that the experiment is active in the GUI:
         \Rehike\YtApp::getInstance()->hasEvilCommentsExperimentBySatan = true;
 
-        $entData = $parser->getViewModelEntities($context, [
+        $entData = $parser->getViewModelEntities([
             "commentKey" => "comment",
             "sharedKey" => "shared",
             "toolbarStateKey" => "toolbarState",
@@ -421,7 +421,7 @@ class CommentThread
         $publishedTime = $commentPayload->properties->publishedTime;
         $commentId = $commentPayload->properties->commentId;
 
-        $isLiked = $commentPayload->engagementToolbarStateEntityPayload->likeState != "TOOLBAR_LIKE_STATE_INDIFFERENT";
+        $isLiked = $commentPayload->engagementToolbarStateEntityPayload->likeState == "TOOLBAR_LIKE_STATE_LIKE";
         $isDisliked = $commentPayload->engagementToolbarStateEntityPayload->dislikeState == "TOOLBAR_LIKE_STATE_DISLIKE";
         $isHearted = $commentPayload->engagementToolbarStateEntityPayload->heartState != "TOOLBAR_HEART_STATE_UNHEARTED";
 
