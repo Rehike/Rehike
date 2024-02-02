@@ -4,8 +4,7 @@ namespace Rehike\Model\ViewModelConverter;
 use Rehike\ViewModelParser;
 
 /**
- * Converts the like button view model to a flatter model like the previous
- * InnerTube implementation.
+ * Converts like button view models to renderers.
  * 
  * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers

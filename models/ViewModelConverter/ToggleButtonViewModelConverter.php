@@ -2,7 +2,7 @@
 namespace Rehike\Model\ViewModelConverter;
 
 /**
- * intro
+ * Converts toggle button view models to renderers.
  * 
  * Toggle button renderers are structured very differently from the view models.
  * The view models (inefficiently) store two separate button models, whereas the

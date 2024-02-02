@@ -17,17 +17,21 @@ class CommentsHeader {
         $new = new self();
 
         if ($a = @$data->titleText) {
-            $new->title = ParsingUtils::getText($data->titleText);
+            $new->title = StringTranslationManager::get(
+                ParsingUtils::getText($data->titleText)
+            );
         }
         
         if ($a = @$data->countText) {
             $a = $a->runs;
-            $new->commentsCountText = $a[0]->text;
+            $new->commentsCountText = StringTranslationManager::reformatNumber($a[0]->text);
         }
 
         if ($a = @$data->createRenderer) {
             $new->createParams = $a->commentSimpleboxRenderer->submitButton->buttonRenderer->serviceEndpoint->createCommentEndpoint->createCommentParams ?? null;
-            $new->commentText = ParsingUtils::getText($a->commentSimpleboxRenderer->submitButton->buttonRenderer->text);
+            $new->commentText = StringTranslationManager::get(
+                ParsingUtils::getText($a->commentSimpleboxRenderer->submitButton->buttonRenderer->text)
+            );
         }
 
         if ($a = $data->sortMenu) {
@@ -38,13 +42,13 @@ class CommentsHeader {
                 $item = $a[$i];
         
                 if ($item->selected) {
-                    $_sr->title = $item->title;
+                    $_sr->title = StringTranslationManager::get(ParsingUtils::getText($item->title));
                 }
         
                 $_sr->items[$i] = (object) [];
                 $_sri = $_sr->items[$i]; // shorthand
                 
-                $_sri->title = $item->title;
+                $_sri->title = StringTranslationManager::get(ParsingUtils::getText($item->title));
                 $_sri->selected = $item->selected;
                 $_sri->continuation = $item->serviceEndpoint->continuationCommand->token;
         
@@ -62,7 +66,9 @@ class CommentsHeader {
             $new->simpleBoxRenderer = (object) [];
             $_sbr = $new->simpleBoxRenderer; // shorthand
             $_sbr->authorThumbnail = $a->authorThumbnail;
-            $_sbr->placeholderText = ParsingUtils::getText($a->placeholderText);
+            $_sbr->placeholderText = StringTranslationManager::get(
+                ParsingUtils::getText($a->placeholderText)
+            );
         }
 
         return $new;

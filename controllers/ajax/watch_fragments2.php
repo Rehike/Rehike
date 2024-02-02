@@ -66,7 +66,11 @@ class AjaxWatchFragments2Controller extends AjaxController
 
         Network::innertubeRequest(
             action: "next", 
-            body: [ "continuation" => $_GET['ctoken'] ]
+            body: [ 
+                "continuation" => $_GET['ctoken'],
+                // We use German as a base language because it has full counts
+                "hl" => "de_DE"
+            ]
         )->then(function($response) use (&$yt) {
             $ytdata = $response->getJson();
 
@@ -84,7 +88,7 @@ class AjaxWatchFragments2Controller extends AjaxController
             // });
 
             $commentsBakery = new CommentThread($ytdata);
-            $commentsBakery->bakeComments()->then(function ($value) use ($yt) {
+            $commentsBakery->bakeComments($_oct->continuationItems)->then(function ($value) use ($yt) {
                 $yt->page->commentsRenderer->comments = $value;
             });
         });

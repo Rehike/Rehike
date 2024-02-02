@@ -14,3 +14,53 @@ oldReplyTextRegex: "/View /"
 
 replyCountIsolator: "/( replies)|( reply)/i"
 likeCountIsolator: "/(Like this )|(comment)|(reply)|( along with )|(,)|( other person)|( other people)/"
+
+# Due to a comments update around the end of January 2024, we decided to
+# hardcode comment strings. This would be needed anyways, but we also use German
+# for comment API requests now, because it has full counts to a larger extent
+# than English.
+commentsHeader: "Comments"
+topComments: "Top comments"
+newestFirst: "Newest first"
+
+linkedComment: "Linked comment"
+
+addAComment: "Add a comment..."
+addAReply: "Add a reply..."
+
+loadMoreReplies: "Load more replies"
+
+expandButtonText: "Read more"
+collapseButtonText: "Show less"
+replyButtonText: "Reply"
+heartButtonText: "Heart"
+unheartButtonText: "Remove heart"
+
+pinnedByText: "Pinned by %s"
+heartTooltipText: "❤ by %s"
+
+secondsAgoSingular: "%s second ago"
+secondsAgoPlural: "%s seconds ago"
+minutesAgoSingular: "%s minute ago"
+minutesAgoPlural: "%s minutes ago"
+hoursAgoSingular: "%s hour ago"
+hoursAgoPlural: "%s hours ago"
+daysAgoSingular: "%s day ago"
+daysAgoPlural: "%s days ago"
+weeksAgoSingular: "%s week ago"
+weeksAgoPlural: "%s weeks ago"
+monthsAgoSingular: "%s month ago"
+monthsAgoPlural: "%s months ago"
+yearsAgoSingular: "%s year ago"
+yearsAgoPlural: "%s years ago"
+
+timestampEditedText: "%s (edited)"
+
+cancelText: "Cancel"
+commentText: "Comment"
+replyText: "Reply"
+
+reportText: "Report"
+deleteText: "Delete"
+editText: "Edit"
+pinText: "Pin"
