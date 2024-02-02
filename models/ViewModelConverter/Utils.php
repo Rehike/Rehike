@@ -2,7 +2,7 @@
 namespace Rehike\Model\ViewModelConverter;
 
 /**
- * Common utilities to the converters.
+ * Provides common utilities for the view model converters.
  * 
  * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers

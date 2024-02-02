@@ -7,6 +7,7 @@ use \Rehike\Model\Comments\MCommentVoteButton as VoteButton;
 use \Rehike\Model\Comments\MCommentReplyButton as ReplyButton;
 use \Rehike\i18n\i18n;
 use \Rehike\ConfigManager\Config;
+use Rehike\Model\ViewModelConverter\CommentsViewModelConverter;
 use \Rehike\Network;
 use Rehike\Util\ParsingUtils;
 use Rehike\ViewModelParser;
@@ -59,9 +60,10 @@ class CommentThread
         });
     }
 
-    public function bakeComments(): Promise
+    public function bakeComments($context): Promise
     {
-        $context = $this->getBaseCommentsContext();
+        // Account for view model update:
+        $this->convertThreadsIfNecessary($context);
 
         return new Promise(function ($resolve, $reject) use ($context) {
             $out = ["commentThreads" => []];
@@ -145,6 +147,9 @@ class CommentThread
 
     public function bakeReplies($context): Promise
     {
+        // Account for view model update:
+        $this->convertCommentsIfNecessary($context->continuationItems);
+
         return new Promise(function ($resolve, $reject) use ($context) {
             // Top level function
             // $context = (Array containing all commentRenderer items)
@@ -213,29 +218,61 @@ class CommentThread
         });
     }
 
-    private function getBaseCommentsContext(): mixed
+    private function convertThreadsIfNecessary(array &$threads): void
     {
-        return $this->data->onResponseReceivedEndpoints[1]->reloadContinuationItemsCommand->continuationItems;
+        foreach ($threads as &$thread)
+        {
+            if (isset($thread->commentThreadRenderer->commentViewModel->commentViewModel))
+            {
+                $target = $thread->commentThreadRenderer->commentViewModel->commentViewModel;
+                $renderer = $this->convertCommentViewModel($target);
+                
+                unset($thread->commentThreadRenderer->commentViewModel);
+                $thread->commentThreadRenderer->comment = (object)[
+                    "commentRenderer" => $renderer
+                ];
+            }
+        }
+
+        if (isset($thread->commentThreadRenderer->replies->commentRepliesRenderer->contents))
+        {
+            $replies = $thread->commentThreadRenderer->replies->commentRepliesRenderer->contents;
+            $this->convertCommentsIfNecessary($replies);
+        }
+    }
+
+    private function convertCommentsIfNecessary(array &$comments): void
+    {
+        foreach ($comments as &$comment)
+        {
+            if (isset($comment->commentViewModel))
+            {
+                $target = $comment->commentViewModel;
+                $renderer = $this->convertCommentViewModel($target);
+
+                unset($comment->commentViewModel);
+                $comment->commentRenderer = $renderer;
+            }
+        }
+    }
+
+    private function convertCommentViewModel(object $viewModel): object
+    {
+        $converter = new CommentsViewModelConverter(
+            $viewModel,
+            $this->data->frameworkUpdates
+        );
+        return $converter->bakeCommentRenderer();
     }
 
     public function commentThreadRenderer($context)
     {
         $out = [];
 
-        // 2024/01/30: Unwrap viewmodels if the experiment is active:
-        if (isset($context->commentViewModel->commentViewModel))
-        {
-            $rendererData = $this->convertViewModel($context->commentViewModel->commentViewModel);
-        }
-        else
-        {
-            $rendererData = $context->comment->commentRenderer;
-        }
-
         // PLEASE NOTE:
         // The extra preceding property "comment"/"replies" is removed by this.
-        if (isset($context->comment) || isset($rendererData)) {
-            $out['commentRenderer'] = $this->commentRenderer($rendererData);
+        if (isset($context->comment)) {
+            $out['commentRenderer'] = $this->commentRenderer($context->comment->commentRenderer);
         }
 
         if (isset($context->replies)) {
@@ -284,6 +321,56 @@ class CommentThread
             }
         }
 
+        // Forced german hack:
+        if ($text = ParsingUtils::getText($context->publishedTimeText))
+        {
+            StringTranslationManager::setText(
+                $context->publishedTimeText,
+                StringTranslationManager::convertDate($text)
+            );
+        }
+        if ($text = ParsingUtils::getText($context->expandButton->text))
+        {
+            StringTranslationManager::setText(
+                $context->expandButton->text,
+                StringTranslationManager::get($text)
+            );
+        }
+        if ($text = ParsingUtils::getText($context->collapseButton->text))
+        {
+            StringTranslationManager::setText(
+                $context->collapseButton->text,
+                StringTranslationManager::get($text)
+            );
+        }
+        if (
+            isset($context->actionButtons->commentActionButtonsRenderer->creatorHeart->creatorHeartRenderer) &&
+            $heart = $context->actionButtons->commentActionButtonsRenderer->creatorHeart->creatorHeartRenderer
+        )
+        {
+            if ($text = ParsingUtils::getText($heart->heartedTooltip))
+            {
+                StringTranslationManager::setText(
+                    $heart->heartedTooltip,
+                    StringTranslationManager::convertHeart($text)
+                );
+            }
+            if ($text = ParsingUtils::getText($heart->heartedAccessibility->accessibilityData))
+            {
+                StringTranslationManager::setText(
+                    $heart->heartedAccessibility->accessibilityData,
+                    StringTranslationManager::get($text)
+                );
+            }
+            if ($text = ParsingUtils::getText($heart->unheartedAccessibility->accessibilityData))
+            {
+                StringTranslationManager::setText(
+                    $heart->unheartedAccessibility->accessibilityData,
+                    StringTranslationManager::get($text)
+                );
+            }
+        }
+
         $context->likeButton = VoteButton::fromData(PropertyAtPath::get($context, self::LIKE_BUTTON_PATH));
         $context->dislikeButton = VoteButton::fromData(PropertyAtPath::get($context, self::DISLIKE_BUTTON_PATH));
 		if (isset($context->voteCount)) $this->addLikeCount($context);
@@ -298,8 +385,7 @@ class CommentThread
             $context->creatorHeart = PropertyAtPath::get($context, self::HEART_BUTTON_PATH);
         } catch (\YukisCoffee\PropertyAtPathException $e) {
             $context->creatorHeart = null;
-        } 
-        
+        }
 
         return $context;
     }
@@ -377,114 +463,8 @@ class CommentThread
         return
             [
                 "token" => $context->command->continuationCommand->token,
-                "text" => $context->text
+                "text" => StringTranslationManager::get(ParsingUtils::getText($context->text))
             ];
-    }
-
-    /**
-     * Converts comment view models to the old format, which Rehike uses for parsing.
-     *
-     * View models are these insane pieces of shit that the monkeys who work on InnerTube
-     * decided to adopt today. Instead of the API being designed in any remotely sane way,
-     * because InnerTube was too good, they decided to rewrite it to be more scattered and
-     * messier.
-     *
-     * In the case that we're using a view model, we have to look up its mutation data and
-     * reform the clean object ourselves. Fuck you, you cunts.
-     */
-    private function convertViewModel(object $context): object
-    {
-        $parser = new ViewModelParser($context, $this->data->frameworkUpdates);
-
-        // This is to report to the user that the experiment is active in the GUI:
-        \Rehike\YtApp::getInstance()->hasEvilCommentsExperimentBySatan = true;
-
-        $entData = $parser->getViewModelEntities([
-            "commentKey" => "comment",
-            "sharedKey" => "shared",
-            "toolbarStateKey" => "toolbarState",
-            "toolbarSurfaceKey" => "toolbarSurface",
-            "commentSurfaceKey" => "commentSurface"
-        ]);
-
-        $commentPayload = $entData["comment"]->payload->commentEntityPayload;
-        $toolbarPayload = $entData["toolbarSurface"]->payload->engagementToolbarSurfaceEntityPayload;
-
-        //\Rehike\Logging\DebugLogger::print("%s", var_export($entData, true));
-        \Rehike\Logging\DebugLogger::print("%s", var_export($toolbarPayload, true));
-
-        $out = [];
-
-        // To add insult to injury, they also moved comment text to use commandRuns.
-        // I call for a firebombing on YouTube's offices tbh
-        $commentText = ParsingUtils::commandRunsToRuns($commentPayload->properties->content);
-        $publishedTime = $commentPayload->properties->publishedTime;
-        $commentId = $commentPayload->properties->commentId;
-
-        $isLiked = $commentPayload->engagementToolbarStateEntityPayload->likeState == "TOOLBAR_LIKE_STATE_LIKE";
-        $isDisliked = $commentPayload->engagementToolbarStateEntityPayload->dislikeState == "TOOLBAR_LIKE_STATE_DISLIKE";
-        $isHearted = $commentPayload->engagementToolbarStateEntityPayload->heartState != "TOOLBAR_HEART_STATE_UNHEARTED";
-
-        $isOwnComment = $commentPayload->author->isCurrentUser;
-        $isCreatorComment = $commentPayload->author->isCreator;
-        $isVerifiedAuthor = $commentPayload->author->isVerified;
-
-
-        $out["commentId"] = $commentId;
-        $out["publishedTimeText"] = $publishedTime;
-        $out["contentText"] = $commentText;
-        $out["authorText"] = $commentPayload->author->displayName;
-        $out["actionButtons"] = (object)[
-            "commentActionButtonsRenderer" => (object)[
-                "likeButton" => (object)[
-                    "toggleButtonRenderer" => (object)[
-                        "defaultIcon" => (object)[
-                            "iconType" => "LIKE"
-                        ],
-                        "isToggled" => $isLiked,
-                        "defaultServiceEndpoint" => (object)[
-                            "performCommentActionEndpoint" => $toolbarPayload->likeCommand->performCommentActionEndpoint
-                        ],
-                        "toggledServiceEndpoint" => (object)[
-                            "performCommentActionEndpoint" => $toolbarPayload->unlikeCommand->performCommentActionEndpoint
-                        ],
-                        "defaultTooltip" => $commentPayload->toolbar->likeInactiveTooltip,
-                        "toggledTooltip" => $commentPayload->toolbar->likeActiveTooltip,
-                    ]
-                ],
-                "dislikeButton" => (object)[
-                    "toggleButtonRenderer" => (object)[
-                        "defaultIcon" => (object)[
-                            "iconType" => "DISLIKE"
-                        ],
-                        "isToggled" => $isDisliked,
-                        "defaultServiceEndpoint" => (object)[
-                            "performCommentActionEndpoint" => $toolbarPayload->dislikeCommand->performCommentActionEndpoint
-                        ],
-                        "toggledServiceEndpoint" => (object)[
-                            "performCommentActionEndpoint" => $toolbarPayload->undislikeCommand->performCommentActionEndpoint
-                        ],
-                        "defaultTooltip" => $commentPayload->toolbar->dislikeInactiveTooltip,
-                        "toggledTooltip" => $commentPayload->toolbar->dislikeActiveTooltip,
-                    ]
-                ],
-                "creatorHeart" => (object)[
-                    "creatorHeartRenderer" => (object)[
-                        
-                    ]
-                ],
-                "replyButton" => (object)[
-                    "buttonRenderer" => (object)[
-                        
-                    ]
-                ]
-            ]
-        ];
-
-        \Rehike\Logging\DebugLogger::print("%s", var_export((object)$out, true));
-        // throw new \Exception;
-
-        return (object)$out;
     }
     
     private function addLikeCount(&$context)
@@ -522,7 +502,7 @@ class CommentThread
 
     private function getLikeCountFromLabel($label)
     {
-        $i18n = i18n::getNamespace("comments");
-        return preg_replace($i18n->get("likeCountIsolator"), "", $label);
+        // return preg_replace("/[^0-9]/", "", $label);
+        return StringTranslationManager::convertLikeCount($label);
     }
 }
