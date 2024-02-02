@@ -534,6 +534,7 @@ ytplayer.config = {
 		"trueview": true,
 		"instream_long": false,
 		"iv_module":"http:\/\/s.ytimg.com\/yts\/swfbin\/player-vflNzsCMr\/iv_module.swf",
+		"playsinline":"1",
 		{% if pageType == "embed" %}
         "el": "embedded",
 		"autohide":"1",
@@ -793,6 +794,45 @@ function buildPlayer()
         }
 
         ytplayer.config.args['url_encoded_fmt_stream_map'] = n;
+		
+		// embed args
+		var qs = document.location.search.split('+').join(' ');
+
+		var params = {},
+			tokens,
+			re = /[?&]?([^=]+)=([^&]*)/g;
+		
+		while (tokens = re.exec(qs)) {
+			params[decodeURIComponent(tokens[1])] = decodeURIComponent(tokens[2]);
+		}
+		
+		function setArgumentFromUrl(a){ 
+			if(!!ytplayer.config.args[a] || !!params[a])
+				ytplayer.config.args[a] = params[a] || ytplayer.config.args[a];
+		}
+		
+		setArgumentFromUrl('color');
+		setArgumentFromUrl('theme');
+		setArgumentFromUrl('autoplay');
+		setArgumentFromUrl('autohide');
+		setArgumentFromUrl('controls');
+		setArgumentFromUrl('disablekb');
+		setArgumentFromUrl('enablejsapi');
+		setArgumentFromUrl('fs');
+		setArgumentFromUrl('end');
+		setArgumentFromUrl('hl');
+		setArgumentFromUrl('iv_load_policy');
+		setArgumentFromUrl('list');
+		setArgumentFromUrl('listType');
+		setArgumentFromUrl('loop');
+		setArgumentFromUrl('modestbranding');
+		setArgumentFromUrl('origin');
+		setArgumentFromUrl('playlist');
+		setArgumentFromUrl('playsinline');
+		setArgumentFromUrl('rel');
+		setArgumentFromUrl('showinfo');
+		setArgumentFromUrl('start');
+		setArgumentFromUrl('html5');
 
         {% if not yt.spf %}
         ytplayer.load = function() {
