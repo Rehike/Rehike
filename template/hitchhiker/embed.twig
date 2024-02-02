@@ -1,411 +1,181 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-    <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="robots" content="noindex">
-        {% include "core/roboto.twig" %}
-        <link rel="stylesheet" href="{{ yt.playerConfig.baseCssUrl }}" name="www-player">
-        <style>
-            html {
-                overflow: hidden;
-            }
-    
-            body {
-                font: 12px Roboto, Arial, sans-serif;
-                background-color: #000;
-                color: #fff;
-                height: 100%;
-                width: 100%;
-                overflow: hidden;
-                position: absolute;
-                margin: 0;
-                padding: 0;
-            }
-    
-            #player {
-                width: 100%;
-                height: 100%;
-            }
-    
-            h1 {
-                text-align: center;
-                color: #fff;
-            }
-    
-            h3 {
-                margin-top: 6px;
-                margin-bottom: 3px;
-            }
-    
-            .player-unavailable {
-                position: absolute;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                padding: 25px;
-                font-size: 13px;
-                background: url(/img/meh7.png) 50% 65% no-repeat;
-            }
-    
-            .player-unavailable .message {
-                text-align: left;
-                margin: 0 -5px 15px;
-                padding: 0 5px 14px;
-                border-bottom: 1px solid #888;
-                font-size: 19px;
-                font-weight: normal;
-            }
-    
-            .player-unavailable a {
-                color: #167ac6;
-                text-decoration: none;
-            }
-        </style>
-        <script>
-            var ytcsi = {
-                gt: function(n) {
-                    n = (n || "") + "data_";
-                    return ytcsi[n] || (ytcsi[n] = {
-                        tick: {},
-                        info: {}
-                    })
-                },
-                now: window.performance && window.performance.timing && window.performance.now && window.performance.timing.navigationStart ? function() {
-                    return window.performance.timing.navigationStart + window.performance.now()
-                } : function() {
-                    return (new Date).getTime()
-                },
-                tick: function(l, t, n) {
-                    var ticks = ytcsi.gt(n).tick;
-                    var v = t || ytcsi.now();
-                    if (ticks[l]) {
-                        ticks["_" + l] = ticks["_" + l] || [ticks[l]];
-                        ticks["_" + l].push(v)
-                    }
-                    ticks[l] = v
-                },
-                info: function(k,
-                    v, n) {
-                    ytcsi.gt(n).info[k] = v
-                },
-                setStart: function(t, n) {
-                    ytcsi.tick("_start", t, n)
-                }
-            };
-            (function(w, d) {
-                ytcsi.setStart(w.performance ? w.performance.timing.responseStart : null);
-                var isPrerender = (d.visibilityState || d.webkitVisibilityState) == "prerender";
-                var vName = !d.visibilityState && d.webkitVisibilityState ? "webkitvisibilitychange" : "visibilitychange";
-                if (isPrerender) {
-                    var startTick = function() {
-                        ytcsi.setStart();
-                        d.removeEventListener(vName, startTick)
-                    };
-                    d.addEventListener(vName, startTick, false)
-                }
-                if (d.addEventListener) d.addEventListener(vName, function() {
-                    ytcsi.tick("vc")
-                }, false);
-            
-                function isGecko() {
-                    if (!w.navigator) return false;
-                    try {
-                        if (w.navigator.userAgentData && w.navigator.userAgentData.brands && w.navigator.userAgentData.brands.length) {
-                            var brands = w.navigator.userAgentData.brands;
-                            for (var i = 0; i < brands.length; i++)
-                                if (brands[i] && brands[i].brand === "Firefox") return true;
-                            return false
-                        }
-                    } catch (e) {
-                        setTimeout(function() {
-                            throw e;
-                        })
-                    }
-                    if (!w.navigator.userAgent) return false;
-                    var ua = w.navigator.userAgent;
-                    return ua.indexOf("Gecko") > 0 && ua.toLowerCase().indexOf("webkit") < 0 && ua.indexOf("Edge") < 0 && ua.indexOf("Trident") < 0 && ua.indexOf("MSIE") < 0
-                }
-                if (isGecko()) {
-                    var isHidden =
-                        (d.visibilityState || d.webkitVisibilityState) == "hidden";
-                    if (isHidden) ytcsi.tick("vc")
-                }
-                var slt = function(el, t) {
-                    setTimeout(function() {
-                        var n = ytcsi.now();
-                        el.loadTime = n;
-                        if (el.slt) el.slt()
-                    }, t)
-                };
-                w.__ytRIL = function(el) {
-                    if (!el.getAttribute("data-thumb"))
-                        if (w.requestAnimationFrame) w.requestAnimationFrame(function() {
-                            slt(el, 0)
-                        });
-                        else slt(el, 16)
-                }
-            })(window, document);
-        </script>
-        <script>
-            var ytcfg = {
-                d: function() {
-                    return window.yt && yt.config_ || ytcfg.data_ || (ytcfg.data_ = {})
-                },
-                get: function(k, o) {
-                    return k in ytcfg.d() ? ytcfg.d()[k] : o
-                },
-                set: function() {
-                    var a = arguments;
-                    if (a.length > 1) ytcfg.d()[a[0]] = a[1];
-                    else
-                        for (var k in a[0]) ytcfg.d()[k] = a[0][k]
-                }
-            };
-            ytcfg.set({
-                "EVENT_ID": "BOKUY9D5G8OBir4PpqGE-AE",
-                "EXPERIMENT_FLAGS": {
-                    "allow_music_base_url": true,
-                    "allow_skip_networkless": true,
-                    "always_send_and_write": true,
-                    "autoescape_tempdata_url": true,
-                    "background_thread_flush_logs_due_to_batch_limit": true,
-                    "cancel_pending_navs": true,
-                    "change_ad_badge_to_stark": true,
-                    "clear_user_partitioned_ls": true,
-                    "csi_on_gel": true,
-                    "deprecate_csi_has_info": true,
-                    "deprecate_pair_servlet_enabled": true,
-                    "deprecate_two_way_binding_child": true,
-                    "deprecate_two_way_binding_parent": true,
-                    "desktop_client_release": true,
-                    "desktop_image_cta_no_background": true,
-                    "desktop_log_img_click_location": true,
-                    "desktop_notification_high_priority_ignore_push": true,
-                    "desktop_notification_set_title_bar": true,
-                    "desktop_sparkles_light_cta_button": true,
-                    "disable_child_node_auto_formatted_strings": true,
-                    "disable_pacf_logging_for_memory_limited_tv": true,
-                    "disable_simple_mixed_direction_formatted_strings": true,
-                    "disable_thumbnail_preloading": true,
-                    "embeds_web_disable_ads_for_pfl": true,
-                    "embeds_web_enable_iframe_src_with_intent": true,
-                    "embeds_web_enable_replace_unload_w_pagehide": true,
-                    "embeds_web_nwl_disable_nocookie": true,
-                    "enable_docked_chat_messages": true,
-                    "enable_mixed_direction_formatted_strings": true,
-                    "enable_pacf_through_ybfe_web_logging_for_page_top": true,
-                    "enable_skip_ad_guidance_prompt": true,
-                    "enable_skippable_ads_for_unplugged_ad_pod": true,
-                    "enable_sli_flush": true,
-                    "enable_watch_next_pause_autoplay_lact": true,
-                    "enable_ypc_spinners": true,
-                    "export_networkless_options": true,
-                    "forward_domain_admin_state_on_embeds": true,
-                    "gfeedback_for_signed_out_users_enabled": true,
-                    "gpa_sparkles_ten_percent_layer": true,
-                    "h5_companion_enable_adcpn_macro_substitution_for_click_pings": true,
-                    "h5_inplayer_enable_adcpn_macro_substitution_for_click_pings": true,
-                    "h5_set_masthead_ads_asynchronously": true,
-                    "hide_endpoint_overflow_on_ytd_display_ad_renderer": true,
-                    "html5_control_flow_include_trigger_logging_in_tmp_logs": true,
-                    "html5_enable_ads_client_monitoring_log_tv": true,
-                    "html5_enable_single_video_vod_ivar_on_pacf": true,
-                    "html5_log_trigger_events_with_debug_data": true,
-                    "html5_web_enable_halftime_preroll": true,
-                    "il_use_view_model_logging_context": true,
-                    "is_browser_support_for_webcam_streaming": true,
-                    "json_condensed_response": true,
-                    "kevlar_dropdown_fix": true,
-                    "kevlar_gel_error_routing": true,
-                    "kevlar_guide_refresh": true,
-                    "live_chat_increased_min_height": true,
-                    "live_chat_use_new_emoji_picker": true,
-                    "log_errors_through_nwl_on_retry": true,
-                    "log_vis_on_tab_change": true,
-                    "log_web_endpoint_to_layer": true,
-                    "mdx_enable_privacy_disclosure_ui": true,
-                    "mdx_load_cast_api_bootstrap_script": true,
-                    "migrate_events_to_ts": true,
-                    "networkless_logging": true,
-                    "no_sub_count_on_sub_button": true,
-                    "pageid_as_header_web": true,
-                    "parse_query_data_from_url": true,
-                    "polymer_bad_build_labels": true,
-                    "polymer_verifiy_app_state": true,
-                    "qoe_send_and_write": true,
-                    "scheduler_use_raf_by_default": true,
-                    "service_worker_enabled": true,
-                    "service_worker_push_enabled": true,
-                    "service_worker_push_home_page_prompt": true,
-                    "service_worker_push_watch_page_prompt": true,
-                    "shorten_initial_gel_batch_timeout": true,
-                    "skip_invalid_ytcsi_ticks": true,
-                    "super_sticker_emoji_picker_category_button_icon_filled": true,
-                    "suppress_error_204_logging": true,
-                    "use_new_nwl_initialization": true,
-                    "use_new_nwl_saw": true,
-                    "use_new_nwl_stw": true,
-                    "use_new_nwl_wts": true,
-                    "use_player_abuse_bg_library": true,
-                    "use_request_time_ms_header": true,
-                    "use_session_based_sampling": true,
-                    "use_shared_nsm": true,
-                    "use_shared_nsm_and_keep_yt_online_updated": true,
-                    "use_watch_fragments2": true,
-                    "verify_ads_itag_early": true,
-                    "vss_final_ping_send_and_write": true,
-                    "vss_playback_use_send_and_write": true,
-                    "warm_load_nav_start_web": true,
-                    "web_always_load_chat_support": true,
-                    "web_api_url": true,
-                    "web_dedupe_ve_grafting": true,
-                    "web_enable_voz_audio_feedback": true,
-                    "web_gel_timeout_cap": true,
-                    "web_one_platform_error_handling": true,
-                    "web_prefetch_preload_video": true,
-                    "web_yt_config_context": true,
-                    "ytidb_clear_embedded_player": true,
-                    "H5_async_logging_delay_ms": 1000.0,
-                    "addto_ajax_log_warning_fraction": 0.1,
-                    "autoplay_pause_by_lact_sampling_fraction": 0.0,
-                    "log_window_onerror_fraction": 0.1,
-                    "tv_pacf_logging_sample_rate": 0.01,
-                    "web_system_health_fraction": 0.01,
-                    "ytidb_transaction_ended_event_rate_limit": 0.02,
-                    "ytidb_transaction_ended_event_rate_limit_session": 0.2,
-                    "ytidb_transaction_ended_event_rate_limit_transaction": 0.1,
-                    "autoplay_pause_by_lact_sec": 0,
-                    "botguard_async_snapshot_timeout_ms": 3000,
-                    "check_navigator_accuracy_timeout_ms": 0,
-                    "initial_gel_batch_timeout": 2000,
-                    "log_web_meta_interval_ms": 0,
-                    "max_prefetch_window_sec_for_livestream_optimization": 0,
-                    "min_prefetch_offset_sec_for_livestream_optimization": 10,
-                    "network_polling_interval": 30000,
-                    "polymer_log_prop_change_observer_percent": 0,
-                    "prefetch_comments_ms_after_video": 0,
-                    "service_worker_push_logged_out_prompt_watches": -1,
-                    "service_worker_push_prompt_cap": -1,
-                    "service_worker_push_prompt_delay_microseconds": 3888000000000,
-                    "watch_next_pause_autoplay_lact_sec": 4500,
-                    "web_foreground_heartbeat_interval_ms": 28000,
-                    "web_gel_debounce_ms": 10000,
-                    "web_logging_max_batch": 100,
-                    "ytidb_remake_db_retries": 1,
-                    "ytidb_reopen_db_retries": 0,
-                    "embeds_web_synth_ch_headers_banned_urls_regex": "",
-                    "live_chat_unicode_emoji_json_url": "https://www.gstatic.com/youtube/img/emojis/emojis-svg-9.json",
-                    "service_worker_push_force_notification_prompt_tag": "1",
-                    "service_worker_scope": "/",
-                    "web_client_version_override": "",
-                    "kevlar_command_handler_command_banlist": [],
-                    "web_op_signal_type_banlist": []
-                },
-                "GAPI_HINT_PARAMS": "m;/_/scs/abc-static/_/js/k\u003dgapi.gapi.en.PlpnwD4HYro.O/d\u003d1/rs\u003dAHpOoo-D4573md5GmdJHX15d0lc3SoObhA/m\u003d__features__",
-                "GAPI_HOST": "https://apis.google.com",
-                "GAPI_LOCALE": "en_US",
-                "GL": "US",
-                "HL": "en",
-                "HTML_LANG": "en",
-                "INNERTUBE_API_KEY": "AIzaSyAO_FJ2SlqU8Q4STEHLGCilw_Y9_11qcW8",
-                "INNERTUBE_API_VERSION": "v1",
-                "INNERTUBE_CLIENT_NAME": "WEB",
-                "INNERTUBE_CLIENT_VERSION": "2.20221104.02.00",
-                "INNERTUBE_CONTEXT": {
-                    {{ yt.page.innertubeContext|json_encode|raw }}
-                },
-                "INNERTUBE_CONTEXT_CLIENT_NAME": 56,
-                "INNERTUBE_CONTEXT_CLIENT_VERSION": "1.20221206.01.00",
-                "INNERTUBE_CONTEXT_GL": "US",
-                "INNERTUBE_CONTEXT_HL": "en",
-                "LATEST_ECATCHER_SERVICE_TRACKING_PARAMS": {
-                    "client.name": "WEB_EMBEDDED_PLAYER"
-                },
-                "SERVER_NAME": "WebFE",
-                "SESSION_INDEX": "0",
-                "VISITOR_DATA": "CgtjR3M3NTUzeTBaVSiExNOcBg%3D%3D",
-                "WEB_PLAYER_CONTEXT_CONFIGS": {
-                    "WEB_PLAYER_CONTEXT_CONFIG_ID_EMBEDDED_PLAYER": {
-                        "rootElementId": "movie_player",
-                        "jsUrl": "{{ yt.playerConfig.baseJsUrl }}",
-                        "cssUrl": "{{ yt.playerConfig.baseCssUrl }}",
-                        "contextId": "WEB_PLAYER_CONTEXT_CONFIG_ID_EMBEDDED_PLAYER",
-                        "eventLabel": "embedded",
-                        "contentRegion": "US",
-                        "hl": "en_US",
-                        "hostLanguage": "en",
-                        "innertubeApiKey": "AIzaSyAO_FJ2SlqU8Q4STEHLGCilw_Y9_11qcW8",
-                        "innertubeApiVersion": "v1",
-                        "innertubeContextClientVersion": "2.20221104.02.00",
-                        "device": {
-                            "brand": "",
-                            "model": "",
-                            "browser": "Firefox",
-                            "browserVersion": "102.0",
-                            "os": "Windows",
-                            "osVersion": "10.0",
-                            "platform": "DESKTOP",
-                            "interfaceName": "WEB_EMBEDDED_PLAYER",
-                            "interfaceVersion": "1.20221206.01.00"
-                        },
-                        "serializedExperimentIds": "23983296,24001373,24002022,24002025,24004644,24007246,24080738,24135310,24169501,24255165,24292955,24407200,24408610,24411032,24415864,24416291,24423887,24434209",
-                        "serializedExperimentFlags": "{% include "player/flags.twig" %}",
-                        "startMuted": false,
-                        "enableMutedAutoplay": false,
-                        "mobileIphoneSupportsInlinePlayback": true,
-                        "isMobileDevice": false,
-                        "cspNonce": "FT3bKhDbemIwaFwrm5Wm4A",
-                        "canaryState": "none",
-                        "enableCsiLogging": true,
-                        "disableAutonav": false,
-                        "authorizedUserIndex": 0,
-                        "isEmbed": true,
-                        "embedOptOutDeprecation": false,
-                        "disableCastApi": false,
-                        "disableMdxCast": false,
-                        "datasyncId": "116362474172410783029||",
-                        "embedsEnablePfpImaIntegration": false,
-                        "embedsEnableAppendUtmParams": false,
-                        "embedsDisableInfoPanels": false
-                    }
-                },
-                "XSRF_FIELD_NAME": "session_token",
-                "XSRF_TOKEN": "QUFFLUhqbUpFTnN1V3ZESm00NkpLb0s1NU9OczZPT0NXd3xBQ3Jtc0tudUZGUDZ3UDVjTWYxSThCUldWSDNPcXhBbGkzaXdZQ245YlJaU2RuUTBOYUJBdDhWTmFHekpvODdUVWJzOUJZYjMta2RiYWhlTWlwU1Y2dmhHTlZULTlQTjA5MlZ0emJ1akNYaVJuTm5fUXBsY21OSQ\u003d\u003d",
-                "SERVER_VERSION": "control",
-                "DATASYNC_ID": "116362474172410783029||",
-                "SERIALIZED_CLIENT_CONFIG_DATA": "CITE05wGEIjdrgUQ_Jb-EhC4i64FEIeR_hIQg92uBRC4kP4SELKI_hIQ2L6tBQ%3D%3D",
-                "ROOT_VE_TYPE": 16623,
-                "CLIENT_PROTOCOL": "h2",
-                "CLIENT_TRANSPORT": "tcp",
-                "PLAYER_VARS": {
-                    "embedded_player_response": "{{ yt.page.playerResponse|json_encode }}",
-                    "video_id": "{{ yt.page.videoId }}",
-                    "user_display_name": "",
-                    "user_display_image": "",
-                    "user_display_email": ""
-                },
-                "POST_MESSAGE_ORIGIN": "*",
-                "VIDEO_ID": "{{ yt.page.videoId }}",
-                "DOMAIN_ADMIN_STATE": ""
-            });
-            window.ytcfg.obfuscatedData_ = [];
-        </script>
-        <script>
-            var yterr = yterr || true;
-        </script>
-        <script src="{{ yt.playerConfig.embedJsUrl }}"></script>
-        <script src="{{ yt.playerConfig.baseJsUrl }}"></script>
-    </head>
-    <body class="date-{{ yt.rehikeVersion.time|date("Ymd") }} en_US ltr site-center-aligned site-as-giant-card">
-        <div id="player"></div>
-        <script>writeEmbed();</script>
-        <script nonce="FT3bKhDbemIwaFwrm5Wm4A">ytcsi.info('st', 56.0);</script>
-        <noscript>
-            <div class="player-unavailable">
-                <h1 class="message">An error occurred.</h1>
-                <div class="submessage">Unable to execute JavaScript.</div>
-            </div>
-        </noscript>
-    </body>
-</html>
+{#
+   Implements the insertion point for the watch page.
+#}
+{% extends "core/core_embed.twig" %}
+
+{% set pageType = 'embed' %}
+
+{% set appbarEnabled = true %}
+{% set defaultGuideVisibility = false %}
+{% set defaultAppbarVisibility = false %}
+{% set enableSnapScaling = true %}
+
+{% set playerType = 'content-alignment       watch-small' %}
+
+{%- block page_class -%}
+video-{{ yt.videoId }} {{ (yt.theaterMode) ? 'watch-wide watch-stage-mode' }}
+{% endblock %}
+
+{% block header %}
+{% endblock %}
+
+{%- block appbarContent -%}
+{% endblock %}
+
+{% block foot_scripts %}
+<script>
+    yt.setConfig({
+      'VIDEO_ID': "{{ yt.videoId }}",
+      {% if yt.playlistId and yt.page.playlist %}
+         'LIST_ID': "{{ yt.playlistId }}",
+      {% endif %}
+      'WAIT_TO_DELAYLOAD_FRAME_CSS': false,
+      'IS_UNAVAILABLE_PAGE': false,
+      'DROPDOWN_ARROW_URL': "\/yts\/img\/pixel-vfl3z5WfW.gif",
+      'AUTONAV_EXTRA_CHECK': false,
+
+      'JS_PAGE_MODULES': [
+        'www/watch',
+          'www/watch_speedyg',
+          'www/watch_autoplayrenderer',
+        'www/watch_transcript'       ],
+
+
+      'REPORTVIDEO_JS': "\/yts\/jsbin\/www-reportvideo-vflidisXQ\/www-reportvideo.js",
+      'REPORTVIDEO_CSS': "\/yts\/cssbin\/www-watch-reportvideo-vflhkISaX.css",
+
+
+      'TIMING_AFT_KEYS': ['pbp', 'pbs'],
+      'YPC_CAN_RATE_VIDEO': true,
+
+
+        {#
+         'RELATED_PLAYER_ARGS': {"rvs":"title=a-ha+-+Take+On+Me+%28Official+Video%29\u0026session_data=itct%3DCBgQvU4YACITCPCb3sSz6toCFcuifgodz50MGCj4HTIJZW5kc2NyZWVuSMS7ga29mI6GdQ%253D%253D\u0026iurlmq=https%3A%2F%2Fi.ytimg.com%2Fvi%2FdjV11Xbc914%2Fhqdefault.jpg%3Fsqp%3D-oaymwEXCNACELwBSFryq4qpAwkIARUAAIhCGAE%3D%26rs%3DAOn4CLAIObBK454k6ctzA817tauyW9rHyA\u0026short_view_count_text=630M+views\u0026endscreen_autoplay_session_data=autonav%3D1%26playnext%3D1%26itct%3DCBkQ4ZIBIhMI8JvexLPq2gIVy6J-Ch3PnQwYKPgdMgxyZWxhdGVkLWF1dG9IxLuBrb2YjoZ1\u0026author=RHINO\u0026id=djV11Xbc914\u0026length_seconds=228\u0026iurlhq=https%3A%2F%2Fi.ytimg.com%2Fvi%2FdjV11Xbc914%2Fhqdefault.jpg%3Fsqp%3D-oaymwEXCNACELwBSFryq4qpAwkIARUAAIhCGAE%3D%26rs%3DAOn4CLAIObBK454k6ctzA817tauyW9rHyA,session_data=itct%3DCBcQvk4YASITCPCb3sSz6toCFcuifgodz50MGCj4HTIJZW5kc2NyZWVuSMS7ga29mI6GdQ%253D%253D\u0026list=RDdQw4w9WgXcQ\u0026playlist_iurlhq=https%3A%2F%2Fi.ytimg.com%2Fvi%2FdQw4w9WgXcQ%2Fhqdefault.jpg\u0026playlist_length=0\u0026playlist_title=Mix+-+Rick+Astley+-+Never+Gonna+Give+You+Up+%28Video%29\u0026video_id=djV11Xbc914\u0026thumbnail_ids=djV11Xbc914\u0026playlist_iurlmq=https%3A%2F%2Fi.ytimg.com%2Fvi%2FdQw4w9WgXcQ%2Fmqdefault.jpg,title=Rick+Astley+-+Together+Forever+%28Video%29\u0026session_data=itct%3DCBYQvU4YAiITCPCb3sSz6toCFcuifgodz50MGCj4HTIJZW5kc2NyZWVuSMS7ga29mI6GdQ%253D%253D\u0026iurlmq=https%3A%2F%2Fi.ytimg.com%2Fvi%2FyPYZpwSpKmA%2Fhqdefault.jpg%3Fsqp%3D-oaymwEXCNACELwBSFryq4qpAwkIARUAAIhCGAE%3D%26rs%3DAOn4CLAkUWeHEvBOX6nimDu8c-pZQqDTRA\u0026short_view_count_text=52M+views\u0026author=RickAstleyVEVO\u0026id=yPYZpwSpKmA\u0026length_seconds=205\u0026iurlhq=https%3A%2F%2Fi.ytimg.com%2Fvi%2FyPYZpwSpKmA%2Fhqdefault.jpg%3Fsqp%3D-oaymwEXCNACELwBSFryq4qpAwkIARUAAIhCGAE%3D%26rs%3DAOn4CLAkUWeHEvBOX6nimDu8c-pZQqDTRA,title=Guardians+of+the+Galaxy%3A+Awesome+Mix+Vol.+1+%26+Vol.+2+%28Full+Soundtrack%29\u0026session_data=itct%3DCBUQvU4YAyITCPCb3sSz6toCFcuifgodz50MGCj4HTIJZW5kc2NyZWVuSMS7ga29mI6GdQ%253D%253D\u0026iurlmq=https%3A%2F%2Fi.ytimg.com%2Fvi%2FcMtaFMZxOjk%2Fhqdefault.jpg%3Fsqp%3D-oaymwEXCNACELwBSFryq4qpAwkIARUAAIhCGAE%3D%26rs%3DAOn4CLB2tmoSLIa02CgDhpOHsW7cMWlNdw\u0026short_view_count_text=2.4M+views\u0026author=Library+Music\u0026id=cMtaFMZxOjk\u0026length_seconds=5676\u0026iurlhq=https%3A%2F%2Fi.ytimg.com%2Fvi%2FcMtaFMZxOjk%2Fhqdefault.jpg%3Fsqp%3D-oaymwEXCNACELwBSFryq4qpAwkIARUAAIhCGAE%3D%26rs%3DAOn4CLB2tmoSLIa02CgDhpOHsW7cMWlNdw,title=Wham%21+-+Wake+Me+Up+Before+You+Go-Go+%28Official+Video%29\u0026session_data=itct%3DCBQQvU4YBCITCPCb3sSz6toCFcuifgodz50MGCj4HTIJZW5kc2NyZWVuSMS7ga29mI6GdQ%253D%253D\u0026iurlmq=https%3A%2F%2Fi.ytimg.com%2Fvi%2FpIgZ7gMze7A%2Fhqdefault.jpg%3Fsqp%3D-oaymwEXCNACELwBSFryq4qpAwkIARUAAIhCGAE%3D%26rs%3DAOn4CLAj9KfRoDCT0RNEtMuOIJMN855pHw\u0026short_view_count_text=209M+views\u0026author=WhamVEVO\u0026id=pIgZ7gMze7A\u0026length_seconds=231\u0026iurlhq=https%3A%2F%2Fi.ytimg.com%2Fvi%2FpIgZ7gMze7A%2Fhqdefault.jpg%3Fsqp%3D-oaymwEXCNACELwBSFryq4qpAwkIARUAAIhCGAE%3D%26rs%3DAOn4CLAj9KfRoDCT0RNEtMuOIJMN855pHw,session_data=itct%3DCBMQvk4YBSITCPCb3sSz6toCFcuifgodz50MGCj4HTIJZW5kc2NyZWVuSMS7ga29mI6GdQ%253D%253D\u0026list=PLMC9KNkIncKtPzgY-5rmhvj7fax8fdxoj\u0026playlist_iurlhq=https%3A%2F%2Fi.ytimg.com%2Fvi%2FOPf0YbXqDm0%2Fhqdefault.jpg\u0026playlist_length=197\u0026playlist_title=Pop+Music+Playlist%3A+Timeless+Pop+Hits+%28Updated+Weekly+2018%29\u0026video_id=OPf0YbXqDm0\u0026thumbnail_ids=OPf0YbXqDm0\u0026playlist_iurlmq=https%3A%2F%2Fi.ytimg.com%2Fvi%2FOPf0YbXqDm0%2Fmqdefault.jpg,title=Michael+Jackson+-+Smooth+Criminal+%28Single+Version%29+HD\u0026session_data=itct%3DCBIQvU4YBiITCPCb3sSz6toCFcuifgodz50MGCj4HTIJZW5kc2NyZWVuSMS7ga29mI6GdQ%253D%253D\u0026iurlmq=https%3A%2F%2Fi.ytimg.com%2Fvi%2Fq8w1d01Y2vY%2Fhqdefault.jpg%3Fsqp%3D-oaymwEXCNACELwBSFryq4qpAwkIARUAAIhCGAE%3D%26rs%3DAOn4CLBSNx-bTKHmJeCVk8dDtsPnldRJwA\u0026short_view_count_text=10M+views\u0026author=moogl3s\u0026id=q8w1d01Y2vY\u0026length_seconds=241\u0026iurlhq=https%3A%2F%2Fi.ytimg.com%2Fvi%2Fq8w1d01Y2vY%2Fhqdefault.jpg%3Fsqp%3D-oaymwEXCNACELwBSFryq4qpAwkIARUAAIhCGAE%3D%26rs%3DAOn4CLBSNx-bTKHmJeCVk8dDtsPnldRJwA,title=Vanilla+Ice+-+Ice+Ice+Baby\u0026session_data=itct%3DCBEQvU4YByITCPCb3sSz6toCFcuifgodz50MGCj4HTIJZW5kc2NyZWVuSMS7ga29mI6GdQ%253D%253D\u0026iurlmq=https%3A%2F%2Fi.ytimg.com%2Fvi%2Frog8ou-ZepE%2Fhqdefault.jpg%3Fsqp%3D-oaymwEXCNACELwBSFryq4qpAwkIARUAAIhCGAE%3D%26rs%3DAOn4CLA865lpL0-es4QJ8PUN83rPTmmjOQ\u0026short_view_count_text=229M+views\u0026author=vanillaiceVEVO\u0026id=rog8ou-ZepE\u0026length_seconds=241\u0026iurlhq=https%3A%2F%2Fi.ytimg.com%2Fvi%2Frog8ou-ZepE%2Fhqdefault.jpg%3Fsqp%3D-oaymwEXCNACELwBSFryq4qpAwkIARUAAIhCGAE%3D%26rs%3DAOn4CLA865lpL0-es4QJ8PUN83rPTmmjOQ,title=Earth%2C+Wind+%26+Fire+-+September\u0026session_data=itct%3DCBAQvU4YCCITCPCb3sSz6toCFcuifgodz50MGCj4HTIJZW5kc2NyZWVuSMS7ga29mI6GdQ%253D%253D\u0026iurlmq=https%3A%2F%2Fi.ytimg.com%2Fvi%2FGs069dndIYk%2Fhqdefault.jpg%3Fsqp%3D-oaymwEXCNACELwBSFryq4qpAwkIARUAAIhCGAE%3D%26rs%3DAOn4CLA97cYvlaLdmOWal9wR5H-wipzbTg\u0026short_view_count_text=190M+views\u0026author=EarthWindandFireVEVO\u0026id=Gs069dndIYk\u0026length_seconds=216\u0026iurlhq=https%3A%2F%2Fi.ytimg.com%2Fvi%2FGs069dndIYk%2Fhqdefault.jpg%3Fsqp%3D-oaymwEXCNACELwBSFryq4qpAwkIARUAAIhCGAE%3D%26rs%3DAOn4CLA97cYvlaLdmOWal9wR5H-wipzbTg,title=Michael+Jackson+-+Beat+It+%28Official+Video%29\u0026session_data=itct%3DCA8QvU4YCSITCPCb3sSz6toCFcuifgodz50MGCj4HTIJZW5kc2NyZWVuSMS7ga29mI6GdQ%253D%253D\u0026iurlmq=https%3A%2F%2Fi.ytimg.com%2Fvi%2FoRdxUFDoQe0%2Fhqdefault.jpg%3Fsqp%3D-oaymwEXCNACELwBSFryq4qpAwkIARUAAIhCGAE%3D%26rs%3DAOn4CLD6PJbqXe4JOhN0WMDFkjGfPtbq-w\u0026short_view_count_text=351M+views\u0026author=michaeljacksonVEVO\u0026id=oRdxUFDoQe0\u0026length_seconds=299\u0026iurlhq=https%3A%2F%2Fi.ytimg.com%2Fvi%2FoRdxUFDoQe0%2Fhqdefault.jpg%3Fsqp%3D-oaymwEXCNACELwBSFryq4qpAwkIARUAAIhCGAE%3D%26rs%3DAOn4CLD6PJbqXe4JOhN0WMDFkjGfPtbq-w,title=Greatest+Hits+Of+The+80%27s+-+80s+Music+Hits+-+Best+Songs+of+The+80s\u0026session_data=itct%3DCA4QvU4YCiITCPCb3sSz6toCFcuifgodz50MGCj4HTIJZW5kc2NyZWVuSMS7ga29mI6GdQ%253D%253D\u0026iurlmq=https%3A%2F%2Fi.ytimg.com%2Fvi%2FggALN-UkQ88%2Fhqdefault.jpg%3Fsqp%3D-oaymwEXCNACELwBSFryq4qpAwkIARUAAIhCGAE%3D%26rs%3DAOn4CLD5J6D8X5_If_pWa8R27Ovsv9ikrg\u0026short_view_count_text=5.6M+views\u0026author=Time+Music\u0026id=ggALN-UkQ88\u0026length_seconds=9007\u0026iurlhq=https%3A%2F%2Fi.ytimg.com%2Fvi%2FggALN-UkQ88%2Fhqdefault.jpg%3Fsqp%3D-oaymwEXCNACELwBSFryq4qpAwkIARUAAIhCGAE%3D%26rs%3DAOn4CLD5J6D8X5_If_pWa8R27Ovsv9ikrg,title=Toto+-+Africa+%28Video%29\u0026session_data=itct%3DCA0QvU4YCyITCPCb3sSz6toCFcuifgodz50MGCj4HTIJZW5kc2NyZWVuSMS7ga29mI6GdQ%253D%253D\u0026iurlmq=https%3A%2F%2Fi.ytimg.com%2Fvi%2FFTQbiNvZqaY%2Fhqdefault.jpg%3Fsqp%3D-oaymwEXCNACELwBSFryq4qpAwkIARUAAIhCGAE%3D%26rs%3DAOn4CLALOsCPxqN1IxcZEfZJCu8rqi4tFw\u0026short_view_count_text=310M+views\u0026author=TotoVEVO\u0026id=FTQbiNvZqaY\u0026length_seconds=275\u0026iurlhq=https%3A%2F%2Fi.ytimg.com%2Fvi%2FFTQbiNvZqaY%2Fhqdefault.jpg%3Fsqp%3D-oaymwEXCNACELwBSFryq4qpAwkIARUAAIhCGAE%3D%26rs%3DAOn4CLALOsCPxqN1IxcZEfZJCu8rqi4tFw"},
+         #}
+
+          'BG_P': "bKC0\/NOxKGI+KHSHYpCbpgrSuGlLA4kdUzK9lA7NaKmFls\/XkEyaOXc+qT1JM4KcCZ8nTnWwipplN9hJuq\/xrAb2pExdzZ1QRxYo2CP\/qDU1K9Y\/biuxqS\/StgNg804OU+omPoLJzZYPC4YWeNyoFjwXty+BjuY2k30E9+0\/VpIJVhcWDgF1GnBgp5eRhhSdxtR7uQEsgfg2XEAKYCrTVTec3RUNyih8SzZ8jtmLrq8Wik5jJHbvcFfUNhn7aFMg5D4+JQ+w4elWvTow7rjeqXef5TFEYzr87uVqlkv2GNhu\/hi2pU4v6VLKY1GJgDTUELf2aGfME9JGC8apW7khT\/uWwKYiG0kh1LghvTPg3484naYdZnl1mEb88BHGdFld7GRtEv5iplFhSFHj1WpMHoFSxuQ6Xx6xo4CC8YRCNr+O86RbpGIuP3S3uzTSmPXJBL1QlGMrTe4dlAPbh5\/tHo4jLADsve+t6WYGd2Fg1OKcJoFJKg\/2U4iB+Kaxe9th4Jry37CBjOG52Pya+JzNUKihoZUdGLHYwR6uwiLU+TKhmX5uU+VdMALZs0f6\/8LfLITelK\/RIjPzD89Ht6H9BUvrdcnwPDYmWv3WhcOTmLlIi+QjRPnRv6U5+2dVChwheyC0AO7p1kCahmN4YzjrgHwoToXPzrVfpZGX25sxtSNcVnc+wRzJWdGy4gOAP7KF4vrRnFpNZ9BB1EaQxPZyvizPOtKIfjWjV8rzA6mlIE1D7Xf1z9i+NeAZCRO5w0\/SIVp0u4tkHdsxeWqFM7kjNxvE74LIpavLhIGWnMAb\/RAIi0trs27ub\/s4jLc3yf7WHvGAgd7V8R+3MuvtRRQf9PpoVKS5bNHz1F4Ie+lNHk6PmN1+6YRYqRa8757rMbWEmEoGwzW1cROYe583HyC3E8K1Zf0D2qRmZMBGm1nr5qgzKKj5TQFSwFhv9J+u9AzV74XEYDXZiUWQtveV1XzeUYCXnuuH1rlYZkS3gELp1eVBnzFhhSMIRfLw\/CiofnM2o7PvctcnkuqZMUyiMIhTVKQl1dpDplZOfWgjFx2Xo9GGFeVmgYB9Yumq9Kzx2Q\/M7XOKHtFxA3uVNmPrskbrq7N74aZuZEMNGyhoPy\/V+is6xekkEqWRDxUhL36i7Za91YWFhhO2EXhUwRawFQekeFODynhsR9zJWLi7Izcbi0LuX2bCfEkH0d0TmUJAXMSQN7zklVeiNCOmSaaY\/qp8wnoPCB6XLNiSG7c9hIsAP+ITQWAo0k\/aafA\/Zv5YpIHaFcYIpW2YRNvLAda7EJPph1T4ua8rKT84w2naEWvGckVY7Kxeq72bx8zZ6n\/zbLMBuZBAu3M+5tKOPxDhe+b6MX2zKLrzRlZYWeoeH612dJRRd0XuFX2iL\/dkqmrX0KrLqQ0znX\/hXyvpVzMYiz44KHf30MR\/ZK4TzhFKVp0QUBuvvuJ9+DKIsIOUmhlhFT3YGnwCu0\/yyCFoSYruXFtyJhUDoKH60vm0IFaDF\/XegNKn5\/2e4ojjI2pxzuaU3ric1bv7j\/fXDKlJY0x+IVFUS3LOQghVXgzWSbNjuv8zkXHICwPxrj40+aoV6VY5+CmPyXEjvnNydp9UTd3y6bZzllOj+z6hSRROP+gp8GJf+YBfmggShkDEqQThAnOUkVfTMxzfFW2GeGLOj5kubPD37wBTiNpMk7mVNm8qHxnC0XrCNlkzwugVL8mxMk2rCXGBEHS02lNoySiEum0RtgvGF3bGUAOOwEZC5mugjfqWi4vmU9FXcjAXF3bnw0Y29JKJbWyHWQtk224kwu76UKuca2ub4ADqnhCEVkwXoN\/YhzoyaSspl0wyeaJvnTB+OVPmNqaI7Xm6kyNdvrVvXozLCSY1PvgBxkqP6n0uGROpaCRRw+c8kx2URgb8ze0WY8wk413tB0qWAtJ3\/EzV2faCbryGmWMU6trTVIFrfY9JQgMEZj\/x8ViRCvajdmt1+byKjuGQwUvKjKdlDf3p833UAMvHNzfr3yfyY3oAM8rW2Gs5N7QIZi3jV7tyxYeCHRDZP865I0RaSnZvcUWogFaPDfnaJ542MdZGp\/7h1M5aATKCyFUUuGrry9ZpsEyTyFAD495pjT0tOUl9Z66zsiWJniruMLZorCpeCWQagP2V3rzQbqcQTwoqClBIn9bJvr54FI7WZoJkeCRS2pGi451Ytlno+H0tuMModViKw5EA+bCTleSDfNiJ2MWZUGgJiN1GMJGlC8TH2W7l3nZRBlPSLVyvacKbBUnyFNB58XTrcApFTMxSFEvgNt4yWqYep3NwnOi47rEFnYB5e\/aLCuIMWNVX7zf8rPOYNVQQsmVjC1jW0WS\/3oN4lvs6I7fkqMCbl5jTTPIuAEtMXiVPH6V8ujIBmEcfJHz7UJwwEnvm7UmVum5LY2LwTe3dSG73UpC8Lr8SJahgqYLf+nuxf3+5roaNTVNMcFIFY+vjABlWbDWB\/hXuhb+LHv2NpECFx2bAkZId9dZb6pAtaDeNLEttrIU8T41FUfa7z7ejG1NIT7ISJtY2F+WdPb6qh6wBLFfvrlZBfNDn1FbTVW5ae3WLsghjW5F7KLqS5+2oIN32Wg+Q4xlpbJ4k\/XkUImcWpLgG66\/Rx4YFmDRa2\/pGNE7WUcDlLMKd8tL+mnPpMRL43SmDmigJx8u5nDu1SRrV1ASm7gCt3natu4d6Htv53\/TiCdxELI6BjtvVqWVEJP+4WrhKgX4BJFdHBIElaK866XbSAbl8pUajzb9\/cKdGVs35Z2xy5ExGSKsWJvHopMsgpv0moHHah3VElZGXuPcKsJ8d59mA1pzfgqniGvIsifXQb89729ls+PGLvGPj5rCVgg6hCZDaHvLi0qH500qoHgzOX5PZ+JjQ+WKR2abcvdvPSNJmwUkuBWcuXQATqkfKO+g1sDND6yEG3bn7MzUkisDz8SeSOnxtZEIb8sdyTf4kZoHH+KBzyFDQonn8PvZnedCWjnyZfl4P0jhorVU\/Lbie5eZ6wyw3Baabc3kg8Kz8EKuLjLenGI6FOkCY9D6XnIYb+S5psyGbPzPOaAP2nsDOImToxQlhRYGplNT8XIM0Tb0x5ZB7j1Xb282qcukSjMBlrYcR7zXJtC5V3R6yD\/71gp+6VYfdVWOvKmKm6fa0rvAzNpAbp4f3URAXIrRp5tp1fXLh95YXnxwDv9ecS6NpbVwGXKRqO2Rps7RlX7+xbAQxJm\/Y5rl4wAvpZrVtd2C5GMuy3S7HRhavj3ruBLm1nYhwmMAP+ok4r3mP+grNz1nj0vrjgIHUx2EgBdARUUlfgp+QLwHGQsVL9sQ13ku\/jzYr2NS2CPYRXwG+mNFRnrREkVBy\/mMfTQy0GPMBn\/qofmSKspJil6WQQeCjRUWsRlNVifY04A+EE7jQFrYhyAeCtOY\/l183eQWC+JY\/9Ss5D2HsTxjm7gP8W0XVCX1aDAEQTU+JEUiQjbGO+oj4NVGtC7IttzWfqDAs7U0Zljp0J3d5hLppm8KIAOwS\/Zg0wHjE3J0UdiVoY1nO8xL7+jATzmM8EvlQP1UAOp9w+7g7lzb7bw6SWaKyw8ZHwesBy5\/1UEjcujFUHM5pNp0qBwa1WVKEhQoFy2+a5YsDvJ\/h1FbyQGeKNz8B+b7jLBiQpqMdInoaVwevdQrHPspYKAI0IlkxG9L0H+NqubVDCUGlBoZrpyk8+vtrfmag0U0MvK9L5N8MaRZeo7P2bVq5eo0kj1CuYFT2t1ygOWgjeh+cjKhmz+2jpl3s1v9DTZ9FUs4JD2oAJZ03ZhUKT7ngU2KlCTAez9j6eC+hqNvy8w9r60HM5+Sg\/POn1EZ63SE2OJbVgy6gTI9e+eKH957J4d4Cyd59IFYoby9LD6C4HUamu4x+wN1fWD3QkfvDn8YgvQ1FcoAVOkkz4L9WP8e++dWEzgHRNggoJBggzSa1TjNVasAzjRTerr2PAKgn3ZkaGux+Z6iMX57UbwkhjddQuAATJVlIo5co+lGWZUECof7gfZJBVv\/qSUG2w6c5Tak6RZVUE6tnC5jqCD7Qe8qlxhm3WIDk05PIK3FaGS5vXqXo9mczFEMjbPBTNeLXGSPq7AjEwxJZ5tt7xBu\/\/JnNgoV8YCo9nRrAfT7EyhrEZSWiO4QFJokZN0mTw+fCp475BQk6LCyHGvEOdcvbErwNAMQpNVJVLhUo5vL4ynnVpRX8CKy0TaEpIksvuBOadBU7xoV5RVuE\/9k7h2hlK9e6osrX1Rr2\/22+0LbfUQsn0LAtMWuw\/7C8kBMos3jegS27F1TXxxrIKG+uKkOr8yHafsgxdQPBanjNwbRfzAZ9jAZm09pXyfD4v78VhRIiT0mFyQcTGglAx9zIneMgqMhi39ZyMpG33cuuui0Nzs2WB6yQ0kjz\/GSlx4JTDeliEch1ZO6hTvWGovbvlDc4nPVjIrHsdQ66xkTjf67h6Qx27pou3ji26StJ173a9FZdnvHANaNtLM7Yr8oAyNMIEiECL2nyhUcStinXaxnftgwMOFObdfdXwvvhmoEkDlvNDUfefrmeS9em1PvwhLU4x99E2COI992wxOHKR8nzjBmXQgs+UX8o9iR4KRLCQkNTGBh4BHtxHTr6d2X0LXUHwMcO1YZkdPkeozdHsiiuthCEeLV8oojIVZEeqnt22inVYmnXXBt6aSKY8odYSOnMMI3Cfai09ARhTI7yJbydR7inCAxYdr2N5HemvhPOyLtUsTu9hFoyyxUh1sShdm1MPmLv9SHL2QN54DNcj+HXlV0uTk24joAY\/InKxVgbv6GRxh3lsIWDVEZ2cG5mNoVcR0JzXaeAw+hATRlitWwmedFGV0jL7iKkfs7H2yCl9KtotcZzrhjsPqeyPUcEICXeIjYnAEDAj6metg\/nIDvHdUQfmQ9hcdT5ebn\/j1l+Pqcr69YmXhCbuhWsP43k+6zu1QXZkvp\/2mOpD3TcPWD77UGvRNUV7IS\/ZN1pDs76yiR78y3MetdXmXplPCTPZm43YzzW2p3vLLH5piJ7jSVddkF4OJhzEIA1XRmAjZhiN9P\/qar1nTZBX\/\/buSM4MLA6amCCbSHJG3cB2Dp3kez0PrEetALMQVIjxTHCJyU3jFi\/BDhWjyuAyIbRFuTdicZePe+R\/xLTsqQAwzOWl1mAsVztX+Akj4mrNrBUciZOBLQQorBZNC46fduizIGBgBrvxlFyLpo8RdipX1UCgf3NVk0MOcm8zTXr27RiaxX3TgE50EHLdU\/GeYteHoMcG0U5LRa4hGG3XsOmrbw0nkpdBh6IU3\/m4QizTQMATRtdtBXosmc7YIIFLuUoHW78dgdVnd+ZXzVU6sAO6gNG2PVEmqfjW0OiETHJ+Fg8w9cDdhumq8fWeDmSdSbGQtzJxDpxDBDjdIzw+J9s3TB3NLcCBl0Ll3fK0De+0OPcxnWipFTbwh3TMXl\/Id2bjoZ7Bgk4Lr4expkuJ0DAYil4oKu8NA3icPcg9TZ9Jwj8yAQzk1\/S3D1p+knKZPWrOR+rAAOFe2t1pEcJAaq2QloYgtBk+2KGOn23O62c6P6spPCSNkUf2zrQKY+dvqYTRSutnpTLE+\/P4W1XKbL9UGzgxAbCzjm\/KY5gd8PHzzDIPA+JzSBSwJZitnxJlMdDOX9810gFO1b1dZRejevI76w4jioYP\/ZgJ8\/esmqOq5GJm3qggqhRT7oaDeLDLISL3pOXHf8J6Yv42fYqiM5KYEuCF33Ms6KUsNrjuhZdpa79s3h0lrRYNBl16ij9cAX1\/6789qk3S7yS2\/lB4pfQOEVXSDKUt\/HExThlvxO8IvJTU5xOGTMo8d4Xkde9Xvic3jR9s8133cUSiht4HN6ER+mXy9+VRVPGAhj6DSit9qeogP4pdXjVYJnU9YN0d0Ne3Z1CTN7iKCWhWjYmf+LHD+Lpf3Kq1fifnp+6O5C755+158\/er5c1o7QtU7XJR8dBMtkcBgue0hSzCSPlfmjOOJPIAcNtNm1GopnmIwPWyy+ItCgIsiLVB40DLxHRN\/cY83DVKoz7XfgcBsXK\/zb2CSibDiWRMnOiJ8BNu+NwDyCXNLJHahBXLM4m5T6384MCKPbkmCOdWLZIZ2A\/z7D1Wu0Ws5YIrABPS8IksdLgashG\/FO2LIFC902Rr0jgZgVnVGQsaQWLalx3ySMNwYO96VP3IkKIFE7Ntheh82Mm42oVCCKyKP4t8y\/PmthJBC+h7mZ6iqAs0I5YrBAWogxPudOn70Hhc\/sDVocLV4MKEApkF2ptlONZTM87VtLZ+fRJ17KLjpGsWr0EylGAPQaIjyaEDCet05Bsrh45ZrhsoXKKErMostymHe+qaIg8mdOyk8QMeZDcz+PMjBNLkg0zNCn6+xpsy5p4UNmiCxZvK7ZLDNSSwkq8N\/HJw6tya2lxoOqoQ==",
+          'BG_IU': "\/\/www.google.com\/js\/bg\/1KUtCLBFZQ_JFefvknMO8_wNfNZDIBfWr9x-gjgyf-k.js",
+
+
+      {% if yt.commentsToken %}
+        'COMMENTS_TOKEN': "{{ yt.commentsToken }}",
+      {% endif %}
+      'GET_PLAYER_EVENT_ID': "23PrWrDCHMvF-gPPu7LAAQ",
+      'HL_LOCALE': "en_US",
+      'TTS_URL': "{{ yt.playerResponse.captions.playerCaptionsTracklistRenderer.captionTracks[0].baseUrl|raw }}",
+      'JS_DELAY_LOAD': 0,
+      'LIST_AUTO_PLAY_VALUE': 1,
+      'SHUFFLE_VALUE': 0,
+      'SKIP_RELATED_ADS': false,
+      'SKIP_TO_NEXT_VIDEO': false,
+      'CONVERSION_CONFIG_DICT': {"baseUrl":"https:\/\/www.youtube.com\/pagead\/viewthroughconversion\/962985656\/","vid":"dQw4w9WgXcQ","focEnabled":true,"uid":"38IQsAvIsxxjztdMZQtwHA","rmktEnabled":true},
+      'RESOLUTION_TRACKING_ENABLED': false,
+      'WATCH_LEGAL_TEXT_ENABLE_AUTOSCROLL': false,
+      'PLAYBACK_ID': "AAVrUziaGLGwlrLT",
+      'IS_DISTILLER': true,
+      'SHARE_CAPTION': null,
+      'SHARE_REFERER': "",
+      'PLAYLIST_INDEX': {{ yt.playlistIndex ? yt.playlistIndex : 'null' }}
+    });
+
+      yt.pushConfigArray('TIMING_WAIT', 'parn');
+
+    yt.setMsg({
+      'EDITOR_AJAX_REQUEST_FAILED': "{{ rehike.i18n.get("watch", "editorAjaxRequestFailed") }}",
+      'EDITOR_AJAX_REQUEST_503': "{{ rehike.i18n.get("watch", "editorAjaxRequest503") }}",
+      'LOADING': "{{ yt.msgs.loading }}"    });
+
+      yt.setMsg('SPEEDYG_INFO', "{{ rehike.i18n.get("watch", "speedygInfo") }}");
+
+
+   {% if yt.page.isLive %}
+      yt.setConfig({
+         'LIVESTREAMING_NO_SHARE_TIME': true
+      });
+      yt.setConfig({
+         'LIVESTREAMING_CARDIO_ENABLED': true,
+         'LIVESTREAMING_CARDIO_POLLING_INTERVAL': 30000,
+         'LIVESTREAMING_CARDIO_CONCURRENTS_METRIC': "viewership" });
+      yt.setMsg({
+         'LIVE_WATCHING_NOW': {
+            "case1": "{{ rehike.i18n.get("watch", "liveWatchingNow1") }}", 
+            "case0": "{{ rehike.i18n.get("watch", "liveWatchingNow0") }}", 
+            "other": "{{ rehike.i18n.get("watch", "liveWatchingNow") }}"
+         }
+      });
+   {% endif %}
+
+
+
+
+
+
+
+
+      yt.setConfig({
+    'GUIDED_HELP_LOCALE': "en_US",
+    'GUIDED_HELP_ENVIRONMENT': "prod"
+  });
+
+</script>
+{#
+   Hacky playlists fix
+
+   This exists to eliminate a timing issue with YouTube's JS itself, if the
+   player loads too slowly, then it won't get updated according to a watch list change.
+#}
+{% if rehike.config.appearance.playerChoice != "LATEST" %}
+	<script>
+	{% include "player/player_decryptor_boot.twig" %}
+	</script>
+{% endif %}
+{% if yt.page.playlist %}
+   <script>
+   (function(yt){
+      var playerApi = yt.www.getAPI('player-api');
+
+      if (playerApi)
+      {
+         playerApi.addEventListener('onReady', handlePlayerReady);
+      }
+
+      function handlePlayerReady()
+      {
+         var fakeSchedulerTime = 0;
+
+         if (yt.www.schedulerAvailable)
+         {
+            yt.www.logSchedulerTime(fakeSchedulerTime);
+            yt.www.runScheduler(
+               yt.www.bindArgument(yt.www.getSchedulerEvent, "watch-list-change")
+            );
+         }
+         else
+         {
+            yt.www.fireEvent("watch-list-change");
+         }
+
+         playerApi.removeEventListener('onReady', handlePlayerReady);
+      }
+   })((function(){
+      // Create a _yt_www API:
+      var a = _yt_www;
+      return {
+         www: {
+            getAPI: a.yn, // Formerly Ci
+            schedulerAvailable: a.fi,
+            logSchedulerTime: a.ci,
+            fireEvent: a.H,
+            getSchedulerEvent: a.ri,
+            bindArgument: a.Ua,
+            runScheduler: a.bi
+         }
+      };
+   })());
+   </script>
+{% endif %}
+{% endblock %}
+
+{%- block content -%}
+<div id="player" class="player-api full-frame"></div>
+{% endblock %}

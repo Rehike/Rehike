@@ -21,6 +21,12 @@ class PlayerInfo
      * in order for it to display properly in a HTML document.
      */
     public string $baseCssUrl;
+	
+	/**
+     * The URL of the player's embed stylesheet, required
+     * in order for it to display properly in an embed.
+     */
+	public string $embedCssUrl;
 
     /**
      * A valued used to protect video streams. This is required for

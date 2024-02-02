@@ -544,7 +544,12 @@ window.ytplayer.config = {
 		"trueview": true,
 		"instream_long": false,
 		"iv_module":"http:\/\/s.ytimg.com\/yts\/swfbin\/player-vflNzsCMr\/iv_module.swf",
-        "c": "WEB",
+		{% if pageType == "embed" %}
+        "el": "embedded",
+		"autohide":"1",
+		{% endif %}
+		"c": "WEB",
+		"hd":"1",
         "innertube_context_client_version": "2.20210623.00.00",
         "gapi_hint_params": "m;\/_\/scs\/abc-static\/_\/js\/k=gapi.gapi.en.fXLlmSb25lg.O\/m=__features__\/rt=j\/d=1\/rs=AHpOoo87O_nfyKCryZ5rvwwhVwktxKhiRA",
 		"player_response": JSON.stringify(RAW_PLAYER_RESPONSE),

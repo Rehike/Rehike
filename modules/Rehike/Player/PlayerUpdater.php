@@ -76,26 +76,31 @@ class PlayerUpdater
         {
             $effectiveJsUrl = "/s/player/c57c113c/player_ias.vflset/en_US/base.js";
             $effectiveCssUrl = "/s/player/c57c113c/www-player.css";
+			$embedCssUrl = "//s.ytimg.com/yts/cssbin/www-embed-player-vfl5foy2V.css"; // temporary
         }
         else if ("PLAYER_2020" === $playerChoice)
         {
             $effectiveJsUrl = "/yts/jsbin/player_ias-vfl1Ng2HU/en_US/base.js";
             $effectiveCssUrl = "/yts/cssbin/player-vflfo9Nwd/www-player-webp.css";
+			$embedCssUrl = "/yts/cssbin/www-embed-player-vfl5foy2V.css"; // temporary
         }
 		else if("PLAYER_2015_NEW" === $playerChoice)
 		{
 			$effectiveJsUrl = "/rehike/static/js/html5player/2015/html5player-new.js";
 			$effectiveCssUrl = "//s.ytimg.com/yts/cssbin/www-player-new-vfliB0u8F.css";
+			$embedCssUrl = "//s.ytimg.com/yts/cssbin/www-embed-player-vfl5foy2V.css";
         }
 		else if("PLAYER_2015" === $playerChoice)
 		{
 			$effectiveJsUrl = "/rehike/static/js/html5player/2015/html5player.js";
 			$effectiveCssUrl = "//s.ytimg.com/yts/cssbin/www-player-vflgv54Kk.css";
+			$embedCssUrl = "//s.ytimg.com/yts/cssbin/www-embed-player-vflufNcwn.css";
 		} 
         else if ("PLAYER_2014" === $playerChoice)
         {
             $effectiveJsUrl = "/rehike/static/js/html5player/2014/html5player.js";
             $effectiveCssUrl = "//s.ytimg.com/yts/cssbin/www-player-vfluwFMix.css";
+			$embedCssUrl = "//s.ytimg.com/yts/cssbin/www-embed-player-vflufNcwn.css";
         }
 		else // CURRENT player, also as fallback for invalid player choice values
         {
@@ -108,6 +113,7 @@ class PlayerUpdater
             "baseJsUrl" => $effectiveJsUrl,
             "baseCssUrl" => $effectiveCssUrl,
             "embedJsUrl" => $embedJsUrl,
+			"embedCssUrl" => $embedCssUrl,
             "signatureTimestamp" => $sts,
             "latestJsUrl" => $latestJsUrl,
             "latestCssUrl" => $latestCssUrl

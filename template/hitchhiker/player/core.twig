@@ -1,10 +1,16 @@
+{% if pageType != "embed" %}
 <div id="player" class="{{ include("page_fragments/player.class.twig") }}" role="complementary">
    <div id="theater-background" class="player-height"></div>
    <div id="player-mole-container">
+{% endif %}
       <div id="player-unavailable" class="{% include "page_fragments/player_unavailable.class.twig" %}">
          {% include "page_fragments/player_unavailable.twig" %}
       </div>
-      <div id="player-api" class="player-width player-height off-screen-target player-api" tabIndex="-1"></div>
+	  {% if pageType == "embed" %}
+      <div id="player-api" class="full-frame" tabIndex="-1"></div>
+	  {% else %}
+	  <div id="player-api" class="player-width player-height off-screen-target player-api" tabIndex="-1"></div>
+	  {% endif %}
       <script >if (window.ytcsi) {window.ytcsi.tick("cfg", null, '');}</script>
       {#
          Player definition scripts. This is somewhat different to what you'd expect.
@@ -91,12 +97,14 @@ ytplayer.load = function() {
 };
 {% endif %}
 </script>
+{% if pageType != "embed" %}
       <div id="player-playlist" class="{{ include("page_fragments/player_playlist.class.twig") }}">
          {% include 'page_fragments/player_playlist.twig' %}
       </div>
    </div>
    <div class="clear"></div>
 </div>
+{% endif %}
 <script>
    // Check if the end-user uses age restrict bypass extension
    // If so, the player unavailable message cannot be removed by
@@ -114,7 +122,7 @@ ytplayer.load = function() {
       {% include "player/small_style.css.twig" %}
    </style>
 {% endif %}
-{% if (rehike.config.appearance.playerChoice == "PLAYER_2014" or rehike.config.appearance.playerChoice == "PLAYER_2015") and (rehike.config.appearance.classicPlayerForcePersistentControls) %}
+{% if (rehike.config.appearance.playerChoice == "PLAYER_2014" or rehike.config.appearance.playerChoice == "PLAYER_2015") and (rehike.config.appearance.classicPlayerForcePersistentControls) and (pageType != "embed") %}
    <style id="rehike-ext-config-classic-player-persistent-controls">
       {% include "player/classic_player_persistent_controls.css.twig" %}
    </style>

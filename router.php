@@ -8,7 +8,7 @@ Router::funnel([
     "~/youtubei/v1/player*", // exclude player
     "/youtubei/*", // all youtubei/ except player, which is proxied elsewhere
     "/s/*",
-    "/embed/*",
+    //"/embed/*",
     "/yts/*",
     "/favicon.ico",
     "/subscribe_embed",
@@ -81,6 +81,7 @@ Router::get([
     "/watch" => "watch",
     "/user/**" => "channel",
     "/channel/**" => "channel",
+	"/embed/*" => "embed",
     "/c/**" => "channel",
     "/live_chat" => "special/get_live_chat",
     "/live_chat_replay" => "special/get_live_chat",
