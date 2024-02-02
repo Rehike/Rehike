@@ -526,7 +526,11 @@ ytplayer.config = {
         "fexp": "908547,914099,927622,930666,930672,932404,934040,940247,940642,947209,947215,949424,951701,952302,952901,953000,953912,957103,957201,958600,913436,951502",
         "player_error_log_fraction": "1.0",
         "dash": "1",
+		{% if pageType == "embed" %}
         "enablejsapi": "1",
+		{% else %}
+		"enablejsapi": "0",
+		{% endif %}
 		"sw": "0.1",
 		"invideo": true,
 		"cafe_experiment_id": "37567045",
@@ -714,7 +718,7 @@ function buildPlayer()
 			ytplayer.config.args['is_live_now'] = RAW_PLAYER_RESPONSE.microformat.playerMicroformatRenderer.liveBroadcastDetails.isLiveNow || undefined;
 		}
 		
-		if (RAW_PLAYER_RESPONSE.playerConfig.playbackStartConfig.startSeconds)
+		if (RAW_PLAYER_RESPONSE.playerConfig.playbackStartConfig)
 			ytplayer.config.args['startSeconds'] = RAW_PLAYER_RESPONSE.playerConfig.playbackStartConfig.startSeconds;
 		
 		if (RAW_PLAYER_RESPONSE.playerConfig.audioConfig && RAW_PLAYER_RESPONSE.playerConfig.audioConfig.loudnessDb && RAW_PLAYER_RESPONSE.playerConfig.audioConfig.perceptualLoudnessDb) { // loudness eq
@@ -834,7 +838,10 @@ function buildPlayer()
 		setArgumentFromUrl('rel');
 		setArgumentFromUrl('showinfo');
 		setArgumentFromUrl('start');
+		ytplayer.config.args['startSeconds'] = ytplayer.config.args['start'] || ytplayer.config.args['startSeconds'];
+		setArgumentFromUrl('startSeconds');
 		setArgumentFromUrl('html5');
+		setArgumentFromUrl('vq');
 
         {% if not yt.spf %}
         ytplayer.load = function() {
