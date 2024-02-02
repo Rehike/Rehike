@@ -515,7 +515,7 @@ ytplayer.config = {
         "autonav": {{ yt.page.autonavEnabled ? "1" : "0" }},
         "no_get_video_log": "1",
         "t": "1",
-        "hl": "{{ yt.hl }}",
+        "hl": "{{ (yt.hl)|replace({'-': '_'}) }}",
         "host_language": "{{ yt.hl }}",
         "plid": "AAVm9hRW-h1RWxWz",
         "ldpj": "-31",
