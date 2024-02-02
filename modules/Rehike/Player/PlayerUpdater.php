@@ -76,7 +76,7 @@ class PlayerUpdater
         {
             $effectiveJsUrl = "/s/player/c57c113c/player_ias.vflset/en_US/base.js";
             $effectiveCssUrl = "/s/player/c57c113c/www-player.css";
-			$embedCssUrl = "//s.ytimg.com/yts/cssbin/www-embed-player-vfl5foy2V.css"; // temporary
+			$embedCssUrl = "/yts/cssbin/www-embed-player-vfl5foy2V.css"; // temporary
         }
         else if ("PLAYER_2020" === $playerChoice)
         {
@@ -106,6 +106,7 @@ class PlayerUpdater
         {
             $effectiveJsUrl = $latestJsUrl;
             $effectiveCssUrl = $latestCssUrl;
+			$embedCssUrl = "/yts/cssbin/www-embed-player-vfl5foy2V.css"; // temporary
         }
 
         // Pack these up and return:
