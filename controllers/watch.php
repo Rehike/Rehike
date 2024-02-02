@@ -138,7 +138,7 @@ return new class extends NirvanaController {
             } 
             else
             {
-                $startTime = 0;
+                $startTime = (isset($request->params->t) && is_numeric($request->params->t)) ? $request->params->t : 0;
             }
         }
 

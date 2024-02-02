@@ -545,7 +545,6 @@ ytplayer.config = {
         "gapi_hint_params": "m;\/_\/scs\/abc-static\/_\/js\/k=gapi.gapi.en.fXLlmSb25lg.O\/m=__features__\/rt=j\/d=1\/rs=AHpOoo87O_nfyKCryZ5rvwwhVwktxKhiRA",
         "autoplay": "1",
         "oid": "",
-        "startSeconds": 0,
         "external_play_video": "0",
         "cver": "2.20210623.00.00",
         "cr": "US",
@@ -714,6 +713,9 @@ function buildPlayer()
 		if (RAW_PLAYER_RESPONSE.microformat.playerMicroformatRenderer.liveBroadcastDetails) {
 			ytplayer.config.args['is_live_now'] = RAW_PLAYER_RESPONSE.microformat.playerMicroformatRenderer.liveBroadcastDetails.isLiveNow || undefined;
 		}
+		
+		if (RAW_PLAYER_RESPONSE.playerConfig.playbackStartConfig.startSeconds)
+			ytplayer.config.args['startSeconds'] = RAW_PLAYER_RESPONSE.playerConfig.playbackStartConfig.startSeconds;
 		
 		if (RAW_PLAYER_RESPONSE.playerConfig.audioConfig && RAW_PLAYER_RESPONSE.playerConfig.audioConfig.loudnessDb && RAW_PLAYER_RESPONSE.playerConfig.audioConfig.perceptualLoudnessDb) { // loudness eq
 			ytplayer.config.args['relative_loudness'] = (RAW_PLAYER_RESPONSE.playerConfig.audioConfig.loudnessDb).toString() || null;
