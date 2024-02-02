@@ -14,3 +14,53 @@ oldReplyTextRegex: "/Zobacz /"
 
 replyCountIsolator: "/[^0-9]/"
 likeCountIsolator: "/[^0-9]/"
+
+# Due to a comments update around the end of January 2024, we decided to
+# hardcode comment strings. This would be needed anyways, but we also use German
+# for comment API requests now, because it has full counts to a larger extent
+# than English.
+commentsHeader: "Komentarze"
+topComments: "Najlepsze komentarze"
+newestFirst: "Od najnowszych"
+
+linkedComment: "Powiązany komentarz"
+
+addAComment: "Dodaj komentarz"
+addAReply: "Dodaj odpowiedź..."
+
+loadMoreReplies: "Wczytaj więcej odpowiedzi"
+
+expandButtonText: "Pokaż więcej"
+collapseButtonText: "Pokaż mniej"
+replyButtonText: "Odpowiedz"
+heartButtonText: "Oznacz sercem"
+unheartButtonText: "Usuń serce"
+
+pinnedByText: "Przypięty przez twórcę %s"
+heartTooltipText: "Użytkownik %s dodał ❤"
+
+secondsAgoSingular: "%s sekunda temu"
+secondsAgoPlural: "%s sekund temu"
+minutesAgoSingular: "%s minuta temu"
+minutesAgoPlural: "%s minut temu"
+hoursAgoSingular: "%s godzina temu"
+hoursAgoPlural: "%s godzin temu"
+daysAgoSingular: "%s dzień temu"
+daysAgoPlural: "%s dni temu"
+weeksAgoSingular: "%s tydzień temu"
+weeksAgoPlural: "%s tygodni temu"
+monthsAgoSingular: "%s miesiąc temu"
+monthsAgoPlural: "%s miesięcy temu"
+yearsAgoSingular: "%s rok temu"
+yearsAgoPlural: "%s lata temu"
+
+timestampEditedText: "%s (edytowany)"
+
+cancelText: "Anuluj"
+commentText: "Skomentuj"
+replyText: "Odpowiedz"
+
+reportText: "Zgłoś"
+deleteText: "Usuń"
+editText: "Edytuj"
+pinText: "Przypnij"
