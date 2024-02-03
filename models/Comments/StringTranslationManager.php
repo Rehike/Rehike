@@ -84,6 +84,39 @@ class StringTranslationManager
             "Jahren" => "yearsAgoPlural"
         };
 
+        /*
+         * Some languages (e.g. Polish) have different inflections for multiple ranges of
+         * numbers, unlike English which just has two (singular and plural). This is a
+         * quick fix that's hacked on top in order to correct this flaw.
+         *
+         * Use in a CoffeeTranslation language file like the following:
+         *    - secondsAgoSingular   == 1
+         *    - secondsAgoPlural     == standard plural match
+         *    - secondsAgoPluralEqu2 == case specifically for 2
+         *    - secondsAgoPluralLastDigitEqu9 == case specifically where the last digit equals 9
+         *
+         * Note that this may have to be handled for all numbers in a range, so this means
+         * (theoretically):
+         *    - 0-60 for seconds and minutes
+         *    - 1-24 for hours
+         *    - 1-14 (?) for days (I think it's a fortnight anyway...)
+         *    - 1-12 for months
+         *    - 1-infinity for years.
+         *
+         * But I think that the ability to check only the last digit should suffice for most
+         * needs.
+         */
+        $templates = $i18n->getAllTemplates();
+        $tnum = trim($number);
+        if (($newName = $unit . "Equ" . $tnum) && isset($templates->{$newName}))
+        {
+            $unit = $newName;
+        }
+        else if (($newName = $unit . "LastDigitEqu" . substr($tnum, -1)) && isset($templates->{$newName}))
+        {
+            $unit = $newName;
+        }
+
         if ($unit)
         {
             $result = $i18n->format($unit, $number);
