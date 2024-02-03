@@ -1,10 +1,10 @@
 {
-	"previousHash": "749b22687cd1958bc85cdf4f4ff8349cd1cdf0b6",
-	"currentRevisionId": 1337,
-	"subject": "[comments/germanify] Expand time unit translation abilities",
-	"body": "[comments/germanify] Expand time unit translation abilities",
+	"previousHash": "025602ae0942728c9a1420a911990e9dd0f1d148",
+	"currentRevisionId": 1341,
+	"subject": "[i18n/ja] Comments strings",
+	"body": "[i18n/ja] Comments strings",
 	"branch": "master",
-	"committerName": "Daylin Cooper",
-	"committerEmail": "dcoop2004@gmail.com",
-	"time": 1706947474
+	"committerName": "Taniko Yamamoto",
+	"committerEmail": "kirasicecreamm@gmail.com",
+	"time": 1707003491
 }
