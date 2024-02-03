@@ -112,6 +112,11 @@ class CodedOutputStream
         } else {
             $low = $value;
         }
+		
+		$current = intval($current);
+		$value = intval($value);
+		$high = intval($high);
+		$low = intval($low);
 
         while (($low >= 0x80 || $low < 0) || $high != 0) {
             $buffer[$current] = chr($low | 0x80);
