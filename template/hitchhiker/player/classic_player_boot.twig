@@ -514,7 +514,8 @@ ytplayer.config = {
         "hl": "{{ (yt.hl)|replace({'-': '_'}) }}",
         "host_language": "{{ yt.hl }}",
         "plid": "AAVm9hRW-h1RWxWz",
-        "ldpj": "-31",
+		"idpj": "-3", // there are both, why?
+        "ldpj": "-3",
         "ptk": "youtube_multi",
         "pltype": "content",
         "video_id": "{{ yt.videoId }}",
@@ -543,7 +544,11 @@ ytplayer.config = {
 		"hd":"1",
         "innertube_context_client_version": "2.20210623.00.00",
         "gapi_hint_params": "m;\/_\/scs\/abc-static\/_\/js\/k=gapi.gapi.en.fXLlmSb25lg.O\/m=__features__\/rt=j\/d=1\/rs=AHpOoo87O_nfyKCryZ5rvwwhVwktxKhiRA",
-        "autoplay": "1",
+		{% if pageType == "embed" %}
+        "autoplay": "0",
+		{% else %}
+		"autoplay": "1",
+		{% endif %}
         "oid": "",
         "external_play_video": "0",
         "cver": "2.20210623.00.00",
@@ -551,7 +556,7 @@ ytplayer.config = {
         "is_html5_mobile_device": false,
         "fmt_list": "22/1280x720/9/0/115,18/640x360/9/0/115,18/320x240/9/0/115,17/256x144/99/1/0",
         "vq": "auto",
-		"iv_load_policy": "0",
+		"iv_load_policy": "1",
 		"iv3_module":"1",
         "tmi": "1",
 		{% if rehike.config.appearance.classicPlayerTheme == "LIGHT" %}
@@ -560,7 +565,11 @@ ytplayer.config = {
 		{% if rehike.config.appearance.classicPlayerColor == "WHITE" %}
 		"color": "white",
 		{% endif %}
-		"darude": "1",
+		"iurlhq": "https://i.ytimg.com/vi/{{ yt.videoId }}/hqdefault.jpg",
+		"iurlsd": "https://i.ytimg.com/vi/{{ yt.videoId }}/sddefault.jpg",
+		"iurl": "https://i.ytimg.com/vi/{{ yt.videoId }}/hqdefault.jpg",
+		"iurlmq": "https://i.ytimg.com/vi/{{ yt.videoId }}/mqdefault.jpg",
+		"iurlmaxres": "https://i.ytimg.com/vi/{{ yt.videoId }}/maxresdefault.jpg",
     },
     "params": {
         "allowfullscreen": "true",
@@ -811,6 +820,14 @@ function buildPlayer()
 				ytplayer.config.args[a] = params[a] || ytplayer.config.args[a];
 		}
 		
+		function checkIfThumbnailExists(a) {
+			var http = new XMLHttpRequest();
+			http.open('HEAD', ytplayer.config.args[a], false);
+			http.send();
+			if (http.status == 404)
+				delete ytplayer.config.args[a];
+		}
+		
 		setArgumentFromUrl('color');
 		setArgumentFromUrl('theme');
 		setArgumentFromUrl('autoplay');
@@ -836,6 +853,14 @@ function buildPlayer()
 		setArgumentFromUrl('startSeconds');
 		setArgumentFromUrl('html5');
 		setArgumentFromUrl('vq');
+		
+		// set higher res thumbnails where possible
+		checkIfThumbnailExists("iurl");
+		ytplayer.config['iurl'] = ytplayer.config['iurl'] || "https://i.ytimg.com/vi/{{ yt.videoId }}/hqdefault.jpg";
+		checkIfThumbnailExists("iurlmaxres");
+		checkIfThumbnailExists("iurlmq");
+		checkIfThumbnailExists("iurlsd");
+		checkIfThumbnailExists("iurlhq");
 
         {% if not yt.spf %}
         ytplayer.load = function() {
