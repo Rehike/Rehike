@@ -502,10 +502,6 @@ ytplayer.config = {
 			"external_list": "1",
 			"is_listed": "1",
 		{%- endif -%}
-	
-		{% if yt.playerResponse.streamingData.dashManifestUrl %}
-			"dashmpd": "{{ yt.playerResponse.streamingData.dashManifestUrl }}",
-		{% endif %}
 
         {% set authorText = rehike.getText(yt.page.results[0].videoPrimaryInfoRenderer.owner.title) %}
         {% set titleText = rehike.getText(yt.page.title) %}
@@ -609,6 +605,9 @@ function buildPlayer()
             RAW_PLAYER_RESPONSE.streamingData.formats,
             playerUtils.cbDecodeSig, playerUtils.cbDecodeN
         );
+		
+		if (RAW_PLAYER_RESPONSE.streamingData.dashManifestUrl)
+			ytplayer.config.args['dashmpd'] = RAW_PLAYER_RESPONSE.streamingData.dashManifestUrl;
 
         /*
          * PATCH(ev): Format stream maps (formats, adaptiveFormats) should be
@@ -629,11 +628,6 @@ function buildPlayer()
 			}
         }
 		
-		// build 
-		ytplayer.config.args['adaptive_fmts'] = buildUrlFormattedStreamMap(
-                RAW_PLAYER_RESPONSE.streamingData.adaptiveFormats
-            );
-
         // Finding the index of the recommendations is real fun.
         var wnContents;
         if (RAW_WATCH_NEXT_RESPONSE)
