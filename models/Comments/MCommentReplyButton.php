@@ -25,9 +25,14 @@ class MCommentReplyButton extends MButton {
     public static function fromData($data, $id) {
         $dialog = $data->navigationEndpoint->createCommentReplyDialogEndpoint->dialog->commentReplyDialogRenderer ?? null;
         $params = $dialog->replyButton->buttonRenderer->serviceEndpoint->createCommentReplyEndpoint->createReplyParams ?? "";
-        $label = ParsingUtils::getText($dialog->replyButton->buttonRenderer->text);
-        $placeholder = ParsingUtils::getText($dialog->placeholderText);
+        $label = StringTranslationManager::get(ParsingUtils::getText($dialog->replyButton->buttonRenderer->text));
+        $placeholder = StringTranslationManager::get(ParsingUtils::getText($dialog->placeholderText));
         $text = $data->text;
+        // Need to do this or it breaks:
+        StringTranslationManager::setText(
+            $text,
+            StringTranslationManager::get(ParsingUtils::getText($text))
+        );
         return new self([
             "id" => $id,
             "params" => $params,

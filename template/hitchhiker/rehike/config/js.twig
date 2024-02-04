@@ -398,8 +398,8 @@ rehike.config.evaluateCondition_ = function(condition)
                 {
                     equality = !equality;
                 }
-
-                return equality;
+				if (equality == true)
+					return equality;
             }
         }
 

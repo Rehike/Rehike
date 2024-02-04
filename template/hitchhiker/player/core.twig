@@ -19,7 +19,7 @@
          };
       </script>
       <script>
-{% if rehike.config.appearance.playerChoice == "PLAYER_2014" %}
+{% if rehike.config.appearance.playerChoice == "PLAYER_2014" or rehike.config.appearance.playerChoice == "PLAYER_2015" or rehike.config.appearance.playerChoice == "PLAYER_2015_NEW" %}
    {% include "player/classic_player_boot.twig" %}
 {% else %}
 {% apply spaceless %}
@@ -114,8 +114,7 @@ ytplayer.load = function() {
       {% include "player/small_style.css.twig" %}
    </style>
 {% endif %}
-{% if rehike.config.appearance.playerChoice == "PLAYER_2014" and
-      rehike.config.appearance.classicPlayerForcePersistentControls %}
+{% if (rehike.config.appearance.playerChoice == "PLAYER_2014" or rehike.config.appearance.playerChoice == "PLAYER_2015") and (rehike.config.appearance.classicPlayerForcePersistentControls) %}
    <style id="rehike-ext-config-classic-player-persistent-controls">
       {% include "player/classic_player_persistent_controls.css.twig" %}
    </style>

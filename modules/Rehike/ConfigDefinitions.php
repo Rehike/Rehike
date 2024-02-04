@@ -32,31 +32,37 @@ class ConfigDefinitions
                         new EnumProp("CURRENT", [
                             "CURRENT",
                             "PLAYER_2014",
+							"PLAYER_2015",
+							"PLAYER_2015_NEW",
                             "PLAYER_2020",
                             "PLAYER_2022"
                         ])
                     ),
-                    "classicPlayerForcePersistentControls" =>
+					"classicPlayerColor" =>
                         new DependentProp(
-                            "appearance.playerChoice == PLAYER_2014",
-                            new BoolProp(true)
+                            "appearance.playerChoice == PLAYER_2014 || appearance.playerChoice == PLAYER_2015 || appearance.playerChoice == PLAYER_2015_NEW", // temporarily 2014 player only as idk how to set it on newer players
+                            new EnumProp("RED", [
+								"RED",
+								"WHITE"
+							])
                         ),
 					"classicPlayerTheme" =>
                         new DependentProp(
-                            "appearance.playerChoice == PLAYER_2014", // deprecated when they introduced the current player design
+                            "appearance.playerChoice == PLAYER_2014 || appearance.playerChoice == PLAYER_2015", // deprecated when they introduced the current player design
                             new EnumProp("DARK", [
 								"DARK",
 								"LIGHT"
 							])
                         ),
-					"classicPlayerColor" =>
+					"smallPlayer" => new DependentProp(
+                            "appearance.playerChoice == PLAYER_2022 || appearance.playerChoice == CURRENT",
+							new BoolProp(true)
+						),
+                    "classicPlayerForcePersistentControls" =>
                         new DependentProp(
-                            "appearance.playerChoice == PLAYER_2014", // temporarily 2014 player only as idk how to set it on newer players
-                            new EnumProp("RED", [
-								"RED",
-								"WHITE"
-							])
-                        )
+                            "appearance.playerChoice == PLAYER_2014 || appearance.playerChoice == PLAYER_2015",
+                            new BoolProp(true)
+                        ),
                 ]),
                 "modernLogo" => new BoolProp(true),
                 "uploadButtonType" => new EnumProp("MENU", [
@@ -75,7 +81,6 @@ class ConfigDefinitions
                 "watchSidebarDates" => new BoolProp(false),
                 "watchSidebarVerification" => new BoolProp(false),
                 "oldBestOfYouTubeIcons" => new BoolProp(false),
-                "smallPlayer" => new BoolProp(true),
                 "enableAdblock" => new BoolProp(true)
             ],
             "experiments" => [

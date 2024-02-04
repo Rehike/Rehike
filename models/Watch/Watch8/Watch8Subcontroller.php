@@ -108,9 +108,8 @@ class Watch8Subcontroller
                         $commentSection?->header[0]?->commentsHeaderRenderer
                     );
 
-                    $contentsRenderer = yield CommentThread::bakeComments(
-                        $commentContents
-                    );
+                    $commentsBakery = new CommentThread(WatchBase::$response);
+                    $contentsRenderer = yield $commentsBakery->bakeComments($commentContents);
 
                     $results[] = (object)[
                         "videoDiscussionRenderer" => (object)[

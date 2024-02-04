@@ -1,10 +1,10 @@
 {
-	"previousHash": "376496d8fd5070346216522a67da0b33324731fa",
-	"currentRevisionId": 1316,
-	"subject": "No fucking way I forgot to undo this 😭",
-	"body": "No fucking way I forgot to undo this 😭",
+	"previousHash": "ef1d3eb04c79af38f2e5ae4fa542eb980f86b3d0",
+	"currentRevisionId": 1350,
+	"subject": "Quick comments translation fix",
+	"body": "Quick comments translation fix",
 	"branch": "master",
 	"committerName": "Taniko Yamamoto",
 	"committerEmail": "kirasicecreamm@gmail.com",
-	"time": 1706169874
+	"time": 1707045186
 }

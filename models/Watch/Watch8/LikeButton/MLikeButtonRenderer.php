@@ -1,6 +1,7 @@
 <?php
 namespace Rehike\Model\Watch\Watch8\LikeButton;
 
+use Rehike\Model\ViewModelConverter\LikeButtonViewModelConverter;
 use Rehike\Util\ExtractUtils;
 
 /**
@@ -25,10 +26,28 @@ class MLikeButtonRenderer
 
     public function __construct($dataHost, &$info, &$videoId)
     {
-        if (isset($info->topLevelButtons[0] ->segmentedLikeDislikeButtonRenderer)) {
+        // Perform view model conversion if we need to:
+        if (isset($info->topLevelButtons[0]->segmentedLikeDislikeButtonViewModel))
+        {
+            $vmConverter = new LikeButtonViewModelConverter(
+                $info->topLevelButtons[0]->segmentedLikeDislikeButtonViewModel,
+                $dataHost::$frameworkUpdates
+            );
+
+            $converted = $vmConverter->bakeSegmentedLikeDislikeButtonRenderer();
+            unset($vmConverter);
+
+            $info->topLevelButtons[0]->segmentedLikeDislikeButtonRenderer = $converted;
+            unset($info->topLevelButtons[0]->segmentedLikeDislikeButtonViewModel);
+        }
+
+        if (isset($info->topLevelButtons[0]->segmentedLikeDislikeButtonRenderer))
+        {
             $origLikeButton = $info->topLevelButtons[0]->segmentedLikeDislikeButtonRenderer->likeButton->toggleButtonRenderer ?? null;
             $origDislikeButton = $info->topLevelButtons[0]->segmentedLikeDislikeButtonRenderer->dislikeButton->toggleButtonRenderer ?? null;
-        } else {
+        }
+        else
+        {
             $origLikeButton = $info->topLevelButtons[0]->toggleButtonRenderer ?? null;
             $origDislikeButton = $info->topLevelButtons[0]->toggleButtonRenderer ?? null;
         }

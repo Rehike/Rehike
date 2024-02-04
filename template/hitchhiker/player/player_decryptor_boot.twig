@@ -1,0 +1,268 @@
+{% apply spaceless %}
+(function(){
+
+// Prerequisite: listen for player load requests from www/base.js:
+// This event is dispatched by our modded copy when yt.config_.REHIKE_CLASSIC_PLAYER
+// is set.
+var g_playerLoadRequestCb = null;
+var rehike = rehike || {};
+{% include "rehike/core/util.js.twig" %}
+rehike.util.events.add(
+    document,
+    "rh-classic-player-request-load",
+    function(e) {
+        g_playerLoadRequestCb = e.detail.cb;
+    }
+);
+
+window._rehikeClassicPlayerTranslations =
+    {{ rehike.i18n.dump("player_classic")|json_encode|raw }};
+	
+var LATEST_PLAYER_JS_URL = "{{ yt.playerConfig.latestJsUrl }}";
+
+
+// Include classic player decryptors (getDecryptorForPlayerSig, getDecryptorForPlayerN)
+{% include "player/classic_player_decryptors.js.twig" %}
+
+/**
+ * Gets necessary information from the latest player revision.
+ *
+ * @returns {
+ *      {
+ *          cbDecodeSig: function(sourceSignature),
+ *          cbDecodeN: function(sourceN)
+ *      }
+ * }
+ */
+function getLatestPlayerJsInfo()
+{
+    var CACHE_INDEX = LATEST_PLAYER_JS_URL;
+
+    return new Promise(function(resolve, reject) {
+        var cacheStr;
+        if (cacheStr = localStorage.getItem("rh-classic-player-cache"))
+        {
+            try
+            {
+                var cache = JSON.parse(cacheStr);
+                if (CACHE_INDEX in cache)
+                {
+                    var cbDecodeSig = new Function(
+                        cache[CACHE_INDEX].decodeSig.args,
+                        cache[CACHE_INDEX].decodeSig.body
+                    );
+                    var cbDecodeN = new Function(
+                        cache[CACHE_INDEX].decodeN.args,
+                        cache[CACHE_INDEX].decodeN.body
+                    );
+
+                    resolve({
+                        cbDecodeSig: cbDecodeSig,
+                        cbDecodeN: cbDecodeN
+                    });
+                }
+                else
+                {
+                    // Invalidate the cache.
+                    localStorage.removeItem("rh-classic-player-cache");
+                }
+            }
+            catch (e)
+            {
+                // Bad cache; invalidate.
+                localStorage.removeItem("rh-classic-player-cache");
+            }
+        }
+
+        // If the cache is unavailable, then request the player from
+        // YouTube and rebuild the cache.
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", LATEST_PLAYER_JS_URL);
+        xhr.onload = function() {
+            if (200 == xhr.status)
+            {
+                var text = xhr.responseText;
+
+                var cbDecodeSig, cbDecodeN;
+                var cacheObj = {};
+                cacheObj[CACHE_INDEX] = {};
+
+                var signatureResult = getDecryptorForPlayerSig(text);
+                var fnDecodeSig = null;
+                if (signatureResult.status == "SUCCESS")
+                {
+                    cbDecodeSig = signatureResult.extractCb;
+                    cacheObj[CACHE_INDEX].decodeSig = signatureResult.cacheParams;
+                }
+
+                var nDecoderResult = getDecryptorForPlayerN(text);
+                var fnDecryptN = null;
+                if (nDecoderResult.status == "SUCCESS")
+                {
+                    cbDecodeN = nDecoderResult.extractCb;
+                    cacheObj[CACHE_INDEX].decodeN = nDecoderResult.cacheParams;
+                }
+
+                // Store the cache:
+                localStorage.setItem(
+                    "rh-classic-player-cache", 
+                    JSON.stringify(cacheObj)
+                );
+
+                resolve({
+                    cbDecodeSig: cbDecodeSig,
+                    cbDecodeN: cbDecodeN
+                });
+            }
+            else
+            {
+                console.error("[Rehike.ClassicPlayer] Failed to download latest player.");
+                reject();
+            }
+        };
+        xhr.send();
+    });
+}
+
+/**
+ * Visits all stream URLs returned by InnerTube and decodes their URLs for
+ * playback independent of any version of the YouTube player.
+ * 
+ * This is required in order to play videos on significantly older players,
+ * since they don't decrypt video playback URLs in the same manner that the
+ * newer versions do.
+ * 
+ * @param {function(encodedSig)} fnDecodeSig Function to decode the signature.
+ * @param {function(encodedN)} fnDecodeN Function to decode the N parameter.
+ */
+function streamUrlVisitor(map, fnDecodeSig, fnDecodeN)
+{
+	if (map == null) {
+		console.log("map is null");
+		return;
+	}
+    for (var i = 0, j = map.length; i < j; i++)
+    {
+        if ("signatureCipher" in map[i])
+        {
+            var base = map[i].signatureCipher;
+            var cipher = decodeURIComponent(base.split("s=")[1].split("&")[0]);
+            var decodedCipher = fnDecodeSig(cipher);
+
+            var streamUrl = decodeURIComponent(base.split("&url=")[1]);
+            var params = decodeURIComponent(streamUrl.split("videoplayback")[1]);
+
+            var nParam = null;
+            if (
+                ((nParam = "&n=") && (params.indexOf(nParam) > -1)) ||
+                ((nParam = "?n=") && (params.indexOf(nParam) > -1))
+            )
+            {
+                var value = params.split(nParam)[1].split("&")[0];
+                var decodedValue = fnDecodeN(value);
+                params = params.replace(nParam + value, nParam + decodedValue);
+            }
+
+            streamUrl = streamUrl.split("videoplayback")[0] + "videoplayback" + params;
+
+            map[i].url = streamUrl + "&alr=yes&sig=" + encodeURIComponent(decodedCipher);
+            map[i].rhDecorated = true;
+        }
+        else if ("url" in map[i] && !map[i].rhDecorated)
+        {
+            // Sometimes, InnerTube returns streams with stream URLs that seem
+            // unencrypted, in the standard URL field. The signature is already
+            // formed fine, but for these URLs, `n` is used as the primary
+            // encryption key. For signatureCipher videos, `n` only serves a
+            // secondary purpose whereby streaming is throttled if it is not
+            // correct, but in this case, if `n` is missing, the server outright
+            // rejects the video request.
+            var base = map[i].url;
+
+            var nParam = "";
+            var originalN = "";
+            var newN = "";
+            if (
+                ((nParam = "&n=") && (base.indexOf(nParam) > -1)) ||
+                ((nParam = "?n=") && (base.indexOf(nParam) > -1))
+            )
+            {
+                var value = base.split(nParam)[1].split("&")[0];
+                originalN = value;
+                var decodedValue = fnDecodeN(value);
+                newN = decodedValue;
+            }
+
+            map[i].url = base.replace(
+                nParam + originalN,
+                nParam + newN
+            );
+
+            map[i].rhDecorated = true;
+        }
+    }
+}
+
+function buildPlayer()
+{
+    getLatestPlayerJsInfo().then(function(playerUtils) {
+        // Cancel if the player information isn't available. If this is the case,
+        // then we're likely not on the watch page:
+        if (typeof ytplayer.config.args.raw_player_response != "object" || !ytplayer.config.args.raw_player_response)
+        {
+            return;
+        }
+
+        // Modify the stream URLs so that they can be played back. Specifically,
+        // we must decode them with the latest player revision first.
+        if (ytplayer.config.args.raw_player_response.streamingData.adaptiveFormats)
+        {
+            streamUrlVisitor(
+                ytplayer.config.args.raw_player_response.streamingData.adaptiveFormats,
+                playerUtils.cbDecodeSig, playerUtils.cbDecodeN
+            );
+        }
+        streamUrlVisitor(
+            ytplayer.config.args.raw_player_response.streamingData.formats,
+            playerUtils.cbDecodeSig, playerUtils.cbDecodeN
+        );
+    });
+}
+
+(function(yt){
+	var playerApi = yt.www.getAPI('player-api');
+	
+	if (playerApi)
+	{
+	playerApi.addEventListener('spfdone', function() {
+			console.log("Rebuilding player decryptors");
+			buildPlayer(); // handle refresh
+		});
+	} else {
+		console.log("No player API found");
+	}
+})((function(){
+   // Create a _yt_www API:
+   var a = _yt_www;
+   return {
+      www: {
+         getAPI: a.yn, // Formerly Ci
+         schedulerAvailable: a.fi,
+         logSchedulerTime: a.ci,
+         fireEvent: a.H,
+         getSchedulerEvent: a.ri,
+         bindArgument: a.Ua,
+         runScheduler: a.bi
+      }
+   };
+})());
+
+/*document.addEventListener('spfdone', function() {
+	console.log("Rebuilding player decryptors");
+    buildPlayer(); // handle refresh
+});*/
+
+buildPlayer();
+
+})();
+{% endapply %}

@@ -16,6 +16,8 @@ props:
         CURRENT: "Najnowszy odtwarzacz" # No specific date; true latest player.
         PLAYER_2022: "2022 - Kwadratowe krawędzie, stary storyboard"
         PLAYER_2020: "2020 - Mniejszy interfejs"
+        PLAYER_2015_NEW: "2015 - Nowoczesny interfejs, stare ikony"
+        PLAYER_2015: "2015 - Klasyczny interfejs, więcej funkcji i nowy ekran końcowy"
         PLAYER_2014: "2014 - Klasyczny interfejs, stare buforowanie"
     classicPlayerForcePersistentControls:
       title: "Zawsze wyświetlaj elementy sterujące"

@@ -16,12 +16,24 @@ props:
         CURRENT: "Player atual" # Sem data específica; verdadeiro player mais recente.
         PLAYER_2022: "2022 - Cantos quadrados, storyboard antiga"
         PLAYER_2020: "2020 - UI menor"
+        PLAYER_2015_NEW: "2015 - UI moderna, ícones antigos"
+        PLAYER_2015: "2015 - UI clássica, mais funções e nova tela final"
         PLAYER_2014: "2014 - UI clássica, comportamento de buffering antigo"
     classicPlayerForcePersistentControls:
       title: "Sempre mostrar controles"
       subtitle: >
         Pode causar problemas com CSS customizado já que isso foi feito pra
         versão mais recente do CSS oficial do Hitchhiker.
+    classicPlayerTheme:
+      title: "Tema do player:"
+      values:
+        DARK: "Tema escuro" # O tema padrão utilizado praticamente desde 2012, mas foi introduzido em 2011.
+        LIGHT: "Tema claro"
+    classicPlayerColor:
+      title: "Cor da barra de progresso do player:"
+      values:
+        RED: "Vermelho"
+        WHITE: "Branco" # Por algum motivo isso existe
     modernLogo:
       title: "Usar a logo atual do YouTube"
       subtitle: >

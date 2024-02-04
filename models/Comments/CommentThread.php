@@ -7,7 +7,10 @@ use \Rehike\Model\Comments\MCommentVoteButton as VoteButton;
 use \Rehike\Model\Comments\MCommentReplyButton as ReplyButton;
 use \Rehike\i18n\i18n;
 use \Rehike\ConfigManager\Config;
+use Rehike\Model\ViewModelConverter\CommentsViewModelConverter;
 use \Rehike\Network;
+use Rehike\Util\ParsingUtils;
+use Rehike\ViewModelParser;
 
 use function \Rehike\Async\async;
 
@@ -22,14 +25,20 @@ class CommentThread
     const REPLY_BUTTON_PATH = self::ACTIONS_PATH . ".replyButton.buttonRenderer";
     const COMMON_A11Y_LABEL = "accessibilityData.label";
 
-    public static $dataApiData = [];
+    protected object $data;
+    protected array $dataApiData = [];
+
+    public function __construct(object $data)
+    {
+        $this->data = $data;
+    }
 
     /**
-     * Populate self::$dataApiData with channel data.
+     * Populate $dataApiData with channel data.
      * 
      * @param string[] $cids  List of channel IDs to get display names for.
      */
-    public static function populateDataApiData(array $cids)
+    public function populateDataApiData(array $cids)
     {
         return async(function() use ($cids) {
             $response = yield Network::dataApiRequest(
@@ -44,15 +53,18 @@ class CommentThread
             if (isset($data->items))
             foreach ($data->items as $item)
             {
-                self::$dataApiData += [
+                $this->dataApiData += [
                     $item->id => $item->snippet
                 ];
             }
         });
     }
 
-    public static function bakeComments($context): Promise
+    public function bakeComments($context): Promise
     {
+        // Account for view model update:
+        $this->convertThreadsIfNecessary($context);
+
         return new Promise(function ($resolve, $reject) use ($context) {
             $out = ["commentThreads" => []];
 
@@ -107,21 +119,20 @@ class CommentThread
                 }
             }
 
-            self::populateDataApiData($cids)
-            ->then(function() use (&$context, &$out, $resolve) {
+            $this->populateDataApiData($cids)->then(function() use (&$context, &$out, $resolve) {
                 if (is_countable($context))
                 {
                     for ($i = 0, $count = count($context); $i < $count; $i++) {
                         if (isset($context[$i]->commentThreadRenderer))
                         {
-                            $out["commentThreads"][] = self::commentThreadRenderer(
+                            $out["commentThreads"][] = $this->commentThreadRenderer(
                                 $context[$i]->commentThreadRenderer
                             );
                         }
                         else if ($count - 1 == $i && isset($context[$i]->continuationItemRenderer))
                         {
                             $out += [
-                                "commentContinuationRenderer" => self::commentContinuationRenderer(
+                                "commentContinuationRenderer" => $this->commentContinuationRenderer(
                                     $context[$i]->continuationItemRenderer
                                 )
                             ];
@@ -134,8 +145,11 @@ class CommentThread
         });
     }
 
-    public static function bakeReplies($context): Promise
+    public function bakeReplies($context): Promise
     {
+        // Account for view model update:
+        $this->convertCommentsIfNecessary($context->continuationItems);
+
         return new Promise(function ($resolve, $reject) use ($context) {
             // Top level function
             // $context = (Array containing all commentRenderer items)
@@ -186,17 +200,16 @@ class CommentThread
                 }
             }
 
-            self::populateDataApiData($cids)
-            ->then(function() use (&$context, &$out, $resolve) {        
+            $this->populateDataApiData($cids)->then(function() use (&$context, &$out, $resolve) {
                 if ($context) for ($i = 0, $count = count($context); $i < $count; $i++)
                 {
                     if (isset($context[$i]->commentRenderer))
                     {
-                        $out["comments"][] = self::commentRenderer($context[$i]->commentRenderer, true);
+                        $out["comments"][] = $this->commentRenderer($context[$i]->commentRenderer, true);
                     }
                     else if ($count -1 == $i && isset($context[$i]->continuationItemRenderer))
                     {
-                        $out += ["repliesContinuationRenderer" => self::repliesContinuationRenderer($context[$i]->continuationItemRenderer)];
+                        $out += ["repliesContinuationRenderer" => $this->repliesContinuationRenderer($context[$i]->continuationItemRenderer)];
                     }
                 }
 
@@ -204,32 +217,79 @@ class CommentThread
             });
         });
     }
-    
-    public static function commentThreadRenderer($context)
+
+    private function convertThreadsIfNecessary(array &$threads): void
+    {
+        foreach ($threads as &$thread)
+        {
+            if (isset($thread->commentThreadRenderer->commentViewModel->commentViewModel))
+            {
+                $target = $thread->commentThreadRenderer->commentViewModel->commentViewModel;
+                $renderer = $this->convertCommentViewModel($target);
+                
+                unset($thread->commentThreadRenderer->commentViewModel);
+                $thread->commentThreadRenderer->comment = (object)[
+                    "commentRenderer" => $renderer
+                ];
+            }
+        }
+
+        if (isset($thread->commentThreadRenderer->replies->commentRepliesRenderer->contents))
+        {
+            $replies = $thread->commentThreadRenderer->replies->commentRepliesRenderer->contents;
+            $this->convertCommentsIfNecessary($replies);
+        }
+    }
+
+    private function convertCommentsIfNecessary(array &$comments): void
+    {
+        foreach ($comments as &$comment)
+        {
+            if (isset($comment->commentViewModel))
+            {
+                $target = $comment->commentViewModel;
+                $renderer = $this->convertCommentViewModel($target);
+
+                unset($comment->commentViewModel);
+                $comment->commentRenderer = $renderer;
+            }
+        }
+    }
+
+    private function convertCommentViewModel(object $viewModel): object
+    {
+        $converter = new CommentsViewModelConverter(
+            $viewModel,
+            $this->data->frameworkUpdates
+        );
+        return $converter->bakeCommentRenderer();
+    }
+
+    public function commentThreadRenderer($context)
     {
         $out = [];
 
         // PLEASE NOTE:
         // The extra preceding property "comment"/"replies" is removed by this.
         if (isset($context->comment)) {
-            $out['commentRenderer'] = self::commentRenderer($context->comment->commentRenderer);
+            $out['commentRenderer'] = $this->commentRenderer($context->comment->commentRenderer);
         }
 
         if (isset($context->replies)) {
-            $out['commentRepliesRenderer'] = self::commentRepliesRenderer($context->replies->commentRepliesRenderer);
+            $out['commentRepliesRenderer'] = $this->commentRepliesRenderer($context->replies->commentRepliesRenderer);
         }
         
         return ['commentThreadRenderer' => $out];
     }
-    
-    public static function commentRenderer($context, $isReply = false)
+
+    public function commentRenderer($context, $isReply = false)
     {
         // Right now, the method is to modify a
         // standard InnerTube response.
 
         $context->isReply = $isReply;
 
-        if ($data = @self::$dataApiData[$context->authorEndpoint->browseEndpoint->browseId]) {
+        if ($data = @$this->dataApiData[$context->authorEndpoint->browseEndpoint->browseId]) {
             $context->authorText = (object) [
                 "simpleText" => $data->title
             ];
@@ -244,9 +304,9 @@ class CommentThread
                  * put around it.
                  */
                 if (substr($ucid, 0, 2) == "UC"
-                &&  isset(self::$dataApiData[$ucid]))
+                &&  isset($this->dataApiData[$ucid]))
                 {
-                    $run->text = "@" . self::$dataApiData[$ucid]->title . "";
+                    $run->text = "@" . $this->dataApiData[$ucid]->title . "";
                 }
 
                 /**
@@ -261,9 +321,73 @@ class CommentThread
             }
         }
 
+        // Forced german hack:
+        if ($text = ParsingUtils::getText($context->publishedTimeText))
+        {
+            StringTranslationManager::setText(
+                $context->publishedTimeText,
+                StringTranslationManager::convertDate($text)
+            );
+        }
+        if ($text = ParsingUtils::getText($context->expandButton->buttonRenderer->text))
+        {
+            StringTranslationManager::setText(
+                $context->expandButton->buttonRenderer->text,
+                StringTranslationManager::get($text)
+            );
+        }
+        if ($text = ParsingUtils::getText($context->collapseButton->buttonRenderer->text))
+        {
+            StringTranslationManager::setText(
+                $context->collapseButton->buttonRenderer->text,
+                StringTranslationManager::get($text)
+            );
+        }
+        if (
+            isset($context->actionButtons->commentActionButtonsRenderer->creatorHeart->creatorHeartRenderer) &&
+            $heart = $context->actionButtons->commentActionButtonsRenderer->creatorHeart->creatorHeartRenderer
+        )
+        {
+            if ($text = ParsingUtils::getText($heart->heartedTooltip))
+            {
+                StringTranslationManager::setText(
+                    $heart->heartedTooltip,
+                    StringTranslationManager::convertHeart($text)
+                );
+            }
+            if ($text = ParsingUtils::getText($heart->heartedAccessibility->accessibilityData))
+            {
+                StringTranslationManager::setText(
+                    $heart->heartedAccessibility->accessibilityData,
+                    StringTranslationManager::get($text)
+                );
+            }
+            if ($text = ParsingUtils::getText($heart->unheartedAccessibility->accessibilityData))
+            {
+                StringTranslationManager::setText(
+                    $heart->unheartedAccessibility->accessibilityData,
+                    StringTranslationManager::get($text)
+                );
+            }
+        }
+
+        if (
+            isset($context->pinnedCommentBadge->pinnedCommentBadgeRenderer) &&
+            $text = ParsingUtils::getText($context->pinnedCommentBadge->pinnedCommentBadgeRenderer->label)
+        )
+        {
+            // This is a multi-child runs array, so we need to replace it entirely.
+            // Otherwise a result like this may happen:
+            //  - Pinned by UsernameUsername angepinnt
+            // because just "Von " (first item) is replaced.
+            $context->pinnedCommentBadge->pinnedCommentBadgeRenderer->label = (object)[
+                "simpleText" => StringTranslationManager::convertPinnedText($text)
+            ];
+        }
+
         $context->likeButton = VoteButton::fromData(PropertyAtPath::get($context, self::LIKE_BUTTON_PATH));
         $context->dislikeButton = VoteButton::fromData(PropertyAtPath::get($context, self::DISLIKE_BUTTON_PATH));
-		if (isset($context->voteCount)) self::addLikeCount($context);
+		if (isset($context->voteCount)) $this->addLikeCount($context);
 		
         try {
             $context->replyButton = ReplyButton::fromData(PropertyAtPath::get($context, self::REPLY_BUTTON_PATH), $context->commentId);
@@ -275,14 +399,13 @@ class CommentThread
             $context->creatorHeart = PropertyAtPath::get($context, self::HEART_BUTTON_PATH);
         } catch (\YukisCoffee\PropertyAtPathException $e) {
             $context->creatorHeart = null;
-        } 
-        
+        }
 
         return $context;
     }
 
     // WHAT THE FUCK
-    public static function commentRepliesRenderer($context)
+    public function commentRepliesRenderer($context)
     {
         if (isset($context->viewReplies))
         {
@@ -295,6 +418,9 @@ class CommentThread
 
             // YouTube is experimenting with bringing back the
             // old "View X replies" text format
+            // TODO (ev): Is this still applicable? The above comment was written on 15 Nov 2022.
+            //            I think it is appropriate to remove this comment and revise the behaviour
+            //            otherwise.
             if (!preg_match($i18n->get("oldReplyTextRegex"), $viewText)) {
                 $replyCount = (int) preg_replace($i18n->get("replyCountIsolator"), "", $viewText);
                 if (isset($context->viewRepliesCreatorThumbnail)) {
@@ -334,28 +460,28 @@ class CommentThread
         if (isset($context->teaserContents)) foreach($context->teaserContents as $item)
         {
             if (isset($item->commentRenderer))
-                $item->commentRenderer = self::commentRenderer($item->commentRenderer, true);
+                $item->commentRenderer = $this->commentRenderer($item->commentRenderer, true);
         }
 
         return $context;
     }
 
-    public static function commentContinuationRenderer($context)
+    private function commentContinuationRenderer($context)
     {
         return $context->continuationEndpoint->continuationCommand;
     }
 
-    public static function repliesContinuationRenderer($context)
+    private function repliesContinuationRenderer($context)
     {
         $context = $context->button->buttonRenderer;
         return
             [
                 "token" => $context->command->continuationCommand->token,
-                "text" => $context->text
+                "text" => StringTranslationManager::get(ParsingUtils::getText($context->text))
             ];
     }
     
-    public static function addLikeCount(&$context)
+    private function addLikeCount(&$context)
     {
         // Adds to context:
         /*
@@ -367,13 +493,13 @@ class CommentThread
          }
         */
 
-        $likeAriaLabel = PropertyAtPath::get($context, 
+        $likeAriaLabel = PropertyAtPath::get($context,
             self::LIKE_BUTTON_PATH .
             ".accessibilityData." .
             self::COMMON_A11Y_LABEL
         );
         
-        $count = (int)self::getLikeCountFromLabel($likeAriaLabel);
+        $count = (int)$this->getLikeCountFromLabel($likeAriaLabel);
 		
 		if (@$context->likeButton->checked) {
 			$context->voteCount = [
@@ -388,9 +514,9 @@ class CommentThread
 		}
     }
 
-    public static function getLikeCountFromLabel($label)
+    private function getLikeCountFromLabel($label)
     {
-        $i18n = i18n::getNamespace("comments");
-        return preg_replace($i18n->get("likeCountIsolator"), "", $label);
+        // return preg_replace("/[^0-9]/", "", $label);
+        return StringTranslationManager::convertLikeCount($label);
     }
 }
