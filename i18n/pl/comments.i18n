@@ -2,8 +2,8 @@
 
 viewSingular: "Wyświetl odpowiedź"
 viewMulti: "Wyświetl %s odpowiedzi"
-viewSingularOwner: "Wyświetl odpowiedź od %s"
-viewMultiOwner: "Wyświetl %s odpowiedzi od %s i innych"
+viewSingularOwner: "Wyświetl odpowiedź użytkownika %s"
+viewMultiOwner: "Wyświetl %s odpowiedzi użytkownika %s i innych"
 hideSingular: "Ukryj odpowiedź"
 hideMulti: "Ukryj %s odpowiedzi"
 
