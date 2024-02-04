@@ -1,10 +1,10 @@
 {
-	"previousHash": "025602ae0942728c9a1420a911990e9dd0f1d148",
-	"currentRevisionId": 1341,
-	"subject": "[i18n/ja] Comments strings",
-	"body": "[i18n/ja] Comments strings",
+	"previousHash": "89a65b53666ddca5089b3cc67c800553b1b3553b",
+	"currentRevisionId": 1348,
+	"subject": "[CoffeeTranslation] Improve DateTime, allow disabling exceptions on failure.",
+	"body": "[CoffeeTranslation] Improve DateTime, allow disabling exceptions on failure.",
 	"branch": "master",
 	"committerName": "Taniko Yamamoto",
 	"committerEmail": "kirasicecreamm@gmail.com",
-	"time": 1707003491
+	"time": 1707021119
 }

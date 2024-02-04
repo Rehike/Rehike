@@ -24,6 +24,14 @@ class LanguageApi
         return CoffeeTranslation::getRouter()->languageExists($langId);
     }
 
+    /**
+     * Determines if the API should throw an exception.
+     */
+    private static function shouldExcept(): bool
+    {
+        return CoffeeTranslation::getConfigApi()->getExceptionOnFailureState();
+    }
+
     public static function tryFormatDateTimeForLanguage(
             string $langId,
             int $format,
@@ -75,10 +83,12 @@ class LanguageApi
             return $result;
         }
 
-        throw new FailureException(sprintf(
+        if (self::shouldExcept()) throw new FailureException(sprintf(
             "Failed to format date time for language \"%s\"",
             $langId
         ));
+
+        return "<lang.$langId.datetime : $timestamp>";
     }
 
     public static function formatDateTime(int $format, int $timestamp =0): string
@@ -88,7 +98,10 @@ class LanguageApi
             return $result;
         }
 
-        throw new FailureException("Failed to format date time");
+        if (self::shouldExcept())
+            throw new FailureException("Failed to format date time");
+
+        return "<datetime : $timestamp>";
     }
 
     public static function tryFormatNumberForLanguage(
@@ -147,7 +160,10 @@ class LanguageApi
             return $result;
         }
 
-        throw new FailureException("Failed to format number.");
+        if (self::shouldExcept())
+            throw new FailureException("Failed to format number.");
+
+        return "<lang.$langId.number : $number>";
     }
 
     public static function formatNumber(int $number, int $numDecPoints = 0): string
@@ -157,7 +173,10 @@ class LanguageApi
             return $result;
         }
 
-        throw new FailureException("Failed to format number.");
+        if (self::shouldExcept())
+            throw new FailureException("Failed to format number.");
+
+        return "<number : $number>";
     }
 
     public static function tryGetAllTemplatesForLanguage(
@@ -254,12 +273,14 @@ class LanguageApi
             return $result;
         }
 
-        throw new FailureException(sprintf(
+        if (self::shouldExcept()) throw new FailureException(sprintf(
             "Failed to get raw string for language \"%s\" with URI \"%s\" and path \"%s\"",
             $langId,
             $uri,
             $path
         ));
+
+        return "<lang.$langId.$uri.$path>";
     }
 
     /**
@@ -289,11 +310,13 @@ class LanguageApi
             return $result;
         }
         
-        throw new FailureException(sprintf(
+        if (self::shouldExcept()) throw new FailureException(sprintf(
             "Failed to get raw string for URI \"%s\" with path \"%s\"",
             $uri,
             $path
         ));
+
+        return "<$uri.$path>";
     }
 
     public static function tryGetFormattedStringForLanguage(
@@ -326,12 +349,14 @@ class LanguageApi
             return $result;
         }
 
-        throw new FailureException(sprintf(
+        if (self::shouldExcept()) throw new FailureException(sprintf(
             "Failed to get formatted string for language \"%s\" with URI \"%s\" and path \"%s\"",
             $langId,
             $uri,
             $path
         ));
+
+        return "<lang.$langId.$uri.$path : " . implode(", ", $args) . ">";
     }
 
     /**
@@ -366,10 +391,12 @@ class LanguageApi
             return $result;
         }
 
-        throw new FailureException(sprintf(
+        if (self::shouldExcept()) throw new FailureException(sprintf(
             "Failed to get formatted string for URI \"%s\" and path \"%s\"",
             $uri,
             $path
         ));
+
+        return "<$uri.$path : " . implode(", ", $args) . ">";
     }
 }
