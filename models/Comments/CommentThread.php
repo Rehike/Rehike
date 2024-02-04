@@ -376,10 +376,13 @@ class CommentThread
             $text = ParsingUtils::getText($context->pinnedCommentBadge->pinnedCommentBadgeRenderer->label)
         )
         {
-            StringTranslationManager::setText(
-                $context->pinnedCommentBadge->pinnedCommentBadgeRenderer->label,
-                StringTranslationManager::convertPinnedText($text)
-            );
+            // This is a multi-child runs array, so we need to replace it entirely.
+            // Otherwise a result like this may happen:
+            //  - Pinned by UsernameUsername angepinnt
+            // because just "Von " (first item) is replaced.
+            $context->pinnedCommentBadge->pinnedCommentBadgeRenderer->label = (object)[
+                "simpleText" => StringTranslationManager::convertPinnedText($text)
+            ];
         }
 
         $context->likeButton = VoteButton::fromData(PropertyAtPath::get($context, self::LIKE_BUTTON_PATH));
