@@ -185,6 +185,18 @@ class StringTranslationManager
         );
     }
 
+    public static function convertPinnedText(?string $in): ?string
+    {
+        // "Von USERNAME angepinnt"
+        $i18n = i18n::getNamespace("comments");
+        $username = preg_replace(
+            "/ angepinnt$/s", "", preg_replace(
+                "/^Von /s", "", $in
+            )
+        );
+        return $i18n->format("pinnedByText", $username);
+    }
+
     public static function setText(mixed &$innertubeObject, string $text): void
     {
         if (isset($innertubeObject->runs))

@@ -23,7 +23,7 @@ commentsHeader: "Comments"
 topComments: "Top comments"
 newestFirst: "Newest first"
 
-linkedComment: "Linked comment"
+linkedComment: "Highlighted comment"
 
 addAComment: "Add a comment..."
 addAReply: "Add a reply..."

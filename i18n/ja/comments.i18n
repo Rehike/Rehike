@@ -14,3 +14,54 @@ oldReplyTextRegex: "/表示/"
 
 replyCountIsolator: "/[^0-9]/"
 likeCountIsolator: "/[^0-9]]/"
+
+# Due to a comments update around the end of January 2024, we decided to
+# hardcode comment strings. This would be needed anyways, but we also use German
+# for comment API requests now, because it has full counts to a larger extent
+# than English.
+
+commentsHeader: "コメント"
+topComments: "評価順"
+newestFirst: "新しい順"
+
+linkedComment: "注目のコメント"
+
+addAComment: "コメントする…"
+addAReply: "返信を追加..."
+
+loadMoreReplies: "他の返信を表示"
+
+expandButtonText: "続きを読む"
+collapseButtonText: "一部を表示"
+replyButtonText: "返信"
+heartButtonText: "ハート"
+unheartButtonText: "ハートを削除"
+
+pinnedByText: "%s さんによって固定されています"
+heartTooltipText: "%s さんが ❤ をつけました"
+
+secondsAgoSingular: "%s 秒前"
+secondsAgoPlural: "%s 秒前"
+minutesAgoSingular: "%s 分前"
+minutesAgoPlural: "%s 分前"
+hoursAgoSingular: "%s 時間前"
+hoursAgoPlural: "%s 時間前"
+daysAgoSingular: "%s 日前"
+daysAgoPlural: "%s 日前"
+weeksAgoSingular: "%s 週間前"
+weeksAgoPlural: "%s 週間前"
+monthsAgoSingular: "%s か月前"
+monthsAgoPlural: "%s か月前"
+yearsAgoSingular: "%s 年前"
+yearsAgoPlural: "%s 年前"
+
+timestampEditedText: "%s（編集済み） "
+
+cancelText: "キャンセル"
+commentText: "コメント"
+replyText: "返信"
+
+reportText: "報告"
+deleteText: "削除"
+editText: "編集"
+pinText: "固定"

@@ -94,6 +94,26 @@ class CommentsViewModelConverter extends BasicVMC
             ],
             "thumbnails" => $commentPayload->avatar->image->sources
         ];
+
+        if ($this->isVerifiedAuthor)
+        {
+            $out["authorCommentBadge"] = (object)[
+                "authorCommentBadgeRenderer" => (object)[
+                    "authorText" => (object)[
+                        // There's also accessibility string like "確認済みユーザー username",
+                        // but this case isn't handled by Rehike i18n, so it's excluded from
+                        // here.
+                        "simpleText" => $commentPayload->author->displayName
+                    ],
+                    "authorEndpoint" => $out["authorEndpoint"],
+                    "icon" => (object)[
+                        "iconType" => "CHECK"
+                    ],
+                    "iconTooltip" => i18n::getRawString("global", "verified")
+                ]
+            ];
+        }
+
         $out["actionButtons"] = (object)[
             "commentActionButtonsRenderer" => $this->internalBakeCommentActionButtonsRenderer()
         ];
@@ -148,6 +168,24 @@ class CommentsViewModelConverter extends BasicVMC
             ],
             "simpleText" => $commentPayload->toolbar->likeCountNotliked
         ];
+
+        if (isset($this->viewModel->pinnedText))
+        {
+            $out["pinnedCommentBadge"] = (object)[
+                "pinnedCommentBadgeRenderer" => (object)[
+                    "label" => $this->viewModel->pinnedText
+                ]
+            ];
+        }
+
+        if (isset($this->viewModel->linkedCommentText))
+        {
+            $out["linkedCommentBadge"] = (object)[
+                "metadataBadgeRenderer" => (object)[
+                    "label" => $i18n->get("linkedComment")
+                ]
+            ];
+        }
 
         return (object)$out;
     }
