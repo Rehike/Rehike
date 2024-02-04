@@ -1,16 +1,16 @@
 # Comments common strings:
 
-viewSingular: "Zobacz odpowiedź"
-viewMulti: "Zobacz wszystkie %s odpowiedzi"
-viewSingularOwner: "Zobacz odpowiedź od %s"
-viewMultiOwner: "Zobacz %s odpowiedzi od %s i innych"
+viewSingular: "Wyświetl odpowiedź"
+viewMulti: "Wyświetl %s odpowiedzi"
+viewSingularOwner: "Wyświetl odpowiedź od %s"
+viewMultiOwner: "Wyświetl %s odpowiedzi od %s i innych"
 hideSingular: "Ukryj odpowiedź"
 hideMulti: "Ukryj %s odpowiedzi"
 
 # Used to detect if the old reply count string should be used.
 # This may be removed in the future, because it doesn't seem useful to keep
 # around anymore.
-oldReplyTextRegex: "/Zobacz /"
+oldReplyTextRegex: "/Wyświetl /"
 
 replyCountIsolator: "/[^0-9]/"
 likeCountIsolator: "/[^0-9]/"
