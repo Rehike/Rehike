@@ -329,17 +329,17 @@ class CommentThread
                 StringTranslationManager::convertDate($text)
             );
         }
-        if ($text = ParsingUtils::getText($context->expandButton->text))
+        if ($text = ParsingUtils::getText($context->expandButton->buttonRenderer->text))
         {
             StringTranslationManager::setText(
-                $context->expandButton->text,
+                $context->expandButton->buttonRenderer->text,
                 StringTranslationManager::get($text)
             );
         }
-        if ($text = ParsingUtils::getText($context->collapseButton->text))
+        if ($text = ParsingUtils::getText($context->collapseButton->buttonRenderer->text))
         {
             StringTranslationManager::setText(
-                $context->collapseButton->text,
+                $context->collapseButton->buttonRenderer->text,
                 StringTranslationManager::get($text)
             );
         }
@@ -369,6 +369,17 @@ class CommentThread
                     StringTranslationManager::get($text)
                 );
             }
+        }
+
+        if (
+            isset($context->pinnedCommentBadge->pinnedCommentBadgeRenderer) &&
+            $text = ParsingUtils::getText($context->pinnedCommentBadge->pinnedCommentBadgeRenderer->label)
+        )
+        {
+            StringTranslationManager::setText(
+                $context->pinnedCommentBadge->pinnedCommentBadgeRenderer->label,
+                StringTranslationManager::convertPinnedText($text)
+            );
         }
 
         $context->likeButton = VoteButton::fromData(PropertyAtPath::get($context, self::LIKE_BUTTON_PATH));

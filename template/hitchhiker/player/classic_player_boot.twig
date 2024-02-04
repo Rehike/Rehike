@@ -502,10 +502,6 @@ ytplayer.config = {
 			"external_list": "1",
 			"is_listed": "1",
 		{%- endif -%}
-	
-		{% if yt.playerResponse.streamingData.dashManifestUrl %}
-			"dashmpd": "{{ yt.playerResponse.streamingData.dashManifestUrl }}",
-		{% endif %}
 
         {% set authorText = rehike.getText(yt.page.results[0].videoPrimaryInfoRenderer.owner.title) %}
         {% set titleText = rehike.getText(yt.page.title) %}
@@ -526,7 +522,7 @@ ytplayer.config = {
         "fexp": "908547,914099,927622,930666,930672,932404,934040,940247,940642,947209,947215,949424,951701,952302,952901,953000,953912,957103,957201,958600,913436,951502",
         "player_error_log_fraction": "1.0",
         "dash": "1",
-        "enablejsapi": "1",
+		"enablejsapi": "1",
 		"sw": "0.1",
 		"invideo": true,
 		"cafe_experiment_id": "37567045",
@@ -600,6 +596,9 @@ function buildPlayer()
             RAW_PLAYER_RESPONSE.streamingData.formats,
             playerUtils.cbDecodeSig, playerUtils.cbDecodeN
         );
+		
+		if (RAW_PLAYER_RESPONSE.streamingData.dashManifestUrl)
+			ytplayer.config.args['dashmpd'] = RAW_PLAYER_RESPONSE.streamingData.dashManifestUrl;
 
         /*
          * PATCH(ev): Format stream maps (formats, adaptiveFormats) should be
@@ -620,11 +619,6 @@ function buildPlayer()
 			}
         }
 		
-		// build 
-		ytplayer.config.args['adaptive_fmts'] = buildUrlFormattedStreamMap(
-                RAW_PLAYER_RESPONSE.streamingData.adaptiveFormats
-            );
-
         // Finding the index of the recommendations is real fun.
         var wnContents;
         if (RAW_WATCH_NEXT_RESPONSE)
