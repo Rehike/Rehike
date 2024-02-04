@@ -16,3 +16,53 @@ oldReplyTextRegex: "/View /"
 
 replyCountIsolator: "/( respostas)|( responder)/i"
 likeCountIsolator: "/(Gostar )|(comentar)|(responder)|( junto com )|(,)|( outra pessoa)|( outras pessoas)/"
+
+# Due to a comments update around the end of January 2024, we decided to
+# hardcode comment strings. This would be needed anyways, but we also use German
+# for comment API requests now, because it has full counts to a larger extent
+# than English.
+commentsHeader: "Comentários"
+topComments: "Principais comentários"
+newestFirst: "Mais recentes"
+
+linkedComment: "Comentário vinculado"
+
+addAComment: "Adicione um comentário..."
+addAReply: "Adicione uma resposta..."
+
+loadMoreReplies: "Carregar mais respostas"
+
+expandButtonText: "Mostrar mais"
+collapseButtonText: "Mostrar menos"
+replyButtonText: "Responder"
+heartButtonText: "Amei"
+unheartButtonText: "Remover \"Amei\""
+
+pinnedByText: "Fixado por %s"
+heartTooltipText: "❤ por %s"
+
+secondsAgoSingular: "%s segundo atrás"
+secondsAgoPlural: "%s segundos atrás"
+minutesAgoSingular: "%s minuto atrás"
+minutesAgoPlural: "%s minutos atrás"
+hoursAgoSingular: "%s hora atrás"
+hoursAgoPlural: "%s horas atrás"
+daysAgoSingular: "%s dia atrás"
+daysAgoPlural: "%s dias atrás"
+weeksAgoSingular: "%s semana atrás"
+weeksAgoPlural: "%s semanas atrás"
+monthsAgoSingular: "%s mês atrás"
+monthsAgoPlural: "%s meses atrás"
+yearsAgoSingular: "%s ano atrás"
+yearsAgoPlural: "%s anos atrás"
+
+timestampEditedText: "%s (editado)"
+
+cancelText: "Cancelar"
+commentText: "Comentar"
+replyText: "Responder"
+
+reportText: "Denunciar"
+deleteText: "Excluir"
+editText: "Editar"
+pinText: "Fixar"
