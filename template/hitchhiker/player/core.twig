@@ -24,6 +24,12 @@
             "playerResponse": {{ yt.playerResponse|json_encode|raw }}
          };
       </script>
+{% if rehike.config.appearance.playerChoice != "CURRENT" %}
+	<script>
+   {# This currently does not work for players since 2021. 2020 and prior are fine. #}
+	{% include "player/player_decryptor_boot.twig" %}
+	</script>
+{% endif %}
       <script>
 {% if rehike.config.appearance.playerChoice == "PLAYER_2014" or rehike.config.appearance.playerChoice == "PLAYER_2015" or rehike.config.appearance.playerChoice == "PLAYER_2015_NEW" %}
    {% include "player/classic_player_boot.twig" %}
@@ -59,7 +65,7 @@ ytplayer.config = {
         "host_language": "en",
         "enablejsapi": "1",
         "c": "WEB",
-        "innertube_context_client_version": "2.20210623.00.00",
+        "innertube_context_client_version": "2.20240205.00.00",
         "hl": "en_US",
         "fflags": "{% include "player/flags.twig" %}",
         "xhr_apiary_host": "youtubei.youtube.com",
@@ -67,7 +73,7 @@ ytplayer.config = {
         "autoplay": "1",
         "external_play_video": "1",
         "innertube_api_key": "AIzaSyAO_FJ2SlqU8Q4STEHLGCilw_Y9_11qcW8",
-        "cver": "2.20210623.00.00",
+        "cver": "2.20240205.00.00",
         "cr": "US",
         "is_html5_mobile_device": false,
         "innertube_api_version": "v1",
