@@ -1,10 +1,10 @@
 {
-	"previousHash": "ef1d3eb04c79af38f2e5ae4fa542eb980f86b3d0",
-	"currentRevisionId": 1350,
-	"subject": "Quick comments translation fix",
-	"body": "Quick comments translation fix",
+	"previousHash": "025d10a403e16858ee6aca27b7c057e450ea5ec4",
+	"currentRevisionId": 1354,
+	"subject": "Fuck you Toru. (current player fix)",
+	"body": "Fuck you Toru. (current player fix)",
 	"branch": "master",
-	"committerName": "Taniko Yamamoto",
-	"committerEmail": "kirasicecreamm@gmail.com",
-	"time": 1707045186
+	"committerName": "Daylin Cooper",
+	"committerEmail": "dcoop2004@gmail.com",
+	"time": 1707130101
 }

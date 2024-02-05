@@ -41,9 +41,9 @@ class Cacher
             $result = json_decode(file_get_contents($path));
 
             if (
-                null != $result && 
+                null != $result &&
                 time() < $result->expire &&
-                IS_REHIKE ? $playerChoice == $result->conditionPlayerChoice : true
+                IS_REHIKE ? ($playerChoice == $result->conditionPlayerChoice) : true
             )
             {
                 return $result->content; // file contents

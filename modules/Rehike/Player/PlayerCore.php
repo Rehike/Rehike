@@ -82,11 +82,11 @@ class PlayerCore extends Configurable
         }
         catch (CacherException $e)
         {
-            /* 
+            /*
              * If the cache is unavailable (doesn't exist,
              * expired, etc.) then request the data from
              * YouTube's servers.
-             * 
+             *
              * This function does also throw an exception, but
              * it should be treated as fatal since there's nothing
              * else to do here.
