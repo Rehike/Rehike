@@ -327,6 +327,7 @@ abstract class HitchhikerController
             $capturedRender = TemplateManager::render();
 
             header("Content-Type: application/json");
+			header("X-Spf-Response-Type: multipart");
             echo $capturedRender;
         }
         else
