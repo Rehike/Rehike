@@ -798,12 +798,7 @@ function buildPlayer()
         {
             g_playerLoadRequestCb();
         }
-
-        {% if yt.spf %}
-        var playerApi = document.getElementById("movie_player");
-        playerApi.loadVideoByPlayerVars(ytplayer.config.args);
-        {% endif %}
-
+		
         // From classic_player_mods:
         initClassicPlayerMods();
     });
