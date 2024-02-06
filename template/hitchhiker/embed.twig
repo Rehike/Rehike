@@ -124,11 +124,6 @@ video-{{ yt.videoId }} {{ (yt.theaterMode) ? 'watch-wide watch-stage-mode' }}
    This exists to eliminate a timing issue with YouTube's JS itself, if the
    player loads too slowly, then it won't get updated according to a watch list change.
 #}
-{% if rehike.config.appearance.playerChoice != "LATEST" %}
-	<script>
-	{% include "player/player_decryptor_boot.twig" %}
-	</script>
-{% endif %}
 {% if yt.page.playlist %}
    <script>
    (function(yt){

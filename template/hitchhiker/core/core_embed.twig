@@ -16,7 +16,6 @@
          scripts in order to properly hijack XHR, this is injected if the
          debugger is enabled.
       #}
-	  {{ core.js('www/promise-polyfill') }}
       {% if rehikeDebugger and not rehikeDebugger.condensed and not yt.spf %}
          <script>{% include "rehike/debugger/js/xhook.js" %}</script>
       {% endif %}
@@ -27,7 +26,6 @@
       <script>ytcfg.set("ROOT_VE_TYPE", 3854);ytcfg.set("EVENT_ID", "caLrWqLbKZD2_AOA-6vIAg");</script>
       <script>{{ include('/core/www-pageframesizing.js.twig') }}</script>
       {{ core.js('scheduler/scheduler') }}
-      {{ core.css('www-core') }}
       {%- block head_css  -%}{%- endblock -%}
 	  <link rel="stylesheet" href="{{ yt.playerConfig.embedCssUrl }}" name="player/www-embed-player">
       <link rel="stylesheet" href="{{ yt.playerConfig.baseCssUrl }}" name="player/www-player">

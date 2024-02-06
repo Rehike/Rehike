@@ -570,6 +570,7 @@ ytplayer.config = {
 		"iurl": "https://i.ytimg.com/vi/{{ yt.videoId }}/hqdefault.jpg",
 		"iurlmq": "https://i.ytimg.com/vi/{{ yt.videoId }}/mqdefault.jpg",
 		"iurlmaxres": "https://i.ytimg.com/vi/{{ yt.videoId }}/maxresdefault.jpg",
+		"loaderUrl": {{ app.request.server.get('http-referer')|json_encode|raw }},
     },
     "params": {
         "allowfullscreen": "true",
@@ -861,7 +862,8 @@ function buildPlayer()
 		checkIfThumbnailExists("iurlmq");
 		checkIfThumbnailExists("iurlsd");
 		checkIfThumbnailExists("iurlhq");
-
+		
+		{% if pageType != "embed" %}
         {% if not yt.spf %}
         ytplayer.load = function() {
             yt.player.Application.create("player-api", ytplayer.config);
@@ -882,7 +884,14 @@ function buildPlayer()
         var playerApi = document.getElementById("movie_player");
         playerApi.loadVideoByPlayerVars(ytplayer.config.args);
         {% endif %}
-
+		
+		{% else %}
+		yt.setConfig('PLAYER_CONFIG', ytplayer.config);
+		writeEmbed();
+		{% endif %}
+		
+		console.log(ytplayer.config.args.loaderUrl);
+		
         // From classic_player_mods:
         initClassicPlayerMods();
     });

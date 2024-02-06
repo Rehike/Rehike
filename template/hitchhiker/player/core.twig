@@ -7,7 +7,7 @@
          {% include "page_fragments/player_unavailable.twig" %}
       </div>
 	  {% if pageType == "embed" %}
-      <div id="player-api" class="full-frame" tabIndex="-1"></div>
+      <div id="player" class="full-frame" tabIndex="-1"></div>
 	  {% else %}
 	  <div id="player-api" class="player-width player-height off-screen-target player-api" tabIndex="-1"></div>
 	  {% endif %}
@@ -30,9 +30,19 @@
 	{% include "player/player_decryptor_boot.twig" %}
 	</script>
 {% endif %}
+	{% if (pageType == "embed") and (rehike.config.appearance.playerChoice == "PLAYER_2014" or rehike.config.appearance.playerChoice == "PLAYER_2015" or rehike.config.appearance.playerChoice == "PLAYER_2015_NEW") %}
+	<script>
+	if (!window.top.onYouTubePlayerReady) {
+		window.top.onYouTubePlayerReady = function(e) {
+			window.top.onYouTubeHTML5PlayerReady(e);
+		}
+	}
+	</script>
+	<script src="//s.ytimg.com/yts/jsbin/www-embed-player-vfl6Pxzzi/www-embed-player.js" type="text/javascript" name="www-embed-player/www-embed-player"></script>
+    {% endif %}
       <script>
 {% if rehike.config.appearance.playerChoice == "PLAYER_2014" or rehike.config.appearance.playerChoice == "PLAYER_2015" or rehike.config.appearance.playerChoice == "PLAYER_2015_NEW" %}
-   {% include "player/classic_player_boot.twig" %}
+    {% include "player/classic_player_boot.twig" %}
 {% else %}
 {% apply spaceless %}
 var ytplayer = ytplayer || {};
@@ -86,7 +96,11 @@ ytplayer.config = {
     },
     "assets": {
         "css": {{ (yt.playerConfig.baseCssUrl)|json_encode|raw }},
+		{% if pageType != "embed" %}
         "js": {{ (yt.playerConfig.baseJsUrl)|json_encode|raw }}
+		{% else %}
+		"js": {{ (yt.playerConfig.embedJsUrl)|json_encode|raw }}
+		{% endif %}
     },
     "html5": true,
     "url": "",
