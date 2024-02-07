@@ -2,7 +2,7 @@
     Standard SPF core response prototype.
 #}
 {% import 'core/macros.twig' as core %}
-[{
+[{ {# part 1 #}
     "head": {%- apply json_encode|raw -%}
         <script>{{ include('/core/www-pageframesizing.js.twig') }}</script>
         {{ core.css('www-core') }}
@@ -25,7 +25,7 @@
 	"name": "{{ pageName ?? pageType }}"
 },
 {% flush %}
-{
+{ {# part 2 #}
     "attr": {
         "player": {
             "class": {{ include("page_fragments/player.class.twig")|json_encode|raw }}
@@ -57,8 +57,8 @@
 
 	"name": "{{ pageName ?? pageType }}"
 },
-{% flush %}
-{
+{% flush %} 
+{ {# part 3 #}
     "attr": {
         "player": {
             "class": {{ include("page_fragments/player.class.twig")|json_encode|raw }}
@@ -104,7 +104,7 @@
 	, "name": "{{ pageName ?? pageType }}"
 },
 {% flush %}
-{
+{ {# part 4 #}
     "body": {
         "player-unavailable": {{ include("page_fragments/player_unavailable.twig")|json_encode|raw }},
         "debug": "",

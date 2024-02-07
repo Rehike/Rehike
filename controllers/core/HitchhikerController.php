@@ -97,10 +97,15 @@ abstract class HitchhikerController
      * @param RequestMetadata $request   Reports request metadata.
      */
     public function get(YtApp $yt, string &$template, RequestMetadata $request): void
-    {
-        header("Content-Type: " .  $this->contentType);
+    {	
         $this->yt = $yt;
         $this->init($yt, $template);
+		if (Spf::isSpfRequested() && $this->yt->spfEnabled) {
+			header("Content-Type: application/json");
+			header("X-Spf-Response-Type: multipart");
+		} else {
+			header("Content-Type: " .  $this->contentType);
+		}
         $this->initPlayer($yt);
 
         $this->onGet($yt, $request);
@@ -326,8 +331,6 @@ abstract class HitchhikerController
 
             $capturedRender = TemplateManager::render();
 
-            header("Content-Type: application/json");
-			header("X-Spf-Response-Type: multipart");
             echo $capturedRender;
         }
         else
