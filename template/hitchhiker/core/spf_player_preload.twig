@@ -1,0 +1,26 @@
+{#
+    Standard SPF core response prototype.
+#}
+{% import 'core/macros.twig' as core %}
+[{ {# part 1 #}
+    "head": {%- apply json_encode|raw -%}
+        <script>{{ include('/core/www-pageframesizing.js.twig') }}</script>
+        {{ core.css('www-core') }}
+        {% if rehike.config.appearance.playerChoice == "PLAYER_2014" or rehike.config.appearance.playerChoice == "PLAYER_2015" or rehike.config.appearance.playerChoice == "PLAYER_2015_NEW" %}
+            <script>
+                // (function(){
+                //     var player = document.getElementById("movie_player");
+
+                //     if (player)
+                //     {
+                //         player.parentNode.removeChild(player);
+                //     }
+                // })();
+
+                {% include "player/classic_player_boot.twig" %}
+            </script>
+        {% endif %}
+    {%- endapply -%},
+	"name": "{{ pageName ?? pageType }}"
+},
+{% flush %}

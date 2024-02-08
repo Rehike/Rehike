@@ -18,6 +18,9 @@ use Rehike\Util\ExtractUtils;
 use Rehike\Model\Watch\WatchModel;
 use YukisCoffee\CoffeeRequest\Exception\GeneralException;
 
+use Rehike\Spf\Spf;
+use Rehike\TemplateManager;
+
 /**
  * Controller for the watch page.
  * 
@@ -143,11 +146,6 @@ return new class extends NirvanaController {
         }
 
         \Rehike\Profiler::start("watch_requests");
-        // Makes the main watch request.
-        $nextRequest = Network::innertubeRequest(
-            "next",
-            $sharedRequestParams + $nextOnlyParams
-        );
 
         // Unlike Polymer, Hitchhiker had all of the player data already
         // available in the initial response. So an additional player request
@@ -217,85 +215,109 @@ return new class extends NirvanaController {
             );
             $storyboardRequest = new Promise(fn($r) => $r());
         }
+		
+		// Makes the main watch request.
+		$nextRequest = Network::innertubeRequest(
+			"next",
+			$sharedRequestParams + $nextOnlyParams
+		);
+		
+		/**
+		* Determine whether or not to use the Return YouTube Dislike
+		* API to return dislikes. Retrieved from application config.
+		*/
+		if (true === Config::getConfigProp("appearance.useRyd"))
+		{
+			$rydUrl = "https://returnyoutubedislikeapi.com/votes?videoId=" . $yt->videoId;
+		
+			$rydRequest = Network::urlRequest($rydUrl);
+		}
+		else
+		{
+			// If RYD is disabled, then send a void Promise that instantly
+			// resolves itself.
+			$rydRequest = new Promise(fn($r) => $r());
+		}
 
-        /**
-         * Determine whether or not to use the Return YouTube Dislike
-         * API to return dislikes. Retrieved from application config.
-         */
-        if (true === Config::getConfigProp("appearance.useRyd"))
-        {
-            $rydUrl = "https://returnyoutubedislikeapi.com/votes?videoId=" . $yt->videoId;
-
-            $rydRequest = Network::urlRequest($rydUrl);
-        }
-        else
-        {
-            // If RYD is disabled, then send a void Promise that instantly
-            // resolves itself.
-            $rydRequest = new Promise(fn($r) => $r());
-        }
-
-        Promise::all([
-            "next"       => $nextRequest,
-            "player"     => $playerRequest,
-            "ryd"        => $rydRequest,
-            "storyboard" => $storyboardRequest
-        ])->then(function ($responses) use ($yt) {
-            \Rehike\Profiler::end("watch_requests");
-            $nextResponse = $responses["next"]->getJson();
-            $playerResponse = $responses["player"]->getJson();
-            if (false === Config::getConfigProp("experiments.encryptedStreamsDO_NOT_USE_UNLESS_YOU_KNOW_WHAT_YOU_ARE_DOING")){
-                $storyboardResponse = $responses["storyboard"]->getJson();
-                $playerResponse->storyboards = $storyboardResponse->storyboards;
-            }
-            try
-            {
-                $rydResponse = $responses["ryd"]?->getJson() ?? (object)[];
-            }
-            catch (GeneralException $e)
-            {
-                $rydResponse = (object) [];
-            }
-			
+		Promise::all([
+            "player"     => $playerRequest
+        ])->then(function ($responses) use ($yt, $nextRequest, $rydRequest) {
+			$playerResponse = $responses["player"]->getJson();
 			$renderer = (object) [];
-
+	
 			$renderer->invideoUrl = "//www.youtube.com/annotations_invideo?video_id=".$yt->videoId;
 			$renderer->loadPolicy = "ALWAYS";
 			$renderer->allowInPlaceSwitch = false;
-
+	
 			$playerResponse->annotations = array((object) []);
 			$playerResponse->annotations[0]->playerAnnotationsUrlsRenderer = $renderer;
+			
+			if (false === Config::getConfigProp("experiments.encryptedStreamsDO_NOT_USE_UNLESS_YOU_KNOW_WHAT_YOU_ARE_DOING")){
+				$storyboardResponse = $responses["storyboard"]->getJson();
+				$playerResponse->storyboards = $storyboardResponse->storyboards;
+			}
+			
+			if (Config::getConfigProp("appearance.enableAdblock"))
+			{
+				// This may not be needed any longer, but manually removing ads
+				// has been historically required as adblockers no longer have
+				// the Hitchhiker-era rules.
+				$this->removeAds($playerResponse);
+			}
+			
+			$yt->playerResponse = $playerResponse;
+			if (Spf::isSpfRequested() && $this->yt->spfEnabled)
+			{
+				// Report SPF status to the templater
+				$this->yt->spf = true;
+	
+				if ($this->tryGetSpfData($spfData))
+				{
+					$this->yt->spfConfig->data = $spfData;
+				}
 
-            if (Config::getConfigProp("appearance.enableAdblock"))
-            {
-                // This may not be needed any longer, but manually removing ads
-                // has been historically required as adblockers no longer have
-                // the Hitchhiker-era rules.
-                $this->removeAds($playerResponse);
-            }
+				$capturedRender = TemplateManager::render([], 'core/spf_player_preload');
+				echo $capturedRender;
+			}
 
-             // Push these over to the global object.
-             $yt->playerResponse = $playerResponse;
-             $yt->watchNextResponse = $nextResponse;
-
-            \Rehike\Profiler::start("modelbake");
-
-            WatchModel::bake(
-                yt:      $yt,
-                data:    $nextResponse,
-                videoId: $yt->videoId,
-                rydData: $rydResponse
-            )->then(function ($watchModelResult) use ($yt) {
-                $yt->page = $watchModelResult;
-
-                if (isset($yt->page->title))
-                {
-                    $this->setTitle($yt->page->title);
-                }
-            });
-            
-            \Rehike\Profiler::end("modelbake");
-        });
+			Promise::all([
+				"next"       => $nextRequest,
+				"ryd"        => $rydRequest
+			])->then(function ($responses) use ($yt) {
+				\Rehike\Profiler::end("watch_requests");
+				$nextResponse = $responses["next"]->getJson();
+				
+				try
+				{
+					$rydResponse = $responses["ryd"]?->getJson() ?? (object)[];
+				}
+				catch (GeneralException $e)
+				{
+					$rydResponse = (object) [];
+				}
+				
+				// Push these over to the global object.
+				$yt->watchNextResponse = $nextResponse;
+	
+				\Rehike\Profiler::start("modelbake");
+		
+				WatchModel::bake(
+					yt:      $yt,
+					data:    $nextResponse,
+					videoId: $yt->videoId,
+					rydData: $rydResponse
+				)->then(function ($watchModelResult) use ($yt) {
+					$yt->page = $watchModelResult;
+		
+					if (isset($yt->page->title))
+					{
+						$this->setTitle($yt->page->title);
+					}
+				});
+				
+				\Rehike\Profiler::end("modelbake");
+			});
+		});
     }
 
     /**
