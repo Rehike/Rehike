@@ -507,7 +507,6 @@ ytplayer.config = {
         {% set titleText = rehike.getText(yt.page.title) %}
         "author": {{ authorText ? authorText|json_encode|raw : "null" }},
         "title": {{ titleText ? titleText|json_encode|raw : "null" }},
-        "autoplay": "1",
         "autonav": {{ yt.page.autonavEnabled ? "1" : "0" }},
         "no_get_video_log": "1",
         "t": "1",
