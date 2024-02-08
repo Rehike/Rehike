@@ -92,6 +92,7 @@ function handleInitialPlaybackFailure()
 	var container = api.parentElement;
 	for (var b; b = container.firstChild; ) // hard reset player
         container.removeChild(b);
+	ytplayer.config.args.autoplay = "0"; // disable autoplay
 	ytplayer.load();
 }
 
