@@ -17383,7 +17383,9 @@ if (document.fullscreenElement == undefined && document.body.webkitRequestFullSc
             return !0;
         var a = wB();
         try {
-            return !(!a || !a.canPlayType || !a.canPlayType('video/mp4; codecs="avc1.42001E, mp4a.40.2"') && !a.canPlayType('video/webm; codecs="vp8.0, vorbis"'))
+			/* support newer formats */
+            return !(!a || !a.canPlayType || 
+			!a.canPlayType('video/mp4; codecs="avc1.42001E, mp4a.40.2"') && !a.canPlayType('video/webm; codecs="vp8.0, vorbis"') && !a.canPlayType('video/mp4; codecs="avc1.42001E"') && !a.canPlayType('video/webm; codecs="vp9"'))
         } catch (b) {
             return !1
         }
@@ -22409,13 +22411,13 @@ if (document.fullscreenElement == undefined && document.body.webkitRequestFullSc
         return !(a.o && a.video)
     }
     function mH(a) {
-        return 0 <= a.indexOf("opus") || 0 <= a.indexOf("vorbis") || 0 <= a.indexOf("mp4a")
+        return 0 <= a.indexOf("opus") || 0 <= a.indexOf("vorbis") || 0 <= a.indexOf("mp4a") || 0 <= a.indexOf("dtse") || 0 <= a.indexOf("ac-3") || 0 <= a.indexOf("ec-3") || 0 <= a.indexOf("iamf")
     }
 	/**
 	 * Rehike-specific change: Support av01 streams.
 	 */
     function nH(a) {
-        return 0 <= a.indexOf("vp9") || 0 <= a.indexOf("vp8") || 0 <= a.indexOf("avc1") || 0 <= a.indexOf("av01")
+        return 0 <= a.indexOf("vp9") || 0 <= a.indexOf("vp09") || 0 <= a.indexOf("vp8") || 0 <= a.indexOf("avc1") || 0 <= a.indexOf("av01")
     }
     ;function oH(a, b, c) {
         this.name = a;
