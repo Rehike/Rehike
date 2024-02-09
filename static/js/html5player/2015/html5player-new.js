@@ -10451,13 +10451,13 @@ if (document.fullscreenElement == undefined && document.body.webkitRequestFullSc
         return !(a.audio && a.video)
     }
     function rs(a) {
-        return 0 <= a.indexOf("opus") || 0 <= a.indexOf("vorbis") || 0 <= a.indexOf("mp4a")
+        return 0 <= a.indexOf("opus") || 0 <= a.indexOf("vorbis") || 0 <= a.indexOf("mp4a") || 0 <= a.indexOf("dtse") || 0 <= a.indexOf("ac-3") || 0 <= a.indexOf("ec-3") || 0 <= a.indexOf("iamf")
     }
 	/**
 	 * Rehike-specific change: Support av01 streams.
 	 */
     function ts(a) {
-        return 0 <= a.indexOf("vp9") || 0 <= a.indexOf("vp8") || 0 <= a.indexOf("avc1") || 0 <= a.indexOf("av01")
+        return 0 <= a.indexOf("vp9") || 0 <= a.indexOf("vp09") || 0 <= a.indexOf("vp8") || 0 <= a.indexOf("avc1") || 0 <= a.indexOf("av01")
     }
     ;function us(a, b, c) {
         this.name = a;
