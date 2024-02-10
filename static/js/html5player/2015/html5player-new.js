@@ -11793,7 +11793,7 @@ if (document.fullscreenElement == undefined && document.body.webkitRequestFullSc
         "captions" == b && (b = Ms(a, "lang"));
         var c = Ms(a, "mimeType")
           , d = Ms(a, "codecs");
-		 if (d == "vp9") // Rehike-specific patch: Ignore VP9 streams
+		if (d.indexOf("vp9")>-1 || d.indexOf("vp09")>-1) // Rehike-specific patch: Ignore VP9 streams
 			d = "_rehike_unsupported";
 			
         var c = d ? c + '; codecs="' + d + '"' : c
@@ -14050,7 +14050,7 @@ if (document.fullscreenElement == undefined && document.body.webkitRequestFullSc
                     var k;
                     k = c[f];
                     var l = k.type.match(/codecs="([^"]*)"/);
-					if (l = "vp9") // Rehike-specific patch: Ignore VP9 streams
+					if (l.indexOf("vp9")>-1 || l.indexOf("vp09")>-1) // Rehike-specific patch: Ignore VP9 streams
 						l = "_rehike_unsupported";
                     k = new Bx(k.itag,k.url,l ? l[1] : "",+k.width,+k.height,+k.fps,+k.bitrate,k.audio_itag);
                     e[k.itag] = k
