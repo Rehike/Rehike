@@ -14050,6 +14050,8 @@ if (document.fullscreenElement == undefined && document.body.webkitRequestFullSc
                     var k;
                     k = c[f];
                     var l = k.type.match(/codecs="([^"]*)"/);
+					if (l = "vp9") // Rehike-specific patch: Ignore VP9 streams
+						l = "_rehike_unsupported";
                     k = new Bx(k.itag,k.url,l ? l[1] : "",+k.width,+k.height,+k.fps,+k.bitrate,k.audio_itag);
                     e[k.itag] = k
                 }
