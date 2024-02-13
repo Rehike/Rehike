@@ -1,5 +1,5 @@
-languageName: "English"
-expandedLanguageName: "English (United States)"
+languageName: "한국어"
+expandedLanguageName: "한국어 (대한민국)"
 writingDirection: ltr
 
 thousandsSeparator: ","
@@ -10,64 +10,64 @@ daysInWeek: 7
 
 spaceOnLineBreak: true
 
-standardDateOrder: mdy
+standardDateOrder: ymd
 
 firstDayOfWeek: 1 # Sunday
 
-am: "AM"
-pm: "PM"
+am: "오전"
+pm: "오후"
 
 # https://www.php.net/manual/en/datetime.format.php
-expandedDateWithTime: "l, F j, Y g:i A" # Tuesday, October 17, 2023 12:50 AM
-expandedDate: "l, F j, Y" # Tuesday, October 17, 2023
-dateWithTime: "F j, Y g:i A" # October 17, 2023 12:50 AM
-date: "F j, Y" # October 17 2023
-shortDateWithTime: "m/d/Y g:i A" # 10/17/2023 12:50 AM
-shortDate: "m/d/Y" # 10/17/2023
-time: "g:i A" # 12:50 AM
+expandedDateWithTime: "Y년 n월 j일 l A g:i"
+expandedDate: "Y년 n월 j일 l"
+dateWithTime: "Y년 n월 j일 A g:" # October 17, 2023 12:50 AM
+date: "Y년 n월 j일" # October 17 2023
+shortDateWithTime: "Y. m. d. A g:i" # 10/17/2023 12:50 AM
+shortDate: Y. m. d." # 10/17/2023
+time: "A g:i" # 12:50 AM
 
 daysOfWeek:
-  1: "Sunday"
-  2: "Monday"
-  3: "Tuesday"
-  4: "Wednesday"
-  5: "Thursday"
-  6: "Friday"
-  7: "Saturday"
+  1: "일요일"
+  2: "월요일"
+  3: "화요일"
+  4: "수요일"
+  5: "목요일"
+  6: "금요일"
+  7: "토요일"
 
 shortDaysOfWeek:
-  1: "Sun"
-  2: "Mon"
-  3: "Tue"
-  4: "Wed"
-  5: "Thur"
-  6: "Fri"
-  7: "Sat"
+  1: "일"
+  2: "월"
+  3: "화"
+  4: "수"
+  5: "목"
+  6: "금"
+  7: "토"
 
 monthNames:
-  1: "January"
-  2: "Feburary"
-  3: "March"
-  4: "April"
-  5: "May"
-  6: "June"
-  7: "July"
-  8: "August"
-  9: "September"
-  10: "October"
-  11: "November"
-  12: "December"
+  1: "1월"
+  2: "2월"
+  3: "3월"
+  4: "4월"
+  5: "5월"
+  6: "6월"
+  7: "7월"
+  8: "8월"
+  9: "9월"
+  10: "10월"
+  11: "12월"
+  12: "12월"
 
 shortMonthNames:
-  1: "Jan"
-  2: "Feb"
-  3: "Mar"
-  4: "Apr"
-  5: "May"
-  6: "Jun"
-  7: "Jul"
-  8: "Aug"
-  9: "Sep"
-  10: "Oct"
-  11: "Nov"
-  12: "Dec"
+  1: "1월"
+  2: "2월"
+  3: "3월"
+  4: "4월"
+  5: "5월"
+  6: "6월"
+  7: "7월"
+  8: "8월"
+  9: "9월"
+  10: "10월"
+  11: "12월"
+  12: "12월"
