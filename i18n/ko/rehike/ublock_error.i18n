@@ -1,0 +1,6 @@
+# Messages for the uBlock origin error (template/hitchhiker/core/ublock_error.twig)
+
+message: >
+  Rehike failed to boot properly. This is almost certainly
+  caused by problems with an adblocker (i.e. uBlock Origin).
+button: How do I fix this?

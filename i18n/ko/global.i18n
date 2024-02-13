@@ -1,0 +1,72 @@
+# Global strings
+# These include both common things and most JS messages.
+# These are exported to the templates at `yt.msg`.
+
+# Common aria (accessibility) labels
+loadingIconLabel: "Loading icon"
+actionMenuLabel: "Action menu."
+
+# Spinner (loading) text:
+loading: "Loading..."
+working: "Working..."
+
+# Generic close button text
+close: "Close"
+
+showMore: "더보기"
+showLess: "간략히 보기"
+
+# General "load more" text
+loadMore: "Load more"
+
+# Duration accessibility strings (shown on watch)
+durationA11y: " - Duration: %s."
+
+# TODO-i18n: make this use printf formatting so it can be more
+# versatile.
+usernamePrepend: "by "
+verified: "인증됨"
+
+# Video thumbnail watch later button strings:
+addToWatchLater: "나중에 볼 동영상에 추가"
+addedToWatchLater: "Added"
+addToWatchLaterError: "Error"
+addToWatchQueue: "Watch Queue"
+addToWatchQueueAdded: "Added"
+addToWatchQueueError: "Error"
+addToTvQueue: "Queue"
+watchLaterSignIn: "%sSign in%s to add this to Watch Later"
+
+# Add to dialog strings:
+addToHeader: "추가"
+addToLoading: "Loading playlists..."
+
+# Shelfsliders (horizontal shelves):
+shelfsliderNext: "다음"
+shelfsliderPrev: "이전"
+
+# Interactive transcripts:
+transcriptTitle: "스크립트"
+transcriptFail: "The interactive transcript could not be loaded."
+
+# Video player ad (?) JS messages
+adsInstreamFirstPlay: "A video ad is playing."
+adsInstreamSkippable: "Video ad can be skipped."
+adsOverlayImpression: "Ad displayed."
+
+# Searchbox labels
+sboxSuggestionDismissedLabel: "Suggestion removed"
+sboxSuggestionDismissLabel: "Remove"
+
+# Misc:
+videoCountNone: "No videos"
+videoCountPlural: "동영상 %s개"
+videoCountSingular: "동영상 1개"
+commentPostFail: "Comment failed to post."
+viewFullPlaylist: "View full playlist"
+mdxAutoplayOff: "Autoplay is off"
+mdxAutoplayOn: "Autoplay is on"
+sorryAboutThat: "Sorry about that."
+browseUnsavedChanges: >
+  Some of the changes you have made to channel settings have not been saved
+  and will be lost if you navigate away from this page.

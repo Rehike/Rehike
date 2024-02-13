@@ -1,0 +1,30 @@
+# Common strings that show in the footer at the bottom of the page:
+
+logoTooltip: "YouTube 홈"
+
+pickerLanguage: "언어: %s"
+pickerLocation: "위치: %s"
+
+pickerSafety: "제한 모드: %s"
+safetyOn: "On"
+safetyOff: "Off"
+
+buttonHistory: "최근 본 동영상"
+buttonHelp: "도움말"
+
+# Primary (top) links:
+primaryAbout: "About"
+primaryPress: "Press"
+primaryCopyright: "저작권"
+primaryCreators: "Creators"
+primaryAdvertise: "Advertise"
+primaryDevs: "개발자"
+primaryVersion: "Rehike v%s [%s]" # Rehike-specific
+
+# Secondary (bottom) links:
+secondaryTerms: "Terms"
+secondaryPrivacy: "Privacy"
+secondaryPolicySafety: "Policy & Safety"
+secondaryFeedback: "Send feedback"
+secondaryTestTube: "Test new features"
+secondaryCopyright: "© %s Google LLC"
