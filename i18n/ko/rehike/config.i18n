@@ -1,156 +1,139 @@
-title: "Rehike settings"
-saveChanges: "Save changes"
-saveChangesSuccess: "Successfully updated configuration!"
-saveChangesFailure: "Failed to update configuration."
+title: "Rehike 설정"
+saveChanges: "적용"
+saveChangesSuccess: "설정이 저장되었습니다!"
+saveChangesFailure: "설정을 저장할 수 없습니다."
 
 tabs:
-  appearance: "Appearance"
-  experiments: "Experiments"
-  advanced: "Advanced"
+  appearance: "스타일"
+  experiments: "실험실"
+  advanced: "고급"
 
 props:
   appearance:
     playerChoice:
-      title: "Choose video player revision:"
+      title: "동영상 재생기 버전:"
       values:
-        CURRENT: "Latest player" # No specific date; true latest player.
-        PLAYER_2022: "2022 - Square edges, old storyboard"
-        PLAYER_2020: "2020 - Smaller UI"
-        PLAYER_2015_NEW: "2015 - Modern UI, old icons"
-        PLAYER_2015: "2015 - Classic UI, more features and new end screen"
-        PLAYER_2014: "2014 - Classic UI, old buffering behavior"
+        CURRENT: "최신 버전" # No specific date; true latest player.
+        PLAYER_2022: "2022년 - 각진 디자인 및 이전 버전 스토리보드"
+        PLAYER_2020: "2020년 - 작은 플레이어 단추"
+        PLAYER_2015_NEW: "2015 - 신형 스타일/이전 버전 아이콘"
+        PLAYER_2015: "2015 - 구형 스타일/신형 최종 화면"
+        PLAYER_2014: "2014 - 구형 스타일/구형 버퍼링 스타일"
     classicPlayerForcePersistentControls:
-      title: "Always show controls"
+      title: "재생 컨트롤 항상 표시"
       subtitle: >
-        May cause issues with custom CSS because this is designed for the latest
-        official Hitchhiker CSS version.
+        최근에 만들어진 사용자 지정 CSS와 충돌할 수 있습니다.
     classicPlayerTheme:
-      title: "Player theme:"
+      title: "재생기 테마:"
       values:
-        DARK: "Dark theme" # The default theme used since about 2012, but was introduced in 2011
-        LIGHT: "Light theme"
+        DARK: "어둡게" # The default theme used since about 2012, but was introduced in 2011
+        LIGHT: "밝게"
     classicPlayerColor:
-      title: "Player progress bar color:"
+      title: "검색 막대 색상:"
       values:
-        RED: "Red"
-        WHITE: "White" # For whatever reason this is a thing
+        RED: "적색"
+        WHITE: "백색" # For whatever reason this is a thing
     modernLogo:
-      title: "Use the current YouTube logo"
+      title: "새로운 YouTube 로고 사용"
       subtitle: >
-        Used since 2017. Enabling this may break some custom themes made 
-        before 2017.
+        2017년부터 적용된 새 로고를 사용합니다. 2017년 이전에 만들어진 사용자 지정 CSS자 올바르게 작동하지 않을 수 있습니다.
     uploadButtonType:
-      title: "Upload button type:"
+      title: "업로드 버튼 모양:"
       values:
-        BUTTON: "Button (2013-2016)"
-        ICON: "Material icon (2016-2018)"
-        MENU: "Creation menu (2018+)"
+        BUTTON: "버튼 (2013~2016)"
+        ICON: "아이콘 (2016~2018)"
+        MENU: "만들기 메뉴 (2018~)"
     largeSearchResults:
-      title: "Larger thumbnails on search page"
+      title: "검색 결과 페이지에서 썸네일을 더 크게 표시"
       subtitle: >
-        Will break some custom themes made before 2017.
+        이 옵션 사용 시 2017년 이전에 만들어진 사용자 지정 CSS자 올바르게 작동하지 않을 수 있습니다.
     swapSearchViewsAndDate:
-      title: "Swap view and date on search page"
+      title: "검색 결과에서 조회수와 날짜의 위치를 서로 바꾸기"
       subtitle: >
-        Show the view count before the date on search page video renderers.
+        조회수를 날짜 앞에 표시합니다.
     showVersionInFooter:
-      title: "Show Rehike version in the footer"
+      title: "하단에 Rehike 버전 보이기"
       subtitle: >
-        Display a convenient link to the Rehike about page at the end of 
-        the footer.
+        하단에 Rehike 정보 페이지로 이동하는 링크를 표시합니다.
     useRyd:
-      title: "Show dislikes on videos"
+      title: "싫어요 수 보이기"
       subtitle: >
-        Stats from the Return YouTube Dislike API.
+        Return YouTube Dislike API에서 제공하는 싫어요 수를 보입니다.
     usernamePrepends:
-      title: "Show \"by\" before the author's name on video links"
+      title: "영어 언어 사용 시 업로더 이름 앞에 \"by\" 표시"
       subtitle: >
-        Used before 2016.
+        2016년 이전에 사용된 기능입니다.
     noViewsText:
-      title: "Remove \"views\" text from view count on watch page"
+      title: "\"조회수 n회\" 라벨 보지 않기"
       subtitle: >
-        Before 2016, only the count itself was displayed, without any label.
+        2016년 이전처럼 조회수 값만 보입니다.
     movingThumbnails:
-      title: "Show an animated preview when hovering over a video"
+      title: "썸네일에 마우스를 올리면 미리보기 재생"
       subtitle: >
-        Used since 2018.
+        2018년부터 적용되었습니다.
     cssFixes:
-      title: "YouTube CSS fixes"
+      title: "CSS 버그 수정"
       subtitle: >
-        Fixes bugs or inconsistencies with the original Hitchhiker CSS. May 
-        break compatibility with some userstyles.
+        일부 사용자 지정 CSS와 충돌할 수 있습니다.
     watchSidebarDates:
-      title: "Show upload date on watch page recommendations"
+      title: "추천 동영상에 업로드 날짜 표시"
       subtitle: >
-        Unlike Polymer, Hitchhiker didn't show these by default.
+        새로운 YouTube UI에서만 사용된 기능입니다.
     watchSidebarVerification:
-      title: "Show verification badges on watch page recommendations"
+      title: "추천 동영상에 인증됨 배지 표시"
       subtitle: >
-        Unlike Polymer, Hitchhiker didn't show these by default.
+        새로운 YouTube UI에서만 사용된 기능입니다.
     oldBestOfYouTubeIcons:
-      title: "Old red icons in \"Best of YouTube\" guide section"
+      title: "\"Best of YouTube\"에 이전 버전 아이콘 사용"
       subtitle: >
-        Show the old red topic channel icons, rather than the black ones used 
-        today.
+        흑색 아이콘 대신 이전에 사용된 적색 아이콘은 사용합니다.
     smallPlayer:
-      title: "Use custom smaller player style."
+      title: "플레이어 버튼을 작게 표시"
       subtitle: >
-        Uses a compact player button style like 2019 that may be more
-        comfortable with smaller windows.
+        2019년 이전에 사용된 작은 UI를 모방합니다.
     enableAdblock:
-      title: "Enable built-in adblock"
+      title: "광고 차단"
       subtitle: >
-        Provides a stable adblocker for ads in the video player.
+        동영상의 광고를 차단합니다.
   
   experiments:
     displayPlayerChoice:
-      title: "Enable the use of older players"
+      title: "구형 플레이어 선택 설정 사용"
       subtitle: >
-        Enables the option to change the YouTube player revision on the
-        appearance page.
+        스타일 탭에서 플레이어 버전을 선택할 수 있습니다.
     useSignInV2:
-      title: "Use sign in v2"
+      title: "새로운 로그인 시스템 사용"
       subtitle: >
-        Use the experimental new rewrite of the sign in rewrite. This option
-        should be available for the duration of v2's development, after which
-        it will become the default and the legacy one will be removed.
+        실험적인 새로운 로그인 시스템을 사용합니다. 나중에 정식 기능으로 적용될 수 있습니다.
     disableSignInOnHome:
-      title: "Disable authenticated home requests"
+      title: "메인 화면에서 임시 로그아웃"
       subtitle: >
-        Makes the home page signed out. This is a workaround for YouTube 
-        blocking homepage access if you have watch history disabled 
-        (2023/08/18).
+        2018년 8월부터 시청기록을 끈 사용자에게 추천 동영상이 나오지 않는 것을 고칩니다.
     encryptedStreamsDO_NOT_USE_UNLESS_YOU_KNOW_WHAT_YOU_ARE_DOING:
-      title: "Use encrypted video streams"
+      title: "암호화된 스트림 사용"
       subtitle: >
-        For the love of god, do not disable this if you don't know what you're doing.
-        It will break the watch page. This is to be used by developers only until it
-        is fixed.
+        개발자용 옵션이며, 이 설정에 대한 이해가 없다면 비활성화하지 마십시오.
 
   advanced:
     enableDebugger:
-      title: "Enable the debugger"
+      title: "디버거 사용"
       subtitle: >
-        The debugger provides useful tools for developers. Only enable if 
-        you're a developer or reporting a bug and need more information.
+        개발자에게 유용합니다. 버그 신고 시에도 사용할 수 있습니다.
     clearSigninCache:
-      title: "Sign-in cache"
+      title: "로그인 상태 캐시"
       subtitle: >
-        Rehike caches sign-in data as to not make too many requests to
-        YouTube.
-      button: "Clear sign-in cache"
+        YouTube에 매번 상태 요청을 하지 않도록 로그인 상태를 저장합니다.
+      button: "캐시 삭제"
     clearPlayerCache:
-      title: "Player cache"
+      title: "플레이어 정보 캐시"
       subtitle: >
-        Rehike caches information about the player as to not make too many
-        requests to YouTube.
-      button: "Clear player cache"
+        YouTube에 매번 상태 요청을 하지 않도록 플레이어 정보를 저장합니다.
+      button: "캐시 삭제"
     factoryReset:
-      title: "Reset Rehike"
+      title: "초기화"
       subtitle: >
-        Reset Rehike to its defaults, including settings, cache, and any
-        changes that aren't on the remote repository.
-      button: "Reset Rehike"
+        캐시 및 설정 등을 초기화합니다.
+      button: "초기화"
     updateRehike:
-      title: "Update Rehike"
-      button: "Update"
+      title: "Rehike 판올림"
+      button: "판올림"

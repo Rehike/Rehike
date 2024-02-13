@@ -1,7 +1,7 @@
-aboutRehike: "About Rehike"
+aboutRehike: "Rehike 정보"
 brandName: "Rehike"
-versionHeader: "Version %s"
-nightly: "Nightly"
+versionHeader: "버전 %s"
+nightly: "베타"
 nightlyInfoTooltip: >
   This release is bleeding edge and may contain irregular bugs.
 
