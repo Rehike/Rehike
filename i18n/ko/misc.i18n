@@ -2,8 +2,8 @@
 
 btnCancel: "취소"
 btnSave: "저장"
-subscriberTextSingular: "%s"
-subscriberTextPlural: "%s"
+subscriberTextSingular: "구독자 %s명"
+subscriberTextPlural: "구독자 %s명"
 viewTextSingular: "조회수 1회"
 viewTextPlural: "조회수 %s회"
 dateTextPublic: "게시 날짜: %s"
