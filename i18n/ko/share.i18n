@@ -1,6 +1,6 @@
-tabShare: "Share"
-tabEmbed: "Embed"
-tabEmail: "Email"
+tabShare: "공유"
+tabEmbed: "퍼가기"
+tabEmail: "이메일"
 
 serviceTooltip: "Share to %s. Opens in a new window."
 startAt: "Start at:"
@@ -8,20 +8,20 @@ startAt: "Start at:"
 sharePlaylist: "Share with playlist starting from  "
 currentVideo: "current video"
 startPlaylist: "start of playlist"
-embedCode: "Embed code"
+embedCode: "퍼가기 코드"
 
-preview: "Preview:"
-videoSize: "Video size:"
+preview: "미리보기:"
+videoSize: "동영상 크기:"
 customSize: "Custom size"
 
 showRelated: "Show suggested videos when the video finishes"
-showControls: "Show player controls"
+showControls: "플레이어 컨트롤을 표시합니다."
 showInfo: "Show video title and player actions"
-delayedCookies: "Enable privacy-enhanced mode"
+delayedCookies: "개인정보 보호 강화 모드를 사용 설정합니다."
 
 legalNotice: >
-  By displaying YouTube videos on your site, you are agreeing to the 
-legalNoticeLink: "YouTube API terms of service."
+  내 사이트에 YouTube 동영상을 퍼가면 
+legalNoticeLink: "YouTube API 서비스 약관에 동의하는 것으로 간주됩니다."
 
 playlistNonexistent: "That playlist does not exist."
 playlistNoVideos: "That playlist does not contain any videos."

@@ -10,9 +10,9 @@ relatedItemA11yDesc: " - Duration: %s."
 actionAddTo: "추가"
 actionShare: "공유"
 actionMore: "더보기"
-actionMoreTooltip: "More actions"
+actionMoreTooltip: "추가 작업"
 actionReport: "신고"
-actionTranscript: "Transcript"
+actionTranscript: "스크립트 보기"
 actionLikeTooltip: "동영상이 마음에 듭니다."
 actionLikeTooltipActive: "좋아요 취소"
 actionDislikeTooltip: "동영상이 마음에 들지 않습니다."
@@ -47,8 +47,8 @@ playlistVideosSingular: "동영상 1개"
 playlistVideosPlural: "동영상 %s개"
 playlistSave: "재생목록에 저장"
 playlistUnsave: "Remove"
-playlistPrevVideo: "Previous video"
-playlistNextVideo: "Next video"
+playlistPrevVideo: "이전 동영상"
+playlistNextVideo: "다음 동영상"
 
 privacyUnlisted: >
   미등록 동영상입니다. 링크가 있는 사용자만 볼 수 있습니다.
@@ -62,8 +62,8 @@ actionPanelRentalRequired: >
 
 loadingMoreSuggestions: "Loading more suggestions..."
 
-repeatPlaylistLabel: "Repeat playlist"
-shufflePlaylistLabel: "Shuffle"
+repeatPlaylistLabel: "재생목록 신고"
+shufflePlaylistLabel: "셔플"
 
 playerBlockadeContentWarning: "Content warning"
 playerBlockadeInappropriate: >
@@ -81,17 +81,17 @@ editorAjaxRequest503: >
 # Slow internet connection message.
 speedygInfo: "Experiencing interruptions?"
 
-liveWatchingNow0: "0 watching now"
-liveWatchingNow1: "1 watching now"
-liveWatchingNow: "# watching now"
+liveWatchingNow0: "0명 시청 중"
+liveWatchingNow1: "1명 시청 중"
+liveWatchingNow: "#명 시청 중"
 
 # Video categories
 categoryAutosAndVehicles: "Autos & Vehicles"
 categoryComedy: "코미디"
 categoryEducation: "교육"
-categoryEntertainment: "Entertainment"
-categoryFilmAndAnimation: "Film & Animation"
-categoryGaming: "Gaming"
+categoryEntertainment: "엔터테인먼트"
+categoryFilmAndAnimation: "영화/애니메이션"
+categoryGaming: "게임"
 categoryHowtoAndStyle: "Howto & Style"
 categoryMusic: "음악"
 categoryNewsAndPolitics: "News & Politics"

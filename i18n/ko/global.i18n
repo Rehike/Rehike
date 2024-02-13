@@ -7,7 +7,7 @@ loadingIconLabel: "Loading icon"
 actionMenuLabel: "Action menu."
 
 # Spinner (loading) text:
-loading: "Loading..."
+loading: "로드 중..."
 working: "Working..."
 
 # Generic close button text
@@ -17,7 +17,7 @@ showMore: "더보기"
 showLess: "간략히 보기"
 
 # General "load more" text
-loadMore: "Load more"
+loadMore: "더보기"
 
 # Duration accessibility strings (shown on watch)
 durationA11y: " - Duration: %s."
@@ -29,10 +29,10 @@ verified: "인증됨"
 
 # Video thumbnail watch later button strings:
 addToWatchLater: "나중에 볼 동영상에 추가"
-addedToWatchLater: "Added"
+addedToWatchLater: "추가된"
 addToWatchLaterError: "Error"
 addToWatchQueue: "Watch Queue"
-addToWatchQueueAdded: "Added"
+addToWatchQueueAdded: "추가됨"
 addToWatchQueueError: "Error"
 addToTvQueue: "Queue"
 watchLaterSignIn: "%sSign in%s to add this to Watch Later"
@@ -59,13 +59,13 @@ sboxSuggestionDismissedLabel: "Suggestion removed"
 sboxSuggestionDismissLabel: "Remove"
 
 # Misc:
-videoCountNone: "No videos"
+videoCountNone: "동영상 없음"
 videoCountPlural: "동영상 %s개"
 videoCountSingular: "동영상 1개"
 commentPostFail: "Comment failed to post."
-viewFullPlaylist: "View full playlist"
-mdxAutoplayOff: "Autoplay is off"
-mdxAutoplayOn: "Autoplay is on"
+viewFullPlaylist: "전체 재생목록 보기"
+mdxAutoplayOff: "자동재생이 꺼져 있습니다."
+mdxAutoplayOn: "자동재생이 켜져 있습니다."
 sorryAboutThat: "Sorry about that."
 browseUnsavedChanges: >
   Some of the changes you have made to channel settings have not been saved

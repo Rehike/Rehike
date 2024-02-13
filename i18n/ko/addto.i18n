@@ -1,13 +1,13 @@
 # Add to definitions
 
-addToHeading: "Add to"
+addToHeading: "추가"
 searchPlaylists: "Search playlists"
 createNewPlaylist: "Create new playlist"
 createNewPlaylistDynamic: "%s (create new)"
 playlistTitle: "Playlist title"
 playlistPrivacy: "Playlist privacy"
-privacyPublic: "Public"
-privacyUnlisted: "Unlisted"
-privacyPrivate: "Private"
-cancel: "Cancel"
+privacyPublic: "공개"
+privacyUnlisted: "미등록"
+privacyPrivate: "비공개"
+cancel: "취소"
 create: "Create"
