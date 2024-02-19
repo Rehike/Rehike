@@ -39,7 +39,9 @@ Router::funnel([
     "/post/*",
     "/feeds/*",
     "/img/*",
-    "/attribution_link*"
+    "/attribution_link*",
+	"/yt*", // this seems to be the username of a channel but YouTube reserved it for footer links
+	"/about/"
 ]);
 
 Router::redirect([
