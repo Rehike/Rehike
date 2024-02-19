@@ -87,13 +87,10 @@ function addEventToPlayer(eventName, callback)
  */
 function handleInitialPlaybackFailure()
 {
-	var api = getMoviePlayer();
-	api.stopVideo();
-	var container = api.parentElement;
-	for (var b; b = container.firstChild; ) // hard reset player
-        container.removeChild(b);
-	ytplayer.config.args.autoplay = "0"; // disable autoplay
-	ytplayer.load();
+    var api = getMoviePlayer();
+    api.stopVideo();
+    api.cueVideoByPlayerVars(ytplayer.config.args);
+    api.hideControls;
 }
 
 function onChangeWatchAutonavState()
