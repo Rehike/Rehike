@@ -11059,7 +11059,7 @@
         "captions" == b && (b = Cr(a, "lang"));
         var c = Cr(a, "mimeType")
           , d = Cr(a, "codecs");
-		if (d.indexOf("vp9")>-1 || d.indexOf("vp09")>-1) // Rehike-specific patch: Ignore VP9 streams
+		if (d == "vp9") // Rehike-specific patch: Ignore VP9 streams
 			d = "_rehike_unsupported";
         var c = d ? c + '; codecs="' + d + '"' : c
           , d = parseInt(Cr(a, "bandwidth"), 10) / 8
