@@ -385,6 +385,17 @@ class CommentThread
             ];
         }
 
+        // comment.linkedCommentBadge.metadataBadgeRenderer.label
+        if (isset($context->linkedCommentBadge->metadataBadgeRenderer->label))
+        {
+            StringTranslationManager::setText(
+                $context->linkedCommentBadge->metadataBadgeRenderer->label,
+                StringTranslationManager::get(
+                    ParsingUtils::getText($context->linkedCommentBadge->metadataBadgeRenderer->label)
+                )
+            );
+        }
+
         $context->likeButton = VoteButton::fromData(PropertyAtPath::get($context, self::LIKE_BUTTON_PATH));
         $context->dislikeButton = VoteButton::fromData(PropertyAtPath::get($context, self::DISLIKE_BUTTON_PATH));
 		if (isset($context->voteCount)) $this->addLikeCount($context);

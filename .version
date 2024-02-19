@@ -1,10 +1,10 @@
 {
-	"previousHash": "ad22c13031363e4d6ddca0137c79476a33dbf5da",
-	"currentRevisionId": 1382,
-	"subject": "I have no idea why this breaks nested JSON encoding (and thus SPF)",
-	"body": "I have no idea why this breaks nested JSON encoding (and thus SPF)",
+	"previousHash": "a61d4f71e5197a43cc7913378a529f33b9530835",
+	"currentRevisionId": 1383,
+	"subject": "Fix German string on linked comments",
+	"body": "Fix German string on linked comments",
 	"branch": "master",
 	"committerName": "Taniko Yamamoto",
 	"committerEmail": "kirasicecreamm@gmail.com",
-	"time": 1708323546
+	"time": 1708324337
 }
