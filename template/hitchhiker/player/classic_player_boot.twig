@@ -618,6 +618,9 @@ function buildPlayer()
 		
 		if (RAW_PLAYER_RESPONSE.streamingData.dashManifestUrl)
 			ytplayer.config.args['dashmpd'] = RAW_PLAYER_RESPONSE.streamingData.dashManifestUrl;
+		
+		if (RAW_PLAYER_RESPONSE.streamingData.hlsManifestUrl)
+			ytplayer.config.args['hlsvp'] = RAW_PLAYER_RESPONSE.streamingData.hlsManifestUrl;
 
         /*
          * PATCH(ev): Format stream maps (formats, adaptiveFormats) should be
@@ -625,7 +628,7 @@ function buildPlayer()
          *
          * Otherwise, the player will fail to load.
          */
-        if (!("dashmpd" in ytplayer.config.args))
+        if (!("dashmpd" in ytplayer.config.args) && !("hlsvp" in ytplayer.config.args))
         {
             ytplayer.config.args['adaptive_fmts'] = buildUrlFormattedStreamMap(
                 RAW_PLAYER_RESPONSE.streamingData.adaptiveFormats
