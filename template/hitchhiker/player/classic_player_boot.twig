@@ -493,7 +493,7 @@ window.ytplayer = window.ytplayer || {};
 ytplayer.config = {
     "args": {
 		{# HACKY FIX ALERT, PLEASE ACTUALLY FIX PROPERLY THX #}
-		{%- if (yt.page.playlist) and (yt.spf) -%}
+		{%- if (yt.page.playlist) and (not yt.spf) -%}
 			"swf_player_response": "1",
 			"list": "{{ yt.playlistId }}",
 			"external_list": "1",
