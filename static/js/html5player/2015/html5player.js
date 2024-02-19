@@ -24822,10 +24822,10 @@ if (document.fullscreenElement == undefined && document.body.webkitRequestFullSc
                     var h;
                     h = b[e];
                     var k = h.type.match(/codecs="([^"]*)"/);
-					if (k = "vp9") // Rehike-specific patch: Ignore VP9 streams
-						k = "_rehike_unsupported";
                     h = new IJ(h.itag,h.url,k ? k[1] : "",+h.width,+h.height,+h.fps,+h.bitrate,h.audio_itag);
-					d[h.itag] = h;
+					console.log(k);
+					if (!(k.indexOf("vp9") > 0)) // Rehike-specific patch: Ignore VP9 streams
+						d[h.itag] = h;
                 }
                 if (d) {
                     var b = [], e = [], g = [], l;
