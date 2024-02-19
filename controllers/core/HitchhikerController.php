@@ -102,7 +102,7 @@ abstract class HitchhikerController
         $this->init($yt, $template);
 		if (Spf::isSpfRequested() && $this->yt->spfEnabled) {
 			header("Content-Type: application/json");
-			//header("X-Spf-Response-Type: multipart");
+			header("X-Spf-Response-Type: multipart");
 		} else {
 			header("Content-Type: " .  $this->contentType);
 		}

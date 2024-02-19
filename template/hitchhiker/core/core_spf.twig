@@ -1,7 +1,7 @@
 {#
     Standard SPF core response prototype.
 #}
-{% import 'core/macros.twig' as core %}
+[{% import 'core/macros.twig' as core %}
 {
     "head": {%- apply json_encode|raw -%}
         <script>{{ include('/core/www-pageframesizing.js.twig') }}</script>
@@ -105,4 +105,4 @@
     {% if yt.spfConfig.rebugData %}
     , "rebug_data": {{ yt.spfConfig.rebugData|raw }}
     {% endif %}
-}
+}]
