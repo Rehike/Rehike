@@ -92,13 +92,8 @@ function handleInitialPlaybackFailure()
 	var container = api.parentElement;
 	for (var b; b = container.firstChild; ) // hard reset player
         container.removeChild(b);
-	ytplayer.config.args['autoplay'] = "0"; // disable autoplay
-	ytplayer.config.args['autoplayoverride'] = "0";
+	ytplayer.config.args.autoplay = "0"; // disable autoplay
 	ytplayer.load();
-	api = getMoviePlayer();
-	api.stopVideo();
-	api.cueVideoByPlayerVars(ytplayer.config.args);
-    api.hideControls;
 }
 
 function onChangeWatchAutonavState()
