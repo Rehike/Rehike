@@ -1,10 +1,10 @@
 {
-	"previousHash": "7040a887dc0567fcbe549b8fb9de7854455294e8",
-	"currentRevisionId": 1355,
-	"subject": "Fuck you me.",
-	"body": "Fuck you me.",
+	"previousHash": "ad22c13031363e4d6ddca0137c79476a33dbf5da",
+	"currentRevisionId": 1382,
+	"subject": "I have no idea why this breaks nested JSON encoding (and thus SPF)",
+	"body": "I have no idea why this breaks nested JSON encoding (and thus SPF)",
 	"branch": "master",
-	"committerName": "Daylin Cooper",
-	"committerEmail": "dcoop2004@gmail.com",
-	"time": 1707131100
+	"committerName": "Taniko Yamamoto",
+	"committerEmail": "kirasicecreamm@gmail.com",
+	"time": 1708323546
 }

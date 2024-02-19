@@ -350,5 +350,8 @@ return new class extends NirvanaController {
 
         if (isset($playerResponse->adPlacements))
             unset($playerResponse->adPlacements);
+
+        if (isset($playerResponse->adSlots))
+            unset($playerResponse->adSlots);
     }
 };
