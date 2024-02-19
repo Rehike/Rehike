@@ -324,6 +324,9 @@ function buildUrlFormattedStreamMap(streamMaps, opt_param)
     var first = true;
     for (var i = 0, j = streamMaps.length; i < j; i++)
     {
+        if (streamMaps[i].mimeType.indexOf("vp9") > 0)
+            continue;
+
         if (!first)
         {
             out += ",";
@@ -492,8 +495,8 @@ function parseText(textObj)
 window.ytplayer = window.ytplayer || {};
 ytplayer.config = {
     "args": {
-		{# HACKY FIX ALERT, PLEASE ACTUALLY FIX PROPERLY THX #}
-		{%- if (yt.page.playlist) and (yt.spf) -%}
+
+		{%- if yt.page.playlist -%}
 			"swf_player_response": "1",
 			"list": "{{ yt.playlistId }}",
 			"external_list": "1",
@@ -504,6 +507,7 @@ ytplayer.config = {
         {% set titleText = rehike.getText(yt.page.title) %}
         "author": {{ authorText ? authorText|json_encode|raw : "null" }},
         "title": {{ titleText ? titleText|json_encode|raw : "null" }},
+        "autoplay": "1",
         "autonav": {{ yt.page.autonavEnabled ? "1" : "0" }},
         "no_get_video_log": "1",
         "t": "1",
@@ -614,8 +618,6 @@ function buildPlayer()
 		
 		if (RAW_PLAYER_RESPONSE.streamingData.dashManifestUrl)
 			ytplayer.config.args['dashmpd'] = RAW_PLAYER_RESPONSE.streamingData.dashManifestUrl;
-		if (RAW_PLAYER_RESPONSE.streamingData.hlsManifestUrl)
-			ytplayer.config.args['hlsvp'] = RAW_PLAYER_RESPONSE.streamingData.hlsManifestUrl;
 
         /*
          * PATCH(ev): Format stream maps (formats, adaptiveFormats) should be
@@ -623,7 +625,7 @@ function buildPlayer()
          *
          * Otherwise, the player will fail to load.
          */
-        if (!("dashmpd" in ytplayer.config.args) && !("hlsvp" in ytplayer.config.args))
+        if (!("dashmpd" in ytplayer.config.args))
         {
             ytplayer.config.args['adaptive_fmts'] = buildUrlFormattedStreamMap(
                 RAW_PLAYER_RESPONSE.streamingData.adaptiveFormats
@@ -705,9 +707,6 @@ function buildPlayer()
 			if (RAW_PLAYER_RESPONSE.videoDetails.isLive == true) {
 				ytplayer.config.args['live_playback'] = "1";
 				ytplayer.config.args['instream_long'] = true;
-				ytplayer.config.args['pltype'] = "contentlive";
-				ytplayer.config.args['ps'] = "live";
-				ytplayer.config.args['livemonitor'] = "1";
 			}
 			if (RAW_PLAYER_RESPONSE.videoDetails.isLiveDvrEnabled == true) {
 				ytplayer.config.args['hlsdvr'] = "1";
@@ -886,7 +885,6 @@ function buildPlayer()
             g_playerLoadRequestCb();
         }
 		
-
 		{% else %}
 		ytplayer.load = function() {
             yt.player.Application.create("player", ytplayer.config);
@@ -895,6 +893,11 @@ function buildPlayer()
 		yt.setConfig('PLAYER_CONFIG', ytplayer.config);
 		writeEmbed();
 		{% endif %}
+		
+        {% if yt.spf %}
+        var playerApi = document.getElementById("movie_player");
+        playerApi.loadVideoByPlayerVars(ytplayer.config.args);
+        {% endif %}
 		
         // From classic_player_mods:
         initClassicPlayerMods();

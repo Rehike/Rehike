@@ -10311,90 +10311,90 @@ if (document.fullscreenElement == undefined && document.body.webkitRequestFullSc
 	 */
 	var hs = {
           0: "f",
+        160: "h",
 		133: "h",
 		134: "h",
 		135: "h",
 		136: "h",
 		137: "h",
+		264: "h",
+		266: "h",
 		138: "h",
+		298: "h",
+		299: "h",
+		304: "h",
+		305: "h",
 		140: "a",
+		256: "a",
+		258: "a",
+		161: "H",
 		142: "H",
 		143: "H",
 		144: "H",
+		222: "H",
+		223: "H",
 		145: "H",
+		224: "H",
+		225: "H",
 		146: "H",
+		226: "H",
 		147: "H",
 		149: "A",
-		160: "h",
-		161: "H",
-		167: "8",
-		168: "8",
-		169: "8",
-		170: "8",
+		261: "M",
+		278: "9",
+		394: "9",
+		242: "9",
+		395: "9",
+		243: "9",
+		396: "9",
+		244: "9",
+		397: "9",
+		247: "9",
+		398: "9",
+		248: "9",
+		399: "9",
+		271: "9",
+		400: "9",
+		313: "9",
+		401: "9",
+		272: "9",
+		302: "9",
+		303: "9",
+		308: "9",
+		315: "9",
+		571: "9",
+		702: "9",
+		701: "9",
+		700: "9",
+		699: "9",
+		698: "9",
+		697: "9",
+		696: "9",
+		695: "9",
+		694: "9",
+		623: "9",
 		171: "v",
+		250: "o",
+		251: "o",
 		194: "*",
 		195: "*",
+		220: "*",
+		221: "*",
 		196: "*",
 		197: "*",
 		198: "V",
-		220: "*",
-		221: "*",
-		222: "H",
-		223: "H",
-		224: "H",
-		225: "H",
-		226: "H",
-		242: "9",
-		243: "9",
-		244: "9",
-		247: "9",
-		248: "9",
-		250: "o",
-		251: "o",
-		256: "a",
-		258: "a",
-		261: "M",
-		264: "h",
-		266: "h",
-		271: "9",
-		272: "9",
+		279: "(",
+		280: "(",
 		273: "(",
 		274: "(",
 		275: "(",
 		276: "(",
-		277: "(",
-		278: "9",
-		279: "(",
-		280: "(",
-		298: "h",
-		299: "h",
-		302: "9",
-		303: "9",
-		304: "h",
-		305: "h",
-		308: "9",
-		313: "9",
 		314: "(",
-		315: "9",
-		394: "9",
-		395: "9",
-		396: "9",
-		397: "9",
-		398: "9",
-		399: "9",
-		400: "9",
-		401: "9",
-		571: "9",
-		623: "9",
-		694: "9",
-		695: "9",
-		696: "9",
-		697: "9",
-		698: "9",
-		699: "9",
-		700: "9",
-		701: "9",
-		702: "9"
+		277: "(",
+		170: "8",
+		169: "8",
+		168: "8",
+		167: "8"
     };
     var is = {
         name: "width",
@@ -10451,13 +10451,13 @@ if (document.fullscreenElement == undefined && document.body.webkitRequestFullSc
         return !(a.audio && a.video)
     }
     function rs(a) {
-        return 0 <= a.indexOf("opus") || 0 <= a.indexOf("vorbis") || 0 <= a.indexOf("mp4a") || 0 <= a.indexOf("dtse") || 0 <= a.indexOf("ac-3") || 0 <= a.indexOf("ec-3") || 0 <= a.indexOf("iamf")
+        return 0 <= a.indexOf("opus") || 0 <= a.indexOf("vorbis") || 0 <= a.indexOf("mp4a")
     }
 	/**
 	 * Rehike-specific change: Support av01 streams.
 	 */
     function ts(a) {
-        return 0 <= a.indexOf("vp9") || 0 <= a.indexOf("vp09") || 0 <= a.indexOf("vp8") || 0 <= a.indexOf("avc1") || 0 <= a.indexOf("av01")
+        return 0 <= a.indexOf("vp9") || 0 <= a.indexOf("vp8") || 0 <= a.indexOf("avc1") || 0 <= a.indexOf("av01")
     }
     ;function us(a, b, c) {
         this.name = a;
@@ -11792,11 +11792,8 @@ if (document.fullscreenElement == undefined && document.body.webkitRequestFullSc
           , b = b.replace(":", ";");
         "captions" == b && (b = Ms(a, "lang"));
         var c = Ms(a, "mimeType")
-          , d = Ms(a, "codecs");
-		if (d.indexOf("vp9")>-1 || d.indexOf("vp09")>-1) // Rehike-specific patch: Ignore VP9 streams
-			d = "_rehike_unsupported";
-			
-        var c = d ? c + '; codecs="' + d + '"' : c
+          , d = Ms(a, "codecs")
+          , c = d ? c + '; codecs="' + d + '"' : c
           , d = parseInt(Ms(a, "bandwidth"), 10) / 8
           , e = null;
         if (ts(c)) {
@@ -14050,8 +14047,6 @@ if (document.fullscreenElement == undefined && document.body.webkitRequestFullSc
                     var k;
                     k = c[f];
                     var l = k.type.match(/codecs="([^"]*)"/);
-					if (l.indexOf("vp9")>-1 || l.indexOf("vp09")>-1) // Rehike-specific patch: Ignore VP9 streams
-						l = "_rehike_unsupported";
                     k = new Bx(k.itag,k.url,l ? l[1] : "",+k.width,+k.height,+k.fps,+k.bitrate,k.audio_itag);
                     e[k.itag] = k
                 }
