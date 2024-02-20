@@ -808,8 +808,10 @@ function buildPlayer()
         }
 
         {% if yt.spf %}
-        var playerApi = document.getElementById("movie_player");
-        playerApi.loadVideoByPlayerVars(ytplayer.config.args);
+		// doesn't seem necessary as yt didn't use this
+		// still leaving this here just in case something breaks again though
+		//var playerApi = document.getElementById("movie_player");
+        //playerApi.loadVideoByPlayerVars(ytplayer.config.args);
         {% endif %}
 
         // From classic_player_mods:
