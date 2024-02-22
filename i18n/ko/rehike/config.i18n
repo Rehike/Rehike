@@ -14,8 +14,8 @@ props:
       title: "동영상 재생기 버전:"
       values:
         CURRENT: "최신 버전" # No specific date; true latest player.
-        PLAYER_2022: "2022년 - 각진 디자인 및 이전 버전 스토리보드"
-        PLAYER_2020: "2020년 - 작은 플레이어 단추"
+        PLAYER_2022: "2022 - 각진 디자인 및 이전 버전 스토리보드"
+        PLAYER_2020: "2020 - 작은 플레이어 단추"
         PLAYER_2015_NEW: "2015 - 신형 스타일/이전 버전 아이콘"
         PLAYER_2015: "2015 - 구형 스타일/신형 최종 화면"
         PLAYER_2014: "2014 - 구형 스타일/구형 버퍼링 스타일"
