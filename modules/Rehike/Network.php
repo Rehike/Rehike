@@ -94,10 +94,21 @@ class Network
         $host = self::INNERTUBE_API_HOST;
         $key  = self::INNERTUBE_API_KEY;
 
+        if (isset($body["hl"]))
+        {
+            $hlOverride = $body["hl"];
+            unset($body["hl"]);
+        }
+
         // Fucking cursed
         $body = (object)($body + (array)InnertubeContext::generate(
             $clientName, $clientVersion
         ));
+
+        if (isset($hlOverride))
+        {
+            $body->context->client->hl = $hlOverride;
+        }
 
         $requestHeaders = [
             "Content-Type" => "application/json",

@@ -1,9 +1,9 @@
 # Comments common strings:
 
 viewSingular: "Zobacz odpowiedź"
-viewMulti: "Zobacz wszystkie %s odpowiedzi"
-viewSingularOwner: "Zobacz odpowiedź od %s"
-viewMultiOwner: "Zobacz %s odpowiedzi od %s i innych"
+viewMulti: "Wyświetl %s odpowiedzi"
+viewSingularOwner: "Wyświetl odpowiedź użytkownika %s"
+viewMultiOwner: "Wyświetl %s odpowiedzi użytkownika %s i innych"
 hideSingular: "Ukryj odpowiedź"
 hideMulti: "Ukryj %s odpowiedzi"
 
@@ -14,3 +14,81 @@ oldReplyTextRegex: "/Zobacz /"
 
 replyCountIsolator: "/[^0-9]/"
 likeCountIsolator: "/[^0-9]/"
+
+# Due to a comments update around the end of January 2024, we decided to
+# hardcode comment strings. This would be needed anyways, but we also use German
+# for comment API requests now, because it has full counts to a larger extent
+# than English.
+commentsHeader: "Komentarze"
+topComments: "Najlepsze komentarze"
+newestFirst: "Od najnowszych"
+
+linkedComment: "Wyróżniony komentarz"
+
+addAComment: "Dodaj komentarz"
+addAReply: "Dodaj odpowiedź..."
+
+loadMoreReplies: "Wczytaj więcej odpowiedzi"
+
+expandButtonText: "Pokaż więcej"
+collapseButtonText: "Pokaż mniej"
+replyButtonText: "Odpowiedz"
+heartButtonText: "Oznacz sercem"
+unheartButtonText: "Usuń serce"
+
+pinnedByText: "Przypięty przez twórcę %s"
+heartTooltipText: "Użytkownik %s dodał ❤"
+
+secondsAgoSingular: "%s sekunda temu"
+secondsAgoPlural: "%s sekund temu"
+secondsAgoPluralLastDigitEqu2: "%s sekundy temu"
+secondsAgoPluralLastDigitEqu3: "%s sekundy temu"
+secondsAgoPluralLastDigitEqu4: "%s sekundy temu"
+secondsAgoPluralEqu12: "%s sekund temu"
+secondsAgoPluralEqu13: "%s sekund temu"
+secondsAgoPluralEqu14: "%s sekund temu"
+minutesAgoSingular: "%s minuta temu"
+minutesAgoPlural: "%s minut temu"
+minutesAgoPluralLastDigitEqu2: "%s minuty temu"
+minutesAgoPluralLastDigitEqu3: "%s minuty temu"
+minutesAgoPluralLastDigitEqu4: "%s minuty temu"
+minutesAgoPluralEqu12: "%s minut temu"
+minutesAgoPluralEqu13: "%s minut temu"
+minutesAgoPluralEqu14: "%s minut temu"
+hoursAgoSingular: "%s godzina temu"
+hoursAgoPlural: "%s godzin temu"
+hoursAgoPluralLastDigitEqu2: "%s godziny temu"
+hoursAgoPluralLastDigitEqu3: "%s godziny temu"
+hoursAgoPluralLastDigitEqu4: "%s godziny temu"
+hoursAgoPluralEqu12: "%s godzin temu"
+hoursAgoPluralEqu13: "%s godzin temu"
+hoursAgoPluralEqu14: "%s godzin temu"
+daysAgoSingular: "%s dzień temu"
+daysAgoPlural: "%s dni temu"
+weeksAgoSingular: "%s tydzień temu"
+weeksAgoPlural: "%s tygodnie temu"
+monthsAgoSingular: "%s miesiąc temu"
+monthsAgoPlural: "%s miesięcy temu"
+monthsAgoPluralLastDigitEqu2: "%s miesiące temu"
+monthsAgoPluralLastDigitEqu3: "%s miesiące temu"
+monthsAgoPluralLastDigitEqu4: "%s miesiące temu"
+monthsAgoPluralEqu12: "%s miesięcy temu"
+yearsAgoSingular: "%s rok temu"
+yearsAgoPlural: "%s lat temu"
+yearsAgoPluralLastDigitEqu2: "%s lata temu"
+yearsAgoPluralLastDigitEqu3: "%s lata temu"
+yearsAgoPluralLastDigitEqu4: "%s lata temu"
+yearsAgoPluralEqu12: "%s lat temu"
+yearsAgoPluralEqu13: "%s lat temu"
+yearsAgoPluralEqu14: "%s lat temu"
+
+timestampEditedText: "%s (edytowany)"
+
+cancelText: "Anuluj"
+commentText: "Skomentuj"
+replyText: "Odpowiedz"
+
+reportText: "Zgłoś"
+deleteText: "Usuń"
+editText: "Edytuj"
+pinText: "Przypnij"

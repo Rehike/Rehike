@@ -173,7 +173,9 @@ return new class extends AjaxController
         Network::innertubeRequest(
             action: "next",
             body: [
-                "continuation" => $_POST["page_token"]
+                "continuation" => $_POST["page_token"],
+                // We use German as a base language because it has full counts
+                "hl" => "de_DE"
             ]
         )->then(function ($response) use ($yt) {
             $ytdata = $response->getJson();
@@ -220,7 +222,9 @@ return new class extends AjaxController
         Network::innertubeRequest(
             action: "next",
             body: [
-                "continuation" => $_POST["page_token"]
+                "continuation" => $_POST["page_token"],
+                // We use German as a base language because it has full counts
+                "hl" => "de_DE"
             ]
         )->then(function ($response) use ($yt) {
             $ytdata = $response->getJson();

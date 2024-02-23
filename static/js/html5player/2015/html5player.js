@@ -17043,90 +17043,90 @@ if (document.fullscreenElement == undefined && document.body.webkitRequestFullSc
 	 */
 	var SA = {
 		  0: "f",
-        160: "h",
 		133: "h",
 		134: "h",
 		135: "h",
 		136: "h",
 		137: "h",
-		264: "h",
-		266: "h",
 		138: "h",
-		298: "h",
-		299: "h",
-		304: "h",
-		305: "h",
 		140: "a",
-		256: "a",
-		258: "a",
-		161: "H",
 		142: "H",
 		143: "H",
 		144: "H",
-		222: "H",
-		223: "H",
 		145: "H",
-		224: "H",
-		225: "H",
 		146: "H",
-		226: "H",
 		147: "H",
 		149: "A",
-		261: "M",
-		278: "9",
-		394: "9",
-		242: "9",
-		395: "9",
-		243: "9",
-		396: "9",
-		244: "9",
-		397: "9",
-		247: "9",
-		398: "9",
-		248: "9",
-		399: "9",
-		271: "9",
-		400: "9",
-		313: "9",
-		401: "9",
-		272: "9",
-		302: "9",
-		303: "9",
-		308: "9",
-		315: "9",
-		571: "9",
-		702: "9",
-		701: "9",
-		700: "9",
-		699: "9",
-		698: "9",
-		697: "9",
-		696: "9",
-		695: "9",
-		694: "9",
-		623: "9",
+		160: "h",
+		161: "H",
+		167: "8",
+		168: "8",
+		169: "8",
+		170: "8",
 		171: "v",
-		250: "o",
-		251: "o",
 		194: "*",
 		195: "*",
-		220: "*",
-		221: "*",
 		196: "*",
 		197: "*",
 		198: "V",
-		279: "(",
-		280: "(",
+		220: "*",
+		221: "*",
+		222: "H",
+		223: "H",
+		224: "H",
+		225: "H",
+		226: "H",
+		242: "9",
+		243: "9",
+		244: "9",
+		247: "9",
+		248: "9",
+		250: "o",
+		251: "o",
+		256: "a",
+		258: "a",
+		261: "M",
+		264: "h",
+		266: "h",
+		271: "9",
+		272: "9",
 		273: "(",
 		274: "(",
 		275: "(",
 		276: "(",
-		314: "(",
 		277: "(",
-		170: "8",
-		169: "8",
-		168: "8",
-		167: "8"
+		278: "9",
+		279: "(",
+		280: "(",
+		298: "h",
+		299: "h",
+		302: "9",
+		303: "9",
+		304: "h",
+		305: "h",
+		308: "9",
+		313: "9",
+		314: "(",
+		315: "9",
+		394: "9",
+		395: "9",
+		396: "9",
+		397: "9",
+		398: "9",
+		399: "9",
+		400: "9",
+		401: "9",
+		571: "9",
+		623: "9",
+		694: "9",
+		695: "9",
+		696: "9",
+		697: "9",
+		698: "9",
+		699: "9",
+		700: "9",
+		701: "9",
+		702: "9"
     };
     function TA(a, b, c) {
         this.o = a;
@@ -17383,7 +17383,24 @@ if (document.fullscreenElement == undefined && document.body.webkitRequestFullSc
             return !0;
         var a = wB();
         try {
-            return !(!a || !a.canPlayType || !a.canPlayType('video/mp4; codecs="avc1.42001E, mp4a.40.2"') && !a.canPlayType('video/webm; codecs="vp8.0, vorbis"'))
+			/* support newer formats */
+            return !(!a || !a.canPlayType || 
+				!a.canPlayType('video/mp4; codecs="avc1.42001E"') &&
+				!a.canPlayType('video/mp4; codecs="avc1.42001E, mp4a.40.2"') &&
+				!a.canPlayType('video/mp4; codecs="avc1.64001e"') &&
+				!a.canPlayType('video/mp4; codecs="av01.0.00M.08"') &&
+				!a.canPlayType('video/mp4; codecs="av01.0.01M.08"') &&
+				!a.canPlayType('video/mp4; codecs="av01.0.04M.08"') &&	
+				!a.canPlayType('video/mp4; codecs="av01.0.05M.08"') &&	
+				!a.canPlayType('video/mp4; codecs="av01.0.08M.08"') &&
+				!a.canPlayType('video/mp4; codecs="av01.0.12M.10.0.110.09.16.09.0"') &&
+				!a.canPlayType('video/webm; codecs="vp8.0, vorbis"') &&
+				!a.canPlayType('video/webm; codecs="vp9"') &&
+				!a.canPlayType('video/webm; codecs=vp09.00.51.08.01.01.01.01.00') &&
+				!a.canPlayType('video/webm; codecs="vp09.02.51.10.01.09.99.99.00"') &&
+				!a.canPlayType('video/webm; codecs="vp09.02.51.10.01.09.16.09.00"') &&
+				!a.canPlayType('video/webm; codecs="vp9.2"')
+			)
         } catch (b) {
             return !1
         }
@@ -23590,6 +23607,8 @@ if (document.fullscreenElement == undefined && document.body.webkitRequestFullSc
     function PI(a, b) {
         var c = new MI;
         D(a, function(a) {
+			if (a.type.indexOf("vp9") > 0) // Rehike-specific patch: Ignore VP9 streams
+				return;
             var e = a.type
               , g = a.itag
               , h = null;
@@ -23642,8 +23661,10 @@ if (document.fullscreenElement == undefined && document.body.webkitRequestFullSc
           , b = b.replace(":", ";");
         "captions" == b && (b = CH(a, "lang"));
         var c = CH(a, "mimeType")
-          , d = CH(a, "codecs")
-          , c = d ? c + '; codecs="' + d + '"' : c
+          , d = CH(a, "codecs");
+		if (d.indexOf("vp9")>-1) // Rehike-specific patch: Ignore VP9 streams
+			d = "_rehike_unsupported";
+        var  c = d ? c + '; codecs="' + d + '"' : c
           , d = parseInt(CH(a, "bandwidth"), 10) / 8
           , e = null;
         nH(c) && (e = new pH(parseInt(CH(a, "width"), 10),parseInt(CH(a, "height"), 10),parseInt(CH(a, "frameRate"), 10)));
@@ -24801,8 +24822,10 @@ if (document.fullscreenElement == undefined && document.body.webkitRequestFullSc
                     var h;
                     h = b[e];
                     var k = h.type.match(/codecs="([^"]*)"/);
+					if (k.indexOf("vp9")>-1 || k.indexOf("vp09")>-1) // Rehike-specific patch: Ignore VP9 streams
+						k = "_rehike_unsupported";
                     h = new IJ(h.itag,h.url,k ? k[1] : "",+h.width,+h.height,+h.fps,+h.bitrate,h.audio_itag);
-                    d[h.itag] = h
+					d[h.itag] = h;
                 }
                 if (d) {
                     var b = [], e = [], g = [], l;

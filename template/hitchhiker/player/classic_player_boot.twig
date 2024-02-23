@@ -493,19 +493,15 @@ function parseText(textObj)
 }
 
 window.ytplayer = window.ytplayer || {};
-window.ytplayer.config = {
+ytplayer.config = {
     "args": {
 
-       {%- if yt.page.playlist -%}
-         "swf_player_response": "1",
-         "list": "{{ yt.playlistId }}",
-         "external_list": "1",
-         "is_listed": "1",
-       {%- endif -%}
-
-       {% if yt.playerResponse.streamingData.dashManifestUrl %}
-           "dashmpd": "{{ yt.playerResponse.streamingData.dashManifestUrl }}",
-       {% endif %}
+		{%- if yt.page.playlist -%}
+			"swf_player_response": "1",
+			"list": "{{ yt.playlistId }}",
+			"external_list": "1",
+			"is_listed": "1",
+		{%- endif -%}
 
         {% set authorText = rehike.getText(yt.page.results[0].videoPrimaryInfoRenderer.owner.title) %}
         {% set titleText = rehike.getText(yt.page.title) %}
@@ -513,11 +509,9 @@ window.ytplayer.config = {
         "title": {{ titleText ? titleText|json_encode|raw : "null" }},
         "autoplay": "1",
         "autonav": {{ yt.page.autonavEnabled ? "1" : "0" }},
-        "idpj": "0", // *I*dpj and *L*dpj are different? "I" version is used in
-                     // V3... idk if erronenously?
         "no_get_video_log": "1",
         "t": "1",
-        "hl": "{{ yt.hl }}",
+        "hl": "{{ (yt.hl)|replace({'-': '_'}) }}",
         "host_language": "{{ yt.hl }}",
         "plid": "AAVm9hRW-h1RWxWz",
         "ldpj": "-31",
@@ -525,19 +519,11 @@ window.ytplayer.config = {
         "pltype": "content",
         "video_id": "{{ yt.videoId }}",
         "player_wide": {{ yt.theaterMode ? "true" : "false" }},
-        "rvs": undefined,
-        "adaptive_fmts": undefined,
-        "url_encoded_fmt_stream_map": undefined,
-        "storyboard_spec": undefined,
         "fexp": "908547,914099,927622,930666,930672,932404,934040,940247,940642,947209,947215,949424,951701,952302,952901,953000,953912,957103,957201,958600,913436,951502",
         "player_error_log_fraction": "1.0",
         "dash": "1",
-		"live_playback": undefined,
-		"hlsdvr": undefined,
-		"livemonitor": undefined,
-        "enablejsapi": "1",
+		"enablejsapi": "1",
 		"sw": "0.1",
-        "ttsurl": undefined,
 		"invideo": true,
 		"cafe_experiment_id": "37567045",
 		"darude": "1",
@@ -547,7 +533,6 @@ window.ytplayer.config = {
         "c": "WEB",
         "innertube_context_client_version": "2.20210623.00.00",
         "gapi_hint_params": "m;\/_\/scs\/abc-static\/_\/js\/k=gapi.gapi.en.fXLlmSb25lg.O\/m=__features__\/rt=j\/d=1\/rs=AHpOoo87O_nfyKCryZ5rvwwhVwktxKhiRA",
-		"player_response": JSON.stringify(RAW_PLAYER_RESPONSE),
         "autoplay": "1",
         "oid": "",
         "startSeconds": 0,
@@ -555,10 +540,8 @@ window.ytplayer.config = {
         "cver": "2.20210623.00.00",
         "cr": "US",
         "is_html5_mobile_device": false,
-        "fmt_list": "22/1280x720/9/0/115,18/640x360/9/0/115,18/320x240/9/0/11517/256x144/99/1/0",
-        "length_seconds": undefined,
+        "fmt_list": "22/1280x720/9/0/115,18/640x360/9/0/115,18/320x240/9/0/115,17/256x144/99/1/0",
         "vq": "auto",
-		"iv_invideo_url": undefined,
 		"iv_load_policy": "0",
 		"iv3_module":"1",
         "tmi": "1",
@@ -568,8 +551,6 @@ window.ytplayer.config = {
 		{% if rehike.config.appearance.classicPlayerColor == "WHITE" %}
 		"color": "white",
 		{% endif %}
-		"loudness": undefined,
-		"thumbnail_url": undefined,
 		"darude": "1",
     },
     "params": {
@@ -615,6 +596,12 @@ function buildPlayer()
             RAW_PLAYER_RESPONSE.streamingData.formats,
             playerUtils.cbDecodeSig, playerUtils.cbDecodeN
         );
+		
+		if (RAW_PLAYER_RESPONSE.streamingData.dashManifestUrl)
+			ytplayer.config.args['dashmpd'] = RAW_PLAYER_RESPONSE.streamingData.dashManifestUrl;
+		
+		if (RAW_PLAYER_RESPONSE.streamingData.hlsManifestUrl)
+			ytplayer.config.args['hlsvp'] = RAW_PLAYER_RESPONSE.streamingData.hlsManifestUrl;
 
         /*
          * PATCH(ev): Format stream maps (formats, adaptiveFormats) should be
@@ -622,17 +609,19 @@ function buildPlayer()
          *
          * Otherwise, the player will fail to load.
          */
-        if (!("dashmpd" in window.ytplayer.config.args))
+        if (!("dashmpd" in ytplayer.config.args) && !("hlsvp" in ytplayer.config.args))
         {
-            window.ytplayer.config.args.adaptive_fmts = buildUrlFormattedStreamMap(
+            ytplayer.config.args['adaptive_fmts'] = buildUrlFormattedStreamMap(
                 RAW_PLAYER_RESPONSE.streamingData.adaptiveFormats
             );
-            window.ytplayer.config.args.url_encoded_fmt_stream_map = buildUrlFormattedStreamMap(
-                RAW_PLAYER_RESPONSE.streamingData.formats,
-                "IS_STANDARD_STREAM"
-            );
+			if (RAW_PLAYER_RESPONSE.streamingData.formats) {
+				ytplayer.config.args['url_encoded_fmt_stream_map'] = buildUrlFormattedStreamMap(
+					RAW_PLAYER_RESPONSE.streamingData.formats,
+					"IS_STANDARD_STREAM"
+				);
+			}
         }
-
+		
         // Finding the index of the recommendations is real fun.
         var wnContents;
         if (RAW_WATCH_NEXT_RESPONSE)
@@ -659,7 +648,7 @@ function buildPlayer()
 
                     if (itemSectionRenderer.contents)
                     {
-                        window.ytplayer.config.args.rvs = buildRelatedVideosSection(
+                        ytplayer.config.args['rvs'] = buildRelatedVideosSection(
                             itemSectionRenderer.contents
                         );
                     }
@@ -668,7 +657,7 @@ function buildPlayer()
                 {
                     // If we have no itemSectionRenderer, then the results object
                     // (what I titled wnSecondaryResults3) contains the videos.
-                    window.ytplayer.config.args.rvs = buildRelatedVideosSection(
+                    ytplayer.config.args['rvs'] = buildRelatedVideosSection(
                         wnSecondaryResults3
                     );
                 }
@@ -680,30 +669,46 @@ function buildPlayer()
             RAW_PLAYER_RESPONSE.storyboards.playerStoryboardSpecRenderer
         )
         {
-            window.ytplayer.config.args.storyboard_spec =
+            ytplayer.config.args['storyboard_spec'] =
                 RAW_PLAYER_RESPONSE.storyboards.playerStoryboardSpecRenderer.spec || null;
-        }
+        } else if (
+            RAW_PLAYER_RESPONSE.storyboards &&
+            RAW_PLAYER_RESPONSE.storyboards.playerLiveStoryboardSpecRenderer
+        )
+        {
+			ytplayer.config.args['live_storyboard_spec'] =
+                RAW_PLAYER_RESPONSE.storyboards.playerLiveStoryboardSpecRenderer.spec || null;
+		}
+		
+		ytplayer.config.args['player_response'] = JSON.stringify(RAW_PLAYER_RESPONSE);
 
         if (RAW_PLAYER_RESPONSE.videoDetails)
         {
-            window.ytplayer.config.args.length_seconds =
+            ytplayer.config.args['length_seconds'] =
                 RAW_PLAYER_RESPONSE.videoDetails.lengthSeconds || "1";
-			window.ytplayer.config.args.iv_invideo_url = "https://www.youtube.com/annotations_invideo?video_id=" + RAW_PLAYER_RESPONSE.videoDetails.videoId;
-			window.ytplayer.config.args.iv_load_policy = "1";
+			ytplayer.config.args['iv_invideo_url'] = "https://www.youtube.com/annotations_invideo?video_id=" + RAW_PLAYER_RESPONSE.videoDetails.videoId;
+			ytplayer.config.args['iv_load_policy'] = "1";
 			if (RAW_PLAYER_RESPONSE.videoDetails.isLive == true) {
-				window.ytplayer.config.args.live_playback = "1";
-				window.ytplayer.config.args.instream_long = true;
+				ytplayer.config.args['live_playback'] = "1";
+				ytplayer.config.args['instream_long'] = true;
 			}
 			if (RAW_PLAYER_RESPONSE.videoDetails.isLiveDvrEnabled == true) {
-				window.ytplayer.config.args.hlsdvr = "1";
+				ytplayer.config.args['hlsdvr'] = "1";
 			}
 			var thumbnails = RAW_PLAYER_RESPONSE.videoDetails.thumbnail.thumbnails;
-			window.ytplayer.config.args.thumbnail_url = thumbnails[thumbnails.length-1].url;
+			ytplayer.config.args['thumbnail_url'] = thumbnails[thumbnails.length-1].url;
+			if (RAW_PLAYER_RESPONSE.videoDetails.liveChunkReadahead)
+				ytplayer.config.args['live_chunk_readahead'] =
+					RAW_PLAYER_RESPONSE.videoDetails.liveChunkReadahead;
         }
 		
+		if (RAW_PLAYER_RESPONSE.microformat.playerMicroformatRenderer.liveBroadcastDetails) {
+			ytplayer.config.args['is_live_now'] = RAW_PLAYER_RESPONSE.microformat.playerMicroformatRenderer.liveBroadcastDetails.isLiveNow || undefined;
+		}
+		
 		if (RAW_PLAYER_RESPONSE.playerConfig.audioConfig && RAW_PLAYER_RESPONSE.playerConfig.audioConfig.loudnessDb && RAW_PLAYER_RESPONSE.playerConfig.audioConfig.perceptualLoudnessDb) { // loudness eq
-			window.ytplayer.config.args.relative_loudness = (RAW_PLAYER_RESPONSE.playerConfig.audioConfig.loudnessDb).toString() || null;
-			window.ytplayer.config.args.loudness = (RAW_PLAYER_RESPONSE.playerConfig.audioConfig.perceptualLoudnessDb).toString() || null;
+			ytplayer.config.args['relative_loudness'] = (RAW_PLAYER_RESPONSE.playerConfig.audioConfig.loudnessDb).toString() || null;
+			ytplayer.config.args['loudness'] = (RAW_PLAYER_RESPONSE.playerConfig.audioConfig.perceptualLoudnessDb).toString() || null;
 		}
 		
 
@@ -713,78 +718,83 @@ function buildPlayer()
 
             if (caps.captionTracks && caps.captionTracks[0])
             {
-                window.ytplayer.config.args.ttsurl = caps.captionTracks[0].baseUrl;
+                ytplayer.config.args['ttsurl'] = caps.captionTracks[0].baseUrl;
+				if (caps.captionTracks[0].kind == 'asr')
+					ytplayer.config.args['cc_asr'] = "1";
             }
         }
-
-        /*
-         * I'll leave this in just in case, I'm not sure how well my implementation will work.
-         *
-         * Source code originally by Reprety and Ciulin, taken from Cosmic Cat.
-         */
-        var n = "";
-
-		if (void 0 === RAW_PLAYER_RESPONSE.streamingData.hlsManifestUrl) {
-            try {
-                for (
-                    var i = 0, j = RAW_PLAYER_RESPONSE.streamingData.formats.length;
-                    i < j;
-                    i++
-                )
-                    (n +=
-                        "fallback_host=" +
-                        RAW_PLAYER_RESPONSE.streamingData.formats[i].url
-                        .split("://")[1]
-                        .split(".com")[0] +
-                        ".com&type=" +
-                        encodeURIComponent(
-                        RAW_PLAYER_RESPONSE.streamingData.formats[i].mimeType
-                    ).replace("%20", "+") +
-                        "&url=" +
-                        encodeURIComponent(RAW_PLAYER_RESPONSE.streamingData.formats[i].url) +
-                        "&quality=" +
-                        RAW_PLAYER_RESPONSE.streamingData.formats[i].quality +
-                        "&itag=" +
-                        RAW_PLAYER_RESPONSE.streamingData.formats[i].itag),
-                        i < parseInt(RAW_PLAYER_RESPONSE.streamingData.formats.length - 1) &&
-                        (n += ",");
-            } catch (e) {
-                // Try again with adaptiveFormats instead.
-                try {
-                    for (
-                        var i = 0, j = RAW_PLAYER_RESPONSE.streamingData.adaptiveFormats.length;
-                        i < j;
-                        i++
-                    )
-                        (n +=
-                            "fallback_host=" +
-                            RAW_PLAYER_RESPONSE.streamingData.adaptiveFormats[i].url
-                            .split("://")[1]
-                            .split(".com")[0] +
-                            ".com&type=" +
-                            encodeURIComponent(
-                            RAW_PLAYER_RESPONSE.streamingData.adaptiveFormats[i].mimeType
-                        ).replace("%20", "+") +
-                            "&url=" +
-                            encodeURIComponent(RAW_PLAYER_RESPONSE.streamingData.adaptiveFormats[i].url) +
-                            "&quality=" +
-                            RAW_PLAYER_RESPONSE.streamingData.adaptiveFormats[i].quality +
-                            "&itag=" +
-                            RAW_PLAYER_RESPONSE.streamingData.adaptiveFormats[i].itag),
-                            i < parseInt(RAW_PLAYER_RESPONSE.streamingData.adaptiveFormats.length - 1) &&
-                            (n += ",");
-                } catch (e) {
-                    console.error("[Vorapis Player] could not craft legacy stream url", e);
-                }
-            }
-        }
-
-        window.ytplayer.config.args.url_encoded_fmt_stream_map = n;
+		
+		if (!("dashmpd" in ytplayer.config.args))
+        {
+			/*
+			* I'll leave this in just in case, I'm not sure how well my implementation will work.
+			*
+			* Source code originally by Reprety and Ciulin, taken from Cosmic Cat.
+			*/
+			var n = "";
+	
+			if (void 0 === RAW_PLAYER_RESPONSE.streamingData.hlsManifestUrl) {
+				try {
+					for (
+						var i = 0, j = RAW_PLAYER_RESPONSE.streamingData.formats.length;
+						i < j;
+						i++
+					)
+						(n +=
+							"fallback_host=" +
+							RAW_PLAYER_RESPONSE.streamingData.formats[i].url
+							.split("://")[1]
+							.split(".com")[0] +
+							".com&type=" +
+							encodeURIComponent(
+							RAW_PLAYER_RESPONSE.streamingData.formats[i].mimeType
+						).replace("%20", "+") +
+							"&url=" +
+							encodeURIComponent(RAW_PLAYER_RESPONSE.streamingData.formats[i].url) +
+							"&quality=" +
+							RAW_PLAYER_RESPONSE.streamingData.formats[i].quality +
+							"&itag=" +
+							RAW_PLAYER_RESPONSE.streamingData.formats[i].itag),
+							i < parseInt(RAW_PLAYER_RESPONSE.streamingData.formats.length - 1) &&
+							(n += ",");
+				} catch (e) {
+					// Try again with adaptiveFormats instead.
+					try {
+						for (
+							var i = 0, j = RAW_PLAYER_RESPONSE.streamingData.adaptiveFormats.length;
+							i < j;
+							i++
+						)
+							(n +=
+								"fallback_host=" +
+								RAW_PLAYER_RESPONSE.streamingData.adaptiveFormats[i].url
+								.split("://")[1]
+								.split(".com")[0] +
+								".com&type=" +
+								encodeURIComponent(
+								RAW_PLAYER_RESPONSE.streamingData.adaptiveFormats[i].mimeType
+							).replace("%20", "+") +
+								"&url=" +
+								encodeURIComponent(RAW_PLAYER_RESPONSE.streamingData.adaptiveFormats[i].url) +
+								"&quality=" +
+								RAW_PLAYER_RESPONSE.streamingData.adaptiveFormats[i].quality +
+								"&itag=" +
+								RAW_PLAYER_RESPONSE.streamingData.adaptiveFormats[i].itag),
+								i < parseInt(RAW_PLAYER_RESPONSE.streamingData.adaptiveFormats.length - 1) &&
+								(n += ",");
+					} catch (e) {
+						console.error("[Vorapis Player] could not craft legacy stream url", e);
+					}
+				}
+			}
+	
+			ytplayer.config.args['url_encoded_fmt_stream_map'] = n;
+		}
 
         {% if not yt.spf %}
-        window.ytplayer.load = function() {
-            window.yt.player.Application.create("player-api", window.ytplayer.config);
-            window.ytplayer.config.loaded = true;
+        ytplayer.load = function() {
+            yt.player.Application.create("player-api", ytplayer.config);
+            ytplayer.config.loaded = true;
         };
         {% endif %}
 
@@ -798,8 +808,10 @@ function buildPlayer()
         }
 
         {% if yt.spf %}
-        var playerApi = document.getElementById("movie_player");
-        playerApi.loadVideoByPlayerVars(window.ytplayer.config.args);
+		// doesn't seem necessary as yt didn't use this
+		// still leaving this here just in case something breaks again though
+		//var playerApi = document.getElementById("movie_player");
+        //playerApi.loadVideoByPlayerVars(ytplayer.config.args);
         {% endif %}
 
         // From classic_player_mods:

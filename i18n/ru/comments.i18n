@@ -14,3 +14,68 @@ oldReplyTextRegex: "/Посмотреть /"
 
 replyCountIsolator: "/( ответы)|( ответить)/i"
 likeCountIsolator: "/[^0-9]/"
+
+# Due to a comments update around the end of January 2024, we decided to
+# hardcode comment strings. This would be needed anyways, but we also use German
+# for comment API requests now, because it has full counts to a larger extent
+# than English.
+commentsHeader: "Все комментарии"
+topComments: "Самые популярные"
+newestFirst: "Сначала новые"
+
+linkedComment: "Комментарий открыт по ссылке"
+
+addAComment: "Оставьте комментарий"
+addAReply: "Добавьте ответ"
+
+loadMoreReplies: "Загрузить больше ответов"
+
+expandButtonText: "Читать дальше"
+collapseButtonText: "Читать меньше"
+replyButtonText: "Ответить"
+heartButtonText: "Понравилось автору"
+unheartButtonText: "Убрать отметку"
+
+pinnedByText: "Закреплено пользователем %s "
+heartTooltipText: "❤ от %s"
+
+secondsAgoSingular: "%s секунду назад"
+secondsAgoPlural: "%s секунд назад"
+secondsAgoPluralLastDigitEqu2: "%s секунды назад"
+secondsAgoPluralLastDigitEqu3: "%s секунды назад"
+secondsAgoPluralLastDigitEqu4: "%s секунды назад"
+minutesAgoSingular: "%s минуту назад"
+minutesAgoPlural: "%s минут назад"
+minutesAgoPluralLastDigitEqu2: "%s минуты назад"
+minutesAgoPluralLastDigitEqu3: "%s минуты назад"
+minutesAgoPluralLastDigitEqu4: "%s минуты назад"
+hoursAgoSingular: "%s час назад"
+hourAgoPluralLastDigitEqu2: "%s часа назад"
+hourAgoPluralLastDigitEqu3: "%s часа назад"
+hourAgoPluralLastDigitEqu4: "%s часа назад"
+hoursAgoPlural: "%s часов назад"
+daysAgoSingular: "%s день назад"
+daysAgoPlural: "%s дней назад"
+weeksAgoSingular: "%s неделю назад"
+weeksAgoPlural: "%s недели назад"
+monthsAgoSingular: "%s месяц назад"
+monthsAgoPlural: "%s месяцев назад"
+monthsAgoPluralLastDigitEqu2: "%s месяца назад"
+monthsAgoPluralLastDigitEqu3: "%s месяца назад"
+monthsAgoPluralLastDigitEqu4: "%s месяца назад"
+yearsAgoSingular: "%s год назад"
+yearsAgoPlural: "%s лет назад"
+yearsAgoPluralLastDigitEqu2: "%s года назад"
+yearsAgoPluralLastDigitEqu3: "%s года назад"
+yearsAgoPluralLastDigitEqu4: "%s года назад"
+
+timestampEditedText: "%s (изменено)"
+
+cancelText: "Отменить"
+commentText: "Оставить комментарий"
+replyText: "Ответить"
+
+reportText: "Пожаловаться"
+deleteText: "удалить"
+editText: "Изменить"
+pinText: "Закрепить"
