@@ -52,7 +52,7 @@ return new class extends HitchhikerController {
 		];
 		
 		// Content restriction
-        if (isset($_GET["has_verified"]) && ($_GET["has_verified"] == "1" || $_GET["has_verified"] == true) or false === Config::getConfigProp("experiments.encryptedStreamsDO_NOT_USE_UNLESS_YOU_KNOW_WHAT_YOU_ARE_DOING"))
+        if (isset($_GET["has_verified"]) && ($_GET["has_verified"] == "1" || $_GET["has_verified"] == true))
         {
             $sharedRequestParams += ["racyCheckOk" => true];
             $sharedRequestParams += ["contentCheckOk" => true];
@@ -126,74 +126,26 @@ return new class extends HitchhikerController {
             $sharedRequestParams + $nextOnlyParams
         );
 		
-		// Unlike Polymer, Hitchhiker had all of the player data already
-        // available in the initial response. So an additional player request
-        // is used.
-        if (false === Config::getConfigProp("experiments.encryptedStreamsDO_NOT_USE_UNLESS_YOU_KNOW_WHAT_YOU_ARE_DOING")){
-            $playerRequest = Network::innertubeRequest(
-                "player",
-                [
-                    "playbackContext" => [
-                        'contentPlaybackContext' => (object) [
-                            'autoCaptionsDefaultOn' => false,
-                            'autonavState' => 'STATE_OFF',
-                            'html5Preference' => 'HTML5_PREF_WANTS',
-                            'lactMilliseconds' => '13407',
-                            'mdxContext' => (object) [],
-                            'playerHeightPixels' => 1080,
-                            'playerWidthPixels' => 1920,
-                            'signatureTimestamp' => $yt->playerConfig->signatureTimestamp
-                        ]   
-                    ],
-                    "startTimeSecs" => $startTime ?? 0,
-                    "params" => 'CgIQBg=='
-                ] + $sharedRequestParams,
-                    clientName: "ANDROID",
-                    clientVersion: "16.02.00"
-            );
-            $storyboardRequest = Network::innertubeRequest(
-                "player",
-                [
-                    "playbackContext" => [
-                        'contentPlaybackContext' => (object) [
-                            'autoCaptionsDefaultOn' => false,
-                            'autonavState' => 'STATE_OFF',
-                            'html5Preference' => 'HTML5_PREF_WANTS',
-                            'lactMilliseconds' => '13407',
-                            'mdxContext' => (object) [],
-                            'playerHeightPixels' => 1080,
-                            'playerWidthPixels' => 1920,
-                            'signatureTimestamp' => $yt->playerConfig->signatureTimestamp
-                        ]
-                    ],
-                    "startTimeSecs" => $startTime ?? 0
-                ] + $sharedRequestParams,
-                clientName: "XBOXONEGUIDE",
-                clientVersion: "1.0"
-            );
-        }
-        else{
-            $playerRequest = Network::innertubeRequest(
-                "player",
-                [
-                    "playbackContext" => [
-                        'contentPlaybackContext' => (object) [
-                            'autoCaptionsDefaultOn' => false,
-                            'autonavState' => 'STATE_OFF',
-                            'html5Preference' => 'HTML5_PREF_WANTS',
-                            'lactMilliseconds' => '13407',
-                            'mdxContext' => (object) [],
-                            'playerHeightPixels' => 1080,
-                            'playerWidthPixels' => 1920,
-                            'signatureTimestamp' => $yt->playerConfig->signatureTimestamp
-                        ]   
-                    ],
-                    "startTimeSecs" => $startTime ?? 0,
-                    "params" => $yt->playerParams
-                ] + $sharedRequestParams
-            );
-            $storyboardRequest = new Promise(fn($r) => $r());
-        }
+        $playerRequest = Network::innertubeRequest(
+            "player",
+            [
+                "playbackContext" => [
+                    'contentPlaybackContext' => (object) [
+                        'autoCaptionsDefaultOn' => false,
+                        'autonavState' => 'STATE_OFF',
+                        'html5Preference' => 'HTML5_PREF_WANTS',
+                        'lactMilliseconds' => '13407',
+                        'mdxContext' => (object) [],
+                        'playerHeightPixels' => 1080,
+                        'playerWidthPixels' => 1920,
+                        'signatureTimestamp' => $yt->playerConfig->signatureTimestamp
+                    ]   
+                ],
+                "startTimeSecs" => $startTime ?? 0,
+                "params" => $yt->playerParams
+            ] + $sharedRequestParams
+        );
+        $storyboardRequest = new Promise(fn($r) => $r());
 
         Promise::all([
 			"player"     => $playerRequest,

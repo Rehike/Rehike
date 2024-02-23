@@ -120,12 +120,6 @@ props:
         Makes the home page signed out. This is a workaround for YouTube 
         blocking homepage access if you have watch history disabled 
         (2023/08/18).
-    encryptedStreamsDO_NOT_USE_UNLESS_YOU_KNOW_WHAT_YOU_ARE_DOING:
-      title: "Use encrypted video streams"
-      subtitle: >
-        For the love of god, do not disable this if you don't know what you're doing.
-        It will break the watch page. This is to be used by developers only until it
-        is fixed.
 
   advanced:
     enableDebugger:
