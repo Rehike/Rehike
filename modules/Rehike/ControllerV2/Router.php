@@ -12,6 +12,21 @@ use Rehike\SimpleFunnel;
  */
 class Router
 {
+    private static array $debugLog = [
+        "type" => "none",
+        "route" => ""
+    ];
+
+    /**
+     * Get internal debug information for logging purposes.
+     * 
+     * @internal
+     */
+    public static function getInternalDebug(): array
+    {
+        return self::$debugLog;
+    }
+
     /**
      * Configure router definitions for all GET requests.
      * 
@@ -53,7 +68,8 @@ class Router
             if (preg_match($regexp, $_SERVER["REQUEST_URI"]))
             {
                 // If there's a match, check if it should callback a function
-                // use simple behaviour using a string.
+                // or use the simple behaviour and redirect to a direct string
+                // path.
                 /** @var string $endpoint */
                 $endpoint;
                 if (is_callable($redir))
@@ -69,6 +85,11 @@ class Router
                     // Otherwise perform the redirection using internal behaviour.
                     $endpoint = preg_replace($regexp, $redir, $_SERVER["REQUEST_URI"]);
                 }
+
+                self::$debugLog = [
+                    "type" => "redirect",
+                    "route" => $endpoint
+                ];
 
                 // Callback the custom handler, or fallback to the
                 // default implementation.
@@ -116,6 +137,11 @@ class Router
 
             if (GlobToRegexp::doMatch($pattern, explode("?", $_SERVER["REQUEST_URI"])[0]))
             {
+                self::$debugLog = [
+                    "type" => "funnel",
+                    "route" => $pattern
+                ];
+
                 SimpleFunnel::funnelCurrentPage()->then(fn($r) => $r->output());
             }
         }
@@ -192,6 +218,11 @@ class Router
                 $pointer
             ] as $path) if (file_exists($path) && is_file($path))
             {
+                self::$debugLog = [
+                    "type" => "GET",
+                    "route" => $path
+                ];
+
                 $import = Core::import($path, false);
                 break;
             }

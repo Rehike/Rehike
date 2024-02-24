@@ -11,6 +11,8 @@ use Rehike\ErrorHandler\ErrorPage\{
     InnertubeFailedRequestPage
 };
 
+use Rehike\Logging\LogFileManager;
+use Rehike\Logging\ExceptionLogger;
 use Rehike\Exception\Network\InnertubeFailedRequestException;
 use YukisCoffee\CoffeeRequest\Exception\UnhandledPromiseException;
 use YukisCoffee\CoffeeRequest\Exception\UncaughtPromiseException;
@@ -30,6 +32,9 @@ final class ErrorHandler
 
     private static bool $isEnabled = true;
     private static AbstractErrorPage $pageModel;
+
+    private static bool $hasLogFile = false;
+    private static string $logFileName = "";
 
     public static function getErrorPageModel(): AbstractErrorPage
     {
@@ -105,6 +110,9 @@ final class ErrorHandler
             self::$pageModel = new UncaughtExceptionPage($e);
         }
 
+        LogFileManager::createExceptionLogFile(
+            ExceptionLogger::getFormattedException($e)
+        );
         self::renderErrorTemplate();
         exit();
     }
@@ -123,6 +131,22 @@ final class ErrorHandler
             self::renderErrorTemplate();
             exit();
         }
+    }
+
+    public static function getHasLogFile(): bool
+    {
+        return self::$hasLogFile;
+    }
+
+    public static function getLogFileName(): string
+    {
+        return self::$logFileName;
+    }
+
+    public static function setLogFileName(string $name): void
+    {
+        self::$hasLogFile = true;
+        self::$logFileName = $name;
     }
 
     private static function renderErrorTemplate(): void
