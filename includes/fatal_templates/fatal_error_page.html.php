@@ -12,6 +12,9 @@
     include_once "includes/fatal_templates/fatal_template_functions.php";
 
     $page = ErrorHandler::getErrorPageModel();
+
+    $hasLogFile = ErrorHandler::getHasLogFile();
+    $logFileName = ErrorHandler::getLogFileName();
 ?>
 <!DOCTYPE html>
 <!-- Page URL: <?php echo $_SERVER['REQUEST_URI']; ?> -->
@@ -39,6 +42,12 @@
                         <a href="//github.com/<?= GH_REPO ?>/issues/new">
                             Please submit an issue to the GitHub repository, including the crash log.
                         </a>
+                        <?php if ($hasLogFile): ?>
+                            <br><br>
+                            A detailed log file has been created at
+                            <?= htmlspecialchars("rehike://" . $logFileName) ?>.
+                            Please attach that when submitting debug logs.
+                        <?php endif ?>
                     </div>
                 <?php endif ?>
 
