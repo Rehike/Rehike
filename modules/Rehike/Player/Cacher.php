@@ -43,7 +43,7 @@ class Cacher
             if (
                 null != $result &&
                 time() < $result->expire &&
-                IS_REHIKE ? ($playerChoice == $result->conditionPlayerChoice) : true
+                (IS_REHIKE ? ($playerChoice == $result->conditionPlayerChoice) : true)
             )
             {
                 return $result->content; // file contents
