@@ -19,7 +19,6 @@ return new class extends AjaxController
 {
     private ?string $videoId;
     private ?string $listId;
-	public bool $useTemplate = false;
 
     public function onGet(YtApp $yt, RequestMetadata $request): void 
     {
@@ -42,6 +41,7 @@ return new class extends AjaxController
                 self::getEmail($yt, $request);
                 break;
         }
+		Promise::all([]); // dunno why this is necessary all of a sudden but it is :v
     }
 
     /**

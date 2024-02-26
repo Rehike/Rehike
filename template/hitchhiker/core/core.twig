@@ -16,14 +16,18 @@
          scripts in order to properly hijack XHR, this is injected if the
          debugger is enabled.
       #}
-	  {{ core.js('www/promise-polyfill') }}
       {% if rehikeDebugger and not rehikeDebugger.condensed and not yt.spf %}
          <script>{% include "rehike/debugger/js/xhook.js" %}</script>
       {% endif %}
+      <script>
+         if (!("Promise" in window)) {
+            document.write("<script src=\"/rehike/static/js/es6-promise.auto.min.js\"" + ">" + "<script" + "/" + ">");
+         }
+      </script>
       {% include "core/ublock_error.twig" %}
       {% include "core/roboto.twig" %}
       <script>{{ include('/core/www-ytcsi.js') }}</script>
-      <script >var ytcfg = {d: function() {return (window.yt && yt.config_) || ytcfg.data_ || (ytcfg.data_ = {});},get: function(k, o) {return (k in ytcfg.d()) ? ytcfg.d()[k] : o;},set: function() {var a = arguments;if (a.length > 1) {ytcfg.d()[a[0]] = a[1];} else {for (var k in a[0]) {ytcfg.d()[k] = a[0][k];}}}};</script>  
+      <script >var ytcfg = {d: function() {return (window.yt && yt.config_) || ytcfg.data_ || (ytcfg.data_ = {});},get: function(k, o) {return (k in ytcfg.d()) ? ytcfg.d()[k] : o;},set: function() {var a = arguments;if (a.length > 1) {ytcfg.d()[a[0]] = a[1];} else {for (var k in a[0]) {ytcfg.d()[k] = a[0][k];}}}};</script>
       <script>ytcfg.set("ROOT_VE_TYPE", 3854);ytcfg.set("EVENT_ID", "caLrWqLbKZD2_AOA-6vIAg");</script>
       <script>{{ include('/core/www-pageframesizing.js.twig') }}</script>
       {{ core.js('scheduler/scheduler') }}

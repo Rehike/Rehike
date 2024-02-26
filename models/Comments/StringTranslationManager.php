@@ -41,6 +41,7 @@ class StringTranslationManager
             "Mehr anzeigen" => $i18n->get("expandButtonText"),
             "Weniger anzeigen" => $i18n->get("collapseButtonText"),
             "Kommentieren" => $i18n->get("commentText"),
+            "Markierter Kommentar" => $i18n->get("linkedComment"),
 
             default => $in
         };

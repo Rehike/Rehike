@@ -599,6 +599,9 @@ function buildPlayer()
 		
 		if (RAW_PLAYER_RESPONSE.streamingData.dashManifestUrl)
 			ytplayer.config.args['dashmpd'] = RAW_PLAYER_RESPONSE.streamingData.dashManifestUrl;
+		
+		if (RAW_PLAYER_RESPONSE.streamingData.hlsManifestUrl)
+			ytplayer.config.args['hlsvp'] = RAW_PLAYER_RESPONSE.streamingData.hlsManifestUrl;
 
         /*
          * PATCH(ev): Format stream maps (formats, adaptiveFormats) should be
@@ -606,7 +609,7 @@ function buildPlayer()
          *
          * Otherwise, the player will fail to load.
          */
-        if (!("dashmpd" in ytplayer.config.args))
+        if (!("dashmpd" in ytplayer.config.args) && !("hlsvp" in ytplayer.config.args))
         {
             ytplayer.config.args['adaptive_fmts'] = buildUrlFormattedStreamMap(
                 RAW_PLAYER_RESPONSE.streamingData.adaptiveFormats
@@ -716,72 +719,77 @@ function buildPlayer()
             if (caps.captionTracks && caps.captionTracks[0])
             {
                 ytplayer.config.args['ttsurl'] = caps.captionTracks[0].baseUrl;
+				if (caps.captionTracks[0].kind == 'asr')
+					ytplayer.config.args['cc_asr'] = "1";
             }
         }
-
-        /*
-         * I'll leave this in just in case, I'm not sure how well my implementation will work.
-         *
-         * Source code originally by Reprety and Ciulin, taken from Cosmic Cat.
-         */
-        var n = "";
-
-		if (void 0 === RAW_PLAYER_RESPONSE.streamingData.hlsManifestUrl) {
-            try {
-                for (
-                    var i = 0, j = RAW_PLAYER_RESPONSE.streamingData.formats.length;
-                    i < j;
-                    i++
-                )
-                    (n +=
-                        "fallback_host=" +
-                        RAW_PLAYER_RESPONSE.streamingData.formats[i].url
-                        .split("://")[1]
-                        .split(".com")[0] +
-                        ".com&type=" +
-                        encodeURIComponent(
-                        RAW_PLAYER_RESPONSE.streamingData.formats[i].mimeType
-                    ).replace("%20", "+") +
-                        "&url=" +
-                        encodeURIComponent(RAW_PLAYER_RESPONSE.streamingData.formats[i].url) +
-                        "&quality=" +
-                        RAW_PLAYER_RESPONSE.streamingData.formats[i].quality +
-                        "&itag=" +
-                        RAW_PLAYER_RESPONSE.streamingData.formats[i].itag),
-                        i < parseInt(RAW_PLAYER_RESPONSE.streamingData.formats.length - 1) &&
-                        (n += ",");
-            } catch (e) {
-                // Try again with adaptiveFormats instead.
-                try {
-                    for (
-                        var i = 0, j = RAW_PLAYER_RESPONSE.streamingData.adaptiveFormats.length;
-                        i < j;
-                        i++
-                    )
-                        (n +=
-                            "fallback_host=" +
-                            RAW_PLAYER_RESPONSE.streamingData.adaptiveFormats[i].url
-                            .split("://")[1]
-                            .split(".com")[0] +
-                            ".com&type=" +
-                            encodeURIComponent(
-                            RAW_PLAYER_RESPONSE.streamingData.adaptiveFormats[i].mimeType
-                        ).replace("%20", "+") +
-                            "&url=" +
-                            encodeURIComponent(RAW_PLAYER_RESPONSE.streamingData.adaptiveFormats[i].url) +
-                            "&quality=" +
-                            RAW_PLAYER_RESPONSE.streamingData.adaptiveFormats[i].quality +
-                            "&itag=" +
-                            RAW_PLAYER_RESPONSE.streamingData.adaptiveFormats[i].itag),
-                            i < parseInt(RAW_PLAYER_RESPONSE.streamingData.adaptiveFormats.length - 1) &&
-                            (n += ",");
-                } catch (e) {
-                    console.error("[Vorapis Player] could not craft legacy stream url", e);
-                }
-            }
-        }
-
-        ytplayer.config.args['url_encoded_fmt_stream_map'] = n;
+		
+		if (!("dashmpd" in ytplayer.config.args))
+        {
+			/*
+			* I'll leave this in just in case, I'm not sure how well my implementation will work.
+			*
+			* Source code originally by Reprety and Ciulin, taken from Cosmic Cat.
+			*/
+			var n = "";
+	
+			if (void 0 === RAW_PLAYER_RESPONSE.streamingData.hlsManifestUrl) {
+				try {
+					for (
+						var i = 0, j = RAW_PLAYER_RESPONSE.streamingData.formats.length;
+						i < j;
+						i++
+					)
+						(n +=
+							"fallback_host=" +
+							RAW_PLAYER_RESPONSE.streamingData.formats[i].url
+							.split("://")[1]
+							.split(".com")[0] +
+							".com&type=" +
+							encodeURIComponent(
+							RAW_PLAYER_RESPONSE.streamingData.formats[i].mimeType
+						).replace("%20", "+") +
+							"&url=" +
+							encodeURIComponent(RAW_PLAYER_RESPONSE.streamingData.formats[i].url) +
+							"&quality=" +
+							RAW_PLAYER_RESPONSE.streamingData.formats[i].quality +
+							"&itag=" +
+							RAW_PLAYER_RESPONSE.streamingData.formats[i].itag),
+							i < parseInt(RAW_PLAYER_RESPONSE.streamingData.formats.length - 1) &&
+							(n += ",");
+				} catch (e) {
+					// Try again with adaptiveFormats instead.
+					try {
+						for (
+							var i = 0, j = RAW_PLAYER_RESPONSE.streamingData.adaptiveFormats.length;
+							i < j;
+							i++
+						)
+							(n +=
+								"fallback_host=" +
+								RAW_PLAYER_RESPONSE.streamingData.adaptiveFormats[i].url
+								.split("://")[1]
+								.split(".com")[0] +
+								".com&type=" +
+								encodeURIComponent(
+								RAW_PLAYER_RESPONSE.streamingData.adaptiveFormats[i].mimeType
+							).replace("%20", "+") +
+								"&url=" +
+								encodeURIComponent(RAW_PLAYER_RESPONSE.streamingData.adaptiveFormats[i].url) +
+								"&quality=" +
+								RAW_PLAYER_RESPONSE.streamingData.adaptiveFormats[i].quality +
+								"&itag=" +
+								RAW_PLAYER_RESPONSE.streamingData.adaptiveFormats[i].itag),
+								i < parseInt(RAW_PLAYER_RESPONSE.streamingData.adaptiveFormats.length - 1) &&
+								(n += ",");
+					} catch (e) {
+						console.error("[Vorapis Player] could not craft legacy stream url", e);
+					}
+				}
+			}
+	
+			ytplayer.config.args['url_encoded_fmt_stream_map'] = n;
+		}
 
         {% if not yt.spf %}
         ytplayer.load = function() {
@@ -800,8 +808,10 @@ function buildPlayer()
         }
 
         {% if yt.spf %}
-        var playerApi = document.getElementById("movie_player");
-        playerApi.loadVideoByPlayerVars(ytplayer.config.args);
+		// doesn't seem necessary as yt didn't use this
+		// still leaving this here just in case something breaks again though
+		//var playerApi = document.getElementById("movie_player");
+        //playerApi.loadVideoByPlayerVars(ytplayer.config.args);
         {% endif %}
 
         // From classic_player_mods:
