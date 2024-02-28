@@ -3,7 +3,7 @@
 viewSingular: "답글 보기"
 viewMulti: "답글 %s개 보기"
 viewSingularOwner: "%s님의 답글 보기"
-viewMultiOwner: "View %s replies from %s and others"
+viewMultiOwner: "%2$s님 및 다른 사용자의 답글 %1$s개 보기"
 hideSingular: "답글 숨기기"
 hideMulti: "답글 %s개 숨기기"
 
