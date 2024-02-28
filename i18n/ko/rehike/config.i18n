@@ -36,7 +36,7 @@ props:
     modernLogo:
       title: "새로운 YouTube 로고 사용"
       subtitle: >
-        2017년부터 적용된 새 로고를 사용합니다. 2017년 이전에 만들어진 사용자 지정 CSS자 올바르게 작동하지 않을 수 있습니다.
+        2017년부터 적용된 새 로고를 사용합니다. 2017년 이전에 만들어진 사용자 지정 CSS가 올바르게 작동하지 않을 수 있습니다.
     uploadButtonType:
       title: "업로드 버튼 모양:"
       values:
