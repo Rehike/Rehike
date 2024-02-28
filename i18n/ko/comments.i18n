@@ -12,7 +12,7 @@ hideMulti: "답글 %s개 숨기기"
 # around anymore.
 oldReplyTextRegex: "/View /"
 
-replyCountIsolator: "/( replies)|( reply)/i"
+replyCountIsolator: "/(답글 )|(개)/i"
 likeCountIsolator: "/(Like this )|(comment)|(reply)|( along with )|(,)|( other person)|( other people)/"
 
 # Due to a comments update around the end of January 2024, we decided to
