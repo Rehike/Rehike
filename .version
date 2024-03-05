@@ -1,10 +1,10 @@
 {
-	"previousHash": "cc1decb692390de9d64c933cf5f62233e40e4779",
-	"currentRevisionId": 1392,
-	"subject": "[player/all] Fix cache expiration",
-	"body": "[player/all] Fix cache expiration",
+	"previousHash": "7235979081152db08977d44d9d3efa7d9f3e21ce",
+	"currentRevisionId": 1393,
+	"subject": "Split RuntimeInfo model for better code quality and stability",
+	"body": "Split RuntimeInfo model for better code quality and stability",
 	"branch": "master",
 	"committerName": "Taniko Yamamoto",
 	"committerEmail": "kirasicecreamm@gmail.com",
-	"time": 1708858662
+	"time": 1709678056
 }
