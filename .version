@@ -1,10 +1,10 @@
 {
-	"previousHash": "7235979081152db08977d44d9d3efa7d9f3e21ce",
-	"currentRevisionId": 1393,
-	"subject": "Split RuntimeInfo model for better code quality and stability",
-	"body": "Split RuntimeInfo model for better code quality and stability",
+	"previousHash": "b992380076fca19f5743cec5c58045080848b090",
+	"currentRevisionId": 1394,
+	"subject": "Add link to V3 OBT in readme",
+	"body": "Add link to V3 OBT in readme",
 	"branch": "master",
 	"committerName": "Taniko Yamamoto",
 	"committerEmail": "kirasicecreamm@gmail.com",
-	"time": 1709678056
+	"time": 1709713348
 }
