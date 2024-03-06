@@ -13,7 +13,7 @@ use function Rehike\Async\async;
  * Controller for the other playlist AJAX endpoints.
  * ...yeah, playlists on Hitchhiker are kinda odd to
  * work with.
- * 
+ *
  * @author Aubrey Pankow <aubyomori@gmail.com>
  * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
@@ -43,27 +43,26 @@ return new class extends AjaxController
                 }
                 if (!is_null($action))
                 {
-                    Network::innertubeRequest($action, [
+                    Network::innertubeRequest("like/$action", [
                         "target" => (object) [
                             "playlistId" => $_POST["list"]
                         ]
-                    ], ignoreErrors: true)->then(function($response) {
-                        var_dump($response);
+                    ])->then(function($response) {
+                        // var_dump($response);
 
-                        // $ytdata = $response->getJson();
-                    
-                        // if (isset($ytdata->error))
-                        // {
-                        //     echo (object) [
-                        //         "code" => $ytdata->error->code
-                        //     ];
-                        // }
-                        // else
-                        // {
-                        //     echo (object) [
-                        //         "code" => "SUCCESS"
-                        //     ];
-                        // }
+                        $ytdata = $response->getJson();
+                        if (isset($ytdata->error))
+                        {
+                            echo json_encode([
+                                "code" => $ytdata->error->code
+                            ]);
+                        }
+                        else
+                        {
+                            echo json_encode([
+                                "code" => "SUCCESS"
+                            ]);
+                        }
                     });
                 }
                 break;

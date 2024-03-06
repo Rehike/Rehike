@@ -2,18 +2,19 @@
 {%- from "common/uix/button.twig" import render as button -%}
 {%- from "core/spinner.twig" import render as spinner -%}
 {
-    "url_short": "{{ yt.page.shortUrl }}",
-    "share_html": {%- apply json_encode|raw -%}
+"url_short": "{{ yt.page.shortUrl }}",
+"share_html":
+{%- apply json_encode|raw -%}
     <div id="debug" class="hid">
         {{ yt.page|json_encode }}
     </div>
     <div class="share-panel">
         <div class="yt-uix-tabs">
-            <span class="yt-uix-button-group" data-button-toggle-group="share-panels">
-                {%- for tab in yt.page.tabs -%}
+		<span class="yt-uix-button-group" data-button-toggle-group="share-panels">
+			{%- for tab in yt.page.tabs -%}
                 {{ button(tab) }}
-                {%- endfor -%}
-            </span>
+            {%- endfor -%}
+		</span>
         </div>
         <div class="share-panel-show-loading hid">
             {{ spinner(yt.msgs.loading) }}
@@ -23,31 +24,54 @@
                 <div class="share-panel-services">
                     <ul class="share-group ytg-box">
                         {%- for service in yt.page.services -%}
-                        <li>
-                            <button class="yt-uix-tooltip share-service-button share-{{ service.icon }}-icon" title="{{ service.tooltip }}" onclick="yt.window.popup('{{ service.url }}', {width:{{ service.width }},height:{{ service.height }},scrollbars:true});return false;">
-                                <span class="share-service-icon share-service-icon-{{ service.icon }} yt-sprite"></span>
-                                <span class="share-service-checkmark yt-sprite"></span>
-                            </button>
-                        </li>
+                            <li>
+                                <button class="yt-uix-tooltip share-service-button share-{{ service.icon }}-icon" title="{{ service.tooltip }}" onclick="yt.window.popup('{{ service.url }}', {width:{{ service.width }},height:{{ service.height }},scrollbars:true});return false;">
+                                    <span class="share-service-icon share-service-icon-{{ service.icon }} yt-sprite"></span>
+                                    <span class="share-service-checkmark yt-sprite"></span>
+                                </button>
+                            </li>
                         {%- endfor -%}
                     </ul>
                 </div>
             </div>
+            {% if yt.page.isVideo and yt.page.listId %}
+                <div class="share-panel-playlist-options">
+				<span class="yt-uix-form-input-checkbox-container  checked">
+					<input type="checkbox" class="yt-uix-form-input-checkbox" name="share-with-playlist" checked="checked" id="share-with-playlist" value="1">
+					<span class="yt-uix-form-input-checkbox-element"></span>
+				</span>
+                    <label for="share-with-playlist">{{ yt.page.strs.sharePlaylist }}</label>
+                    <button class=" yt-uix-button yt-uix-button-default yt-uix-button-size-default" type="button" onclick=";return false;" data-button-menu-indicate-selected="true" role="button" aria-pressed="false" aria-expanded="false" aria-haspopup="true" aria-activedescendant="">
+					<span class="yt-uix-button-content">{{ yt.page.strs.currentVideo }}
+					</span>
+                        <img class="yt-uix-button-arrow" src="http://s.ytimg.com/yts/img/pixel-vfl3z5WfW.gif" alt="" title="">
+                        <ul class=" yt-uix-button-menu yt-uix-button-menu-default" role="menu" aria-haspopup="true" style="display: none;">
+                            <li role="menuitem">
+                                <span class=" yt-uix-button-menu-item" onclick=";return false;" id="share-with-playlist-current">{{ yt.page.strs.currentVideo }}</span>
+                            </li>
+                            <li role="menuitem">
+                                <span class=" yt-uix-button-menu-item" onclick=";return false;" id="share-with-playlist-first">{{ yt.page.strs.startPlaylist }}</span>
+                            </li>
+                        </ul>
+                    </button>
+                </div>
+            {% endif %}
             <div class="share-panel-url-container share-panel-reverse">
-                <span class="share-panel-url-input-container yt-uix-form-input-container yt-uix-form-input-text-container yt-uix-form-input-non-empty">
-                    <input type="text" class="yt-uix-form-input-text share-panel-url" name="share_url" value="{{ yt.page.shortUrl }}" data-video-id="{{ yt.page.videoId }}">
-                </span>
+			<span class="share-panel-url-input-container yt-uix-form-input-container yt-uix-form-input-text-container yt-uix-form-input-non-empty">
+				<input type="text" class="yt-uix-form-input-text share-panel-url" name="share_url" value="{{ yt.page.shortUrl }}" data-video-id="{{ yt.page.videoId }}">
+			</span>
             </div>
-            <span class="share-panel-start-at-container">
-                 <label>
-                     <span class="yt-uix-form-input-checkbox-container">
-                        <input class="share-panel-start-at" type="checkbox">
-                        <span class="yt-uix-form-input-checkbox-element"></span>
-                    </span>
-                    {{ yt.page.startStr }}
-                </label>
-                <input type="text" value="0:00" title="Video start time" class="yt-uix-form-input-text share-panel-start-at-time">
-            </span>
+            {# TODO: "Allow people to add videos to this playlist" checkbox #}
+            <span class="share-panel-start-at-container {{ yt.page.isVideo and yt.page.listId ? "hid" : "" }}">
+			<label>
+				<span class="yt-uix-form-input-checkbox-container">
+					<input class="share-panel-start-at" type="checkbox">
+					<span class="yt-uix-form-input-checkbox-element"></span>
+				</span>
+				{{ yt.page.strs.startAt }}
+			</label>
+			<input type="text" value="0:00" title="{{ yt.page.strs.videoStartTime }}" class="yt-uix-form-input-text share-panel-start-at-time">
+		</span>
         </div>
         <div class="share-panel-embed-container hid">
             {{ action_panel.loading() }}
@@ -60,13 +84,11 @@
         {% else %}
             <div class="share-panel-email-container hid" data-disabled="true">
                 <strong>
-                    <a href="https://accounts.google.com/ServiceLogin?uilel=3\u0026amp;hl=en\u0026amp;passive=true\u0026amp;service=youtube\u0026amp;continue=http%3A%2F%2Fwww.youtube.com%2Fsignin%3Faction_handle_signin%3Dtrue%26app%3Ddesktop%26feature%3Demail%26hl%3Den%26">Sign in</a> now.
+                    <a href="https://accounts.google.com/ServiceLogin?uilel=3\u0026amp;hl=en\u0026amp;passive=true\u0026amp;service=youtube\u0026amp;continue=http%3A%2F%2Fwww.youtube.com%2Fsignin%3Faction_handle_signin%3Dtrue%26app%3Ddesktop%26feature%3Demail%26hl%3Den%26">Sign in</a>
+                    now.
                 </strong>
             </div>
         {% endif %}
 
 
-  </div>
-    </div>
-    {%- endapply -%}
-}
+    </div></div>{%- endapply -%}}
