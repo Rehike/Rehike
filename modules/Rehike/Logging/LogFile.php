@@ -2,7 +2,7 @@
 namespace Rehike\Logging;
 
 use Rehike\Version\VersionController;
-use Rehike\Model\Rehike\Version\MRuntimeInfo;
+use Rehike\RuntimeInfo;
 use Rehike\ConfigManager\Config;
 use Rehike\ControllerV2\Router;
 use Rehike\Logging\Common\FormattedString;
@@ -153,14 +153,14 @@ class LogFile
 
     private function getOperatingSystem(): string
     {
-        $runtimeInfo = new MRuntimeInfo;
-        return $runtimeInfo->osInfo->prominentOsName ?? "Unknown OS";
+        $runtimeInfo = new RuntimeInfo;
+        return $runtimeInfo->osDisplayName . " ($runtimeInfo->internalOsName $runtimeInfo->osBuildNumber)";
     }
 
     private function getServerSoftware(): string
     {
-        $runtimeInfo = new MRuntimeInfo;
-        return $runtimeInfo->phpInfo->serverVersion ?? "Unknown server";
+        $runtimeInfo = new RuntimeInfo;
+        return $runtimeInfo->serverVersion;
     }
 
     private function getSuccessfulRequests(): string

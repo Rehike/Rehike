@@ -11,6 +11,14 @@ We use it to accurately restore the old YouTube layout and feel, which is known 
 
 **Rehike is not a browser extension, nor does it intend to function as one.** Rather, it works over the browser, offering more freedom to what it is allowed to do and greater portability. This makes Rehike browser-independent and, to an extent, system independent.
 
+## Want an easy-to-install extension instead?
+
+Please check out our friend, Vorapis 2013 / V3. This is a browser extension that restores the old YouTube layout in a very similar manner. Link to the Open Beta Test server on Discord below, where you can download it and receive support:
+
+<a href="https://discord.gg/VDcKeJjgJY" tooltip="V3 Discord server">
+    <img src="branding/v3_logo.png" width="120">
+</a>
+
 ## How do I do this? FAQs? etc.
 
 See [the Rehike wiki](https://github.com/Rehike/Rehike/wiki).
