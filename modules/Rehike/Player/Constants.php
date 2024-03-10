@@ -1,5 +1,5 @@
 <?php
 namespace Rehike\Player;
 
-const DEBUG = true;
+const DEBUG = false;
 const IS_REHIKE = true;

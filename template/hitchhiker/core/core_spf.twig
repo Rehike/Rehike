@@ -9,15 +9,6 @@
         {%- block head_css  -%}{%- endblock -%}
         {% if rehike.config.appearance.playerChoice == "PLAYER_2014" or rehike.config.appearance.playerChoice == "PLAYER_2015" or rehike.config.appearance.playerChoice == "PLAYER_2015_NEW" %}
             <script>
-                // (function(){
-                //     var player = document.getElementById("movie_player");
-
-                //     if (player)
-                //     {
-                //         player.parentNode.removeChild(player);
-                //     }
-                // })();
-
                 {% include "player/classic_player_boot.twig" %}
             </script>
         {% endif %}

@@ -23,9 +23,11 @@ class Network
     protected const INNERTUBE_API_KEY = "AIzaSyAO_FJ2SlqU8Q4STEHLGCilw_Y9_11qcW8";
     
     protected const V3_API_HOST = "https://www.googleapis.com";
-    protected const V3_API_KEY = "AIzaSyAa8yy0GdcGPHdtD083HiGGx_S0vMPScDM";
+    protected const V3_API_KEY = "AIzaSyBeo4NGA__U6Xxy-aBE6yFm19pgq8TY-TM"; // old key: "AIzaSyAa8yy0GdcGPHdtD083HiGGx_S0vMPScDM";
 
     protected const DNS_OVERRIDE_HOST = "1.1.1.1";
+
+    private static array $sessionRequestLog = [];
 
     /**
      * Contains headers meant to be sent only to InnerTube requests.
@@ -40,13 +42,32 @@ class Network
     private function __construct() {}
 
     /**
+     * Gets the internal session request log, used for debugging purposes.
+     * 
+     * @internal
+     */
+    public static function getSessionRequestLog(): array
+    {
+        return self::$sessionRequestLog;
+    }
+
+    /**
      * Make a generic URL request.
      * 
      * @return Promise<Response>
      */
     public static function urlRequest(string $url, array $opts = []): Promise/*<Response>*/
     {
-        return CoffeeRequest::request($url, $opts);
+        $result = CoffeeRequest::request($url, $opts);
+
+        self::$sessionRequestLog[] = [
+            "type" => "url",
+            "url" => $url,
+            "opts" => (object)$opts,
+            "INTERNAL_promise" => $result
+        ];
+
+        return $result;
     }
 
     /**
@@ -120,7 +141,7 @@ class Network
             $requestHeaders += self::$innertubeHeaders;
         }
 
-        return new Promise(function ($resolve, $reject)
+        $result = new Promise(function ($resolve, $reject)
             use ($action, 
                  $body, 
                  $clientName, 
@@ -159,6 +180,19 @@ class Network
                 \Rehike\Profiler::end("innertube-$action-$profilerRid");
             });
         });
+
+        self::$sessionRequestLog[] = [
+            "type" => "innertube",
+            "action" => $action,
+            "body" => (object)$body,
+            "clientName" => $clientName,
+            "clientVersion" => $clientVersion,
+            "ignoreErrors" => $ignoreErrors,
+            "useAuthentication" => $useAuthentication,
+            "INTERNAL_promise" => $result
+        ];
+
+        return $result;
     }
 
     /**
@@ -185,7 +219,7 @@ class Network
         bool $useAuthentication = true
     ): Promise/*<Response>*/
     {
-        return new Promise(function ($resolve, $reject)
+        $result = new Promise(function ($resolve, $reject)
             use ($action, 
                  $body, 
                  $clientName, 
@@ -219,6 +253,19 @@ class Network
                 []
             ));
         });
+
+        self::$sessionRequestLog[] = [
+            "type" => "innertube",
+            "action" => $action,
+            "body" => (object)$body,
+            "clientName" => $clientName,
+            "clientVersion" => $clientVersion,
+            "ignoreErrors" => $ignoreErrors,
+            "useAuthentication" => $useAuthentication,
+            "INTERNAL_promise" => $result
+        ];
+
+        return $result;
     }
 
     /**
@@ -280,10 +327,20 @@ class Network
             ];
         }
 
-        return CoffeeRequest::request(
+        $result = CoffeeRequest::request(
             "{$host}/youtube/v3/{$action}?key={$key}{$urlParams}",
             $body
         );
+
+        self::$sessionRequestLog[] = [
+            "type" => "dataapi",
+            "action" => $action,
+            "body" => (object)$body,
+            "post" => $post,
+            "INTERNAL_promise" => $result
+        ];
+
+        return $result;
     }
 
     /**

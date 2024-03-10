@@ -86,8 +86,7 @@ class ConfigDefinitions
             "experiments" => [
                 "displayPlayerChoice" => new BoolProp(false),
                 "useSignInV2" => new BoolProp(false),
-                "disableSignInOnHome" => new BoolProp(false),
-                "encryptedStreamsDO_NOT_USE_UNLESS_YOU_KNOW_WHAT_YOU_ARE_DOING" => new BoolProp(true)
+                "disableSignInOnHome" => new BoolProp(false)
             ],
             "advanced" => [
                 "enableDebugger" => new BoolProp(false)
