@@ -1,81 +1,32 @@
-# Comments common strings:
-
-viewSingular: "Посмотреть ответ"
-viewMulti: "Посмотреть %s ответов"
-viewSingularOwner: "Посмотреть ответ от %s"
-viewMultiOwner: "Посмотреть %s ответы от %s и других"
-hideSingular: "Скрыть ответ"
-hideMulti: "Скрыть %s ответы"
-
-# Used to detect if the old reply count string should be used.
-# This may be removed in the future, because it doesn't seem useful to keep
-# around anymore.
-oldReplyTextRegex: "/Посмотреть /"
-
-replyCountIsolator: "/( ответы)|( ответить)/i"
+# Displays substrings used to isolate simple counts. These ones can usually
+# just replace all non-numerical characters, since they're full counts.
 likeCountIsolator: "/[^0-9]/"
+viewCountIsolator: "/[^0-9]/"
 
-# Due to a comments update around the end of January 2024, we decided to
-# hardcode comment strings. This would be needed anyways, but we also use German
-# for comment API requests now, because it has full counts to a larger extent
-# than English.
-commentsHeader: "Все комментарии"
-topComments: "Самые популярные"
-newestFirst: "Сначала новые"
+# The like button accessibility string when likes are disabled on a video.
+# This is used to isolate this case and replace the string with 0.
+# You can easily access this string here:
+# https://www.youtube.com/watch?v=UKY3scPIMd8&pp=4AQB&ab_channel=YouTubeViewers
+likeTextDisabled: "Мне это нравится"
 
-linkedComment: "Комментарий открыт по ссылке"
+# A like button accessibility substring used specifically in the case of
+# 0 likes in some languages. This is used to replace it with "0".
+countZero: "0"
 
-addAComment: "Оставьте комментарий"
-addAReply: "Добавьте ответ"
+# Used to isolate the subscriber count. Note that since subscriber counts are
+# abbreviated by YouTube, you can't just replace all numerical data, or you
+# would display wrong counts. Instead, you must replace all text that can occur
+# in the string except for the units.
+subscriberCountIsolator: "/( подписчиков)|( подписчика)|( подписчик)/"
 
-loadMoreReplies: "Загрузить больше ответов"
+# Used for detecting if the date string in watch descriptions should be
+# modified. If none of these words are found in the string, then it is assumed
+# that the string should be modified.
+nonPublishCheck: "/(Премьера состоялась)|(Дата премьеры:)|(Трансляция началась )|(Прямой эфир состоялся )|(Планируемая дата публикации: )/"
 
-expandButtonText: "Читать дальше"
-collapseButtonText: "Читать меньше"
-replyButtonText: "Ответить"
-heartButtonText: "Понравилось автору"
-unheartButtonText: "Убрать отметку"
+# Used to isolate a channel name from the unsubscription modal message.
+unsubChannelNameMatch: "/Отписаться от (.*?)\\?/"
 
-pinnedByText: "Закреплено пользователем %s "
-heartTooltipText: "❤ от %s"
-
-secondsAgoSingular: "%s секунду назад"
-secondsAgoPlural: "%s секунд назад"
-secondsAgoPluralLastDigitEqu2: "%s секунды назад"
-secondsAgoPluralLastDigitEqu3: "%s секунды назад"
-secondsAgoPluralLastDigitEqu4: "%s секунды назад"
-minutesAgoSingular: "%s минуту назад"
-minutesAgoPlural: "%s минут назад"
-minutesAgoPluralLastDigitEqu2: "%s минуты назад"
-minutesAgoPluralLastDigitEqu3: "%s минуты назад"
-minutesAgoPluralLastDigitEqu4: "%s минуты назад"
-hoursAgoSingular: "%s час назад"
-hourAgoPluralLastDigitEqu2: "%s часа назад"
-hourAgoPluralLastDigitEqu3: "%s часа назад"
-hourAgoPluralLastDigitEqu4: "%s часа назад"
-hoursAgoPlural: "%s часов назад"
-daysAgoSingular: "%s день назад"
-daysAgoPlural: "%s дней назад"
-weeksAgoSingular: "%s неделю назад"
-weeksAgoPlural: "%s недели назад"
-monthsAgoSingular: "%s месяц назад"
-monthsAgoPlural: "%s месяцев назад"
-monthsAgoPluralLastDigitEqu2: "%s месяца назад"
-monthsAgoPluralLastDigitEqu3: "%s месяца назад"
-monthsAgoPluralLastDigitEqu4: "%s месяца назад"
-yearsAgoSingular: "%s год назад"
-yearsAgoPlural: "%s лет назад"
-yearsAgoPluralLastDigitEqu2: "%s года назад"
-yearsAgoPluralLastDigitEqu3: "%s года назад"
-yearsAgoPluralLastDigitEqu4: "%s года назад"
-
-timestampEditedText: "%s (изменено)"
-
-cancelText: "Отменить"
-commentText: "Оставить комментарий"
-replyText: "Ответить"
-
-reportText: "Пожаловаться"
-deleteText: "удалить"
-editText: "Изменить"
-pinText: "Закрепить"
+# Miscellaneous isolators
+videoTimeIsolator: "/([0-9]?[0-9])( seconds)|(1 second)/"
+secondsIsolator: "/( seconds)|( second)/"
