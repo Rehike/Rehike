@@ -1,0 +1,29 @@
+openButtonLabel: "Debugger"
+openButtonErrorCountSingular: "(1 fout)"
+openButtonErrorCountPlural: "(%s fouten)"
+condensedButtonLabelSingular: >
+  Er is een fout opgetreden. Klik hier voor meer informatie.
+condensedButtonLabelPlural: >
+  Er zijn %s fouten opgetreden. Klik hier voor meer informatie.
+
+debuggerTitle: "Debugger"
+condensedDebuggerTitle: "Fouten"
+condensedDebuggerHelpLink: "Wat moet ik doen?"
+debuggerClose: "Sluiten"
+
+errorWarning: "Waarschuwing"
+errorError: "Fout"
+errorNotice: "bericht"
+errorDeprecated: "Verouderd"
+
+tabErrorTitle: "Fouten (%s)"
+tabConsoleTitle: "PHP console"
+tabNetworkTitle: "Netwerk"
+tabPerformanceTitle: "Prestatie"
+tabYtWalkerTitle: "Variable walker"
+nothingToSee: "Er is hier niets te zien!"
+
+historyCurrent: "Huidige pagina"
+historyPrevious: "Vorige pagina"
+historyPagesAgo: "# paginas geleden"
+historyUnavailable: "Geschiedenis niet beschikbaar"
