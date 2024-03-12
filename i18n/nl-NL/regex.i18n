@@ -7,11 +7,11 @@ viewCountIsolator: "/[^0-9]/"
 # This is used to isolate this case and replace the string with 0.
 # You can easily access this string here:
 # https://www.youtube.com/watch?v=UKY3scPIMd8&pp=4AQB&ab_channel=YouTubeViewers
-likeTextDisabled: "I like this"
+likeTextDisabled: "Vind ik leuk"
 
 # A like button accessibility substring used specifically in the case of
 # 0 likes in some languages. This is used to replace it with "0".
-countZero: "No"
+countZero: "Nee"
 
 # Used to isolate the subscriber count. Note that since subscriber counts are
 # abbreviated by YouTube, you can't just replace all numerical data, or you
