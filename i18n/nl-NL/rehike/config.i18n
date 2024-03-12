@@ -1,0 +1,150 @@
+title: "Rehike instellingen"
+saveChanges: "Wijzigingen opslaan"
+saveChangesSuccess: "De wijzigingen zijn uitgevoerd!"
+saveChangesFailure: "Het is niet gelukt de wijzigingen uit te voeren."
+
+tabs:
+  appearance: "Uiterlijk"
+  experiments: "Experimenten"
+  advanced: "Geavanceerd"
+
+props:
+  appearance:
+    playerChoice:
+      title: "Kies een video herziening:"
+      values:
+        CURRENT: "Meest recente player" # No specific date; true latest player.
+        PLAYER_2022: "2022 - Vierkante hoeken, oude storyboard"
+        PLAYER_2020: "2020 - kleinere UI"
+        PLAYER_2015_NEW: "2015 - Moderne UI, oude icoontjes"
+        PLAYER_2015: "2015 - Classic UI, more functies en een nieuw eind-scherm"
+        PLAYER_2014: "2014 - Classic UI, voormalig buffer-gedrag"
+    classicPlayerForcePersistentControls:
+      title: "Altijd de nieuwe besturing laten zien"
+      subtitle: >
+        May cause issues with custom CSS because this is designed for the latest
+        official Hitchhiker CSS version.
+    classicPlayerTheme:
+      title: "Player thema:"
+      values:
+        DARK: "Donker thema" # The default theme used since about 2012, but was introduced in 2011
+        LIGHT: "Licht thema"
+    classicPlayerColor:
+      title: "Kleur van de progress-bar:"
+      values:
+        RED: "Rood"
+        WHITE: "Wit" # For whatever reason this is a thing
+    modernLogo:
+      title: "Gebruik het huidige YouTube logo"
+      subtitle: >
+        Used since 2017. Enabling this may break some custom themes made 
+        before 2017.
+    uploadButtonType:
+      title: "Upload knop type:"
+      values:
+        BUTTON: "Knop (2013-2016)"
+        ICON: "Materiaal icoontje (2016-2018)"
+        MENU: "creatie menu (2018+)"
+    largeSearchResults:
+      title: "grotere thumbnails op de zoekpagina"
+      subtitle: >
+        Will break some custom themes made before 2017.
+    swapSearchViewsAndDate:
+      title: "Verwissel de weergave en datum op de zoekpagina"
+      subtitle: >
+        Show the view count before the date on search page video renderers.
+    showVersionInFooter:
+      title: "Laat de Rehike versie in de footer zien"
+      subtitle: >
+        Display a convenient link to the Rehike about page at the end of 
+        the footer.
+    useRyd:
+      title: "Dislikes zichtbaar maken bij videos"
+      subtitle: >
+        Stats from the Return YouTube Dislike API.
+    usernamePrepends:
+      title: "Show \"by\" before the author's name on video links"
+      subtitle: >
+        Used before 2016.
+    noViewsText:
+      title: "Remove \"views\" text from view count on watch page"
+      subtitle: >
+        Before 2016, only the count itself was displayed, without any label.
+    movingThumbnails:
+      title: "Show an animated preview when hovering over a video"
+      subtitle: >
+        Used since 2018.
+    cssFixes:
+      title: "YouTube CSS fixes"
+      subtitle: >
+        Fixes bugs or inconsistencies with the original Hitchhiker CSS. May 
+        break compatibility with some userstyles.
+    watchSidebarDates:
+      title: "Show upload date on watch page recommendations"
+      subtitle: >
+        Unlike Polymer, Hitchhiker didn't show these by default.
+    watchSidebarVerification:
+      title: "Show verification badges on watch page recommendations"
+      subtitle: >
+        Unlike Polymer, Hitchhiker didn't show these by default.
+    oldBestOfYouTubeIcons:
+      title: "Old red icons in \"Best of YouTube\" guide section"
+      subtitle: >
+        Show the old red topic channel icons, rather than the black ones used 
+        today.
+    smallPlayer:
+      title: "Use custom smaller player style."
+      subtitle: >
+        Uses a compact player button style like 2019 that may be more
+        comfortable with smaller windows.
+    enableAdblock:
+      title: "Enable built-in adblock"
+      subtitle: >
+        Provides a stable adblocker for ads in the video player.
+  
+  experiments:
+    displayPlayerChoice:
+      title: "Enable the use of older players"
+      subtitle: >
+        Enables the option to change the YouTube player revision on the
+        appearance page.
+    useSignInV2:
+      title: "Use sign in v2"
+      subtitle: >
+        Use the experimental new rewrite of the sign in rewrite. This option
+        should be available for the duration of v2's development, after which
+        it will become the default and the legacy one will be removed.
+    disableSignInOnHome:
+      title: "Disable authenticated home requests"
+      subtitle: >
+        Makes the home page signed out. This is a workaround for YouTube 
+        blocking homepage access if you have watch history disabled 
+        (2023/08/18).
+
+  advanced:
+    enableDebugger:
+      title: "Enable the debugger"
+      subtitle: >
+        The debugger provides useful tools for developers. Only enable if 
+        you're a developer or reporting a bug and need more information.
+    clearSigninCache:
+      title: "Sign-in cache"
+      subtitle: >
+        Rehike caches sign-in data as to not make too many requests to
+        YouTube.
+      button: "Clear sign-in cache"
+    clearPlayerCache:
+      title: "Player cache"
+      subtitle: >
+        Rehike caches information about the player as to not make too many
+        requests to YouTube.
+      button: "Clear player cache"
+    factoryReset:
+      title: "Reset Rehike"
+      subtitle: >
+        Reset Rehike to its defaults, including settings, cache, and any
+        changes that aren't on the remote repository.
+      button: "Reset Rehike"
+    updateRehike:
+      title: "Update Rehike"
+      button: "Update"
