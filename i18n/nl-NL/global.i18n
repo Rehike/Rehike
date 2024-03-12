@@ -1,0 +1,71 @@
+# Global strings
+# These include both common things and most JS messages.
+# These are exported to the templates at `yt.msg`.
+
+# Common aria (accessibility) labels
+loadingIconLabel: "Laad icoon"
+actionMenuLabel: "Actie menu."
+
+# Spinner (loading) text:
+loading: "Laden..."
+working: "Werken..."
+
+# Generic close button text
+close: "sluiten"
+
+showMore: "Meer laten zien"
+showLess: "Minder laten zien"
+
+# General "load more" text
+loadMore: "Meer laden"
+
+# Duration accessibility strings (shown on watch)
+durationA11y: " - Duur: %s."
+
+# TODO-i18n: make this use printf formatting so it can be more
+# versatile.
+usernamePrepend: "door "
+verified: "Geverifieerd"
+
+# Video thumbnail watch later button strings:
+addToWatchLater: "Later bekijken"
+addedToWatchLater: "Toegevoegd"
+addToWatchLaterError: "Fout"
+addToWatchQueue: "Bekijk wachtrij"
+addToWatchQueueAdded: "Toegevoegd"
+addToWatchQueueError: "Fout"
+addToTvQueue: "Wachtrij"
+watchLaterSignIn: "%sMeldt aan%s om dit aan Later bekijken toe te voegen"
+
+# Add to dialog strings:
+addToHeader: "Toevoegen aan"
+addToLoading: "Afspeellijst word geladen..."
+
+# Shelfsliders (horizontal shelves):
+shelfsliderNext: "Volgende"
+shelfsliderPrev: "Vorige"
+
+# Interactive transcripts:
+transcriptTitle: "Transcriptie"
+transcriptFail: "De interactieve transcriptie kon niet worden geladen."
+
+# Video player ad (?) JS messages
+adsInstreamFirstPlay: "Een video Advertentie wordt afgespeeld."
+adsInstreamSkippable: "Video Advertentie kan worden overgeslagen."
+adsOverlayImpression: "Advertentie getoond."
+
+# Searchbox labels
+sboxSuggestionDismissedLabel: "Suggestie verwijderd"
+sboxSuggestionDismissLabel: "Verwijder"
+
+# Misc:
+videoCountNone: "Geen videos"
+videoCountPlural: "%s videos"
+videoCountSingular: "1 video"
+commentPostFail: "Reactie kon niet worden geplaatst."
+viewFullPlaylist: "Volledige Afspeellijst laten zien"
+mdxAutoplayOff: "Automatisch afspelen uitgeschakeld"
+mdxAutoplayOn: "Automatisch afspelen ingeschakeld"
+sorryAboutThat: "Onze excuses."
+browseUnsavedChanges: >
+  Sommige wijzigingen die u in de kanaalinstellingen heeft aangebracht, zijn niet opgeslagen en gaan verloren als u deze pagina verlaat.

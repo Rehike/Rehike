@@ -1,0 +1,103 @@
+# Watch strings:
+
+autoplayToggleDesc: "Autoplay"
+autoplayTitle: "Up next"
+autoplayInfoText: >
+  When autoplay is enabled, a suggested video will automatically play next.
+
+relatedItemA11yDesc: " - Duration: %s."
+
+actionAddTo: "Add to"
+actionShare: "Share"
+actionMore: "More"
+actionMoreTooltip: "More actions"
+actionReport: "Report"
+actionTranscript: "Transcript"
+actionLikeTooltip: "I like this"
+actionLikeTooltipActive: "Unlike"
+actionDislikeTooltip: "I dislike this"
+
+clickcardSignIn: "Sign in"
+clickcardPlaylistSignIn: "Sign in to YouTube"
+addToClickcardHeading: "Want to watch this video again later?"
+addToClickcardTip: "Sign in to add this video to a playlist."
+reportClickcardHeading: "Need to report the video?"
+reportClickcardTip: "Sign in to report inappropriate content."
+likeClickcardHeading: "Like the video?"
+dislikeClickcardHeading: "Dislike the video?"
+voteClickcardTip: "Sign in to make your opinion count."
+
+channelSettings: "Channel settings"
+creatorBarInfo: "Information and configuration"
+creatorBarEnhancements: "Enhancements"
+creatorBarAudio: "Audio"
+creatorBarComments: "Comments"
+creatorBarCards: "Cards"
+creatorBarSubtitles: "Subtitles"
+creatorBarAnalytics: "Analytics"
+creatorBarVideoManager: "Video Manager"
+
+metadataLicense: "License"
+metadataLicenseStandard: "Standard YouTube License"
+metadataCategory: "Category"
+metadataSong: "Song"
+metadataGame: "Game"
+
+playlistVideosSingular: "1 video"
+playlistVideosPlural: "%s videos"
+playlistSave: "Save to Playlists"
+playlistUnsave: "Remove"
+playlistPrevVideo: "Previous video"
+playlistNextVideo: "Next video"
+
+privacyUnlisted: >
+  This video is unlisted. Only those with the link can see it.
+privacyPrivate: >
+  This video is private. Only those with access can see it.
+
+actionPanelError: >
+  This feature is not available right now. Please try again later.
+actionPanelRentalRequired: >
+  Rating is available when the video has been rented.
+
+loadingMoreSuggestions: "Loading more suggestions..."
+
+repeatPlaylistLabel: "Repeat playlist"
+shufflePlaylistLabel: "Shuffle"
+
+playerBlockadeContentWarning: "Content warning"
+playerBlockadeInappropriate: >
+  This video may be inappropriate for some users.
+playerBlockadeAgeRestrictedSignin: >
+  Sign in to confirm your age
+
+# JS messages:
+editorAjaxRequestFailed: >
+  Something went wrong trying to get data from the server. 
+  Try again, or reload the page.
+editorAjaxRequest503: >
+  This functionality is not available right now. Please try again later.
+
+# Slow internet connection message.
+speedygInfo: "Experiencing interruptions?"
+
+liveWatchingNow0: "0 watching now"
+liveWatchingNow1: "1 watching now"
+liveWatchingNow: "# watching now"
+
+# Video categories
+categoryAutosAndVehicles: "Autos & Vehicles"
+categoryComedy: "Comedy"
+categoryEducation: "Education"
+categoryEntertainment: "Entertainment"
+categoryFilmAndAnimation: "Film & Animation"
+categoryGaming: "Gaming"
+categoryHowtoAndStyle: "Howto & Style"
+categoryMusic: "Music"
+categoryNewsAndPolitics: "News & Politics"
+categoryNonprofitsAndActivism: "Nonprofits & Activism"
+categoryPeopleAndBlogs: "People & Blogs"
+categoryPetsAndAnimals: "Pets & Animals"
+categoryScienceAndTechnology: "Science & Technology"
+categorySports: "Sports"
+categoryTravelAndEvents: "Travel & Events"
