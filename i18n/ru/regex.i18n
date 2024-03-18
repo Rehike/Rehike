@@ -22,7 +22,7 @@ subscriberCountIsolator: "/( подписчиков)|( подписчика)|( �
 # Used for detecting if the date string in watch descriptions should be
 # modified. If none of these words are found in the string, then it is assumed
 # that the string should be modified.
-nonPublishCheck: "/(Дата премьеры:)|(Трансляция началась )|(Прямой эфир состоялся )|(Планируемая дата публикации: )/"
+nonPublishCheck: "/(Премьера состоялась)|(Дата премьеры:)|(Трансляция началась )|(Прямой эфир состоялся )|(Планируемая дата публикации: )/"
 
 # Used to isolate a channel name from the unsubscription modal message.
 unsubChannelNameMatch: "/Отписаться от (.*?)\\?/"
