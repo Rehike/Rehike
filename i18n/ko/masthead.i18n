@@ -1,0 +1,28 @@
+# Masthead (site header) strings:
+
+a11ySkipNav: "탐색 건너뛰기"
+logoTooltip: "YouTube 홈"
+appbarGuideLabel: "가이드"
+searchboxPlaceholder: "검색"
+uploadButton: "업로드"
+creationLabel: "Create a video or post"
+creationUpload: "동영상 업로드"
+creationLive: "Go live"
+creationPost: "Create post"
+notificationsTitle: "알림"
+notificationsSettings: "설정"
+notificationsNone: "0 unread notifications."
+notificationsSingular: "1 unread notification."
+# Uses "#" symbol for placeholder because YouTube's JS accesses this string.
+notificationsPlural: "# unread notifications."
+notifications99Plus: "99+"
+accountPickerLabel: >
+  Account profile photo that opens list of alternate accounts
+accountPickerStudio: "크리에이터 스튜디오"
+accountPickerSettings: "Rehike 설정"
+accountPickerCreate: "채널 만들기"
+accountPickerPhotoChange: "변경"
+accountPickerMultiLoginHeader: "다른 계정"
+accountPickerAddAccount: "계정 추가"
+accountPickerSignOut: "로그아웃"
+signInButton: "로그인"

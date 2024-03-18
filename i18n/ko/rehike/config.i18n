@@ -1,0 +1,139 @@
+title: "Rehike 설정"
+saveChanges: "적용"
+saveChangesSuccess: "설정이 저장되었습니다!"
+saveChangesFailure: "설정을 저장할 수 없습니다."
+
+tabs:
+  appearance: "스타일"
+  experiments: "실험실"
+  advanced: "고급"
+
+props:
+  appearance:
+    playerChoice:
+      title: "동영상 재생기 버전:"
+      values:
+        CURRENT: "최신 버전" # No specific date; true latest player.
+        PLAYER_2022: "2022 - 각진 디자인 및 이전 버전 스토리보드"
+        PLAYER_2020: "2020 - 작은 플레이어 단추"
+        PLAYER_2015_NEW: "2015 - 신형 스타일/이전 버전 아이콘"
+        PLAYER_2015: "2015 - 구형 스타일/신형 최종 화면"
+        PLAYER_2014: "2014 - 구형 스타일/구형 버퍼링 스타일"
+    classicPlayerForcePersistentControls:
+      title: "재생 컨트롤 항상 표시"
+      subtitle: >
+        최근에 만들어진 사용자 지정 CSS와 충돌할 수 있습니다.
+    classicPlayerTheme:
+      title: "재생기 테마:"
+      values:
+        DARK: "어둡게" # The default theme used since about 2012, but was introduced in 2011
+        LIGHT: "밝게"
+    classicPlayerColor:
+      title: "검색 막대 색상:"
+      values:
+        RED: "적색"
+        WHITE: "백색" # For whatever reason this is a thing
+    modernLogo:
+      title: "새로운 YouTube 로고 사용"
+      subtitle: >
+        2017년부터 적용된 새 로고를 사용합니다. 2017년 이전에 만들어진 사용자 지정 CSS가 올바르게 작동하지 않을 수 있습니다.
+    uploadButtonType:
+      title: "업로드 버튼 모양:"
+      values:
+        BUTTON: "버튼 (2013~2016)"
+        ICON: "아이콘 (2016~2018)"
+        MENU: "만들기 메뉴 (2018~)"
+    largeSearchResults:
+      title: "검색 결과 페이지에서 썸네일을 더 크게 표시"
+      subtitle: >
+        이 옵션 사용 시 2017년 이전에 만들어진 사용자 지정 CSS자 올바르게 작동하지 않을 수 있습니다.
+    swapSearchViewsAndDate:
+      title: "검색 결과에서 조회수와 날짜의 위치를 서로 바꾸기"
+      subtitle: >
+        조회수를 날짜 앞에 표시합니다.
+    showVersionInFooter:
+      title: "하단에 Rehike 버전 보이기"
+      subtitle: >
+        하단에 Rehike 정보 페이지로 이동하는 링크를 표시합니다.
+    useRyd:
+      title: "싫어요 수 보이기"
+      subtitle: >
+        Return YouTube Dislike API에서 제공하는 싫어요 수를 보입니다.
+    usernamePrepends:
+      title: "영어 언어 사용 시 업로더 이름 앞에 \"by\" 표시"
+      subtitle: >
+        2016년 이전에 사용된 기능입니다.
+    noViewsText:
+      title: "\"조회수 n회\" 라벨 보지 않기"
+      subtitle: >
+        2016년 이전처럼 조회수 값만 보입니다.
+    movingThumbnails:
+      title: "썸네일에 마우스를 올리면 미리보기 재생"
+      subtitle: >
+        2018년부터 적용되었습니다.
+    cssFixes:
+      title: "CSS 버그 수정"
+      subtitle: >
+        일부 사용자 지정 CSS와 충돌할 수 있습니다.
+    watchSidebarDates:
+      title: "추천 동영상에 업로드 날짜 표시"
+      subtitle: >
+        새로운 YouTube UI에서만 사용된 기능입니다.
+    watchSidebarVerification:
+      title: "추천 동영상에 인증됨 배지 표시"
+      subtitle: >
+        새로운 YouTube UI에서만 사용된 기능입니다.
+    oldBestOfYouTubeIcons:
+      title: "\"Best of YouTube\"에 이전 버전 아이콘 사용"
+      subtitle: >
+        흑색 아이콘 대신 이전에 사용된 적색 아이콘은 사용합니다.
+    smallPlayer:
+      title: "플레이어 버튼을 작게 표시"
+      subtitle: >
+        2019년 이전에 사용된 작은 UI를 모방합니다.
+    enableAdblock:
+      title: "광고 차단"
+      subtitle: >
+        동영상의 광고를 차단합니다.
+  
+  experiments:
+    displayPlayerChoice:
+      title: "구형 플레이어 선택 설정 사용"
+      subtitle: >
+        스타일 탭에서 플레이어 버전을 선택할 수 있습니다.
+    useSignInV2:
+      title: "새로운 로그인 시스템 사용"
+      subtitle: >
+        실험적인 새로운 로그인 시스템을 사용합니다. 나중에 정식 기능으로 적용될 수 있습니다.
+    disableSignInOnHome:
+      title: "메인 화면에서 임시 로그아웃"
+      subtitle: >
+        2018년 8월부터 시청기록을 끈 사용자에게 추천 동영상이 나오지 않는 것을 고칩니다.
+    encryptedStreamsDO_NOT_USE_UNLESS_YOU_KNOW_WHAT_YOU_ARE_DOING:
+      title: "암호화된 스트림 사용"
+      subtitle: >
+        개발자용 옵션이며, 이 설정에 대한 이해가 없다면 비활성화하지 마십시오.
+
+  advanced:
+    enableDebugger:
+      title: "디버거 사용"
+      subtitle: >
+        개발자에게 유용합니다. 버그 신고 시에도 사용할 수 있습니다.
+    clearSigninCache:
+      title: "로그인 상태 캐시"
+      subtitle: >
+        YouTube에 매번 상태 요청을 하지 않도록 로그인 상태를 저장합니다.
+      button: "캐시 삭제"
+    clearPlayerCache:
+      title: "플레이어 정보 캐시"
+      subtitle: >
+        YouTube에 매번 상태 요청을 하지 않도록 플레이어 정보를 저장합니다.
+      button: "캐시 삭제"
+    factoryReset:
+      title: "초기화"
+      subtitle: >
+        캐시 및 설정 등을 초기화합니다.
+      button: "초기화"
+    updateRehike:
+      title: "Rehike 판올림"
+      button: "판올림"
