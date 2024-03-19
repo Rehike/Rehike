@@ -1,3 +1,7 @@
 nonexistent: "Ta playlista nie istnieje."
 unsupported: "Ten typ playlisty nie jest obsługiwany."
-playAll: "Odtwórz wszystkie"
+playAll: "Odtwórz wszystkie",
+shareTooltip: "Udostępnij lub umieść tę playlistę",
+saveText: "Zapisz",
+savedText: "Zapisano",
+saveTooltip: "Zapisz do playlist"
