@@ -1,0 +1,73 @@
+languageName: "Nederlands"
+expandedLanguageName: "Nederlands (Nederland)"
+writingDirection: ltr
+
+thousandsSeparator: "."
+decimalSeparator: ","
+
+numberOfMonths: 12
+daysInWeek: 7
+
+spaceOnLineBreak: true
+
+standardDateOrder: dmy
+
+firstDayOfWeek: 1 # Zondag
+
+am: "AM"
+pm: "PM"
+
+# https://www.php.net/manual/en/datetime.format.php
+expandedDateWithTime: "l, F j, Y g:i A" # Dinsdag, Oktober 17, 2023 12:50 AM
+expandedDate: "l, F j, Y" # Dinsdag, Oktober 17, 2023
+dateWithTime: "F j, Y g:i A" # Oktober 17, 2023 12:50 AM
+date: "F j, Y" # Oktober 17 2023
+shortDateWithTime: "m/d/Y g:i A" # 10/17/2023 12:50 AM
+shortDate: "m/d/Y" # 10/17/2023
+time: "g:i A" # 12:50 AM
+
+daysOfWeek:
+  1: "Zondag"
+  2: "Maandag"
+  3: "Dinsdag"
+  4: "Woensdag"
+  5: "Donderdag"
+  6: "Vrijdag"
+  7: "Zaterdag"
+
+shortDaysOfWeek:
+  1: "Zon"
+  2: "Man"
+  3: "Din"
+  4: "Woe"
+  5: "Don"
+  6: "Vri"
+  7: "Zat"
+
+monthNames:
+  1: "Januari"
+  2: "Feburari"
+  3: "Maart"
+  4: "April"
+  5: "Mei"
+  6: "Juni"
+  7: "Juli"
+  8: "Augustus"
+  9: "September"
+  10: "Oktober"
+  11: "November"
+  12: "December"
+
+shortMonthNames:
+  1: "Jan"
+  2: "Feb"
+  3: "Mar"
+  4: "Apr"
+  5: "Mei"
+  6: "Jun"
+  7: "Jul"
+  8: "Aug"
+  9: "Sep"
+  10: "Okt"
+  11: "Nov"
+  12: "Dec"

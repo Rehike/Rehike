@@ -1,0 +1,52 @@
+# Guide strings:
+
+# Note that many strings are taken from InnerTube rather than this file.
+# For example, the signed-out subscription promo.
+# This file only contains strings that are not built into InnerTube anymore.
+
+# Common strings:
+showMore: "Meer weergeven"
+showFewer: "Toon minder"
+
+# Primary section items:
+trending: "Trending"
+myChannel: "Mijn kanaal"
+subscriptions: "Abbonementen"
+
+# Bottom section items:
+guideBuilderLabel: "Blader kanaal"
+manageSubscriptionsLabel: "Abbonementen beheren"
+
+# Section names:
+bestOfYouTubeTitle: "Beste van YouTube"
+libraryTitle: "Bibliotheek"
+
+# Best of YouTube section item names:
+bestOfYouTubePopularOnYouTube: "Populair op YouTube"
+bestOfYouTubeMusic: "Muziek"
+bestOfYouTubeSports: "Sport"
+bestOfYouTubeGaming: "Gaming"
+bestOfYouTubeMoviesTv: "Films & Series"
+bestOfYouTubeNews: "Nieuws"
+bestOfYouTubeLive: "Live"
+bestOfYouTubeSpotlight: "Spotlight"
+bestOfYouTube360: "360° Video"
+
+# Subscriptions promo:
+subscriptionsPromoButton: "Kanalen toevoegen"
+subscriptionsPromoTooltip: >
+  Je abonnementen worden hier weergegeven. Bekijk enkele kanalen om aan de slag te gaan.
+
+# Guide notification messages:
+watchLaterVideoAdded: "Toegevoegd aan Later bekijken"
+watchLaterVideoRemoved: "Verwijderd uit Later bekijken"
+subscription: "Abbonement toegevoegd"
+unsubscription: "Abbonement verwijderd"
+playlistLike: "Opgeslagen in Afspeellijst"
+playlistUnlike: "Verwijderd uit Afspeellijst"
+playlistVideoAdded: "Aan Afspeellijst toegevoegd"
+playlistVideoRemoved: "Uit Afspeellijst verwijderd"
+videoLike: "Toegevoegd aan gelikete videos"
+videoUnlike: "Verwijderd uit gelikete videos"
+eventReminderSet: "Je zal aan deze gebeurtenis worden herinnerd"
+eventReminderRemoved: "Gebeurtenisherinnering verwijderd"

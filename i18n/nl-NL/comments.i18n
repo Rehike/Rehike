@@ -1,0 +1,66 @@
+# Comments common strings:
+
+viewSingular: "Antwoord bekijken"
+viewMulti: "Bekijk antwoorden van %s"
+viewSingularOwner: "Antwoord bekijken van %s"
+viewMultiOwner: "Bekijk antwoorden van %s en van %s en anderen"
+hideSingular: "Antwoord verbergen"
+hideMulti: "Verberg antwoorden van %s"
+
+# Used to detect if the old reply count string should be used.
+# This may be removed in the future, because it doesn't seem useful to keep
+# around anymore.
+oldReplyTextRegex: "/View /"
+
+replyCountIsolator: "/( replies)|( reply)/i"
+likeCountIsolator: "/(Like this )|(comment)|(reply)|( along with )|(,)|( other person)|( other people)/"
+
+# Due to a comments update around the end of January 2024, we decided to
+# hardcode comment strings. This would be needed anyways, but we also use German
+# for comment API requests now, because it has full counts to a larger extent
+# than English.
+commentsHeader: "Reacties"
+topComments: "Top reacties"
+newestFirst: "Nieuwste eerst"
+
+linkedComment: "Gemarkeerde reactie"
+
+addAComment: "Voeg een reactie toe..."
+addAReply: "Voeg een antwoord toe..."
+
+loadMoreReplies: "Laad meer reacties"
+
+expandButtonText: "Meer lezen"
+collapseButtonText: "Minder laten zien"
+replyButtonText: "Beantwoorden"
+heartButtonText: "Hartje"
+unheartButtonText: "Verwijder hartje"
+
+pinnedByText: "Vastgezet door %s"
+heartTooltipText: "❤ door %s"
+
+secondsAgoSingular: "%s seconde geleden"
+secondsAgoPlural: "%s seconden geleden"
+minutesAgoSingular: "%s minuut geleden"
+minutesAgoPlural: "%s minuten geleden"
+hoursAgoSingular: "%s uur geleden"
+hoursAgoPlural: "%s uren geleden"
+daysAgoSingular: "%s dag geleden"
+daysAgoPlural: "%s dagen geleden"
+weeksAgoSingular: "%s week geleden"
+weeksAgoPlural: "%s weeken geleden"
+monthsAgoSingular: "%s maand geleden"
+monthsAgoPlural: "%s maanden geleden"
+yearsAgoSingular: "%s jaar geleden"
+yearsAgoPlural: "%s jaren geleden"
+
+timestampEditedText: "%s (bewerkt)"
+
+cancelText: "annuleren"
+commentText: "Reageren"
+replyText: "Beantwoorden"
+
+reportText: "Rapporteren"
+deleteText: "Verwijderen"
+editText: "Bewerken"
+pinText: "Vastzetten"
