@@ -7,26 +7,26 @@ viewCountIsolator: "/[^0-9]/"
 # This is used to isolate this case and replace the string with 0.
 # You can easily access this string here:
 # https://www.youtube.com/watch?v=UKY3scPIMd8&pp=4AQB&ab_channel=YouTubeViewers
-likeTextDisabled: "Мне это нравится"
+likeTextDisabled: "마음에 듭니다"
 
 # A like button accessibility substring used specifically in the case of
 # 0 likes in some languages. This is used to replace it with "0".
-countZero: "0"
+countZero: "No"
 
 # Used to isolate the subscriber count. Note that since subscriber counts are
 # abbreviated by YouTube, you can't just replace all numerical data, or you
 # would display wrong counts. Instead, you must replace all text that can occur
 # in the string except for the units.
-subscriberCountIsolator: "/( подписчиков)|( подписчика)|( подписчик)/"
+subscriberCountIsolator: "/(구독자 )|(명)/"
 
 # Used for detecting if the date string in watch descriptions should be
 # modified. If none of these words are found in the string, then it is assumed
 # that the string should be modified.
-nonPublishCheck: "/(Премьера состоялась)|(Дата премьеры:)|(Трансляция началась )|(Прямой эфир состоялся )|(Планируемая дата публикации: )/"
+nonPublishCheck: "/(Premiere)|(Started)|(Streamed)|(Scheduled)|(Live stream)/"
 
 # Used to isolate a channel name from the unsubscription modal message.
-unsubChannelNameMatch: "/Отписаться от (.*?)\\?/"
+unsubChannelNameMatch: "/Unsubscribe from (.*?)\\?/"
 
 # Miscellaneous isolators
-videoTimeIsolator: "/([0-9]?[0-9])( seconds)|(1 second)/"
-secondsIsolator: "/( seconds)|( second)/"
+videoTimeIsolator: "/([0-9]?[0-9])(초)|(1초)/"
+secondsIsolator: "/(초)/"

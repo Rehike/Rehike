@@ -1,4 +1,5 @@
 cache/**
 config.json
 .vscode/**
+.idea/**
 logs/**
