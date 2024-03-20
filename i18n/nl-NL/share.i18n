@@ -1,0 +1,35 @@
+tabShare: "Delen"
+tabEmbed: "Embed"
+tabEmail: "Email"
+
+serviceTooltip: "Deel naar %s. Opent in een nieuw venster."
+startAt: "Begin vanaf:"
+
+sharePlaylist: "Deel de afspeellijst startende vanaf  "
+currentVideo: "Huidige video"
+startPlaylist: "Begin van de afspeellijst"
+embedCode: "Embed code"
+
+preview: "Voorbeeld:"
+videoSize: "Video formaat:"
+customSize: "Aangepast formaat"
+
+showRelated: "Toon voorgestelde videos wanneer de video is afgelopen"
+showControls: "Laat videospeler besturing zien"
+showInfo: "Toon videotitel en speleracties"
+delayedCookies: "Schakel de privacy-verbeterde modus in"
+
+legalNotice: >
+  Door YouTube-video's op uw site weer te geven, gaat u akkoord met de 
+legalNoticeLink: "YouTube API servicevoorwaarden."
+
+playlistNonexistent: "Die afspeellijst bestaat niet."
+playlistNoVideos: "Die afspeellijst bevat geen videos."
+
+recipientsPlaceholder: "Naar"
+recipientsAlt: "Voer E-mailaddressen in"
+optionalMessagePlaceholder: "Optioneel bericht"
+optionalMessageAlt: "Voer uw E-mail address in (optioneel)"
+messagePreview: "Voorbeeld bericht:"
+emailShared: " heeft een video met u gedeeld op YouTube"
+sendEmail: "Verstuur E-mail"

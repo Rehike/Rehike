@@ -1,0 +1,5 @@
+# Messages for the uBlock origin error (template/hitchhiker/core/ublock_error.twig)
+
+message: >
+  Het is niet gelukt om Rehike correct op te startten. Dit kan vaak gebeuren door adblocker (bijv. uBlock Origin).
+button: Hoe los ik dit op?

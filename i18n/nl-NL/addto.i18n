@@ -1,0 +1,13 @@
+# Add to definitions
+
+addToHeading: "Toevoegen"
+searchPlaylists: "Zoeken in Afspeellijst"
+createNewPlaylist: "Maak een nieuwe Afspeellijst"
+createNewPlaylistDynamic: "%s (create new)"
+playlistTitle: "Titel Afspeellijst"
+playlistPrivacy: "Privacy Afspeellijst"
+privacyPublic: "Openbaar"
+privacyUnlisted: "Verborgen"
+privacyPrivate: "Prive"
+cancel: "Annuleren"
+create: "Aanmaken"

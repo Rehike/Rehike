@@ -1,0 +1,25 @@
+# Channels common strings:
+
+tabChannels: "Kanalen"
+tabAbout: "Over"
+
+flowGrid: "Raster"
+flowList: "Lijst"
+viewUploads: "Uploads"
+viewAllVideos: "Alle videos"
+viewLiveStreams: "Livestreams"
+viewShorts: "Shorts"
+seeAll: "Alles bekijken"
+backstageViewAllCommentsSingular: "Reactie bekijken"
+backstageViewAllCommentsPlural: "Alle reacties van %s bekijken"
+videoSortPopular: "Meest populair"
+videoSortOldest: "Datum toegevoegd (oudste)"
+videoSortNewest: "Datum toegevoegd (meest recent)"
+subscriptionConfirmationHeader: "Bevestig Abbonement op kanaal"
+nonexistent: "Dit kanaal bestaat niet."
+secondaryHeaderViews: "%s weergaven"
+secondaryHeaderManager: "Video beheren"
+
+# about tab strings
+aboutTabDetails: "Details"
+aboutTabCountry: "Land"

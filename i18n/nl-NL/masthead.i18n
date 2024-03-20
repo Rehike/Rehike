@@ -1,0 +1,28 @@
+# Masthead (site header) strings:
+
+a11ySkipNav: "Navigatie overslaan"
+logoTooltip: "YouTube Home"
+appbarGuideLabel: "Gids"
+searchboxPlaceholder: "Zoeken"
+uploadButton: "Uploaden"
+creationLabel: "Maak een Video of plaats een bericht"
+creationUpload: "Upload een video"
+creationLive: "Ga Live"
+creationPost: "Plaats een bericht"
+notificationsTitle: "Notificaties"
+notificationsSettings: "instellingen"
+notificationsNone: "0 ongelezen berichten."
+notificationsSingular: "1 ongelezen bericht."
+# Uses "#" symbol for placeholder because YouTube's JS accesses this string.
+notificationsPlural: "# Ongelezen berichten."
+notifications99Plus: "99+"
+accountPickerLabel: >
+  Account profiel foto opent een lijst met alternatieve accounts
+accountPickerStudio: "YouTube Studio"
+accountPickerSettings: "Rehike Instellingen"
+accountPickerCreate: "Maak een kanaal"
+accountPickerPhotoChange: "Wijzigen"
+accountPickerMultiLoginHeader: "Andere accounts"
+accountPickerAddAccount: "voeg account toe"
+accountPickerSignOut: "Uitloggen"
+signInButton: "Inloggen"
