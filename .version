@@ -1,10 +1,10 @@
 {
-	"previousHash": "d302ca3f4a2958a68d80069e491bbc07e998429b",
-	"currentRevisionId": 1403,
-	"subject": "Nuke CoffeeException",
-	"body": "Nuke CoffeeException",
+	"previousHash": "bb6ce3e090c5e103212ec0387afe0f5fe9c745d5",
+	"currentRevisionId": 1404,
+	"subject": "Deprecate $yt->page as array",
+	"body": "Deprecate $yt->page as array",
 	"branch": "master",
 	"committerName": "Taniko Yamamoto",
 	"committerEmail": "kirasicecreamm@gmail.com",
-	"time": 1711177095
+	"time": 1711177505
 }

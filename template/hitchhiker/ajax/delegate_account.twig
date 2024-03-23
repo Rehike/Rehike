@@ -8,7 +8,7 @@
     "body": {
         "yt-delegate-accounts": {% apply json_encode|raw %}
             {% from "common/thumb.twig" import render as thumb %}
-            {%- for account in yt.page -%}
+            {%- for account in yt.page.channels -%}
             <a href="{{ account.switchUrl }}" class="yt-masthead-account-picker-option yt-masthead-account-picker-user-option">
                 {{ thumb({
                     type: "square",
