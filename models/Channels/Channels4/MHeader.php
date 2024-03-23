@@ -81,7 +81,7 @@ class MHeader
             );
         }
         // Channel owner
-        elseif (isset($header->editChannelButtons))
+        else if (isset($header->editChannelButtons))
         {
             if (isset($header->subscriberCountText))
             {
@@ -93,7 +93,7 @@ class MHeader
                 $count
             );
         }
-        elseif (isset($header->subscribeButton))
+        else if (isset($header->subscribeButton))
         {
             if (isset($header->subscriberCountText))
             {

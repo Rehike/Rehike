@@ -2,7 +2,8 @@
 namespace Rehike\Model\Common\Menu;
 
 #[\AllowDynamicProperties]
-class MMenuItem {
+class MMenuItem
+{
     /** @var string */
     public $label;
 
@@ -12,8 +13,10 @@ class MMenuItem {
     /** @var bool */
     public $hasIcon = false;
 
-    public function __construct($data) {
-        foreach ($data as $key => $val) {
+    public function __construct($data)
+    {
+        foreach ($data as $key => $val)
+        {
             $this->{$key} = $val;
         }
     }

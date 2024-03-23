@@ -31,19 +31,25 @@ class MLikeButton extends MAbstractLikeButton
         // Store a reference to the current sign in state.
         $signedIn = SignIn::isSignedIn();
 
-        if ($signedIn) {
+        if ($signedIn)
+        {
             $this->attributes["post-action"] = "/service_ajax?name=likeEndpoint";
             $this->class[] = "yt-uix-post-anchor";
         }
 
-        if (!$signedIn && !$active) {
+        if (!$signedIn && !$active)
+        {
             $this->clickcard = new MSigninClickcard($signinMessage, $signinDetail, [
                 "text" => $i18n->get("clickcardSignIn"),
                 "href" => "https://accounts.google.com/ServiceLogin?continue=https%3A%2F%2Fwww.youtube.com%2Fsignin%3Fnext%3D%252F%253Faction_handle_signin%3Dtrue%26feature%3D__FEATURE__%26hl%3Den%26app%3Ddesktop&passive=true&hl=en&uilel=3&service=youtube"
             ]);
-        } elseif ($signedIn && !$active) {
+        }
+        else if ($signedIn && !$active)
+        {
             $this->attributes["post-data"] = "action=like&id=" . $videoId;
-        } elseif ($signedIn && $active) {
+        }
+        else if ($signedIn && $active)
+        {
             $this->attributes["post-data"] = "action=removelike&id=" . $videoId;
         }
 

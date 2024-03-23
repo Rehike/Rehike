@@ -53,7 +53,8 @@ class MDialogHeader
             ? $i18n->get("debuggerTitle")
             : $i18n->get("condensedDebuggerTitle");
 
-        if ($condensed) {
+        if ($condensed)
+        {
             $this->helpLink = (object) [
                 "text" => $i18n->get("condensedDebuggerHelpLink"),
                 "href" => "//github.com/Rehike/Rehike/wiki/Creating-an-issue"

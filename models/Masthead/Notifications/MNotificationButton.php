@@ -3,7 +3,8 @@ namespace Rehike\Model\Masthead\Notifications;
 
 use Rehike\Model\Common\MButton;
 
-class MNotificationButton extends MButton {
+class MNotificationButton extends MButton
+{
     public $targetId = "yt-masthead-notifications-button";
     public $class = [
         "sb-notif-off"
@@ -15,7 +16,8 @@ class MNotificationButton extends MButton {
         "position" => "bottomleft"
     ];
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->accessibility = (object) [
             "accessibilityData" => (object) [
                 "haspopup" => "true"

@@ -46,14 +46,16 @@ class MSubscriptionActions
 
         $this->unsubConfirmDialog = $opts["unsubConfirmDialog"];
 
-        if ($a = @$this->unsubConfirmDialog->confirmButton->buttonRenderer) {
+        if ($a = @$this->unsubConfirmDialog->confirmButton->buttonRenderer)
+        {
             $a->class = [
                 "overlay-confirmation-unsubscribe-button",
                 "yt-uix-overlay-close"
             ];
         }
 
-        if ($a = @$this->unsubConfirmDialog->cancelButton->buttonRenderer) {
+        if ($a = @$this->unsubConfirmDialog->cancelButton->buttonRenderer)
+        {
             $a->class = ["yt-uix-overlay-close"];
             $a->style = "STYLE_DEFAULT";
         }
@@ -122,7 +124,8 @@ class MSubscriptionActions
         ]);
     }
 
-    public static function signedOutStub($count = "", $branded = true) {
+    public static function signedOutStub($count = "", $branded = true)
+    {
         return new self([
             "longText" => $count,
             "shortText" => $count,

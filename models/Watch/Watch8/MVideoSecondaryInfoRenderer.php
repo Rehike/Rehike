@@ -82,7 +82,7 @@ class MVideoSecondaryInfoRenderer
                 );
             }
             // Channel links
-            elseif (isset($run->navigationEndpoint->browseEndpoint))
+            else if (isset($run->navigationEndpoint->browseEndpoint))
             {
                 switch (substr($run->navigationEndpoint->browseEndpoint->browseId, 0, 2))
                 {

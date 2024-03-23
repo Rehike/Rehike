@@ -25,7 +25,8 @@ use function Rehike\Async\async;
  * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
-class ResultsController extends NirvanaController {
+class ResultsController extends NirvanaController
+{
     public string $template = "results";
 
     // No clue why these are static.

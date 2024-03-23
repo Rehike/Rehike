@@ -4,9 +4,14 @@ namespace Rehike\Model\Share;
 use Rehike\i18n\i18n;
 use Rehike\Util\ParsingUtils;
 
+/**
+ * Model for the share box.
+ * 
+ * @author syndiate
+ * @author The Rehike Maintainers
+ */
 class ShareBoxModel
 {
-
     public static function bake(string $videoId, ?string $title, ?string $listId)
     {
         $response = (object) [];
@@ -110,9 +115,6 @@ class ShareBoxModel
 
         return $response;
     }
-
-
-
 
     public static function playlistBake(mixed $listModel, string $listId)
     {

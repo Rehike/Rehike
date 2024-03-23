@@ -122,7 +122,8 @@ class CommentThread
             $this->populateDataApiData($cids)->then(function() use (&$context, &$out, $resolve) {
                 if (is_countable($context))
                 {
-                    for ($i = 0, $count = count($context); $i < $count; $i++) {
+                    for ($i = 0, $count = count($context); $i < $count; $i++)
+                    {
                         if (isset($context[$i]->commentThreadRenderer))
                         {
                             $out["commentThreads"][] = $this->commentThreadRenderer(
@@ -271,11 +272,13 @@ class CommentThread
 
         // PLEASE NOTE:
         // The extra preceding property "comment"/"replies" is removed by this.
-        if (isset($context->comment)) {
+        if (isset($context->comment))
+        {
             $out['commentRenderer'] = $this->commentRenderer($context->comment->commentRenderer);
         }
 
-        if (isset($context->replies)) {
+        if (isset($context->replies))
+        {
             $out['commentRepliesRenderer'] = $this->commentRepliesRenderer($context->replies->commentRepliesRenderer);
         }
         
@@ -289,14 +292,16 @@ class CommentThread
 
         $context->isReply = $isReply;
 
-        if ($data = @$this->dataApiData[$context->authorEndpoint->browseEndpoint->browseId]) {
+        if ($data = @$this->dataApiData[$context->authorEndpoint->browseEndpoint->browseId])
+        {
             $context->authorText = (object) [
                 "simpleText" => $data->title
             ];
         }
 
         // Correct mentions
-        foreach ($context->contentText->runs as $i => &$run) {
+        foreach ($context->contentText->runs as $i => &$run)
+        {
             if ($ucid = @$run->navigationEndpoint->browseEndpoint->browseId)
             {
                 /** 
@@ -400,15 +405,21 @@ class CommentThread
         $context->dislikeButton = VoteButton::fromData(PropertyAtPath::get($context, self::DISLIKE_BUTTON_PATH));
 		if (isset($context->voteCount)) $this->addLikeCount($context);
 		
-        try {
+        try
+        {
             $context->replyButton = ReplyButton::fromData(PropertyAtPath::get($context, self::REPLY_BUTTON_PATH), $context->commentId);
-        } catch(\YukisCoffee\PropertyAtPathException $e) {
+        }
+        catch (\YukisCoffee\PropertyAtPathException $e)
+        {
             $context->replyButton = null;
         }
 
-        try {
+        try
+        {
             $context->creatorHeart = PropertyAtPath::get($context, self::HEART_BUTTON_PATH);
-        } catch (\YukisCoffee\PropertyAtPathException $e) {
+        }
+        catch (\YukisCoffee\PropertyAtPathException $e)
+        {
             $context->creatorHeart = null;
         }
 
@@ -430,7 +441,8 @@ class CommentThread
             // "View {count} reply from {author}" instead of "author pfp・1 REPLY"
             // etc.
             $replyCount = (int) preg_replace($i18n->get("replyCountIsolator"), "", $viewText);
-            if (isset($context->viewRepliesCreatorThumbnail)) {
+            if (isset($context->viewRepliesCreatorThumbnail))
+            {
                 $creatorName = $context->viewRepliesCreatorThumbnail->accessibility->accessibilityData->label;
             }
 
@@ -509,12 +521,15 @@ class CommentThread
         
         $count = (int)$this->getLikeCountFromLabel($likeAriaLabel);
 		
-		if (@$context->likeButton->checked) {
+		if (@$context->likeButton->checked)
+        {
 			$context->voteCount = [
 				"indifferentText" => (string)($count - 1),
 				"likedText" => (string)$count
 			];
-		} else {
+		}
+        else
+        {
 			$context->voteCount = [
 				"indifferentText" => (string)$count,
 				"likedText" => (string)($count + 1)

@@ -3,7 +3,8 @@ namespace Rehike\Model\Playlist;
 
 use Rehike\Model\Common\MAbstractClickcard;
 
-class MPlaylistShareClickcard extends MAbstractClickcard {
+class MPlaylistShareClickcard extends MAbstractClickcard
+{
     public $template = "playlist_share";
     public $cardClass = [
         "yt-card"
@@ -11,7 +12,8 @@ class MPlaylistShareClickcard extends MAbstractClickcard {
     public $class = "pl-header-sharepanel-content";
     public $targetWrapper;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->targetWrapper = (object) [
             "position" => "bottomright",
             "orientation" => "vertical"

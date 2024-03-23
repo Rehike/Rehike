@@ -34,7 +34,7 @@ class MChannelItem
             {
                 $this->ucid = "UC" . $token->offlineCacheKeyToken->clientCacheKey;
             }
-            elseif (isset($token->accountSigninToken))
+            else if (isset($token->accountSigninToken))
             {
                 $this->url = $token->accountSigninToken->signinUrl;
             }

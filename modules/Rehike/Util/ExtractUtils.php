@@ -9,7 +9,8 @@ use Rehike\i18n\i18n;
  * @author Aubrey Pankow <aubyomori@gmail.com>
  * @author The Rehike Maintainers
  */
-class ExtractUtils {
+class ExtractUtils
+{
     /**
      * Isolate any count with a set input by replacing other parts of a
      * substring with an empty string.
@@ -17,7 +18,8 @@ class ExtractUtils {
      * @param $input       Base string.
      * @param $substrRegex Substrings to replace
      */
-    public static function isolateCount(?string $input, string $substrRegex): string {
+    public static function isolateCount(?string $input, string $substrRegex): string
+    {
         if (!$input) return '';
         return preg_replace(
             $substrRegex,
@@ -31,13 +33,18 @@ class ExtractUtils {
      * 
      * @param $likeCount Base string to modify.
      */
-    public static function isolateLikeCnt(?string $likeCount): string {
+    public static function isolateLikeCnt(?string $likeCount): string
+    {
         $i18n = i18n::getNamespace("regex");
 
         $a = self::isolateCount($likeCount, $i18n->get("likeCountIsolator"));
-        if ($a != $i18n->get("likeTextDisabled")) {
+
+        if ($a != $i18n->get("likeTextDisabled"))
+        {
             return $a;
-        } else {
+        }
+        else
+        {
             return '';
         }
     }
@@ -49,13 +56,18 @@ class ExtractUtils {
      * 
      * @param $subCount Base string to modify.
      */
-    public static function isolateSubCnt(?string $subCount): string {
+    public static function isolateSubCnt(?string $subCount): string
+    {
         $i18n = i18n::getNamespace("regex");
 
         $a = self::isolateCount($subCount, $i18n->get("subscriberCountIsolator"));
-        if ($a != $i18n->get("countZero")) {
+
+        if ($a != $i18n->get("countZero"))
+        {
             return $a;
-        } else {
+        }
+        else
+        {
             return '0';
         }
     }
@@ -68,13 +80,18 @@ class ExtractUtils {
      * 
      * @param $viewCount Base string to modify.
      */
-    public static function isolateViewCnt(?string $viewCount): string {
+    public static function isolateViewCnt(?string $viewCount): string
+    {
         $i18n = i18n::getNamespace("regex");
         
         $a = self::isolateCount($viewCount, $i18n->get("viewCountIsolator"));
-        if ($a != $i18n->get("countZero")) {
+
+        if ($a != $i18n->get("countZero"))
+        {
             return $a;
-        } else {
+        }
+        else
+        {
             return '0';
         }
     }

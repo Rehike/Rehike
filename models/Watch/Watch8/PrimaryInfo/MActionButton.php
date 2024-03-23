@@ -174,7 +174,8 @@ class MActionButton extends MButton
             "actionPanelTrigger" => "report"
         ];
 
-        if (!SignIn::isSignedIn()) {
+        if (!SignIn::isSignedIn())
+        {
             $buttonCfg += [
                 "fakeActionPanel" => true,
                 "clickcard" => new MSigninClickcard(

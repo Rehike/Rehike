@@ -32,7 +32,8 @@ class AjaxWatchFragments2Controller extends AjaxController
     public function onPost(YtApp $yt, RequestMetadata $request): void
     {
         $fragsId = $_GET['frags'] ?? '';
-        switch ($fragsId) {
+        switch ($fragsId)
+        {
             case 'comments':
                 self::getComments($yt);
                 break;

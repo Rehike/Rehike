@@ -26,7 +26,8 @@ use YukisCoffee\CoffeeRequest\Exception\GeneralException;
  * @author Toru the Red Fox
  * @author The Rehike Maintainers
  */
-return new class extends HitchhikerController {
+return new class extends HitchhikerController
+{
 	public string $contentType = "application/xml";
 	public bool $useTemplate = false;
 	
@@ -181,13 +182,16 @@ return new class extends HitchhikerController {
 			// Close the cURL resource, and free system resources
 			curl_close($ch);
 			
-			$xml;
-			
-			if ($code !== 200) {
+			if ($code !== 200)
+			{
 				$xml = new SimpleXMLElement("<document><annotations></annotations></document>");
-			} else {
+			}
+			else
+			{
 				$xml = simplexml_load_string($out);
-				foreach ($xml->xpath("//annotation[@style='branding']") as $node) { // remove any existing branding
+				foreach ($xml->xpath("//annotation[@style='branding']") as $node)
+				{ 
+					// remove any existing branding
 					unset($node[0]); // remove the original annotation if present as we're going to be making our own
 				}
 			}

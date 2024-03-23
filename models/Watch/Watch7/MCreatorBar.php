@@ -5,7 +5,8 @@ use Rehike\Model\Common\MButton;
 use Rehike\i18n\i18n;
 use Rehike\Signin\API as SignIn;
 
-class MCreatorBar {
+class MCreatorBar
+{
     /** @var MButton[] */
     public $navButtons;
 
@@ -15,7 +16,8 @@ class MCreatorBar {
     /**
      * @var string $vid   Video ID.
      */
-    public function __construct($vid) {
+    public function __construct($vid)
+    {
         $i18n = i18n::getNamespace("watch");
         $ucid = SignIn::getInfo()["ucid"];
 

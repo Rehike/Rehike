@@ -39,7 +39,8 @@ return new class extends HitchhikerController {
     public function onGet(YtApp $yt, RequestMetadata $request): void
     {
 		$videoId = $request->params->video_id; 
-		if ($videoId == null && $videoId !== "") {
+		if ($videoId == null && $videoId !== "")
+		{
 			http_response_code(400);
 			die();
 		}

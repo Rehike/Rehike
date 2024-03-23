@@ -5,24 +5,29 @@ use \Rehike\Model\Common\MAlert;
 use Rehike\i18n\i18n;
 use Rehike\Model\Share\MShareTabBar;
 
-class ShareEmbedModel {
-
-    public static function bake($videoId, $title, $listData) {
-
+/**
+ * Model for the share box's embed page.
+ * 
+ * @author syndiate
+ * @author The Rehike Maintainers
+ */
+class ShareEmbedModel
+{
+    public static function bake($videoId, $title, $listData)
+    {
         $response = (object) [];
         $i18n = i18n::getNamespace("share");
 
-
         $alternateUrls = [];
 
-
-        if ($listData != null) {
-
-
-
-            $playlistHost = $listData -> contents -> twoColumnBrowseResultsRenderer -> tabs[0] -> tabRenderer -> content ?? null;
+        if ($listData != null)
+        {
+            $playlistHost = 
+                $listData->contents->twoColumnBrowseResultsRenderer->tabs[0]->tabRenderer->content
+                ?? null;
             
-            if (!isset($playlistHost -> sectionListRenderer)) {
+            if (!isset($playlistHost -> sectionListRenderer))
+            {
                 return (object) [
                     "alerts" => [
                         new MAlert([
@@ -32,13 +37,13 @@ class ShareEmbedModel {
                     ]
                 ];
             }
-
             
-            $listId = $listData -> header -> playlistHeaderRenderer -> playlistId;
-            $videoList = $playlistHost -> sectionListRenderer -> contents[0] -> itemSectionRenderer -> contents[0] -> playlistVideoListRenderer -> contents;
+            $listId = $listData->header->playlistHeaderRenderer->playlistId;
+            $videoList = $playlistHost->sectionListRenderer->contents[0]->itemSectionRenderer
+                ->contents[0]->playlistVideoListRenderer->contents;
 
-
-            if (count($videoList) <= 0) {
+            if (count($videoList) <= 0)
+            {
                 return (object) [
                     "alerts" => [
                         new MAlert([
@@ -48,7 +53,6 @@ class ShareEmbedModel {
                     ]
                 ];
             }
-
 
             $firstVideoId = $videoList[0]->playlistVideoRenderer->videoId;
 
@@ -69,19 +73,15 @@ class ShareEmbedModel {
                     "content" => "https://www.youtube.com/embed/$videoId"
                 ]
              ];
-
-
-        } else {
+        }
+        else
+        {
             $response->embedUrl = "https://www.youtube.com/embed/$videoId";
             $response->isList = false;
         }
-
-
         
-        $response -> alternateUrls = $alternateUrls;
-        $response -> strs = (array) $i18n->getAllTemplates();
-
-
+        $response->alternateUrls = $alternateUrls;
+        $response->strs = (array)$i18n->getAllTemplates();
 
         $sizes = [
             (object) [
@@ -110,7 +110,6 @@ class ShareEmbedModel {
             ]
         ];
 
-
         $options = [
             (object) [
                 "name" => "show-related",
@@ -135,11 +134,9 @@ class ShareEmbedModel {
             ]
         ];
 
-        $response -> options = $options;
-        $response -> sizes = $sizes;
+        $response->options = $options;
+        $response->sizes = $sizes;
 
         return $response;
-
     }
-
 }

@@ -4,11 +4,13 @@ namespace Rehike\Model\Masthead\Notifications;
 use Rehike\Model\Common\MButton;
 use Rehike\i18n\i18n;
 
-class MNotificationSettingsButton extends MButton {
+class MNotificationSettingsButton extends MButton
+{
     public $targetId = "yt-masthead-notifications-settings";
     public $style = "STYLE_OPACITY";
 
-    public function __construct() {
+    public function __construct()
+    {
         $i18n = i18n::getNamespace("masthead");
 
         $this->accessibility = (object) [
