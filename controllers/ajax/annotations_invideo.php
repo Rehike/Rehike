@@ -95,14 +95,14 @@ return new class extends HitchhikerController {
             $sharedRequestParams['playlistIndex'] = $yt->playlistIndex;
         }
 
-        // TODO (kirasicecreamm): Clean up this algo, make better
+        // Parse complex &t parameter timestamps (such as "2h12m43s")
+		// TODO (kirasicecreamm): Clean up this algo, make better
         if (isset($request->params->t))
         {
             preg_match_all("/\d{1,6}/", $request->params->t, $times);
             $times = $times[0];
             if (count($times) == 1)
             {
-                // before you whine "waaahh use case" I CAN'T IT BREAKS IT FOR NO FUCKING REASON, if you wanna make this better, go ahead
                 $startTime = (int) $times[0];
             } 
             else if (count($times) == 2)

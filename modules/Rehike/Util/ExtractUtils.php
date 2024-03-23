@@ -66,10 +66,6 @@ class ExtractUtils {
      * "120,000 views" => "120,000"
      * "No views" => "0"
      * 
-     * BUG(dcooper): This function will only work in English, as although the
-     * isolator string is obtained from i18n, the "No" substring is still
-     * hardcoded in English only.
-     * 
      * @param $viewCount Base string to modify.
      */
     public static function isolateViewCnt(?string $viewCount): string {

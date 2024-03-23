@@ -364,11 +364,6 @@ class Watch8Subcontroller
      */
     public static function shouldUseAutoplay(&$data)
     {
-        /**
-         * TODO: Specific master check to disable globally,
-         * useful for building watch7/etc. later.
-         */
-
         // Disable if watch playlists available at all.
         if (is_null(WatchBase::$playlist))
         {
