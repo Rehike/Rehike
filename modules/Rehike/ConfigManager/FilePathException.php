@@ -2,5 +2,6 @@
 
 namespace Rehike\ConfigManager;
 
-// Prereq coffeeexception
-class FilePathException extends \YukisCoffee\CoffeeException {};
+use Rehike\Exception\AbstractException;
+
+class FilePathException extends AbstractException {};

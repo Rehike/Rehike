@@ -5,7 +5,6 @@ use \Rehike\ConfigManager\Config;
 use \Rehike\TemplateManager;
 use \Rehike\i18n\i18n;
 use \Rehike\YtApp;
-use \YukisCoffee\CoffeeException;
 
 use \Rehike\Model\Rehike\Debugger\{
     MOpenButton as OpenButton,
@@ -81,9 +80,6 @@ class Debugger
         //ini_set("display_errors", "off");
 
         TemplateManager::addGlobal("rehikeDebugger", self::$context);
-
-        // Disable the CoffeeException custom error screen
-        CoffeeException::disableBeautifulError();
 
         set_error_handler("\\Rehike\\Debugger\\YcRehikeDebuggerErrorHandler");
     }
