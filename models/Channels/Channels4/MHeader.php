@@ -22,7 +22,66 @@ class MHeader
 
     protected $subscriptionCount;
 
-    public function __construct($header, $baseUrl)
+    public function __construct($header, $baseUrl, bool $isOld = true)
+    {
+        if (!$isOld)
+        {
+            // New format (March 2024):
+            $this->constructFromViewModel($header, $baseUrl);
+        }
+        else
+        {
+            // Old format:
+            $this->constructFromRenderer($header, $baseUrl);
+        }
+    }
+
+    /**
+     * Construct from an InnerTube view model structure.
+     */
+    protected function constructFromViewModel($header, $baseUrl): void
+    {
+        $content = $header->content->pageHeaderViewModel;
+
+        // Add the title if it exists.
+        if ($a = @$content->title->dynamicTextViewModel->text->content)
+        {
+            $this->title = (object)[
+                "text" => $a,
+                "href" => $baseUrl
+            ];
+        }
+
+        // Add the avatar if it exists.
+        if ($a = @$content->image->decoratedAvatarViewModel->avatar->avatarViewModel)
+        {
+            $this->thumbnail = ImageUtils::changeSize(
+                $a->image->sources[0]->url, 100
+            );
+        }
+
+        $this->url = $baseUrl;
+
+        // Add the banner if it exists.
+        if ($a = @$content->banner->imageBannerViewModel)
+        {
+            $this->banner = (object)[
+                "image" => $a->image->sources[0]->url ?? null,
+                "hdImage" => $a->image->sources[3]->url ?? null
+            ];
+            $this->banner->isCustom = true;
+        }
+        else
+        {
+            $this->banner = new MDefaultBanner();
+            $this->banner->isCustom = false;
+        }
+    }
+
+    /**
+     * Construct from legacy InnerTube renderer structure.
+     */
+    protected function constructFromRenderer($header, $baseUrl): void
     {
         // Add the title if it exists
         if ($a = @$header->title)
@@ -32,7 +91,7 @@ class MHeader
                 "href" => $baseUrl
             ];
         }
-        
+
         // Add the avatar if it exists
         if ($a = @$header->avatar)
         {
@@ -45,8 +104,8 @@ class MHeader
         if ($a = @$header->banner)
         {
             $this->banner = (object) [
-                "image" => $a->thumbnails[0] ->url ?? null,
-                "hdImage" => $a->thumbnails[3] ->url ?? null
+                "image" => $a->thumbnails[0]->url ?? null,
+                "hdImage" => $a->thumbnails[3]->url ?? null
             ];
             $this->banner->isCustom = true;
         }

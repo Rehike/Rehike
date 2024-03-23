@@ -43,7 +43,19 @@ class Channels4Model
 
         if ($header = @$data->header->c4TabbedHeaderRenderer)
         {
-            $response += ["header" => new Channels4\MHeader($header, self::getBaseUrl())];
+            $response += ["header" => new Channels4\MHeader(
+                $header, 
+                self::getBaseUrl(),
+                isOld: true
+            )];
+        }
+        else if ($header = @$data->header->pageHeaderRenderer)
+        {
+            $response += ["header" => new Channels4\MHeader(
+                $header, 
+                self::getBaseUrl(),
+                isOld: false
+            )];
         }
         else if ($header = @$data->header->carouselHeaderRenderer)
         {
