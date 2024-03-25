@@ -197,7 +197,7 @@ return new class extends AjaxController
                 $commentsBakery = new CommentThread($ytdata);
                 $commentsBakery->bakeComments($data)->then(function ($response) use ($yt)
                 {
-                    $yt->page = $response;
+                    $yt->page = (object)$response;
                 });
             }
             else
@@ -242,7 +242,7 @@ return new class extends AjaxController
                 $commentsBakery = new CommentThread($ytdata);
                 $commentsBakery->bakeReplies($data)->then(function ($response) use ($yt)
                 {
-                    $yt->page = $response;
+                    $yt->page = (object)$response;
                 });
             }
             else

@@ -1,0 +1,24 @@
+# Miscellaneous strings (move to global?)
+
+btnCancel: "Annuleer"
+btnSave: "Opslaan"
+subscriberTextSingular: "%s Abbonee"
+subscriberTextPlural: "%s Abbonees"
+viewTextSingular: "%s weergave"
+viewTextPlural: "%s weergaven"
+dateTextPublic: "Gepubliceerd op %s"
+dateTextPrivate: "Geüpload op %s"
+subscribeText: "Abonneer"
+subscribedText: "Geabonneerd"
+unsubscribeText: "Uitscrhijven"
+
+# How to obtain:
+# Get your UCID from YouTube. This is on https://www.youtube.com/account_advanced
+# Paste it into here: https://www.youtube.com/subscribe_embed?usegapi=1&channelid=<UCID>&layout=full&count=default
+# Make sure that you're logged into the account you need to access this string.
+selfSubscribeTooltip: "Het is niet nodig om aan jezelf te abonneren"
+
+notificationPrefsTitle: "Meldingen van %s"
+notificationPrefsLabel: "Abonnement voorkeuren"
+
+notificationA11yDesc: " - Melding"

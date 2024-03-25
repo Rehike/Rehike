@@ -1,0 +1,30 @@
+# Common strings that show in the footer at the bottom of the page:
+
+logoTooltip: "YouTube home"
+
+pickerLanguage: "Taal: %s"
+pickerLocation: "Locatie: %s"
+
+pickerSafety: "Beperkte modus: %s"
+safetyOn: "Aan"
+safetyOff: "Uit"
+
+buttonHistory: "Geschiedenis"
+buttonHelp: "Help"
+
+# Primary (top) links:
+primaryAbout: "Over"
+primaryPress: "pers"
+primaryCopyright: "Copyright"
+primaryCreators: "Creators"
+primaryAdvertise: "Advertenteren"
+primaryDevs: "Developers"
+primaryVersion: "Rehike v%s [%s]" # Rehike-specific
+
+# Secondary (bottom) links:
+secondaryTerms: "Voorwaarden"
+secondaryPrivacy: "Privacy"
+secondaryPolicySafety: "Beleid & Veiligheid"
+secondaryFeedback: "Feedback versturen"
+secondaryTestTube: "Nieuwe Features uitproberen"
+secondaryCopyright: "© %s Google LLC"

@@ -118,6 +118,7 @@ return new class extends NirvanaController {
             $sharedRequestParams['playlistIndex'] = $yt->playlistIndex;
         }
 
+        // Parse complex &t parameter timestamps (such as "2h12m43s")
         // TODO (kirasicecreamm): Clean up this algo, make better
         if (isset($request->params->t))
         {
@@ -125,7 +126,6 @@ return new class extends NirvanaController {
             $times = $times[0];
             if (count($times) == 1)
             {
-                // before you whine "waaahh use case" I CAN'T IT BREAKS IT FOR NO FUCKING REASON, if you wanna make this better, go ahead
                 $startTime = (int) $times[0];
             } 
             else if (count($times) == 2)

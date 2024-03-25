@@ -1,0 +1,8 @@
+# Used on the "Video Attribution Information" page at /attribution.
+
+title: "Video Attribution Information"
+sectionTitle: "Used videos"
+sectionSubtitle: "These videos were used to create or were created with %s"
+viewAttrs: "View attributions"
+watchLater: "나중에 볼 동영상"
+goToUser: "Go to the user page for %s"

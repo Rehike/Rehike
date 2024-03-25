@@ -287,8 +287,10 @@ class Network
 
         $urlParams = "";
 
-        if (!$post) {
-            foreach($params as $name => $value) {
+        if (!$post)
+        {
+            foreach($params as $name => $value)
+            {
                 $urlParams .= "&{$name}={$value}";
             }
         }
@@ -306,7 +308,8 @@ class Network
                 ?? "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:107.0) Gecko/20100101 Firefox/107.0"
         ];
 
-        if ($post) {
+        if ($post)
+        {
             $headers += [
                 "Content-Type" => "application/json"
             ];
@@ -316,12 +319,15 @@ class Network
             "headers" => $headers
         ];
 
-        if ($post) {
+        if ($post)
+        {
             $body += [
                 "body" => $params,
                 "method" => "POST"
             ];
-        } else {
+        }
+        else
+        {
             $body += [
                 "method" => "GET"
             ];

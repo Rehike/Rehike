@@ -51,11 +51,8 @@ class YtApp extends stdClass
      * 
      * This can be literally anything, so long as it is a valid object. Each
      * page has different content specifications, after all.
-     * 
-     * TODO (kirasicecreamm): Deprecate support for associative array page
-     * types (i.e. comment service ajax).
      */
-    public object|array $page;
+    public object $page;
 
     /**
      * The title of the page, as it appears in the browser.

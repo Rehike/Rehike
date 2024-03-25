@@ -1,0 +1,26 @@
+# Channels common strings:
+
+tabChannels: "채널"
+tabVideos: "동영상"
+tabAbout: "정보"
+
+flowGrid: "그리드"
+flowList: "목록"
+viewUploads: "동영상"
+viewAllVideos: "전체 동영상"
+viewLiveStreams: "이전 실시간 스트림"
+viewShorts: "Shorts"
+seeAll: "모두 보기"
+backstageViewAllCommentsSingular: "댓글 보기"
+backstageViewAllCommentsPlural: "댓글 %s개 보기"
+videoSortPopular: "인기순"
+videoSortOldest: "추가된 날짜 (오래된순)"
+videoSortNewest: "추가된 날짜 (최신순)"
+subscriptionConfirmationHeader: "Confirm Channel Subscription"
+nonexistent: "This channel does not exist."
+secondaryHeaderViews: "조회수 %s회"
+secondaryHeaderManager: "동영상 관리자"
+
+# about tab strings
+aboutTabDetails: "정보"
+aboutTabCountry: "국가"

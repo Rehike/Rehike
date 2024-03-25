@@ -6,12 +6,14 @@ use Rehike\Model\Common\MButton;
 use Rehike\ConfigManager\Config;
 use Rehike\Player\Configurable;
 
-class MHistoryButton extends MButton {
+class MHistoryButton extends MButton
+{
     public $class = [
         "footer-history"
     ];
 
-    public function __construct() {
+    public function __construct()
+    {
         $i18n = i18n::getNamespace("footer");
 
         $this->icon = (object) [

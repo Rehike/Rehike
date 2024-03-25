@@ -15,7 +15,8 @@ use Rehike\Model\Masthead\{
     UploadButton\MUploadIconButton
 };
 
-class MMasthead {
+class MMasthead
+{
     /** @var string */
     public $a11ySkipNav;
 
@@ -37,7 +38,8 @@ class MMasthead {
     /** @var object */
     public $notificationStrings;
 
-    public function __construct($appbarEnabled) {
+    public function __construct($appbarEnabled)
+    {
         $i18n = i18n::getNamespace("masthead");
 
         $this->a11ySkipNav = $i18n->get("a11ySkipNav");
@@ -54,7 +56,8 @@ class MMasthead {
             "plural" => $i18n->get("notificationsPlural"),
         ];
 
-        switch (Config::getConfigProp("appearance.uploadButtonType")) {
+        switch (Config::getConfigProp("appearance.uploadButtonType"))
+        {
             case "BUTTON":
                 $this->buttons[] = new MUploadButton();
                 break;
@@ -67,15 +70,19 @@ class MMasthead {
         }
 
         $yt = YtApp::getInstance();
+        
         if ("US" != $yt->gl)
         {
             $this->countryCode = $yt->gl;
         }
 
-        if (SignIn::isSignedIn()) {
+        if (SignIn::isSignedIn())
+        {
             $this->buttons[] = new MNotificationButton();
             $this->buttons[] = new MAccountPickerButton();
-        } else {
+        }
+        else
+        {
             $this->buttons[] = new MSignInButton();
         }
     }

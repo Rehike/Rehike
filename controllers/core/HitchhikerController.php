@@ -254,7 +254,8 @@ abstract class HitchhikerController
         $yt->useModularCore = false;
         $yt->page = (object)[];
 
-        if ($this->useTemplate) {
+        if ($this->useTemplate)
+        {
             $yt->masthead = new Masthead(false);
             $yt->footer = new Footer();
         }

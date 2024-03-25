@@ -1,0 +1,66 @@
+# Comments common strings:
+
+viewSingular: "답글 보기"
+viewMulti: "답글 %s개 보기"
+viewSingularOwner: "%s님의 답글 보기"
+viewMultiOwner: "%2$s님 및 다른 사용자의 답글 %1$s개 보기"
+hideSingular: "답글 숨기기"
+hideMulti: "답글 %s개 숨기기"
+
+# Used to detect if the old reply count string should be used.
+# This may be removed in the future, because it doesn't seem useful to keep
+# around anymore.
+oldReplyTextRegex: "/View /"
+
+replyCountIsolator: "/(답글 )|(개)/i"
+likeCountIsolator: "/(Like this )|(comment)|(reply)|( along with )|(,)|( other person)|( other people)/"
+
+# Due to a comments update around the end of January 2024, we decided to
+# hardcode comment strings. This would be needed anyways, but we also use German
+# for comment API requests now, because it has full counts to a larger extent
+# than English.
+commentsHeader: "댓글"
+topComments: "인기순"
+newestFirst: "최신순"
+
+linkedComment: "하이라이트 댓글"
+
+addAComment: "공개 댓글 추가..."
+addAReply: "답글 추가..."
+
+loadMoreReplies: "답글 더보기"
+
+expandButtonText: "자세히 보기"
+collapseButtonText: "간략히 보기"
+replyButtonText: "답글"
+heartButtonText: "하트"
+unheartButtonText: "하트 제거"
+
+pinnedByText: "%s님이 고정함"
+heartTooltipText: "%s님의 ❤"
+
+secondsAgoSingular: "%s초 전"
+secondsAgoPlural: "%s초 전"
+minutesAgoSingular: "%s분 전"
+minutesAgoPlural: "%s분 전"
+hoursAgoSingular: "%s시간 전"
+hoursAgoPlural: "%s시간 전"
+daysAgoSingular: "%s일 전"
+daysAgoPlural: "%s일 전"
+weeksAgoSingular: "%s주 전"
+weeksAgoPlural: "%s주 전"
+monthsAgoSingular: "%s달 전"
+monthsAgoPlural: "%s달 전"
+yearsAgoSingular: "%s년 전"
+yearsAgoPlural: "%s년 전"
+
+timestampEditedText: "%s (수정됨)"
+
+cancelText: "취소"
+commentText: "댓글"
+replyText: "답글"
+
+reportText: "신고"
+deleteText: "삭제"
+editText: "수정"
+pinText: "고정"

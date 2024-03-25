@@ -1,0 +1,24 @@
+# Miscellaneous strings (move to global?)
+
+btnCancel: "취소"
+btnSave: "저장"
+subscriberTextSingular: "구독자 %s명"
+subscriberTextPlural: "구독자 %s명"
+viewTextSingular: "조회수 1회"
+viewTextPlural: "조회수 %s회"
+dateTextPublic: "게시 날짜: %s"
+dateTextPrivate: "업로드 날짜: %s"
+subscribeText: "구독"
+subscribedText: "구독중"
+unsubscribeText: "구독 취소"
+
+# How to obtain:
+# Get your UCID from YouTube. This is on https://www.youtube.com/account_advanced
+# Paste it into here: https://www.youtube.com/subscribe_embed?usegapi=1&channelid=<UCID>&layout=full&count=default
+# Make sure that you're logged into the account you need to access this string.
+selfSubscribeTooltip: "No need to subscribe to yourself"
+
+notificationPrefsTitle: "Notifications from %s"
+notificationPrefsLabel: "Subscription preferences"
+
+notificationA11yDesc: " - Notification"

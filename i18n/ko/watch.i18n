@@ -1,0 +1,103 @@
+# Watch strings:
+
+autoplayToggleDesc: "자동재생"
+autoplayTitle: "다음 동영상"
+autoplayInfoText: >
+  When autoplay is enabled, a suggested video will automatically play next.
+
+relatedItemA11yDesc: " - Duration: %s."
+
+actionAddTo: "추가"
+actionShare: "공유"
+actionMore: "더보기"
+actionMoreTooltip: "추가 작업"
+actionReport: "신고"
+actionTranscript: "스크립트 보기"
+actionLikeTooltip: "동영상이 마음에 듭니다."
+actionLikeTooltipActive: "좋아요 취소"
+actionDislikeTooltip: "동영상이 마음에 들지 않습니다."
+
+clickcardSignIn: "로그인"
+clickcardPlaylistSignIn: "YouTube에 로그인"
+addToClickcardHeading: "Want to watch this video again later?"
+addToClickcardTip: "Sign in to add this video to a playlist."
+reportClickcardHeading: "Need to report the video?"
+reportClickcardTip: "Sign in to report inappropriate content."
+likeClickcardHeading: "Like the video?"
+dislikeClickcardHeading: "Dislike the video?"
+voteClickcardTip: "Sign in to make your opinion count."
+
+channelSettings: "채널 설정"
+creatorBarInfo: "정보 및 설정"
+creatorBarEnhancements: "특수효과"
+creatorBarAudio: "오디오"
+creatorBarComments: "댓글"
+creatorBarCards: "카드"
+creatorBarSubtitles: "자막"
+creatorBarAnalytics: "분석"
+creatorBarVideoManager: "동영상 관리자"
+
+metadataLicense: "라이선스"
+metadataLicenseStandard: "표준 YouTube 라이선스"
+metadataCategory: "카테고리"
+metadataSong: "음악"
+metadataGame: "게임"
+
+playlistVideosSingular: "동영상 1개"
+playlistVideosPlural: "동영상 %s개"
+playlistSave: "재생목록에 저장"
+playlistUnsave: "Remove"
+playlistPrevVideo: "이전 동영상"
+playlistNextVideo: "다음 동영상"
+
+privacyUnlisted: >
+  미등록 동영상입니다. 링크가 있는 사용자만 볼 수 있습니다.
+privacyPrivate: >
+  This video is private. Only those with access can see it.
+
+actionPanelError: >
+  This feature is not available right now. Please try again later.
+actionPanelRentalRequired: >
+  Rating is available when the video has been rented.
+
+loadingMoreSuggestions: "Loading more suggestions..."
+
+repeatPlaylistLabel: "재생목록 신고"
+shufflePlaylistLabel: "셔플"
+
+playerBlockadeContentWarning: "Content warning"
+playerBlockadeInappropriate: >
+  This video may be inappropriate for some users.
+playerBlockadeAgeRestrictedSignin: >
+  Sign in to confirm your age
+
+# JS messages:
+editorAjaxRequestFailed: >
+  Something went wrong trying to get data from the server. 
+  Try again, or reload the page.
+editorAjaxRequest503: >
+  This functionality is not available right now. Please try again later.
+
+# Slow internet connection message.
+speedygInfo: "Experiencing interruptions?"
+
+liveWatchingNow0: "0명 시청 중"
+liveWatchingNow1: "1명 시청 중"
+liveWatchingNow: "#명 시청 중"
+
+# Video categories
+categoryAutosAndVehicles: "Autos & Vehicles"
+categoryComedy: "코미디"
+categoryEducation: "교육"
+categoryEntertainment: "엔터테인먼트"
+categoryFilmAndAnimation: "영화/애니메이션"
+categoryGaming: "게임"
+categoryHowtoAndStyle: "Howto & Style"
+categoryMusic: "음악"
+categoryNewsAndPolitics: "News & Politics"
+categoryNonprofitsAndActivism: "Nonprofits & Activism"
+categoryPeopleAndBlogs: "인물/블로그"
+categoryPetsAndAnimals: "Pets & Animals"
+categoryScienceAndTechnology: "Science & Technology"
+categorySports: "스포츠"
+categoryTravelAndEvents: "Travel & Events"

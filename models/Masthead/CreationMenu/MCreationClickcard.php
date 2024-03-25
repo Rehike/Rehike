@@ -4,7 +4,8 @@ namespace Rehike\Model\Masthead\CreationMenu;
 use Rehike\i18n\i18n;
 use Rehike\Signin\API as SignIn;
 
-class MCreationClickcard {
+class MCreationClickcard
+{
     public $template = "masthead_creation_menu";
     public $cardClass = [
         "yt-scrollbar",
@@ -14,12 +15,15 @@ class MCreationClickcard {
     public $cardId = "yt-masthead-creation-clickcard";
     public $content;
 
-    public function __construct() {
+    public function __construct()
+    {
         $i18n = i18n::getNamespace("masthead");
 
         $signInInfo = (object) SignIn::getInfo();
         $hasChannel = SignIn::isSignedIn() && isset($signInInfo->ucid);
-        if ($hasChannel) $ucid = $signInInfo->ucid;
+
+        if ($hasChannel)
+            $ucid = $signInInfo->ucid;
 
         $items = [];
 

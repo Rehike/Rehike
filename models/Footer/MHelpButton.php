@@ -6,7 +6,8 @@ use Rehike\Model\Common\MButton;
 use Rehike\ConfigManager\Config;
 use Rehike\Player\Configurable;
 
-class MHelpButton extends MButton {
+class MHelpButton extends MButton
+{
     public $targetId = "google-help";
     public $class = [
         "yt-uix-button-reverse",
@@ -20,7 +21,8 @@ class MHelpButton extends MButton {
         "feedback-product-id" => "59"
     ];
 
-    public function __construct() {
+    public function __construct()
+    {
         $i18n = i18n::getNamespace("footer");
 
         $this->text = (object) [

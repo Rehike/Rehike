@@ -1,0 +1,103 @@
+# Watch strings:
+
+autoplayToggleDesc: "Automatisch afspelen"
+autoplayTitle: "Volgende"
+autoplayInfoText: >
+  Wanneer Automatisch afspelen aan staat, zal een gesuggereerde video afspelen na de huidige video.
+
+relatedItemA11yDesc: " - tijdsduur: %s."
+
+actionAddTo: "Voeg toe aan"
+actionShare: "Delen"
+actionMore: "Meer"
+actionMoreTooltip: "Meer acties"
+actionReport: "Rapporteren"
+actionTranscript: "Transcriptie"
+actionLikeTooltip: "Vind ik leuk"
+actionLikeTooltipActive: "Niet leuk"
+actionDislikeTooltip: "Vind ik niet leuk"
+
+clickcardSignIn: "Aanmelden"
+clickcardPlaylistSignIn: "Aanmelden bij YouTube"
+addToClickcardHeading: "Wil je deze video later nogmaals bekijken?"
+addToClickcardTip: "Meld je aan om deze video aan een afspeellijst toe te voegen."
+reportClickcardHeading: "Wil je deze video rapporteren?"
+reportClickcardTip: "Meld je aan om ongepaste inhoud te rapporteren."
+likeClickcardHeading: "Vind je de video leuk?"
+dislikeClickcardHeading: "Vind je de video niet leuk?"
+voteClickcardTip: "Meld je aan om je mening te laten tellen."
+
+channelSettings: "Kanaal instellingen"
+creatorBarInfo: "Informatie en configuratie"
+creatorBarEnhancements: "Verbeteringen"
+creatorBarAudio: "Audio"
+creatorBarComments: "Reacties"
+creatorBarCards: "Kaarten"
+creatorBarSubtitles: "Ondertiteling"
+creatorBarAnalytics: "Analyses"
+creatorBarVideoManager: "Video beheer"
+
+metadataLicense: "Licentie"
+metadataLicenseStandard: "Standaard YouTube Licentie"
+metadataCategory: "Categorie"
+metadataSong: "Liedje"
+metadataGame: "Game"
+
+playlistVideosSingular: "1 video"
+playlistVideosPlural: "%s videos"
+playlistSave: "opslaan in afspeellijst"
+playlistUnsave: "verwijder"
+playlistPrevVideo: "Vorige video"
+playlistNextVideo: "Volgende video"
+
+privacyUnlisted: >
+  Deze video is verborgen. Alleen degenen met de link kunnen het zien.
+privacyPrivate: >
+  Deze video is prive. Alleen degenen met toegang kunnen het zien.
+
+actionPanelError: >
+  Deze functie is nu niet beschikbaar. Probeer het later nog eens.
+actionPanelRentalRequired: >
+  Beoordeling is beschikbaar wanneer de video is gehuurd.
+
+loadingMoreSuggestions: "Bezig meer suggesties te laden..."
+
+repeatPlaylistLabel: "Herhaal afspeellijst"
+shufflePlaylistLabel: "willekeurige volgorde"
+
+playerBlockadeContentWarning: "Inhoudswaarschuwing"
+playerBlockadeInappropriate: >
+  Deze video is mogelijk ongepast voor sommige gebruikers.
+playerBlockadeAgeRestrictedSignin: >
+  Log in om je leeftijd te bevestigen
+
+# JS messages:
+editorAjaxRequestFailed: >
+  Er is een fout opgetreden bij het ophalen van de data. 
+  Probeer opnieuw, of herlaad de pagina.
+editorAjaxRequest503: >
+  Deze functionaliteit is momenteel niet beschikbaar. Probeer het later nog eens.
+
+# Slow internet connection message.
+speedygInfo: "Ervaar je verstoringen?"
+
+liveWatchingNow0: "0 bekijken nu"
+liveWatchingNow1: "1 bekijkt nu"
+liveWatchingNow: "# bekijken nu"
+
+# Video categories
+categoryAutosAndVehicles: "Autos & voertuigen"
+categoryComedy: "Komedie"
+categoryEducation: "Educatie"
+categoryEntertainment: "Vermaak"
+categoryFilmAndAnimation: "Film & Animatie"
+categoryGaming: "Gaming"
+categoryHowtoAndStyle: "Hoe & Stijl"
+categoryMusic: "Muziek"
+categoryNewsAndPolitics: "Nieuws & Politiek"
+categoryNonprofitsAndActivism: "Nonprofits & Activisme"
+categoryPeopleAndBlogs: "Mensen & Blogs"
+categoryPetsAndAnimals: "Huisdieren & Dieren"
+categoryScienceAndTechnology: "Wetenschap & Technologie"
+categorySports: "Sport"
+categoryTravelAndEvents: "Reizen & Evenementen"

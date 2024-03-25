@@ -8,10 +8,12 @@ use Rehike\Signin\API as SignIn;
 use Rehike\i18n\i18n;
 use Rehike\Model\Watch\WatchModel;
 
-class MActionPanelOverflowMenu extends MMenu {
+class MActionPanelOverflowMenu extends MMenu
+{
     public $menuId = "action-panel-overflow-menu";
 
-    public function __construct() {
+    public function __construct()
+    {
         $i18n = i18n::getNamespace("watch");
 
         $reportCfg = [
@@ -20,11 +22,14 @@ class MActionPanelOverflowMenu extends MMenu {
             "hasIcon" => true
         ];
 
-        if (SignIn::isSignedIn()) {
+        if (SignIn::isSignedIn())
+        {
             $reportCfg += [
                 "closeOnSelect" => true
             ];
-        } else {
+        }
+        else
+        {
             $reportCfg += [
                 "clickcard" => new MSigninClickcard(
                     $i18n->get("reportClickcardHeading"),
@@ -45,11 +50,13 @@ class MActionPanelOverflowMenu extends MMenu {
         $this->items[] = new MMenuItem($reportCfg);
 
         if (isset(WatchModel::$yt->playerResponse->captions->playerCaptionsTracklistRenderer->captionTracks[0]->baseUrl))
-        $this->items[] = new MMenuItem([
-            "actionPanelTrigger" => "transcript",
-            "closeOnSelect" => true,
-            "label" => $i18n->get("actionTranscript"),
-            "hasIcon" => true
-        ]);
+        {
+            $this->items[] = new MMenuItem([
+                "actionPanelTrigger" => "transcript",
+                "closeOnSelect" => true,
+                "label" => $i18n->get("actionTranscript"),
+                "hasIcon" => true
+            ]);
+        }
     }
 }

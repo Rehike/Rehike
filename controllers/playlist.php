@@ -76,7 +76,7 @@ return new class extends NirvanaController
                 {
                     $yt->page->channelHeader = new MHeader($header, "/channel/$yt->ucid");
                 }
-                elseif ($header = @$channelData->header->carouselHeaderRenderer)
+                else if ($header = @$channelData->header->carouselHeaderRenderer)
                 {
                     $yt->page->channelHeader = new MCarouselHeader($header, "/channel/$yt->ucid");
                 }

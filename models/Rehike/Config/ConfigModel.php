@@ -35,8 +35,8 @@ class ConfigModel extends RehikePanelPage
         parent::__construct($tabId);
     }
 
-    public static function bake(string $tab, $status = null) {
-        
+    public static function bake(string $tab, $status = null)
+    {
         $response = new self($tab);
         $i18n = i18n::getNamespace("rehike/config");
         $tabs = (object) $i18n->getAllTemplates()->tabs;
@@ -44,9 +44,11 @@ class ConfigModel extends RehikePanelPage
 
         $response->tab = $tab;
 
-        if ($status != null) {
+        if ($status != null)
+        {
             $response->alerts = [];
-            switch ($status) {
+            switch ($status)
+            {
                 case "success":
                     $response->alerts[] = new MAlert([
                         "type" => MAlert::TypeSuccess,

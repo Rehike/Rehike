@@ -108,7 +108,7 @@ class Switcher
             {
                 $gaiaId = $token->pageIdToken->pageId;
             }
-            elseif (isset($token->accountSigninToken))
+            else if (isset($token->accountSigninToken))
             {
                 $switchUrl = $token->accountSigninToken->signinUrl;
             }

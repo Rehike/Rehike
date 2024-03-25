@@ -4,7 +4,8 @@ namespace Rehike\Model\Comments;
 use Rehike\Util\ParsingUtils;
 use Rehike\i18n\i18n;
 
-class CommentsHeader {
+class CommentsHeader
+{
     public $title;
     public $commentsCountText;
     public $sortRenderer;
@@ -13,35 +14,42 @@ class CommentsHeader {
     public $commentsCountEndpoint;
     public $commentText;
 
-    public static function fromData($data) {
+    public static function fromData($data)
+    {
         $new = new self();
 
-        if ($a = @$data->titleText) {
+        if ($a = @$data->titleText)
+        {
             $new->title = StringTranslationManager::get(
                 ParsingUtils::getText($data->titleText)
             );
         }
         
-        if ($a = @$data->countText) {
+        if ($a = @$data->countText)
+        {
             $a = $a->runs;
             $new->commentsCountText = StringTranslationManager::reformatNumber($a[0]->text);
         }
 
-        if ($a = @$data->createRenderer) {
+        if ($a = @$data->createRenderer)
+        {
             $new->createParams = $a->commentSimpleboxRenderer->submitButton->buttonRenderer->serviceEndpoint->createCommentEndpoint->createCommentParams ?? null;
             $new->commentText = StringTranslationManager::get(
                 ParsingUtils::getText($a->commentSimpleboxRenderer->submitButton->buttonRenderer->text)
             );
         }
 
-        if ($a = $data->sortMenu) {
+        if ($a = $data->sortMenu)
+        {
             $a = $a->sortFilterSubMenuRenderer->subMenuItems; // everything we need in here...
             $new->sortRenderer = (object) [];
             $_sr = $new->sortRenderer; // shorthand
-            for ($i = 0; $i < count($a); $i++) {
+            for ($i = 0; $i < count($a); $i++)
+            {
                 $item = $a[$i];
         
-                if ($item->selected) {
+                if ($item->selected)
+                {
                     $_sr->title = StringTranslationManager::get(ParsingUtils::getText($item->title));
                 }
         
@@ -54,7 +62,8 @@ class CommentsHeader {
         
                 // just in case, probably won't do much harm
                 $_sri->menuName = (function() use ($i){
-                    switch($i) {
+                    switch($i)
+                    {
                         case 0: return 'top-comments';
                         case 1: return 'newest-first';
                     }
@@ -62,7 +71,8 @@ class CommentsHeader {
             }
         }
 
-        if ($a = ($data->createRenderer->commentSimpleboxRenderer ?? false)) {
+        if ($a = ($data->createRenderer->commentSimpleboxRenderer ?? false))
+        {
             $new->simpleBoxRenderer = (object) [];
             $_sbr = $new->simpleBoxRenderer; // shorthand
             $_sbr->authorThumbnail = $a->authorThumbnail;

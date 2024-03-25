@@ -1,7 +1,7 @@
 <?php
 namespace YukisCoffee;
 
-class PropertyAtPathException extends CoffeeException {}
+class PropertyAtPathException extends \Exception {}
 
 /**
  * PHP lacks traditional syntax for walking property paths.

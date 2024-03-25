@@ -7,7 +7,8 @@ use Rehike\Signin\API as SignIn;
 use Rehike\Model\Common\Thumb\MThumbSquare;
 use Rehike\Util\ImageUtils;
 
-class MAccountPickerButton extends MButton {
+class MAccountPickerButton extends MButton
+{
     public $noStyle = true;
     public $class = [
         "yt-masthead-user-icon"
@@ -19,7 +20,8 @@ class MAccountPickerButton extends MButton {
         "position" => "bottomleft"
     ];
 
-    public function __construct() {
+    public function __construct()
+    {
         $i18n = i18n::getNamespace("masthead");
         $signInInfo = (object) SignIn::getInfo();
         $this->thumb = new MThumbSquare([

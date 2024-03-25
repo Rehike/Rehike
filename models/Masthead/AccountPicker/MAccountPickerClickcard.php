@@ -6,7 +6,8 @@ use Rehike\Signin\API as SignIn;
 use Rehike\Model\Common\Thumb\MThumbSquare;
 use Rehike\Util\ImageUtils;
 
-class MAccountPickerClickcard {
+class MAccountPickerClickcard
+{
     public $template = "masthead_account_picker";
     public $id = "yt-masthead-account-picker";
     public $cardAction = "yt.www.masthead.handleAccountPickerClick";
@@ -16,7 +17,8 @@ class MAccountPickerClickcard {
     public $class = "yt-masthead-account-picker";
     public $content;
 
-    public function __construct() {
+    public function __construct()
+    {
         $i18n = i18n::getNamespace("masthead");
         $signInInfo = (object) SignIn::getInfo();
         $activeChannel = $signInInfo->activeChannel;

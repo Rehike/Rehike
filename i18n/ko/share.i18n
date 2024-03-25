@@ -1,0 +1,35 @@
+tabShare: "공유"
+tabEmbed: "퍼가기"
+tabEmail: "이메일"
+
+serviceTooltip: "Share to %s. Opens in a new window."
+startAt: "Start at:"
+
+sharePlaylist: "Share with playlist starting from  "
+currentVideo: "current video"
+startPlaylist: "start of playlist"
+embedCode: "퍼가기 코드"
+
+preview: "미리보기:"
+videoSize: "동영상 크기:"
+customSize: "Custom size"
+
+showRelated: "Show suggested videos when the video finishes"
+showControls: "플레이어 컨트롤을 표시합니다."
+showInfo: "Show video title and player actions"
+delayedCookies: "개인정보 보호 강화 모드를 사용 설정합니다."
+
+legalNotice: >
+  내 사이트에 YouTube 동영상을 퍼가면 
+legalNoticeLink: "YouTube API 서비스 약관에 동의하는 것으로 간주됩니다."
+
+playlistNonexistent: "That playlist does not exist."
+playlistNoVideos: "That playlist does not contain any videos."
+
+recipientsPlaceholder: "To"
+recipientsAlt: "Enter email addresses"
+optionalMessagePlaceholder: "Optional message"
+optionalMessageAlt: "Enter your email address (optional)"
+messagePreview: "Message preview:"
+emailShared: " has shared a video with you on YouTube"
+sendEmail: "Send email"

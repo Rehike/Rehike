@@ -187,13 +187,14 @@ class Converter
      * locally, including the images (which are in 
      * /rehike/static/best_of_youtube)
      */
-    public static function getBestOfYouTubeSection() {
+    public static function getBestOfYouTubeSection()
+    {
         $strings = i18n::getNamespace("guide");
 
         // Thumbnail prefix and suffix
         $format = Config::getConfigProp("appearance.oldBestOfYouTubeIcons")
-        ? "/rehike/static/best_of_youtube/%s_old.jpg"
-        : "/rehike/static/best_of_youtube/%s.jpg";
+            ? "/rehike/static/best_of_youtube/%s_old.jpg"
+            : "/rehike/static/best_of_youtube/%s.jpg";
 
         $response = (object) [];
         $response->formattedTitle = (object) [
@@ -490,7 +491,8 @@ class Converter
      * Build the subscription promo section.
      * This shows when you have no subscriptions.
      */
-    public static function buildSubscriptionsPromoSection() {
+    public static function buildSubscriptionsPromoSection()
+    {
         $i18n = i18n::getNamespace("guide");
         $response = (object) [];
         $format = Config::getConfigProp("appearance.oldBestOfYouTubeIcons")

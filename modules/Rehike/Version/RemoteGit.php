@@ -60,7 +60,7 @@ class RemoteGit
     /**
      * Store a cache file and reuse it later
      * 
-     * TODO: Unified cache system.
+     * TODO: Unified cache system for all Rehike components.
      * 
      * @param string $branch
      * @param string $encodedJson

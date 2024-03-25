@@ -25,7 +25,8 @@ return new class extends AjaxController
 
         $endpoint = $request->params->name;
 
-        switch ($endpoint) {
+        switch ($endpoint)
+        {
             case "likeEndpoint":
                 self::likeEndpoint();
                 break;
