@@ -75,8 +75,10 @@ class SimpleFunnel
 
         $headers = [];
 
-        foreach ($opts["headers"] as $key => $val) {
-            if (!in_array(strtolower($key), self::$illegalRequestHeaders)) {
+        foreach ($opts["headers"] as $key => $val)
+        {
+            if (!in_array(strtolower($key), self::$illegalRequestHeaders))
+            {
                 $headers[$key] = $val;
             }
         }

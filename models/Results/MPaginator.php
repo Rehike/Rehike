@@ -10,7 +10,8 @@ use Rehike\i18n\i18n;
  * @author Daylin Cooper <dcoop2004@gmail.com>
  * @author The Rehike Maintainers
  */
-class MPaginator {
+class MPaginator
+{
     const VISIBLE_PAGE_LINKS = 7;
 
     public $pageNumber;
@@ -18,39 +19,53 @@ class MPaginator {
     public $hasBackButton = false;
     public $hasNextButton = false;
 
-    public function __construct($paginatorInfo) {
+    public function __construct($paginatorInfo)
+    {
         $this->pageNumber = $paginatorInfo->pageNumber ?? 1;
         $pagesCount = $paginatorInfo->pagesCount ?? 1;
 
         $this->items = self::getVisiblePages($this->pageNumber, $pagesCount);
 
-        if ($this->pageNumber > $pagesCount) {
+        if ($this->pageNumber > $pagesCount)
+        {
             $this->hasNextButton = true;
         }
 
-        if ($this->pageNumber > 1) {
+        if ($this->pageNumber > 1)
+        {
             $this->hasBackButton = true;
         }
     }
 
-    public static function getVisiblePages($pageNumber, $pagesCount) {
+    public static function getVisiblePages($pageNumber, $pagesCount)
+    {
         $lBound = 1;
         $rBound = $pagesCount;
 
         $displayedPages = [];
-        if ($pagesCount > self::VISIBLE_PAGE_LINKS) {
+        if ($pagesCount > self::VISIBLE_PAGE_LINKS)
+        {
             $rangeOffset = 2;
             $range = $pageNumber + self::VISIBLE_PAGE_LINKS;
 
-            while ($range < $lBound) $range++;
-            while ($range > $rBound) $range--;
-            while ($pageNumber - $rangeOffset < $lBound) $rangeOffset--;
+            while ($range < $lBound)
+                $range++;
 
-            for ($i = $pageNumber - $rangeOffset; $i < $range - $rangeOffset; $i++) {
+            while ($range > $rBound)
+                $range--;
+
+            while ($pageNumber - $rangeOffset < $lBound)
+                $rangeOffset--;
+
+            for ($i = $pageNumber - $rangeOffset; $i < $range - $rangeOffset; $i++)
+            {
                 $displayedPages[] = (int) $i;
             }
-        } else {
-            for ($i = 1; $i < $pagesCount; $i++) {
+        }
+        else
+        {
+            for ($i = 1; $i < $pagesCount; $i++)
+            {
                 $displayedPages[] = (int) $i;
             }
         }
@@ -58,11 +73,13 @@ class MPaginator {
         $response = [];
         $strings = i18n::getNamespace("results");
 
-        if ($pageNumber > 1) {
+        if ($pageNumber > 1)
+        {
             $response[] = new MPaginatorButton($strings->get("pagePrev"), false, ResultsController::getPageParamUrl(ResultsController::$param, $pageNumber - 1));
         }
 
-        for ($i = 0, $j = count($displayedPages); $i < $j; $i++) {
+        for ($i = 0, $j = count($displayedPages); $i < $j; $i++)
+        {
             $text = $displayedPages[$i];
             $selected = $displayedPages[$i] == $pageNumber;
             $url = ResultsController::getPageParamUrl(ResultsController::$param, $displayedPages[$i]);
@@ -70,7 +87,8 @@ class MPaginator {
             $response[] = new MPaginatorButton($text, $selected, $url);
         }
 
-        if ($pageNumber < $pagesCount) {
+        if ($pageNumber < $pagesCount)
+        {
             $response[] = new MPaginatorButton($strings->get("pageNext"), false, ResultsController::getPageParamUrl(ResultsController::$param, $pageNumber + 1));
         }
 

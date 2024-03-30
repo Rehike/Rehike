@@ -35,7 +35,8 @@ class Watch8Subcontroller
      */
     public static function bakeResults(&$data, $videoId)
     {
-        return async(function () use (&$data, $videoId) {
+        return async(function () use (&$data, $videoId)
+        {
             // Create references
             $primaryInfo = &WatchBase::$primaryInfo;
             $secondaryInfo = &WatchBase::$secondaryInfo;
@@ -44,7 +45,8 @@ class Watch8Subcontroller
             $results = [];
 
             // Push creator bar if the video is yours
-            if (WatchBase::$isOwner) {
+            if (WatchBase::$isOwner)
+            {
                 $results[] = (object) [
                     "videoCreatorBarRenderer" => new MCreatorBar($videoId)
                 ];
@@ -175,9 +177,12 @@ class Watch8Subcontroller
                 {
                     $autoplayIndex = self::getRecomAutoplay($recomsList);
 
-                    if (isset($_COOKIE["PREF"])) {
+                    if (isset($_COOKIE["PREF"]))
+                    {
                         $pref = PrefUtils::parse($_COOKIE["PREF"]);
-                    } else {
+                    }
+                    else
+                    {
                         $pref = (object) [];
                     }
 
@@ -229,7 +234,8 @@ class Watch8Subcontroller
             // TODO: cleanup
             $countText = $list->videoCountText->runs ?? null;
             
-            if (!is_null($countText)) {
+            if (!is_null($countText))
+            {
                 $curIndex = $countText[0]->text;
                 $videoCount = $countText[2]->text;
 
@@ -364,11 +370,6 @@ class Watch8Subcontroller
      */
     public static function shouldUseAutoplay(&$data)
     {
-        /**
-         * TODO: Specific master check to disable globally,
-         * useful for building watch7/etc. later.
-         */
-
         // Disable if watch playlists available at all.
         if (is_null(WatchBase::$playlist))
         {

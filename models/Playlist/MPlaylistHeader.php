@@ -57,6 +57,7 @@ class MPlaylistHeader
         $authorDetails = (object) [
             "simpleText" => $ownerText
         ];
+
         // The InnerTube response no longer includes the data for the URL
         // of the artist of the album (if the playlist is one), and just renders it as text.
         if (isset($data->ownerEndpoint))
@@ -72,8 +73,6 @@ class MPlaylistHeader
             ];
         }
 
-
-
         // Actions (play all, share, save)
         if (isset($data->playButton->buttonRenderer))
         {
@@ -88,6 +87,7 @@ class MPlaylistHeader
                 ]
             ]);
         }
+
         if (isset($data->shareButton->buttonRenderer))
         {
             $this->actions[] = new MButton([
@@ -106,6 +106,7 @@ class MPlaylistHeader
                 "clickcard" => new MPlaylistShareClickcard()
             ]);
         }
+        
         if (isset($data->saveButton->toggleButtonRenderer))
         {
             // TODO: fix toggle for save button

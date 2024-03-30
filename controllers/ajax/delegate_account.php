@@ -39,6 +39,8 @@ return new class extends \Rehike\Controller\core\AjaxController
             }
         }
 
-        $yt->page = $channelList;
+        $yt->page = (object)[
+            "channels" => $channelList
+        ];
     }
 };

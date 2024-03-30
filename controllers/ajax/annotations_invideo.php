@@ -26,7 +26,8 @@ use YukisCoffee\CoffeeRequest\Exception\GeneralException;
  * @author Toru the Red Fox
  * @author The Rehike Maintainers
  */
-return new class extends HitchhikerController {
+return new class extends HitchhikerController
+{
 	public string $contentType = "application/xml";
 	public bool $useTemplate = false;
 	
@@ -95,14 +96,14 @@ return new class extends HitchhikerController {
             $sharedRequestParams['playlistIndex'] = $yt->playlistIndex;
         }
 
-        // TODO (kirasicecreamm): Clean up this algo, make better
+        // Parse complex &t parameter timestamps (such as "2h12m43s")
+		// TODO (kirasicecreamm): Clean up this algo, make better
         if (isset($request->params->t))
         {
             preg_match_all("/\d{1,6}/", $request->params->t, $times);
             $times = $times[0];
             if (count($times) == 1)
             {
-                // before you whine "waaahh use case" I CAN'T IT BREAKS IT FOR NO FUCKING REASON, if you wanna make this better, go ahead
                 $startTime = (int) $times[0];
             } 
             else if (count($times) == 2)
@@ -181,13 +182,16 @@ return new class extends HitchhikerController {
 			// Close the cURL resource, and free system resources
 			curl_close($ch);
 			
-			$xml;
-			
-			if ($code !== 200) {
+			if ($code !== 200)
+			{
 				$xml = new SimpleXMLElement("<document><annotations></annotations></document>");
-			} else {
+			}
+			else
+			{
 				$xml = simplexml_load_string($out);
-				foreach ($xml->xpath("//annotation[@style='branding']") as $node) { // remove any existing branding
+				foreach ($xml->xpath("//annotation[@style='branding']") as $node)
+				{ 
+					// remove any existing branding
 					unset($node[0]); // remove the original annotation if present as we're going to be making our own
 				}
 			}

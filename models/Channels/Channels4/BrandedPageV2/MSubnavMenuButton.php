@@ -25,13 +25,18 @@ class MSubnavMenuButton
         $this->items[] = $menu;
     }
 
-    public static function fromData($data) {
+    public static function fromData($data)
+    {
         $items = [];
 
-        foreach ($data as $item) {
-            if ($item->selected) {
+        foreach ($data as $item)
+        {
+            if ($item->selected)
+            {
                 $title = $item->title;
-            } else {
+            }
+            else
+            {
                 $items[$item->title] = $item->endpoint->commandMetadata->webCommandMetadata->url;
             }
         }

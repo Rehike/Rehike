@@ -1,6 +1,6 @@
 <?php
 namespace Rehike\ControllerV2\Exception;
 
-use YukisCoffee\CoffeeException;
+use Rehike\Exception\AbstractException;
 
-class MethodDoesNotExistException extends CoffeeException {}
+class MethodDoesNotExistException extends AbstractException {}

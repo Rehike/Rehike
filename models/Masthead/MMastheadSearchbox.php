@@ -4,7 +4,8 @@ namespace Rehike\Model\Masthead;
 use Rehike\Model\Common\MButton;
 use Rehike\i18n\i18n;
 
-class MMastheadSearchbox {
+class MMastheadSearchbox
+{
     /** @var string */
     public $placeholder;
 
@@ -17,7 +18,8 @@ class MMastheadSearchbox {
     /** @var string */
     public $query;
 
-    public function __construct() {
+    public function __construct()
+    {
         $i18n = i18n::getNamespace("masthead");
     
         $this->placeholder = $i18n->get("searchboxPlaceholder");

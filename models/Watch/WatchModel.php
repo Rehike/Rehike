@@ -295,13 +295,20 @@ class WatchModel
     public static function getIsOwner(&$secondaryInfo)
     {
         if (!SignIn::isSignedIn()) return false;
-        if ($ucid = SignIn::getInfo()["ucid"]) {
-            if ($ucid == @$secondaryInfo->owner->videoOwnerRenderer->navigationEndpoint->browseEndpoint->browseId) {
+        
+        if ($ucid = SignIn::getInfo()["ucid"])
+        {
+            if ($ucid == @$secondaryInfo->owner->videoOwnerRenderer->navigationEndpoint->browseEndpoint->browseId)
+            {
                 return true;
-            } else {
+            }
+            else
+            {
                 return false;
             }
-        } else {
+        }
+        else
+        {
             return false;
         }
     }

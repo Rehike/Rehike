@@ -34,7 +34,8 @@ return new class extends AjaxController {
         $this->videoId = $request->params->video_id ?? null;
         $this->listId = $request->params->list ?? null;
 
-        switch ($action) {
+        switch ($action)
+        {
             case "get_share_box":
                 self::getShareBox($yt, $request);
                 break;
@@ -66,12 +67,15 @@ return new class extends AjaxController {
 
                 $priInfo = $responses["priInfo"];
                 $listInfo = $responses["listInfo"];
-                if (is_null($priInfo)) {
+                if (is_null($priInfo))
+                {
                     $yt->page = ShareBoxModel::playlistBake(
                         listModel: PlaylistModel::bake($listInfo),
                         listId: $this->listId
                     );
-                } else {
+                }
+                else
+                {
                     $yt->page = ShareBoxModel::bake(
                         videoId: $this->videoId,
                         title: ParsingUtils::getText($priInfo->title),
@@ -154,13 +158,15 @@ return new class extends AjaxController {
 
             $priInfo = null;
             $secInfo = null;
-            foreach ($results as $infoItem) {
+            foreach ($results as $infoItem)
+            {
                 $priInfo = $infoItem->videoPrimaryInfoRenderer ?? $priInfo;
                 $secInfo = $infoItem->videoSecondaryInfoRenderer ?? $secInfo;
             }
 
 
-            if (!isset($priInfo) || !isset($secInfo)) {
+            if (!isset($priInfo) || !isset($secInfo))
+            {
                 echo $response;
                 self::error();
             }

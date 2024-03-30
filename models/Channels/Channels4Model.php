@@ -43,9 +43,21 @@ class Channels4Model
 
         if ($header = @$data->header->c4TabbedHeaderRenderer)
         {
-            $response += ["header" => new Channels4\MHeader($header, self::getBaseUrl())];
+            $response += ["header" => new Channels4\MHeader(
+                $header, 
+                self::getBaseUrl(),
+                isOld: true
+            )];
         }
-        elseif ($header = @$data->header->carouselHeaderRenderer)
+        else if ($header = @$data->header->pageHeaderRenderer)
+        {
+            $response += ["header" => new Channels4\MHeader(
+                $header, 
+                self::getBaseUrl(),
+                isOld: false
+            )];
+        }
+        else if ($header = @$data->header->carouselHeaderRenderer)
         {
             $response += ["header" => new Channels4\MCarouselHeader($header, self::getBaseUrl())];
         }
@@ -265,9 +277,10 @@ class Channels4Model
                 self::$currentTabContents = &$tab->tabRenderer->content;
             }
         }
-        elseif (@$tab->expandableTabRenderer)
+        else if (@$tab->expandableTabRenderer)
         {
-            if (@$tab->expandableTabRenderer->selected) {
+            if (@$tab->expandableTabRenderer->selected)
+            {
                 self::$currentTabContents = &$tab->expandableTabRenderer->content;
             }
         }
@@ -458,7 +471,8 @@ class Channels4Model
         if (0 < count($channelsShelves))
         {
             $shelves = [];
-            foreach ($channelsShelves as $shelf) {
+            foreach ($channelsShelves as $shelf)
+            {
                 $shelves[] = (object) [
                     "relatedChannelsRenderer" =>
                     MRelatedChannels::fromShelf($shelf)
@@ -491,7 +505,8 @@ class Channels4Model
         return self::$baseUrl;
     }
 
-    public static function getVideosSort() {
+    public static function getVideosSort()
+    {
         return self::$videosSort;
     }
 }

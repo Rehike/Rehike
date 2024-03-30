@@ -4,7 +4,8 @@ namespace Rehike\Model\Common;
 use Rehike\Model\Common\MButton;
 use Rehike\Util\ParsingUtils;
 
-class MAlert {
+class MAlert
+{
     const TypeInformation = "info";
     const TypeWarning = "warn";
     const TypeError = "error";
@@ -33,7 +34,8 @@ class MAlert {
      */
     public $buttons = [];
 
-    public function __construct($data) {
+    public function __construct($data)
+    {
         $this->type = $data["type"];
         $this->text = $data["text"] ?? null;
         $this->hasCloseButton = $data["hasCloseButton"] ?? true;
@@ -46,7 +48,8 @@ class MAlert {
      * @param  array  $flags  Special flags.
      * @return MAlert
      */
-    public static function fromData(object $data, array $flags = []): self {
+    public static function fromData(object $data, array $flags = []): self
+    {
         return new self([
             "type" => MAlert::parseInnerTubeType($data->type),
             "hasCloseButton" => (isset($data->dismissButton) || @$flags["forceCloseButton"]),
@@ -61,8 +64,10 @@ class MAlert {
      * 
      * @return string
      */
-    public static function parseInnerTubeType($type) {
-        switch ($type) {
+    public static function parseInnerTubeType($type)
+    {
+        switch ($type)
+        {
             case "INFO":
                 return self::TypeInformation;
                 break;

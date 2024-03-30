@@ -1,7 +1,8 @@
 <?php
 namespace Rehike\Model\Common\Thumb;
 
-class MThumbSimple {
+class MThumbSimple
+{
     public $type = "simple";
 
     /** @var string */
@@ -19,7 +20,8 @@ class MThumbSimple {
     /** @var bool */
     public $delayload = false;
 
-    public function __construct($data) {
+    public function __construct($data)
+    {
         $this->image = $data["image"] ?? "";
         $this->width = $data["width"] ?? 0;
         $this->height = $data["height"] ?? 0;

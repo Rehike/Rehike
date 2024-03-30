@@ -3,7 +3,8 @@ namespace Rehike\Model\Masthead\Notifications;
 
 use Rehike\i18n\i18n;
 
-class MNotificationClickcard {
+class MNotificationClickcard
+{
     public $template = "masthead_notifications";
     public $id = "yt-masthead-notifications";
     public $cardAction = "yt.www.notifications.inbox.handleNotificationsClick";
@@ -14,7 +15,8 @@ class MNotificationClickcard {
     public $cardId = "yt-masthead-notifications-clickcard";
     public $content;
 
-    public function __construct() {
+    public function __construct()
+    {
         $i18n = i18n::getNamespace("masthead");
 
         $this->content = (object) [];

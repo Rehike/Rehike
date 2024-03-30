@@ -2,5 +2,6 @@
 
 namespace Rehike\ConfigManager;
 
-// Prereq coffeeexception
-class LoadConfigException extends \YukisCoffee\CoffeeException {};
+use Rehike\Exception\AbstractException;
+
+class LoadConfigException extends AbstractException {};

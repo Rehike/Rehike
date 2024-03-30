@@ -71,7 +71,7 @@ class channel extends NirvanaController
         async(function() use (&$yt, $request) {
             $this->useJsModule("www/channels");
 
-            // BUG (kirasicecreamm): ChannelUtils::getUcid is hardcoded
+            // TODO (kirasicecreamm): ChannelUtils::getUcid is hardcoded
             // to look at the path property of the input object.
             // This is bad design.
             if ($request->path[0] != "channel")

@@ -124,7 +124,7 @@ class FileSystem
     }
 
     //
-    // Alias operations
+    // Wrapper operations for standard library functions
     //
 
     public static function getFileContents(
@@ -135,31 +135,11 @@ class FileSystem
             ?int $length = null
     ): string
     {
-        /*
-         * PATCH (kirasicecreamm): The file_get_contents API vaguely differs between
-         * PHP versions.
-         * 
-         * This has been a source of odd crashing on what we could only just
-         * trace to PHP 7.x, which we intend to continue supporting for the near
-         * future.
-         * 
-         * TODO (kirasicecreamm): Revamp? We don't support PHP 7 any longer.
-         */
-        $fgcArgs = [
+        $status = @\file_get_contents(
             $filename,
             $useIncludePath,
             $context
-        ];
-
-        if (\PHP_VERSION_ID < 80000)
-        {
-            $offset = 0;
-        }
-
-        $fgcArgs[] = $offset;
-        if (null != $length) $fgcArgs[] = $length;
-
-        $status = @\file_get_contents(...$fgcArgs);
+        );
 
         if (false == $status)
         {

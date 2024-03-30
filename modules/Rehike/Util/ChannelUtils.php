@@ -108,7 +108,7 @@ class ChannelUtils
                                     $ownerData->views = $b->total;
                                 }
                             }
-                            elseif ($a = @$card->latestActivityCardData->lifetimeSubsData->metricColumns[0]->counts->values[0])
+                            else if ($a = @$card->latestActivityCardData->lifetimeSubsData->metricColumns[0]->counts->values[0])
                             {
                                 $ownerData->subscribers = $a;
                             }

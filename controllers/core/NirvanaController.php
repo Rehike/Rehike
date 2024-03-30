@@ -39,7 +39,8 @@ abstract class NirvanaController extends HitchhikerController
         $yt->appbar = new Appbar();
         $yt->page = (object)[];
 
-        if ($this->useTemplate) {
+        if ($this->useTemplate)
+        {
             $yt->masthead = new Masthead(true);
             $yt->footer = new Footer();
         }
