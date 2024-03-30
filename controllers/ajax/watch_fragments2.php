@@ -82,10 +82,19 @@ class AjaxWatchFragments2Controller extends AjaxController
              * Comments Threads Rewrite
              * TODO: further rewrite may be necessary
              */
-            $_oct = $ytdata->onResponseReceivedEndpoints[1]->reloadContinuationItemsCommand; // original comment threads
+            //$_oct = $ytdata->onResponseReceivedEndpoints[1]->reloadContinuationItemsCommand; // original comment threads
             // CommentThread::bakeComments($_oct->continuationItems)->then(function ($value) use ($yt) {
             //     $yt->page->commentsRenderer->comments = $value;
             // });
+			
+			// TODO(syndiate): Header has not been checked with this approach yet. I really don't feel like it right now (this mindset is why Rehike is dying)
+			$receivedEndpoints = $ytdata->onResponseReceivedEndpoints;
+			foreach($receivedEndpoints as $_oct) {
+				if (isset($_oct->reloadContinuationItemsCommand)) {
+					$_oct = $_oct->reloadContinuationItemsCommand;
+					break;
+				}
+			}
 
             $commentsBakery = new CommentThread($ytdata);
             $commentsBakery->bakeComments($_oct->continuationItems)->then(function ($value) use ($yt) {
