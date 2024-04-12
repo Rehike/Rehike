@@ -1,6 +1,10 @@
 <?php
 namespace Rehike\Model\Guide;
 
+// Async imports:
+use function Rehike\Async\async;
+use Rehike\Async\Promise;
+
 /**
  * Implements the guide model.
  * 
@@ -23,14 +27,16 @@ class MGuide
      * Process an InnerTube response and create a standard
      * guide response from it.
      * 
-     * @return void
+     * @return Promise<void>
      */
-    public static function fromData($data)
+    public static function fromData($data): Promise/*<void>*/
     {
-        $me = new self();
+        return async(function() use ($data) {
+            $me = new self();
 
-        $me->items = Converter::fromData($data);
+            $me->items = yield Converter::fromData($data);
 
-        return $me;
+            return $me;
+        });
     }
 }

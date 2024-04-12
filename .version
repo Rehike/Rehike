@@ -1,10 +1,10 @@
 {
-	"previousHash": "c3ed792dbd6dec9a87fc6b9b42dc00a4b2653c9c",
-	"currentRevisionId": 1407,
-	"subject": "Memory holed",
-	"body": "Memory holed",
+	"previousHash": "5f211c74b871a5bc450e1fee32da1930b1ee3b62",
+	"currentRevisionId": 1408,
+	"subject": "Fix guide playlists (#559)",
+	"body": "Fix guide playlists (#559)",
 	"branch": "master",
-	"committerName": "Taniko Yamamoto",
-	"committerEmail": "kirasicecreamm@gmail.com",
-	"time": 1712215146
+	"committerName": "Isabella",
+	"committerEmail": "kawapure@gmail.com",
+	"time": 1712951435
 }
