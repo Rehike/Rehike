@@ -133,6 +133,9 @@ final class Bootloader
         Tasks::setupI18n();
         Tasks::setupControllerV2();
         Tasks::setupPlayer();
+
+        // The visitor data setup requires the player to be initialized, so it must
+        // go last.
         Tasks::setupVisitorData();
     }
 }

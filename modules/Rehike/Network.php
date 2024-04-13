@@ -426,7 +426,7 @@ class Network
     /**
      * Convert the PHP cookie array to a HTTP header string.
      */
-    protected static function getCurrentRequestCookie(): string
+    public static function getCurrentRequestCookie(): string
     {
         if (empty($_COOKIE)) return "";
         

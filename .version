@@ -1,10 +1,10 @@
 {
-	"previousHash": "eeffb1f92e17707c4c9bd3b70e18475d42a7ad0c",
-	"currentRevisionId": 1414,
-	"subject": "Feed nudge renderer for no-watched-videos sessions",
-	"body": "Feed nudge renderer for no-watched-videos sessions",
+	"previousHash": "ae2b4f2ae626d5946b1127b92b1b27661e9baceb",
+	"currentRevisionId": 1415,
+	"subject": "Populate new visitor info with recommendations",
+	"body": "Populate new visitor info with recommendations",
 	"branch": "master",
 	"committerName": "Isabella",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1713034713
+	"time": 1713041995
 }

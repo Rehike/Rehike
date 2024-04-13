@@ -7,7 +7,8 @@ use Rehike\{
     ControllerV2\Core as ControllerV2,
     Debugger\Debugger,
     Signin\AuthManager,
-    ConfigManager\Config
+    ConfigManager\Config,
+    Player\PlayerCore
 };
 
 /**
@@ -38,6 +39,7 @@ final class YtStateManager
         TemplateManager::registerGlobalState($yt);
         ControllerV2::registerStateVariable($yt);
         Debugger::init($yt);
+        $yt->playerConfig = PlayerCore::getInfo();
 
         /*
          * TODO: This should be removed when V1 is deprecated.
