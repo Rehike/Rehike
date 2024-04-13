@@ -7,7 +7,7 @@ viewCountIsolator: "/[^0-9]/"
 # This is used to isolate this case and replace the string with 0.
 # You can easily access this string here:
 # https://www.youtube.com/watch?v=UKY3scPIMd8&pp=4AQB&ab_channel=YouTubeViewers
-likeTextDisabled: "To mi się podoba"
+likeTextDisabled: "Podoba mi się"
 
 # A like button accessibility substring used specifically in the case of
 # 0 likes in some languages. This is used to replace it with "0".
@@ -17,7 +17,7 @@ countZero: "Brak"
 # abbreviated by YouTube, you can't just replace all numerical data, or you
 # would display wrong counts. Instead, you must replace all text that can occur
 # in the string except for the units.
-subscriberCountIsolator: "/( subskrybentów)|( subskrybent)/"
+subscriberCountIsolator: "/( subskrybentów)|( subskrybent)/"
 
 # Used for detecting if the date string in watch descriptions should be
 # modified. If none of these words are found in the string, then it is assumed

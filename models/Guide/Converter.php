@@ -7,6 +7,10 @@ use Rehike\ConfigManager\Config;
 use Rehike\Model\Common\MButton;
 use Rehike\Model\Traits\NavigationEndpoint;
 
+// Async imports:
+use function Rehike\Async\async;
+use Rehike\Async\Promise;
+
 /**
  * A god class for converting InnerTube guide responses to
  * the Rehike format.
@@ -32,58 +36,60 @@ class Converter
      * It takes in a raw (but JSON decoded) YTI guide response and
      * processes it into a Rehike format (which is mostly just reorganised
      * to change the layout a little bit).
-     * 
+     *
      * @param object $data of the raw InnerTube response
-     * @return object[] array of the modified items.
+     * @return Promise<object[]> array of the modified items.
      */
-    public static function fromData($data)
+    public static function fromData($data): Promise/*<object>*/
     {
-        // Log the sign in state from the Signin service
-        // so that I can use it later.
-        $signedIn = Signin::isSignedIn();
+        return async(function() use ($data) {
+            // Log the sign in state from the Signin service
+            // so that I can use it later.
+            $signedIn = Signin::isSignedIn();
 
-        // Guide update (October 2023) makes obtaining the UCID a little bit
-        // more difficult.
-        $canonicalLibrary = self::getInnertubeLibrarySection($data);
-        if (null != $canonicalLibrary)
-        {
-            self::initUcid($canonicalLibrary);
-        }
-
-        $response = [];
-
-        // Push the main section to the response
-        $response[] = self::getMainSection($data, $signedIn);
-
-        // If signed in,
-        //    push the library and subscriptions sections,
-        // else
-        //    push only the best of YouTube section
-        if ($signedIn)
-        {
-            $response[] = self::getLibrarySection($data);
-            $response[] = self::getSubscriptionSection($data);
-        }
-        else
-        {
-            $response[] = self::getBestOfYouTubeSection();
-        }
-        
-        // Push the guide management items (the "end section")
-        $response[] = self::getEndSection($signedIn);
-
-        // Add sign in promo if not logged in
-        if (!$signedIn)
-        {
-            foreach ($data->items as $item)
-            foreach ($item as $key => $content)
-            if ("guideSigninPromoRenderer" == $key)
+            // Guide update (October 2023) makes obtaining the UCID a little bit
+            // more difficult.
+            $canonicalLibrary = self::getInnertubeLibrarySection($data);
+            if (null != $canonicalLibrary)
             {
-                $response[] = $item;
+                self::initUcid($canonicalLibrary);
             }
-        }
 
-        return $response;
+            $response = [];
+
+            // Push the main section to the response
+            $response[] = self::getMainSection($data, $signedIn);
+
+            // If signed in,
+            //    push the library and subscriptions sections,
+            // else
+            //    push only the best of YouTube section
+            if ($signedIn)
+            {
+                $response[] = yield self::getLibrarySection($data);
+                $response[] = self::getSubscriptionSection($data);
+            }
+            else
+            {
+                $response[] = self::getBestOfYouTubeSection();
+            }
+
+            // Push the guide management items (the "end section")
+            $response[] = self::getEndSection($signedIn);
+
+            // Add sign in promo if not logged in
+            if (!$signedIn)
+            {
+                foreach ($data->items as $item)
+                foreach ($item as $key => $content)
+                if ("guideSigninPromoRenderer" == $key)
+                {
+                    $response[] = $item;
+                }
+            }
+
+            return $response;
+        });
     }
 
     /**
@@ -128,7 +134,7 @@ class Converter
         {
             $subscriptionsItem->guideEntryRenderer->icon->iconType = "MY_SUBSCRIPTIONS";
         }
-        
+
         //
         // Push the main section items to the response array
         //
@@ -290,134 +296,177 @@ class Converter
      *    - Watch later
      *    - Liked videos
      *    - <All user playlists>
-     * 
+     *
      * It only appears if logged in.
-     * 
+     *
      * @param object $data
-     * @return object {guideSectionRenderer}
+     * @return Promise<object> {guideSectionRenderer}
      */
-    public static function getLibrarySection($data)
+    public static function getLibrarySection($data): Promise/*<object>*/
     {
-        // Custom strings are only used this time for the expander
-        // text.
-        $strings = i18n::getNamespace("guide");
+        return async(function() use ($data) {
+            // Custom strings are only used this time for the expander
+            // text.
+            $strings = i18n::getNamespace("guide");
 
-        $ucid = self::getUcid();
+            $ucid = self::getUcid();
 
-        $librarySection = self::getInnertubeLibrarySection($data);
+            $librarySection = self::getInnertubeLibrarySection($data);
 
-        if ($librarySection == null)
-            return null;
+            if ($librarySection == null)
+                return null;
 
-        // Store the title for later use (it needs to have a navigation endpoint later on)
-        $title = $strings->get("libraryTitle");
+            // Store the title for later use (it needs to have a navigation endpoint later on)
+            $title = $strings->get("libraryTitle");
 
-        $response = [];
+            $response = [];
 
-        /**
-         * A support types map.
-         * 
-         * The left side is checked against, and then replaced with the
-         * content of the right side.
-         * 
-         * This is only currently needed for the history icon type, but in case
-         * InnerTube changes the icon types later I just layed them all out
-         * here.
-         * 
-         * @var string[]
-         */
-        $supportedTypes = [
-            "WATCH_HISTORY"  => "HISTORY",
-            "WATCH_LATER"    => "WATCH_LATER",
-            "LIKES_PLAYLIST" => "LIKES_PLAYLIST",
-            "PLAYLISTS"      => "PLAYLISTS"
-        ];
-
-        // Count all items and add them if they're a supported type
-        // (also correct the icon types)
-        // Basically just make use of everything I did above!
-        foreach ($librarySection->sectionItems as $item)
-        {
-            // Skip non guide entry renderers
-            if (!isset($item->guideEntryRenderer)) continue;
-
-            $iconType = @$item->guideEntryRenderer->icon->iconType;
-
-            if (isset($supportedTypes[$iconType]))
-            {
-                $item->guideEntryRenderer->icon->iconType = $supportedTypes[$iconType];
-                $response[] = $item;
-            }
-        }
-        
-        // Hack: move the official collapsible (too small for my taste)
-        // into the response body (very large) so that we can shrink it
-        // down to 4 (perfect)
-        if (isset($librarySection->sectionItems[count($librarySection->sectionItems) - 1]->guideCollapsibleEntryRenderer))
-        {
-            $c = $librarySection->sectionItems[count($librarySection->sectionItems) - 1]->guideCollapsibleEntryRenderer;
-
-            $response = array_merge($response, $c->expandableItems);
-        }
-
-        // Move overflow items to the show more container
-        // if needed
-        if (count($response) > 4)
-        {
-            $collapsible = [];
-
-            for ($i = 4; $i < count($response); $i++)
-            {
-                $collapsible[] = $response[$i];
-            }
-
-            // Remove the original items
-            array_splice($response, 4);
-
-            // Synthesise a little guide collapsible entry renderer
-            // for containing the excess items. This differs a little
-            // bit from the InnerTube specification.
-            $response[] = (object)[
-                "guideCollapsibleEntryRenderer" => (object)[
-                    "expandableItems" => $collapsible,
-                    "expanderItem" => (object)[
-                        "text" => $strings->get("showMore")
-                    ],
-                    "collapserItem" => (object)[
-                        "text" => $strings->get("showFewer")
-                    ]
-                ]
+            /**
+             * A support types map.
+             *
+             * The left side is checked against, and then replaced with the
+             * content of the right side.
+             * 
+             * This is only currently needed for the history icon type, but in case
+             * InnerTube changes the icon types later I just layed them all out
+             * here.
+             *
+             * @var string[]
+             */
+            $supportedTypes = [
+                "WATCH_HISTORY"  => "HISTORY",
+                "WATCH_LATER"    => "WATCH_LATER",
+                "LIKES_PLAYLIST" => "LIKES_PLAYLIST",
             ];
-        }
 
-        // Finally, synthesise the section renderer.
-        // The formatted title is an ugly bit of code to make the title
-        // also an anchor. This actually is according to the InnerTube spec.
-        return (object)[
-            "guideSectionRenderer" => (object)[
-                "formattedTitle" => (object)[
-                    "runs" => [
-                        (object)[
-                            "text" => $title,
+            // Count all items and add them if they're a supported type
+            // (also correct the icon types)
+            // Basically just make use of everything I did above!
+            foreach ($librarySection->sectionItems as $item)
+            {
+                // Skip non guide entry renderers
+                if (!isset($item->guideEntryRenderer)) continue;
+
+                $iconType = @$item->guideEntryRenderer->icon->iconType;
+
+                if (isset($supportedTypes[$iconType]))
+                {
+                    $item->guideEntryRenderer->icon->iconType = $supportedTypes[$iconType];
+                    $response[] = $item;
+                }
+            }
+
+            // Playlist items must be manually added now that InnerTube no-longer supports them.
+            $playlistManager = new GuidePlaylistsManager();
+
+            foreach (yield $playlistManager->getPlaylists() as $playlistItem)
+            {
+                // GuidePlaylistsManager doesn't filter out the playlist types that we already
+                // have (WL and LL), so we must filter them out manually.
+                if (!in_array($playlistItem->playlistId, ["WL", "LL"]))
+                {
+                    // Convert to the InnerTube format:
+                    $obj = (object)[
+                        "guideEntryRenderer" => (object)[
+                            "icon" => [
+                                "iconType" => "PLAYLISTS"
+                            ],
+                            "formattedTitle" => (object)[
+                                "simpleText" => $playlistItem->title
+                            ],
                             "navigationEndpoint" => (object)[
+                                "browseEndpoint" => (object)[
+                                    "browseId" => "VL" . $playlistItem->playlistId
+                                ],
                                 "commandMetadata" => (object)[
                                     "webCommandMetadata" => (object)[
-                                        "url" => "/channel/$ucid/playlists"
+                                        "url" => "/playlist?list=" . $playlistItem->playlistId
                                     ]
                                 ]
                             ]
                         ]
+                    ];
+
+                    if (isset($playlistItem->authorName))
+                    {
+                        $obj->guideEntryRenderer->subtitle = (object)[
+                            "simpleText" => $playlistItem->authorName
+                        ];
+                    }
+
+                    $response[] = $obj;
+                }
+            }
+
+            // Hack: move the official collapsible (too small for my taste)
+            // into the response body (very large) so that we can shrink it
+            // down to 4 (perfect)
+            if (isset($librarySection->sectionItems[count($librarySection->sectionItems) - 1]->guideCollapsibleEntryRenderer))
+            {
+                $c = $librarySection->sectionItems[count($librarySection->sectionItems) - 1]->guideCollapsibleEntryRenderer;
+
+                $response = array_merge($response, $c->expandableItems);
+            }
+
+            // Move overflow items to the show more container
+            // if needed
+            if (count($response) > 4)
+            {
+                $collapsible = [];
+
+                for ($i = 4; $i < count($response); $i++)
+                {
+                    $collapsible[] = $response[$i];
+                }
+
+                // Remove the original items
+                array_splice($response, 4);
+
+                // Synthesise a little guide collapsible entry renderer
+                // for containing the excess items. This differs a little
+                // bit from the InnerTube specification.
+                $response[] = (object)[
+                    "guideCollapsibleEntryRenderer" => (object)[
+                        "expandableItems" => $collapsible,
+                        "expanderItem" => (object)[
+                            "text" => $strings->get("showMore")
+                        ],
+                        "collapserItem" => (object)[
+                            "text" => $strings->get("showFewer")
+                        ]
                     ]
-                ],
-                "items" => $response
-            ]
-        ];
+                ];
+            }
+
+            // Finally, synthesise the section renderer.
+            // The formatted title is an ugly bit of code to make the title
+            // also an anchor. This actually is according to the InnerTube spec.
+            return (object)[
+                "guideSectionRenderer" => (object)[
+                    "formattedTitle" => (object)[
+                        "runs" => [
+                            (object)[
+                                "text" => $title,
+                                "navigationEndpoint" => (object)[
+                                    "commandMetadata" => (object)[
+                                        "webCommandMetadata" => (object)[
+                                            "url" => "/channel/$ucid/playlists"
+                                        ]
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ],
+                    "items" => $response
+                ]
+            ];
+        });
     }
 
     /**
      * This function is responsible for getting the subscriptions section
      * of the guide data.
-     * 
+     *
      * This is one of the most complicated parts of the guide, since it
      * can refresh dynamically with user interactions across the site
      * (i.e. subscribing to a channel).
