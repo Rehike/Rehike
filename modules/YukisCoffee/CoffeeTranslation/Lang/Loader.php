@@ -35,7 +35,8 @@ final class Loader
     public static function tryOpen(
             string $langId,
             string $namespace,
-            ?LanguageRecord &$out
+            ?LanguageRecord &$out,
+            ?Language $languageObj = null,
     ): bool
     {
         if (self::tryLoadFromCache($langId, $namespace, $result))
@@ -44,9 +45,12 @@ final class Loader
             return true;
         }
 
-        $language = self::openLanguage($langId);
+        if (null == $languageObj)
+            $language = self::openLanguage($langId);
+        else
+            $language = $languageObj;
 
-        if (self::tryGetLanguageRecord($langId, $namespace, $result))
+        if (self::tryLoadNewLanguageRecord($langId, $namespace, $result))
         {
             $language->namespaces[$namespace] = $result;
 
@@ -112,7 +116,7 @@ final class Loader
         $lang = new Language;
         $culture = CoffeeTranslation::getConfigApi()->getCultureFileName();
 
-        if (self::tryGetLanguageRecord($langId, $culture, $result))
+        if (self::tryOpen($langId, $culture, $result, languageObj: $lang))
         {
             $lang->cultureInfo = self::loadCulture($result);
         }
@@ -121,13 +125,15 @@ final class Loader
             throw new \Exception("fuck $culture");
         }
 
+        self::$languages[$langId] = $lang;
+
         return $lang;
     }
 
     /**
-     * Try to get a language record.
+     * Try to load a new language record into memory.
      */
-    private static function tryGetLanguageRecord(
+    private static function tryLoadNewLanguageRecord(
             string $langId,
             string $uri,
             ?LanguageRecord &$out
