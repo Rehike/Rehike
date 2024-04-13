@@ -13,9 +13,9 @@ We use it to accurately restore the old YouTube layout and feel, which is known 
 
 ## Want an easy-to-install extension instead?
 
-Please check out our friend, Vorapis 2013 / V3. This is a browser extension that restores the old YouTube layout in a very similar manner. Link to the Open Beta Test server on Discord below, where you can download it and receive support:
+Please check out our friend, Vorapis 2013 / V3. This is a browser extension that restores the old YouTube layout in a very similar manner. You can download V3 at https://vorapis.pages.dev.
 
-<a href="https://discord.gg/VDcKeJjgJY" tooltip="V3 Discord server">
+<a href="//vorapis.pages.dev" tooltip="Visit the V3 website">
     <img src="branding/v3_logo.png" width="120">
 </a>
 

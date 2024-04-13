@@ -10,7 +10,7 @@ use Rehike\{
     SecurityChecker,
     Spf\Spf
 };
-
+use Rehike\Async\Concurrency;
 use Rehike\Model\{
     Guide\MGuide as Guide,
     Footer\MFooter as Footer,
@@ -176,12 +176,15 @@ abstract class HitchhikerController
     {
         return new Promise(function ($resolve) {
             Network::innertubeRequest("guide")->then(function ($response) 
-                    use ($resolve) 
+                    use ($resolve)
             {
-                $data = $response->getJson();
-                $guide = Guide::fromData($data);
-                
-                $resolve($guide);
+                // Need Concurrency::async to use yield on Guide::fromData()
+                return Concurrency::async(function() use ($response, $resolve) {
+                    $data = $response->getJson();
+                    $guide = yield Guide::fromData($data);
+
+                    $resolve($guide);
+                });
             });
         });
     }
