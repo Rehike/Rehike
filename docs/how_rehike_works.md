@@ -16,4 +16,4 @@ No, seriously, that was one of the biggest considerations that played into us ma
 
 Apart from that, it would mean we would need to hook network APIs (mostly XHR) and the codebase overall would be way more complicated in order to replicate the experience.
 
-It just isn't something we want to do. There are [Cosmic Cat](//github.com/cosmic-cat-yt/Cosmic-Cat) and V3 to fill this purpose.
+It just isn't something we want to do. There is [V3](//vorapis.pages.dev) to fill this purpose.
