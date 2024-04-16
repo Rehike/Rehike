@@ -1,10 +1,10 @@
 {
-	"previousHash": "95f0107121932aff0805ab24fdbe60ec0802bad2",
-	"currentRevisionId": 1416,
-	"subject": "Add image sources to the repo",
-	"body": "Add image sources to the repo",
+	"previousHash": "f367e89f36741df17364e4aa08fdf712bdc51ffc",
+	"currentRevisionId": 1417,
+	"subject": "Update bug_report.yml for Rehike 0.8.1",
+	"body": "Update bug_report.yml for Rehike 0.8.1",
 	"branch": "master",
-	"committerName": "Taniko Yamamoto",
-	"committerEmail": "kirasicecreamm@gmail.com",
-	"time": 1713307630
+	"committerName": "Isabella",
+	"committerEmail": "kawapure@gmail.com",
+	"time": 1713308051
 }
