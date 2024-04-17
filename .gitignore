@@ -3,3 +3,5 @@ config.json
 .vscode/**
 .idea/**
 logs/**
+src/build_tools/node_modules
+src/build_tools/.ignore-init-check

@@ -10,6 +10,7 @@ use Rehike\{
     YtApp,
     Network,
     Async\Concurrency,
+    Async\Promise,
     ControllerV2\Core as ControllerV2,
     Player\PlayerCore,
     TemplateUtilsDelegate\RehikeUtilsDelegate,
@@ -18,7 +19,8 @@ use Rehike\{
     Util\Nameserver\Nameserver,
     Util\Base64Url,
     i18n\BootServices as i18nBoot,
-    i18n\i18n
+    i18n\i18n,
+    InnertubeContext
 };
 
 /**
@@ -119,8 +121,130 @@ final class Tasks
             $visitor = explode("(", $visitor)[0];
 
             setcookie("VISITOR_INFO1_LIVE", $visitor);
+
+            // Set the visitor data in the context manager now, since we need it configured in
+            // order to populate it in the below function.
+            ContextManager::setVisitorData($visitor);
+
+            // Build the recommendations list. This operation is blocking so it can't conflict
+            // with any homepage requests.
+            Concurrency::awaitSync(self::populateVisitorDataRecommendations($visitor));
+
+            // Return; we don't need to do any other work.
+            return;
         }
 
         ContextManager::setVisitorData($visitor);
+    }
+
+    /**
+     * Populate the recommends for a given visitor data string.
+     *
+     * Due to YouTube changes in early 2024, neither signed-out sessions in which no videos
+     * have been watched, nor users with watch history disabled who have no videos in their
+     * history, get default video recommendations on the homepage.
+     *
+     * This is a fix for the case of signed-out sessions, where we can log views.
+     *
+     * Unfortunately, it seems to take about 10 seconds for such a request to register, so
+     * it's really slow to do.
+     */
+    private static function populateVisitorDataRecommendations(string $visitor): Promise/*<void>*/
+    {
+        return Concurrency::async(function() use ($visitor) {
+            $defaultVideoId = "jNQXAC9IVRw";
+            $yt = YtApp::getInstance();
+
+            $playerResponse = yield Network::innertubeRequest(
+                "player",
+                [
+                    "playbackContext" => [
+                        'contentPlaybackContext' => (object) [
+                            'autoCaptionsDefaultOn' => false,
+                            'autonavState' => 'STATE_OFF',
+                            'html5Preference' => 'HTML5_PREF_WANTS',
+                            'lactMilliseconds' => '13407',
+                            'mdxContext' => (object) [],
+                            'playerHeightPixels' => 1080,
+                            'playerWidthPixels' => 1920,
+                            'signatureTimestamp' => $yt->playerConfig->signatureTimestamp
+                        ]
+                    ],
+                    "startTimeSecs" => $startTime ?? 0,
+                    "videoId" => $defaultVideoId
+                ]
+            );
+            $player = $playerResponse->getJson();
+
+            // Get the template information for the default video. It's enough to make a request
+            // to add watch history.
+            $playbackStatsUrl = $player->playbackTracking->videostatsPlaybackUrl->baseUrl;
+            $pbstatsParams = self::parsePlayerStatsParams($playbackStatsUrl);
+
+            // Properties from the playback stats parameters.
+            $ns = $pbstatsParams?->ns ?? "";
+            $docid = $pbstatsParams?->docid ?? "";
+            $el = $pbstatsParams?->el ?? "";
+            $vm = $pbstatsParams?->vm ?? "";
+            $cpn = $pbstatsParams?->cpn ?? "";
+            $ei = $pbstatsParams?->ei ?? "";
+            $len = $pbstatsParams?->len ?? "";
+            $of = $pbstatsParams?->of ?? "";
+            $fexp = $pbstatsParams?->fexp ?? "";
+
+            $url = "https://www.youtube.com/api/stats/playback?" . implode("&", [
+                "ns=" . $ns,
+                "el=" . $el,
+                "cpn=" . $cpn,
+                "docid=" . $docid,
+                "ver=2",
+                "referrer=https://www.youtube.com/",
+                "ei=" . $ei,
+                "of=" . $of,
+                "euri=", // This is okay to be empty
+                "lact=622",
+                "mos=0",
+                "vm=" . $vm,
+                "len=" . $len,
+                "fexp=" . $fexp,
+                "feature=g-high-crv",
+            ]);
+
+            $statsRequest = yield Network::urlRequestFirstParty($url, [
+                "method" => "GET",
+                "redirect" => "follow",
+                "headers" => [
+                    "X-Goog-Visitor-Id" => InnertubeContext::genVisitorData($visitor),
+                    "Cookie" => Network::getCurrentRequestCookie() . "VISITOR_INFO1_LIVE=" . $visitor . "; ",
+                    "User-Agent" => $_SERVER["HTTP_USER_AGENT"]
+                        ?? "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:107.0) Gecko/20100101 Firefox/107.0"
+                ]
+            ] + Network::getDefaultYoutubeOpts());
+        });
+    }
+
+    /**
+     * Parses the player stats parameters.
+     *
+     * This is just used as a helper by the above method.
+     */
+    private static function parsePlayerStatsParams(string $baseUrl): object
+    {
+        $out = (object)[];
+
+        // This is evil code to split up URL-encoded parameters like
+        // ?arg1=val1&arg2=val2
+        $params = explode("&", implode("", array_slice(explode("?", $baseUrl), 1)));
+
+        foreach ($params as $param)
+        {
+            $bits = explode("=", $param);
+            $key = $bits[0];
+            $value = $bits[1];
+
+            $out->{$key} = $value;
+        }
+
+        return $out;
     }
 }

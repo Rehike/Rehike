@@ -1,0 +1,52 @@
+syntax = "proto3";
+
+package com.youtube.innertube.navigation;
+
+/**
+ * Implements some of the definitions for InnerTube navigation endpoints.
+ * 
+ * The fun part is!!! Desktop YouTube doesn't really use protobuf, it uses
+ * JSON. So I didn't have to get creative with the names.
+ *
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
+ * @author The Rehike Maintainers
+ */
+message NavigationEndpoint {
+   /*
+    * Define submessages
+    *
+    * I have no idea about the accuracy of these in reality.
+    * The most immediately useful definitions are the browse and
+    * URL endpoints.
+    */
+   message BrowseEndpoint {
+      string browse_id = 2;
+   }
+
+   message WatchEndpoint {
+      string video_id = 1;
+   }
+
+   message UrlEndpoint {
+      string url = 1;
+   }
+
+   message SearchEndpoint {
+      string query = 1;
+   }
+
+   /*
+    * Define the values assigned to submessage types.
+    *
+    * These IDs are all pretty insane and bloaty. Makes me wonder if
+    * this is meant to be used as part of any particular, more expansive
+    * subsystem rather than just navigation endpoints.
+    *
+    * YouTube is, of course, a huge project and I bet that some parts of the
+    * backend code have grown to be a mess.
+    */
+   optional BrowseEndpoint browse_endpoint = 48687626;
+   optional WatchEndpoint watch_endpoint = 48687757;
+   optional UrlEndpoint url_endpoint = 49679253;
+   optional SearchEndpoint search_endpoint = 48687709;
+}

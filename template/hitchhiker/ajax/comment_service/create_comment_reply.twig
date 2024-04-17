@@ -1,4 +1,4 @@
-{% import "common/comments/main.twig" as dv2 %}
+{% import "common/comments/main.twig" as comments %}
 {
-    "html_content": {{ dv2.comment(yt.page, true)|json_encode|raw }}
+    "html_content": {{ comments.comment(yt.page, true)|json_encode|raw }}
 }
