@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+/**
+  * Provides a wrapper so that Rehike's browse_ajax implementation knows
+  * whether to return videos in grid or list flow, for the channel video
+  * tab.
+  *
+  * @author aubymori
+  */
+package com.youtube.innertube.helpers;
+
+message VideosContinuationWrapper
+{
+    string continuation = 1;
+    bool list = 2;
+    bool wrap_in_grid = 3;
+}

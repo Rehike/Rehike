@@ -1,0 +1,59 @@
+/**
+ * Reconstructed InnerTube message for browse request parameters.
+ * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
+ * @author The Rehike Maintainers
+ */
+
+syntax = "proto3";
+
+package com.youtube.innertube.request;
+
+message BrowseRequestParams {
+  // completely unknown fields (do not use)
+  reserved 13, 23;
+
+  // ? unknown field used for channel
+  // search requests. Presumedly an unused
+  // page parameter.
+  optional int32 page = 1;
+
+  optional string tab = 2;
+
+  enum Sort {
+    DEFAULT_SORT = 0;
+    MOST_POPULAR = 1;
+    OLDEST = 2;
+    NEWEST = 3;
+    LATEST = 4;
+  }
+
+  optional Sort sort = 3;
+
+  // TODO
+  //enum View {}
+
+  //optional View view = 4;
+  enum Flow {
+    DEFAULT_FLOW = 0;
+    GRID = 1;
+    LIST = 2;
+  }
+
+  optional Flow flow = 6;
+
+  enum LiveView {
+    DEFAULT_LIVEVIEW = 0;
+    ALL = 1;
+    LIVE = 2;
+    UPCOMING = 3;
+    PAST = 4;
+  }
+
+  optional LiveView live_view = 7;
+
+  optional int32 shelf_id = 14;
+
+  // TODO, unreserve, this is documented
+  reserved 15;
+}

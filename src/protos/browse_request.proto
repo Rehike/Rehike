@@ -1,0 +1,15 @@
+/*
+ * Never finished.
+ *
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
+ * @author The Rehike Maintainers
+ */
+
+syntax = "proto3";
+
+package youtube.request;
+
+message BrowseRequest
+{
+    
+}

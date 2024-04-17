@@ -1,10 +1,10 @@
 {
-	"previousHash": "f367e89f36741df17364e4aa08fdf712bdc51ffc",
-	"currentRevisionId": 1417,
-	"subject": "Update bug_report.yml for Rehike 0.8.1",
-	"body": "Update bug_report.yml for Rehike 0.8.1",
+	"previousHash": "252dd879764fa761070c74e956a603c3a311376b",
+	"currentRevisionId": 1419,
+	"subject": "Rename unclear names in comments AJAX templates",
+	"body": "Rename unclear names in comments AJAX templates",
 	"branch": "master",
 	"committerName": "Isabella",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1713308051
+	"time": 1713321957
 }

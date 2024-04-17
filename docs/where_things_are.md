@@ -19,7 +19,8 @@ Source code files:
 - `includes/` - Low-level PHP source code, or anything that isn't in a class.
 - `models/` - Code used for page data models; InnerTube model converters or entirely custom data models. These are what's fed into the template engine.
 - `modules/` - General Rehike source code, including the base and most operations.
-- `modules/generated/` - Generated source files, i.e. from the [Rehike/protos](//github.com/Rehike/protos) repository. You shouldn't modify this unless you know what you're doing.
+- `modules/generated/` - Generated source files, i.e. from the `src/protos` folder. You shouldn't modify this unless you know what you're doing.
+- `src/` - Non-PHP source files. This includes things like JS, CSS, protobuf, and images.
 - `static/` - Static content files, such as images or JavaScript files.
 - `template/` - Twig source code files for HTML/JS templates.
 - `vendor/` - Composer-downloaded modules. You shouldn't modify this unless you know what you're doing.
