@@ -91,7 +91,7 @@ return new class extends AjaxController
             $commentsBakery->populateDataApiData($cids)->then(function() use (&$yt, $data, $commentsBakery) {
                 if (null != $data)
                 {
-                    $yt->page = $commentsBakery->commentThreadRenderer($data);
+                    $yt->page->comment = $commentsBakery->commentThreadRenderer($data);
                 }
                 else
                 {
@@ -147,7 +147,7 @@ return new class extends AjaxController
             $commentsBakery->populateDataApiData($cids)->then(function() use (&$yt, $data, $commentsBakery) {
                 if (null != $data)
                 {
-                    $yt->page = $commentsBakery->commentRenderer($data, true);
+                    $yt->page->comment = $commentsBakery->commentRenderer($data, true);
                 }
                 else
                 {
