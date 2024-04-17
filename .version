@@ -1,10 +1,10 @@
 {
-	"previousHash": "5d66cdeef9f2070285e851fc60e2cc8379fefaa0",
-	"currentRevisionId": 1425,
-	"subject": "Fix comment AJAX invalid assignment",
-	"body": "Fix comment AJAX invalid assignment",
+	"previousHash": "ff226f82cf15db1d63b2e23fb59d66df40b2c4bb",
+	"currentRevisionId": 1426,
+	"subject": "Config option to disable PromiseResolutionTracker",
+	"body": "Config option to disable PromiseResolutionTracker",
 	"branch": "master",
 	"committerName": "Isabella",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1713372760
+	"time": 1713373599
 }
