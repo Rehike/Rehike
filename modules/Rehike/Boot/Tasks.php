@@ -49,6 +49,12 @@ final class Tasks
             ConfigDefinitions::getConfigDefinitions()
         );
         Config::loadConfig();
+
+        // Apply early configuration properties for other modules:
+        if (Config::getConfigProp("advanced.developer.ignoreUnresolvedPromises"))
+        {
+            \YukisCoffee\CoffeeRequest\Util\PromiseResolutionTracker::disable();
+        }
     }
 
     public static function setupTemplateManager(): void

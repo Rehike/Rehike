@@ -89,7 +89,10 @@ class ConfigDefinitions
                 "disableSignInOnHome" => new BoolProp(false)
             ],
             "advanced" => [
-                "enableDebugger" => new BoolProp(false)
+                "enableDebugger" => new BoolProp(false),
+                "developer" => [
+                    "ignoreUnresolvedPromises" => new BoolProp(false)
+                ]
             ],
             "hidden" => [
                 "language" => new StringProp("en-US"),
