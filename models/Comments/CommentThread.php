@@ -520,8 +520,9 @@ class CommentThread
         );
         
         $count = (int)$this->getLikeCountFromLabel($likeAriaLabel);
-		
-		if (@$context->likeButton->checked)
+
+        $context->isLiked = $context->isLiked ?? @$context->likeButton->checked;
+		if ($context->isLiked)
         {
 			$context->voteCount = [
 				"indifferentText" => (string)($count - 1),

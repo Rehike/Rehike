@@ -158,6 +158,8 @@ class CommentsViewModelConverter extends BasicVMC
             ]
         ];
         $out["voteStatus"] = $likeToolbarState;
+        $out["isLiked"] = $this->isLiked;
+        $out["isDisliked"] = $this->isDisliked;
 
         // They removed full like count too, fucking cunts.
         $out["voteCount"] = (object)[
