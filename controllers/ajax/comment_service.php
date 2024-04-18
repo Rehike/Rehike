@@ -1,6 +1,7 @@
 <?php
 namespace Rehike\Controller\ajax;
 
+use Rehike\Model\ViewModelConverter\CommentsViewModelConverter;
 use Rehike\YtApp;
 use Rehike\ControllerV2\RequestMetadata;
 
@@ -66,18 +67,40 @@ return new class extends AjaxController
             action: "comment/create_comment",
             body: [
                 "commentText" => $_POST["content"],
-                "createCommentParams" => $_POST["params"]
+                "createCommentParams" => $_POST["params"],
+                "hl" => "de_DE"
             ]
-        )->then(function ($response) use ($yt) {
+        )->then(function ($response) use (&$yt) {
             $ytdata = $response->getJson();
 
-            $data = $ytdata->actions[1] ->createCommentAction->contents 
-                ->commentThreadRenderer ?? null;
+
+            $renderer = null;
+            foreach($ytdata->actions as $action)
+            {
+                if (!isset($action->createCommentAction)) continue;
+                $renderer = $action->createCommentAction->contents->commentThreadRenderer;
+            }
+
+            if (isset($renderer->commentViewModel->commentViewModel))
+            {
+                $converter = new CommentsViewModelConverter(
+                    $renderer->commentViewModel->commentViewModel,
+                    $ytdata->frameworkUpdates
+                );
+                $renderer = (object) [
+                    "comment" => (object) [
+                        "commentRenderer" => $converter->bakeCommentRenderer()
+                    ]
+                ];
+            }
+
+            $data = $renderer->comment->commentRenderer;
+
 
             $cids = [];
-            $cids[] = $data->comment->commentRenderer->authorEndpoint->browseEndpoint->browseId;
+            $cids[] = $data->authorEndpoint->browseEndpoint->browseId;
 
-            foreach ($data->comment->commentRenderer->contentText->runs as $run)
+            foreach ($data->contentText->runs as $run)
             {
                 if ($a = @$run->navigationEndpoint->browseEndpoint->browseId)
                 {
@@ -88,10 +111,10 @@ return new class extends AjaxController
 
             $commentsBakery = new CommentThread($ytdata);
 
-            $commentsBakery->populateDataApiData($cids)->then(function() use (&$yt, $data, $commentsBakery) {
-                if (null != $data)
+            $commentsBakery->populateDataApiData($cids)->then(function() use (&$yt, $renderer, $commentsBakery) {
+                if (null != $renderer)
                 {
-                    $yt->page->comment = $commentsBakery->commentThreadRenderer($data);
+                    $yt->page->comment = $commentsBakery->commentThreadRenderer($renderer);
                 }
                 else
                 {
@@ -125,29 +148,51 @@ return new class extends AjaxController
                 "commentText" => $_POST["content"],
                 "createReplyParams" => $_POST["params"]
             ]
-        )->then(function ($response) use ($yt) {
+        )->then(function ($response) use (&$yt) {
             $ytdata = $response->getJson();
 
-            $data = $ytdata->actions[1] ->createCommentReplyAction 
-                ->contents->commentRenderer ?? null;
 
-                $cids = [];
-                $cids[] = $data->authorEndpoint->browseEndpoint->browseId;
-    
-                foreach ($data->contentText->runs as $run)
+            $renderer = null;
+            foreach($ytdata->actions as $action)
+            {
+                if (!isset($action->createCommentReplyAction)) continue;
+                $renderer = $action->createCommentReplyAction->contents;
+            }
+
+            if (isset($renderer->commentViewModel))
+            {
+                $converter = new CommentsViewModelConverter(
+                    $renderer->commentViewModel,
+                    $ytdata->frameworkUpdates
+                );
+                $renderer = (object) [
+                    "comment" => (object) [
+                        "commentRenderer" => $converter->bakeCommentRenderer()
+                    ]
+                ];
+            }
+
+            $data = $renderer->comment->commentRenderer;
+
+
+            $cids = [];
+            $cids[] = $data->authorEndpoint->browseEndpoint->browseId;
+
+            foreach ($data->contentText->runs as $run)
+            {
+                if ($a = @$run->navigationEndpoint->browseEndpoint->browseId)
                 {
-                    if ($a = @$run->navigationEndpoint->browseEndpoint->browseId)
-                    {
-                        if (!in_array($a, $cids))
+                    if (!in_array($a, $cids))
                         $cids[] = $a;
-                    }
                 }
+            }
 
             $commentsBakery = new CommentThread($ytdata);
-            $commentsBakery->populateDataApiData($cids)->then(function() use (&$yt, $data, $commentsBakery) {
-                if (null != $data)
+
+            $commentsBakery->populateDataApiData($cids)->then(function() use (&$yt, $renderer, $commentsBakery) {
+                if (null != $renderer)
                 {
-                    $yt->page->comment = $commentsBakery->commentRenderer($data, true);
+                    $yt->page->comment = $commentsBakery->commentRenderer($renderer);
                 }
                 else
                 {
@@ -156,6 +201,7 @@ return new class extends AjaxController
             });
         });
     }
+
 
     /**
      * Get comments for continuation or
