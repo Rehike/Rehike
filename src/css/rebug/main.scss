@@ -1,0 +1,124 @@
+/**
+ * Implements the core CSS for the Rehike debugger.
+ *
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
+ * @author The Rehike Maintainers
+ */
+
+@use "global_walker";
+@use "tabs";
+@use "errors";
+
+#rebug-lightbox .hid
+{
+    display: none !important;
+}
+
+#rebug-open-button-container {
+    position: fixed;
+    bottom: 3px;
+    right: 6px;
+    z-index: 1000000002;
+}
+
+.rebug-open-button.condensed
+{
+    display: none;
+
+    &.rebug-open-button-has-error {
+        display: inline-block;
+    }
+}
+
+.rebug-open-button-has-error {
+    color: #a01312;
+    text-shadow: 1px 1px rgba(0, 0, 0, 10%);
+    opacity: 1;
+}
+
+.rebug-open-button-has-error .yt-uix-button-arrow {
+    border-bottom-color: #a01312;
+}
+
+.rebug-open-button-has-error:hover {
+    color: #c00;
+    opacity: 1;
+}
+
+#rebug-lightbox-container {
+    display: none;
+}
+
+#rebug-lightbox-container.open {
+    display: block;
+}
+
+#rebug-main .yt-dialog-title
+{
+    display: inline-block;
+}
+
+#rebug-main .rebug-history-button
+{
+    margin-left: 15px;
+    max-width: 300px;
+
+    /** History button shouldn't be displayed in sick beta release! */
+    // ^^ Hi taniko from god knows how long ago! It was never added :3
+    display: none;
+}
+
+.rebug-close-button-wrapper {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.exp-invert-logo .rebug-tab.rebug-tab-selected {
+    background: #f00;
+}
+
+#rebug-lightbox .yt-dialog-content {
+    /* Height of lightbox container - 20px */
+    height: 380px;
+}
+
+.rebug-expander
+{
+  cursor: pointer;
+}
+
+.nothing-to-see-renderer
+{
+    font-size: 18px;
+    color: #666;
+    display: table;
+    height: 100%;
+    margin: 0 auto;
+}
+
+.nothing-to-see-renderer .text
+{
+    max-width: 200px;
+    vertical-align: middle;
+    display: table-cell;
+}
+
+#rebug-help-link
+{
+    font-size: 13px;
+    font-weight: 400;
+    margin-left: 8px;
+}
+
+.rebug-condensed #rebug-tab-content-error
+{
+    display: block !important;
+}
+
+/*
+ * IMPORTS
+ */
+@include errors.styles();
+@include tabs.styles();
+@include global_walker.styles();

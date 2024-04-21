@@ -1,0 +1,111 @@
+/**
+ * Rebug error styles
+ *
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
+ * @author The Rehike Maintainers
+ */
+
+@mixin styles() {
+    .rebug-error-renderer {
+        vertical-align: middle;
+        padding: 5px;
+        max-height: 30px;
+        overflow: hidden;
+        border: 1px solid rgba(0, 0, 0, .075);
+
+
+        .error-icon-warning,
+        .error-icon-deprecated {
+            background: no-repeat url(//s.ytimg.com/yts/imgbin/www-hitchhiker-vfllYIUv0.png) -67px -190px;
+            background-size: auto;
+            width: 20px;
+            height: 21px
+        }
+    
+        .error-icon-error {
+            background: no-repeat url(//s.ytimg.com/yts/imgbin/www-hitchhiker-vfllYIUv0.png) -195px -725px;
+            background-size: auto;
+            width: 20px;
+            height: 21px
+        }
+    
+        .error-icon-notice {
+            background: no-repeat url(//s.ytimg.com/yts/imgbin/www-hitchhiker-vfllYIUv0.png) -243px -799px;
+            background-size: auto;
+            width: 20px;
+            height: 21px
+        }
+    
+        .icon {
+            display: block;
+            position: relative;
+            float: left;
+        }
+    
+        .rebug-error-renderer-content {
+            display: block;
+            margin-left: 24px;
+            margin-top: 3px;
+            max-height: 17px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    
+        &.rebug-expander-expanded {
+            overflow: visible;
+            max-height: none;
+        }
+    
+        &.rebug-expander-expanded .rebug-error-renderer-content {
+            overflow: visible;
+            text-overflow: none;
+            white-space: initial;
+            max-height: none;
+        }
+    
+        &.rebug-expander-expanded .collapsed-display {
+            display: none;
+        }
+    
+        &.rebug-expander-expanded .expanded-display {
+            display: block;
+        }
+    
+        &.rebug-expander-collapsed .collapsed-display {
+            display: inline;
+        }
+    
+        &.rebug-expander-collapsed .expanded-display {
+            display: none;
+        }
+    
+        .file {
+            opacity: 0.75;
+        }
+    
+        .collapsed-display .file {
+            float: right;
+        }
+    
+        &.rebug-expander-expanded {
+            box-shadow: 0 0 0 #000, 0 0 1px rgba(255, 255, 255, .25), inset 0 1px 3px rgba(0, 0, 0, .25);
+        }
+    
+        &.error-warning,
+        &.error-deprecated {
+            background-color: #f5d562;
+            color: #333;
+        }
+    
+        &.error-warning.rebug-expander-collapsed:hover,
+        &.error-deprecated.rebug-expander-collapsed:hover {
+            background-color: #f4d87a;
+        }
+    
+        &.error-notice {
+            background-color: #167ac6;
+            color: #fff;
+        }
+    }
+}

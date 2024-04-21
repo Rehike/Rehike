@@ -23,7 +23,7 @@ class Network
     protected const INNERTUBE_API_KEY = "AIzaSyAO_FJ2SlqU8Q4STEHLGCilw_Y9_11qcW8";
     
     protected const V3_API_HOST = "https://www.googleapis.com";
-    protected const V3_API_KEY = "AIzaSyBeo4NGA__U6Xxy-aBE6yFm19pgq8TY-TM"; // old key: "AIzaSyAa8yy0GdcGPHdtD083HiGGx_S0vMPScDM";
+    protected const V3_API_KEY = "AIzaSyAdXYhjVjFVmN4Txzxf0Lt3HS8FsxBPhSM"; // old key: "AIzaSyBeo4NGA__U6Xxy-aBE6yFm19pgq8TY-TM";
 
     protected const DNS_OVERRIDE_HOST = "1.1.1.1";
 
