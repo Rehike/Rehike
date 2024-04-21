@@ -1,3 +1,8 @@
 *.twig linguist-vendored
 *.html linguist-vendored
 static/**/*.js linguist-vendored
+
+# .rhbuild files are technically JavaScript, though they
+# could also pass as Python due to syntactic choices in
+# their construction.
+*.rhbuild linguist-language=js

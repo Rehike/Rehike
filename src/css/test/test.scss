@@ -1,0 +1,9 @@
+@use "test_partial";
+
+html {
+    background: white;
+}
+
+body {
+    @include test_partial.test();
+}

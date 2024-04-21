@@ -1,0 +1,3 @@
+CSS_BUILD_FILES = {
+    "test.scss": "static/rehike/css/www-test.css"
+}

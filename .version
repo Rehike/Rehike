@@ -1,10 +1,10 @@
 {
-	"previousHash": "ff226f82cf15db1d63b2e23fb59d66df40b2c4bb",
-	"currentRevisionId": 1426,
-	"subject": "Config option to disable PromiseResolutionTracker",
-	"body": "Config option to disable PromiseResolutionTracker",
+	"previousHash": "56d475b6bec69304a30700bd0ff9eae6c77cff6f",
+	"currentRevisionId": 1429,
+	"subject": "[RHBuild] Introduce build system",
+	"body": "[RHBuild] Introduce build system",
 	"branch": "master",
 	"committerName": "Isabella",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1713373599
+	"time": 1713668357
 }
