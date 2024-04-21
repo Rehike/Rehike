@@ -54,7 +54,7 @@ function CommonStartupTask()
 /**
  * Runs CSS build tasks.
  */
-function buildCss()
+function BuildCss()
 {
     return gulp.src(RehikeBuild.getBuildFilesForLanguage("css"), commonBuildCfg)
         // Initialize the build task so that RehikeBuild actions can be applied to it:
@@ -70,7 +70,7 @@ function buildCss()
 exports.build = gulp.series(
     CommonStartupTask,
     gulp.parallel(
-        buildCss
+        BuildCss
     )
 );
 
