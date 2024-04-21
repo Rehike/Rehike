@@ -1,6 +1,6 @@
 *.twig linguist-vendored
 *.html linguist-vendored
-static/ linguist-vendored
+static/** linguist-vendored
 
 # .rhbuild files are technically JavaScript, though they
 # could also pass as Python due to syntactic choices in
