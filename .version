@@ -1,10 +1,10 @@
 {
-	"previousHash": "1c96e2a5b2f593afaad0e40a2a8e46f50b9850b8",
-	"currentRevisionId": 1431,
-	"subject": "[RHBuild] buildCss -> BuildCss",
-	"body": "[RHBuild] buildCss -> BuildCss",
+	"previousHash": "5124c6d4a7ff2d46060aee0c7826e8934f2d471d",
+	"currentRevisionId": 1432,
+	"subject": "Move branding/ to .github/branding/",
+	"body": "Move branding/ to .github/branding/",
 	"branch": "master",
 	"committerName": "Isabella",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1713669830
+	"time": 1713670482
 }
