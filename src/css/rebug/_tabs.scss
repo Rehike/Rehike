@@ -1,0 +1,104 @@
+/**
+ * Rebug tabs styles
+ *
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
+ * @author The Rehike Maintainers
+ */
+
+@mixin styles() {
+    #rebug-tabs-switcher {
+        float: left;
+    }
+    
+    #rebug-tabs-switcher.full-view + #rebug-tabbed-content-wrapper {
+        /** 175px (width of tabs) + 15px (spacing) */
+        margin-left: 190px;
+    }
+    
+    .rebug-tab {
+        min-width: 160px;
+        padding: 4px 8px;
+        cursor: pointer;
+    }
+    
+    .rebug-tab:hover {
+        background: #444;
+        color: #fff;
+    }
+    
+    .rebug-tab.rebug-tab-selected {
+        background: #cc181e;
+        color: #fff;
+        font-weight: 500;
+        text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.25);
+    }
+
+    .rebug-tab-content {
+        /* Width is equal to
+           (width of container - padding on both sides [20px * 2] - (width of tabs + padding [176px]) 
+           - left padding of parent [15px] - border width both sides [1px * 2])
+           
+           Height is equal to (height of lightbox content - height of header [51px]) */
+        width: 373px;
+        height: 335px;
+        padding: 0;
+        overflow-y: scroll;
+        background: #fbfbfb;
+        border: 1px solid #ededed;
+        display: none;
+    }
+    
+    .rebug-tab-content.rebug-tab-selected {
+        display: block;
+    }
+
+    @media screen and (min-width: 850px) {
+        .rebug-tab-content {
+            width: 573px;
+        }
+    }
+
+    @media screen and (min-height: 650px) {
+        .rebug-tab-content {
+            height: 535px;
+        }
+
+        #rebug-lightbox .yt-dialog-content {
+            height: 580px;
+        }
+    }
+
+    @media screen and (min-width: 1050px) {
+        .rebug-tab-content {
+            width: 773px;
+        }
+    }
+
+    @media screen and (min-height: 850px) {
+        .rebug-tab-content {
+            height: 735px;
+        }
+
+        #rebug-lightbox .yt-dialog-content {
+            height: 780px;
+        }
+    }
+
+    .rebug-tab-content .loading {
+        display: block;
+        text-align: center;
+        height: 100%;
+    }
+
+    .rebug-tab-content .loading::before {
+        content: "";
+        display: inline-block;
+        height: 100%;
+        vertical-align: middle;
+    }
+
+    .rebug-tab-content .loading .yt-spinner {
+        display: inline-block;
+        vertical-align: middle;
+    }
+}

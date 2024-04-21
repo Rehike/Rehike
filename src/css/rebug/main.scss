@@ -1,11 +1,13 @@
 /**
  * Implements the core CSS for the Rehike debugger.
  *
- * TODO: Port this to SCSS for easier management.
- *
  * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
+
+@use "global_walker";
+@use "tabs";
+@use "errors";
 
 #rebug-lightbox .hid
 {
@@ -22,11 +24,10 @@
 .rebug-open-button.condensed
 {
     display: none;
-}
 
-.rebug-open-button.condensed.rebug-open-button-has-error
-{
-    display: inline-block;
+    &.rebug-open-button-has-error {
+        display: inline-block;
+    }
 }
 
 .rebug-open-button-has-error {
@@ -63,6 +64,7 @@
     max-width: 300px;
 
     /** History button shouldn't be displayed in sick beta release! */
+    // ^^ Hi taniko from god knows how long ago! It was never added :3
     display: none;
 }
 
@@ -72,54 +74,8 @@
     right: 10px;
 }
 
-#rebug-tabs-switcher {
-    float: left;
-}
-
-#rebug-tabs-switcher.full-view + #rebug-tabbed-content-wrapper {
-    /** 175px (width of tabs) + 15px (spacing) */
-    margin-left: 190px;
-}
-
-.rebug-tab {
-    min-width: 160px;
-    padding: 4px 8px;
-    cursor: pointer;
-}
-
-.rebug-tab:hover {
-    background: #444;
-    color: #fff;
-}
-
-.rebug-tab.rebug-tab-selected {
-    background: #cc181e;
-    color: #fff;
-    font-weight: 500;
-    text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.25);
-}
-
 .exp-invert-logo .rebug-tab.rebug-tab-selected {
     background: #f00;
-}
-
-.rebug-tab-content {
-    /* Width is equal to
-       (width of container - padding on both sides [20px * 2] - (width of tabs + padding [176px]) 
-       - left padding of parent [15px] - border width both sides [1px * 2])
-       
-       Height is equal to (height of lightbox content - height of header [51px]) */
-    width: 373px;
-    height: 335px;
-    padding: 0;
-    overflow-y: scroll;
-    background: #fbfbfb;
-    border: 1px solid #ededed;
-    display: none;
-}
-
-.rebug-tab-content.rebug-tab-selected {
-    display: block;
 }
 
 #rebug-lightbox .yt-dialog-content {
@@ -130,48 +86,6 @@
 .rebug-expander
 {
   cursor: pointer;
-}
-
-@media screen and (min-width: 850px)
-{
-    .rebug-tab-content
-    {
-        width: 573px;
-    }
-}
-
-@media screen and (min-height: 650px)
-{
-    .rebug-tab-content
-    {
-        height: 535px;
-    }
-
-    #rebug-lightbox .yt-dialog-content
-    {
-        height: 580px;
-    }
-}
-
-@media screen and (min-width: 1050px)
-{
-    .rebug-tab-content
-    {
-        width: 773px;
-    }
-}
-
-@media screen and (min-height: 850px)
-{
-    .rebug-tab-content
-    {
-        height: 735px;
-    }
-
-    #rebug-lightbox .yt-dialog-content
-    {
-        height: 780px;
-    }
 }
 
 .nothing-to-see-renderer
@@ -190,129 +104,6 @@
     display: table-cell;
 }
 
-/* Errors */
-.rebug-error-renderer .error-icon-warning, .rebug-error-renderer .error-icon-deprecated
-{
-    background:no-repeat url(//s.ytimg.com/yts/imgbin/www-hitchhiker-vfllYIUv0.png) -67px -190px;
-    background-size:auto;
-    width:20px;
-    height:21px
-}
-
-.rebug-error-renderer .error-icon-error
-{
-    background:no-repeat url(//s.ytimg.com/yts/imgbin/www-hitchhiker-vfllYIUv0.png) -195px -725px;
-    background-size:auto;
-    width:20px;
-    height:21px
-}
-
-.rebug-error-renderer .error-icon-notice
-{
-    background:no-repeat url(//s.ytimg.com/yts/imgbin/www-hitchhiker-vfllYIUv0.png) -243px -799px;
-    background-size:auto;
-    width:20px;
-    height:21px
-}
-
-.rebug-error-renderer
-{
-    vertical-align: middle;
-    padding: 5px;
-    max-height: 30px;
-    overflow: hidden;
-}
-
-.rebug-error-renderer .icon
-{
-    display: block;
-    position: relative;
-    float: left;
-}
-
-.rebug-error-renderer-content
-{
-  display: block;
-  margin-left: 24px;
-  margin-top: 3px;
-  max-height: 17px;
-  white-space:nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.rebug-error-renderer.rebug-expander-expanded
-{
-  overflow: visible;
-  max-height: none;
-}
-
-.rebug-error-renderer.rebug-expander-expanded .rebug-error-renderer-content
-{
-  overflow: visible;
-  text-overflow: none;
-  white-space: initial;
-  max-height: none;
-}
-
-.rebug-error-renderer.rebug-expander-expanded .collapsed-display
-{
-    display: none;
-}
-
-.rebug-error-renderer.rebug-expander-expanded .expanded-display
-{
-    display: block;
-}
-
-.rebug-error-renderer.rebug-expander-collapsed .collapsed-display
-{
-    display: inline;
-}
-
-.rebug-error-renderer.rebug-expander-collapsed .expanded-display
-{
-    display: none;
-}
-
-.rebug-error-renderer .file
-{
-    opacity: 0.75;
-}
-
-.rebug-error-renderer .collapsed-display .file
-{
-    float: right;
-}
-
-.rebug-error-renderer
-{
-  border:1px solid rgba(0,0,0,.075);
-}
-
-.rebug-error-renderer.rebug-expander-expanded
-{
-  box-shadow:0 0 0 #000,0 0 1px rgba(255,255,255,.25),inset 0 1px 3px rgba(0,0,0,.25);
-}
-
-.rebug-error-renderer.error-warning, .rebug-error-renderer.error-deprecated
-{
-  background-color: #f5d562;
-  color: #333;
-}
-
-.rebug-error-renderer.error-warning.rebug-expander-collapsed:hover, 
-.rebug-error-renderer.error-deprecated.rebug-expander-collapsed:hover
-{
-  background-color: #f4d87a;
-}
-
-.rebug-error-renderer.error-notice
-{
-  background-color: #167ac6;
-  color: #fff;
-}
-
 #rebug-help-link
 {
     font-size: 13px;
@@ -325,28 +116,9 @@
     display: block !important;
 }
 
-.rebug-tab-content .loading
-{
-    display: block;
-    text-align: center;
-    height: 100%;
-}
-
-.rebug-tab-content .loading::before
-{
-    content: "";
-    display: inline-block;
-    height: 100%;
-    vertical-align: middle;
-}
-
-.rebug-tab-content .loading .yt-spinner
-{
-    display: inline-block;
-    vertical-align: middle;
-}
-
 /*
  * IMPORTS
  */
-{% include "rehike/debugger/css/global_walker.css.twig" %}
+@include errors.styles();
+@include tabs.styles();
+@include global_walker.styles();
