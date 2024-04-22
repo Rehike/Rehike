@@ -28,7 +28,7 @@ headingVersionInfo: "Rehike について"
 viewOnGithub: "GitHub で見る"
 
 extraInfo: "ランタイム情報"
-operatingSystem: "オペレーティング システム"
+operatingSystem: "OS"
 phpVersion: "PHP バージョン"
 browserVersion: "ブラウザ バージョン"
 
