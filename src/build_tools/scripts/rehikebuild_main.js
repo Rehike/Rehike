@@ -20,11 +20,51 @@ const REHIKE_ROOT_DIR = path.resolve(__dirname, "../../..");
 
 /**
  * Stores a map of all known build files.
+ * 
+ * The mapping is stored: source path -> output destination
  */
 const buildFiles = {
-    js: {},
-    css: {},
-    protobuf: {}
+    /**
+     * All build files.
+     */
+    _all: [],
+    
+    /**
+     * Packages determine all source file that compose a single destination file.
+     * 
+     * @type {Map<string, WeakRef<BuildFile>[]>}
+     */
+    _packages: new Map(),
+    
+    js: [],
+    css: [],
+    protobuf: [],
+    
+    /**
+     * Push a build file to the build map.
+     * 
+     * @param {BuildFile} buildFile
+     */
+    push(buildFile)
+    {
+        this._all.push(buildFile);
+        
+        // Per-language name cache:
+        if (!this[buildFile.languageName])
+        {
+            this[buildFile.languageName] = [];
+        }
+        
+        this[buildFile.languageName].push(new WeakRef(buildFile));
+        
+        // Package name cache:
+        if (!this._packages.has(buildFile.destinationPath))
+        {
+            this._packages.set(buildFile.destinationPath, []);
+        }
+        
+        this._packages.get(buildFile.destinationPath).push(new WeakRef(buildFile));
+    },
 };
 
 /**
@@ -35,10 +75,96 @@ const buildFiles = {
 const renameHandles = {};
 
 /**
+ * A build file.
+ */
+class BuildFile
+{
+    languageName;
+    sourcePath;
+    destinationPath;
+    
+    /**
+     * @param {object} info 
+     */
+    constructor(info)
+    {
+       assert(info.languageName && info.sourcePath && info.destinationPath);
+       
+       this.languageName = info.languageName;
+       this.sourcePath = info.sourcePath;
+       this.destinationPath = info.destinationPath;
+    }
+}
+
+/**
+ * API for retrieving build files for a language.
+ */
+class LanguageBuildFilesAPI
+{
+    /**
+     * The name of the language.
+     * 
+     * @readonly
+     * @private
+     */
+    _languageName = "";
+    
+    constructor(languageName)
+    {
+        this._languageName = languageName;
+    }
+    
+    /**
+     * Gets all build files (unsorted) for a language.
+     * 
+     * @returns {string[]}
+     */
+    getAllSourceNames()
+    {
+        let files = buildFiles[this._languageName]
+            .map(item => item.deref())
+            .filter(item => null != item)
+            .map(item => item.sourcePath);
+        return files;
+    }
+    
+    /**
+     * Gets the package API for a language.
+     * 
+     * @returns {Map<string, BuildFile[]>}
+     */
+    getPackages()
+    {
+        let result = new Map();
+        
+        for (const mapping of buildFiles._packages)
+        {
+            const destPath = mapping[0];
+            const packages = mapping[1];
+            
+            for (const pPackage of packages)
+            {
+                const pkg = pPackage.deref();
+                
+                if (!pkg || pkg.languageName != this._languageName)
+                    continue;
+                
+                if (!result.get(destPath))
+                    result.set(destPath, []);
+                
+                result.get(destPath).push(pkg);
+            }
+        }
+        
+        return result;
+    }
+}
+
+/**
  * Gets all known build files for a given language name.
  * 
  * @param {string} languageName 
- * @returns {string[]}
+ * @returns {LanguageBuildFilesAPI}
  */
 function getBuildFilesForLanguage(languageName)
 {
@@ -48,7 +174,7 @@ function getBuildFilesForLanguage(languageName)
         return [];
     }
     
-    return Object.keys(buildFiles[languageName]);
+    return new LanguageBuildFilesAPI(languageName);
 }
 
 /**
@@ -59,11 +185,17 @@ function getBuildFilesForLanguage(languageName)
  */
 function getOutputPathForBuildFile(buildFilePath)
 {
-    const flattened = Utils.flattenObject(buildFiles);
-    
     let normalizedPath = buildFilePath.replace(new RegExp("\\" + path.sep, "g"), "/");
     
-    let outputPath = flattened[normalizedPath];
+    let outputPath = null;
+    for (const buildFile of buildFiles._all)
+    {
+        if (buildFile.sourcePath == normalizedPath)
+        {
+            outputPath = buildFile.destinationPath;
+            break;
+        }
+    }
     
     if (outputPath)
     {
@@ -84,10 +216,10 @@ function pushSourceFiles(descriptor)
     
     // Common function to decorate and push entries for all languages, assuming they
     // exist.
-    function decorateAndPush(srcEntry, dest)
+    function decorateAndPush(srcEntry, languageName)
     {
         assert(typeof srcEntry == "object");
-        
+
         for (let entryKey in srcEntry)
         {
             // Resolve the full path of the file (relative from the src/ directory).
@@ -95,24 +227,29 @@ function pushSourceFiles(descriptor)
             // are relative to the .rhbuild file path.
             let fullEntryPath = path.resolve(basePath, entryKey)
                 .replace(new RegExp("\\" + path.sep, "g"), "/");
-            //fullEntryPath = path.relative(BASE_SRC_DIR, fullEntryPath);
-            
-            // Create a property on the destination object that has the same value
-            // as the source entry. The source path is always relative to the Rehike
-            // root directory.
-            dest[fullEntryPath] = srcEntry[entryKey]
+                
+            // The destination path is always relative to the Rehike root directory.
+            const normalizedDestPath = srcEntry[entryKey]
                 .replace(new RegExp("\\" + path.sep, "g"), "/");
+                
+            const buildFile = new BuildFile({
+                languageName: languageName,
+                sourcePath: fullEntryPath,
+                destinationPath: normalizedDestPath
+            });
+            
+            buildFiles.push(buildFile);
         }
     }
     
     if (descriptor.cssBuildFiles != null)
-        decorateAndPush(descriptor.cssBuildFiles, buildFiles.css);
+        decorateAndPush(descriptor.cssBuildFiles, "css");
     
     if (descriptor.jsBuildFiles != null)
-        decorateAndPush(descriptor.jsBuildFiles, buildFiles.js);
+        decorateAndPush(descriptor.jsBuildFiles, "js");
 
     if (descriptor.protobufBuildFiles != null)
-        decorateAndPush(descriptor.protobufBuildFiles, buildFiles.protobuf);
+        decorateAndPush(descriptor.protobufBuildFiles, "protobuf");
 }
 
 /**
@@ -157,7 +294,7 @@ function resolveRenameHandle(handle)
         return renameHandles[normalizedHandle];
     }
     
-    throw new Exception(`Rename handle ${handle} does not exist.`);
+    throw new Error(`Rename handle ${handle} does not exist.`);
 }
 
 /**
@@ -208,11 +345,30 @@ function GulpFinalizePathsTask()
     });
 }
 
+/**
+ * Gulp task for getting the RehikeBuild handle name.
+ */
+function GulpHackGetRehikeBuildHandleTask(outputObj, outputName)
+{
+    return through2.obj(function(file, encoding, callback)
+    {
+        // Limit the handle file name to just the basename without any extension,
+        // so it matches the actual handle name used internally:
+        let normalizedHandle = path.basename(file.path, path.extname(file.path));
+        
+        outputObj[outputName] = normalizedHandle;
+        
+        this.push(file);
+        callback();
+    });
+}
+
 exports.getBuildFilesForLanguage = getBuildFilesForLanguage;
 exports.getOutputPathForBuildFile = getOutputPathForBuildFile;
 exports.pushSourceFiles = pushSourceFiles;
 exports.GulpInitRehikeBuildTask = GulpInitRehikeBuildTask;
 exports.GulpFinalizePathsTask = GulpFinalizePathsTask;
+exports.GulpHackGetRehikeBuildHandleTask = GulpHackGetRehikeBuildHandleTask;
 exports.BASE_SRC_DIR = BASE_SRC_DIR;
 exports.REHIKE_ROOT_DIR = REHIKE_ROOT_DIR;
 exports.Parser = require("./parse_rhbuild");
