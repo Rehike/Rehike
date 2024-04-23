@@ -1,0 +1,21 @@
+# Manages mirroring commits to the Codeberg mirror of Rehike at
+# https://codeberg.org/Rehike/Rehike
+
+name: Codeberg mirroring action
+on:
+  push:
+    branches:
+      - '**'
+
+jobs:
+  codeberg:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - uses: yesolutions/mirror-action@master
+        with:
+          REMOTE: 'https://codeberg.org/Rehike/Rehike.git'
+          GIT_USERNAME: 'rehike-bot'
+          GIT_PASSWORD: ${{ secrets.GIT_PASSWORD }}

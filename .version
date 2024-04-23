@@ -1,10 +1,10 @@
 {
-	"previousHash": "e536909ea4acafef1912010dc3335e8b919f7929",
-	"currentRevisionId": 1436,
-	"subject": "Remove src/css/test/ project",
-	"body": "Remove src/css/test/ project",
+	"previousHash": "ef8f1886deefef8ec313b873d1ecf225bb7883d7",
+	"currentRevisionId": 1440,
+	"subject": "[i18n/ja] Change OS string in rehike/version",
+	"body": "[i18n/ja] Change OS string in rehike/version",
 	"branch": "master",
 	"committerName": "Isabella",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1713723847
+	"time": 1713810901
 }
