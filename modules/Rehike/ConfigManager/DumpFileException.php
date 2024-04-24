@@ -2,5 +2,6 @@
 
 namespace Rehike\ConfigManager;
 
-// Prereq coffeeexception
-class DumpFileException extends \YukisCoffee\CoffeeException {};
+use Rehike\Exception\AbstractException;
+
+class DumpFileException extends AbstractException {};

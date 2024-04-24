@@ -11,8 +11,6 @@ use Rehike\i18n\i18n;
  * 
  * These are the buttons for watch interaction, such
  * as add to and share.
- * 
- * TODO(dcooper): more action button
  */
 class MActionButton extends MButton
 {
@@ -51,7 +49,7 @@ class MActionButton extends MButton
             else
             {
                 /*
-                 * BUG (kirasicecreamm): This used += operator to
+                 * PATCH (kirasicecreamm): This used += operator to
                  * append the arrays, which is useful for associative,
                  * but not numerical arrays.
                  * 
@@ -176,7 +174,8 @@ class MActionButton extends MButton
             "actionPanelTrigger" => "report"
         ];
 
-        if (!SignIn::isSignedIn()) {
+        if (!SignIn::isSignedIn())
+        {
             $buttonCfg += [
                 "fakeActionPanel" => true,
                 "clickcard" => new MSigninClickcard(

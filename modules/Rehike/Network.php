@@ -23,7 +23,7 @@ class Network
     protected const INNERTUBE_API_KEY = "AIzaSyAO_FJ2SlqU8Q4STEHLGCilw_Y9_11qcW8";
     
     protected const V3_API_HOST = "https://www.googleapis.com";
-    protected const V3_API_KEY = "AIzaSyBeo4NGA__U6Xxy-aBE6yFm19pgq8TY-TM"; // old key: "AIzaSyAa8yy0GdcGPHdtD083HiGGx_S0vMPScDM";
+    protected const V3_API_KEY = "AIzaSyAdXYhjVjFVmN4Txzxf0Lt3HS8FsxBPhSM"; // old key: "AIzaSyBeo4NGA__U6Xxy-aBE6yFm19pgq8TY-TM";
 
     protected const DNS_OVERRIDE_HOST = "1.1.1.1";
 
@@ -287,8 +287,10 @@ class Network
 
         $urlParams = "";
 
-        if (!$post) {
-            foreach($params as $name => $value) {
+        if (!$post)
+        {
+            foreach($params as $name => $value)
+            {
                 $urlParams .= "&{$name}={$value}";
             }
         }
@@ -306,7 +308,8 @@ class Network
                 ?? "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:107.0) Gecko/20100101 Firefox/107.0"
         ];
 
-        if ($post) {
+        if ($post)
+        {
             $headers += [
                 "Content-Type" => "application/json"
             ];
@@ -316,12 +319,15 @@ class Network
             "headers" => $headers
         ];
 
-        if ($post) {
+        if ($post)
+        {
             $body += [
                 "body" => $params,
                 "method" => "POST"
             ];
-        } else {
+        }
+        else
+        {
             $body += [
                 "method" => "GET"
             ];
@@ -420,7 +426,7 @@ class Network
     /**
      * Convert the PHP cookie array to a HTTP header string.
      */
-    protected static function getCurrentRequestCookie(): string
+    public static function getCurrentRequestCookie(): string
     {
         if (empty($_COOKIE)) return "";
         

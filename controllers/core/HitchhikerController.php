@@ -10,7 +10,7 @@ use Rehike\{
     SecurityChecker,
     Spf\Spf
 };
-
+use Rehike\Async\Concurrency;
 use Rehike\Model\{
     Guide\MGuide as Guide,
     Footer\MFooter as Footer,
@@ -101,7 +101,6 @@ abstract class HitchhikerController
         header("Content-Type: " .  $this->contentType);
         $this->yt = $yt;
         $this->init($yt, $template);
-        $this->initPlayer($yt);
 
         $this->onGet($yt, $request);
 
@@ -119,7 +118,7 @@ abstract class HitchhikerController
      * functionality. Use the controller's API (onPost()) for that.
      * 
      * @param YtApp $yt                  Template data.
-     * 
+     *
      * @param string $template           Passes a template in and out of the function.
      *                                   For API usage, you can safely ignore this. It only
      *                                   matters on the technical end.
@@ -157,17 +156,16 @@ abstract class HitchhikerController
 
     /**
      * Initialise the player.
+     *
+     * @deprecated Moved to YtStateManager. This function is a no-op now.
      */
     public function initPlayer(YtApp $yt): void
     {
-        $playerConfig = PlayerCore::getInfo();
-
-        $yt->playerConfig = $playerConfig;
     }
 
     /**
      * Request the guide and return the processed result.
-     * 
+     *
      * As Rehike implements a Nirvana frontend primarily, this behaviour
      * is unused by the base Hitchhiker controller. This function
      * is used by NirvanaController.
@@ -176,12 +174,15 @@ abstract class HitchhikerController
     {
         return new Promise(function ($resolve) {
             Network::innertubeRequest("guide")->then(function ($response) 
-                    use ($resolve) 
+                    use ($resolve)
             {
-                $data = $response->getJson();
-                $guide = Guide::fromData($data);
-                
-                $resolve($guide);
+                // Need Concurrency::async to use yield on Guide::fromData()
+                return Concurrency::async(function() use ($response, $resolve) {
+                    $data = $response->getJson();
+                    $guide = yield Guide::fromData($data);
+
+                    $resolve($guide);
+                });
             });
         });
     }
@@ -254,7 +255,8 @@ abstract class HitchhikerController
         $yt->useModularCore = false;
         $yt->page = (object)[];
 
-        if ($this->useTemplate) {
+        if ($this->useTemplate)
+        {
             $yt->masthead = new Masthead(false);
             $yt->footer = new Footer();
         }

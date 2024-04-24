@@ -1,19 +1,29 @@
 <?php
-
 namespace Rehike\Model\Share;
 
 use Rehike\i18n\i18n;
 use Rehike\Model\Common\MButton;
 
-
-// this *may* involve videos in playlists, but im not sure, since i could only find one screenshot of the email feature
-// video showing the email feature: https://youtu.be/BiJzA9L3-Yk?t=172
-class ShareEmailModel {
-
-    public static function bake(string $videoId, string $title, string $userId, 
-                                string $userName, string $desc) : object {
-
-
+/**
+ * Model for the share box email page.
+ * 
+ * This *may* involve videos in playlists, but I'm not sure, since I could only
+ * find one screenshot of the email feature video showing the email feature.
+ * https://youtu.be/BiJzA9L3-Yk?t=172
+ * 
+ * @author syndiate
+ * @author The Rehike Maintainers
+ */
+class ShareEmailModel
+{
+    public static function bake(
+            string $videoId, 
+            string $title, 
+            string $userId, 
+            string $userName, 
+            string $desc
+    ): object
+    {
         $response = (object) [];
         $i18n = i18n::getNamespace("share");
 
@@ -39,9 +49,9 @@ class ShareEmailModel {
         $response->user_ucid = $userId;
 
         // assuming its the first 77 characters as shown in the video
-        $response->desc = (strlen($desc) >= 77) ? (substr($desc, 0, 77) . "...") : $desc;
-
-
+        $response->desc = (strlen($desc) >= 77)
+            ? (substr($desc, 0, 77) . "...")
+            : $desc;
         
         // We need to use a mailto link since whatever servers YouTube used to email videos to users
         // (probably don't exist anymore. 
@@ -73,7 +83,5 @@ class ShareEmailModel {
         ]);
 
         return $response;
-
-
     }
 }

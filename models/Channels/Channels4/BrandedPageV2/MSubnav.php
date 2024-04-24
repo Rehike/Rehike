@@ -100,7 +100,8 @@ class MSubnav
         }        
     }
 
-    public static function getSortButton($sort) {
+    public static function getSortButton($sort)
+    {
         $i18n = i18n::getNamespace("channels");
         $baseUrl = Channels4Model::getBaseUrl();
         $tab = Channels4Model::getCurrentTab();
@@ -151,7 +152,8 @@ class MSubnav
         $gridText = $i18n->get("flowGrid");
         $listText = $i18n->get("flowList");
 
-        $sort = match (Channels4Model::getVideosSort()) {
+        $sort = match (Channels4Model::getVideosSort())
+        {
             0 => "dd",
             1 => "p",
             2 => "da",
@@ -186,9 +188,12 @@ class MSubnav
 
         $i->addBackButton($baseUrl);
 
-        if (count($data->contentTypeSubMenuItems) > 1) {
+        if (count($data->contentTypeSubMenuItems) > 1)
+        {
             $i->leftButtons[] = MSubnavMenuButton::fromData($data->contentTypeSubMenuItems);
-        } else {
+        }
+        else
+        {
             $i->title = $data->contentTypeSubMenuItems[0]->title;
         }
 

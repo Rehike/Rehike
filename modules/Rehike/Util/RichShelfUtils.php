@@ -21,7 +21,8 @@ class RichShelfUtils
         foreach ($response->onResponseReceivedActions as $action)
         if (isset($action->appendContinuationItemsAction->continuationItems)) 
         foreach ($action->appendContinuationItemsAction->continuationItems as $item)
-        if (isset($item->richSectionRenderer->content->richShelfRenderer)) {
+        if (isset($item->richSectionRenderer->content->richShelfRenderer))
+        {
             $contents[] = self::reformatShelf($item);
         }
         else

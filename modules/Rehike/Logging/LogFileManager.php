@@ -52,7 +52,13 @@ class LogFileManager
 
     private static function getLogFileName(): string
     {
-        $pageName =  explode("?", explode("/", $_SERVER["REQUEST_URI"])[0])[0];
+        $url = parse_url($_SERVER["REQUEST_URI"]);
+        $path = $url["path"];
+
+        // Normalize the path name to be safely stored as a file name.
+        // In this process, "/" characters are removed from the beginnings and ends, and all
+        // ones in the middle of the string are replaced with underscores.
+        $pageName = preg_replace("/[^\\w]/", "-", str_replace("/", "_", trim($path, "/")));
 
         return empty($pageName) ? "home" : $pageName;
     }

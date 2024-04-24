@@ -46,12 +46,6 @@ class SimpleRouter implements IRouter
         return $this->tryGetEffectivePath($langId, $uri, $ignored);
     }
 
-    // TODO
-    public function getCulture()
-    {
-
-    }
-
     protected function internalResolveLocation(
             string $langId,
             string $uri,

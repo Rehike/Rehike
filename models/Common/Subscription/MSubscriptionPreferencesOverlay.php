@@ -4,7 +4,8 @@ namespace Rehike\Model\Common\Subscription;
 use Rehike\Model\Common\MButton;
 use Rehike\i18n\i18n;
 
-class MSubscriptionPreferencesOverlay {
+class MSubscriptionPreferencesOverlay
+{
     public string $title;
 
     /** @var MSubscriptionPreference[] */
@@ -14,7 +15,8 @@ class MSubscriptionPreferencesOverlay {
 
     public MButton $cancelButton;
 
-    public function __construct($data) {
+    public function __construct($data)
+    {
         $i18n = i18n::getNamespace("misc");
 
         $this->title = $i18n->format("notificationPrefsTitle", $data["title"]);
@@ -38,9 +40,9 @@ class MSubscriptionPreferencesOverlay {
             "class" => ["yt-uix-overlay-close"]
         ]);
 
+        // Filter out "Unsubscribe" item
         foreach ($data["options"] as $option)
         if ($option->menuServiceItemRenderer->icon->iconType != "PERSON_MINUS")
-        // ^ Filter out "Unsubscribe" item
         {
             $this->options[] = MSubscriptionPreference::fromData($option);
         }

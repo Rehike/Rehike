@@ -99,9 +99,6 @@ class DateTimeStringTranslator
         $this->cultureInfo = $cultureInfo;
         $this->originalString = $originalString;
         $this->result = $originalString;
-
-        \Rehike\YtApp::getInstance()->{"DateTimeTest_id" . $counter++}
-            = &$this->regionInfoMap;
     }
 
     /**

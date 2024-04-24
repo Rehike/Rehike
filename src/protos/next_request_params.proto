@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package com.youtube.innertube.request;
+
+/*
+ * Next request parameters (used for linked comment IDs in Rehike).
+ *
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
+ * @author The Rehike Maintainers
+ */
+message NextRequestParams {
+   optional string linked_comment_id = 15;
+
+   message UnknownThing {
+      optional int32 a = 24;
+   }
+
+   optional UnknownThing unknown_thing = 36;
+}

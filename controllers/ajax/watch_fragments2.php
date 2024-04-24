@@ -13,12 +13,12 @@ use Rehike\ConfigManager\Config;
 
 /**
  * Watch fragments ajax controller
- * 
+ *
  * @author Aubrey Pankow <aubyomori@gmail.com>
  * @author Daylin Cooper <dcoop2004@gmail.com>
  * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
- * 
+ *
  * @version 1.0.20220805
  */
 class AjaxWatchFragments2Controller extends AjaxController
@@ -32,7 +32,8 @@ class AjaxWatchFragments2Controller extends AjaxController
     public function onPost(YtApp $yt, RequestMetadata $request): void
     {
         $fragsId = $_GET['frags'] ?? '';
-        switch ($fragsId) {
+        switch ($fragsId)
+        {
             case 'comments':
                 self::getComments($yt);
                 break;
@@ -65,8 +66,8 @@ class AjaxWatchFragments2Controller extends AjaxController
         ];
 
         Network::innertubeRequest(
-            action: "next", 
-            body: [ 
+            action: "next",
+            body: [
                 "continuation" => $_GET['ctoken'],
                 // We use German as a base language because it has full counts
                 "hl" => "de_DE"
@@ -74,23 +75,34 @@ class AjaxWatchFragments2Controller extends AjaxController
         )->then(function($response) use (&$yt) {
             $ytdata = $response->getJson();
 
-            $yt->page->commentsRenderer->headerRenderer = CommentsHeader::fromData(
-                $ytdata->onResponseReceivedEndpoints[0]->reloadContinuationItemsCommand->continuationItems[0]->commentsHeaderRenderer
-            );
 
             /**
              * Comments Threads Rewrite
              * TODO: further rewrite may be necessary
              */
-            $_oct = $ytdata->onResponseReceivedEndpoints[1]->reloadContinuationItemsCommand; // original comment threads
-            // CommentThread::bakeComments($_oct->continuationItems)->then(function ($value) use ($yt) {
-            //     $yt->page->commentsRenderer->comments = $value;
-            // });
-
             $commentsBakery = new CommentThread($ytdata);
-            $commentsBakery->bakeComments($_oct->continuationItems)->then(function ($value) use ($yt) {
-                $yt->page->commentsRenderer->comments = $value;
-            });
+            foreach ($ytdata->onResponseReceivedEndpoints as $endpoint)
+            {
+                if (!(@$endpoint = $endpoint->reloadContinuationItemsCommand))
+                {
+                    continue;
+                }
+                if ($endpoint->slot === "RELOAD_CONTINUATION_SLOT_HEADER")
+                {
+                    $yt->page->commentsRenderer->headerRenderer = CommentsHeader::fromData(
+                        $endpoint->continuationItems[0]->commentsHeaderRenderer
+                    );
+                }
+                else if ($endpoint->slot === "RELOAD_CONTINUATION_SLOT_BODY")
+                {
+                    // At least with some videos, if there are no comments the continuationItems property doesn't exist.
+                    $commentsBakery->bakeComments(($endpoint->continuationItems ?? []))->then(function ($value) use ($yt) {
+                        $yt->page->commentsRenderer->comments = $value;
+                    });
+                }
+            }
+
+
         });
     }
 }

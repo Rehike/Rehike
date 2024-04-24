@@ -122,7 +122,8 @@ class CommentThread
             $this->populateDataApiData($cids)->then(function() use (&$context, &$out, $resolve) {
                 if (is_countable($context))
                 {
-                    for ($i = 0, $count = count($context); $i < $count; $i++) {
+                    for ($i = 0, $count = count($context); $i < $count; $i++)
+                    {
                         if (isset($context[$i]->commentThreadRenderer))
                         {
                             $out["commentThreads"][] = $this->commentThreadRenderer(
@@ -271,11 +272,13 @@ class CommentThread
 
         // PLEASE NOTE:
         // The extra preceding property "comment"/"replies" is removed by this.
-        if (isset($context->comment)) {
+        if (isset($context->comment))
+        {
             $out['commentRenderer'] = $this->commentRenderer($context->comment->commentRenderer);
         }
 
-        if (isset($context->replies)) {
+        if (isset($context->replies))
+        {
             $out['commentRepliesRenderer'] = $this->commentRepliesRenderer($context->replies->commentRepliesRenderer);
         }
         
@@ -289,14 +292,16 @@ class CommentThread
 
         $context->isReply = $isReply;
 
-        if ($data = @$this->dataApiData[$context->authorEndpoint->browseEndpoint->browseId]) {
+        if ($data = @$this->dataApiData[$context->authorEndpoint->browseEndpoint->browseId])
+        {
             $context->authorText = (object) [
                 "simpleText" => $data->title
             ];
         }
 
         // Correct mentions
-        foreach ($context->contentText->runs as $i => &$run) {
+        foreach ($context->contentText->runs as $i => &$run)
+        {
             if ($ucid = @$run->navigationEndpoint->browseEndpoint->browseId)
             {
                 /** 
@@ -400,15 +405,21 @@ class CommentThread
         $context->dislikeButton = VoteButton::fromData(PropertyAtPath::get($context, self::DISLIKE_BUTTON_PATH));
 		if (isset($context->voteCount)) $this->addLikeCount($context);
 		
-        try {
+        try
+        {
             $context->replyButton = ReplyButton::fromData(PropertyAtPath::get($context, self::REPLY_BUTTON_PATH), $context->commentId);
-        } catch(\YukisCoffee\PropertyAtPathException $e) {
+        }
+        catch (\YukisCoffee\PropertyAtPathException $e)
+        {
             $context->replyButton = null;
         }
 
-        try {
+        try
+        {
             $context->creatorHeart = PropertyAtPath::get($context, self::HEART_BUTTON_PATH);
-        } catch (\YukisCoffee\PropertyAtPathException $e) {
+        }
+        catch (\YukisCoffee\PropertyAtPathException $e)
+        {
             $context->creatorHeart = null;
         }
 
@@ -420,49 +431,47 @@ class CommentThread
     {
         if (isset($context->viewReplies))
         {
-            $teaser = false /* Config::getConfigProp("appearance.teaserReplies") */;
-
             $i18n = i18n::getNamespace("comments");
 
             $viewText = &$context->viewReplies->buttonRenderer->text->runs[0]->text;
             $hideText = &$context->hideReplies->buttonRenderer->text->runs[0]->text;
 
-            // YouTube is experimenting with bringing back the
-            // old "View X replies" text format
-            // TODO (ev): Is this still applicable? The above comment was written on 15 Nov 2022.
-            //            I think it is appropriate to remove this comment and revise the behaviour
-            //            otherwise.
-            if (!preg_match($i18n->get("oldReplyTextRegex"), $viewText)) {
-                $replyCount = (int) preg_replace($i18n->get("replyCountIsolator"), "", $viewText);
-                if (isset($context->viewRepliesCreatorThumbnail)) {
-                    $creatorName = $context->viewRepliesCreatorThumbnail->accessibility->accessibilityData->label;
-                }
-
-                if ($teaser && $replyCount < 3) {
-                    unset($context->viewReplies);
-                    unset($context->hideReplies);
-                } else if ($replyCount > 1) {
-                    if (isset($creatorName)) {
-                        $viewText = $teaser
-                        ? $i18n->format("viewMultiTeaserOwner", $replyCount, $creatorName)
-                        : $i18n->format("viewMultiOwner", $replyCount, $creatorName);
-                    } else {
-                        $viewText = $teaser
-                        ? $i18n->format("viewMultiTeaser", $replyCount)
-                        : $i18n->format("viewMulti", $replyCount);
-                    }
-                } else {
-                    if (isset($creatorName)) {
-                        $viewText = $i18n->format("viewSingularOwner", $creatorName);
-                    } else {
-                        $viewText = $i18n->get("viewSingular");
-                    }
-                }
-
-                $hideText = ($replyCount > 1)
-                    ? $i18n->format("hideMulti", $replyCount)
-                    : $i18n->get("hideSingular");
+            // Restore the old reply count text used before 2022.
+            // "View {count} replies" instead of "{count} REPLIES"
+            // "View {count} reply from {author}" instead of "author pfp・1 REPLY"
+            // etc.
+            $replyCount = (int) preg_replace($i18n->get("replyCountIsolator"), "", $viewText);
+            if (isset($context->viewRepliesCreatorThumbnail))
+            {
+                $creatorName = $context->viewRepliesCreatorThumbnail->accessibility->accessibilityData->label;
             }
+
+            if ($replyCount > 1)
+            {
+                if (isset($creatorName))
+                {
+                    $viewText = $i18n->format("viewMultiOwner", $replyCount, $creatorName);
+                }
+                else
+                {
+                    $viewText = $i18n->format("viewMulti", $replyCount);
+                }
+            }
+            else
+            {
+                if (isset($creatorName))
+                {
+                    $viewText = $i18n->format("viewSingularOwner", $creatorName);
+                }
+                else
+                {
+                    $viewText = $i18n->get("viewSingular");
+                }
+            }
+
+            $hideText = ($replyCount > 1)
+                ? $i18n->format("hideMulti", $replyCount)
+                : $i18n->get("hideSingular");
         }
 
         /*
@@ -511,13 +520,17 @@ class CommentThread
         );
         
         $count = (int)$this->getLikeCountFromLabel($likeAriaLabel);
-		
-		if (@$context->likeButton->checked) {
+
+        $context->isLiked = $context->isLiked ?? @$context->likeButton->checked;
+		if ($context->isLiked)
+        {
 			$context->voteCount = [
 				"indifferentText" => (string)($count - 1),
 				"likedText" => (string)$count
 			];
-		} else {
+		}
+        else
+        {
 			$context->voteCount = [
 				"indifferentText" => (string)$count,
 				"likedText" => (string)($count + 1)

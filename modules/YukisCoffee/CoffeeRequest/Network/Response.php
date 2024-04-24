@@ -80,20 +80,6 @@ class Response
      */
     public function getJson(): object|array
     {
-        /*
-         * TODO (kirasicecreamm): Slow validation method.
-         * 
-         * This should be cleaned up eventually and replaced with a more 
-         * efficient one. Of keen interest is the json_validate() function, 
-         * which is slated to be released in PHP 8.3.
-         * 
-         * As a bleeding edge feature, it may be implemented as an
-         * alternative path for use in the target language runtime only,
-         * and the slower method used here will be kept for previous
-         * versions.
-         * 
-         * https://wiki.php.net/rfc/json_validate
-         */ 
         if ($a = @json_decode($this->content))
         {
             return $a;

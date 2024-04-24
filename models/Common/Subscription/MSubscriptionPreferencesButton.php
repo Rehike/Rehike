@@ -4,12 +4,14 @@ namespace Rehike\Model\Common\Subscription;
 use Rehike\Model\Common\MButton;
 use Rehike\i18n\i18n;
 
-class MSubscriptionPreferencesButton extends MButton {
+class MSubscriptionPreferencesButton extends MButton
+{
     public $class = [
         "yt-uix-subscription-preferences-button"
     ];
 
-    public function __construct($ucid, $stateId) {
+    public function __construct($ucid, $stateId)
+    {
         $i18n = i18n::getNamespace("misc");
 
         $this->attributes["channel-external-id"] = $ucid;
@@ -25,7 +27,8 @@ class MSubscriptionPreferencesButton extends MButton {
             "iconType" => "SUBSCRIPTION_PREFERENCES"
         ];
 
-        switch ($stateId) {
+        switch ($stateId)
+        {
             case 0:
                 $this->class[] = "yt-uix-subscription-notifications-none";
                 break;

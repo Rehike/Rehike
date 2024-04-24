@@ -6,7 +6,8 @@ use Rehike\Model\Common\MButton;
 use Rehike\ConfigManager\Config;
 use Rehike\Player\Configurable;
 
-class MFooter {
+class MFooter
+{
     /** @var string */
     public $logoTooltip;
 
@@ -28,7 +29,8 @@ class MFooter {
     /** @var bool */
     public $enableCopyright;
 
-    public function __construct() {
+    public function __construct()
+    {
         $i18n = i18n::getNamespace("footer");
         $rehikeVersion = \Rehike\Version\VersionController::$versionInfo;
         $rehikeVersion->semanticVersion = \Rehike\Version\VersionController::getVersion();

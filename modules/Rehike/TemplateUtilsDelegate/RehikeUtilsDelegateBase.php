@@ -413,7 +413,8 @@ abstract class RehikeUtilsDelegateBase extends stdClass
             "STYLE_BLUE_TEXT" => "STYLE_PRIMARY"
         ];
     
-        if (isset($styleOverrides->{$const})) {
+        if (isset($styleOverrides->{$const}))
+        {
             $const = $styleOverrides->{$const};
         }
     

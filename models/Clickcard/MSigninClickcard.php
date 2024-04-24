@@ -38,7 +38,8 @@ class MSigninClickcard extends MAbstractClickcard
         ];
     }
 
-    public static function fromData($data) {
+    public static function fromData($data)
+    {
         $heading = $data->title ?? null;
         $message = $data->content ?? null;
         $button = $data->button->buttonRenderer ?? null;

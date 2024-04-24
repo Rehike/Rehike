@@ -1,7 +1,8 @@
 <?php
 namespace Rehike\Model\Common\Menu;
 
-class MMenu {
+class MMenu
+{
     /** @var MMenuItem[] */
     public $items = [];
 
@@ -14,10 +15,13 @@ class MMenu {
     /** @var string[] */
     public $menuClass = [];
 
-    public function __construct($data) {
-        foreach ($data["items"] as $item) {
+    public function __construct($data)
+    {
+        foreach ($data["items"] as $item)
+        {
             $this->items[] = new MMenuItem($item);
         }
+
         $this->containerClass = $data["containerClass"];
         $this->menuId = $data["menuId"];
         $this->menuClass = $data["menuClass"];

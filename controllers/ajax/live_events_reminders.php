@@ -24,7 +24,8 @@ return new class extends \Rehike\Controller\core\AjaxController
     {
         $action = self::findAction();
 
-        switch ($action) {
+        switch ($action)
+        {
             case "set_reminder":
                 $request = self::setReminder($request);
                 break;

@@ -5,7 +5,8 @@ use Rehike\Model\Browse\InnertubeBrowseConverter;
 
 use Rehike\ConfigManager\Config;
 
-class ResultsModel {
+class ResultsModel
+{
     static $yt;
     static $response;
 
@@ -51,6 +52,7 @@ class ResultsModel {
             : $i18n->format("resultCountSingular", $i18n->formatNumber(self::getResultsCount($data)));
 
         $filterCrumbs = [];
+
         if (isset($submenu->groups))
         foreach ($submenu->groups as $group)
         if (isset($group->searchFilterGroupRenderer))
@@ -60,6 +62,7 @@ class ResultsModel {
         {
             $filterCrumbs[] = $filter->searchFilterRenderer;
         }
+        
         $submenu->filterCrumbs = $filterCrumbs;
 
         if (count($filterCrumbs) > 0)

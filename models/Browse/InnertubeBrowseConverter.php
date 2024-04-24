@@ -160,7 +160,8 @@ class InnertubeBrowseConverter
          * DITCH, HOLY FUCKING SHIT.
          *  - love, aubrey <3
          */
-        if (substr($subscriberCount, 0, 1) == "@") {
+        if (substr($subscriberCount, 0, 1) == "@")
+        {
             $subscriberCount = ExtractUtils::isolateSubCnt(ParsingUtils::getText($data->videoCountText));
             unset($data->videoCountText);
         }
@@ -168,10 +169,13 @@ class InnertubeBrowseConverter
         if (@$context["channelRendererUnbrandedSubscribeButton"]) 
             $subscribeButtonBranded = false;
 
-        if (@$context["channelRendererChannelBadge"]) {
-            if (!isset($data->badges)) {
+        if (@$context["channelRendererChannelBadge"])
+        {
+            if (!isset($data->badges))
+            {
                 $data->badges = [];
             }
+            
             $data->badges[] = (object) [
                 "metadataBadgeRenderer" => (object) [
                     "label" => $i18n->get("channelBadge"),

@@ -29,6 +29,18 @@
     .yt-uix-expander-ellipsis.yt-ui-ellipsis-10 {
         max-height: none;
     }
+
+    /*
+     * Used by the feed nudge renderer, which appears instead of videos on the homepage if the user
+     * is signed out with a fresh visitor data cookie, or has history disabled with no watched videos.
+     */
+    .feed-nudge {
+        padding: 20px;
+    }
+
+    .feed-nudge h1 {
+        margin-bottom: 6px;
+    }
 </style>
 {%- if rehike.config.appearance.cssFixes -%}
 <style id="hh-css-fix">

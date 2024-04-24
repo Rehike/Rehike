@@ -30,7 +30,7 @@ class ChannelSwitcherModel
                     "accountItemRenderer" => new MChannelItem($channel->accountItemRenderer, $next)
                 ];
             }
-            elseif (isset($channel->buttonRenderer))
+            else if (isset($channel->buttonRenderer))
             {
                 $response->channels[] = (object) [
                     "createChannelItemRenderer" => new MCreateChannelItem($channel->buttonRenderer)

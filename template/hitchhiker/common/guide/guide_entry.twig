@@ -3,7 +3,7 @@
 {% set serializedEndpoint = rehike.serializeEndpoint(item.navigationEndpoint) %}
 {% set selected = (serializedEndpoint == rehike.serializeEndpoint(yt.currentEndpoint)) %}
 <li id="{{ externalId }}-guide-item" class="guide-channel guide-notification-item overflowable-list-item" role="menuitem">
-    <a href="{{ item.hrefOverride ?? rehike.getUrl(item) }}" class="guide-item {{ selected ? "guide-item-selected" }}  yt-valign spf-link" title="{{ item.titleOverride ?? rehike.getText(item.formattedTitle) }}"
+    <a href="{{ item.hrefOverride ?? rehike.getUrl(item) }}" class="guide-item {{ selected ? "guide-item-selected" }}  yt-valign spf-link {{ item.subtitle ? "has-subtitle" }}" title="{{ item.titleOverride ?? rehike.getText(item.formattedTitle) }}"
     data-external-id="{{ externalId }}"
     data-serialized-endpoint="{{ serializedEndpoint }}">
         <span class="yt-valign-container">
@@ -25,6 +25,9 @@
             <span class="display-name {{ not hasCount ? "no-count" }}">
                 <span>{{ item.titleOverride ?? rehike.getText(item.formattedTitle) }}</span>
             </span>
+            {% if item.subtitle %}
+                <p class="guide-item-subtitle">{{ rehike.getText(item.subtitle) }}</p>
+            {% endif %}
         </span>
         {% if item.badges.liveBroadcasting %}
         <span class="guide-badge-live yt-uix-tooltip yt-valign" data-tooltip-text="LIVE">

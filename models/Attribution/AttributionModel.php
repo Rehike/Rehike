@@ -5,18 +5,21 @@ use Rehike\i18n\i18n;
 use Rehike\Network;
 use Rehike\Util\ParsingUtils;
 
-class AttributionModel {
+class AttributionModel
+{
     public $header;
     public $contents;
 
-    public static function bake($dataHost, $videoId) {
+    public static function bake($dataHost, $videoId)
+    {
         $i18n = i18n::getNamespace("attribution");
         $response = (object) [];
         $response->videoId = $videoId;
 
         $items = $dataHost->contents->twoColumnBrowseResultsRenderer->tabs[0] ->tabRenderer->content->richGridRenderer->contents ?? null;
 
-        if (isset($items[0] ->richSectionRenderer)) {
+        if (isset($items[0] ->richSectionRenderer))
+        {
             $head = $items[0] ->richSectionRenderer->content->sourcePivotHeaderRenderer->headerInformation->profilePageHeaderInformationRenderer ?? null;
             $header = (object) [];
             $header->title = $i18n->get('title');
@@ -34,13 +37,16 @@ class AttributionModel {
             $response->header = $header;
         }
 
-        if(isset($items[1] ->richItemRenderer)) {
+        if(isset($items[1] ->richItemRenderer))
+        {
             $contents = (object) [];
             $contents->title = $i18n->get("sectionTitle");
             $contents->subtitle = $i18n->format("sectionSubtitle", ParsingUtils::getText($header->video->title));
             $contents->items = [];
-            for ($i = 1; $i < count($items); $i++) {
-                if (isset($items[$i] ->richItemRenderer)) {
+            for ($i = 1; $i < count($items); $i++)
+            {
+                if (isset($items[$i] ->richItemRenderer))
+                {
                     $videoId = $items[$i] ->richItemRenderer->content->reelItemRenderer->videoId ?? null;
 
                     // TODO (kirasicecreamm): I DON'T WANT TO FIX THIS WTF THIS

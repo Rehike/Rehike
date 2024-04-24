@@ -8,8 +8,10 @@ namespace Rehike\Model\Traits;
  * @author Aubrey Pankow <aubyomori@gmail.com>
  * @author The Rehike Maintainers
  */
-class NavigationEndpoint {
-    public static function createEndpoint($url) {
+class NavigationEndpoint
+{
+    public static function createEndpoint($url)
+    {
         return (object) [
             "commandMetadata" => (object) [
                 "webCommandMetadata" => (object) [

@@ -61,8 +61,8 @@ class CommentsViewModelConverter extends BasicVMC
         $publishedTimeText = $commentPayload->properties->publishedTime;
         $commentId = $commentPayload->properties->commentId;
 
-        $this->isLiked = $toolbarStatePayload->likeState == "TOOLBAR_LIKE_STATE_LIKE";
-        $this->isDisliked = $toolbarStatePayload->dislikeState == "TOOLBAR_LIKE_STATE_DISLIKE";
+        $this->isLiked = $toolbarStatePayload->likeState == "TOOLBAR_LIKE_STATE_LIKED";
+        $this->isDisliked = ($toolbarStatePayload->dislikeState ?? $toolbarStatePayload->likeState) == "TOOLBAR_LIKE_STATE_DISLIKED";
         $this->isHearted = $toolbarStatePayload->heartState != "TOOLBAR_HEART_STATE_UNHEARTED";
 
         $likeToolbarState = str_replace("TOOLBAR_LIKE_STATE_", "", $toolbarStatePayload->heartState);
@@ -158,6 +158,8 @@ class CommentsViewModelConverter extends BasicVMC
             ]
         ];
         $out["voteStatus"] = $likeToolbarState;
+        $out["isLiked"] = $this->isLiked;
+        $out["isDisliked"] = $this->isDisliked;
 
         // They removed full like count too, fucking cunts.
         $out["voteCount"] = (object)[
@@ -209,10 +211,10 @@ class CommentsViewModelConverter extends BasicVMC
                     ],
                     "isToggled" => $this->isLiked,
                     "defaultServiceEndpoint" => (object)[
-                        "performCommentActionEndpoint" => $toolbarPayload->likeCommand->performCommentActionEndpoint
+                        "performCommentActionEndpoint" => $toolbarPayload->likeCommand->innertubeCommand->performCommentActionEndpoint
                     ],
                     "toggledServiceEndpoint" => (object)[
-                        "performCommentActionEndpoint" => $toolbarPayload->unlikeCommand->performCommentActionEndpoint
+                        "performCommentActionEndpoint" => $toolbarPayload->unlikeCommand->innertubeCommand->performCommentActionEndpoint
                     ],
                     "defaultTooltip" => $commentPayload->toolbar->likeInactiveTooltip,
                     "toggledTooltip" => $commentPayload->toolbar->likeActiveTooltip,
@@ -225,10 +227,10 @@ class CommentsViewModelConverter extends BasicVMC
                     ],
                     "isToggled" => $this->isDisliked,
                     "defaultServiceEndpoint" => (object)[
-                        "performCommentActionEndpoint" => $toolbarPayload->dislikeCommand->performCommentActionEndpoint
+                        "performCommentActionEndpoint" => $toolbarPayload->dislikeCommand->innertubeCommand->performCommentActionEndpoint
                     ],
                     "toggledServiceEndpoint" => (object)[
-                        "performCommentActionEndpoint" => $toolbarPayload->undislikeCommand->performCommentActionEndpoint
+                        "performCommentActionEndpoint" => $toolbarPayload->undislikeCommand->innertubeCommand->performCommentActionEndpoint
                     ],
                     "defaultTooltip" => $commentPayload->toolbar->dislikeInactiveTooltip,
                     "toggledTooltip" => $commentPayload->toolbar->dislikeActiveTooltip,

@@ -3,7 +3,8 @@ namespace Rehike\Model\Masthead\CreationMenu;
 
 use Rehike\Model\Common\MButton;
 
-class MCreationMenu extends MButton {
+class MCreationMenu extends MButton
+{
     public $targetId = "yt-masthead-creation-button";
     public $attributes = [
         "force-position" => "true",
@@ -12,7 +13,8 @@ class MCreationMenu extends MButton {
         "position" => "bottomleft"
     ];
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->clickcard = new MCreationClickcard();
         $this->icon = (object) [];
     }

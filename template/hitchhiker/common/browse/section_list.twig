@@ -22,6 +22,15 @@
                     {%- endif -%}
                 </p>
             </li>
+            {#
+                richSectionRenderer + feedNudgeRenderer support for the homepage "watch more videos" promo
+            #}
+            {%- elseif item.richSectionRenderer.content.feedNudgeRenderer -%}
+                {% set content = item.richSectionRenderer.content.feedNudgeRenderer %}
+                <li class="feed-nudge">
+                    <h1>{{ rehike.getText(content.title) }}</h1>
+                    <p>{{ rehike.getText(content.subtitle) }}</p>
+                </li>
             {%- endif -%}
         {%- endfor -%}
     </ol>
