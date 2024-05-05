@@ -1,10 +1,10 @@
 {
-	"previousHash": "2a8e105ea1d44d4309250227720763ae0afa7ebf",
-	"currentRevisionId": 1448,
-	"subject": "Reword Prototaxis credit",
-	"body": "Reword Prototaxis credit",
+	"previousHash": "dfaf1b8d21f35789fb17ad5cb104ad7c42e44a69",
+	"currentRevisionId": 1449,
+	"subject": "[i18n/en-GB,ja] Support British English, tweak Japanese",
+	"body": "[i18n/en-GB,ja] Support British English, tweak Japanese",
 	"branch": "master",
 	"committerName": "Isabella",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1714944467
+	"time": 1714945867
 }
