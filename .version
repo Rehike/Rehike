@@ -1,10 +1,10 @@
 {
-	"previousHash": "fee98e4713161a8db533cb4f6517f0f5ae378cea",
-	"currentRevisionId": 1443,
-	"subject": "[RHBuild] Check in current WIP changes",
-	"body": "[RHBuild] Check in current WIP changes",
+	"previousHash": "a9ba6de5edc9355a96afb901f7bc82f83c83750f",
+	"currentRevisionId": 1444,
+	"subject": "[RHBuild] Support adding tasks during build",
+	"body": "[RHBuild] Support adding tasks during build",
 	"branch": "master",
 	"committerName": "Isabella",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1714505501
+	"time": 1714940996
 }

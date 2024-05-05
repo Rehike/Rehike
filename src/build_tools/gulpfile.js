@@ -113,10 +113,16 @@ function BuildJs()
     return gulp.parallel(BuildEvents);
 }
 
-function BuildAll(cb)
+async function BuildAll()
 {
-    let buildTasks = RehikeBuild.BuildTask.getAllBuildTasks();
-    gulp.parallel(buildTasks)(() => cb());
+    const iterator = RehikeBuild.BuildTask.getAllBuildTasks();
+    
+    while (iterator.hasNewItems())
+    {
+        await new Promise((resolve, reject) => {
+            gulp.parallel( iterator.getNext() )( () => resolve() );
+        });
+    }
 }
 
 BuildAll.displayName = "RehikeBuild :: Main build task";

@@ -7,11 +7,8 @@
 
 const gulp = require("gulp");
 const through2 = require("through2");
-const Utils = require("./utils");
 const path = require("path");
 const assert = require("assert/strict");
-const crypto = require("crypto");
-const Transform = require("streamx").Transform;
 
 // Includes should be relative to the src/ directory, and this script resides in
 // src/build_tools/scripts, so we need to up two directories.
@@ -36,6 +33,10 @@ const commonBuildCfg = {
 
 /**
  * Stores all registered build tasks.
+ * 
+ * Note that new tasks should always be appended to the end of this array in
+ * order for the build system to function correctly. Inserting an item in the
+ * middle will mess things up.
  * 
  * @type {BuildTask[]}
  */
@@ -85,24 +86,14 @@ class BuildTask
         return this._isPending;
     }
     
+    /**
+     * Gets an iterator for all build tasks in the registry.
+     * 
+     * @returns {BuildTaskRegistryIterator}
+     */
     static getAllBuildTasks()
     {
-        // console.log(JSON.stringify(g_buildTaskRegistry));
-        let out = [];
-        
-        for (const wrapper of g_buildTaskRegistry)
-        {
-            const fn = function() {
-                return wrapper.gulpTask;
-            };
-            
-            fn.displayName = "[RehikeBuild] " + wrapper.displayName;
-            
-            out.push(fn);
-        }
-        
-        return out;
-        //return g_buildTaskRegistry.map(wrapper => wrapper.gulpTask);
+        return new BuildTaskRegistryIterator();
     }
     
     /**
@@ -121,8 +112,6 @@ class BuildTask
             this._gulpTask.on("finish", function() {
                 console.log("Task finished:");
                 console.dir(arguments);
-                
-                //console.dir(this.gulpTask);
             }.bind(this));
         }
     }
@@ -160,11 +149,14 @@ class CSSBuildTask extends BuildTask
         const task = this._prepareGulpBackend();
         let result = task.pipe(GulpSass.sync({ outputStyle: "compressed" }).on("error", GulpSass.logError))
             .pipe(through2.obj(function(file, encoding, callback) {
-                console.log("hi!!!!");
                 this.push(file);
                 
-                let test = new BuildTask({}, "fake", "fake");
-                g_buildTaskRegistry.push(test);
+                // Temporary testing code: 
+                if (process.argv.includes("--test-branched-build-task"))
+                {
+                    let test = new BuildTask({taskName: "Fake test task."}, "fake", "fake");
+                    g_buildTaskRegistry.push(test);
+                }
                 
                 callback();
             }));
@@ -173,16 +165,58 @@ class CSSBuildTask extends BuildTask
 }
 
 /**
- * Opens a file as a Vinyl file.
+ * Iterates the build task registry.
  * 
- * This is similar to gulp.src, except that it is designed to work with full file paths,
- * which is what RehikeBuild is designed to use.
- * 
- * @param {string} fullFilePath 
+ * This design exists to allow tasks to be added dynamically during the build process.
  */
-function openVinylFile(fullFilePath)
+class BuildTaskRegistryIterator
 {
+    /**
+     * The latest known item position in the build task registry.
+     * 
+     * @private
+     */
+    _latestKnownItemPosition = 0;
     
+    /**
+     * Check if new items were added to the registry since the last time we checked.
+     * 
+     * @returns {boolean}
+     */
+    hasNewItems()
+    {
+        return this._latestKnownItemPosition < g_buildTaskRegistry.length;
+    }
+    
+    /**
+     * Gets the latest unread chunk of build tasks from the registry.
+     * 
+     * This function is also responsible for the decoration process so that they
+     * work with Gulp.
+     * 
+     * @returns {callback[]} Wrapped tasks for Gulp's Undertaker module.
+     */
+    getNext()
+    {
+        const chunk = g_buildTaskRegistry.slice(this._latestKnownItemPosition);
+        
+        this._latestKnownItemPosition = g_buildTaskRegistry.length;
+        
+        let out = [];
+        
+        for (const wrapper of chunk)
+        {
+            const fn = function() {
+                return wrapper.gulpTask;
+            };
+            
+            fn.displayName = "[RehikeBuild] " + wrapper.displayName;
+            
+            out.push(fn);
+        }
+        
+        return out;
+    }
 }
 
 /**
@@ -211,12 +245,6 @@ function pushSourceFiles(descriptor)
             // The destination path is always relative to the Rehike root directory.
             const normalizedDestPath = srcEntry[entryKey]
                 .replace(new RegExp("\\" + path.sep, "g"), "/");
-                
-            // const buildTask = new BuildFile({
-            //     languageName: languageName,
-            //     sourcePath: fullEntryPath,
-            //     destinationPath: normalizedDestPath
-            // });
             
             let buildTask = null;
             
@@ -244,28 +272,16 @@ function pushSourceFiles(descriptor)
         decorateAndPush(descriptor, descriptor.protobufBuildFiles, "protobuf");
 }
 
-// module.exports = {
-//     // Exported constants:
-//     BASE_SRC_DIR: BASE_SRC_DIR,
-//     REHIKE_ROOT_DIR: REHIKE_ROOT_DIR,
-    
-//     // Exported classes:
-//     BuildTask: BuildTask,
-//     CSSBuildTask: CSSBuildTask,
-    
-//     // Exported functions:
-//     pushSourceFiles: pushSourceFiles,
-    
-//     // Namespace aliases:
-//     Parser: require("./parse_rhbuild"),
-// };
-
+// Exported constants:
 exports.BASE_SRC_DIR = BASE_SRC_DIR;
 exports.REHIKE_ROOT_DIR = REHIKE_ROOT_DIR;
 
+// Exported classes:
 exports.BuildTask = BuildTask;
 exports.CSSBuildTask = CSSBuildTask;
 
+// Exported functions:
 exports.pushSourceFiles = pushSourceFiles;
 
+// Namespace aliases:
 exports.Parser = require("./parse_rhbuild");
