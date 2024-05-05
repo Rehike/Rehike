@@ -3,6 +3,3 @@ props:
     classicPlayerColor:
       # "color" -> "colour"
       title: "Player progress bar colour:"
-      values:
-        RED: "Red"
-        WHITE: "White" # For whatever reason this is a thing
