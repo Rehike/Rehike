@@ -70,7 +70,7 @@ creditsThirdPartyHeader: >
 # HTML content.
 creditsPrototaxisTemplate: >
   %s さんは、クラシックで「棚のような」ホームページのデザインを復元するために使用する
-  InnerTube API のエクスプロイトを文書化しています。
+  InnerTube API のエクスプロイトを文書化しているありがとうございました。
 
 creditsThirdPartyFooter: >
   これらのサードパーティサービスの使用は、それぞれのライセンスに従います。
