@@ -12,12 +12,22 @@ use Rehike\i18n\i18n;
  */
 class MPaginator
 {
-    const VISIBLE_PAGE_LINKS = 7;
+    public const VISIBLE_PAGE_LINKS = 7;
 
-    public $pageNumber;
-    public $items;
-    public $hasBackButton = false;
-    public $hasNextButton = false;
+    /**
+     * The current page number.
+     */
+    public int $pageNumber;
+    
+    /**
+     * All of the displayed items in the paginator row.
+     * 
+     * @var MPaginatorButton[]
+     */
+    public array $items;
+    
+    public bool $hasBackButton = false;
+    public bool $hasNextButton = false;
 
     public function __construct($paginatorInfo)
     {
@@ -37,8 +47,9 @@ class MPaginator
         }
     }
 
-    public static function getVisiblePages($pageNumber, $pagesCount)
+    public static function getVisiblePages(int $pageNumber, int $pagesCount): array
     {
+        // The range for pagination is 1 page before the current, and up to 5 after it.
         $lBound = 1;
         $rBound = $pagesCount;
 
@@ -75,7 +86,11 @@ class MPaginator
 
         if ($pageNumber > 1)
         {
-            $response[] = new MPaginatorButton($strings->get("pagePrev"), false, ResultsController::getPageParamUrl(ResultsController::$param, $pageNumber - 1));
+            $response[] = new MPaginatorButton(
+                text: $strings->get("pagePrev"), 
+                selected: false, 
+                url: ResultsController::getPageParamUrl(ResultsController::$param, $pageNumber - 1)
+            );
         }
 
         for ($i = 0, $j = count($displayedPages); $i < $j; $i++)
@@ -89,7 +104,11 @@ class MPaginator
 
         if ($pageNumber < $pagesCount)
         {
-            $response[] = new MPaginatorButton($strings->get("pageNext"), false, ResultsController::getPageParamUrl(ResultsController::$param, $pageNumber + 1));
+            $response[] = new MPaginatorButton(
+                text: $strings->get("pageNext"), 
+                selected: false, 
+                url: ResultsController::getPageParamUrl(ResultsController::$param, $pageNumber + 1)
+            );
         }
 
         return $response;

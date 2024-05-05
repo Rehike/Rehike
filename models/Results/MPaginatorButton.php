@@ -3,9 +3,15 @@ namespace Rehike\Model\Results;
 
 use Rehike\Model\Common\MButton;
 
+/**
+ * A button in the pagination view.
+ * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
+ * @author The Rehike Maintainers
+ */
 class MPaginatorButton extends MButton
 {
-    public function __construct($text, $selected, $url)
+    public function __construct(string $text, bool $selected, string $url)
     {
         $this->setText($text);
         
