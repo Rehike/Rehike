@@ -28,6 +28,23 @@ class Channels4Model
     private static ?object $currentTabContents = null;
 
     private static $responseData;
+    
+    /**
+     * Fixed order of tabs.
+     */
+    private const TAB_ORDER = [
+        "featured", // Home
+        "videos",
+        "podcasts",
+        "releases",
+        "RH_SPECIAL_EXTRA",
+        "playlists",
+        "community",
+        "discussion", // Not supported anymore
+        "store",
+        "about",
+        "search"
+    ];
 
     public static function bake(&$yt, $data, $sidebarData = null, $ownerData = null)
     {
@@ -249,13 +266,42 @@ class Channels4Model
                     "title" => i18n::getRawString("channels", "tabAbout")
                 ]
             ];
-
-            array_splice($tabs, $searchBarIndex, 0, [$aboutContent]);
+            
+            $tabs[] = $aboutContent;
         }
         
-        $header->addTabs($tabs, ($yt->partiallySelectTabs ?? false));
+        // We want to keep the same order of tabs by channel, and a reliable way to do that is to
+        // simply make a fixed order map and then sort the tabs by that order. We do this as such:
+        $tabIdMap = [];
+        $sortedTabs = [];
+        
+        foreach ($tabs as $tab)
+        {
+            $tabIdMap[self::getTabId($tab)] = $tab;
+        }
+        
+        foreach (self::TAB_ORDER as $tabId)
+        {
+            if ($tabId == "RH_SPECIAL_EXTRA")
+            {
+                foreach ($tabIdMap as $uniqueTabId => $uniqueTab)
+                {
+                    if (!in_array($uniqueTabId, self::TAB_ORDER))
+                    {
+                        $sortedTabs[] = $uniqueTab;
+                    }
+                }
+            }
+            
+            if (isset($tabIdMap[$tabId]))
+            {
+                $sortedTabs[] = $tabIdMap[$tabId];
+            }
+        }
+        
+        $header->addTabs($sortedTabs, ($yt->partiallySelectTabs ?? false));
 
-        foreach ($tabs as $tab) if (@$tab->tabRenderer)
+        foreach ($sortedTabs as $tab) if (@$tab->tabRenderer)
         {
             $tabEndpoint = $tab->tabRenderer->endpoint->commandMetadata->webCommandMetadata->url ?? null;
 
@@ -508,5 +554,43 @@ class Channels4Model
     public static function getVideosSort()
     {
         return self::$videosSort;
+    }
+    
+    private static function getTabId(object $tab): string
+    {
+        $renderer = null;
+        
+        if (isset($tab->tabRenderer))
+        {
+            $renderer = $tab->tabRenderer;
+        }
+        else if (isset($tab->expandableTabRenderer))
+        {
+            $renderer = $tab->expandableTabRenderer;
+        }
+        
+        if ($renderer)
+        {
+            $url = $renderer->endpoint->commandMetadata->webCommandMetadata->url;
+            $parts = explode("/", $url);
+            
+            if (empty($parts[0]))
+            {
+                $parts = array_slice($parts, 1);
+            }
+            
+            if (in_array($parts[0], ["channel", "user", "c"]))
+            {
+                // [channel|user|c, CHANNEL_NAME, *TAB_ID*]
+                return $parts[2];
+            }
+            else
+            {
+                // [CHANNEL_NAME, *TAB_ID*]
+                return $parts[1];
+            }
+        }
+        
+        return "";
     }
 }

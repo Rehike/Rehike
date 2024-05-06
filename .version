@@ -1,10 +1,10 @@
 {
-	"previousHash": "cc7ca2d535d7b669cebad476393ef1bb0aaee6df",
-	"currentRevisionId": 1452,
-	"subject": "Clean up appbar models",
-	"body": "Clean up appbar models",
+	"previousHash": "0cb68b5c5dbe8dea31bae8fa2fec1a33e9eda4bf",
+	"currentRevisionId": 1453,
+	"subject": "Correct channel tab order in some cases",
+	"body": "Correct channel tab order in some cases",
 	"branch": "master",
 	"committerName": "Isabella",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1714951898
+	"time": 1714953700
 }
