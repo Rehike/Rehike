@@ -1,10 +1,10 @@
 {
-	"previousHash": "a4a9618149d167de2f5ef78fc27a4808ab794172",
-	"currentRevisionId": 1455,
-	"subject": "Fix formatting -> after array access",
-	"body": "Fix formatting -> after array access",
+	"previousHash": "12fc2404de23d846adc39484bc0fa8aa09a9b72d",
+	"currentRevisionId": 1456,
+	"subject": "Clean up add to playlist models",
+	"body": "Clean up add to playlist models",
 	"branch": "master",
 	"committerName": "Isabella",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1714967515
+	"time": 1714967822
 }
