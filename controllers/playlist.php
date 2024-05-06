@@ -109,11 +109,14 @@ return new class extends NirvanaController
 
                 if ($tabs = @$channelData->contents->twoColumnBrowseResultsRenderer->tabs)
                 {
-                    Channels4Model::processAndAddTabs(
-                        $yt,
-                        $tabs,
-                        $yt->page->channelHeader
-                    );
+                    if (isset($yt->page->channelHeader))
+                    {
+                        Channels4Model::processAndAddTabs(
+                            $yt,
+                            $tabs,
+                            $yt->page->channelHeader
+                        );
+                    }
                     
                     if (isset($yt->page->header->title))
                     {
