@@ -78,8 +78,8 @@ class ResultsModel
         }
 
         for ($i = 0; $i < count($contents->contents); $i++)
-        if (isset($contents->contents[$i] ->itemSectionRenderer))
-        foreach($contents->contents[$i] ->itemSectionRenderer->contents as $item2)
+        if (isset($contents->contents[$i]->itemSectionRenderer))
+        foreach($contents->contents[$i]->itemSectionRenderer->contents as $item2)
         if (isset($item2->promotedSparklesTextSearchRenderer))
         {
             array_splice($contents->contents, $i, 1);
