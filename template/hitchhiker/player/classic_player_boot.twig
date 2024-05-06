@@ -492,6 +492,16 @@ function parseText(textObj)
     return "<null>";
 }
 
+var startSeconds = 0;
+if (
+    RAW_PLAYER_RESPONSE.playerConfig &&
+    RAW_PLAYER_RESPONSE.playerConfig.playbackStartConfig &&
+    RAW_PLAYER_RESPONSE.playerConfig.playbackStartConfig.startSeconds
+)
+{
+    startSeconds = RAW_PLAYER_RESPONSE.playerConfig.playbackStartConfig.startSeconds;
+}
+
 window.ytplayer = window.ytplayer || {};
 ytplayer.config = {
     "args": {
@@ -550,6 +560,7 @@ ytplayer.config = {
 		"autoplay": "1",
 		{% endif %}
         "oid": "",
+        "startSeconds": String(startSeconds),
         "external_play_video": "0",
         "cver": "2.20210623.00.00",
         "cr": "US",
