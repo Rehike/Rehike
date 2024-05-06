@@ -187,6 +187,11 @@ class Channels4Model
      */
     public static function processAndAddTabs(object &$yt, array $tabs, Channels4\MHeader &$header): void
     {
+        if (!isset(self::$baseUrl) || empty(self::$baseUrl))
+        {
+            self::guessBaseUrlFromTabs($tabs);
+        }
+        
         /** @var object */
         $videosTab = null;
         
@@ -556,6 +561,63 @@ class Channels4Model
         return self::$videosSort;
     }
     
+    /**
+     * Guess the base URL based on the tabs.
+     * 
+     * We need this in case of playlist views, which don't have the information accessible
+     * from their URL directly.
+     */
+    public static function guessBaseUrlFromTabs(array $tabs): void
+    {
+        $renderer = null;
+        
+        foreach ($tabs as $tab)
+        {
+            
+            if (isset($tab->tabRenderer))
+            {
+                $renderer = $tab->tabRenderer;
+            }
+            else if (isset($tab->expandableTabRenderer))
+            {
+                $renderer = $tab->expandableTabRenderer;
+            }
+            
+            if ($renderer)
+            {
+                $url = $renderer->endpoint->commandMetadata->webCommandMetadata->url;
+                $parts = explode("/", $url);
+                
+                if (empty($parts[0]))
+                {
+                    $parts = array_slice($parts, 1);
+                }
+                
+                if (in_array($parts[0], ["channel", "user", "c"]))
+                {
+                    // [channel|user|c, CHANNEL_NAME, *TAB_ID*]
+                    if (!isset(self::$baseUrl))
+                    {
+                        self::$baseUrl = "/" . $parts[0] . "/" . $parts[1];
+                        return;
+                    }
+                }
+                else if (count($parts) == 2)
+                {
+                    // [CHANNEL_NAME, *TAB_ID*]
+                    if (!isset(self::$baseUrl))
+                    {
+                        self::$baseUrl = "/" . $parts[0];
+                        return;
+                    }
+                }
+            }
+        }
+    }
+    
+    /**
+     * Get the ID of a particular tab.
+     */
     private static function getTabId(object $tab): string
     {
         $renderer = null;
@@ -579,15 +641,21 @@ class Channels4Model
                 $parts = array_slice($parts, 1);
             }
             
+            //\Rehike\Logging\DebugLogger::print(json_encode($parts));
+            
             if (in_array($parts[0], ["channel", "user", "c"]))
             {
                 // [channel|user|c, CHANNEL_NAME, *TAB_ID*]
                 return $parts[2];
             }
+            else if (count($parts) == 2)
+            {
+                // [CHANNEL_NAME, *TAB_ID*]    
+                return $parts[1];
+            }
             else
             {
-                // [CHANNEL_NAME, *TAB_ID*]
-                return $parts[1];
+                return $parts[0] ?? "";
             }
         }
         
