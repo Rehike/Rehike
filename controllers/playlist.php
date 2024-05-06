@@ -74,7 +74,11 @@ return new class extends NirvanaController
 
                 if ($header = @$channelData->header->c4TabbedHeaderRenderer)
                 {
-                    $yt->page->channelHeader = new MHeader($header, "/channel/$yt->ucid");
+                    $yt->page->channelHeader = new MHeader($header, "/channel/$yt->ucid", isOld: true);
+                }
+                else if ($header = @$channelData->header->pageHeaderRenderer)
+                {
+                    $yt->page->channelHeader = new MHeader($header, "/channel/$yt->ucid", isOld: false);
                 }
                 else if ($header = @$channelData->header->carouselHeaderRenderer)
                 {
