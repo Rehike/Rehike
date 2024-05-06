@@ -19,7 +19,7 @@ class RecordEntries extends stdClass implements ArrayAccess
         return isset($this->{$offset});
     }
 
-    public function offsetGet(mixed $offset): bool
+    public function offsetGet(mixed $offset): mixed
     {
         return $this->{$offset};
     }

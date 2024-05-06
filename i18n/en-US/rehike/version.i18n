@@ -70,7 +70,7 @@ creditsThirdPartyHeader: >
 # GitHub profile, but it's not featured here in order to avoid embedding
 # HTML content.
 creditsPrototaxisTemplate: >
-  %s for documenting the InnerTube API exploits we use to restore the
+  Thank you to %s for documenting the InnerTube API exploits we use to restore the
   classic "shelves" homepage design.
 
 creditsThirdPartyFooter: >

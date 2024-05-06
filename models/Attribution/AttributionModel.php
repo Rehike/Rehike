@@ -16,16 +16,16 @@ class AttributionModel
         $response = (object) [];
         $response->videoId = $videoId;
 
-        $items = $dataHost->contents->twoColumnBrowseResultsRenderer->tabs[0] ->tabRenderer->content->richGridRenderer->contents ?? null;
+        $items = $dataHost->contents->twoColumnBrowseResultsRenderer->tabs[0]->tabRenderer->content->richGridRenderer->contents ?? null;
 
-        if (isset($items[0] ->richSectionRenderer))
+        if (isset($items[0]->richSectionRenderer))
         {
-            $head = $items[0] ->richSectionRenderer->content->sourcePivotHeaderRenderer->headerInformation->profilePageHeaderInformationRenderer ?? null;
+            $head = $items[0]->richSectionRenderer->content->sourcePivotHeaderRenderer->headerInformation->profilePageHeaderInformationRenderer ?? null;
             $header = (object) [];
             $header->title = $i18n->get('title');
             $header->video = (object) [];
             $header->video->title = $head->title->profilePageHeaderTitleRenderer->title ?? null;
-            $thumb = $head->thumbnail->profilePageHeaderThumbnailRenderer->thumbnail->thumbnails[0] ->url ?? null;
+            $thumb = $head->thumbnail->profilePageHeaderThumbnailRenderer->thumbnail->thumbnails[0]->url ?? null;
             // Remove shorts crop
             $header->video->thumbnail = preg_replace("/\?sqp=.*/", "" , $thumb);
 
@@ -37,7 +37,7 @@ class AttributionModel
             $response->header = $header;
         }
 
-        if(isset($items[1] ->richItemRenderer))
+        if(isset($items[1]->richItemRenderer))
         {
             $contents = (object) [];
             $contents->title = $i18n->get("sectionTitle");
@@ -45,9 +45,9 @@ class AttributionModel
             $contents->items = [];
             for ($i = 1; $i < count($items); $i++)
             {
-                if (isset($items[$i] ->richItemRenderer))
+                if (isset($items[$i]->richItemRenderer))
                 {
-                    $videoId = $items[$i] ->richItemRenderer->content->reelItemRenderer->videoId ?? null;
+                    $videoId = $items[$i]->richItemRenderer->content->reelItemRenderer->videoId ?? null;
 
                     // TODO (kirasicecreamm): I DON'T WANT TO FIX THIS WTF THIS
                     // WILL NEVER WORK OUT 😭😭
@@ -64,7 +64,7 @@ class AttributionModel
                     // $reelHeader = $reelData->overlay->reelPlayerOverlayRenderer->reelPlayerHeaderSupportedRenderers->reelPlayerHeaderRenderer ?? null;
                     // $contents->items[] = (object) [];
                     // $current = $contents->items[array_key_last($contents->items)];
-                    // $thumb = $items[$i] ->richItemRenderer->content->reelItemRenderer->thumbnail->thumbnails[0] ->url ?? null;
+                    // $thumb = $items[$i]->richItemRenderer->content->reelItemRenderer->thumbnail->thumbnails[0]->url ?? null;
                     // $current->thumbnail = preg_replace("/\?sqp=.*/", "", $thumb);
                     // $current->title = $reelHeader->reelTitleText;
                     // $current->author = $reelHeader->channelTitleText;

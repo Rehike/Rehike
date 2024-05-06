@@ -47,9 +47,10 @@ Rehike makes use of the following software or services:
 - [Twig](//twig.symfony.com)
 - [Protocol Buffers](//developers.google.com/protocol-buffers/)
 - [Return YouTube Dislike API](https://www.returnyoutubedislike.com/)
-- [Prototaxis](//github.com/Prototaxis) for shelves homepage on InnerTube WEB v2
 
 Use of these third party services is governed by their respective licenses. Where possible, their application will be optional.
+
+Thank you to [Prototaxis](//github.com/Prototaxis) for his work on shelves homepage on InnerTube WEB v2. We use this valuable work for the homepage.
 
 ## Licence
 

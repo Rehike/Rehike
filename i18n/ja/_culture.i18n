@@ -17,13 +17,13 @@ am: "午前"
 pm: "午後"
 
 # https://www.php.net/manual/en/datetime.format.php
-expandedDateWithTime: "Y年m月d日（D）　G:i" # 2023年10月17日（火）　12:50 AM
+expandedDateWithTime: "Y年m月d日（D）　H:i" # 2023年10月17日（火）　00:50
 expandedDate: "Y年m月d日（D）" # 2023年10月17日（火）
-dateWithTime: "Y年m月d日　G:i" # 2023年10月17日　12:50
+dateWithTime: "Y年m月d日　H:i" # 2023年10月17日　00:50
 date: "Y年m月d日" # 2023年10月17日
-shortDateWithTime: "Y年m月d日　G:i" # 2023年10月17日　12:50
+shortDateWithTime: "Y年m月d日　H:i" # 2023年10月17日　00:50
 shortDate: "Y年m月d日" # 2023年10月17日
-time: "G:i" # 12:50
+time: "H:i" # 00:50
 
 daysOfWeek:
   1: "日曜日"

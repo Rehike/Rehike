@@ -53,14 +53,6 @@ function doParse(filePath, scriptContents)
     
     runInParserContext();
     
-    let jsOutput = null;
-    
-    if (JS_BUILD_FILES || JS_OUTPUT_BUNDLE)
-    {
-        assert(JS_BUILD_FILES && JS_OUTPUT_BUNDLE);
-        jsOutput = buildJsBuildMap(JS_BUILD_FILES, JS_OUTPUT_BUNDLE);
-    }
-    
     let taskName;
     if (TASK_NAME)
     {
@@ -85,30 +77,11 @@ function doParse(filePath, scriptContents)
     RehikeBuild.pushSourceFiles({
         baseName: filePath,
         taskName: taskName,
-        jsBuildFiles: jsOutput,
+        jsBuildFiles: JS_BUILD_FILES,
+        jsOutputBundle: JS_OUTPUT_BUNDLE,
         cssBuildFiles: CSS_BUILD_FILES,
         protobufBuildFiles: PROTOBUF_BUILD_FILES,
     });
-}
-
-/**
- * Gets a JS build map from the output source.
- * 
- * @param {string[]} buildFiles
- * @param {string} outputBundleName
- * 
- * @return {object} Build sources to destination bundle name.
- */
-function buildJsBuildMap(buildFiles, outputBundleName)
-{
-    let result = {};
-    
-    for (let file of buildFiles)
-    {
-        result[file] = outputBundleName;
-    }
-    
-    return result;
 }
 
 exports.doParse = doParse;

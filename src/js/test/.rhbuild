@@ -1,6 +1,6 @@
 JS_BUILD_FILES = [
-    "main.externs.js",
     "main.js",
+    "main.externs.js",
 ]
 
 JS_OUTPUT_BUNDLE = "static/js/www-test.js"

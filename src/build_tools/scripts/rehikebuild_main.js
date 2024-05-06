@@ -7,11 +7,9 @@
 
 const gulp = require("gulp");
 const through2 = require("through2");
-const Utils = require("./utils");
 const path = require("path");
 const assert = require("assert/strict");
-const crypto = require("crypto");
-const Transform = require("streamx").Transform;
+const { Transform } = require("stream");
 
 // Includes should be relative to the src/ directory, and this script resides in
 // src/build_tools/scripts, so we need to up two directories.
@@ -25,6 +23,10 @@ const sassBackend = require("sass");
 const gulpSassBackend = require("gulp-sass");
 const GulpSass = gulpSassBackend(sassBackend);
 
+// JS compiler includes:
+const closureCompilerBackend = require("google-closure-compiler");
+const GulpClosureCompiler = closureCompilerBackend.gulp();
+
 /**
  * Common build configuration options.
  */
@@ -36,6 +38,10 @@ const commonBuildCfg = {
 
 /**
  * Stores all registered build tasks.
+ * 
+ * Note that new tasks should always be appended to the end of this array in
+ * order for the build system to function correctly. Inserting an item in the
+ * middle will mess things up.
  * 
  * @type {BuildTask[]}
  */
@@ -52,8 +58,27 @@ class BuildTask
     outputFileName = "";
     displayName = "";
     
+    static Status = {
+        PENDING: 0,
+        FINISHED: 1,
+        ERRORED: 2,
+    };
+    
     _gulpTask = null;
-    _isPending = true;
+    _status = BuildTask.Status.PENDING;
+    
+    _data = null;
+    
+    _resolutionPromise = {
+        resolve: null,
+        reject: null,
+        promise: null
+    };
+    
+    get resolutionPromise()
+    {
+        return this._resolutionPromise.promise;
+    }
     
     constructor(descriptor, inputFileNames, outputFileName)
     {
@@ -71,6 +96,11 @@ class BuildTask
         this.outputFileName = outputFileName;
         
         console.log(`Created new BuildTask(${JSON.stringify(inputFileNames)}, ${outputFileName})`);
+        
+        this._resolutionPromise.promise = new Promise((resolve, reject) => {
+            this._resolutionPromise.resolve = resolve;
+            this._resolutionPromise.reject = reject;
+        });
     }
     
     get gulpTask()
@@ -82,27 +112,22 @@ class BuildTask
     
     get isPending()
     {
-        return this._isPending;
+        return this._status == BuildTask.Status.PENDING;
     }
     
+    get status()
+    {
+        return this._status;
+    }
+    
+    /**
+     * Gets an iterator for all build tasks in the registry.
+     * 
+     * @returns {BuildTaskRegistryIterator}
+     */
     static getAllBuildTasks()
     {
-        // console.log(JSON.stringify(g_buildTaskRegistry));
-        let out = [];
-        
-        for (const wrapper of g_buildTaskRegistry)
-        {
-            const fn = function() {
-                return wrapper.gulpTask;
-            };
-            
-            fn.displayName = "[RehikeBuild] " + wrapper.displayName;
-            
-            out.push(fn);
-        }
-        
-        return out;
-        //return g_buildTaskRegistry.map(wrapper => wrapper.gulpTask);
+        return new BuildTaskRegistryIterator();
     }
     
     /**
@@ -112,18 +137,23 @@ class BuildTask
     {
         if (!this._gulpTask)
         {
+            const parent = this;
             console.log("Creating gulp task");
             this._gulpTask = this._buildGulpTask();
-            this._gulpTask.on("end", function() {
-                console.log("Task ended:");
-                console.dir(arguments);
-            });
+            
+            this._gulpTask = this._gulpTask.pipe(this._getDataFromStream(this));
+            
             this._gulpTask.on("finish", function() {
-                console.log("Task finished:");
-                console.dir(arguments);
+                parent._status = BuildTask.Status.FINISHED;
+                parent._resolutionPromise.resolve(parent._data);
                 
-                //console.dir(this.gulpTask);
-            }.bind(this));
+                console.dir(parent._data.contents.toString());
+            });
+            
+            this._gulpTask.on("error", function(e) {
+                parent._status = BuildTask.Status.ERRORED;
+                parent._resolutionPromise.reject(e);
+            });
         }
     }
     
@@ -149,6 +179,23 @@ class BuildTask
     {
         return gulp.src(this.inputFileNames, commonBuildCfg);
     }
+    
+    /**
+     * Gets the data from the Gulp transform stream.
+     * 
+     * @param {BuildTask} targetObj 
+     * @returns {Transform}
+     */
+    _getDataFromStream(targetObj)
+    {
+        return through2.obj(function(file, encoding, callback) {
+            targetObj._data = file;
+            
+            // This should always be the last step, but just in case, we actually don't
+            // push the file in any case.
+            callback();
+        });
+    }
 }
 
 class CSSBuildTask extends BuildTask
@@ -160,11 +207,14 @@ class CSSBuildTask extends BuildTask
         const task = this._prepareGulpBackend();
         let result = task.pipe(GulpSass.sync({ outputStyle: "compressed" }).on("error", GulpSass.logError))
             .pipe(through2.obj(function(file, encoding, callback) {
-                console.log("hi!!!!");
                 this.push(file);
                 
-                let test = new BuildTask({}, "fake", "fake");
-                g_buildTaskRegistry.push(test);
+                // Temporary testing code: 
+                if (process.argv.includes("--test-branched-build-task"))
+                {
+                    let test = new BuildTask({taskName: "Fake test task."}, "fake", "fake");
+                    g_buildTaskRegistry.push(test);
+                }
                 
                 callback();
             }));
@@ -172,17 +222,89 @@ class CSSBuildTask extends BuildTask
     }
 }
 
-/**
- * Opens a file as a Vinyl file.
- * 
- * This is similar to gulp.src, except that it is designed to work with full file paths,
- * which is what RehikeBuild is designed to use.
- * 
- * @param {string} fullFilePath 
- */
-function openVinylFile(fullFilePath)
+class JSBuildTask extends BuildTask
 {
+    /** @inheritdoc @override */
+    _buildGulpTask()
+    {
+        console.log("JSBuildTask._buildGulpTask");
+        const task = this._prepareGulpBackend();
+        let result = task.pipe(GulpClosureCompiler({
+                compilation_level: "ADVANCED_OPTIMIZATIONS",
+                process_closure_primitives: true,
+                language_out: "ECMASCRIPT3",
+                output_wrapper: "(function(){%output%})();"
+            }));
+        return result;
+    }
     
+    /** @inheritdoc @override */
+    _prepareGulpBackend()
+    {
+        const buildFiles = this.inputFileNames.slice(0); // .slice(0) to clone the array
+        
+        // Requirements for Closure Compiler:
+        buildFiles.push(
+            "build_tools/node_modules/google-closure-library/closure/goog/base.js"
+        );
+        
+        return gulp.src(buildFiles, commonBuildCfg);
+    }
+}
+
+/**
+ * Iterates the build task registry.
+ * 
+ * This design exists to allow tasks to be added dynamically during the build process.
+ */
+class BuildTaskRegistryIterator
+{
+    /**
+     * The latest known item position in the build task registry.
+     * 
+     * @private
+     */
+    _latestKnownItemPosition = 0;
+    
+    /**
+     * Check if new items were added to the registry since the last time we checked.
+     * 
+     * @returns {boolean}
+     */
+    hasNewItems()
+    {
+        return this._latestKnownItemPosition < g_buildTaskRegistry.length;
+    }
+    
+    /**
+     * Gets the latest unread chunk of build tasks from the registry.
+     * 
+     * This function is also responsible for the decoration process so that they
+     * work with Gulp.
+     * 
+     * @returns {callback[]} Wrapped tasks for Gulp's Undertaker module.
+     */
+    getNext()
+    {
+        const chunk = g_buildTaskRegistry.slice(this._latestKnownItemPosition);
+        
+        this._latestKnownItemPosition = g_buildTaskRegistry.length;
+        
+        let out = [];
+        
+        for (const wrapper of chunk)
+        {
+            const fn = function() {
+                return wrapper.gulpTask;
+            };
+            
+            fn.displayName = "[RehikeBuild] " + wrapper.displayName;
+            
+            out.push(fn);
+        }
+        
+        return out;
+    }
 }
 
 /**
@@ -196,7 +318,7 @@ function pushSourceFiles(descriptor)
     
     // Common function to decorate and push entries for all languages, assuming they
     // exist.
-    function decorateAndPush(descriptor, srcEntry, languageName)
+    function buildSourceToSource(descriptor, srcEntry, languageName)
     {
         assert(typeof srcEntry == "object");
 
@@ -211,12 +333,6 @@ function pushSourceFiles(descriptor)
             // The destination path is always relative to the Rehike root directory.
             const normalizedDestPath = srcEntry[entryKey]
                 .replace(new RegExp("\\" + path.sep, "g"), "/");
-                
-            // const buildTask = new BuildFile({
-            //     languageName: languageName,
-            //     sourcePath: fullEntryPath,
-            //     destinationPath: normalizedDestPath
-            // });
             
             let buildTask = null;
             
@@ -224,6 +340,9 @@ function pushSourceFiles(descriptor)
             {
                 case "css":
                     buildTask = new CSSBuildTask(descriptor, fullEntryPath, normalizedDestPath);
+                    break;
+                case "js":
+                    buildTask = new JSBuildTask(descriptor, fullEntryPath, normalizedDestPath);
                     break;
             }
             
@@ -234,38 +353,59 @@ function pushSourceFiles(descriptor)
         }
     }
     
+    function buildManyToOne(descriptor, srcEntries, outputBundle, languageName)
+    {
+        assert(typeof srcEntries == "object");
+        assert(typeof outputBundle == "string");
+        
+        // Resolutions of the full paths of the files (relative from the src/ directory).
+        const fullEntryPaths = [];
+        
+        // The destination path is always relative to the Rehike root directory.
+        const normalizedDestPath = outputBundle.replace(new RegExp("\\" + path.sep, "g"), "/");
+        
+        for (let entry of srcEntries)
+        {
+            fullEntryPaths.push(
+                path.resolve(basePath, entry).replace(new RegExp("\\" + path.sep, "g"), "/")
+            );
+        }
+        
+        let buildTask = null;
+        
+        switch (languageName)
+        {
+            case "js":
+                buildTask = new JSBuildTask(descriptor, fullEntryPaths, normalizedDestPath);
+                break;
+        }
+        
+        if (buildTask)
+        {
+            g_buildTaskRegistry.push(buildTask);
+        }
+    }
+    
     if (descriptor.cssBuildFiles != null)
-        decorateAndPush(descriptor, descriptor.cssBuildFiles, "css");
+        buildSourceToSource(descriptor, descriptor.cssBuildFiles, "css");
     
     if (descriptor.jsBuildFiles != null)
-        decorateAndPush(descriptor, descriptor.jsBuildFiles, "js");
+        buildManyToOne(descriptor, descriptor.jsBuildFiles, descriptor.jsOutputBundle, "js");
 
     if (descriptor.protobufBuildFiles != null)
-        decorateAndPush(descriptor, descriptor.protobufBuildFiles, "protobuf");
+        buildSourceToSource(descriptor, descriptor.protobufBuildFiles, "protobuf");
 }
 
-// module.exports = {
-//     // Exported constants:
-//     BASE_SRC_DIR: BASE_SRC_DIR,
-//     REHIKE_ROOT_DIR: REHIKE_ROOT_DIR,
-    
-//     // Exported classes:
-//     BuildTask: BuildTask,
-//     CSSBuildTask: CSSBuildTask,
-    
-//     // Exported functions:
-//     pushSourceFiles: pushSourceFiles,
-    
-//     // Namespace aliases:
-//     Parser: require("./parse_rhbuild"),
-// };
-
+// Exported constants:
 exports.BASE_SRC_DIR = BASE_SRC_DIR;
 exports.REHIKE_ROOT_DIR = REHIKE_ROOT_DIR;
 
+// Exported classes:
 exports.BuildTask = BuildTask;
 exports.CSSBuildTask = CSSBuildTask;
 
+// Exported functions:
 exports.pushSourceFiles = pushSourceFiles;
 
+// Namespace aliases:
 exports.Parser = require("./parse_rhbuild");

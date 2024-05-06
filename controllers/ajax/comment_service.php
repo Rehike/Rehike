@@ -316,7 +316,7 @@ return new class extends AjaxController
         )->then(function ($response) {
             $ytdata = $response->getJson();
 
-            if (@$ytdata->actionResults[0] ->status == "STATUS_SUCCEEDED")
+            if (@$ytdata->actionResults[0]->status == "STATUS_SUCCEEDED")
             {
                 echo json_encode((object) [
                     "response" => "SUCCESS"

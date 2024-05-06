@@ -10,12 +10,8 @@
 {% import 'core/macros.twig' as core %}
 {{ core.css("www-account-settings") }}
 {{ core.css("www-creatorpage") }}
-<style>
-{% include "rehike/panel/common.css.twig" %}
-</style>
-<style>
-{% include "rehike/version/css.twig" %}
-</style>
+<link rel="stylesheet" href="/rehike/static/rehike/css/www-rehike-panel.css">
+<link rel="stylesheet" href="/rehike/static/rehike/css/www-rehike-version.css">
 {% endblock %}
 
 {%- block body_class -%}
