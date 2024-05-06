@@ -1,0 +1,6 @@
+{
+    "name": "Test mod",
+    "author": "Taniko Yamamoto",
+    "id": "nikos-test-mod",
+    "insertion_point": "main.php"
+}

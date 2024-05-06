@@ -1,0 +1,88 @@
+/**
+ * Public network interface.
+ *
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
+ * @author The Rehike Maintainers
+ */
+interface Network
+{
+    /**
+     * Make a generic URL request.
+     */
+    static Promise<Response> urlRequest(
+        in string url, 
+        in map<string, any> opts
+    );
+
+    /**
+     * Make a first-party (youtube.com) URL request.
+     * 
+     * Unlike the standard function, this will forward the user's YouTube authentication data.
+     * Do not use this function for foreign requests.
+     * 
+     * This is used occassionally for non-InnerTube APIs that still need access to the user's
+     * account, i.e. /getAccountSwitcherEndpoint.
+     */
+    static Promise<Response> urlRequestFirstParty(
+        in string url,
+        map<string, any> opts
+    );
+
+    /**
+     * Make an InnerTube request.
+     */
+    static Promise<Response> innertubeRequest(
+        in string action,
+        map<string, any> body,
+        [optional, in] string|int clientName,
+        [optional, in] string|int clientVersion,
+        [optional, in] boolean ignoreErrors,
+        [optional, in] boolean useAuthentication
+    );
+
+    /**
+     * Make a fake InnerTube request. This is used for developer testing purposes.
+     * 
+     * This will return data from a local JSON file as if it's a true InnerTube request. This
+     * allows Rehike developers to test InnerTube dumps for debugging purposes.
+     * 
+     * The signature is kept about the same as innertubeRequest, so that it's easy to swap things
+     * out during development purposes.
+     * 
+     * In addition, if $localFilePath is "error", then an InnerTube error will be forced. This
+     * may be used to test error handling.
+     */
+    static Promise<Response> innertubeRequestFake(
+        in string localFilePath,
+        in string action,
+        map<string, any> body,
+        [optional, in] string|int clientName,
+        [optional, in] string|int clientVersion,
+        [optional, in] boolean ignoreErrors,
+        [optional, in] boolean useAuthentication
+    );
+
+    /**
+     * Request the public YouTube Data API v3.
+     * 
+     * This uses a unique key, and as such, doesn't have any limitations.
+     */
+    static Promise<Response> dataApiRequest(
+        in string action,
+        in map<string, any> params,
+        [optional, in] boolean post
+    );
+
+    /**
+     * Get the default options for any non-InnerTube YouTube request.
+     * 
+     * These are merged with other user options to provide a desired
+     * outcome.
+     */
+    static map<string, any> getDefaultYouTubeOpts();
+
+    /**
+     * Run all requests made.
+     */
+    static void run();
+};
