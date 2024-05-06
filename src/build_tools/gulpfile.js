@@ -9,15 +9,6 @@ const gulp = require("gulp");
 const through2 = require("through2");
 const RehikeBuild = require("./scripts/rehikebuild_main");
 
-// CSS compiler includes
-const sassBackend = require("sass");
-const gulpSassBackend = require("gulp-sass");
-const GulpSass = gulpSassBackend(sassBackend);
-
-// JS compiler includes:
-const closureCompilerBackend = require("google-closure-compiler");
-const GulpClosureCompiler = closureCompilerBackend.gulp();
-
 // Miscellaneous includes:
 const path = require("path");
 
@@ -51,23 +42,6 @@ function CommonStartupTask()
 }
 
 CommonStartupTask.displayName = "RehikeBuild :: Initialization";
-
-// /**
-//  * Runs CSS build tasks.
-//  */
-// function BuildCss()
-// {
-//     const buildFiles = RehikeBuild.getBuildFilesForLanguage("css").getAllSourceNames();
-    
-//     return gulp.src(buildFiles, commonBuildCfg)
-//         // Initialize the build task so that RehikeBuild actions can be applied to it:
-//         .pipe(RehikeBuild.GulpInitRehikeBuildTask())
-//         // Send the file contents off to the SASS compiler:
-//         .pipe(GulpSass.sync({ outputStyle: "compressed" }).on("error", GulpSass.logError))
-//         // Finalize the build task:
-//         .pipe(RehikeBuild.GulpFinalizePathsTask())
-//         .pipe(gulp.dest(RehikeBuild.BASE_SRC_DIR));
-// }
 
 /**
  * Runs JS build tasks.

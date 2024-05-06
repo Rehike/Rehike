@@ -32,4 +32,4 @@ test.test = function()
     return privateTest();
 };
 
-test();
+test.test();
