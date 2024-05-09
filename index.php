@@ -57,6 +57,7 @@ set_include_path($_SERVER['DOCUMENT_ROOT']);
     "</a>"
 );
 
+require "includes/startup_config.php";
 require "includes/fatal_handler.php";
 
 // PHP < 8.2 IDE fix

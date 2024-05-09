@@ -74,7 +74,11 @@ return new class extends NirvanaController
 
                 if ($header = @$channelData->header->c4TabbedHeaderRenderer)
                 {
-                    $yt->page->channelHeader = new MHeader($header, "/channel/$yt->ucid");
+                    $yt->page->channelHeader = new MHeader($header, "/channel/$yt->ucid", isOld: true);
+                }
+                else if ($header = @$channelData->header->pageHeaderRenderer)
+                {
+                    $yt->page->channelHeader = new MHeader($header, "/channel/$yt->ucid", isOld: false);
                 }
                 else if ($header = @$channelData->header->carouselHeaderRenderer)
                 {
@@ -109,11 +113,14 @@ return new class extends NirvanaController
 
                 if ($tabs = @$channelData->contents->twoColumnBrowseResultsRenderer->tabs)
                 {
-                    Channels4Model::processAndAddTabs(
-                        $yt,
-                        $tabs,
-                        $yt->page->channelHeader
-                    );
+                    if (isset($yt->page->channelHeader))
+                    {
+                        Channels4Model::processAndAddTabs(
+                            $yt,
+                            $tabs,
+                            $yt->page->channelHeader
+                        );
+                    }
                     
                     if (isset($yt->page->header->title))
                     {

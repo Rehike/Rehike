@@ -17,6 +17,7 @@ errorNotice: "通知"
 errorDeprecated: "非推奨"
 
 tabErrorTitle: "エラー (%s)"
+tabLogTitle: "ロッグ"
 tabConsoleTitle: "PHP コンソール"
 tabNetworkTitle: "ネットワーク"
 tabPerformanceTitle: "パフォーマンス"

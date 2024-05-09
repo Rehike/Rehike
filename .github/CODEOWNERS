@@ -1,0 +1,71 @@
+# The following volunteers have self-identified as subject matter experts
+# or interested parties over a particular area of the Rehike source code.
+# While requesting a review from someone does not obligate that person to
+# review a pull request, these reviewers might have valuable knowledge of
+# the problem area and could aid in deciding whether a pull request is ready
+# for merging.
+#
+# For more information, see the GitHub CODEOWNERS documentation:
+# https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+# Language translation owners:
+/i18n/en-US @YukisCoffee
+/i18n/en-GB @YukisCoffee @kawapure
+/i18n/ja @YukisCoffee
+/i18n/ko @bluedragon-cairo
+/i18n/es-LA @Erizur
+/i18n/nl-NL @Zehnter
+/i18n/pl @VexorionReal
+/i18n/pt-BR @kwan-vini
+/i18n/ru @malina-1797
+
+# General code
+/.git-hooks @YukisCoffee
+/.github @YukisCoffee @kawapure @aubymori
+
+/controllers @YukisCoffee @aubymori @kawapure
+/controllers/ajax @aubymori
+/controllers/core @YukisCoffee @kawapure
+/controllers/rehike @YukisCoffee
+/controllers/rehike/config.php @aubymori
+
+/docs @YukisCoffee @kawapure
+
+/includes @YukisCoffee @kawapure @aubymori
+
+/models @YukisCoffee @aubymori @kawapure
+/models/Browse @YukisCoffee
+/models/Comments @YukisCoffee
+/models/Rehike @YukisCoffee
+/models/Results @kawapure
+/models/Share @syndiate
+
+/modules/generated @YukisCoffee
+/modules/Rehike @YukisCoffee @aubymori @kawapure
+/modules/Rehike/Async @YukisCoffee
+/modules/Rehike/ControllerV2 @YukisCoffee
+/modules/Rehike/Debugger @YukisCoffee
+/modules/Rehike/i18n @YukisCoffee
+/modules/Rehike/Nepeta @YukisCoffee
+/modules/Rehike/Player @YukisCoffee @kawapure @TorutheRedFox @DavidCGranger
+/modules/Rehike/Signin @YukisCoffee @kawapure
+/modules/Rehike/SignInV2 @YukisCoffee @kawapure
+/modules/Rehike/Spf @YukisCoffee @kawapure
+/modules/Rehike/Version @YukisCoffee
+/modules/YukisCoffee @YukisCoffee
+
+/src @YukisCoffee @aubymori @kawapure
+/src/build_tools @kawapure
+/src/img @YukisCoffee
+/src/protos @YukisCoffee
+
+/static/js/html5player @TorutheRedFox @YukisCoffee
+/static/js/www-base-rehike.js @YukisCoffee
+
+/template/hitchhiker @YukisCoffee @kawapure @aubymori
+/template/hitchhiker/rehike @YukisCoffee
+/template/hitchhiker/page_fragments @YukisCoffee @kawapure
+/template/hitchhiker/player @YukisCoffee @TorutheRedFox
+
+/index.php @YukisCoffee @kawapure @aubymori
+/router.php @YukisCoffee @kawapure @aubymori
