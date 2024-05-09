@@ -10,6 +10,7 @@ use \Rehike\Model\Rehike\Debugger\{
     MOpenButton as OpenButton,
     MDialog as Dialog,
     MErrorTab as ErrorTab,
+    MLogTab as LogTab,
     MYtWalker as YtWalker,
     MLoadingTab as LoadingTab,
     MNetworkTab as NetworkTab
@@ -162,6 +163,10 @@ class Debugger
                 )
             );
             */
+            
+            $context->addTab(
+                LogTab::createTab($i18n->get("tabLogTitle"), "logs")
+            );
 
             /** @var YtWalker */
             $ytWalker = $context->addTab(
