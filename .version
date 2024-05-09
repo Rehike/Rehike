@@ -1,10 +1,10 @@
 {
-	"previousHash": "cb63dac4a84f0414888e0e055a1b5d06ff981cbc",
-	"currentRevisionId": 1469,
-	"subject": "Add log tab to Rebug",
-	"body": "Add log tab to Rebug",
+	"previousHash": "99a1bf45fa7ea82d4a68d0a69b23e89ea90c1be8",
+	"currentRevisionId": 1470,
+	"subject": "Support on-update callbacks for config changes",
+	"body": "Support on-update callbacks for config changes",
 	"branch": "master",
 	"committerName": "Isabella",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1715281738
+	"time": 1715282031
 }
