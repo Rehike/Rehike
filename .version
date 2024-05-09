@@ -1,10 +1,10 @@
 {
-	"previousHash": "b05ab56fadac6caed548c61299853f84a2b2d556",
-	"currentRevisionId": 1466,
-	"subject": "Hopefully fix #566",
-	"body": "Hopefully fix #566",
+	"previousHash": "8c0ed50c4b60b9bf5f11d6d556414e1f55a0a71c",
+	"currentRevisionId": 1467,
+	"subject": "Add CODEOWNERS file for GitHub",
+	"body": "Add CODEOWNERS file for GitHub",
 	"branch": "master",
 	"committerName": "Isabella",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1715010939
+	"time": 1715215321
 }
