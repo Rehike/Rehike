@@ -494,6 +494,7 @@ function parseText(textObj)
 
 var startSeconds = 0;
 if (
+    RAW_PLAYER_RESPONSE &&
     RAW_PLAYER_RESPONSE.playerConfig &&
     RAW_PLAYER_RESPONSE.playerConfig.playbackStartConfig &&
     RAW_PLAYER_RESPONSE.playerConfig.playbackStartConfig.startSeconds
@@ -581,10 +582,17 @@ ytplayer.config = {
     }
 };
 
+{% if not yt.spf %}
 {% include "player/classic_player_mods.js.twig" %}
+{% endif %}
 
 function buildPlayer()
 {
+    {% if not yt.spf %}
+    // From classic_player_mods:
+    initClassicPlayerMods();
+    {% endif %}
+    
     getLatestPlayerJsInfo().then(function(playerUtils) {
         // Cancel if the player information isn't available. If this is the case,
         // then we're likely not on the watch page:
@@ -823,9 +831,6 @@ function buildPlayer()
 		//var playerApi = document.getElementById("movie_player");
         //playerApi.loadVideoByPlayerVars(ytplayer.config.args);
         {% endif %}
-
-        // From classic_player_mods:
-        initClassicPlayerMods();
     });
 }
 
