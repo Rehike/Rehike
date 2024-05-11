@@ -24,22 +24,9 @@
             "playerResponse": {{ yt.playerResponse|json_encode|raw }}
          };
       </script>
-{% if rehike.config.appearance.playerChoice != "CURRENT" %}
-	<script>
-   {# This currently does not work for players since 2021. 2020 and prior are fine. #}
-	{% include "player/player_decryptor_boot.twig" %}
-	</script>
-{% endif %}
-	{% if (pageType == "embed") and (rehike.config.appearance.playerChoice == "PLAYER_2014" or rehike.config.appearance.playerChoice == "PLAYER_2015" or rehike.config.appearance.playerChoice == "PLAYER_2015_NEW") %}
-	<script>
-	if (!window.top.onYouTubePlayerReady) {
-		window.top.onYouTubePlayerReady = function(e) {
-			window.top.onYouTubeHTML5PlayerReady(e);
-		}
-	}
-	</script>
-	<script src="//s.ytimg.com/yts/jsbin/www-embed-player-vfl6Pxzzi/www-embed-player.js" type="text/javascript" name="www-embed-player/www-embed-player"></script>
-    {% endif %}
+{# RELOCATION NOTICE(izzy): Player decryptor boot code has been moved to core/core.twig to compensate
+   for synchronous loading of core JS. It used to be located here, but this code is loaded before YouTube's
+   JS, so it failed to load correctly. #}
       <script>
 {% if rehike.config.appearance.playerChoice == "PLAYER_2014" or rehike.config.appearance.playerChoice == "PLAYER_2015" or rehike.config.appearance.playerChoice == "PLAYER_2015_NEW" %}
     {% include "player/classic_player_boot.twig" %}
