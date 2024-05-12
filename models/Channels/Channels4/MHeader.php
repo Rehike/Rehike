@@ -1,13 +1,22 @@
 <?php
 namespace Rehike\Model\Channels\Channels4;
 
+use Rehike\ViewModelParser;
 use Rehike\Model\Appbar\MAppbarNav;
 use Rehike\Model\Appbar\MAppbarNavItem;
+use Rehike\Model\Common\Subscription\MSubscriberCount;
 use Rehike\Util\ExtractUtils;
 use Rehike\Util\ImageUtils;
 use Rehike\Util\ParsingUtils;
 use Rehike\Model\Common\Subscription\MSubscriptionActions;
 
+/**
+ * Model for the channels4 page header.
+ * 
+ * @author Aubrey Pankow <aubyomori@gmail.com>
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
+ * @author The Rehike Maintainers
+ */
 class MHeader
 {
     public $title;
@@ -19,14 +28,16 @@ class MHeader
     public $tabs;
     public $subscriptionButton;
     public $nonexistentMessage;
+    protected ?object $frameworkUpdates = null;
 
     protected $subscriptionCount;
 
-    public function __construct($header, $baseUrl, bool $isOld = true)
+    public function __construct($header, $baseUrl, bool $isOld = true, ?object $frameworkUpdates = null)
     {
         if (!$isOld)
         {
             // New format (March 2024):
+            $this->frameworkUpdates = $frameworkUpdates;
             $this->constructFromViewModel($header, $baseUrl);
         }
         else
@@ -41,6 +52,7 @@ class MHeader
      */
     protected function constructFromViewModel($header, $baseUrl): void
     {
+        \Rehike\Logging\DebugLogger::print("construct from view model");
         $content = $header->content->pageHeaderViewModel;
 
         // Add the title if it exists.
@@ -75,6 +87,78 @@ class MHeader
         {
             $this->banner = new MDefaultBanner();
             $this->banner->isCustom = false;
+        }
+        
+        // The subscription count is stored elsewhere, because of course it is.
+        // In fact, I'm not even sure if this can be reliably considered to be the
+        // subscription count of the channel, meaning that there is a possibility that
+        // we will need to apply another fucking heuristic to determine if the string
+        // is the subscriber count.
+        $subscriberCountFullString = @$content->metadata->contentMetadataViewModel->metadataRows[1]
+            ->metadataParts[0]->text->content;
+            
+        $subscriberCount = ExtractUtils::isolateSubCnt(ParsingUtils::getText($subscriberCountFullString));
+        
+        $primaryActionButtonContainer = $content->actions->flexibleActionsViewModel->actionsRows[0]->actions[0];
+        
+        // Add the subscribe button (or equivalent item):
+        if ($viewModel = @$primaryActionButtonContainer->subscribeButtonViewModel)
+        {
+            // Logged-in subscribe button
+            \Rehike\Logging\DebugLogger::print("subscribe button");
+            if ($this->frameworkUpdates)
+            {
+                \Rehike\Logging\DebugLogger::print("has framework updates");
+                // In order to determine whether or not the user is subscribed, we need to parse
+                // the mutation entities.
+                $parser = new ViewModelParser($viewModel, $this->frameworkUpdates);
+                $entities = $parser->getViewModelEntities([
+                    "stateEntityStoreKey" => "state"
+                ]);
+                
+                $subscribeStatus = $entities["state"]->payload->subscriptionStateEntity->subscribed;
+                    
+                if ($subscribeStatus == true)
+                {
+                    $actionsModelStatus = @$viewModel->unsubscribeButtonContent->onTapCommand->innertubeCommand
+                        ->signalServiceEndpoint->actions[0]->openPopupAction->popup->confirmDialogRenderer
+                        ->confirmButton->serviceEndpoint->unsubscribeEndpoint->params ?? "";
+                }
+                else
+                {
+                    $actionsModelStatus = @$viewModel->subscribeButtonContent->onTapCommand->innertubeCommand
+                        ->subscribeEndpoint->params ?? "";
+                }
+                    
+                $this->subscriptionButton = new MSubscriptionActions([
+                    "branded" => true,
+                    "longText" => $subscriberCount,
+                    "shortText" => $subscriberCount,
+                    "isSubscribed" => $subscribeStatus ?? false,
+                    "channelExternalId" => $viewModel->channelId,
+                    "params" => $actionsModelStatus,
+                    "unsubConfirmDialog" => @$viewModel->unsubscribeButtonContent->onTapCommand
+                        ->innertubeCommand->signalServiceEndpoint->actions[0]->openPopupAction->popup
+                        ->confirmDialogRenderer ?? null,
+                    //"notificationStateId" => $data->notificationPreferenceButton->subscriptionNotificationToggleButtonRenderer->currentStateId ?? 3
+                ]);
+            }
+        }
+        else if (
+            ($viewModel = @$primaryActionButtonContainer->buttonViewModel) &&
+            @$viewModel->targetId == "channel-customize-button"
+        )
+        {
+            // Channel owner
+            \Rehike\Logging\DebugLogger::print("owner subscribe button");
+            
+            $this->subscriptionButton = MSubscriptionActions::buildMock($subscriberCount);
+        }
+        else if (!\Rehike\Signin\API::isSignedIn())
+        {
+            \Rehike\Logging\DebugLogger::print("logged out subscribe button");
+            
+            $this->subscriptionButton = MSubscriptionActions::signedOutStub($subscriberCount);
         }
     }
 
@@ -125,10 +209,11 @@ class MHeader
 
 
         $count = "";
-        // Add the subscription button
+        
+        // Add the subscribe button (or equivalent item):
         if ($a = @$header->subscribeButton->subscribeButtonRenderer)
         {
-
+            // Logged-in subscribe button
             if (isset($header->subscriberCountText))
             {
                 $count = ExtractUtils::isolateSubCnt(ParsingUtils::getText($header->subscriberCountText));
@@ -139,9 +224,9 @@ class MHeader
                 $a, $count
             );
         }
-        // Channel owner
         else if (isset($header->editChannelButtons))
         {
+            // Channel owner
             if (isset($header->subscriberCountText))
             {
                 $count = ExtractUtils::isolateSubCnt(ParsingUtils::getText($header->subscriberCountText));
@@ -154,6 +239,7 @@ class MHeader
         }
         else if (isset($header->subscribeButton))
         {
+            // Logged-out subscribe button
             if (isset($header->subscriberCountText))
             {
                 $count = ExtractUtils::isolateSubCnt(ParsingUtils::getText($header->subscriberCountText));
