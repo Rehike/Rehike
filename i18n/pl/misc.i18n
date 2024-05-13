@@ -10,7 +10,7 @@ dateTextPublic: "Opublikowany %s"
 dateTextPrivate: "Przesłany %s"
 subscribeText: "Subskrybuj"
 subscribedText: "Subkrybujesz"
-unsubscribeText: "Usuń subskrypcję"
+unsubscribeText: "Zrezygnuj z subskrypcji"
 
 # How to obtain:
 # Get your UCID from YouTube. This is on https://www.youtube.com/account_advanced
