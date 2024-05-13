@@ -9,7 +9,7 @@ viewTextPlural: "%s wyświetleń"
 dateTextPublic: "Opublikowany %s"
 dateTextPrivate: "Przesłany %s"
 subscribeText: "Subskrybuj"
-subscribedText: "Subkrybujesz"
+subscribedText: "Subskrybujesz"
 unsubscribeText: "Zrezygnuj z subskrypcji"
 
 # How to obtain:
