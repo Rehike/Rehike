@@ -1,15 +1,15 @@
 /**
- * @fileoverview Main implementations for RehikeBuild and .rhbuild files.
+ * @fileoverview Main implementations for RehikeBuild
  * 
  * @author Isabella <kawapure@gmail.com>
  * @author The Rehike Maintainers
  */
 
+const gulp = require("gulp");
 const through2 = require("through2");
-const Utils = require("./utils");
 const path = require("path");
 const assert = require("assert/strict");
-const crypto = require("crypto");
+const { Transform } = require("stream");
 
 // Includes should be relative to the src/ directory, and this script resides in
 // src/build_tools/scripts, so we need to up two directories.
@@ -18,191 +18,293 @@ const BASE_SRC_DIR = path.resolve(__dirname, "../..");
 // Rehike root directory is three directories up from here.
 const REHIKE_ROOT_DIR = path.resolve(__dirname, "../../..");
 
+// CSS compiler includes
+const sassBackend = require("sass");
+const gulpSassBackend = require("gulp-sass");
+const GulpSass = gulpSassBackend(sassBackend);
+
+// JS compiler includes:
+const closureCompilerBackend = require("google-closure-compiler");
+const GulpClosureCompiler = closureCompilerBackend.gulp();
+
 /**
- * Stores a map of all known build files.
- * 
- * The mapping is stored: source path -> output destination
+ * Common build configuration options.
  */
-const buildFiles = {
-    /**
-     * All build files.
-     */
-    _all: [],
-    
-    /**
-     * Packages determine all source file that compose a single destination file.
-     * 
-     * @type {Map<string, WeakRef<BuildFile>[]>}
-     */
-    _packages: new Map(),
-    
-    js: [],
-    css: [],
-    protobuf: [],
-    
-    /**
-     * Push a build file to the build map.
-     * 
-     * @param {BuildFile} buildFile
-     */
-    push(buildFile)
-    {
-        this._all.push(buildFile);
-        
-        // Per-language name cache:
-        if (!this[buildFile.languageName])
-        {
-            this[buildFile.languageName] = [];
-        }
-        
-        this[buildFile.languageName].push(new WeakRef(buildFile));
-        
-        // Package name cache:
-        if (!this._packages.has(buildFile.destinationPath))
-        {
-            this._packages.set(buildFile.destinationPath, []);
-        }
-        
-        this._packages.get(buildFile.destinationPath).push(new WeakRef(buildFile));
-    },
+const commonBuildCfg = {
+    base: BASE_SRC_DIR,
+    root: BASE_SRC_DIR,
+    cwd: BASE_SRC_DIR,
 };
 
 /**
- * Stores rename handles for build files.
+ * Stores all registered build tasks.
  * 
- * @see See {@link getRenameHandle} for more information
+ * Note that new tasks should always be appended to the end of this array in
+ * order for the build system to function correctly. Inserting an item in the
+ * middle will mess things up.
+ * 
+ * @type {BuildTask[]}
  */
-const renameHandles = {};
+const g_buildTaskRegistry = [];
 
 /**
- * A build file.
+ * Base class for Gulp build tasks.
+ * 
+ * @abstract
  */
-class BuildFile
+class BuildTask
 {
-    languageName;
-    sourcePath;
-    destinationPath;
+    inputFileNames = [];
+    outputFileName = "";
+    displayName = "";
+    
+    static Status = {
+        PENDING: 0,
+        FINISHED: 1,
+        ERRORED: 2,
+    };
+    
+    _gulpTask = null;
+    _status = BuildTask.Status.PENDING;
+    
+    _data = null;
+    
+    _resolutionPromise = {
+        resolve: null,
+        reject: null,
+        promise: null
+    };
+    
+    get resolutionPromise()
+    {
+        return this._resolutionPromise.promise;
+    }
+    
+    constructor(descriptor, inputFileNames, outputFileName)
+    {
+        if (typeof inputFileNames == "string")
+        {
+            this.inputFileNames = [inputFileNames];
+        }
+        else
+        {
+            this.inputFileNames = inputFileNames;
+        }
+        
+        this.displayName = descriptor.taskName;
+        
+        this.outputFileName = outputFileName;
+        
+        console.log(`Created new BuildTask(${JSON.stringify(inputFileNames)}, ${outputFileName})`);
+        
+        this._resolutionPromise.promise = new Promise((resolve, reject) => {
+            this._resolutionPromise.resolve = resolve;
+            this._resolutionPromise.reject = reject;
+        });
+    }
+    
+    get gulpTask()
+    {
+        this._ensureGulpTask();
+        
+        return this._gulpTask;
+    }
+    
+    get isPending()
+    {
+        return this._status == BuildTask.Status.PENDING;
+    }
+    
+    get status()
+    {
+        return this._status;
+    }
     
     /**
-     * @param {object} info 
+     * Gets an iterator for all build tasks in the registry.
+     * 
+     * @returns {BuildTaskRegistryIterator}
      */
-    constructor(info)
+    static getAllBuildTasks()
     {
-       assert(info.languageName && info.sourcePath && info.destinationPath);
-       
-       this.languageName = info.languageName;
-       this.sourcePath = info.sourcePath;
-       this.destinationPath = info.destinationPath;
+        return new BuildTaskRegistryIterator();
+    }
+    
+    /**
+     * Ensures that the Gulp task exists, and creates it if it doesn't.
+     */
+    _ensureGulpTask()
+    {
+        if (!this._gulpTask)
+        {
+            const parent = this;
+            console.log("Creating gulp task");
+            this._gulpTask = this._buildGulpTask();
+            
+            this._gulpTask = this._gulpTask.pipe(this._getDataFromStream(this));
+            
+            this._gulpTask.on("finish", function() {
+                parent._status = BuildTask.Status.FINISHED;
+                parent._resolutionPromise.resolve(parent._data);
+                
+                console.dir(parent._data.contents.toString());
+            });
+            
+            this._gulpTask.on("error", function(e) {
+                parent._status = BuildTask.Status.ERRORED;
+                parent._resolutionPromise.reject(e);
+            });
+        }
+    }
+    
+    /**
+     * Builds a Gulp task for the file.
+     * 
+     * @abstract
+     * @virtual
+     * @protected
+     */
+    _buildGulpTask()
+    {
+        const gulp = this._prepareGulpBackend();
+        return gulp;
+    }
+    
+    /**
+     * Sets up the Gulp backend for building the task.
+     * 
+     * @protected
+     */
+    _prepareGulpBackend()
+    {
+        return gulp.src(this.inputFileNames, commonBuildCfg);
+    }
+    
+    /**
+     * Gets the data from the Gulp transform stream.
+     * 
+     * @param {BuildTask} targetObj 
+     * @returns {Transform}
+     */
+    _getDataFromStream(targetObj)
+    {
+        return through2.obj(function(file, encoding, callback) {
+            targetObj._data = file;
+            
+            // This should always be the last step, but just in case, we actually don't
+            // push the file in any case.
+            callback();
+        });
     }
 }
 
-/**
- * API for retrieving build files for a language.
- */
-class LanguageBuildFilesAPI
+class CSSBuildTask extends BuildTask
 {
-    /**
-     * The name of the language.
-     * 
-     * @readonly
-     * @private
-     */
-    _languageName = "";
-    
-    constructor(languageName)
+    /** @inheritdoc @override */
+    _buildGulpTask()
     {
-        this._languageName = languageName;
-    }
-    
-    /**
-     * Gets all build files (unsorted) for a language.
-     * 
-     * @returns {string[]}
-     */
-    getAllSourceNames()
-    {
-        let files = buildFiles[this._languageName]
-            .map(item => item.deref())
-            .filter(item => null != item)
-            .map(item => item.sourcePath);
-        return files;
-    }
-    
-    /**
-     * Gets the package API for a language.
-     * 
-     * @returns {Map<string, BuildFile[]>}
-     */
-    getPackages()
-    {
-        let result = new Map();
-        
-        for (const mapping of buildFiles._packages)
-        {
-            const destPath = mapping[0];
-            const packages = mapping[1];
-            
-            for (const pPackage of packages)
-            {
-                const pkg = pPackage.deref();
+        console.log("CSSBuildTask._buildGulpTask");
+        const task = this._prepareGulpBackend();
+        let result = task.pipe(GulpSass.sync({ outputStyle: "compressed" }).on("error", GulpSass.logError))
+            .pipe(through2.obj(function(file, encoding, callback) {
+                this.push(file);
                 
-                if (!pkg || pkg.languageName != this._languageName)
-                    continue;
+                // Temporary testing code: 
+                if (process.argv.includes("--test-branched-build-task"))
+                {
+                    let test = new BuildTask({taskName: "Fake test task."}, "fake", "fake");
+                    g_buildTaskRegistry.push(test);
+                }
                 
-                if (!result.get(destPath))
-                    result.set(destPath, []);
-                
-                result.get(destPath).push(pkg);
-            }
-        }
-        
+                callback();
+            }));
         return result;
     }
 }
 
-/**
- * Gets all known build files for a given language name.
- * 
- * @param {string} languageName 
- * @returns {LanguageBuildFilesAPI}
- */
-function getBuildFilesForLanguage(languageName)
+class JSBuildTask extends BuildTask
 {
-    if (!(languageName in buildFiles))
+    /** @inheritdoc @override */
+    _buildGulpTask()
     {
-        console.warn("Attempted to read build files for non-existent language: " + languageName);
-        return [];
+        console.log("JSBuildTask._buildGulpTask");
+        const task = this._prepareGulpBackend();
+        let result = task.pipe(GulpClosureCompiler({
+                compilation_level: "ADVANCED_OPTIMIZATIONS",
+                process_closure_primitives: true,
+                language_out: "ECMASCRIPT3",
+                output_wrapper: "(function(){%output%})();"
+            }));
+        return result;
     }
     
-    return new LanguageBuildFilesAPI(languageName);
+    /** @inheritdoc @override */
+    _prepareGulpBackend()
+    {
+        const buildFiles = this.inputFileNames.slice(0); // .slice(0) to clone the array
+        
+        // Requirements for Closure Compiler:
+        buildFiles.push(
+            "build_tools/node_modules/google-closure-library/closure/goog/base.js"
+        );
+        
+        return gulp.src(buildFiles, commonBuildCfg);
+    }
 }
 
 /**
- * Gets the output path related to a given build file path.
+ * Iterates the build task registry.
  * 
- * @param {string} buildFilePath 
- * @returns {string?}
+ * This design exists to allow tasks to be added dynamically during the build process.
  */
-function getOutputPathForBuildFile(buildFilePath)
+class BuildTaskRegistryIterator
 {
-    let normalizedPath = buildFilePath.replace(new RegExp("\\" + path.sep, "g"), "/");
+    /**
+     * The latest known item position in the build task registry.
+     * 
+     * @private
+     */
+    _latestKnownItemPosition = 0;
     
-    let outputPath = null;
-    for (const buildFile of buildFiles._all)
+    /**
+     * Check if new items were added to the registry since the last time we checked.
+     * 
+     * @returns {boolean}
+     */
+    hasNewItems()
     {
-        if (buildFile.sourcePath == normalizedPath)
+        return this._latestKnownItemPosition < g_buildTaskRegistry.length;
+    }
+    
+    /**
+     * Gets the latest unread chunk of build tasks from the registry.
+     * 
+     * This function is also responsible for the decoration process so that they
+     * work with Gulp.
+     * 
+     * @returns {callback[]} Wrapped tasks for Gulp's Undertaker module.
+     */
+    getNext()
+    {
+        const chunk = g_buildTaskRegistry.slice(this._latestKnownItemPosition);
+        
+        this._latestKnownItemPosition = g_buildTaskRegistry.length;
+        
+        let out = [];
+        
+        for (const wrapper of chunk)
         {
-            outputPath = buildFile.destinationPath;
-            break;
+            const fn = function() {
+                return wrapper.gulpTask;
+            };
+            
+            fn.displayName = "[RehikeBuild] " + wrapper.displayName;
+            
+            out.push(fn);
         }
+        
+        return out;
     }
-    
-    if (outputPath)
-    {
-        return path.resolve(REHIKE_ROOT_DIR, outputPath);
-    }
-    
-    console.error(`Build file ${buildFilePath} does not exist`);
 }
 
 /**
@@ -216,7 +318,7 @@ function pushSourceFiles(descriptor)
     
     // Common function to decorate and push entries for all languages, assuming they
     // exist.
-    function decorateAndPush(srcEntry, languageName)
+    function buildSourceToSource(descriptor, srcEntry, languageName)
     {
         assert(typeof srcEntry == "object");
 
@@ -231,144 +333,79 @@ function pushSourceFiles(descriptor)
             // The destination path is always relative to the Rehike root directory.
             const normalizedDestPath = srcEntry[entryKey]
                 .replace(new RegExp("\\" + path.sep, "g"), "/");
-                
-            const buildFile = new BuildFile({
-                languageName: languageName,
-                sourcePath: fullEntryPath,
-                destinationPath: normalizedDestPath
-            });
             
-            buildFiles.push(buildFile);
+            let buildTask = null;
+            
+            switch (languageName)
+            {
+                case "css":
+                    buildTask = new CSSBuildTask(descriptor, fullEntryPath, normalizedDestPath);
+                    break;
+                case "js":
+                    buildTask = new JSBuildTask(descriptor, fullEntryPath, normalizedDestPath);
+                    break;
+            }
+            
+            if (buildTask)
+            {
+                g_buildTaskRegistry.push(buildTask);
+            }
+        }
+    }
+    
+    function buildManyToOne(descriptor, srcEntries, outputBundle, languageName)
+    {
+        assert(typeof srcEntries == "object");
+        assert(typeof outputBundle == "string");
+        
+        // Resolutions of the full paths of the files (relative from the src/ directory).
+        const fullEntryPaths = [];
+        
+        // The destination path is always relative to the Rehike root directory.
+        const normalizedDestPath = outputBundle.replace(new RegExp("\\" + path.sep, "g"), "/");
+        
+        for (let entry of srcEntries)
+        {
+            fullEntryPaths.push(
+                path.resolve(basePath, entry).replace(new RegExp("\\" + path.sep, "g"), "/")
+            );
+        }
+        
+        let buildTask = null;
+        
+        switch (languageName)
+        {
+            case "js":
+                buildTask = new JSBuildTask(descriptor, fullEntryPaths, normalizedDestPath);
+                break;
+        }
+        
+        if (buildTask)
+        {
+            g_buildTaskRegistry.push(buildTask);
         }
     }
     
     if (descriptor.cssBuildFiles != null)
-        decorateAndPush(descriptor.cssBuildFiles, "css");
+        buildSourceToSource(descriptor, descriptor.cssBuildFiles, "css");
     
     if (descriptor.jsBuildFiles != null)
-        decorateAndPush(descriptor.jsBuildFiles, "js");
+        buildManyToOne(descriptor, descriptor.jsBuildFiles, descriptor.jsOutputBundle, "js");
 
     if (descriptor.protobufBuildFiles != null)
-        decorateAndPush(descriptor.protobufBuildFiles, "protobuf");
+        buildSourceToSource(descriptor, descriptor.protobufBuildFiles, "protobuf");
 }
 
-/**
- * Gets a rename handle for tracking files between renames.
- * 
- * Rename handles are required because Gulp tasks can rename files subtly (such
- * as changing the extensions) and we want to track file names easily on our
- * own; RehikeBuild definitions define their own output paths.
- * 
- * @param {string} resolutionName
- */
-function getRenameHandle(resolutionName)
-{
-    let id;
-    
-    do 
-    {
-        id = "rhbuild_" + crypto.randomBytes(20).toString("hex");
-    }
-    while (Object.keys(renameHandles).includes(id));
-    
-    renameHandles[id] = resolutionName;
-    
-    return id;
-}
-
-/**
- * Resolves a rename handle.
- * 
- * @see See {@link getRenameHandle} for more information.
- * 
- * @param {string} handle 
- */
-function resolveRenameHandle(handle)
-{
-    // Limit the handle file name to just the basename without any extension,
-    // so it matches the actual handle name used internally:
-    let normalizedHandle = path.basename(handle, path.extname(handle));
-    
-    if (renameHandles[normalizedHandle])
-    {
-        return renameHandles[normalizedHandle];
-    }
-    
-    throw new Error(`Rename handle ${handle} does not exist.`);
-}
-
-/**
- * Gulp task for initializing RehikeBuild tasks.
- */
-function GulpInitRehikeBuildTask()
-{
-    return through2.obj(function(file, encoding, callback)
-    {
-        const handle = getRenameHandle(getOutputPathForBuildFile(file.path));
-        
-        file.basename = handle + file.extname;
-        
-        this.push(file);
-        callback();
-    });
-}
-
-/**
- * Gulp task for finalizing RehikeBuild tasks.
- */
-function GulpFinalizePathsTask()
-{
-    return through2.obj(function(file, encoding, callback)
-    {
-        const originalPath = file.path;
-        let newPath = resolveRenameHandle(originalPath);
-        
-        if (newPath)
-        {
-            file.path = newPath;
-        }
-        else
-        {
-            console.error("Failed to get new path, debug info: ", newPath);
-            callback();
-            return;
-        }
-        
-        if (file.sourceMap)
-        {
-            file.sourceMap.file = file.relative;
-        }
-        
-        this.push(file);
-        
-        callback(null, file);
-    });
-}
-
-/**
- * Gulp task for getting the RehikeBuild handle name.
- */
-function GulpHackGetRehikeBuildHandleTask(outputObj, outputName)
-{
-    return through2.obj(function(file, encoding, callback)
-    {
-        // Limit the handle file name to just the basename without any extension,
-        // so it matches the actual handle name used internally:
-        let normalizedHandle = path.basename(file.path, path.extname(file.path));
-        
-        outputObj[outputName] = normalizedHandle;
-        
-        this.push(file);
-        callback();
-    });
-}
-
-exports.getBuildFilesForLanguage = getBuildFilesForLanguage;
-exports.getOutputPathForBuildFile = getOutputPathForBuildFile;
-exports.pushSourceFiles = pushSourceFiles;
-exports.GulpInitRehikeBuildTask = GulpInitRehikeBuildTask;
-exports.GulpFinalizePathsTask = GulpFinalizePathsTask;
-exports.GulpHackGetRehikeBuildHandleTask = GulpHackGetRehikeBuildHandleTask;
+// Exported constants:
 exports.BASE_SRC_DIR = BASE_SRC_DIR;
 exports.REHIKE_ROOT_DIR = REHIKE_ROOT_DIR;
+
+// Exported classes:
+exports.BuildTask = BuildTask;
+exports.CSSBuildTask = CSSBuildTask;
+
+// Exported functions:
+exports.pushSourceFiles = pushSourceFiles;
+
+// Namespace aliases:
 exports.Parser = require("./parse_rhbuild");

@@ -151,12 +151,10 @@
         {%- elseif item.globalWalkerContainer -%}
             {% import "rehike/debugger/global_walker.twig" as global_walker %}
             {{ global_walker.container(item.globalWalkerContainer) }}
+        {%- elseif item.isLogTab -%}
+            <pre>{% set logs = item.getLogs() %}{% for log in logs %}{{ log }}{{ "\n" }}{% endfor %}</pre>
         {%- elseif item.loadingRenderer -%}
             {{ _self.loading_renderer() }}
         {%- endif -%}
     {%- endfor -%}
 {%- endmacro -%}
-
-
-    {{ _self.dialog(rehikeDebugger.dialog) }}
-</div>

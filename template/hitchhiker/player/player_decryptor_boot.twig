@@ -234,7 +234,7 @@ function buildPlayer()
 	
 	if (playerApi)
 	{
-	playerApi.addEventListener('spfdone', function() {
+	    playerApi.addEventListener('spfdone', function() {
 			console.log("Rebuilding player decryptors");
 			buildPlayer(); // handle refresh
 		});

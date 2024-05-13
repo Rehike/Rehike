@@ -31,35 +31,6 @@ class channel extends NirvanaController
 
     public static string $requestedTab = "";
 
-    // Tabs where the "Featured channels" sidebar should show on
-    public const SECONDARY_RESULTS_ENABLED_TAB_IDS = [
-        "featured",
-        "discussion",
-        "community",
-        "about"
-    ];
-
-    // Indices of which cloud chip corresponds to each sort option
-    public const VIDEO_TAB_SORT_INDICES = [
-        "dd",
-        "p",
-        "da"
-    ];
-
-    // Sort map for regular tabs that still use the old sorting backend
-    public const SORT_MAP = [
-        null,
-        "p",
-        "da",
-        "dd",
-        "lad"
-    ];
-
-    public const VIDEO_TABS = [
-        "videos",
-        "streams"
-    ];
-
     public function onPost(YtApp $yt, RequestMetadata $request): void
     {
         http_response_code(404);
@@ -151,7 +122,7 @@ class channel extends NirvanaController
 
             if (isset($request->params->sort) && !in_array($tab, ["videos", "streams", "shorts"]))
             {
-                $id = array_search($request->params->sort, self::SORT_MAP);
+                $id = array_search($request->params->sort, Channels4::SORT_MAP);
                 if (is_int($id))
                 {
                     $params->setSort($id);
@@ -178,7 +149,7 @@ class channel extends NirvanaController
             }
 
             if (
-                in_array($tab, self::SECONDARY_RESULTS_ENABLED_TAB_IDS) &&
+                in_array($tab, Channels4::SECONDARY_RESULTS_ENABLED_TAB_IDS) &&
                 "featured" != $tab
             )
             {
@@ -205,10 +176,10 @@ class channel extends NirvanaController
             // Get content for current sort if it
             // is not recently uploaded (default)
             $yt->videosSort = 0;
-            if (in_array($tab, self::VIDEO_TABS) && isset($request->params->sort))
+            if (in_array($tab, Channels4::VIDEO_TABS) && isset($request->params->sort))
             {
                 // Get index of sort name
-                $sort = array_search($request->params->sort, self::VIDEO_TAB_SORT_INDICES);
+                $sort = array_search($request->params->sort, Channels4::VIDEO_TAB_SORT_INDEX_MAP);
                 $yt->videosSort = $sort;
                 if ($sort > 0)
                 {
@@ -276,9 +247,11 @@ class channel extends NirvanaController
                     $baseUrl = "/" . $request->path[0];
                     break;
             }
+            
+            $c4Bakery = new Channels4();
 
-            Channels4::registerBaseUrl($baseUrl);
-            Channels4::registerCurrentTab($tab);
+            $c4Bakery->registerBaseUrl($baseUrl);
+            $c4Bakery->registerCurrentTab($tab);
 
             // Handle the sidebar
             $sidebar = null;
@@ -292,7 +265,7 @@ class channel extends NirvanaController
                 $sidebar = $page;
             }
 
-            $yt->page = Channels4::bake(
+            $yt->page = $c4Bakery->bake(
                 yt: $yt,
                 data: $page,
                 sidebarData: $sidebar,

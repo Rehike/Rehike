@@ -86,7 +86,14 @@ class ConfigDefinitions
             "experiments" => [
                 "displayPlayerChoice" => new BoolProp(false),
                 "useSignInV2" => new BoolProp(false),
-                "disableSignInOnHome" => new BoolProp(false)
+                "disableSignInOnHome" => new BoolProp(false),
+                "tickInjectionForScheduling" => (new BoolProp(false))->registerUpdateCb(function() {
+                    // When this configuration property changes, the contents of the PHP files
+                    // change virtually without being touched on disk, so we just manually
+                    // clear the opcache to recompile the scripts:
+                    if (function_exists("opcache_reset"))
+                        opcache_reset();
+                })
             ],
             "advanced" => [
                 "enableDebugger" => new BoolProp(false),

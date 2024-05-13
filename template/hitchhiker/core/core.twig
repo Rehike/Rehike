@@ -119,6 +119,12 @@
       {% else %}
          {{ core.js('www-core/www-core') }}
       {% endif %}
+      {% if rehike.config.appearance.playerChoice != "CURRENT" %}
+         <script>
+            {# This currently does not work for players since 2021. 2020 and prior are fine. #}
+            {% include "player/player_decryptor_boot.twig" %}
+         </script>
+      {% endif %}
       <script>if (window.ytcsi) {window.ytcsi.tick("je", null, '');}</script>  
       {%- block foot_scripts -%}{% endblock %}
       {% include 'core/yt_global_js_config.twig' %}

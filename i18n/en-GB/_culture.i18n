@@ -1,7 +1,14 @@
 languageName: "English"
 expandedLanguageName: "English (United Kingdom)"
 writingDirection: ltr
+
+# We inherit most strings from American English, since British English is not different
+# enough to justify a full branch.
 baseLanguageId: en-US
+
+
+thousandsSeparator: ","
+decimalSeparator: "."
 
 numberOfMonths: 12
 daysInWeek: 7
@@ -12,6 +19,18 @@ standardDateOrder: dmy
 
 firstDayOfWeek: 2 # Monday
 
+am: "AM"
+pm: "PM"
+
+# https://www.php.net/manual/en/datetime.format.php
+expandedDateWithTime: "l, j F Y H:i A" # Tuesday, 17 October 2023 00:50
+expandedDate: "l, j F Y" # Tuesday, 17 October 2023
+dateWithTime: "j F Y H:i A" # 17 October 2023 00:50
+date: "j F Y" # 17 October 2023
+shortDateWithTime: "d/m/Y H:i" # 17/10/2023 00:50
+shortDate: "d/m/Y" # 17/10/2023
+time: "H:i" # 00:50
+
 daysOfWeek:
   1: "Sunday"
   2: "Monday"
@@ -20,6 +39,15 @@ daysOfWeek:
   5: "Thursday"
   6: "Friday"
   7: "Saturday"
+
+shortDaysOfWeek:
+  1: "Sun"
+  2: "Mon"
+  3: "Tue"
+  4: "Wed"
+  5: "Thur"
+  6: "Fri"
+  7: "Sat"
 
 monthNames:
   1: "January"
@@ -34,3 +62,17 @@ monthNames:
   10: "October"
   11: "November"
   12: "December"
+
+shortMonthNames:
+  1: "Jan"
+  2: "Feb"
+  3: "Mar"
+  4: "Apr"
+  5: "May"
+  6: "Jun"
+  7: "Jul"
+  8: "Aug"
+  9: "Sep"
+  10: "Oct"
+  11: "Nov"
+  12: "Dec"

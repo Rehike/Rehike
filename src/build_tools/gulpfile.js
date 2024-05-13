@@ -9,26 +9,8 @@ const gulp = require("gulp");
 const through2 = require("through2");
 const RehikeBuild = require("./scripts/rehikebuild_main");
 
-// CSS compiler includes
-const sassBackend = require("sass");
-const gulpSassBackend = require("gulp-sass");
-const GulpSass = gulpSassBackend(sassBackend);
-
-// JS compiler includes:
-const closureCompilerBackend = require("google-closure-compiler");
-const GulpClosureCompiler = closureCompilerBackend.gulp();
-
 // Miscellaneous includes:
 const path = require("path");
-
-/**
- * Common build configuration options.
- */
-const commonBuildCfg = {
-    base: RehikeBuild.BASE_SRC_DIR,
-    root: RehikeBuild.BASE_SRC_DIR,
-    cwd: RehikeBuild.BASE_SRC_DIR,
-};
 
 /**
  * Wraps a Node.js stream for consumption alongside promises.
@@ -59,22 +41,7 @@ function CommonStartupTask()
     ]);
 }
 
-/**
- * Runs CSS build tasks.
- */
-function BuildCss()
-{
-    const buildFiles = RehikeBuild.getBuildFilesForLanguage("css").getAllSourceNames();
-    
-    return gulp.src(buildFiles, commonBuildCfg)
-        // Initialize the build task so that RehikeBuild actions can be applied to it:
-        .pipe(RehikeBuild.GulpInitRehikeBuildTask())
-        // Send the file contents off to the SASS compiler:
-        .pipe(GulpSass.sync({ outputStyle: "compressed" }).on("error", GulpSass.logError))
-        // Finalize the build task:
-        .pipe(RehikeBuild.GulpFinalizePathsTask())
-        .pipe(gulp.dest(RehikeBuild.BASE_SRC_DIR));
-}
+CommonStartupTask.displayName = "RehikeBuild :: Initialization";
 
 /**
  * Runs JS build tasks.
@@ -120,13 +87,26 @@ function BuildJs()
     return gulp.parallel(BuildEvents);
 }
 
+async function BuildAll()
+{
+    const iterator = RehikeBuild.BuildTask.getAllBuildTasks();
+    
+    while (iterator.hasNewItems())
+    {
+        await new Promise((resolve, reject) => {
+            gulp.parallel( iterator.getNext() )( () => resolve() );
+        });
+    }
+}
+
+BuildAll.displayName = "RehikeBuild :: Main build task";
+
+console.log("Welcome to RehikeBuild!");
+
 // Main build action
 exports.build = gulp.series(
     CommonStartupTask,
-    gulp.parallel(
-        BuildCss,
-        //BuildJs,
-    )
+    BuildAll
 );
 
 // Build everything if no arguments are provided:

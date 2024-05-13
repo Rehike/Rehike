@@ -24,7 +24,29 @@ class DebugLogger
      */
     public static function print(string $template, mixed ...$args): void
     {
-        self::$logs[] = sprintf($template, ...$args);
+        $message = sprintf($template, ...$args);
+        
+        $latestMessage = @self::$logs[count(self::$logs) - 1];
+        if (is_string($latestMessage) && strstr($latestMessage, $message) !== false)
+        {
+            if (substr($latestMessage, 0, 2) == "[x")
+            {
+                $currentCount = explode("[x", $latestMessage)[1];
+                $currentCount = (int)(explode("]", $currentCount)[0]);
+                
+                $newMessage = "[x" . ++$currentCount . "] " . $message;
+                //self::$logs[] = $currentCount;
+                self::$logs[count(self::$logs) - 1] = $newMessage;
+            }
+            else
+            {
+                self::$logs[count(self::$logs) - 1] = "[x2] $message";
+            }
+        }
+        else
+        {
+            self::$logs[] = $message;
+        }
     }
 
     /**
@@ -34,8 +56,6 @@ class DebugLogger
      */
     public static function getLogs(): array
     {
-        // We want them to go in chronological order, not the internal stack
-        // order.
-        return array_reverse(self::$logs);
+        return self::$logs;
     }
 }

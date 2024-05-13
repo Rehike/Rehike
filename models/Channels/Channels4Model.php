@@ -10,56 +10,174 @@ use Rehike\Model\Common\MAlert;
 use Rehike\Util\Base64Url;
 use Rehike\Util\ParsingUtils;
 use Rehike\i18n\i18n;
+use Rehike\YtApp;
 use Com\Youtube\Innertube\Helpers\VideosContinuationWrapper;
 
+/**
+ * Model bakery for the channels page.
+ * 
+ * @author Aubrey Pankow <aubyomori@gmail.com>
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
+ * @author Isabella <kawapure@gmail.com>
+ * @author The Rehike Maintainers
+ */
 class Channels4Model
 {
-    private static $baseUrl;
-    private static string $currentTab = "featured";
-    public static $yt;
+    /**
+     * The canonical base URL of the channel.
+     * 
+     * This is equivalent to the URL path without the tab name or any additional
+     * arguments. For example:
+     * 
+     * /user/PewDiePie
+     * /channel/UC-lHJZR3Gqxm24_Vd_AJ5Yw
+     * /c/PewDiePie
+     * /@PewDiePie
+     * 
+     * This may be late-binding. If the base URL is not provided to the model
+     * bakery by an outside actor, then we will attempt to deduce it from the
+     * URLs of the tabs on the channel.
+     */
+    private ?string $baseUrl = null;
+    
+    /**
+     * The current tab of the channel.
+     * 
+     * This defaults to the featured tab, which is the default tab navigated to
+     * for any unknown tab offset.
+     */
+    private string $currentTab = "featured";
 
-    private static int $videosSort;
+    /**
+     * The sorting mode to use on the videos page.
+     */
+    private int $videosSort;
 
-    private static $subscriptionCount = "";
+    /**
+     * The subscription count of the channel.
+     * 
+     * This is referenced by the about page bakery, but we store it here for
+     * temporary reasons.
+     */
+    private string $subscriptionCount = "";
 
-    /** @var string[] */
-    public static array $extraVideoTabs = [];
+    /**
+     * Special unique tabs to be cascaded into the videos tab.
+     */
+    public array $extraVideoTabs = [];
 
-    private static ?object $currentTabContents = null;
+    /**
+     * The contents of the current tab.
+     */
+    private ?object $currentTabContents = null;
 
-    private static $responseData;
+    /**
+     * InnerTube response data.
+     */
+    private object $responseData;
+    
+    /**
+     * Reference to the global state object.
+     */
+    public YtApp $yt;
+    
+    /**
+     * Fixed order of tabs.
+     * 
+     * Tabs will be sorted to always appear in this order, where RH_SPECIAL_EXTRA
+     * represents the position for any unknown tabs.
+     */
+    public const TAB_ORDER = [
+        "featured", // Home
+        "videos",
+        "podcasts",
+        "releases",
+        "RH_SPECIAL_EXTRA",
+        "playlists",
+        "channels", // Not officially supported anymore
+        "community",
+        "discussion", // Not supported anymore
+        "store",
+        "about",
+        "search",
+    ];
+    
+    /**
+     * Tabs where the "featured channels" (secondary results) sidebar should
+     * be displayed on.
+     */
+    public const SECONDARY_RESULTS_ENABLED_TAB_IDS = [
+        "featured",
+        "discussion",
+        "community",
+        "about",
+    ];
 
-    public static function bake(&$yt, $data, $sidebarData = null, $ownerData = null)
+    /**
+     * Maps cloud chip sorting indices to their classical names.
+     */
+    public const VIDEO_TAB_SORT_INDEX_MAP = [
+        0 => "dd",
+        1 => "p",
+        2 => "da",
+    ];
+
+    /**
+     * Sort map for regular tabs that still use the old sorting backend.
+     */
+    public const SORT_MAP = [
+        null,
+        "p",
+        "da",
+        "dd",
+        "lad",
+    ];
+
+    /**
+     * Tabs which store types of video content, and thus should be cascaded into the videos tab.
+     */
+    public const VIDEO_TABS = [
+        "videos",
+        "streams",
+        "shorts",
+    ];
+
+    public function bake(YtApp $yt, object $data, ?object $sidebarData = null, ?object $ownerData = null)
     {
         $i18n = i18n::getNamespace("channels");
 
-        self::$yt = &$yt;
-        self::$responseData = $data;
+        $this->yt = &$yt;
+        $this->responseData = $data;
 
-        self::$videosSort = $yt->videosSort ?? 0;
+        $this->videosSort = $yt->videosSort ?? 0;
 
         // Declare the response array.
         $response = [];
 
         if ($header = @$data->header->c4TabbedHeaderRenderer)
         {
-            $response += ["header" => new Channels4\MHeader(
+            $header = new Channels4\MHeader(
                 $header, 
-                self::getBaseUrl(),
+                $this->getBaseUrl(),
                 isOld: true
-            )];
+            );
+            
+            $response += ["header" => $header];
         }
         else if ($header = @$data->header->pageHeaderRenderer)
         {
-            $response += ["header" => new Channels4\MHeader(
+            $header = new Channels4\MHeader(
                 $header, 
-                self::getBaseUrl(),
-                isOld: false
-            )];
+                $this->getBaseUrl(),
+                isOld: false,
+                frameworkUpdates: $this->responseData->frameworkUpdates ?? null
+            );
+            
+            $response += ["header" => $header];
         }
         else if ($header = @$data->header->carouselHeaderRenderer)
         {
-            $response += ["header" => new Channels4\MCarouselHeader($header, self::getBaseUrl())];
+            $response += ["header" => new Channels4\MCarouselHeader($header, $this->getBaseUrl())];
         }
 
         if (isset($response["header"]) && isset($data->contents->twoColumnBrowseResultsRenderer->tabs))
@@ -70,14 +188,16 @@ class Channels4Model
             // Also add the owner info we just got to the appbar
             $yt->appbar->nav->addOwner(
                 $response["header"]->getTitle(),
-                self::getBaseUrl(),
+                $this->getBaseUrl(),
                 $response["header"]->thumbnail ?? "",
             );
         }
 
+        // Add alerts if necessary:
         if ($alerts = @$data->alerts)
         {
             $response += ["alerts" => []];
+            
             foreach ($alerts as $alert)
             {
                 $alert = $alert->alertWithButtonRenderer
@@ -88,8 +208,7 @@ class Channels4Model
                 &&  isset($response["header"])
                 )
                 {
-                    $response["header"]->nonexistentMessage =
-                    ParsingUtils::getText($alert->text);
+                    $response["header"]->nonexistentMessage = ParsingUtils::getText($alert->text);
                 }
                 else
                 {
@@ -107,7 +226,7 @@ class Channels4Model
             // process them (add navigation and store a reference)
             if ($tabsR = @$data->contents->twoColumnBrowseResultsRenderer->tabs)
             {
-                self::processAndAddTabs($yt, $tabsR, $response["header"]);
+                $this->processAndAddTabs($yt, $tabsR, $response["header"]);
             }
 
             $response += [
@@ -115,7 +234,7 @@ class Channels4Model
             ];
 
             // Also global subscription count for about
-            self::$subscriptionCount = $response["header"]->getSubscriptionCount();
+            $this->subscriptionCount = $response["header"]->getSubscriptionCount();
         }
 
         if (!is_null($ownerData))
@@ -124,23 +243,25 @@ class Channels4Model
         }
         
         // If we have a sidebar, go through it
-        if ($sidebarShelves = @$sidebarData->contents->twoColumnBrowseResultsRenderer->tabs[0]
-            ->tabRenderer->content->sectionListRenderer->contents)
+        if (
+            $sidebarShelves = @$sidebarData->contents->twoColumnBrowseResultsRenderer->tabs[0]
+                ->tabRenderer->content->sectionListRenderer->contents
+        )
         {
             $featuredData = null;
 
-            if ("featured" == self::$currentTab)
+            if ("featured" == $this->currentTab)
             {
                 $featuredData = &$data->contents->twoColumnBrowseResultsRenderer->tabs[0]
                     ->tabRenderer->content->sectionListRenderer->contents
                 ;
             }
 
-            $sidebarData = self::getSidebarData($sidebarShelves, $featuredData);
+            $sidebarData = $this->getSidebarData($sidebarShelves, $featuredData);
 
             if ($sidebarData)
             {
-                self::initSecondaryColumn($response);
+                $this->initSecondaryColumn($response);
                 $response["secondaryContent"]->items = $sidebarData;
             }
         }
@@ -150,12 +271,12 @@ class Channels4Model
             $response += ["subConfirmationDialog" => new MSubConfirmationDialog($response["header"])];
         }
 
-        if (!is_null(self::$currentTabContents))
+        if (!is_null($this->currentTabContents))
         {
-            $response += ["content" => self::getTabContents(self::$currentTabContents)];
+            $response += ["content" => $this->getTabContents($this->currentTabContents)];
         }
 
-        $response += ["baseUrl" => self::$baseUrl];
+        $response += ["baseUrl" => $this->baseUrl];
 
         // Send the response array
         return (object)$response;
@@ -168,14 +289,18 @@ class Channels4Model
      * @param object[] $tabs             Array of tabs to process and add.
      * @param MHeader $header            Header to add the tabs to.
      */
-    public static function processAndAddTabs(object &$yt, array $tabs, Channels4\MHeader &$header): void
+    public function processAndAddTabs(object &$yt, array $tabs, Channels4\MHeader &$header): void
     {
+        if (!isset($this->baseUrl) || empty($this->baseUrl))
+        {
+            $this->guessBaseUrlFromTabs($tabs);
+        }
+        
         /** @var object */
         $videosTab = null;
         
         /** @var object */
         $aboutTab = null;
-        $searchBarIndex = 0;
 
         // Splice "live" tab as this should be cascaded into videos.
         for ($i = 0; $i < count($tabs); $i++)
@@ -195,9 +320,11 @@ class Channels4Model
                     {
                         $videosTab = &$tabR;
                     }
-                    else if (stripos($tabEndpoint, "/streams") || stripos($tabEndpoint, "/shorts"))
+                    else if (!empty(array_filter( self::VIDEO_TABS, fn($item) => stripos( $tabEndpoint, "/$item" ) )))
                     {
-                        self::$extraVideoTabs[] = substr($tabEndpoint, strrpos($tabEndpoint, "/") + 1);
+                        // If the tab is any of the extra video tabs, then we want to cascade it into the videos tab.
+                        // The above array technically contains "videos" too, but we test for that already above.
+                        $this->extraVideoTabs[] = substr($tabEndpoint, strrpos($tabEndpoint, "/") + 1);
                         $tabR->hidden = true;
 
                         if (@$tabR->tabRenderer->selected) $videosTab->tabRenderer->selected = true;
@@ -208,17 +335,13 @@ class Channels4Model
                     }
                 }
             }
-            else if (isset($tabs[$i]->expandableTabRenderer))
-            {
-                $searchBarIndex = $i;
-            }
         }
 
         // 2023/11/03: YouTube are experimenting with moving the about tab into
-        // a popup menu. Thus, we must convert the data.
+        // a popup menu. Thus, we must manually restore the tab:
         if (is_null($aboutTab))
         {
-            if (@self::$yt->tab == "about")
+            if (@$yt->tab == "about")
             {
                 foreach ($tabs as $t)
                 {
@@ -240,7 +363,7 @@ class Channels4Model
                     "endpoint" => (object)[
                         "commandMetadata" => (object)[
                             "webCommandMetadata" => (object)[
-                                "url" => self::$baseUrl . "/about"
+                                "url" => $this->baseUrl . "/about"
                             ]
                         ]
                     ],
@@ -249,13 +372,42 @@ class Channels4Model
                     "title" => i18n::getRawString("channels", "tabAbout")
                 ]
             ];
-
-            array_splice($tabs, $searchBarIndex, 0, [$aboutContent]);
+            
+            $tabs[] = $aboutContent;
         }
         
-        $header->addTabs($tabs, ($yt->partiallySelectTabs ?? false));
+        // We want to keep the same order of tabs by channel, and a reliable way to do that is to
+        // simply make a fixed order map and then sort the tabs by that order. We do this as such:
+        $tabIdMap = [];
+        $sortedTabs = [];
+        
+        foreach ($tabs as $tab)
+        {
+            $tabIdMap[$this->getTabId($tab)] = $tab;
+        }
+        
+        foreach (self::TAB_ORDER as $tabId)
+        {
+            if ($tabId == "RH_SPECIAL_EXTRA")
+            {
+                foreach ($tabIdMap as $uniqueTabId => $uniqueTab)
+                {
+                    if (!in_array($uniqueTabId, self::TAB_ORDER))
+                    {
+                        $sortedTabs[] = $uniqueTab;
+                    }
+                }
+            }
+            
+            if (isset($tabIdMap[$tabId]))
+            {
+                $sortedTabs[] = $tabIdMap[$tabId];
+            }
+        }
+        
+        $header->addTabs($sortedTabs, ($yt->partiallySelectTabs ?? false));
 
-        foreach ($tabs as $tab) if (@$tab->tabRenderer)
+        foreach ($sortedTabs as $tab) if (@$tab->tabRenderer)
         {
             $tabEndpoint = $tab->tabRenderer->endpoint->commandMetadata->webCommandMetadata->url ?? null;
 
@@ -274,14 +426,14 @@ class Channels4Model
             if (@$tab->tabRenderer->status > 0
             ||  @$tab->tabRenderer->selected)
             {
-                self::$currentTabContents = &$tab->tabRenderer->content;
+                $this->currentTabContents = &$tab->tabRenderer->content;
             }
         }
         else if (@$tab->expandableTabRenderer)
         {
             if (@$tab->expandableTabRenderer->selected)
             {
-                self::$currentTabContents = &$tab->expandableTabRenderer->content;
+                $this->currentTabContents = &$tab->expandableTabRenderer->content;
             }
         }
 
@@ -291,7 +443,7 @@ class Channels4Model
         }
     }
     
-    public static function initSecondaryColumn(&$response)
+    public function initSecondaryColumn(&$response)
     {
         if (!isset($response["secondaryContent"]))
         {
@@ -303,7 +455,7 @@ class Channels4Model
         }
     }
 
-    public static function getTabContents($content)
+    public function getTabContents($content)
     {
         if (isset($content->sectionListRenderer->contents[0]->itemSectionRenderer->contents[0]->channelAboutFullMetadataRenderer))
         {
@@ -311,7 +463,7 @@ class Channels4Model
             return (object)[
                 "channelAboutMetadataRenderer" => 
                     new MChannelAboutMetadata(
-                        self::$subscriptionCount,
+                        $this->subscriptionCount,
                         $content->sectionListRenderer->contents[0]->itemSectionRenderer->contents[0]->channelAboutFullMetadataRenderer
                     )
             ];
@@ -322,28 +474,28 @@ class Channels4Model
             return (object)[
                 "channelAboutMetadataRenderer" =>
                     new MChannelAboutMetadata(
-                        self::$subscriptionCount,
-                        self::$responseData?->rehikeAboutTab
+                        $this->subscriptionCount,
+                        $this->responseData?->rehikeAboutTab
                     )
             ];
         }
         else if ($a = @$content->sectionListRenderer->contents[0]->itemSectionRenderer->contents[0]->gridRenderer)
         {
-            return self::handleGridTab($a, $content);
+            return $this->handleGridTab($a, $content);
         }
         else if ($a = @$content->richGridRenderer)
         {
-            return self::handleGridTab(InnertubeBrowseConverter::richGridRenderer($a), $content, true);
+            return $this->handleGridTab(InnertubeBrowseConverter::richGridRenderer($a), $content, true);
         }
         else if (($a = @$content->sectionListRenderer->contents[0]->itemSectionRenderer) && (isset($a->contents[0]->backstagePostThreadRenderer)))
         {
-            return self::handleBackstage($a);
+            return $this->handleBackstage($a);
         }
         else if ($a = @$content->sectionListRenderer)
         {
             if ($submenu = @$a->subMenu->channelSubMenuRenderer)
             {
-                $brandedPageV2SubnavRenderer = MSubnav::fromData($submenu);
+                $brandedPageV2SubnavRenderer = MSubnav::fromData($this, $submenu);
                 unset($a->subMenu);
             }
 
@@ -360,11 +512,11 @@ class Channels4Model
         }
     }
 
-    public static function handleGridTab($data, $parentTab, $rich = false)
+    public function handleGridTab($data, $parentTab, $rich = false)
     {
         $response = [];
 
-        switch (self::$currentTab)
+        switch ($this->currentTab)
         {
             case "videos":
             case "streams":
@@ -372,7 +524,7 @@ class Channels4Model
                 if ($rich)
                 {
                     $response += [
-                        "brandedPageV2SubnavRenderer" => MSubnav::bakeVideos()
+                        "brandedPageV2SubnavRenderer" => MSubnav::bakeVideos($this)
                     ];
                 }
                 break;
@@ -382,7 +534,7 @@ class Channels4Model
                     $subnav = $subnav ?? null;
 
                     $response += [
-                        "brandedPageV2SubnavRenderer" => MSubnav::fromData($subnav)
+                        "brandedPageV2SubnavRenderer" => MSubnav::fromData($this, $subnav)
                     ];
                 }
         }
@@ -419,7 +571,7 @@ class Channels4Model
         return (object)$response;
     }
 
-    public static function handleBackstage($data)
+    public function handleBackstage($data)
     {
         $response = [
             "backstageRenderer" => [
@@ -441,7 +593,7 @@ class Channels4Model
         return (object)$response;
     }
 
-    public static function getSidebarData($shelves, &$featuredData)
+    public function getSidebarData($shelves, &$featuredData)
     {
         $channelsShelves = [];
 
@@ -462,7 +614,6 @@ class Channels4Model
 
                 if (null != $featuredData)
                 {
-                    //array_splice($featuredData, $i, 1);
                     unset($featuredData[$i]);
                 }
             }
@@ -485,28 +636,127 @@ class Channels4Model
         return null;
     }
 
-    public static function registerCurrentTab(string $currentTab): void
+    public function registerCurrentTab(string $currentTab): void
     {
-        self::$currentTab = $currentTab;
+        $this->currentTab = $currentTab;
     }
 
-    public static function getCurrentTab()
+    public function getCurrentTab()
     {
-        return self::$currentTab;
+        return $this->currentTab;
     }
 
-    public static function registerBaseUrl($baseUrl)
+    public function registerBaseUrl($baseUrl)
     {
-        self::$baseUrl = $baseUrl;
+        $this->baseUrl = $baseUrl;
     }
 
-    public static function getBaseUrl()
+    public function getBaseUrl()
     {
-        return self::$baseUrl;
+        return $this->baseUrl;
     }
 
-    public static function getVideosSort()
+    public function getVideosSort()
     {
-        return self::$videosSort;
+        return $this->videosSort;
+    }
+    
+    /**
+     * Guess the base URL based on the tabs.
+     * 
+     * We need this in case of playlist views, which don't have the information accessible
+     * from their URL directly.
+     */
+    public function guessBaseUrlFromTabs(array $tabs): void
+    {
+        $renderer = null;
+        
+        foreach ($tabs as $tab)
+        {
+            
+            if (isset($tab->tabRenderer))
+            {
+                $renderer = $tab->tabRenderer;
+            }
+            else if (isset($tab->expandableTabRenderer))
+            {
+                $renderer = $tab->expandableTabRenderer;
+            }
+            
+            if ($renderer)
+            {
+                $url = $renderer->endpoint->commandMetadata->webCommandMetadata->url;
+                $parts = explode("/", $url);
+                
+                if (empty($parts[0]))
+                {
+                    $parts = array_slice($parts, 1);
+                }
+                
+                if (in_array($parts[0], ["channel", "user", "c"]))
+                {
+                    // [channel|user|c, CHANNEL_NAME, *TAB_ID*]
+                    if (!isset($this->baseUrl))
+                    {
+                        $this->baseUrl = "/" . $parts[0] . "/" . $parts[1];
+                        return;
+                    }
+                }
+                else if (count($parts) == 2)
+                {
+                    // [CHANNEL_NAME, *TAB_ID*]
+                    if (!isset($this->baseUrl))
+                    {
+                        $this->baseUrl = "/" . $parts[0];
+                        return;
+                    }
+                }
+            }
+        }
+    }
+    
+    /**
+     * Get the ID of a particular tab.
+     */
+    private function getTabId(object $tab): string
+    {
+        $renderer = null;
+        
+        if (isset($tab->tabRenderer))
+        {
+            $renderer = $tab->tabRenderer;
+        }
+        else if (isset($tab->expandableTabRenderer))
+        {
+            $renderer = $tab->expandableTabRenderer;
+        }
+        
+        if ($renderer)
+        {
+            $url = $renderer->endpoint->commandMetadata->webCommandMetadata->url;
+            $parts = explode("/", $url);
+            
+            if (empty($parts[0]))
+            {
+                $parts = array_slice($parts, 1);
+            }
+            
+            if (in_array($parts[0], ["channel", "user", "c"]))
+            {
+                // [channel|user|c, CHANNEL_NAME, *TAB_ID*]
+                return $parts[2];
+            }
+            else if (count($parts) == 2)
+            {
+                // [CHANNEL_NAME, *TAB_ID*]    
+                return $parts[1];
+            }
+            else
+            {
+                return $parts[0] ?? "";
+            }
+        }
+        
+        return "";
     }
 }

@@ -66,7 +66,7 @@ return new class extends AjaxController
             )->then(function ($response) use ($yt) {
                 $ytdata = $response->getJson();
 
-                $yt->page->notifList = $ytdata->actions[0] ->appendContinuationItemsAction->continuationItems ?? [];
+                $yt->page->notifList = $ytdata->actions[0]->appendContinuationItemsAction->continuationItems ?? [];
                 $yt->page->nextContinuation = (end($yt->page->notifList) 
                         ->continuationItemRenderer 
                         ->continuationEndpoint 

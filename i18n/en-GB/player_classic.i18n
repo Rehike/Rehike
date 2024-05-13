@@ -1,0 +1,4 @@
+# "color" -> "colour"
+YTP_FONT_COLOR: "Font colour"
+YTP_BACKGROUND_COLOR: "Background colour"
+YTP_WINDOW_COLOR: "Window colour"

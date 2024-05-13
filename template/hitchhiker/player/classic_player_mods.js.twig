@@ -4,6 +4,14 @@ var initClassicPlayerMods = function(){};
 
 {% include "rehike/core/rehike-core.js.twig" %}
 
+/**
+ * Stores if the current page is currently the watch page.
+ *
+ * We use this variable to prevent re-registering the events every time the
+ * user navigates to a new video.
+ */
+var g_isCurrentlyWatchPage = false;
+
 // I NEVER WANT TO INTERFACE WITH JS KEYBOARD API EVER AGAIN
 var KEYCODE_ENTER = 13;
 var KEYCODE_SPACE = 32;
@@ -18,11 +26,21 @@ var KEYCODE_GT = 190;
 var CHARCODE_T = 84 + 32;
 var CHARCODE_K = 75 + 32;
 
-var DEBUG = true;
+var DEBUG = false;
 
 function getMoviePlayer()
 {
-    return document.getElementById(ytplayer.config.attrs.id || "movie_player");
+    if (
+        ytplayer &&
+        ytplayer.config &&
+        ytplayer.config.attrs &&
+        ytplayer.config.attrs.id
+    )
+    {
+        return document.getElementById(ytplayer.config.attrs.id || "movie_player");
+    }
+        
+    return null;
 }
 
 function waitForSomething(conditionCb, resultCb, opt_timeout, opt_interval)
@@ -207,7 +225,7 @@ function isWatchPage()
 
 function onPageChanged()
 {
-    if (isWatchPage())
+    if (isWatchPage() && !g_isCurrentlyWatchPage)
     {
         // Prevent space from scrolling the page.
         rehike.util.events.add(
@@ -215,14 +233,46 @@ function onPageChanged()
             "keydown",
             preventWatchScrollSpace
         );
+        
+        // Keyboard events:
+        rehike.util.events.add(
+            document, 
+            "rh-classic-player-global-key-down", 
+            handleGlobalKeyDown
+        );
+
+        // Initial playback failure:
+        rehike.util.events.add(
+            document, 
+            "rh-classic-player-fail-play-video", 
+            handleInitialPlaybackFailure
+        );
+        
+        waitForMoviePlayer().then(onLoadPlayerElement);
+        
+        g_isCurrentlyWatchPage = true;
     }
-    else
+    else if (!isWatchPage())
     {
         rehike.util.events.remove(
             window,
             "keydown",
             preventWatchScrollSpace
         );
+        
+        rehike.util.events.remove(
+            document, 
+            "rh-classic-player-global-key-down", 
+            handleGlobalKeyDown
+        );
+
+        rehike.util.events.remove(
+            document, 
+            "rh-classic-player-fail-play-video", 
+            handleInitialPlaybackFailure
+        );
+        
+        g_isCurrentlyWatchPage = false;
     }
 }
 
@@ -311,6 +361,17 @@ function playerCustomKeyDownHandler(e)
                 {
                     api.seekBy((1 / fps) * (e.keyCode == KEYCODE_LT ? -1 : 1));
                 }
+            }
+            break;
+        case KEYCODE_SPACE:
+            // Pause the video even if the player isn't focused
+            if (document.activeElement && !getMoviePlayer().contains(document.activeElement))
+            {
+                var evt = new KeyboardEvent("keypress", {
+                    bubbles: false,
+                    keyCode: KEYCODE_SPACE
+                });
+                api.dispatchEvent(evt);
             }
             break;
     }
@@ -414,27 +475,7 @@ function onLoadPlayerElement(api)
 // This is exported to the above scope.
 initClassicPlayerMods = function()
 {
-    waitForMoviePlayer().then(onLoadPlayerElement);
-    
-    // Global events like this should only be added once per-session:
-    {% if not yt.spf %}
-        // Page-specific events:
-        initPageSpecificEvents();
-
-        // Keyboard events:
-        rehike.util.events.add(
-            document, 
-            "rh-classic-player-global-key-down", 
-            handleGlobalKeyDown
-        );
-
-        // Initial playback failure:
-        rehike.util.events.add(
-            document, 
-            "rh-classic-player-fail-play-video", 
-            handleInitialPlaybackFailure
-        );
-    {% endif %}
+    initPageSpecificEvents();
 };
 
 })();

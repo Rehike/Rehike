@@ -3,7 +3,8 @@ namespace Rehike\Boot;
 
 use Rehike\{
     Debugger\Debugger,
-    DisableRehike\DisableRehike
+    DisableRehike\DisableRehike,
+    Nepeta\NepetaCore
 };
 use Rehike\ConfigManager\Config;
 
@@ -116,6 +117,7 @@ final class Bootloader
      */
     private static function runInitTasks(): void
     {
+        //NepetaCore::init();
         Tasks::initNetwork();
         Tasks::initResourceConstants();
         Tasks::initConfigManager();

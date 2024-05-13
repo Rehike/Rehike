@@ -27,6 +27,11 @@ class Config
      * Maps configuration key names to their types.
      */
     protected static array $types = [];
+    
+    /**
+     * Stores the property schemas for all known properties.
+     */
+    protected static array $properties = [];
 
     /**
      * The name of the configuration file.
@@ -63,6 +68,7 @@ class Config
         $defs = self::parseDefs($defs);
         self::$defaultConfig = $defs["defs"];
         self::$types = $defs["types"];
+        self::$properties = $defs["sources"];
     }
 
     /**
@@ -72,7 +78,8 @@ class Config
     {
         $out = [
             "defs" => [],
-            "types" => []
+            "types" => [],
+            "sources" => [],
         ];
 
         foreach ($defs as $name => $def)
@@ -82,6 +89,7 @@ class Config
                 $result = self::parseDefs($def);
                 $out["defs"][$name] = $result["defs"];
                 $out["types"][$name] = $result["types"];
+                $out["sources"][$name] = $result["sources"];
             }
             else if ($def instanceof PropGroup)
             {
@@ -91,6 +99,7 @@ class Config
                 {
                     $out["defs"][$resultName] = $resultDef;
                     $out["types"][$resultName] = $result["types"][$resultName];
+                    $out["sources"][$resultName] = $result["sources"][$resultName];
                 }
             }
             else if ($def instanceof DependentProp)
@@ -98,12 +107,14 @@ class Config
                 $prop = $def->getProp();
                 $out["defs"][$name] = $prop->getDefaultValue();
                 $out["types"][$name] = $prop->getType();
+                $out["sources"][$name] = $prop;
                 continue;
             }
             else if ($def instanceof AbstractAssociativeProp)
             {
                 $out["defs"][$name] = $def->getDefaultValue();
                 $out["types"][$name] = $def->getType();
+                $out["sources"][$name] = $def;
             }
             else
             {
@@ -205,6 +216,17 @@ class Config
         try
         {
             PropertyAtPath::set(static::$config, $path, $value);
+            
+            try
+            {
+                $prop = PropertyAtPath::get(self::$properties, $path);
+                
+                if (is_object($prop) && $prop instanceof AbstractAssociativeProp)
+                {
+                    $prop->onUpdate();
+                }
+            }
+            catch (\YukisCoffee\PropertyAtPathException $e) {}
         }
         catch (\YukisCoffee\PropertyAtPathException $e)
         {

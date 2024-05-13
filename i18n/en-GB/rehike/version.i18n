@@ -1,0 +1,9 @@
+# "synchronize" -> "synchronise"
+syncGithubButton: "Synchronise with GitHub"
+
+# -- Translations for the credits section --
+
+# "license" -> "licence"
+creditsThirdPartyFooter: >
+  Use of these third-party services is governed by their respective licences.
+  Where possible, their application will be optional.

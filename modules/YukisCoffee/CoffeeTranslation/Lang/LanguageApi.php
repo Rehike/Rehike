@@ -185,10 +185,33 @@ class LanguageApi
             ?object &$out
     ): bool
     {
-        if (Loader::tryOpen($langId, $uri, /*out*/ $record))
+        $cultureInfo = self::openCultureSafe($langId, $uri);
+
+        if (isset($cultureInfo->baseLanguageId))
         {
-            $out = $record->toObject();
-            return true;
+            $baseLangId = $cultureInfo->baseLanguageId;
+
+            if (Loader::tryOpen($baseLangId, $uri, /*out*/ $baseRecord))
+            {
+                $out = $baseRecord->toObject();
+                
+                if (Loader::tryOpen($langId, $uri, /*out*/ $childRecord))
+                {
+                    $childEntries = $childRecord->toObject();
+
+                    self::deepMergeObjects($out, $childEntries);
+                }
+
+                return true;
+            }
+        }
+        else
+        {
+            if (Loader::tryOpen($langId, $uri, /*out*/ $record))
+            {
+                $out = $record->toObject();
+                return true;
+            }
         }
 
         $out = null;
@@ -398,5 +421,40 @@ class LanguageApi
         ));
 
         return "<$uri.$path : " . implode(", ", $args) . ">";
+    }
+
+    /**
+     * Opens the culture file safely.
+     * 
+     * This avoids an infinite loop.
+     */
+    private static function openCultureSafe(string $langId, string $uri): ?object
+    {
+        $cultureName = CoffeeTranslation::getConfigApi()->getCultureFileName();
+
+        if ($uri != $cultureName)
+        {
+            return self::getAllTemplatesForLanguage($langId, $cultureName);
+        }
+
+        return null;
+    }
+
+    /**
+     * Deep merges the properties of an object.
+     */
+    private static function deepMergeObjects(object $to, object $from): void
+    {
+        foreach ($from as $key => $value)
+        {
+            if (is_object($value) && isset($to->{$key}) && is_object($to->{$key}))
+            {
+                self::deepMergeObjects($to->{$key}, $value);
+            }
+            else if (isset($to->{$key}))
+            {
+                $to->{$key} = $value;
+            }
+        }
     }
 }

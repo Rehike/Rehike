@@ -5,16 +5,14 @@ use Rehike\Model\Browse\InnertubeBrowseConverter;
 
 use Rehike\ConfigManager\Config;
 
+/**
+ * Model for the search results page.
+ * 
+ * @author Aubrey Pankow <aubyomori@gmail.com>
+ * @author The Rehike Maintainers
+ */
 class ResultsModel
 {
-    static $yt;
-    static $response;
-
-    // Shorthand data references
-    static $filterHeader = null;
-    static $results = null;
-    static $pageFooter = null;
-
     /**
      * Bake a results page model
      *
@@ -80,8 +78,8 @@ class ResultsModel
         }
 
         for ($i = 0; $i < count($contents->contents); $i++)
-        if (isset($contents->contents[$i] ->itemSectionRenderer))
-        foreach($contents->contents[$i] ->itemSectionRenderer->contents as $item2)
+        if (isset($contents->contents[$i]->itemSectionRenderer))
+        foreach($contents->contents[$i]->itemSectionRenderer->contents as $item2)
         if (isset($item2->promotedSparklesTextSearchRenderer))
         {
             array_splice($contents->contents, $i, 1);
@@ -139,7 +137,7 @@ class ResultsModel
         return $response;
     }
 
-    public static function getResultsCount($data)
+    public static function getResultsCount(object $data): int
     {
         if (isset($data->estimatedResults))
         {
