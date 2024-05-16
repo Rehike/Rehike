@@ -1,10 +1,10 @@
 {
-	"previousHash": "3352e55994e667edf44f99875df72b6d498be4ec",
-	"currentRevisionId": 1509,
-	"subject": "[RHBuild] Support for building individual packages",
-	"body": "[RHBuild] Support for building individual packages",
+	"previousHash": "d8c2417c0318f3860478abc5652190a63c1ff8f3",
+	"currentRevisionId": 1510,
+	"subject": "Fix #571",
+	"body": "Fix #571",
 	"branch": "master",
 	"committerName": "Isabella",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1715902087
+	"time": 1715902264
 }
