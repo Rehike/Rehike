@@ -52,7 +52,6 @@ class MHeader
      */
     protected function constructFromViewModel($header, $baseUrl): void
     {
-        \Rehike\Logging\DebugLogger::print("construct from view model");
         $content = $header->content->pageHeaderViewModel;
 
         // Add the title if it exists.
@@ -105,10 +104,8 @@ class MHeader
         if ($viewModel = @$primaryActionButtonContainer->subscribeButtonViewModel)
         {
             // Logged-in subscribe button
-            \Rehike\Logging\DebugLogger::print("subscribe button");
             if ($this->frameworkUpdates)
             {
-                \Rehike\Logging\DebugLogger::print("has framework updates");
                 // In order to determine whether or not the user is subscribed, we need to parse
                 // the mutation entities.
                 $parser = new ViewModelParser($viewModel, $this->frameworkUpdates);
@@ -150,14 +147,10 @@ class MHeader
         )
         {
             // Channel owner
-            \Rehike\Logging\DebugLogger::print("owner subscribe button");
-            
             $this->subscriptionButton = MSubscriptionActions::buildMock($subscriberCount);
         }
         else if (!\Rehike\Signin\API::isSignedIn())
         {
-            \Rehike\Logging\DebugLogger::print("logged out subscribe button");
-            
             $this->subscriptionButton = MSubscriptionActions::signedOutStub($subscriberCount);
         }
     }
