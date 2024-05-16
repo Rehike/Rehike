@@ -42,6 +42,7 @@
         {% include 'experiment/ringo/ringo.twig' %}
       {% endif %}
       {% include "core/rehike_custom_css.twig" %}
+      <script type="text/javascript" src="{{ rehike.resource.resolveVersioned("rehike/js/www-rehike-core.js") }}"></script>
    </head>
    {#
       The body's class contains general metadata about the YouTube session,
@@ -118,6 +119,12 @@
          {% include 'core/modular_js_v2.twig' %}
       {% else %}
          {{ core.js('www-core/www-core') }}
+      {% endif %}
+      {% if rehike.config.appearance.playerChoice != "CURRENT" %}
+         <script>
+            {# This currently does not work for players since 2021. 2020 and prior are fine. #}
+            {% include "player/player_decryptor_boot.twig" %}
+         </script>
       {% endif %}
       <script>if (window.ytcsi) {window.ytcsi.tick("je", null, '');}</script>  
       {%- block foot_scripts -%}{% endblock %}

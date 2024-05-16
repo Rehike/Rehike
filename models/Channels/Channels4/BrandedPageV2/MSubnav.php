@@ -11,28 +11,35 @@ class MSubnav
     public $leftButtons;
     public $title;
     public $backButton;
+    
+    private Channels4Model $parent;
+    
+    public function __construct(Channels4Model $parent)
+    {
+        $this->parent = $parent;
+    }
 
     public function addBackButton($href)
     {
         $this->backButton = new MSubnavBackButton($href);
     }
 
-    public static function bakeVideos()
+    public static function bakeVideos(Channels4Model $parent)
     {
-        $i = new self();
+        $i = new self($parent);
 
-        $baseUrl = Channels4Model::getBaseUrl();
+        $baseUrl = $parent->getBaseUrl();
 
         $i->addBackButton($baseUrl);
 
-        if (!is_null(Channels4Model::getVideosSort()))
+        if (!is_null($parent->getVideosSort()))
         {
-            $i->rightButtons[] = self::getSortButton(Channels4Model::getVideosSort());
+            $i->rightButtons[] = $i->getSortButton($parent->getVideosSort());
         }
 
         $flow = $_GET["flow"] ?? "grid";
         if (!in_array($flow, ["grid", "list"])) $flow = "grid";
-        $i->rightButtons[] = self::getFlowButton($flow);
+        $i->rightButtons[] = $i->getFlowButton($flow);
 
         // Process uploads view
         self::getViewButton($i);
@@ -44,9 +51,9 @@ class MSubnav
     {
         $i18n = i18n::getNamespace("channels");
 
-        if (count(Channels4Model::$extraVideoTabs) == 0)
+        if (count($instance->parent->extraVideoTabs) == 0)
         {
-            $instance->title = match(Channels4Model::getCurrentTab())
+            $instance->title = match($instance->parent->getCurrentTab())
             {
                 "videos" => $i18n->get("viewUploads"),
                 "streams" => $i18n->get("viewLiveStreams"),
@@ -55,9 +62,9 @@ class MSubnav
         }
         else
         {
-            $baseUrl = Channels4Model::getBaseUrl();
+            $baseUrl = $instance->parent->getBaseUrl();
 
-            \Rehike\ControllerV2\Core::$state->test = Channels4Model::$extraVideoTabs;
+            \Rehike\ControllerV2\Core::$state->test = $instance->parent->extraVideoTabs;
         
             $options = [];
     
@@ -65,20 +72,20 @@ class MSubnav
             $streamsText = $i18n->get("viewLiveStreams");
             $shortsText = $i18n->get("viewShorts");
     
-            if ("streams" == Channels4Model::getCurrentTab())
+            if ("streams" == $instance->parent->getCurrentTab())
             {
                 $activeText = $streamsText;
                 $options += [$uploadsText => "$baseUrl/videos"];
-                if (in_array("shorts", Channels4Model::$extraVideoTabs))
+                if (in_array("shorts", $instance->parent->extraVideoTabs))
                 {
                     $options += [$shortsText => "$baseUrl/shorts"];
                 }
             }
-            else if ("shorts" == Channels4Model::getCurrentTab())
+            else if ("shorts" == $instance->parent->getCurrentTab())
             {
                 $activeText = $shortsText;
                 $options += [$uploadsText => "$baseUrl/videos"];
-                if (in_array("streams", Channels4Model::$extraVideoTabs))
+                if (in_array("streams", $instance->parent->extraVideoTabs))
                 {
                     $options += [$streamsText => "$baseUrl/streams"];
                 }
@@ -86,11 +93,11 @@ class MSubnav
             else
             {
                 $activeText = $uploadsText;
-                if (in_array("streams", Channels4Model::$extraVideoTabs))
+                if (in_array("streams", $instance->parent->extraVideoTabs))
                 {
                     $options += [$streamsText => "$baseUrl/streams"];
                 }
-                if (in_array("shorts", Channels4Model::$extraVideoTabs))
+                if (in_array("shorts", $instance->parent->extraVideoTabs))
                 {
                     $options += [$shortsText => "$baseUrl/shorts"];
                 }
@@ -100,11 +107,11 @@ class MSubnav
         }        
     }
 
-    public static function getSortButton($sort)
+    public function getSortButton($sort)
     {
         $i18n = i18n::getNamespace("channels");
-        $baseUrl = Channels4Model::getBaseUrl();
-        $tab = Channels4Model::getCurrentTab();
+        $baseUrl = $this->parent->getBaseUrl();
+        $tab = $this->parent->getCurrentTab();
         $flow = $_GET["flow"] ?? "grid";
 
         $options = [];
@@ -143,16 +150,16 @@ class MSubnav
         return new MSubnavMenuButton("sort", $activeText, $options);
     }
 
-    public static function getFlowButton($view)
+    public function getFlowButton($view)
     {
         $i18n = i18n::getNamespace("channels");
 
-        $baseUrl = Channels4Model::getBaseUrl();
+        $baseUrl = $this->parent->getBaseUrl();
 
         $gridText = $i18n->get("flowGrid");
         $listText = $i18n->get("flowList");
 
-        $sort = match (Channels4Model::getVideosSort())
+        $sort = match ($this->parent->getVideosSort())
         {
             0 => "dd",
             1 => "p",
@@ -160,7 +167,7 @@ class MSubnav
             default => "dd"
         };
 
-        $tab = Channels4Model::getCurrentTab();
+        $tab = $this->parent->getCurrentTab();
 
         $options = [];
 
@@ -178,13 +185,13 @@ class MSubnav
         return new MSubnavMenuButton("flow", $activeText, $options);
     }
 
-    public static function fromData($data)
+    public static function fromData(Channels4Model $parent, $data)
     {
         $i18n = i18n::getNamespace("channels");
 
-        $baseUrl = Channels4Model::getBaseUrl();
+        $baseUrl = $parent->getBaseUrl();
 
-        $i = new self();
+        $i = new self($parent);
 
         $i->addBackButton($baseUrl);
 

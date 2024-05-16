@@ -5,8 +5,7 @@
 // This event is dispatched by our modded copy when yt.config_.REHIKE_CLASSIC_PLAYER
 // is set.
 var g_playerLoadRequestCb = null;
-var rehike = rehike || {};
-{% include "rehike/core/util.js.twig" %}
+
 rehike.util.events.add(
     document,
     "rh-classic-player-request-load",

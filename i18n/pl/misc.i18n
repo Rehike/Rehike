@@ -9,8 +9,8 @@ viewTextPlural: "%s wyświetleń"
 dateTextPublic: "Opublikowany %s"
 dateTextPrivate: "Przesłany %s"
 subscribeText: "Subskrybuj"
-subscribedText: "Subkrybujesz"
-unsubscribeText: "Usuń subskrypcję"
+subscribedText: "Subskrybujesz"
+unsubscribeText: "Zrezygnuj z subskrypcji"
 
 # How to obtain:
 # Get your UCID from YouTube. This is on https://www.youtube.com/account_advanced

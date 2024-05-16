@@ -9,6 +9,7 @@ use Rehike\Util\Exception\ResourceUtils\BadResourceException;
  * Provides helper functions for getting resource locations.
  * 
  * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
+ * @author Isabella <kawapure@gmail.com>
  * @author The Rehike Maintainers
  */
 class ResourceUtils
@@ -73,5 +74,31 @@ class ResourceUtils
                 "Unknown image resource name \"$name\""
             );
         }
+    }
+    
+    /**
+     * Get the path of any custom Rehike resource which is versioned.
+     */
+    public static function resolveVersioned(string $name, bool $prefixUri = true): string
+    {
+        $constants = ResourceConstantsStore::getVersionMap();
+        
+        if ($prefixUri)
+        {
+            $lookupUri = "static/$name";
+        }
+        else
+        {
+            $lookupUri = $name;
+        }
+        
+        $resultName = $lookupUri;
+        
+        if (isset($constants->{$lookupUri}))
+        {
+            $resultName = $constants->{$lookupUri};
+        }
+        
+        return $prefixUri ? "/rehike/$resultName" : $resultName;
     }
 }

@@ -62,9 +62,7 @@ return new class extends NirvanaController
                     action: "browse", 
                     body: [
                         "browseId" => $yt->ucid,
-                        "params" => Base64Url::encode($params 
-                            ->serializeToString()
-                        )
+                        "params" => Base64Url::encode($params ->serializeToString())
                     ]
                 );
 
@@ -115,7 +113,8 @@ return new class extends NirvanaController
                 {
                     if (isset($yt->page->channelHeader))
                     {
-                        Channels4Model::processAndAddTabs(
+                        $c4Bakery = new Channels4Model();
+                        $c4Bakery->processAndAddTabs(
                             $yt,
                             $tabs,
                             $yt->page->channelHeader

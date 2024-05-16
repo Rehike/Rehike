@@ -70,7 +70,7 @@ creditsThirdPartyHeader: >
 # GitHub profile, but it's not featured here in order to avoid embedding
 # HTML content.
 creditsPrototaxisTemplate: >
-  %s za udokumentowanie exploitów API InnerTube, których używamy do przywrócenia
+  Dziękujemy %s za udokumentowanie exploitów API InnerTube, których używamy do przywrócenia
   klasycznego wyglądu strony głównej z "półkami".
 
 creditsThirdPartyFooter: >

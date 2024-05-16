@@ -3,12 +3,19 @@ namespace Rehike\Controller\rehike;
 
 use Rehike\YtApp;
 use Rehike\FileSystem;
+use Rehike\ResourceConstantsStore;
 use Rehike\ControllerV2\RequestMetadata;
 
 class StaticRouter
 {
     public function get(YtApp $yt, string &$template, RequestMetadata $request)
     {
+        $baseMap = ResourceConstantsStore::getVersionMap();
+        
+        // We reverse the version map because we're performing a VFL-to-original
+        // lookup in this case.
+        $map = $this->reverseObject($baseMap);
+        
         $filename = "static/";
         for ($i = 2; $i < count($request->path); $i++)
         {
@@ -20,6 +27,12 @@ class StaticRouter
             {
                 $filename .= $request->path[$i] . "/";
             }
+        }
+        
+        // If we're requesting a VFL version, then we map it back to the original.
+        if (isset($map->{$filename}))
+        {
+            $filename = $map->{$filename};
         }
 
         if (file_exists($filename)) 
@@ -71,6 +84,18 @@ class StaticRouter
             "mp4" => "video/mp4",
             default => mime_content_type($ext)
         };
+    }
+    
+    private function reverseObject(object $in): object
+    {
+        $out = (object)[];
+        
+        foreach ($in as $key => $value)
+        {
+            $out->{$value} = $key;
+        }
+        
+        return $out;
     }
 }
 

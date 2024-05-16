@@ -17,6 +17,7 @@ errorNotice: "Uwaga"
 errorDeprecated: "Przestarzałe"
 
 tabErrorTitle: "Błędy (%s)"
+tabLogTitle: "Logi"
 tabConsoleTitle: "Konsola PHP"
 tabNetworkTitle: "Sieć"
 tabPerformanceTitle: "Wydajność"
