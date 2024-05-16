@@ -1,31 +1,15 @@
 var rehike = rehike || {};
+window.rehike = rehike;
 
 (function(){
 
-/*{{ "*"~"/" }}
-
- {######################################################
- #                     IMPORTS.                        #
- #                                                     #
- #  The order in which these are added doesn't matter  #
- #  too much, since the JS interpreter will resolve    #
- #  function declarations regardless of their order.   #
- #                                                     #
- #  By the way, that little mess above this comment's  #
- #  a hack to get the IDE to display right with these  #
- #  Twig imports.                                      #
- #                                                     #
- ######################################################}
-
-{% include "rehike/core/debug.js.twig" %}
-{% include "rehike/core/script.js.twig" %}
-{% include "rehike/core/event_delegate.js.twig" %}
-{% include "rehike/core/class.js.twig" %}
-{% include "rehike/core/pubsub.js.twig" %}
-{% include "rehike/core/util.js.twig" %}
-{% include "rehike/core/dialog.js.twig" %}
-
-//*/
+// @include class.js
+// @include debug.js
+// @include dialog.js
+// @include event_delegate.js
+// @include pubsub.js
+// @include script.js
+// @include util.js
 
 /**
  * Implements simple OOP inheritance.

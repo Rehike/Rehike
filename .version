@@ -1,10 +1,10 @@
 {
-	"previousHash": "b85ec3eee20e287268c335fd3939247b1321fd25",
-	"currentRevisionId": 1504,
-	"subject": "[RHBuild] Fix JS compilation; output; more!",
-	"body": "[RHBuild] Fix JS compilation; output; more!",
+	"previousHash": "90e1db72123a2e602af07dd425591c9b9c5b11b5",
+	"currentRevisionId": 1506,
+	"subject": "Move Rehike Core JS to RHBuild package",
+	"body": "Move Rehike Core JS to RHBuild package",
 	"branch": "master",
 	"committerName": "Isabella",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1715829047
+	"time": 1715829468
 }
