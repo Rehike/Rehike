@@ -17,7 +17,7 @@
         _rebugcfg.CONDENSED = {{ rebug.condensed ? "true" : "false" }};
         _rebugcfg.HISTORY_RAW_UPDATE_TAB_IDS = {{ rebug.getJsHistoryTabIds()|json_encode|raw }};
     </script>
-    <link rel="stylesheet" href="/rehike/static/rehike/css/www-rebug.css">
+    <link rel="stylesheet" href="{{ rehike.resource.resolveVersioned("rehike/css/www-rebug.css") }}">
     {%- if rebug.openButton -%}
         {% include "rehike/debugger/open_button.twig" %}
     {%- endif -%}

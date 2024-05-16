@@ -6,11 +6,8 @@
  */
 
 const gulp = require("gulp");
-const through2 = require("through2");
 const RehikeBuild = require("./scripts/rehikebuild_main");
-
-// Miscellaneous includes:
-const path = require("path");
+const VflGenerator = require("./scripts/vfl_gen");
 
 /**
  * Wraps a Node.js stream for consumption alongside promises.
@@ -43,60 +40,34 @@ function CommonStartupTask()
 
 CommonStartupTask.displayName = "RehikeBuild :: Initialization";
 
-/**
- * Runs JS build tasks.
- */
-function BuildJs()
-{
-    const packages = RehikeBuild.getBuildFilesForLanguage("js").getPackages();
-    
-    const buildEvents = [];
-    
-    packages.forEach((fileDefs, destinationName) => {
-        const buildFiles = fileDefs.map(file => file.sourcePath);
-        console.log("BuildJs:packages.forEach", JSON.stringify(buildFiles));
-        
-        // Requirements for Closure Compiler:
-        buildFiles.push(
-            "build_tools/node_modules/google-closure-library/closure/goog/base.js"
-        );
-        
-        //let existingFileName = {};
-        
-        buildEvents.push(promiseWrapStream(
-            gulp.src(buildFiles, commonBuildCfg)
-            // Initialize the build task so that RehikeBuild actions can be applied to it:
-            .pipe(RehikeBuild.GulpInitRehikeBuildTask())
-            //.pipe(RehikeBuild.GulpHackGetRehikeBuildHandleTask(existingFileName, "efn"))
-            // Send the file contents off to the JS compiler:
-            .pipe(GulpClosureCompiler({
-                compilation_level: "ADVANCED_OPTIMIZATIONS",
-                process_closure_primitives: true,
-                language_out: "ECMASCRIPT3",
-                output_wrapper: "(function(){%output%})();",
-                js_output_file: "NAME_DOESNT_FUCKING_WORK.js"
-            }))
-            // Finalize the build task:
-            .pipe(RehikeBuild.GulpFinalizePathsTask())
-            .pipe(gulp.dest(RehikeBuild.BASE_SRC_DIR))
-        ));
-    });
-    
-    const BuildEvents = () => Promise.all(buildEvents);
-    
-    return gulp.parallel(BuildEvents);
-}
-
 async function BuildAll()
 {
     const iterator = RehikeBuild.BuildTask.getAllBuildTasks();
     
+    const tasks = [];
+    
+    /*
+     * The waiting architecture here is pretty complicated in order to work with
+     * Gulp.
+     */
     while (iterator.hasNewItems())
     {
+        // We continuously get slices in a loop while they're made. This is done
+        // in order to dynamically add more Gulp build tasks during the build.
+        const slice = iterator.getNext();
+        
+        tasks.push(...slice.tasks);
+        
         await new Promise((resolve, reject) => {
-            gulp.parallel( iterator.getNext() )( () => resolve() );
+            gulp.parallel( slice.gulpWrappers )( () => resolve() );
         });
     }
+    
+    // Wait for all RehikeBuild tasks to finish, which may take longer than Gulp:
+    await Promise.all(tasks.map(task => task.resolutionPromise));
+    
+    await VflGenerator.generateNewCache();
+    console.log("All builds complete.");
 }
 
 BuildAll.displayName = "RehikeBuild :: Main build task";
