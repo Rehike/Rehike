@@ -1,10 +1,10 @@
 {
-	"previousHash": "d8c2417c0318f3860478abc5652190a63c1ff8f3",
-	"currentRevisionId": 1510,
-	"subject": "Fix #571",
-	"body": "Fix #571",
+	"previousHash": "84695b91295c066d8d9d9cef6a42f382686e36c2",
+	"currentRevisionId": 1512,
+	"subject": "Move Rebug JS to RHBuild package",
+	"body": "Move Rebug JS to RHBuild package",
 	"branch": "master",
 	"committerName": "Isabella",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1715902264
+	"time": 1715902946
 }

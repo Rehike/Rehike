@@ -9,35 +9,17 @@ var _rebug = _rebug || {};
 
 (function(rebug) {
 
-/*{{ "*"~"/" }}
+// @include polyfill/Array.includes.js
+// @include polyfill/Element.remove.js
 
- {######################################################
- #                     IMPORTS.                        #
- #                                                     #
- #  The order in which these are added doesn't matter  #
- #  too much, since the JS interpreter will resolve    #
- #  function declarations regardless of their order.   #
- #                                                     #
- #  By the way, that little mess above this comment's  #
- #  a hack to get the IDE to display right with these  #
- #  Twig imports.                                      #
- #                                                     #
- ######################################################}
-
-{% include "rehike/debugger/js/polyfill/Array.includes.js.twig" %}
-{% include "rehike/debugger/js/polyfill/Element.remove.js.twig" %}
-{% include "rehike/debugger/js/lightbox.js.twig" %}
-{% include "rehike/debugger/js/tabs.js.twig" %}
-{% include "rehike/debugger/js/menu.js.twig" %}
-{% include "rehike/debugger/js/history.js.twig" %}
-{% if not rehikeDebugger.condensed %}
-    {% include "rehike/debugger/js/network.js.twig" %}
-{% endif %}
-{% include "rehike/debugger/js/spf.js.twig" %}
-{% include "rehike/debugger/js/global_walker.js.twig" %}
-{% include "rehike/debugger/js/widgets.js.twig" %}
-
-//*/
+// @include lightbox.js
+// @include tabs.js
+// @include menu.js
+// @include history.js
+// @include network.js
+// @include spf.js
+// @include global_walker.js
+// @include widgets.js
 
 function init()
 {

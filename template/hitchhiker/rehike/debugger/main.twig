@@ -27,9 +27,7 @@
             {{ main.dialog(rebug.dialog) }}
         </div>
     </div>
-    <script>
-        {% include "rehike/debugger/js/main.js.twig" %}
-    </script>
+    <script type="text/javascript" src="{{ rehike.resource.resolveVersioned("rehike/js/www-rebug.js") }}"></script>
     {# Global walker config #}
     {% set globalAttr = rebug.jsAttrs %}
     <script async="true">

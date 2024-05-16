@@ -7,10 +7,8 @@
 
 rebug.widgets = {};
 
-/*{{ "*"~"/" }}
-{% include "rehike/debugger/js/widgets/OpenButton.js.twig" %}
-{% include "rehike/debugger/js/widgets/CloseButton.js.twig" %}
-{% include "rehike/debugger/js/widgets/Tab.js.twig" %}
-{% include "rehike/debugger/js/widgets/Expander.js.twig" %}
-{% include "rehike/debugger/js/widgets/ExpanderTarget.js.twig" %}
-//*/
+// @include widgets/OpenButton.js
+// @include widgets/CloseButton.js
+// @include widgets/Tab.js
+// @include widgets/Expander.js
+// @include widgets/ExpanderTarget.js
