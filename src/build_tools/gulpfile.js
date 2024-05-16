@@ -8,6 +8,15 @@
 const gulp = require("gulp");
 const RehikeBuild = require("./scripts/rehikebuild_main");
 const VflGenerator = require("./scripts/vfl_gen");
+const ArgumentsParser = require("./scripts/parse_args");
+
+/**
+ * Stores a list of all arguments passed to the build system.
+ * 
+ * @global
+ * @var {object}
+ */
+let g_args = ArgumentsParser.getArgs();
 
 /**
  * Wraps a Node.js stream for consumption alongside promises.
@@ -33,8 +42,20 @@ function CommonStartupTask()
 {
     const stream = promiseWrapStream;
     
+    // If package names to be built are specified in the arguments, then we only
+    // build those packages. Otherwise, we'll send an empty array to build all
+    // existing packages.
+    let packages = [];
+    if ("package" in g_args)
+    {
+        if (Array.isArray(g_args["package"]))
+        {
+            packages = g_args["package"];
+        }
+    }
+    
     return Promise.all([
-        stream(RehikeBuild.Parser.GulpSetupRhBuildTask())
+        stream(RehikeBuild.Parser.GulpSetupRhBuildTask(packages))
     ]);
 }
 
@@ -66,8 +87,40 @@ async function BuildAll()
     // Wait for all RehikeBuild tasks to finish, which may take longer than Gulp:
     await Promise.all(tasks.map(task => task.resolutionPromise));
     
+    let completed = 0;
+    let failed = 0;
+    let upToDate = 0;
+    
+    const Status = RehikeBuild.BuildTask.Status;
+    
+    for (const task of tasks)
+    {
+        switch (task.status)
+        {
+            case Status.FINISHED:
+                completed++;
+                break;
+                
+            case Status.UP_TO_DATE:
+                upToDate++;
+                break;
+            
+            case Status.ERRORED:
+            default:
+                failed++;
+                break;
+        }
+    }
+    
     await VflGenerator.generateNewCache();
     console.log("All builds complete.");
+    
+    // Visual-Studio-like build-completion messages:
+    console.log(
+        `${completed.toLocaleString()} completed, ` +
+        `${failed.toLocaleString()} failed, ` +
+        `${upToDate.toLocaleString()} up-to-date`
+    );
 }
 
 BuildAll.displayName = "RehikeBuild :: Main build task";

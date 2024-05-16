@@ -11,6 +11,9 @@ const fs = require("fs/promises");
 
 const RehikeBuild = require("./rehikebuild_main");
 
+// temporary critical bug fix code:
+const ArgumentsParser = require("./parse_args");
+
 /**
  * The output destination at which to store the VFL cache.
  */
@@ -67,6 +70,12 @@ function generateVflMapping(buildTask)
  */
 async function generateNewCache()
 {
+    // As of right now, building individual packages is not supported with VFL
+    // cache generation as it will override all existing records and store *only*
+    // the updated one.
+    if ("package" in ArgumentsParser.getArgs())
+        return;
+    
     let fh = await fs.open(
         path.join(RehikeBuild.REHIKE_ROOT_DIR, VFL_OUTPUT_DESTINATION),
         "w"

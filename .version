@@ -1,10 +1,10 @@
 {
-	"previousHash": "ae1780bec7222f5c748c63e4f2311cd3467e9fef",
-	"currentRevisionId": 1507,
-	"subject": "Remove debug print code from C4 MHeader",
-	"body": "Remove debug print code from C4 MHeader",
+	"previousHash": "3352e55994e667edf44f99875df72b6d498be4ec",
+	"currentRevisionId": 1509,
+	"subject": "[RHBuild] Support for building individual packages",
+	"body": "[RHBuild] Support for building individual packages",
 	"branch": "master",
 	"committerName": "Isabella",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1715829543
+	"time": 1715902087
 }
