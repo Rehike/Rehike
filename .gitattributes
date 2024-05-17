@@ -1,4 +1,3 @@
-*.twig linguist-vendored
 *.html linguist-vendored
 static/** linguist-vendored
 
