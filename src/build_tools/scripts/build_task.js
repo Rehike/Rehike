@@ -41,6 +41,7 @@ class BuildTask
         FINISHING: 1,
         FINISHED: 2,
         ERRORED: 3,
+        UP_TO_DATE: 4,
     };
     
     _gulpTask = null;

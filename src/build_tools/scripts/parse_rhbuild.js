@@ -14,9 +14,19 @@ const assert = require("assert/strict");
 /**
  * Gulp task for setting up .rhbuild files.
  */
-function GulpSetupRhBuildTask()
+function GulpSetupRhBuildTask(buildProjects = [])
 {
-    return gulp.src("**/.rhbuild", { cwd: RehikeBuild.BASE_SRC_DIR })
+    let inputSource = "**/.rhbuild";
+    
+    // If we're given a list of build packages to parse, then we want to only specify
+    // those in the build sources. Since the package names correspond to the file-system
+    // layout, we just build a static list.
+    if (buildProjects.length > 0)
+    {
+        inputSource = buildProjects.map(item => `${item}/.rhbuild`);
+    }
+    
+    return gulp.src(inputSource, { cwd: RehikeBuild.BASE_SRC_DIR })
         .pipe(gulpParseRhBuild());
 }
 
