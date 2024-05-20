@@ -5,16 +5,6 @@
     <i><a href="https://discord.gg/rqBJ9EXDTH">Discord</a></i>
 </p>
 
----
-
-<div align="center">
-<p><strong>
-    <a href="README.md">English</a> | <a href="README.ja.md">日本語</a> | <a href="README.ko.md">한국어</a> | <a href="README.es.md">Español</a> | <a href="README.nl-NL.md">Nederlands</a> | <a href="README.pl.md">Polski</a> | <a href="README.pt-BR.md">Português</a> | <a href="README.ru.md">Русский</a> | <a href="README.uk.md">Українська</a>
-</strong></p>
-</div>
-
----
-
 Rehike is a custom web frontend server for YouTube.
 
 We use it to accurately restore the old YouTube layout and feel, which is known as Hitchhiker. This version of YouTube existed from 2013 to 2020 and is preferred by us due to its speed and simplicity.
