@@ -5,6 +5,16 @@
     <i><a href="https://discord.gg/rqBJ9EXDTH">Discord</a></i>
 </p>
 
+---
+
+<div align="center">
+<p><strong>
+    <a href="README.md">English</a> | <a href="README.ja.md">日本語</a> | <a href="README.ko.md">한국어</a> | <a href="README.es.md">Español</a> | <a href="README.nl-NL.md">Nederlands</a> | <a href="README.pl.md">Polski</a> | <a href="README.pt-BR.md">Português</a> | <a href="README.ru.md">Русский</a> | <a href="README.uk.md">Українська</a>
+</strong></p>
+</div>
+
+---
+
 Rehike es un servidor personalizado de frontend web para YouTube.
 
 Lo usamos para restaurar con precisión el antiguo diseño y sensación de YouTube, conocido como Hitchhiker. Esta versión de YouTube existió desde 2013 hasta 2020 y la preferimos por su velocidad y simplicidad.
