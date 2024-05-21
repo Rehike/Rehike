@@ -47,6 +47,8 @@ class VersionController
 
         if ($dg || $dv)
         {
+            \Rehike\Logging\DebugLogger::print(json_encode(self::$versionInfo));
+            self::$versionInfo->buildNumber = BuildNumber::getBuildNumber();
             $hasRun = true;
             return true;
         }
@@ -71,9 +73,9 @@ class VersionController
 
         $initStatus = self::init();
 
-        if ($initStatus && @self::$versionInfo->currentRevisionId && $dateAvailable)
+        if ($initStatus && @self::$versionInfo->buildNumber && $dateAvailable)
         {
-            $semanticVersion .= " (build " . (string)self::$versionInfo->currentRevisionId . ", " . $dateTime->format("Y-m-d") . ")";
+            $semanticVersion .= " (build " . (string)self::$versionInfo->buildNumber . ", " . $dateTime->format("Y-m-d") . ")";
         }
 
         return $semanticVersion;
