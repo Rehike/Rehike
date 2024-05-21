@@ -38269,7 +38269,7 @@
         return !!(a.k && a.j.Bc() && a.k.g != a.j && a.k.g.info.ra < a.j.info.ra)
     }
     L_.prototype.G = function(a) {
-        //Tr(a.info.g[0]) || a.dispose();
+        Tr(a.info.g[0]) || a.dispose();
         this.A -= Zr(a.info)
     }
     ;
