@@ -1,10 +1,10 @@
 {
-	"previousHash": "6b294bf7cfaf2a8f5e27c896ca3245aacbcd356c",
-	"currentRevisionId": 1523,
-	"subject": "Hacky fix for modern username lookup",
-	"body": "Hacky fix for modern username lookup",
+	"previousHash": "a9d214434bc515950d949069fcb11d0e7b9aeed7",
+	"currentRevisionId": 1524,
+	"subject": "Explain why the default route is "channel"",
+	"body": "Explain why the default route is "channel"",
 	"branch": "master",
 	"committerName": "Isabella",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1716329600
+	"time": 1716330093
 }

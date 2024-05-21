@@ -129,5 +129,10 @@ Router::post([
 	"/annotations_invideo" => "ajax/annotations_invideo",
 	"/get_video_metadata" => "ajax/get_video_metadata",
     "/player_204" => function() { exit(); },
+    
+    // The default route is the channel controller. This is so we can handle
+    // username shorthand URLs (i.e. /PewDiePie -> /user/PewDiePie)
+    // Channel controller is responsible for showing the 404 page if lookup
+    // fails.
     "default" => "channel"
 ]);
