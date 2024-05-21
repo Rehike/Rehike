@@ -29,6 +29,11 @@ class DotVersion
         $versionFile = file_get_contents(".version");
 
         $json = json_decode($versionFile);
+        
+        if (null == $json)
+        {
+            $json = MessyJsonParser::parse($versionFile);
+        }
 
         if (null == $json)
         {

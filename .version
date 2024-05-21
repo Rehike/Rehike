@@ -1,10 +1,10 @@
 {
-	"previousHash": "a9d214434bc515950d949069fcb11d0e7b9aeed7",
-	"currentRevisionId": 1524,
-	"subject": "Explain why the default route is "channel"",
-	"body": "Explain why the default route is "channel"",
+	"previousHash": "b5311cbfe3f6f3465fcf48d28798377ded36b59c",
+	"currentRevisionId": 1525,
+	"subject": "Fix .version parsing with double quotes in message",
+	"body": "Fix .version parsing with double quotes in message",
 	"branch": "master",
 	"committerName": "Isabella",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1716330093
+	"time": 1716333889
 }
