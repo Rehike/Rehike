@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 /**
  * @fileoverview Rehike Build System
  * 
@@ -6,6 +8,7 @@
  */
 
 const gulp = require("gulp");
+const GulpManager = require("./scripts/gulp_manager");
 const RehikeBuild = require("./scripts/rehikebuild_main");
 const VflGenerator = require("./scripts/vfl_gen");
 const ArgumentsParser = require("./scripts/parse_args");
@@ -59,7 +62,7 @@ function CommonStartupTask()
     ]);
 }
 
-CommonStartupTask.displayName = "RehikeBuild :: Initialization";
+CommonStartupTask.displayName = "@RHBUILD::NOLOG";
 
 async function BuildAll()
 {
@@ -80,7 +83,10 @@ async function BuildAll()
         tasks.push(...slice.tasks);
         
         await new Promise((resolve, reject) => {
-            gulp.parallel( slice.gulpWrappers )( () => resolve() );
+            GulpManager.runGulpTask(
+                gulp.parallel(slice.gulpWrappers),
+                () => resolve()
+            );
         });
     }
     
@@ -123,15 +129,12 @@ async function BuildAll()
     );
 }
 
-BuildAll.displayName = "RehikeBuild :: Main build task";
+BuildAll.displayName = "@RHBUILD::NOLOG";
 
 console.log("Welcome to RehikeBuild!");
 
 // Main build action
-exports.build = gulp.series(
+GulpManager.runGulpTask(gulp.series(
     CommonStartupTask,
     BuildAll
-);
-
-// Build everything if no arguments are provided:
-exports.default = exports.build;
+));
