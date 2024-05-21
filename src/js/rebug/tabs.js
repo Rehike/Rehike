@@ -36,7 +36,8 @@ rebug.tabs.getCurrentId = function()
 {
     var tab = rebug.tabs.getCurrent();
 
-    if (!tab) return "";
+    if (!tab)
+        return "";
 
     return tab.getAttribute("data-tab-target") || "";
 };
@@ -86,8 +87,15 @@ rebug.tabs.switchTab = function(tabId)
     var tab = rebug.tabs.getTabById(tabId);
     var content = rebug.tabs.getContentById(tabId);
 
-    if (tab) rehike.class.add(tab, "rebug-tab-selected");
-    if (content) rehike.class.add(content, "rebug-tab-selected");
+    if (tab)
+    {
+        rehike.class.add(tab, "rebug-tab-selected");
+    }
+    
+    if (content)
+    {
+        rehike.class.add(content, "rebug-tab-selected");
+    }
 
     rehike.pubsub.publish("rebug-tab-switch");
 };
@@ -102,6 +110,13 @@ rebug.tabs._clearSelectedTab = function()
     var tab = rebug.tabs.getCurrent();
     var content = rebug.tabs.getCurrentContent();
 
-    if (tab) rehike.class.remove(tab, "rebug-tab-selected");
-    if (content) rehike.class.remove(content, "rebug-tab-selected");
+    if (tab)
+    {
+        rehike.class.remove(tab, "rebug-tab-selected");
+    }
+    
+    if (content)
+    {
+        rehike.class.remove(content, "rebug-tab-selected");
+    }
 };
