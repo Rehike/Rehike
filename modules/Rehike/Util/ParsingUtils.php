@@ -67,10 +67,49 @@ class ParsingUtils
 
     public static function getUrl(mixed $source): ?string
     {
-        return @$source->navigationEndpoint->commandMetadata->webCommandMetadata->url
+        $url = @$source->navigationEndpoint->commandMetadata->webCommandMetadata->url
             ?? @$source->navigationEndpoint->confirmDialogEndpoint->content->confirmDialogRenderer->confirmButton->buttonRenderer->command->urlEndpoint->url
             ?? @$source->commandMetadata->webCommandMetadata->url
             ?? null;
+            
+        if ($url)
+        {
+            if (str_starts_with($url, "/@"))
+            {
+                return self::fixNewUsernameUrl($url, $source);
+            }
+            
+            return $url;
+        }
+        
+        return null;
+    }
+    
+    /**
+     * PATCH (izzy): YouTube fucked up parsing new username URLs.
+     * 
+     * If a channel has a modern username which is the same as a legacy one, then
+     * the legacy one is preferred by YouTube's server-side parser, and you will
+     * visit the legacy channel.
+     * 
+     * For example:
+     * 
+     * /@Stryder7x (UCYDnJiF0_RqSjkjvjRbG1tA) -> /user/Stryder7x (UC7O-LSXY_CWSI3AIoIsamqg)
+     * 
+     * Because this can be quite confusing, we'll just fix YouTube's fuck up in Rehike
+     * by always using /channel/ links for /@ URLs.
+     */
+    public static function fixNewUsernameUrl(string $url, object $source): ?string
+    {
+        $channelId = @$source->navigationEndpoint->browseEndpoint->browseId
+            ?? @$source->browseEndpoint->browseId
+            ?? null;
+        $urlParts = explode("/", trim($url, "/"));
+        $subPage = implode("/", array_slice($urlParts, 1));
+        
+        return empty($subPage)
+            ? "/channel/$channelId"
+            : "/channel/$channelId/$subPage";
     }
 
     /**

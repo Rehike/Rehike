@@ -1,5 +1,5 @@
 <div id="watch7-user-header" class=" spf-link ">
-    <a href="{{ owner.navigationEndpoint.browseEndpoint.canonicalBaseUrl }}" class="yt-user-photo       spf-link ">
+    <a href="{{ rehike.getUrl(owner.navigationEndpoint) }}" class="yt-user-photo       spf-link ">
     <span class="video-thumb  yt-thumb yt-thumb-48">
         <span class="yt-thumb-square">
             <span class="yt-thumb-clip">
@@ -10,7 +10,7 @@
     </span>
     </a>
     <div class="yt-user-info">
-    <a href="{{ owner.navigationEndpoint.browseEndpoint.canonicalBaseUrl }}" class="       spf-link ">{{ rehike.getText(owner.title) }}</a>
+    <a href="{{ rehike.getUrl(owner.navigationEndpoint) }}" class="       spf-link ">{{ rehike.getText(owner.title) }}</a>
     {% if owner.badges %}
     <span data-tooltip-text="{{ yt.msgs.verified }}" class="yt-channel-title-icon-verified yt-uix-tooltip yt-sprite" aria-label="{{ yt.msgs.verified }}"></span>
     {% endif %}

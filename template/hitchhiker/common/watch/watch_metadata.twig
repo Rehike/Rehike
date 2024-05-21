@@ -7,7 +7,7 @@
 <meta itemprop="duration" content="PT3M33S">
 <meta itemprop="unlisted" content="False">
 <span itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <link itemprop="url" href="{{ owner.navigationEndpoint.browseEndpoint.canonicalBaseUrl }}">
+    <link itemprop="url" href="{{ rehike.getUrl(owner.navigationEndpoint) }}">
 </span>
 <span itemprop="author" itemscope itemtype="http://schema.org/Person">
     <link itemprop="url" href="https://plus.google.com/118341150529602077100">
@@ -21,7 +21,7 @@
             "@type": "ListItem",
             "position": 1,
             "item": {
-            "@id": "{{ owner.navigationEndpoint.browseEndpoint.canonicalBaseUrl|json_encode() }}",
+            "@id": "{{ rehike.getUrl(owner.navigationEndpoint)|json_encode() }}",
             "name": "RickAstleyVEVO"
             }
         }
