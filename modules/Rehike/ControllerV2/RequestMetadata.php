@@ -157,8 +157,14 @@ class RequestMetadata
             case "application/json":
                 $obj = @json_decode($body);
 
-                if (null != $obj) return $obj;
-                else return $body;
+                if (null != $obj)
+                {
+                    return $obj;
+                }
+                else
+                {
+                    return $body;
+                }
 
                 break;
         }

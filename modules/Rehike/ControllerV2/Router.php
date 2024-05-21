@@ -36,7 +36,9 @@ class Router
     public static function get(array $defs)
     {
         if ("GET" == $_SERVER['REQUEST_METHOD'])
-        return self::baseRequestMethod($defs, "get");
+        {
+            return self::baseRequestMethod($defs, "get");
+        }
     }
 
     /**
@@ -48,7 +50,9 @@ class Router
     public static function post(array $defs)
     {
         if ("POST" == $_SERVER['REQUEST_METHOD'])
-        return self::baseRequestMethod($defs, "post");
+        {
+            return self::baseRequestMethod($defs, "post");
+        }
     }
 
     /**
