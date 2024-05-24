@@ -1,10 +1,10 @@
 {
-	"previousHash": "9ab23b3db3102d3649af14798d6d9db110366997",
-	"currentRevisionId": 1527,
-	"subject": "Use continuation strategy for C4 about request",
-	"body": "Use continuation strategy for C4 about request",
+	"previousHash": "bb2f2fb6cbb7252e50a06c8d2512b53174c67886",
+	"currentRevisionId": 1528,
+	"subject": "Fix /playlist links for mixes (RD list type)",
+	"body": "Fix /playlist links for mixes (RD list type)",
 	"branch": "master",
 	"committerName": "Isabella",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1716580802
+	"time": 1716585253
 }
