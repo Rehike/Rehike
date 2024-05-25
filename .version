@@ -1,10 +1,10 @@
 {
-	"previousHash": "bb2f2fb6cbb7252e50a06c8d2512b53174c67886",
-	"currentRevisionId": 1528,
-	"subject": "Fix /playlist links for mixes (RD list type)",
-	"body": "Fix /playlist links for mixes (RD list type)",
+	"previousHash": "6b7003dd211a4e05c19fb2878adc29b501b3fe27",
+	"currentRevisionId": 1529,
+	"subject": "Fix channel banner changing (+ more)",
+	"body": "Fix channel banner changing (+ more)",
 	"branch": "master",
 	"committerName": "Isabella",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1716585253
+	"time": 1716667895
 }

@@ -123,6 +123,15 @@ class Router
      */
     public static function funnel(array $defs): void
     {
+        // PATCH (izzy): In the case where a request sends too many PHP variables and causes
+        // a warning to be printed to the output, we want to discard that. Hence, we start
+        // output buffering for funnelled requests:
+        while (ob_get_level() > 0)
+        {
+            ob_end_clean();
+        }
+        ob_start();
+        
         foreach ($defs as $index => $value)
         {
             $pattern = $value;

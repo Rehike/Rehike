@@ -31,6 +31,7 @@ Router::funnel([
     "/account_billing",
     "/account_advanced",
     "/account_transfer_channel",
+    "/channel_image_upload*",
     "/features",
     "/testtube",
     "/t/terms",
