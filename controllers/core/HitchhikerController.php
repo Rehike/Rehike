@@ -310,7 +310,11 @@ abstract class HitchhikerController
         
             if ($curMonth == 6)
             {
-                $yt->masthead->applyYoodleLogo("//s.ytimg.com/yts/img/doodles/yt_doodle_pride_2013-vflG2_e_y.png");
+                $prideYoodleUrl = Config::getConfigProp("appearance.modernLogo")
+                    ? "/rehike/static/logo/pride_2017_custom.png"
+                    : "//s.ytimg.com/yts/img/doodles/yt_doodle_pride_2013-vflG2_e_y.png";
+                
+                $yt->masthead->applyYoodleLogo($prideYoodleUrl);
             }
         }
     }
