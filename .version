@@ -1,10 +1,10 @@
 {
-	"previousHash": "6b7003dd211a4e05c19fb2878adc29b501b3fe27",
-	"currentRevisionId": 1529,
-	"subject": "Fix channel banner changing (+ more)",
-	"body": "Fix channel banner changing (+ more)",
+	"previousHash": "9c95caffa3311318c407ac81171d1ad7e1d65695",
+	"currentRevisionId": 1530,
+	"subject": "Add yoodle support",
+	"body": "Add yoodle support",
 	"branch": "master",
 	"committerName": "Isabella",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1716667895
+	"time": 1717265734
 }

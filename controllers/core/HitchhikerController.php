@@ -301,6 +301,18 @@ abstract class HitchhikerController
                 "hasCloseButton" => false
             ]);
         }
+        
+        if ($yt->masthead instanceof Masthead)
+        {
+            // Since we have a template, we should have a masthead, so we'll try to apply
+            // the yoodle.
+            $curMonth = idate("m");
+        
+            if ($curMonth == 6)
+            {
+                $yt->masthead->applyYoodleLogo("//s.ytimg.com/yts/img/doodles/yt_doodle_pride_2013-vflG2_e_y.png");
+            }
+        }
     }
 
     /**

@@ -9,8 +9,12 @@
         <div id="appbar-main-guide-notification-container"></div>
         {%- endif -%}
         <span id="yt-masthead-logo-fragment">
-            <a href="/" id="logo-container" class="masthead-logo-renderer spf-link" title="{{ yt.masthead.logoTooltip }}">
+            <a href="/" id="logo-container" class="masthead-logo-renderer {{ yt.masthead.logoIsDoodle ? "doodle" }} spf-link" title="{{ yt.masthead.logoTooltip }}">
+                {% if yt.masthead.logoIsDoodle %}
+                <img id="logo" alt="{{ yt.masthead.logoTooltip }}" src="{{ yt.masthead.doodleImageUrl }}">
+                {% else %}
                 <span class="logo masthead-logo-renderer-logo yt-sprite"></span>
+                {% endif %}
                 {%- if yt.masthead.countryCode -%}
                 <span class="content-region">{{ yt.masthead.countryCode }}</span>
                 {%- endif -%}
