@@ -1,5 +1,5 @@
 <?php
-namespace Rehike\Nepeta\Process;
+namespace Rehike\Nepeta\IPC\Process;
 
 /**
  * Manages the creation of additional PHP processes.

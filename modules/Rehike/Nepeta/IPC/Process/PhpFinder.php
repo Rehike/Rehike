@@ -1,5 +1,5 @@
 <?php
-namespace Rehike\Nepeta\Process;
+namespace Rehike\Nepeta\IPC\Process;
 
 /**
  * Find the location of the PHP executable.

@@ -1,7 +1,7 @@
 <?php
-namespace Rehike\Nepeta\Client;
+namespace Rehike\Nepeta\IPC\Client;
 
-use Rehike\Nepeta\Process\ModHandlerBase;
+use Rehike\Nepeta\IPC\Process\ModHandlerBase;
 use Override;
 
 /**

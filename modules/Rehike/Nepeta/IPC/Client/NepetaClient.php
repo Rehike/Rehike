@@ -1,5 +1,5 @@
 <?php
-namespace Rehike\Nepeta\Client;
+namespace Rehike\Nepeta\IPC\Client;
 
 use const Rehike\Nepeta\NEPETA_INTERNAL_SERVER_ADDRESS;
 
