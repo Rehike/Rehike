@@ -10,6 +10,12 @@ var initClassicPlayerMods = function(){};
  */
 var g_isCurrentlyWatchPage = false;
 
+/**
+ * Some work needs to be done when the player is first initialized, but never
+ * repeated thereafter.
+ */
+var g_finishedInitialSetup = false;
+
 // I NEVER WANT TO INTERFACE WITH JS KEYBOARD API EVER AGAIN
 var KEYCODE_ENTER = 13;
 var KEYCODE_SPACE = 32;
@@ -438,7 +444,8 @@ function onLoadPlayerElement(api)
     }
 
     // These things don't need refreshing (or break with it)
-    {% if not yt.spf %}
+    if (!g_finishedInitialSetup)
+    {
         // Next, we need to listen to this event to handle button presses. For some
         // reason, the player doesn't handle this natively, but this quick fix works:
         api.addEventListener("onAutonavChangeRequest", function(status) {
@@ -467,7 +474,9 @@ function onLoadPlayerElement(api)
         // Custom keyboard events:
         addEventToPlayer("keydown", playerCustomKeyDownHandler);
         addEventToPlayer("keypress", playerCustomKeyPressHandler);
-    {% endif %}
+        
+        g_finishedInitialSetup = true;
+    }
 }
 
 // This is exported to the above scope.

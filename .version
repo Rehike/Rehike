@@ -1,10 +1,10 @@
 {
-	"previousHash": "d0fefc602d0dcdee09592c78569287091913a9b7",
-	"currentRevisionId": 1533,
-	"subject": "Nepeta restructuring...",
-	"body": "Nepeta restructuring...",
+	"previousHash": "0dbdb9fcaaf2d00b22b475e8d4e8a975c9b16bd9",
+	"currentRevisionId": 1534,
+	"subject": "Fix #575",
+	"body": "Fix #575",
 	"branch": "master",
 	"committerName": "Isabella",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1717306073
+	"time": 1717307451
 }
