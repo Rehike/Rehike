@@ -302,6 +302,9 @@ abstract class HitchhikerController
             ]);
         }
         
+		if (!$this->useTemplate) // skip following code if not using templates to avoid fatal error
+			return;
+		
         if ($yt->masthead instanceof Masthead)
         {
             // Since we have a template, we should have a masthead, so we'll try to apply
