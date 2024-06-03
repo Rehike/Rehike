@@ -306,16 +306,24 @@ abstract class HitchhikerController
         {
             // Since we have a template, we should have a masthead, so we'll try to apply
             // the yoodle.
-            $curMonth = idate("m");
-        
-            if ($curMonth == 6)
-            {
-                $prideYoodleUrl = Config::getConfigProp("appearance.modernLogo")
-                    ? "/rehike/static/logo/pride_2017_custom.png"
-                    : "//s.ytimg.com/yts/img/doodles/yt_doodle_pride_2013-vflG2_e_y.png";
-                
-                $yt->masthead->applyYoodleLogo($prideYoodleUrl);
-            }
+            $this->checkAndApplyYoodles($yt);
+        }
+    }
+    
+    /**
+     * Manages the use of YouTube doodle logos for special events.
+     */
+    public function checkAndApplyYoodles(YtApp $yt): void
+    {
+        $curMonth = idate("m");
+    
+        if ($curMonth == 6)
+        {
+            $prideYoodleUrl = Config::getConfigProp("appearance.modernLogo")
+                ? "/rehike/static/logo/pride_2017_custom.png"
+                : "//s.ytimg.com/yts/img/doodles/yt_doodle_pride_2013-vflG2_e_y.png";
+            
+            $yt->masthead->applyYoodleLogo($prideYoodleUrl);
         }
     }
 
