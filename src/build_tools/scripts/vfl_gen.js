@@ -11,9 +11,6 @@ const fs = require("fs/promises");
 
 const RehikeBuild = require("./rehikebuild_main");
 
-// temporary critical bug fix code:
-const ArgumentsParser = require("./parse_args");
-
 /**
  * The output destination at which to store the VFL cache.
  */
@@ -70,19 +67,34 @@ function generateVflMapping(buildTask)
  */
 async function generateNewCache()
 {
-    // As of right now, building individual packages is not supported with VFL
-    // cache generation as it will override all existing records and store *only*
-    // the updated one.
-    if ("package" in ArgumentsParser.getArgs())
-        return;
+    const FILE_PATH = path.join(RehikeBuild.REHIKE_ROOT_DIR, VFL_OUTPUT_DESTINATION);
     
-    let fh = await fs.open(
-        path.join(RehikeBuild.REHIKE_ROOT_DIR, VFL_OUTPUT_DESTINATION),
-        "w"
-    );
+    let vflMapObj = {};
     
+    try
+    {
+        // Using another FS call for readFile here because it seems that
+        // truncate() doesn't work right in Node, so you need to hack
+        // around it, it seems:
+        let fileContents = await fs.readFile(FILE_PATH);
+        
+        vflMapObj = JSON.parse(fileContents.toString());
+    }
+    catch (e) {} // ignore invalid JSON
+    
+    let fh = await fs.open(FILE_PATH, "w");
+    
+    // Merge updated entries during this RehikeBuild session with entries
+    // from the original file:
+    for (let key in g_vflMap)
+    {
+        vflMapObj[key] = g_vflMap[key];
+    }
+    
+    await fh.write(Buffer.from(JSON.stringify(vflMapObj, null, 4)));
     console.log("Wrote VFL cache.");
-    await fh.write(Buffer.from(JSON.stringify(g_vflMap, null, 4)));
+    
+    await fh.sync();
     
     await fh.close();
 }

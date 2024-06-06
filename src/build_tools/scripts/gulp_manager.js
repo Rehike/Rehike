@@ -58,11 +58,10 @@ function setupLogging(gulp)
     
     gulp.on("error", function(event)
     {
+        // This error logging code sucks. Consider cleaning up when errors become prominent.
         let info = parseLogCommand(event.name);
         
-        gulplog.error({
-            tag: "Error in " + event.name
-        });
+        console.log(`${chalk.red("Error in " + event.name + ": ")} ${JSON.stringify(event)}`);
     });
 }
 
