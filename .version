@@ -1,10 +1,10 @@
 {
-	"previousHash": "5f942628aeec4ca8c3db01b4e2f10090eca2a509",
-	"currentRevisionId": 1540,
-	"subject": "[RHBuild] Fix VFL generation for single package builds",
-	"body": "[RHBuild] Fix VFL generation for single package builds",
+	"previousHash": "149fa27b43ae85e5aae2a8c339244a8ef02ab7c7",
+	"currentRevisionId": 1541,
+	"subject": "Fix #576",
+	"body": "Fix #576",
 	"branch": "master",
 	"committerName": "Isabella",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1717713783
+	"time": 1717885447
 }

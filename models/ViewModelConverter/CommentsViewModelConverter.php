@@ -70,6 +70,27 @@ class CommentsViewModelConverter extends BasicVMC
         $this->isOwnComment = $commentPayload->author->isCurrentUser;
         $this->isCreatorComment = $commentPayload->author->isCreator;
         $this->isVerifiedAuthor = $commentPayload->author->isVerified;
+        
+        // Early 2024-06: They got rid of the browse command too, so we have to rebuild those too:
+        if (isset($commentPayload->author->channelPageEndpoint->innertubeCommand))
+        {
+            $authorEndpoint = $commentPayload->author->channelPageEndpoint->innertubeCommand;
+        }
+        else
+        {
+            $browseId = $commentPayload->author->channelId;
+            
+            $authorEndpoint = (object)[
+                "browseEndpoint" => (object)[
+                    "browseId" => $browseId
+                ],
+                "commandMetadata" => (object)[
+                    "webCommandMetadata" => (object)[
+                        "url" => "/channel/$browseId"
+                    ]
+                ]
+            ];
+        }
 
         $out["commentId"] = $commentId;
         $out["publishedTimeText"] = (object)[
@@ -85,7 +106,7 @@ class CommentsViewModelConverter extends BasicVMC
             "simpleText" => $commentPayload->author->displayName
         ];
         $out["authorIsChannelOwner"] = $this->isCreatorComment;
-        $out["authorEndpoint"] = $commentPayload->author->channelCommand->innertubeCommand;
+        $out["authorEndpoint"] = $authorEndpoint;
         $out["authorThumbnail"] = (object)[
             "accessiblity" => (object)[
                 "accessibilityData" => (object)[
@@ -105,7 +126,7 @@ class CommentsViewModelConverter extends BasicVMC
                         // here.
                         "simpleText" => $commentPayload->author->displayName
                     ],
-                    "authorEndpoint" => $out["authorEndpoint"],
+                    "authorEndpoint" => $authorEndpoint,
                     "icon" => (object)[
                         "iconType" => "CHECK"
                     ],
