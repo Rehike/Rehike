@@ -1,10 +1,10 @@
 {
-	"previousHash": "149fa27b43ae85e5aae2a8c339244a8ef02ab7c7",
-	"currentRevisionId": 1541,
-	"subject": "Fix #576",
-	"body": "Fix #576",
+	"previousHash": "26dedda9213ca5b3d10448addf436d37733f654b",
+	"currentRevisionId": 1542,
+	"subject": "Fix C4 about link + appbar links",
+	"body": "Fix C4 about link + appbar links",
 	"branch": "master",
 	"committerName": "Isabella",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1717885447
+	"time": 1717960936
 }

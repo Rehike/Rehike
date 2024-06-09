@@ -365,6 +365,9 @@ class Channels4Model
                             "webCommandMetadata" => (object)[
                                 "url" => $this->baseUrl . "/about"
                             ]
+                        ],
+                        "browseEndpoint" => (object)[
+                            "browseId" => $yt->ucid
                         ]
                     ],
                     "selected" => $aboutTabSelected,
@@ -409,7 +412,7 @@ class Channels4Model
 
         foreach ($sortedTabs as $tab) if (@$tab->tabRenderer)
         {
-            $tabEndpoint = $tab->tabRenderer->endpoint->commandMetadata->webCommandMetadata->url ?? null;
+            $tabEndpoint = ParsingUtils::getUrl($tab->tabRenderer->endpoint);
 
             if (!is_null($tabEndpoint))
             {
@@ -673,7 +676,6 @@ class Channels4Model
         
         foreach ($tabs as $tab)
         {
-            
             if (isset($tab->tabRenderer))
             {
                 $renderer = $tab->tabRenderer;
@@ -686,7 +688,7 @@ class Channels4Model
             if ($renderer)
             {
                 $url = $renderer->endpoint->commandMetadata->webCommandMetadata->url;
-                $parts = explode("/", $url);
+                $parts = explode("/", trim($url, "/"));
                 
                 if (empty($parts[0]))
                 {
