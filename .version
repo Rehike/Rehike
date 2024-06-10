@@ -1,10 +1,10 @@
 {
-	"previousHash": "65e7e263c9a2637c2e3b45ef029e455aac48bf6e",
-	"currentRevisionId": 1544,
-	"subject": "Handle comment teasers + replies correctly for VM exp",
-	"body": "Handle comment teasers + replies correctly for VM exp",
+	"previousHash": "6234cce5a1941e2703518d45331c349c91acf906",
+	"currentRevisionId": 1545,
+	"subject": "Correct warnings for new channel about metadata",
+	"body": "Correct warnings for new channel about metadata",
 	"branch": "master",
 	"committerName": "Isabella",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1718036574
+	"time": 1718037086
 }

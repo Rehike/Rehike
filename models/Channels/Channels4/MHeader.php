@@ -170,9 +170,20 @@ class MHeader
         
         if (Config::getConfigProp("appearance.showNewInfoOnChannelAboutPage"))
         {
-            $this->username = ParsingUtils::getText($metadata->usernameText);
-            $this->pronouns = ParsingUtils::getText($metadata->pronounsText);
-            $this->videoCount = ParsingUtils::getText($metadata->videoCountText);
+            if (isset($header->usernameText))
+            {
+                $this->username = ParsingUtils::getText($metadata->usernameText);
+            }
+            
+            if (isset($header->pronounsText))
+            {
+                $this->pronouns = ParsingUtils::getText($metadata->pronounsText);
+            }
+            
+            if (isset($header->videoCountText))
+            {
+                $this->videoCount = ParsingUtils::getText($metadata->videoCountText);
+            }
         }
     }
 
@@ -265,9 +276,20 @@ class MHeader
         
         if (Config::getConfigProp("appearance.showNewInfoOnChannelAboutPage"))
         {
-            $this->username = ParsingUtils::getText($header->channelHandleText);
-            $this->pronouns = ParsingUtils::getText($header->channelPronouns);
-            $this->videoCount = ParsingUtils::getText($header->videosCountText);
+            if (isset($header->channelHandleText))
+            {
+                $this->username = ParsingUtils::getText($header->channelHandleText);
+            }
+            
+            if (isset($header->channelPronouns))
+            {
+                $this->pronouns = ParsingUtils::getText($header->channelPronouns);
+            }
+            
+            if (isset($header->videosCountText))
+            {
+                $this->videoCount = ParsingUtils::getText($header->videosCountText);
+            }
         }
     }
 
