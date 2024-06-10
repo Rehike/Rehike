@@ -233,12 +233,20 @@ class CommentThread
                     "commentRenderer" => $renderer
                 ];
             }
-        }
+            
+            // Comment teasers (i.e. linked replies)
+            if (isset($thread->commentThreadRenderer->replies->commentRepliesRenderer->teaserContents))
+            {
+                $teaserReplies = $thread->commentThreadRenderer->replies->commentRepliesRenderer->teaserContents;
+                $this->convertCommentsIfNecessary($teaserReplies);
+            }
 
-        if (isset($thread->commentThreadRenderer->replies->commentRepliesRenderer->contents))
-        {
-            $replies = $thread->commentThreadRenderer->replies->commentRepliesRenderer->contents;
-            $this->convertCommentsIfNecessary($replies);
+            // Thread replies (if they exist here):
+            if (isset($thread->commentThreadRenderer->replies->commentRepliesRenderer->contents))
+            {
+                $replies = $thread->commentThreadRenderer->replies->commentRepliesRenderer->contents;
+                $this->convertCommentsIfNecessary($replies);
+            }
         }
     }
 
