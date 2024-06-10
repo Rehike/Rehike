@@ -1,10 +1,10 @@
 {
-	"previousHash": "26dedda9213ca5b3d10448addf436d37733f654b",
-	"currentRevisionId": 1542,
-	"subject": "Fix C4 about link + appbar links",
-	"body": "Fix C4 about link + appbar links",
+	"previousHash": "e12477e31bde6ae37ae9a2c80b5266b8e047c9ef",
+	"currentRevisionId": 1543,
+	"subject": "Support new metadata on channel about",
+	"body": "Support new metadata on channel about",
 	"branch": "master",
 	"committerName": "Isabella",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1717960936
+	"time": 1718034673
 }

@@ -3,13 +3,33 @@
     <div class="about-metadata-container">
         <div class="about-metadata-stats branded-page-box-padding">
             <div class="about-stats">
+                {# Some of these properties are only visible if the option
+                   appearance.showNewInfoOnChannelAboutPage is enabled. #}
+                {% if data.usernameText %}
+                <span class="about-stat">
+                    {{ _self.formatStat(data.usernameText.runs) }}
+                </span>
+                {% endif %}
+                {% if data.pronounsText %}
+                <span class="about-stat">
+                    {{ data.usernameText ? " • " }}{{ _self.formatStat(data.pronounsText.runs) }}
+                </span>
+                {% endif %}
+                {% if data.usernameText or data.pronounsText %}
+                <br>
+                {% endif %}
                 {% if data.subscriberCountText %}
                 <span class="about-stat">
                     {{ _self.formatStat(data.subscriberCountText.runs) }}
                 </span>
                 {% endif %}
+                {% if data.videoCountText %}
                 <span class="about-stat">
-                   {{ data.subscriberCountText ? " • " }}{{ _self.formatStat(data.viewCountText.runs) }}
+                    {{ data.subscriberCountText ? " • " }}{{ _self.formatStat(data.videoCountText.runs) }}
+                </span>
+                {% endif %}
+                <span class="about-stat">
+                   {{ data.subscriberCountText or data.videoCountText ? " • " }}{{ _self.formatStat(data.viewCountText.runs) }}
                 </span>
                 <br>
                 <span class="about-stat">{{ data.joinedDateText }}</span>

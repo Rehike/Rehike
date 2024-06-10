@@ -70,6 +70,7 @@ class ConfigDefinitions
                     "ICON",
                     "MENU"
                 ]),
+                "showNewInfoOnChannelAboutPage" => new BoolProp(true),
                 "largeSearchResults" => new BoolProp(true),
                 "swapSearchViewsAndDate" => new BoolProp(false),
                 "showVersionInFooter" => new BoolProp(true),

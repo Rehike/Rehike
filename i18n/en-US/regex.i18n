@@ -27,6 +27,10 @@ nonPublishCheck: "/(Premiere)|(Started)|(Streamed)|(Scheduled)|(Live stream)/"
 # Used to isolate a channel name from the unsubscription modal message.
 unsubChannelNameMatch: "/Unsubscribe from (.*?)\\?/"
 
+# Used on the channel about page when the user has modern information
+# enabled:
+videoCountIsolator: "/( videos)|( video)/"
+
 # Miscellaneous isolators
 videoTimeIsolator: "/([0-9]?[0-9])( seconds)|(1 second)/"
 secondsIsolator: "/( seconds)|( second)/"
