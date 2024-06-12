@@ -1,5 +1,5 @@
 <?php
-namespace Rehike\i18n\Private;
+namespace Rehike\i18n\Internal;
 
 use Rehike\i18n\i18n;
 use Rehike\FileSystem;

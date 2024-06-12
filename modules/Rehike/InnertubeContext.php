@@ -2,7 +2,7 @@
 namespace Rehike;
 
 use Rehike\Util\Base64Url;
-use Rehike\i18n\Private\Core as I18nCore;
+use Rehike\i18n\Internal\Core as I18nCore;
 
 /**
  * Generates a valid InnerTube client context required
@@ -77,7 +77,8 @@ class InnertubeContext
     public static function genVisitorData(string $visitor): string
     {
         // Generate visitorData string
-        if (is_null($visitor)) return "";
+        if (is_null($visitor))
+            return "";
         
         $date = time();
         

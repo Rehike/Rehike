@@ -65,7 +65,10 @@ abstract class Configurable
      */
     private static function _transformName(string $prefix, string $name): string
     {
-        $name = str_replace($prefix, "", $name, 1);
+        // PHP requires this to be passed by reference.
+        $value = 1;
+        
+        $name = str_replace($prefix, "", $name, $value);
         $name = lcfirst($name);
 
         return $name;

@@ -2,7 +2,7 @@
 namespace Rehike\i18n;
 
 use Rehike\ConfigManager\Config;
-use Rehike\i18n\Private\Core as I18nCore;
+use Rehike\i18n\Internal\Core as I18nCore;
 use Rehike\YtApp;
 
 /**
