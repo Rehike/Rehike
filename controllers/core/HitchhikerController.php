@@ -12,9 +12,9 @@ use Rehike\{
 };
 use Rehike\Async\Concurrency;
 use Rehike\Model\{
-    Guide\MGuide as Guide,
-    Footer\MFooter as Footer,
-    Masthead\MMasthead as Masthead,
+    Guide\MGuide,
+    Footer\MFooter,
+    Masthead\MMasthead,
     Common\MAlert,
     Rehike\Security\SecurityLightbox
 };
@@ -179,7 +179,7 @@ abstract class HitchhikerController
                 // Need Concurrency::async to use yield on Guide::fromData()
                 return Concurrency::async(function() use ($response, $resolve) {
                     $data = $response->getJson();
-                    $guide = yield Guide::fromData($data);
+                    $guide = yield MGuide::fromData($data);
 
                     $resolve($guide);
                 });
@@ -257,8 +257,8 @@ abstract class HitchhikerController
 
         if ($this->useTemplate)
         {
-            $yt->masthead = new Masthead(false);
-            $yt->footer = new Footer();
+            $yt->masthead = new MMasthead(false);
+            $yt->footer = new MFooter();
         }
     }
 
@@ -302,7 +302,7 @@ abstract class HitchhikerController
             ]);
         }
 		
-        if (isset($yt->masthead) && $yt->masthead instanceof Masthead)
+        if (isset($yt->masthead) && $yt->masthead instanceof MMasthead)
         {
             // Since we have a template, we should have a masthead, so we'll try to apply
             // the yoodle.

@@ -5,9 +5,9 @@ use Rehike\YtApp;
 use Rehike\Spf\Spf;
 
 use Rehike\Model\{
-    Appbar\MAppbar as Appbar,
-    Footer\MFooter as Footer,
-    Masthead\MMasthead as Masthead
+    Appbar\MAppbar,
+    Footer\MFooter,
+    Masthead\MMasthead
 };
 
 /**
@@ -36,15 +36,15 @@ abstract class NirvanaController extends HitchhikerController
         $yt->spfEnabled = true;
         $yt->useModularCore = true;
         $yt->modularCoreModules = [];
-        $yt->appbar = new Appbar();
+        $yt->appbar = new MAppbar();
         $yt->page = (object)[];
 
         if ($this->useTemplate)
         {
-            $yt->masthead = new Masthead(true);
-            $yt->footer = new Footer();
+            $yt->masthead = new MMasthead(true);
+            $yt->footer = new MFooter();
         }
-        $yt->footer = new Footer();
+        $yt->footer = new MFooter();
 
         // Request appbar guide fragments if the page has the
         // guide enabled, the request is not SPF, and the guide

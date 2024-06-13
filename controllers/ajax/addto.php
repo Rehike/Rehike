@@ -6,7 +6,7 @@ use Rehike\ControllerV2\RequestMetadata;
 
 use Rehike\Controller\core\AjaxController;
 use Rehike\Network;
-use Rehike\Model\AddTo\MAddTo as AddTo;
+use Rehike\Model\AddTo\MAddTo;
 
 return new class extends AjaxController 
 {
@@ -36,7 +36,7 @@ return new class extends AjaxController
 
             $lists = $data->contents[0]->addToPlaylistRenderer->playlists;
 
-            $yt->page->addto = new AddTo($lists);
+            $yt->page->addto = new MAddTo($lists);
         });
     }
 };

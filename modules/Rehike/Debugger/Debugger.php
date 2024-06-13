@@ -7,13 +7,13 @@ use \Rehike\i18n\i18n;
 use \Rehike\YtApp;
 
 use \Rehike\Model\Rehike\Debugger\{
-    MOpenButton as OpenButton,
-    MDialog as Dialog,
-    MErrorTab as ErrorTab,
-    MLogTab as LogTab,
-    MYtWalker as YtWalker,
-    MLoadingTab as LoadingTab,
-    MNetworkTab as NetworkTab
+    MOpenButton,
+    MDialog,
+    MErrorTab,
+    MLogTab,
+    MYtWalker,
+    MLoadingTab,
+    MNetworkTab
 };
 
 /**
@@ -139,13 +139,13 @@ class Debugger
     /**
      * Setup the tabs available to the debugger session.
      */
-    public static function setupTabs(Dialog $context): void
+    public static function setupTabs(MDialog $context): void
     {
         $i18n = i18n::getNamespace("rehike/debugger");
 
-        /** @var ErrorTab */
+        /** @var MErrorTab */
         $errorTab = $context->addTab(
-            ErrorTab::createTab(
+            MErrorTab::createTab(
                 $i18n->format("tabErrorTitle", $i18n->formatNumber(self::getErrorCount())),
                 "error",
                 true
@@ -157,20 +157,20 @@ class Debugger
         {
             /*
             $context->addTab(
-                NetworkTab::createTab(
-                    $i18n->tabNetworkTitle,
+                MNetworkTab::createTab(
+                    $i18n->get("tabNetworkTitle"),
                     "network"
                 )
             );
             */
             
             $context->addTab(
-                LogTab::createTab($i18n->get("tabLogTitle"), "logs")
+                MLogTab::createTab($i18n->get("tabLogTitle"), "logs")
             );
 
-            /** @var YtWalker */
+            /** @var MYtWalker */
             $ytWalker = $context->addTab(
-                YtWalker::createTab(
+                MYtWalker::createTab(
                     $i18n->get("tabYtWalkerTitle"), "global_walker"
                 )
             );
@@ -189,9 +189,9 @@ class Debugger
 
         $context->condensed = self::$condensed;
 
-        $context->openButton = new OpenButton(self::getErrorCount(), self::$condensed);
+        $context->openButton = new MOpenButton(self::getErrorCount(), self::$condensed);
 
-        $context->dialog = new Dialog(self::$condensed);
+        $context->dialog = new MDialog(self::$condensed);
 
         self::setupTabs($context->dialog);
     }
