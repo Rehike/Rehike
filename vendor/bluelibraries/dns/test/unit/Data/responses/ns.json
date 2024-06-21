@@ -1,0 +1,27 @@
+{
+    "rawData": "WHSBgAABAAMAAAAADWJsdWVsaWJyYXJpZXMDY29tAAACAAHADAACAAEAAFRgABADbnMxCWluc3RyYWRuc8AawAwAAgABAABUYAAGA25zM8AzwAwAAgABAABUYAAGA25zMsAz",
+    "typeId": 2,
+    "result": [
+        {
+            "host": "bluelibraries.com",
+            "ttl": 21600,
+            "class": "IN",
+            "type": "NS",
+            "target": "ns1.instradns.com"
+        },
+        {
+            "host": "bluelibraries.com",
+            "ttl": 21600,
+            "class": "IN",
+            "type": "NS",
+            "target": "ns3.instradns.com"
+        },
+        {
+            "host": "bluelibraries.com",
+            "ttl": 21600,
+            "class": "IN",
+            "type": "NS",
+            "target": "ns2.instradns.com"
+        }
+    ]
+}

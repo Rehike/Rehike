@@ -1,0 +1,26 @@
+{
+    "rawData": "sOqBgAABAAIAAAAACHJvYmludGVsAnJvAAAwAAHADAAwAAEAAA4CAEQBAQMNmdsswUyr3DPW132mOi8V9xESWE8jTo0dxCjjnopKl+GqJxpVXckHAeF+KkxLbxILfDLUT0rAK9iUzy1L53eKGcAMADAAAQAADgIARAEAAw2gkxERLPkTiBjNL+rpcOu9TWow9giMJbMlo5q7xc0Rl6oJgoPlqvQhF3wqpdcUmSqZV9G8wY+YzXHx8YBrZeFI",
+    "typeId": 48,
+    "result": [
+        {
+            "host": "robintel.ro",
+            "ttl": 3586,
+            "class": "IN",
+            "type": "DNSKEY",
+            "flags": 257,
+            "protocol": 3,
+            "algorithm": 13,
+            "public-key": "mdsswUyr3DPW132mOi8V9xESWE8jTo0dxCjjnopKl+GqJxpVXckHAeF+ KkxLbxILfDLUT0rAK9iUzy1L53eKGQ=="
+        },
+        {
+            "host": "robintel.ro",
+            "ttl": 3586,
+            "class": "IN",
+            "type": "DNSKEY",
+            "flags": 256,
+            "protocol": 3,
+            "algorithm": 13,
+            "public-key": "oJMRESz5E4gYzS\/q6XDrvU1qMPYIjCWzJaOau8XNEZeqCYKD5ar0IRd8 KqXXFJkqmVfRvMGPmM1x8fGAa2XhSA=="
+        }
+    ]
+}

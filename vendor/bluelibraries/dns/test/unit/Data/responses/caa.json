@@ -1,0 +1,78 @@
+{
+    "rawData": "FWyBgAABAAgAAAAABGFzdXMDY29tAAEBAAHADAEBAAEAAAEsABEABWlzc3VlYW1hem9uLmNvbcAMAQEAAQAAASwAEwAFaXNzdWVhd3N0cnVzdC5jb23ADAEBAAEAAAEsABUABWlzc3VlZ2xvYmFsc2lnbi5jb23ADAEBAAEAAAEsABYABWlzc3VlYW1hem9udHJ1c3QuY29twAwBAQABAAABLAAgAAVpb2RlZm1haWx0bzpkbnNfYWRtaW5AYXN1cy5jb23ADAEBAAEAAAEsABQABWlzc3VlYW1hem9uYXdzLmNvbcAMAQEAAQAAASwAEwAFaXNzdWVkaWdpY2VydC5jb23ADAEBAAEAAAEsABIABWlzc3Vlc2VjdGlnby5jb20=",
+    "typeId": 257,
+    "result": [
+        {
+            "host": "asus.com",
+            "ttl": 300,
+            "class": "IN",
+            "type": "CAA",
+            "flags": 0,
+            "tag": "issue",
+            "value": "amazon.com"
+        },
+        {
+            "host": "asus.com",
+            "ttl": 300,
+            "class": "IN",
+            "type": "CAA",
+            "flags": 0,
+            "tag": "issue",
+            "value": "awstrust.com"
+        },
+        {
+            "host": "asus.com",
+            "ttl": 300,
+            "class": "IN",
+            "type": "CAA",
+            "flags": 0,
+            "tag": "issue",
+            "value": "globalsign.com"
+        },
+        {
+            "host": "asus.com",
+            "ttl": 300,
+            "class": "IN",
+            "type": "CAA",
+            "flags": 0,
+            "tag": "issue",
+            "value": "amazontrust.com"
+        },
+        {
+            "host": "asus.com",
+            "ttl": 300,
+            "class": "IN",
+            "type": "CAA",
+            "flags": 0,
+            "tag": "iodef",
+            "value": "mailto:dns_admin@asus.com"
+        },
+        {
+            "host": "asus.com",
+            "ttl": 300,
+            "class": "IN",
+            "type": "CAA",
+            "flags": 0,
+            "tag": "issue",
+            "value": "amazonaws.com"
+        },
+        {
+            "host": "asus.com",
+            "ttl": 300,
+            "class": "IN",
+            "type": "CAA",
+            "flags": 0,
+            "tag": "issue",
+            "value": "digicert.com"
+        },
+        {
+            "host": "asus.com",
+            "ttl": 300,
+            "class": "IN",
+            "type": "CAA",
+            "flags": 0,
+            "tag": "issue",
+            "value": "sectigo.com"
+        }
+    ]
+}

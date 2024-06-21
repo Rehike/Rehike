@@ -1,0 +1,39 @@
+name: Coverage
+
+on:
+  push:
+    branches: [ "main", "dev" ]
+  pull_request:
+    branches: [ "main", "dev" ]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+
+    runs-on: ubuntu-20.04
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Install dependencies
+      run: composer install -n
+
+    - name: PHPUnit Coverage Tests
+      uses: php-actions/phpunit@v3
+      env:
+        XDEBUG_MODE: coverage
+      with:
+        version: 9.6.3
+        configuration: phpunit.xml.dist
+        php_extensions: xdebug
+        args: test --coverage-clover coverage.xml
+
+    - name: Upload to Codecov
+      uses: codecov/codecov-action@v3
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+        fail_ci_if_error: true
+        files: coverage.xml
+        verbose: true

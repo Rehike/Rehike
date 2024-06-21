@@ -1,0 +1,14 @@
+{
+    "rawData": "ydSBgAABAAEAAAAADHpvbmV0cmFuc2ZlcgJtZQAADQABwAwADQABAAAArgAZDUNhc2lvIGZ4LTcwMEcKV2luZG93cyBYUA==",
+    "typeId": 13,
+    "result": [
+        {
+            "host": "zonetransfer.me",
+            "ttl": 174,
+            "class": "IN",
+            "type": "HINFO",
+            "hardware": "Casio fx-700G",
+            "os": "Windows XP"
+        }
+    ]
+}

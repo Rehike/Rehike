@@ -1,0 +1,26 @@
+<?php
+
+namespace BlueLibraries\Dns\Handlers;
+
+use Exception;
+
+class DnsHandlerException extends Exception
+{
+    const HOSTNAME_EMPTY = 1;
+    const HOSTNAME_LENGTH_TOO_SMALL = 2;
+    const HOSTNAME_FORMAT_INVALID = 3;
+    const HOSTNAME_LENGTH_INVALID = 4;
+    const TYPE_ID_INVALID = 6;
+    const ERR_UNABLE_TO_GET_RECORD = 7;
+    const INVALID_NAMESERVER = 8;
+    const UNABLE_TO_USE_CUSTOM_NAMESERVER = 9;
+    const TRUNCATION_DETECTED = 10;
+    const ERR_UNABLE_TO_WRITE_TO_UDP_SOCKET = 11;
+    const ERR_UNABLE_TO_READ_DATA_BUFFER = 12;
+    const ERR_UNABLE_TO_WRITE_QUESTION_LENGTH_TO_TCP_SOCKET = 13;
+    const ERR_UNABLE_TO_WRITE_QUESTION_TO_TCP_SOCKET = 14;
+    const ERR_UNABLE_TO_READ_SIZE_FROM_TCP_SOCKET = 15;
+    const TYPE_ID_NOT_SUPPORTED = 17;
+    const ERR_INVALID_RECORD_HEADER_LENGTH = 18;
+    const TYPE_ID_NOT_IMPLEMENTED = 19;
+}

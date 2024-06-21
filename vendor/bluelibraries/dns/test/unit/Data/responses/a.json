@@ -1,0 +1,13 @@
+{
+    "rawData": "InOBgAABAAEAAAAADWJsdWVsaWJyYXJpZXMDY29tAAABAAHADAABAAEAAFHWAATGMvxA",
+    "typeId": 1,
+    "result": [
+        {
+            "host": "bluelibraries.com",
+            "ttl": 20950,
+            "class": "IN",
+            "type": "A",
+            "ip": "198.50.252.64"
+        }
+    ]
+}
