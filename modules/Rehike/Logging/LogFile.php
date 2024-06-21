@@ -66,9 +66,19 @@ class LogFile
         $out .= " - Operating system: " . $this->getOperatingSystem() . "\n";
         $out .= " - PHP version: " . phpversion() . "\n";
         $out .= " - Server software: " . $this->getServerSoftware() . "\n";
-        $out .= " - User configuration: " . $this->indentDumpedObject(
-            json_encode(Config::getConfig(), JSON_PRETTY_PRINT)
-        ) . "\n";
+        
+        if (Config::isInitialized())
+        {
+            $configLog = $this->indentDumpedObject(
+                json_encode(Config::getConfig(), JSON_PRETTY_PRINT)
+            );
+        }
+        else
+        {
+            $configLog = "(unavailable)";
+        }
+        
+        $out .= " - User configuration: " . $configLog . "\n";
 
         $out .= "\n\n\n";
 

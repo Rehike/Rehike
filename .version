@@ -1,10 +1,10 @@
 {
-	"previousHash": "56bef3aa9269dd758d4d13ab8068c880a9a162ee",
-	"currentRevisionId": 1548,
-	"subject": "Remove code to alias model classes to remove M- prefix",
-	"body": "Remove code to alias model classes to remove M- prefix",
+	"previousHash": "f97ee9ee3733725e63d8122b107855daa233c66e",
+	"currentRevisionId": 1549,
+	"subject": "Fix some bugs mentioned in #582",
+	"body": "Fix some bugs mentioned in #582",
 	"branch": "master",
 	"committerName": "Isabella",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1718307701
+	"time": 1718993723
 }
