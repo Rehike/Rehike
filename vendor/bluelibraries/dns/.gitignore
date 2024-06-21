@@ -1,0 +1,14 @@
+*.phar
+*.zip
+build/artifacts
+.idea
+.php_cs.cache
+.phpunit.result.cache
+atlassian-ide-plugin.xml
+.DS_Store
+.build
+composer.lock
+vendor
+src/package.xml
+clover.xml
+coverage.xml

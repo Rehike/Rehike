@@ -1,0 +1,20 @@
+{
+    "rawData": "+9KBgAABAAIAAAAAB2V4YW1wbGUDb3JnAAAQAAHADAAQAAEAAFRgAAwLdj1zcGYxIC1hbGzADAAQAAEAAFRgACEgNnI0d3RqMTBsdDJodzB6aHloazdjZ3p6ZmZoanA3Zmw=",
+    "typeId": 16,
+    "result": [
+        {
+            "host": "example.org",
+            "ttl": 21600,
+            "class": "IN",
+            "type": "TXT",
+            "txt": "v=spf1 -all"
+        },
+        {
+            "host": "example.org",
+            "ttl": 21600,
+            "class": "IN",
+            "type": "TXT",
+            "txt": "6r4wtj10lt2hw0zhyhk7cgzzffhjp7fl"
+        }
+    ]
+}

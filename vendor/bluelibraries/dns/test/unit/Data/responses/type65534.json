@@ -1,0 +1,24 @@
+{
+    "rawData": "DnaBgAABAAMAAAAABmV1cm9wYQJldQD\/\/gABwAz\/\/gABAAAAAAAFCILLAAHADP\/+AAEAAAAAAAUIOf0AAcAM\/\/4AAQAAAAAABQg4GQAB",
+    "typeId": 65534,
+    "result": [
+        {
+            "host": "europa.eu",
+            "ttl": 0,
+            "class": "IN",
+            "type": "TYPE65534"
+        },
+        {
+            "host": "europa.eu",
+            "ttl": 0,
+            "class": "IN",
+            "type": "TYPE65534"
+        },
+        {
+            "host": "europa.eu",
+            "ttl": 0,
+            "class": "IN",
+            "type": "TYPE65534"
+        }
+    ]
+}

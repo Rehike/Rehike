@@ -1,6 +1,12 @@
 <?php
 namespace Rehike\Util\Nameserver;
 
+use BlueLibraries\Dns\Handlers\Types\TCP;
+use BlueLibraries\Dns\DnsRecords;
+use BlueLibraries\Dns\Records\Types\A as IPV4Record;
+use BlueLibraries\Dns\Records\Types\CNAME as CnameRecord;
+use BlueLibraries\Dns\Records\RecordTypes;
+
 use function shell_exec;
 use function filter_var;
 use function call_user_func;
@@ -68,6 +74,7 @@ class Nameserver
     ): NameserverInfo
     {
         $strategies = [
+            "lookupBluelibraries",
             "lookupNative",
             "lookupViaShell"
         ];
@@ -89,6 +96,79 @@ class Nameserver
         // If we got here, all strategies have failed, so throw another
         // exception.
         throw new DnsLookupException($uri, $lookupServer);
+    }
+    
+    /**
+     * Looks up the IP address of a server via BlueLibraries' DNS library.
+     * 
+     * The use of this library allows us to avoid some hard-to-debug bugs with
+     * the native PHP DNS functions.
+     */
+    public static function lookupBluelibraries(
+            string $uri,
+            int $port,
+            string $lookupServer
+    ): NameserverInfo
+    {
+        \Rehike\Logging\DebugLogger::print("Entering BlueLibraries method...");
+        $dnsHandler = (new TCP())
+            ->setNameserver($lookupServer)
+            ->setTimeout(10)
+            ->setRetries(5);
+            
+        $service = new DnsRecords($dnsHandler);
+        
+        try
+        {
+            $cname = $service->get($uri, RecordTypes::CNAME);
+        }
+        catch (\Throwable $e)
+        {
+            \Rehike\Logging\DebugLogger::print("BlueLibraries: Failed to get CNAME for %s", $uri);
+            throw new DnsLookupException($uri, $lookupServer);
+        }
+        
+        \Rehike\Logging\DebugLogger::print("%s", json_encode($cname));
+        
+        $requestUri = $uri;
+        
+        if (isset($cname[0]))
+        {
+            $requestUri = $cname[0]->getTarget();
+        }
+        
+        try
+        {
+            $records = $service->get($requestUri, RecordTypes::A);
+        }
+        catch (\Throwable $e)
+        {
+            \Rehike\Logging\DebugLogger::print("BlueLibraries: Failed to get address for %s", $uri);
+            throw new DnsLookupException($uri, $lookupServer);
+        }
+        
+        \Rehike\Logging\DebugLogger::print("%s %s", $requestUri, json_encode($records));
+        
+        if (!empty($records))
+        {
+            foreach ($records as $record)
+            {
+                /** @var IPV4Record */
+                $record;
+                $ip = $record->getIp();
+                
+                if (self::isValidIp($ip))
+                {
+                    \Rehike\Logging\DebugLogger::print("Done with BlueLibraries method!");
+                    return new NameserverInfo("$uri:$port", $ip);
+                }
+            }
+        }
+        else
+        {
+            \Rehike\Logging\DebugLogger::print("BlueLibraries: no records");
+            throw new DnsLookupException($uri, $lookupServer);
+        }
     }
 
     /**

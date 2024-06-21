@@ -1,0 +1,66 @@
+{
+    "rawData": "CQqBgAABAAUAAAAABWhlbnJpA3RlbAAAIwABwAwAIwABAAAAPAA1AGQAZQF1FkUyVSt2b2ljZTp0ZWwreC1tb2JpbGUWIV4uKiQhdGVsOis5NjEzNTExNzc0IQDADAAjAAEAAAA8AC0AZABkAXUNRTJVK3ZvaWNlOnRlbBchXi4qJCF0ZWw6KzE0MTUyMjMzNDQ0IQDADAAjAAEAAAA8AG8AZAByAXURRTJVK3gtcGhvdG86aHR0cHNVIV4uKiQhaHR0cHM6Ly9kMzc5OWsxZzl0NXRjOS5jbG91ZGZyb250Lm5ldC9pbWcvZTR0NTVpaTNhY3FmdjFoY3FyNnFnNnVxajB2ZzNlNGcucG5nIQDADAAjAAEAAAA8ADYAZABtAXUMRTJVK3dlYjpodHRwISFeLiokIWh0dHA6Ly90d2l0dGVyLmNvbS9yaWtrbGVzIQDADAAjAAEAAAA8ADgAZABrAXUQRTJVK2VtYWlsOm1haWx0bx8hXi4qJCFtYWlsdG86aGVucmlAYXNzZWlseS5jb20hAA==",
+    "typeId": 35,
+    "result": [
+        {
+            "host": "henri.tel",
+            "ttl": 60,
+            "class": "IN",
+            "type": "NAPTR",
+            "order": 100,
+            "pref": 101,
+            "flag": "u",
+            "services": "E2U+voice:tel+x-mobile",
+            "regex": "!^.*$!tel:+9613511774!",
+            "replacement": ""
+        },
+        {
+            "host": "henri.tel",
+            "ttl": 60,
+            "class": "IN",
+            "type": "NAPTR",
+            "order": 100,
+            "pref": 100,
+            "flag": "u",
+            "services": "E2U+voice:tel",
+            "regex": "!^.*$!tel:+14152233444!",
+            "replacement": ""
+        },
+        {
+            "host": "henri.tel",
+            "ttl": 60,
+            "class": "IN",
+            "type": "NAPTR",
+            "order": 100,
+            "pref": 114,
+            "flag": "u",
+            "services": "E2U+x-photo:https",
+            "regex": "!^.*$!https:\/\/d3799k1g9t5tc9.cloudfront.net\/img\/e4t55ii3acqfv1hcqr6qg6uqj0vg3e4g.png!",
+            "replacement": ""
+        },
+        {
+            "host": "henri.tel",
+            "ttl": 60,
+            "class": "IN",
+            "type": "NAPTR",
+            "order": 100,
+            "pref": 109,
+            "flag": "u",
+            "services": "E2U+web:http",
+            "regex": "!^.*$!http:\/\/twitter.com\/rikkles!",
+            "replacement": ""
+        },
+        {
+            "host": "henri.tel",
+            "ttl": 60,
+            "class": "IN",
+            "type": "NAPTR",
+            "order": 100,
+            "pref": 107,
+            "flag": "u",
+            "services": "E2U+email:mailto",
+            "regex": "!^.*$!mailto:henri@asseily.com!",
+            "replacement": ""
+        }
+    ]
+}

@@ -1,0 +1,15 @@
+{
+    "rawData": "HRGBgAABAAEAAAAACHJvYmludGVsAnJvAABBAAHADABBAAEAAAEWABsAAQAAAQAMAmgzBWgzLTI5AmgyAAQABF1xrm4=",
+    "typeId": 65,
+    "result": [
+        {
+            "host": "robintel.ro",
+            "ttl": 278,
+            "class": "IN",
+            "type": "TYPE65",
+            "separator": "\\#",
+            "original-length": 27,
+            "data": "0001000001000C0268330568332D3239026832000400045D71AE6E"
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "rawData": "w5mBgAABAAEAAAAABXNzaGZwA25ldAAAMwABwAwAMwABAAAAAAAVAQAAFBB7GpCpFhl+RdB3Kry2RBFW",
+    "typeId": 51,
+    "result": [
+        {
+            "host": "sshfp.net",
+            "ttl": 0,
+            "class": "IN",
+            "type": "NSEC3PARAM",
+            "algorithm": 1,
+            "flags": 0,
+            "iterations": 20,
+            "salt": "7B1A90A916197E45D0772ABCB6441156"
+        }
+    ]
+}

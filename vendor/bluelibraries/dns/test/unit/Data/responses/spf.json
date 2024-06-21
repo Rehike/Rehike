@@ -1,0 +1,13 @@
+{
+    "rawData": "IaqBgAABAAEAAAAABWluZGlhA2NvbQAAYwABwAwAYwABAAABLAAgH3Y9c3BmMSBpbmNsdWRlOm5jYXBwMDIuY29tIH5hbGw=",
+    "typeId": 99,
+    "result": [
+        {
+            "host": "india.com",
+            "ttl": 300,
+            "class": "IN",
+            "type": "TXT",
+            "txt": "v=spf1 include:ncapp02.com ~all"
+        }
+    ]
+}

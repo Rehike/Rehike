@@ -1,0 +1,26 @@
+{
+    "rawData": "WhKBgAABAAIAAAAABWluZGlhA2NvbQAAIQABwAwAIQABAAAOEAAeAGQOEABkBnNpcGZlZAZvbmxpbmUEbHluYwNjb20AwAwAIQABAAAOEAAeAGQOEABkBnNpcGRpcgZvbmxpbmUEbHluYwNjb20A",
+    "typeId": 33,
+    "result": [
+        {
+            "host": "india.com",
+            "ttl": 3600,
+            "class": "IN",
+            "type": "SRV",
+            "pri": 100,
+            "weight": 3600,
+            "port": 100,
+            "target": "sipfed.online.lync.com"
+        },
+        {
+            "host": "india.com",
+            "ttl": 3600,
+            "class": "IN",
+            "type": "SRV",
+            "pri": 100,
+            "weight": 3600,
+            "port": 100,
+            "target": "sipdir.online.lync.com"
+        }
+    ]
+}

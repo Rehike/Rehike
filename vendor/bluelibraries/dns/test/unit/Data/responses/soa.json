@@ -1,0 +1,19 @@
+{
+    "rawData": "pMqBgAABAAEAAAAADWJsdWVsaWJyYXJpZXMDY29tAAAGAAHADAAGAAEAAFRgADIDbnMxCWluc3RyYWRuc8AaBHJvb3QGaW5zdHJhwBp4lLcFAABwgAAAHCAACTqAAAFRgA==",
+    "typeId": 6,
+    "result": [
+        {
+            "host": "bluelibraries.com",
+            "ttl": 21600,
+            "class": "IN",
+            "type": "SOA",
+            "mname": "ns1.instradns.com",
+            "rname": "root.instra.com",
+            "serial": 2023012101,
+            "refresh": 28800,
+            "retry": 7200,
+            "expire": 604800,
+            "minimum-ttl": 86400
+        }
+    ]
+}

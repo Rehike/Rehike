@@ -1,0 +1,26 @@
+{
+    "rawData": "nbiBgAABAAIAAAAAA25ldANjb20AACsAAcAMACsAAQAAVGAAJPk8DQLsCqGpXQPo\/bEflslnBn73+qZWkTZuzcdJZG4utpRkKsAMACsAAQAAVGAAJGqaDQJAT3dKfibsd1ghLafqxOQH1vJ6L8ZsB+9FaLnaJCESow==",
+    "typeId": 43,
+    "result": [
+        {
+            "host": "net.com",
+            "ttl": 21600,
+            "class": "IN",
+            "type": "DS",
+            "key-tag": 63804,
+            "algorithm": 13,
+            "algorithm-digest": 2,
+            "digest": "EC0AA1A95D03E8FDB11F96C967067EF7FAA65691366ECDC749646E2E B694642A"
+        },
+        {
+            "host": "net.com",
+            "ttl": 21600,
+            "class": "IN",
+            "type": "DS",
+            "key-tag": 27290,
+            "algorithm": 13,
+            "algorithm-digest": 2,
+            "digest": "404F774A7E26EC7758212DA7EAC4E407D6F27A2FC66C07EF4568B9DA 242112A3"
+        }
+    ]
+}

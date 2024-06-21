@@ -26,6 +26,10 @@ class ComposerStaticInit14befcaebdd16793d803391aa69e5f63
             'Google\\Protobuf\\' => 16,
             'GPBMetadata\\Google\\Protobuf\\' => 28,
         ),
+        'B' => 
+        array (
+            'BlueLibraries\\Dns\\' => 18,
+        ),
     );
 
     public static $prefixDirsPsr4 = array (
@@ -48,6 +52,10 @@ class ComposerStaticInit14befcaebdd16793d803391aa69e5f63
         'GPBMetadata\\Google\\Protobuf\\' => 
         array (
             0 => __DIR__ . '/..' . '/google/protobuf/src/GPBMetadata/Google/Protobuf',
+        ),
+        'BlueLibraries\\Dns\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/bluelibraries/dns/src',
         ),
     );
 
