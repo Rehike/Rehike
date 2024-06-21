@@ -1,10 +1,10 @@
 {
-	"previousHash": "1eef7c3a6d02044e134cc6f12fb0969fe402765c",
-	"currentRevisionId": 1550,
-	"subject": "Add support for alternative DNS lookup library",
-	"body": "Add support for alternative DNS lookup library",
+	"previousHash": "3a9a76324f94706c5d38237e4ced8fb163a79e8d",
+	"currentRevisionId": 1551,
+	"subject": "Clean up BlueLibraries DNS wrapper code",
+	"body": "Clean up BlueLibraries DNS wrapper code",
 	"branch": "582-unknown-dnslookupexception-after-os-update",
 	"committerName": "Isabella",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1719005250
+	"time": 1719006561
 }

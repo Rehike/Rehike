@@ -74,7 +74,7 @@ class Nameserver
     ): NameserverInfo
     {
         $strategies = [
-            "lookupBluelibraries",
+            "lookupBlueLibraries",
             "lookupNative",
             "lookupViaShell"
         ];
@@ -104,13 +104,18 @@ class Nameserver
      * The use of this library allows us to avoid some hard-to-debug bugs with
      * the native PHP DNS functions.
      */
-    public static function lookupBluelibraries(
+    public static function lookupBlueLibraries(
             string $uri,
             int $port,
             string $lookupServer
     ): NameserverInfo
     {
-        \Rehike\Logging\DebugLogger::print("Entering BlueLibraries method...");
+        if (!extension_loaded("sockets"))
+        {
+            // BlueLibraries method requires PHP sockets to be enabled.
+            throw new DnsLookupException($uri, $lookupServer);
+        }
+        
         $dnsHandler = (new TCP())
             ->setNameserver($lookupServer)
             ->setTimeout(10)
@@ -124,7 +129,7 @@ class Nameserver
         }
         catch (\Throwable $e)
         {
-            \Rehike\Logging\DebugLogger::print("BlueLibraries: Failed to get CNAME for %s", $uri);
+            \Rehike\Logging\DebugLogger::print("BlueLibraries DNS: Failed to get CNAME for %s", $uri);
             throw new DnsLookupException($uri, $lookupServer);
         }
         
@@ -143,7 +148,7 @@ class Nameserver
         }
         catch (\Throwable $e)
         {
-            \Rehike\Logging\DebugLogger::print("BlueLibraries: Failed to get address for %s", $uri);
+            \Rehike\Logging\DebugLogger::print("BlueLibraries DNS: Failed to get address for %s", $uri);
             throw new DnsLookupException($uri, $lookupServer);
         }
         
@@ -159,14 +164,13 @@ class Nameserver
                 
                 if (self::isValidIp($ip))
                 {
-                    \Rehike\Logging\DebugLogger::print("Done with BlueLibraries method!");
                     return new NameserverInfo("$uri:$port", $ip);
                 }
             }
         }
         else
         {
-            \Rehike\Logging\DebugLogger::print("BlueLibraries: no records");
+            \Rehike\Logging\DebugLogger::print("BlueLibraries DNS: no records");
             throw new DnsLookupException($uri, $lookupServer);
         }
     }
