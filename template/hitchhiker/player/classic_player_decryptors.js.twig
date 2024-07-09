@@ -196,18 +196,26 @@ function getDecryptorForPlayerN(playerScript)
 
     if (DEBUG)
         console.log("[NDecode] Using player script:", playerScript);
-
+    
+    // Small little obfuscation procedure that YouTube implemented in modern players:
+    // - "n" parameter name is encoded in a String.fromCharCode(110) call.
+    // - As of 2024/07/09, this variable is created just before the base result
+    //   pattern, so working around this is quite easy.
+    var N_STRING_PARAM_PATTERN =
+        "([a-zA-Z0-9_$]*?)\\s*\\=\\s*String\\.fromCharCode\\(110\\)";
+    
     // Resulting groups:
     //   [0]: Entire expression
     //   [1]: Assigned variable name.
-    var BASE_CALL_PATTERN = "([a-zA-Z0-9_$]*?)\\=[a-zA-Z0-9_$]*?\\.get\\(\\\"n\\\"\\)";
+    var BASE_CALL_PATTERN_TEMPLATE =
+        "([a-zA-Z0-9_$]*?)\\=[a-zA-Z0-9_$]*?\\.get\\(__ARGUMENT__\\)";
 
     // Resulting groups:
     //   [0]: Entire expression
     //   [1]: Obfuscator function name
     //   [2]: Only the array index
     var OBFUSCATOR_CALL_PATTERN_TEMPLATE =
-        "__NAME__=([a-zA-Z0-9_$]*?(\\[[a-zA-Z0-9_$]*\\])?)\\(.*\\)";
+        "__NAME__=([a-zA-Z0-9_$]*?(\\[[a-zA-Z0-9_$]+\\])?)\\(.*\\)";
 
     // Base result.
     var result = {
@@ -216,8 +224,73 @@ function getDecryptorForPlayerN(playerScript)
         extractCb: null,
         cacheParams: null
     };
+    
+    var nStringMatches = playerScript.match(new RegExp(N_STRING_PARAM_PATTERN));
+    
+    var baseCallPattern;
+    var baseCallIndexText;
+    var baseCallIndex = 0;
+    if (nStringMatches)
+    {
+        // If we got here, then we have a version of the player text where the
+        // "n" parameter text is slightly obfuscated, so we look for the next
+        // pattern for the aforementioned variable name:
+        var varName = nStringMatches[1];
+        
+        // We don't have to escape anything here because the var name should
+        // always be just text.
+        baseCallPattern = BASE_CALL_PATTERN_TEMPLATE.replace(
+            "__ARGUMENT__", 
+            varName
+        );
+        
+        // Search the script starting from the position of the regex find:
+        baseCallIndexText = playerScript.slice(nStringMatches.index);
+        baseCallIndex = nStringMatches.index;
+        
+        if (DEBUG)
+        {
+            console.log(
+                "[NDecode] OBFUSCATED \"n\" parameter in text. " +
+                "Look to nStringMatches for debugging information."
+            );
+        }
+    }
+    else
+    {
+        // If the string literal is embedded, then we make a base call pattern
+        // regex template with the argument "n" as a string literal. This is
+        // double escaped, once for the regex and once for the JS string
+        // literal parser.
+        baseCallPattern = BASE_CALL_PATTERN_TEMPLATE.replace(
+            "__ARGUMENT__", 
+            "\\\"n\\\""
+        );
+        
+        // Search the entire script.
+        baseCallIndexText = playerScript;
+        baseCallIndex = 0;
+        
+        if (DEBUG)
+        {
+            console.log("[NDecode] No obfuscated \"n\" parameter in text.");
+        }
+    }
+    
+    if (DEBUG)
+    {
+        console.log("[NDecode] nStringMatches == ", nStringMatches);
+        console.log("[NDecode] baseCallPattern == ", baseCallPattern);
+        console.log("[NDecode] baseCallIndexText == ", baseCallIndexText);
+        console.log("[NDecode] baseCallIndex ==", baseCallIndex);
+        
+        if (baseCallIndexText == playerScript)
+        {
+            console.log("[NDecode] baseCallIndex is the same as playerScript.");
+        }
+    }
 
-    var declarationMatches = playerScript.match(new RegExp(BASE_CALL_PATTERN));
+    var declarationMatches = baseCallIndexText.match(new RegExp(baseCallPattern));
 
     if (DEBUG)
         console.log("[NDecode] declarationMatches ==", declarationMatches);
@@ -234,11 +307,13 @@ function getDecryptorForPlayerN(playerScript)
 
     // The next use of the declaration variable should be to another
     // function. This can become a bit of a mess.
-    var searchIndex = declarationMatches.index;
+    var searchIndex = declarationMatches.index + baseCallIndex;
     var subsequentText = playerScript.slice(searchIndex);
 
     var obfuscatorCallPattern =
         OBFUSCATOR_CALL_PATTERN_TEMPLATE.replace("__NAME__", declarationVarName);
+    if (DEBUG)
+        console.log("[NDecode] obfuscatorCallPattern ==", obfuscatorCallPattern);
 
     var obfuscatorCallMatches = subsequentText.match(new RegExp(obfuscatorCallPattern));
     if (DEBUG)
@@ -284,10 +359,32 @@ function getDecryptorForPlayerN(playerScript)
     var patternSearch = obfuscatorFnText.slice(nextVariableDef);
     nextVariableDef = patternSearch.search("=");
     patternSearch = patternSearch.slice(0, nextVariableDef).slice(4);
+    
     var endPattern = 'return ' + patternSearch + '.join("")};';
-    try
+    
+    // This alternative style may be used in some cases:
+    var endPattern2 = 'return Array.prototype.join.call(' + patternSearch + ',"")};';
+    var bAlreadySplit = false;
+    
+    if (DEBUG)
+    {
+        console.log("[NDecode] nextVariableDef ==", nextVariableDef);
+        console.log("[NDecode] patternSearch ==", patternSearch);
+        console.log("[NDecode] endPattern ==", endPattern);
+        console.log("[NDecode] endPattern2 ==", endPattern2);
+    }
+    
+    if (!bAlreadySplit) try
+    {
+        obfuscatorFnText = obfuscatorFnText.split(endPattern2)[0] + endPattern2;
+        bAlreadySplit = true;
+    }
+    catch(e) {}
+    
+    if (!bAlreadySplit) try
     {
         obfuscatorFnText = obfuscatorFnText.split(endPattern)[0] + endPattern;
+        bAlreadySplit = true;
     }
     catch(e) {}
 

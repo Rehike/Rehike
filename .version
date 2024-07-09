@@ -1,10 +1,10 @@
 {
-	"previousHash": "3a9a76324f94706c5d38237e4ced8fb163a79e8d",
-	"currentRevisionId": 1551,
-	"subject": "Clean up BlueLibraries DNS wrapper code",
-	"body": "Clean up BlueLibraries DNS wrapper code",
-	"branch": "582-unknown-dnslookupexception-after-os-update",
+	"previousHash": "2f3b8c8729e120986a3303d9db1800aa5ef290db",
+	"currentRevisionId": 1552,
+	"subject": "Fix classic player init errors",
+	"body": "Fix classic player init errors",
+	"branch": "master",
 	"committerName": "Isabella",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1719006561
+	"time": 1720554158
 }
