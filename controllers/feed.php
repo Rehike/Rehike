@@ -8,7 +8,7 @@ use Rehike\Async\Promise;
 
 use Com\Youtube\Innertube\Helpers\VideosContinuationWrapper;
 use Rehike\Network;
-use Rehike\Util\WebV2Shelves;
+use Rehike\Helper\WebV2Shelves;
 use Rehike\Util\RichShelfUtils;
 use Rehike\Model\Feed\MFeedAppbarNav;
 use Rehike\Signin\API as SignIn;

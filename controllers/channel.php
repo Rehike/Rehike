@@ -17,7 +17,7 @@ use Rehike\Exception\Network\InnertubeFailedRequestException;
 use YukisCoffee\CoffeeRequest\Network\Response;
 use Rehike\Util\Base64Url;
 use Rehike\Util\ExtractUtils;
-use Rehike\Util\ChannelUtils;
+use Rehike\Helper\ChannelUtils;
 use Rehike\Signin\API as SignIn;
 
 use \Rehike\Model\Channels\Channels4Model as Channels4;

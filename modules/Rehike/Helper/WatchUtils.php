@@ -1,5 +1,5 @@
 <?php
-namespace Rehike\Util;
+namespace Rehike\Helper;
 
 /**
  * Common watch utilities for Rehike.

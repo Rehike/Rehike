@@ -1,10 +1,10 @@
 {
-	"previousHash": "37be0a849a719c6d9bd0f6d9930e72c33a295b42",
-	"currentRevisionId": 1553,
-	"subject": "Fix Codeberg mirroring",
-	"body": "Fix Codeberg mirroring",
+	"previousHash": "8080ff56dac7300e9a1219878df9f6af7076a6fe",
+	"currentRevisionId": 1554,
+	"subject": "Move "narrow" utils to Rehike\Helper namespace...",
+	"body": "Move "narrow" utils to Rehike\Helper namespace...",
 	"branch": "master",
 	"committerName": "Isabella",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1720554594
+	"time": 1720591098
 }

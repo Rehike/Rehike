@@ -1,5 +1,5 @@
 <?php
-namespace Rehike\Util;
+namespace Rehike\Helper;
 
 use \Rehike\Util\Base64Url;
 
