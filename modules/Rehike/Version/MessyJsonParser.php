@@ -42,7 +42,7 @@ class MessyJsonParser
             $key = @$pair[0];
             $value = @$pair[1];
             
-            $numberOfQuotes = substr_count($value, '"');
+            $numberOfQuotes = substr_count($value ?? "", '"');
             $fixedQuotes = $value;
             
             if ($numberOfQuotes > 2)
