@@ -24,6 +24,12 @@
             "playerResponse": {{ yt.playerResponse|json_encode|raw }}
          };
       </script>
+	  {% if (pageType == "embed") and (rehike.config.appearance.playerChoice == "PLAYER_2014" or rehike.config.appearance.playerChoice == "PLAYER_2015" or rehike.config.appearance.playerChoice == "PLAYER_2015_NEW") %}
+	<script>
+	
+	</script>
+	<script src="//s.ytimg.com/yts/jsbin/www-embed-player-vfl6Pxzzi/www-embed-player.js" type="text/javascript" name="www-embed-player/www-embed-player"></script>
+    {% endif %}
 {# RELOCATION NOTICE(izzy): Player decryptor boot code has been moved to core/core.twig to compensate
    for synchronous loading of core JS. It used to be located here, but this code is loaded before YouTube's
    JS, so it failed to load correctly. #}

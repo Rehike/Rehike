@@ -19,8 +19,60 @@
       {% if rehikeDebugger and not rehikeDebugger.condensed and not yt.spf %}
          <script>{% include "rehike/debugger/js/xhook.js" %}</script>
       {% endif %}
+	  <script>
+	  function _init() {};
+	  function _onInit() {};
+	  function _onRebugInit() {};
+	  function onTabSwitch() {};
+	  function onHistorySwitch() {};
+	  window.rehike = {
+	  "inherits" : null,
+  "class": {},
+  "debug": {},
+  "eventDelegate": {
+    "_handlers": [],
+    "_activeEvents": [
+      "click"
+    ]
+  },
+  "pubsub": {
+    "_subscriptions": {
+      "rebug-init-finish": [
+        _init(),
+        _onInit(),
+        _onRebugInit(),
+        _onRebugInit()
+      ],
+      "rebug-tab-switch": [
+        onTabSwitch()
+      ],
+      "rebug-history-switch": [
+        onHistorySwitch()
+      ]
+    }
+  },
+  "script": {
+    "pageSpecificCallbackInstalled_": false,
+    "pageSpecificCallbackRegistry_": []
+  },
+  "util": {
+    "scrollLock": {
+      "_enabled": false,
+      "_previousScroll": 0,
+      "_elements": [],
+      "_bodyInfo": null
+    },
+    "events": {
+		"add": function(a,b,c){a.addEventListener?a.addEventListener(b,c):a.attachEvent&&a.attachEvent("on"+b,c)},
+		"remove": function(a,b,c){a.removeEventListener?a.removeEventListener(b,c):a.detachEvent&&a.detachEvent("on"+b,c)}
+	}
+  }
+};
+		rehike.inherits = function(a,b){var c=function(){};c.prototype=b.prototype;a.prototype=new c;a.prototype.constructor=a;a["super"]=function(f,g){for(var h=[],k=2;k<arguments.length;k++)h[k-2]=arguments[k];return b.prototype[g].apply(f,h)}};
+	  </script>
       {% include "core/ublock_error.twig" %}
       {% include "core/roboto.twig" %}
+	  
       <script>{{ include('/core/www-ytcsi.js') }}</script>
       <script >var ytcfg = {d: function() {return (window.yt && yt.config_) || ytcfg.data_ || (ytcfg.data_ = {});},get: function(k, o) {return (k in ytcfg.d()) ? ytcfg.d()[k] : o;},set: function() {var a = arguments;if (a.length > 1) {ytcfg.d()[a[0]] = a[1];} else {for (var k in a[0]) {ytcfg.d()[k] = a[0][k];}}}};</script>  
       <script>ytcfg.set("ROOT_VE_TYPE", 3854);ytcfg.set("EVENT_ID", "caLrWqLbKZD2_AOA-6vIAg");</script>
@@ -49,8 +101,6 @@
       {#
          YouTube's foot contains templates and scripts.
       #}
-      {% include 'common/uix/lightbox/template_feed-privacy.twig' %}
-      {% include 'common/uix/hidden_component_template_wrapper.twig' %}
       {% include 'core/spf_module.twig' %}
       {%- if yt.useModularCore -%}
          {% include 'core/modular_js_v2.twig' %}
@@ -63,8 +113,6 @@
       {#
          Inject Rebug (if it is enabled)
       #}
-      {%- if rehikeDebugger -%}
-         {% include "rehike/debugger/main.twig" %}
-      {%- endif -%}
+      
    </body>
 </html>
