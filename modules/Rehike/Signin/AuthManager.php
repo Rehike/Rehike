@@ -9,7 +9,7 @@ use YukisCoffee\CoffeeRequest\Network\Response;
 use Rehike\Network;
 use Rehike\FileSystem as FS;
 use Rehike\YtApp;
-use Rehike\Util\ChannelUtils;
+use Rehike\Helper\ChannelUtils;
 
 /**
  * Treat this as private. Use the API please.

@@ -11,6 +11,7 @@ class VersionInfo
 {
     public bool $supportsDotGit = false;
     public bool $isRelease = false;
+    public int $buildNumber = 0;
     public ?int $time = null;
     public ?int $currentRevisionId = null;
     public ?string $previousHash = null;

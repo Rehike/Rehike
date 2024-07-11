@@ -64,7 +64,7 @@ class MOpenButton extends MButton
                 $label .= "@rehike";
 
                 $branch = $versionInfo->branch ?? null;
-                $revId = $versionInfo->currentRevisionId ?? null;
+                $revId = $versionInfo->buildNumber ?? null;
 
                 // Append the branch if it's available;
                 //    "Debugger@rehike.master"

@@ -12,9 +12,9 @@ use Rehike\{
 };
 use Rehike\Async\Concurrency;
 use Rehike\Model\{
-    Guide\MGuide as Guide,
-    Footer\MFooter as Footer,
-    Masthead\MMasthead as Masthead,
+    Guide\MGuide,
+    Footer\MFooter,
+    Masthead\MMasthead,
     Common\MAlert,
     Rehike\Security\SecurityLightbox
 };
@@ -179,7 +179,7 @@ abstract class HitchhikerController
                 // Need Concurrency::async to use yield on Guide::fromData()
                 return Concurrency::async(function() use ($response, $resolve) {
                     $data = $response->getJson();
-                    $guide = yield Guide::fromData($data);
+                    $guide = yield MGuide::fromData($data);
 
                     $resolve($guide);
                 });
@@ -257,8 +257,8 @@ abstract class HitchhikerController
 
         if ($this->useTemplate)
         {
-            $yt->masthead = new Masthead(false);
-            $yt->footer = new Footer();
+            $yt->masthead = new MMasthead(false);
+            $yt->footer = new MFooter();
         }
     }
 
@@ -300,6 +300,30 @@ abstract class HitchhikerController
                 "text" => $i18n->get("currentlyDisabledMessage"),
                 "hasCloseButton" => false
             ]);
+        }
+		
+        if (isset($yt->masthead) && $yt->masthead instanceof MMasthead)
+        {
+            // Since we have a template, we should have a masthead, so we'll try to apply
+            // the yoodle.
+            $this->checkAndApplyYoodles($yt);
+        }
+    }
+    
+    /**
+     * Manages the use of YouTube doodle logos for special events.
+     */
+    public function checkAndApplyYoodles(YtApp $yt): void
+    {
+        $curMonth = idate("m");
+    
+        if ($curMonth == 6)
+        {
+            $prideYoodleUrl = Config::getConfigProp("appearance.modernLogo")
+                ? "/rehike/static/logo/pride_2017_custom.png"
+                : "//s.ytimg.com/yts/img/doodles/yt_doodle_pride_2013-vflG2_e_y.png";
+            
+            $yt->masthead->applyYoodleLogo($prideYoodleUrl);
         }
     }
 

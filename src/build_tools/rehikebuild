@@ -1,0 +1,140 @@
+#!/usr/bin/env node
+
+/**
+ * @fileoverview Rehike Build System
+ * 
+ * @author Isabella <kawapure@gmail.com>
+ * @author The Rehike Maintainers
+ */
+
+const gulp = require("gulp");
+const GulpManager = require("./scripts/gulp_manager");
+const RehikeBuild = require("./scripts/rehikebuild_main");
+const VflGenerator = require("./scripts/vfl_gen");
+const ArgumentsParser = require("./scripts/parse_args");
+
+/**
+ * Stores a list of all arguments passed to the build system.
+ * 
+ * @global
+ * @var {object}
+ */
+let g_args = ArgumentsParser.getArgs();
+
+/**
+ * Wraps a Node.js stream for consumption alongside promises.
+ * 
+ * @param {Stream} stream
+ * @returns {Promise<void>}
+ */
+function promiseWrapStream(stream)
+{
+    return new Promise((resolve, reject) => {
+        stream.on("finish", resolve);
+        stream.on("end", resolve);
+        stream.on("error", reject);
+    });
+}
+
+/**
+ * All common startup tasks for the build environment.
+ * 
+ * @return {Promise<void>}
+ */
+function CommonStartupTask()
+{
+    const stream = promiseWrapStream;
+    
+    // If package names to be built are specified in the arguments, then we only
+    // build those packages. Otherwise, we'll send an empty array to build all
+    // existing packages.
+    let packages = [];
+    if ("package" in g_args)
+    {
+        if (Array.isArray(g_args["package"]))
+        {
+            packages = g_args["package"];
+        }
+    }
+    
+    return Promise.all([
+        stream(RehikeBuild.Parser.GulpSetupRhBuildTask(packages))
+    ]);
+}
+
+CommonStartupTask.displayName = "@RHBUILD::NOLOG";
+
+async function BuildAll()
+{
+    const iterator = RehikeBuild.BuildTask.getAllBuildTasks();
+    
+    const tasks = [];
+    
+    /*
+     * The waiting architecture here is pretty complicated in order to work with
+     * Gulp.
+     */
+    while (iterator.hasNewItems())
+    {
+        // We continuously get slices in a loop while they're made. This is done
+        // in order to dynamically add more Gulp build tasks during the build.
+        const slice = iterator.getNext();
+        
+        tasks.push(...slice.tasks);
+        
+        await new Promise((resolve, reject) => {
+            GulpManager.runGulpTask(
+                gulp.parallel(slice.gulpWrappers),
+                () => resolve()
+            );
+        });
+    }
+    
+    // Wait for all RehikeBuild tasks to finish, which may take longer than Gulp:
+    await Promise.all(tasks.map(task => task.resolutionPromise));
+    
+    let completed = 0;
+    let failed = 0;
+    let upToDate = 0;
+    
+    const Status = RehikeBuild.BuildTask.Status;
+    
+    for (const task of tasks)
+    {
+        switch (task.status)
+        {
+            case Status.FINISHED:
+                completed++;
+                break;
+                
+            case Status.UP_TO_DATE:
+                upToDate++;
+                break;
+            
+            case Status.ERRORED:
+            default:
+                failed++;
+                break;
+        }
+    }
+    
+    await VflGenerator.generateNewCache();
+    console.log("All builds complete.");
+    
+    // Visual-Studio-like build-completion messages:
+    console.log(
+        `${completed.toLocaleString()} completed, ` +
+        `${failed.toLocaleString()} failed, ` +
+        `${upToDate.toLocaleString()} up-to-date`
+    );
+}
+
+BuildAll.displayName = "@RHBUILD::NOLOG";
+
+console.log("Welcome to RehikeBuild!");
+
+// Main build action
+GulpManager.runGulpTask(gulp.series(
+    CommonStartupTask,
+    BuildAll
+));

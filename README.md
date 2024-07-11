@@ -47,6 +47,7 @@ Rehike makes use of the following software or services:
 - [Twig](//twig.symfony.com)
 - [Protocol Buffers](//developers.google.com/protocol-buffers/)
 - [Return YouTube Dislike API](https://www.returnyoutubedislike.com/)
+- [BlueLibraries DNS](//github.com/bluelibraries/dns)
 
 Use of these third party services is governed by their respective licenses. Where possible, their application will be optional.
 

@@ -324,39 +324,43 @@ class Watch8Subcontroller
 
             $isSaved = $out->menu->menuRenderer->items[0]->toggleMenuServiceItemRenderer->isToggled ?? false;
 
-            $out->saveButton = new MButton([
-                "size" => "SIZE_DEFAULT",
-                "style" => "STYLE_OPACITY",
-                "id" => "gh-playlist-save",
-                "icon" => (object) [],
-                "class" => [
-                    "yt-uix-button-player-controls",
-                    "yt-uix-playlistlike",
-                    "watch-playlist-like",
-                    $isSaved ? "yt-uix-button-toggled" : ""
-                ],
-                "tooltip" => $isSaved ? $i18n->get("playlistUnsave") : $i18n->get("playlistSave"),
-                "attributes" => [
-                    "like-label" => "",
-                    "playlist-id" => $out->playlistId,
-                    "unlike-label" => "",
-                    "unlike-tooltip" => $i18n->get("playlistUnsave"),
-                    "like-tooltip" => $i18n->get("playlistSave"),
-                    "toggle-class" => "yt-uix-button-toggled",
-                    "token" => "dummy"
-                ]
-            ]);
-
-            if (!SignIn::isSignedIn())
+            if (!$out->isMix)
             {
-                $out->saveButton->clickcard = new MSigninClickcard(
-                    $i18n->get("clickcardPlaylistSignIn"),
-                    "",
-                    [
-                        "text" => $i18n->get("clickcardSignIn"),
-                        "href" => "https://accounts.google.com/ServiceLogin?continue=https%3A%2F%2Fwww.youtube.com%2Fsignin%3Fnext%3D%252F%253Faction_handle_signin%3Dtrue%26feature%3D__FEATURE__%26hl%3Den%26app%3Ddesktop&passive=true&hl=en&uilel=3&service=youtube"
+                // TODO (izzy): Check if this works. I heard reports that this doesn't work.
+                $out->saveButton = new MButton([
+                    "size" => "SIZE_DEFAULT",
+                    "style" => "STYLE_OPACITY",
+                    "id" => "gh-playlist-save",
+                    "icon" => (object) [],
+                    "class" => [
+                        "yt-uix-button-player-controls",
+                        "yt-uix-playlistlike",
+                        "watch-playlist-like",
+                        $isSaved ? "yt-uix-button-toggled" : ""
+                    ],
+                    "tooltip" => $isSaved ? $i18n->get("playlistUnsave") : $i18n->get("playlistSave"),
+                    "attributes" => [
+                        "like-label" => "",
+                        "playlist-id" => $out->playlistId,
+                        "unlike-label" => "",
+                        "unlike-tooltip" => $i18n->get("playlistUnsave"),
+                        "like-tooltip" => $i18n->get("playlistSave"),
+                        "toggle-class" => "yt-uix-button-toggled",
+                        "token" => "dummy"
                     ]
-                );
+                ]);
+                
+                if (!SignIn::isSignedIn())
+                {
+                    $out->saveButton->clickcard = new MSigninClickcard(
+                        $i18n->get("clickcardPlaylistSignIn"),
+                        "",
+                        [
+                            "text" => $i18n->get("clickcardSignIn"),
+                            "href" => "https://accounts.google.com/ServiceLogin?continue=https%3A%2F%2Fwww.youtube.com%2Fsignin%3Fnext%3D%252F%253Faction_handle_signin%3Dtrue%26feature%3D__FEATURE__%26hl%3Den%26app%3Ddesktop&passive=true&hl=en&uilel=3&service=youtube"
+                        ]
+                    );
+                }
             }
         }
 

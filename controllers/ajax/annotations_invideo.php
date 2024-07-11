@@ -1,5 +1,5 @@
 <?php
-use \Rehike\Controller\core\HitchhikerController;
+use \Rehike\Controller\core\AjaxController;
 use Rehike\ControllerV2\RequestMetadata;
 use Rehike\YtApp;
 
@@ -13,7 +13,7 @@ use Rehike\i18n\i18n;
 
 use Rehike\Util\Base64Url;
 use Rehike\ConfigManager\Config;
-use Rehike\Util\WatchUtils;
+use Rehike\Helper\WatchUtils;
 use Rehike\Util\ExtractUtils;
 use Rehike\Util\ParsingUtils;
 
@@ -26,7 +26,7 @@ use YukisCoffee\CoffeeRequest\Exception\GeneralException;
  * @author Toru the Red Fox
  * @author The Rehike Maintainers
  */
-return new class extends HitchhikerController
+return new class extends AjaxController
 {
 	public string $contentType = "application/xml";
 	public bool $useTemplate = false;

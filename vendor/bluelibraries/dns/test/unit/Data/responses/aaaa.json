@@ -1,0 +1,13 @@
+{
+    "rawData": "zoWBgAABAAEAAAAAB2V4YW1wbGUDb3JnAAAcAAHADAAcAAEAADNNABAmBigAAiAAAQJIGJMlyBlG",
+    "typeId": 28,
+    "result": [
+        {
+            "host": "example.org",
+            "ttl": 13133,
+            "class": "IN",
+            "type": "AAAA",
+            "ipv6": "2606:2800:220:1:248:1893:25c8:1946"
+        }
+    ]
+}

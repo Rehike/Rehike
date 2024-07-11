@@ -12,7 +12,7 @@ use \Rehike\Model\Channels\Channels4\MCarouselHeader;
 use \Rehike\Model\Channels\Channels4\MSecondaryHeader;
 use \Rehike\Util\Base64Url;
 use \Rehike\Network;
-use Rehike\Util\ChannelUtils;
+use Rehike\Helper\ChannelUtils;
 use Rehike\Signin\API as SignIn;
 
 use function Rehike\Async\async;

@@ -3,8 +3,13 @@ namespace Rehike\Model\Comments;
 
 use YukisCoffee\PropertyAtPath;
 use YukisCoffee\CoffeeRequest\Promise;
-use \Rehike\Model\Comments\MCommentVoteButton as VoteButton;
-use \Rehike\Model\Comments\MCommentReplyButton as ReplyButton;
+
+// These are aliased to be a bit shorter.
+use \Rehike\Model\Comments\{
+    MCommentVoteButton as MVoteButton,
+    MCommentReplyButton as MReplyButton
+};
+
 use \Rehike\i18n\i18n;
 use \Rehike\ConfigManager\Config;
 use Rehike\Model\ViewModelConverter\CommentsViewModelConverter;
@@ -233,12 +238,20 @@ class CommentThread
                     "commentRenderer" => $renderer
                 ];
             }
-        }
+            
+            // Comment teasers (i.e. linked replies)
+            if (isset($thread->commentThreadRenderer->replies->commentRepliesRenderer->teaserContents))
+            {
+                $teaserReplies = $thread->commentThreadRenderer->replies->commentRepliesRenderer->teaserContents;
+                $this->convertCommentsIfNecessary($teaserReplies);
+            }
 
-        if (isset($thread->commentThreadRenderer->replies->commentRepliesRenderer->contents))
-        {
-            $replies = $thread->commentThreadRenderer->replies->commentRepliesRenderer->contents;
-            $this->convertCommentsIfNecessary($replies);
+            // Thread replies (if they exist here):
+            if (isset($thread->commentThreadRenderer->replies->commentRepliesRenderer->contents))
+            {
+                $replies = $thread->commentThreadRenderer->replies->commentRepliesRenderer->contents;
+                $this->convertCommentsIfNecessary($replies);
+            }
         }
     }
 
@@ -401,13 +414,13 @@ class CommentThread
             );
         }
 
-        $context->likeButton = VoteButton::fromData(PropertyAtPath::get($context, self::LIKE_BUTTON_PATH));
-        $context->dislikeButton = VoteButton::fromData(PropertyAtPath::get($context, self::DISLIKE_BUTTON_PATH));
+        $context->likeButton = MVoteButton::fromData(PropertyAtPath::get($context, self::LIKE_BUTTON_PATH));
+        $context->dislikeButton = MVoteButton::fromData(PropertyAtPath::get($context, self::DISLIKE_BUTTON_PATH));
 		if (isset($context->voteCount)) $this->addLikeCount($context);
 		
         try
         {
-            $context->replyButton = ReplyButton::fromData(PropertyAtPath::get($context, self::REPLY_BUTTON_PATH), $context->commentId);
+            $context->replyButton = MReplyButton::fromData(PropertyAtPath::get($context, self::REPLY_BUTTON_PATH), $context->commentId);
         }
         catch (\YukisCoffee\PropertyAtPathException $e)
         {

@@ -1,8 +1,10 @@
 <?php
 namespace Rehike\Nepeta;
 
-use Rehike\Nepeta\Process\NepetaIpc;
-use Rehike\Nepeta\Process\ServerModHandler;
+use Rehike\Nepeta\IPC\{
+    Process\NepetaIpc,
+    Process\ServerModHandler
+};
 
 use Rehike\FileSystem;
 
@@ -24,7 +26,10 @@ class NepetaCore
     public static function init(): void
     {
         self::loadAllPackages();
-
+    }
+    
+    public static function _testIpc(): void
+    {
         // Should move IPC init so that it only is called if an extension
         // requests it.
         (new ServerModHandler)->listen();

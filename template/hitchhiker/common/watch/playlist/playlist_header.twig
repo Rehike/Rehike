@@ -14,7 +14,10 @@
                     <a  href="https://accounts.google.com/ServiceLogin?passive=true&amp;uilel=3&amp;hl=en&amp;continue=https%3A%2F%2Fwww.youtube.com%2Fsignin%3Fnext%3D%252Fwatch%253Fv%253DtuPqvSRF08w%2526list%253DFLNaqshw8BAQ12nPRixBy4AA%26action_handle_signin%3Dtrue%26hl%3Den%26app%3Ddesktop%26feature%3D__FEATURE__&amp;service=youtube" class="yt-uix-button  signin-button  yt-uix-button-primary yt-uix-button-size-default"><span class="yt-uix-button-content">Sign in</span></a>
                 </div>
             </span> #}
-            {{ button(playlist.saveButton) }}
+            {% if not playlist.isMix %}
+                {# Only non-mix playlists can be saved. #}
+                {{ button(playlist.saveButton) }}
+            {% endif %}
         </div>
         <div class="playlist-info">
 
@@ -22,7 +25,11 @@
                 <span class="playlist-mix-icon yt-sprite"></span>
             {% endif %}
             <h3 class="playlist-title">
+                {% if not playlist.isMix %}
                 <a href="/playlist?list={{ playlist.playlistId }}" class="spf-link">{{ playlist.title }}</a>
+                {% else %}{# Mixes don't have a title link because they can only be seen on watch page #}
+                {{ playlist.title }}
+                {% endif %}
             </h3>
             <ul class="playlist-details">
                 {% if playlist.shortBylineText %}

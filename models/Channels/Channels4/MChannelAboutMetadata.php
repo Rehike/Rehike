@@ -1,8 +1,10 @@
 <?php
 namespace Rehike\Model\Channels\Channels4;
 
+use Rehike\ConfigManager\Config;
 use Rehike\Util\ExtractUtils;
 use Rehike\i18n\i18n;
+use Rehike\Model\Channels\Channels4Model;
 use Rehike\Util\ParsingUtils;
 use Rehike\Model\Traits\NavigationEndpoint;
 
@@ -11,6 +13,9 @@ class MChannelAboutMetadata
     public $subscriberCountText;
     public $viewCountText;
     public $joinedDateText;
+    public object $usernameText;
+    public object $videoCountText;
+    public object $pronounsText;
     public $descriptionLabel;
     public $detailsLabel;
     public $linksLabel;
@@ -19,14 +24,16 @@ class MChannelAboutMetadata
     public $countryLabel;
     public $primaryLinks;
 
-    public function __construct($subCount, $data)
+    public function __construct(Channels4Model $c4Bakery, $data)
     {
         $i18n = i18n::getNamespace("channels");
         $regexs = i18n::getNamespace("regex");
         $miscStrings = i18n::getNamespace("misc");
+        
+        $headerInfo = $c4Bakery->header->getAboutInfo();
 
         $this->subscriberCountText = self::getRichStat(
-            $subCount,
+            $headerInfo["subscriberCount"],
             $regexs->get("subscriberCountIsolator")
         );
 
@@ -41,6 +48,40 @@ class MChannelAboutMetadata
         );
 
         $this->joinedDateText = ParsingUtils::getText(@$data->joinedDateText);
+        
+        if (Config::getConfigProp("appearance.showNewInfoOnChannelAboutPage"))
+        {
+            if ($headerInfo["username"])
+            {
+                $this->usernameText = (object)[
+                    "runs" => [
+                        (object)[
+                            "bold" => true,
+                            "text" => $headerInfo["username"]
+                        ]
+                    ]
+                ];
+            }
+            
+            if ($headerInfo["pronouns"])
+            {
+                $this->pronounsText = (object)[
+                    "runs" => [
+                        (object)[
+                            "text" => $headerInfo["pronouns"]
+                        ]
+                    ]
+                ];
+            }
+            
+            if ($headerInfo["videoCount"])
+            {
+                $this->videoCountText = self::getRichStat(
+                    $headerInfo["videoCount"],
+                    $regexs->get("videoCountIsolator")
+                );
+            }
+        }
 
         if (isset($data->descriptionLabel))
             $this->descriptionLabel = ParsingUtils::getText($data->descriptionLabel);

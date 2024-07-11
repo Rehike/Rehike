@@ -116,7 +116,7 @@
                 {%- if item.tabRenderer -%}
                     {% set item = item.tabRenderer %}
                     <li class="">
-                        <a href="{{ item.endpoint.commandMetadata.webCommandMetadata.url }}" class="yt-uix-button  spf-link {{ item.status == 2 ? "selected" : item.status == 1 ? "partially-selected" }}  yt-uix-sessionlink yt-uix-button-epic-nav-item yt-uix-button-size-default" data-sessionlink="ei=PYD4WYi3NtLY-AOXuqv4Aw&amp;ved=CC8Qwy0iEwjIycGWgZvXAhVSLH4KHRfdCj8omxw"><span class="yt-uix-button-content">{{ item.title }}</span></a>
+                        <a href="{{ rehike.getUrl(item.endpoint) }}" class="yt-uix-button  spf-link {{ item.status == 2 ? "selected" : item.status == 1 ? "partially-selected" }}  yt-uix-sessionlink yt-uix-button-epic-nav-item yt-uix-button-size-default" data-sessionlink="ei=PYD4WYi3NtLY-AOXuqv4Aw&amp;ved=CC8Qwy0iEwjIycGWgZvXAhVSLH4KHRfdCj8omxw"><span class="yt-uix-button-content">{{ item.title }}</span></a>
                     </li>
                 {% elseif item.expandableTabRenderer %}
                     {% set item = item.expandableTabRenderer %}

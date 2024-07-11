@@ -101,6 +101,10 @@ props:
       title: "Enable built-in adblock"
       subtitle: >
         Provides a stable adblocker for ads in the video player.
+    showNewInfoOnChannelAboutPage:
+      title: "Show newly-added information snippets on the channel \"About\" page"
+      subtitle: >
+        Shows channel pronouns and video count on the channel about page.
   
   experiments:
     displayPlayerChoice:

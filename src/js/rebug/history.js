@@ -256,8 +256,7 @@ rebug.history._setupInitialPage = function()
 
             snapshot.openButton = 
                 document.getElementById("rebug-open-button-container")
-                .innerHTML
-            ;
+                .innerHTML;
         }
 
         rebug.history._registry.push(snapshot);

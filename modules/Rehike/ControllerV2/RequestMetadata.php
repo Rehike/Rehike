@@ -114,7 +114,8 @@ class RequestMetadata
 
             foreach ($_SERVER as $key => $value)
             {
-                if ("HTTP_" != substr($key, 0, 5)) continue;
+                if ("HTTP_" != substr($key, 0, 5))
+                    continue;
 
                 // Not so hellish anymore now that I've stopped caring about
                 // the case.
@@ -157,8 +158,14 @@ class RequestMetadata
             case "application/json":
                 $obj = @json_decode($body);
 
-                if (null != $obj) return $obj;
-                else return $body;
+                if (null != $obj)
+                {
+                    return $obj;
+                }
+                else
+                {
+                    return $body;
+                }
 
                 break;
         }

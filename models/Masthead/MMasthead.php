@@ -37,6 +37,16 @@ class MMasthead
 
     /** @var object */
     public $notificationStrings;
+    
+    /**
+     * Specifies if the YouTube logo is a doodle.
+     */
+    public bool $logoIsDoodle = false;
+    
+    /**
+     * Used as the image URL for doodle images.
+     */
+    public string $doodleImageUrl = "";
 
     public function __construct($appbarEnabled)
     {
@@ -85,5 +95,14 @@ class MMasthead
         {
             $this->buttons[] = new MSignInButton();
         }
+    }
+    
+    /**
+     * Applies a yoodle logo. This is used for special events.
+     */
+    public function applyYoodleLogo(string $yoodleUrl): void
+    {
+        $this->logoIsDoodle = true;
+        $this->doodleImageUrl = $yoodleUrl;
     }
 }

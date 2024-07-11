@@ -1,0 +1,14 @@
+{
+    "rawData": "OsSBgAABAAEAAAAAA3BocANuZXQAAA8AAcAMAA8AAQAAAB4AEgAADXBocC1zbXRwNC1pcDTADA==",
+    "typeId": 15,
+    "result": [
+        {
+            "host": "php.net",
+            "ttl": 30,
+            "class": "IN",
+            "type": "MX",
+            "pri": 0,
+            "target": "php-smtp4-ip4.php.net"
+        }
+    ]
+}

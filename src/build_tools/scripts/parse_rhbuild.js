@@ -63,10 +63,10 @@ function doParse(filePath, scriptContents)
     
     runInParserContext();
     
-    let taskName;
+    let gulpTaskName;
     if (TASK_NAME)
     {
-        taskName = TASK_NAME;
+        gulpTaskName = TASK_NAME;
     }
     else
     {
@@ -81,12 +81,12 @@ function doParse(filePath, scriptContents)
             }
         }
         
-        taskName = "Building package \"" + temp.join("/") + "\"";
+        gulpTaskName = "@RHBUILD::PACKAGE::" + temp.join("/");
     }
     
     RehikeBuild.pushSourceFiles({
         baseName: filePath,
-        taskName: taskName,
+        taskName: gulpTaskName,
         jsBuildFiles: JS_BUILD_FILES,
         jsOutputBundle: JS_OUTPUT_BUNDLE,
         cssBuildFiles: CSS_BUILD_FILES,

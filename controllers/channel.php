@@ -17,7 +17,7 @@ use Rehike\Exception\Network\InnertubeFailedRequestException;
 use YukisCoffee\CoffeeRequest\Network\Response;
 use Rehike\Util\Base64Url;
 use Rehike\Util\ExtractUtils;
-use Rehike\Util\ChannelUtils;
+use Rehike\Helper\ChannelUtils;
 use Rehike\Signin\API as SignIn;
 
 use \Rehike\Model\Channels\Channels4Model as Channels4;
@@ -307,9 +307,8 @@ class channel extends NirvanaController
     /**
      * 2023/11/13: Channel about requests are pretty strange.
      *
-     * Currently, we rely on a mobile-specific parameter for requesting the page
-     * content (otherwise we'd have to look into some UUID nonsense I guess), so
-     * we have a separate function to handle this.
+     * Currently, we rely on the standard browse continuation method that Polymer
+     * uses.
      *
      * The channel header must be zippered together from another response, so we
      * must request twice.
@@ -323,12 +322,36 @@ class channel extends NirvanaController
                     "browseId" => $ucid
                 ]
             );
+            
+            // Build a browse continuation for the about request:
+            $paramsBuilderInner = new BrowseContinuationWrapper([
+                "browse_id" => $ucid,
+                
+                // We don't have a reversed protobuf of this yet, so here's the general structure:
+                //
+                // {
+                //     110: {
+                //         3: {
+                //             19: {
+                //                 1: "66b9c56e-0000-2aff-91fb-883d24fc5398"
+                //             }
+                //         }
+                //     }
+                // }
+                //
+                // Note that the GUID here has no significant meaning in Rehike. It is just an
+                // element target ID in Polymer.
+                "encoded_action" => "8gYrGimaASYKJDY2YjljNTZlLTAwMDAtMmFmZi05MWZiLTg4M2QyNGZjNTM5OA%3D%3D"
+            ]);
+            $paramsBuilderOuter = new ContinuationWrapper([
+                "browse_continuation" => $paramsBuilderInner
+            ]);
+            $params = Base64Url::encode($paramsBuilderOuter->serializeToString());
 
             $aboutRequest = Network::innertubeRequest(
                 action: "browse",
                 body: [
-                    "browseId" => $ucid,
-                    "params" => "8gYEEgIiAA"
+                    "continuation" => $params
                 ]
             );
 
@@ -340,12 +363,19 @@ class channel extends NirvanaController
             $baseResponse = $responses["header"]->getJson();
             $aboutResponse = $responses["about"]->getJson();
 
-            $this->yt->test = $aboutResponse;
+            if (!\Rehike\Debugger\Debugger::isCondensed())
+            {
+                // In the case of a non-condensed debugger, we will add this debug property
+                // to the global object so that we can see its contents in the debugger.
+                $this->yt->testAboutResponse = $aboutResponse;
+            }
 
+            // We add this property to the base response so that we can access it when parsing
+            // channel contents.
             $baseResponse->rehikeAboutTab = @$aboutResponse
-                ->contents->twoColumnBrowseResultsRenderer->tabs[0]->tabRenderer
-                ->content->sectionListRenderer->contents[0]->itemSectionRenderer
-                ->contents[0]->channelAboutFullMetadataRenderer;
+                ->onResponseReceivedEndpoints[0]->appendContinuationItemsAction
+                ->continuationItems[0]->aboutChannelRenderer->metadata
+                ->aboutChannelViewModel;
 
             // Hack to generate a new, modified network response since we're
             // expecting it earlier in the code.

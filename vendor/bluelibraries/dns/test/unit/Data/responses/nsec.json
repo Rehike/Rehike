@@ -1,0 +1,14 @@
+{
+    "rawData": "NviBgAABAAEAAAAAB2V4YW1wbGUDY29tAAAvAAHADAAvAAEAAA39ABoDd3d3B2V4YW1wbGUDY29tAAAHYgGACAADgA==",
+    "typeId": 47,
+    "result": [
+        {
+            "host": "example.com",
+            "ttl": 3581,
+            "class": "IN",
+            "type": "NSEC",
+            "next-authoritative-name": "www.example.com",
+            "types": "A NS SOA MX TXT AAAA RRSIG NSEC DNSKEY"
+        }
+    ]
+}

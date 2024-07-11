@@ -11,4 +11,5 @@ return array(
     'Symfony\\Polyfill\\Ctype\\' => array($vendorDir . '/symfony/polyfill-ctype'),
     'Google\\Protobuf\\' => array($vendorDir . '/google/protobuf/src/Google/Protobuf'),
     'GPBMetadata\\Google\\Protobuf\\' => array($vendorDir . '/google/protobuf/src/GPBMetadata/Google/Protobuf'),
+    'BlueLibraries\\Dns\\' => array($vendorDir . '/bluelibraries/dns/src'),
 );

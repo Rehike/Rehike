@@ -7,7 +7,7 @@ use Rehike\ControllerV2\RequestMetadata;
 use Rehike\Controller\core\AjaxController;
 use Rehike\Model\Comments\CommentThread;
 use Rehike\Model\Comments\CommentsHeader;
-use Rehike\Model\Appbar\MAppbar as Appbar;
+use Rehike\Model\Appbar\MAppbar;
 use Rehike\Network;
 use Rehike\ConfigManager\Config;
 
@@ -50,7 +50,7 @@ class AjaxWatchFragments2Controller extends AjaxController
     {
         $this->template = "ajax/watch_fragments2/guide";
 
-        $yt->appbar = new Appbar();
+        $yt->appbar = new MAppbar();
         $this->getPageGuide()->then(function ($guide) use ($yt) {
             $yt->appbar->addGuide($guide);
         });

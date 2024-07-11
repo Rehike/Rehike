@@ -1,0 +1,13 @@
+{
+    "rawData": "XFuBgAABAAEAAAAAA3d3dwhyb2JpbnRlbAJybwAABQABwAwABQABAAAAnwACwBA=",
+    "typeId": 5,
+    "result": [
+        {
+            "host": "www.robintel.ro",
+            "ttl": 159,
+            "class": "IN",
+            "type": "CNAME",
+            "target": "robintel.ro"
+        }
+    ]
+}

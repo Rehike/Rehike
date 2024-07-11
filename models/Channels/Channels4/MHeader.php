@@ -1,6 +1,7 @@
 <?php
 namespace Rehike\Model\Channels\Channels4;
 
+use Rehike\ConfigManager\Config;
 use Rehike\ViewModelParser;
 use Rehike\Model\Appbar\MAppbarNav;
 use Rehike\Model\Appbar\MAppbarNavItem;
@@ -30,7 +31,19 @@ class MHeader
     public $nonexistentMessage;
     protected ?object $frameworkUpdates = null;
 
-    protected $subscriptionCount;
+    // Information that we parse from the header in the model code, but
+    // only store to be shared with other sections.
+    protected ?string $subscriptionCount = null;
+    protected ?string $username = null;
+    protected ?string $pronouns = null;
+    protected ?string $videoCount = null;
+    
+    // These matrices define the common offsets of channel metadata in the
+    // header viewmodel. [row, part]
+    const METADATA_USERNAME_INDEX = [0, 0];
+    const METADATA_PRONOUNS_INDEX = [0, 1];
+    const METADATA_SUBCOUNT_INDEX = [1, 0];
+    const METADATA_VIDCOUNT_INDEX = [1, 1];
 
     public function __construct($header, $baseUrl, bool $isOld = true, ?object $frameworkUpdates = null)
     {
@@ -88,15 +101,16 @@ class MHeader
             $this->banner->isCustom = false;
         }
         
+        $metadata = $this->parseViewModelMetadata(@$content->metadata->contentMetadataViewModel);
+        
         // The subscription count is stored elsewhere, because of course it is.
         // In fact, I'm not even sure if this can be reliably considered to be the
         // subscription count of the channel, meaning that there is a possibility that
         // we will need to apply another fucking heuristic to determine if the string
         // is the subscriber count.
-        $subscriberCountFullString = @$content->metadata->contentMetadataViewModel->metadataRows[1]
-            ->metadataParts[0]->text->content;
-            
+        $subscriberCountFullString = $metadata->subscriberCountText->text->content;
         $subscriberCount = ExtractUtils::isolateSubCnt(ParsingUtils::getText($subscriberCountFullString));
+        $this->subscriptionCount = $subscriberCount;
         
         $primaryActionButtonContainer = $content->actions->flexibleActionsViewModel->actionsRows[0]->actions[0];
         
@@ -152,6 +166,24 @@ class MHeader
         else if (!\Rehike\Signin\API::isSignedIn())
         {
             $this->subscriptionButton = MSubscriptionActions::signedOutStub($subscriberCount);
+        }
+        
+        if (Config::getConfigProp("appearance.showNewInfoOnChannelAboutPage"))
+        {
+            if (isset($header->usernameText))
+            {
+                $this->username = ParsingUtils::getText($metadata->usernameText);
+            }
+            
+            if (isset($header->pronounsText))
+            {
+                $this->pronouns = ParsingUtils::getText($metadata->pronounsText);
+            }
+            
+            if (isset($header->videoCountText))
+            {
+                $this->videoCount = ParsingUtils::getText($metadata->videoCountText);
+            }
         }
     }
 
@@ -241,6 +273,24 @@ class MHeader
 
             $this->subscriptionButton = MSubscriptionActions::signedOutStub($count);
         }
+        
+        if (Config::getConfigProp("appearance.showNewInfoOnChannelAboutPage"))
+        {
+            if (isset($header->channelHandleText))
+            {
+                $this->username = ParsingUtils::getText($header->channelHandleText);
+            }
+            
+            if (isset($header->channelPronouns))
+            {
+                $this->pronouns = ParsingUtils::getText($header->channelPronouns);
+            }
+            
+            if (isset($header->videosCountText))
+            {
+                $this->videoCount = ParsingUtils::getText($header->videosCountText);
+            }
+        }
     }
 
     public function addTabs($tabs, $partSelect = false)
@@ -288,6 +338,38 @@ class MHeader
     public function getSubscriptionCount()
     {
         return $this->subscriptionCount ?? "";
+    }
+    
+    /**
+     * Gets information that we move to be displayed only on the about tab in Rehike.
+     */
+    public function getAboutInfo()
+    {
+        return [
+            "username" => $this->username,
+            "subscriberCount" => $this->subscriptionCount,
+            "pronouns" => $this->pronouns,
+            "videoCount" => $this->videoCount,
+        ];
+    }
+    
+    protected function parseViewModelMetadata(object $metadataObj): object
+    {
+        $names = [
+            "usernameText" => self::METADATA_USERNAME_INDEX,
+            "pronounsText" => self::METADATA_PRONOUNS_INDEX,
+            "subscriberCountText" => self::METADATA_SUBCOUNT_INDEX,
+            "videoCountText" => self::METADATA_VIDCOUNT_INDEX,
+        ];
+        
+        $out = [];
+        
+        foreach ($names as $name => $index)
+        {
+            $out[$name] = @$metadataObj->metadataRows[$index[0]]->metadataParts[$index[1]];
+        }
+        
+        return (object)$out;
     }
 
     /**

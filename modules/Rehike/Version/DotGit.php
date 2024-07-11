@@ -20,11 +20,12 @@ class DotGit
     /**
      * Get the active Git branch.
      */
-    public static function getBranch(): string
+    public static function getBranch(): ?string
     {
         $headFile = @file_get_contents(".git/HEAD");
 
-        if (false == $headFile) return null;
+        if (false == $headFile)
+            return null;
 
         return trim(str_replace(["ref:", "refs/heads/", " ",], "", $headFile));
     }
@@ -32,11 +33,12 @@ class DotGit
     /**
      * Get the latest possible commit hash.
      */
-    public static function getCommit(string $branch): string
+    public static function getCommit(string $branch): ?string
     {
         $branchFile = @file_get_contents(".git/refs/heads/{$branch}");
 
-        if (false == $branchFile) return null;
+        if (false == $branchFile)
+            return null;
 
         return trim($branchFile);
     }
@@ -49,7 +51,8 @@ class DotGit
      */
     public static function getInfo(VersionInfo $versionInfo)
     {
-        if (!self::canUse()) return []; // Add nothing at all
+        if (!self::canUse())
+            return []; // Add nothing at all
 
         if ($branch = self::getBranch())
             $versionInfo->branch = $branch;

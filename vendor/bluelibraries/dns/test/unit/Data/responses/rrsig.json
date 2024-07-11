@@ -1,0 +1,21 @@
+{
+    "rawData": "2eyBgAABAAEAAAAAB2V4YW1wbGUDY29tAAAuAAHADAAuAAEAAFRgAJ8AAQgCAAFRgGPcomhjwEK\/RR8HZXhhbXBsZQNjb20Au9j0PkT4XnBF7NRMVUf9snoxGdF1IzQljykCSNWF3IVcLgG7A2K6nPsgr3Xt8poZ8Hf+QesCyhqrpC3PZdIaSqMDopIaalXdmveXFc1JkBG697rCIsdkrey05xejFdZUjhNEJ4Lepwh6qBOFgDx0AfyA3L2NALWuPeBCCD2bbnE=",
+    "typeId": 46,
+    "result": [
+        {
+            "host": "example.com",
+            "ttl": 21600,
+            "class": "IN",
+            "type": "RRSIG",
+            "type-covered": "A",
+            "algorithm": 8,
+            "labels-number": 2,
+            "original-ttl": 86400,
+            "signature-expiration": 20230203055800,
+            "signature-creation": 20230112172623,
+            "key-tag": 17695,
+            "signer-name": "example.com",
+            "signature": "u9j0PkT4XnBF7NRMVUf9snoxGdF1IzQljykCSNWF3IVcLgG7A2K6nPsg r3Xt8poZ8Hf+QesCyhqrpC3PZdIaSqMDopIaalXdmveXFc1JkBG697rC Isdkrey05xejFdZUjhNEJ4Lepwh6qBOFgDx0AfyA3L2NALWuPeBCCD2b bnE="
+        }
+    ]
+}

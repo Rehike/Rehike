@@ -12,6 +12,7 @@ use Rehike\Util\ParsingUtils;
 use Rehike\i18n\i18n;
 use Rehike\YtApp;
 use Com\Youtube\Innertube\Helpers\VideosContinuationWrapper;
+use Rehike\Model\Channels\Channels4\MHeader;
 
 /**
  * Model bakery for the channels page.
@@ -80,6 +81,8 @@ class Channels4Model
      * Reference to the global state object.
      */
     public YtApp $yt;
+    
+    public MHeader $header;
     
     /**
      * Fixed order of tabs.
@@ -156,7 +159,7 @@ class Channels4Model
 
         if ($header = @$data->header->c4TabbedHeaderRenderer)
         {
-            $header = new Channels4\MHeader(
+            $this->header = $header = new Channels4\MHeader(
                 $header, 
                 $this->getBaseUrl(),
                 isOld: true
@@ -166,7 +169,7 @@ class Channels4Model
         }
         else if ($header = @$data->header->pageHeaderRenderer)
         {
-            $header = new Channels4\MHeader(
+            $this->header = $header = new Channels4\MHeader(
                 $header, 
                 $this->getBaseUrl(),
                 isOld: false,
@@ -177,7 +180,9 @@ class Channels4Model
         }
         else if ($header = @$data->header->carouselHeaderRenderer)
         {
-            $response += ["header" => new Channels4\MCarouselHeader($header, $this->getBaseUrl())];
+            $this->header = new Channels4\MCarouselHeader($header, $this->getBaseUrl());
+            
+            $response += ["header" => $this->header];
         }
 
         if (isset($response["header"]) && isset($data->contents->twoColumnBrowseResultsRenderer->tabs))
@@ -232,9 +237,6 @@ class Channels4Model
             $response += [
                 "title" => $response["header"]->getTitle()
             ];
-
-            // Also global subscription count for about
-            $this->subscriptionCount = $response["header"]->getSubscriptionCount();
         }
 
         if (!is_null($ownerData))
@@ -365,6 +367,9 @@ class Channels4Model
                             "webCommandMetadata" => (object)[
                                 "url" => $this->baseUrl . "/about"
                             ]
+                        ],
+                        "browseEndpoint" => (object)[
+                            "browseId" => $yt->ucid
                         ]
                     ],
                     "selected" => $aboutTabSelected,
@@ -409,7 +414,7 @@ class Channels4Model
 
         foreach ($sortedTabs as $tab) if (@$tab->tabRenderer)
         {
-            $tabEndpoint = $tab->tabRenderer->endpoint->commandMetadata->webCommandMetadata->url ?? null;
+            $tabEndpoint = ParsingUtils::getUrl($tab->tabRenderer->endpoint);
 
             if (!is_null($tabEndpoint))
             {
@@ -463,7 +468,7 @@ class Channels4Model
             return (object)[
                 "channelAboutMetadataRenderer" => 
                     new MChannelAboutMetadata(
-                        $this->subscriptionCount,
+                        $this,
                         $content->sectionListRenderer->contents[0]->itemSectionRenderer->contents[0]->channelAboutFullMetadataRenderer
                     )
             ];
@@ -474,7 +479,7 @@ class Channels4Model
             return (object)[
                 "channelAboutMetadataRenderer" =>
                     new MChannelAboutMetadata(
-                        $this->subscriptionCount,
+                        $this,
                         $this->responseData?->rehikeAboutTab
                     )
             ];
@@ -673,7 +678,6 @@ class Channels4Model
         
         foreach ($tabs as $tab)
         {
-            
             if (isset($tab->tabRenderer))
             {
                 $renderer = $tab->tabRenderer;
@@ -686,7 +690,7 @@ class Channels4Model
             if ($renderer)
             {
                 $url = $renderer->endpoint->commandMetadata->webCommandMetadata->url;
-                $parts = explode("/", $url);
+                $parts = explode("/", trim($url, "/"));
                 
                 if (empty($parts[0]))
                 {

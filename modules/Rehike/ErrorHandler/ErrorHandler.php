@@ -110,9 +110,27 @@ final class ErrorHandler
             self::$pageModel = new UncaughtExceptionPage($e);
         }
 
-        LogFileManager::createExceptionLogFile(
-            ExceptionLogger::getFormattedException($e)
-        );
+        try
+        {
+            LogFileManager::createExceptionLogFile(
+                ExceptionLogger::getFormattedException($e)
+            );
+        }
+        catch (\Throwable $e)
+        {
+            // The log file system is kinda poorly written and doesn't check
+            // if certain modules are loaded before attempting to access
+            // them, which can end up throwing an error in some cases.
+            // For now, this will just be hacked around by ignoring any errors
+            // that are thrown by the log file manager.
+            // However, we will clear the latest log file name in order to
+            // avoid referring to a nonexistent file, since the file is likely
+            // to have not been created if an exception was thrown anywhere during
+            // the execution there.
+            self::$hasLogFile = false;
+            self::$logFileName = "";
+        }
+        
         self::renderErrorTemplate();
         exit();
     }

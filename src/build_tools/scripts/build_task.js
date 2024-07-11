@@ -266,7 +266,9 @@ class BuildTaskRegistryIterator
                 return buildTask.gulpTask;
             };
             
-            wrapper.displayName = "[RehikeBuild] " + buildTask.displayName;
+            // Inherit the Gulp task name from the wrapped task so that the
+            // console logs work correctly:
+            wrapper.displayName = buildTask.displayName;
             
             gulpWrappers.push(wrapper);
             tasks.push(buildTask);

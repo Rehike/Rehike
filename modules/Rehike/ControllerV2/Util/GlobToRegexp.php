@@ -41,11 +41,25 @@ class GlobToRegexp
         ];
 
         // Handle flags behaviours
-        if ($flags & self::PATHNAME) $transforms["\*"] = "[^/]*";
-        if ($flags & self::NOESCAPE) unset($transforms["\\"]);
+        if ($flags & self::PATHNAME)
+        {
+            $transforms["\*"] = "[^/]*";
+        }
+        
+        if ($flags & self::NOESCAPE)
+        {
+            unset($transforms["\\"]);
+        }
+        
         if ($flags & self::PERIOD && 0 === strpos($filename, ".") && 0 !== strpos($pattern, "."))
+        {
             return false;
-        if ($flags & self::CASEFOLD) $regexFlags .= "i";
+        }
+        
+        if ($flags & self::CASEFOLD)
+        {
+            $regexFlags .= "i";
+        }
 
         // Declare regexp pattern
         $regexPattern = "#^"

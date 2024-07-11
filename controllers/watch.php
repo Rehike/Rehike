@@ -12,7 +12,7 @@ use Rehike\Async\Promise;
 
 use Rehike\Util\Base64Url;
 use Rehike\ConfigManager\Config;
-use Rehike\Util\WatchUtils;
+use Rehike\Helper\WatchUtils;
 use Rehike\Util\ExtractUtils;
 
 use Rehike\Model\Watch\WatchModel;

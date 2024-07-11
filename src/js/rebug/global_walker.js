@@ -219,7 +219,9 @@ rebug.globalWalker.templates = {
                     name,
                     this.itemBoolHandler(name, data)
                 );
-            case "undefined": type = "null";
+            case "undefined":
+                type = "null";
+                // fallthrough
             case "null":
             default:
                 return this.abstractItem(

@@ -157,15 +157,25 @@ class Config
 
         self::$file = $filePath;
     }
+    
+    public static function isInitialized(): bool
+    {
+        return isset(static::$config);
+    }
 
     /**
      * Get the active config.
      * 
-     * @return object
+     * @return ?object
      */
-    public static function getConfig(): object
+    public static function getConfig(): ?object
     {
-        return is_object(static::$config) ? static::$config : (object) static::$defaultConfig;
+        if (self::isInitialized())
+        {
+            return is_object(static::$config) ? static::$config : (object) static::$defaultConfig;
+        }
+        
+        return null;
     }
 
     /**

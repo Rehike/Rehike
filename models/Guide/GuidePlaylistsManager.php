@@ -152,10 +152,10 @@ class GuidePlaylistsManager
     /**
      * Performs cache validation functions.
      */
-    protected function validateCache(object $cacheObj): object
+    protected function validateCache(mixed $cacheObj): object
     {
         // All of these properties must exist on the cache object.
-        if (isset($cacheObj->expire) && isset($cacheObj->accountId) && isset($cacheObj->items))
+        if (is_object($cacheObj) && isset($cacheObj->expire) && isset($cacheObj->accountId) && isset($cacheObj->items))
         {
             // The current time must be less than the expire time.
             if (time() > $cacheObj->expire)
