@@ -50,7 +50,7 @@ gitManagerDialogFailedPullMessage: >
 
 # -- Переводы для раздела титров --
 
-creditsTitle: "Признательность"
+creditsTitle: "Credits"
 creditsDevelopersTitle: "Разработчики Rehike"
 
 # Major contributor names.
