@@ -1,10 +1,10 @@
 {
-	"previousHash": "8080ff56dac7300e9a1219878df9f6af7076a6fe",
-	"currentRevisionId": 1554,
-	"subject": "Move "narrow" utils to Rehike\Helper namespace...",
-	"body": "Move "narrow" utils to Rehike\Helper namespace...",
+	"previousHash": "243fa90a46bdf74bdcf22d0ac88a4ca0593a0d21",
+	"currentRevisionId": 1557,
+	"subject": "Fix for MessyJsonParser",
+	"body": "Fix for MessyJsonParser",
 	"branch": "master",
 	"committerName": "Isabella",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1720591098
+	"time": 1721696570
 }

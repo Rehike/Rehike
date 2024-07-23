@@ -18,7 +18,8 @@ class MessyJsonParser
      */
     public static function parse(string $json): ?object
     {
-        $transformed = self::quoteTransform($json);
+        $transformed = self::backslashTransform($json);
+        $transformed = self::quoteTransform($transformed);
         
         if ($result = json_decode($transformed))
         {
@@ -26,6 +27,17 @@ class MessyJsonParser
         }
         
         return null;
+    }
+    
+    /**
+     * Transform single backslash characters (i.e. PHP namespace path) into
+     * double backslash characters.
+     */
+    private static function backslashTransform(string $json): string
+    {
+        // This is a quite lazy approach, but as long as this is done as the
+        // first transformation, everything should be okay.
+        return str_replace("\\", "\\\\", $json);
     }
     
     /**
