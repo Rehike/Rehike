@@ -1,10 +1,10 @@
 {
-	"previousHash": "9a9c568ea1751ac84ce9c657f6dd3b8928c301f2",
-	"currentRevisionId": 1558,
-	"subject": "Fix for 2024/07/24 player "n" obfuscation",
-	"body": "Fix for 2024/07/24 player "n" obfuscation",
+	"previousHash": "aa7e95abf73d8693510a6196f583e007fdc4ccf3",
+	"currentRevisionId": 1559,
+	"subject": "Update README to remove reference to "early" development",
+	"body": "Update README to remove reference to "early" development",
 	"branch": "master",
 	"committerName": "Isabella",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1721853039
+	"time": 1721853374
 }
