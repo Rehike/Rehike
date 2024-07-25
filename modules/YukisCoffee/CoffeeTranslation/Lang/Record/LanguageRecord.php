@@ -89,4 +89,14 @@ class LanguageRecord implements IResourceRecord
         $out = null;
         return false;
     }
+    
+    // Rehike-specific change for now:
+    public static function __set_state(array $state): object
+    {
+        $pThis = (new \ReflectionClass(self::class))->newInstanceWithoutConstructor();
+        
+        $pThis->entries = $state["entries"];
+        
+        return $pThis;
+    }
 }

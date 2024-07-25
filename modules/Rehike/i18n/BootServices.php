@@ -3,6 +3,7 @@ namespace Rehike\i18n;
 
 use Rehike\ConfigManager\Config;
 use Rehike\i18n\Internal\Core as I18nCore;
+use Rehike\i18n\Internal\RehikeTranslationRouter;
 use Rehike\YtApp;
 use Rehike\Validation\ValidHostLanguages;
 
@@ -40,6 +41,8 @@ class BootServices
         {
             $langId = "en-US";
         }
+        
+        i18n::setRouter(new RehikeTranslationRouter());
 
         i18n::getConfigApi()
             ->setCultureFileName("_culture.i18n")
