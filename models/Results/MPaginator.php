@@ -7,7 +7,7 @@ use Rehike\i18n\i18n;
 /**
  * Implements the search paginator model.
  * 
- * @author Daylin Cooper <dcoop2004@gmail.com>
+ * @author Isabella <kawapure@gmail.com>
  * @author The Rehike Maintainers
  */
 class MPaginator

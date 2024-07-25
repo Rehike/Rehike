@@ -410,7 +410,7 @@ class Network
         {
             self::$innertubeHeaders += [
                 /*
-                 * TODO(dcooper): Invalid AuthUser use.
+                 * TODO(izzy): Invalid AuthUser use.
                  * 
                  * AuthUser is used to switch between Google accounts (i.e.
                  * Gmail addresses themselves) and should not be hardcoded as

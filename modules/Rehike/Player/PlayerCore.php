@@ -30,7 +30,7 @@ use Rehike\Player\{
  * made open to the public for anyone to use, whether that be for similar
  * or completely different purposes.
  * 
- * @author Daylin Cooper <dcoop2004@gmail.com>
+ * @author Isabella <kawapure@gmail.com>
  * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  * 

@@ -146,7 +146,7 @@ class MYtWalker extends MTabContent
                 if ($value instanceof ReflectionProperty)
                 {
                     /*
-                     * PATCH (dcooper): Required before PHP 8.1, else a 
+                     * PATCH (izzy): Required before PHP 8.1, else a 
                      * ReflectionException is thrown upon trying to access the 
                      * contents of a protected or private property.
                     */

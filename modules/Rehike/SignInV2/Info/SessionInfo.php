@@ -5,7 +5,7 @@ namespace Rehike\SignInV2\Info;
  * Provides information about the current user session. This is the top-most
  * class for accessing data about the user session in the PHP world.
  * 
- * @author Daylin Cooper <dcoop2004@gmail.com>
+ * @author Isabella <kawapure@gmail.com>
  * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */

@@ -57,7 +57,7 @@ Thank you to [Prototaxis](//github.com/Prototaxis) for his work on shelves homep
 
 It is the belief of the team that code should generally be open and unrestricted.
 
-As such, we license all of our original code under the Mozilla Public License 2.0 (MPL 2.0); **you are free to do whatever you want with any code in the project that is authored by The Rehike Maintainers, Taniko Yamamoto, Daylin Cooper, or Aubrey Pankow, unless otherwise stated, as long as you distribute the source code and maintain the MPL 2.0 license.**
+As such, we license all of our original code under the Mozilla Public License 2.0 (MPL 2.0); **you are free to do whatever you want with any code in the project that is authored by The Rehike Maintainers, Taniko Yamamoto, Isabella, or Aubrey Pankow, unless otherwise stated, as long as you distribute the source code and maintain the MPL 2.0 license.**
 
 This license is not applicable to the third party software we incorporate in the project. Please see their respective `LICENSE` files for more information on each.
 
