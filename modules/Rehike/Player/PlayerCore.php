@@ -34,8 +34,8 @@ use Rehike\Player\{
  * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  * 
- * @license Unlicense
- * @version 3.1
+ * @license Mozilla Public License 2.0
+ * @version 3.2
  */
 class PlayerCore extends Configurable
 {
