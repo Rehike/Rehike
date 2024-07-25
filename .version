@@ -1,10 +1,10 @@
 {
-	"previousHash": "1e16baaa41c025c49dc77cac5ebecb58a4143043",
-	"currentRevisionId": 1563,
-	"subject": "izzy :3",
-	"body": "izzy :3",
+	"previousHash": "664154546b116e65233dbdca3a476b2b59516ad6",
+	"currentRevisionId": 1564,
+	"subject": "Support retrieving language from cookies",
+	"body": "Support retrieving language from cookies",
 	"branch": "master",
 	"committerName": "Isabella",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1721870082
+	"time": 1721872742
 }
