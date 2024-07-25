@@ -34,7 +34,7 @@ use Rehike\DisableRehike\DisableRehike;
  * 
  * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author Aubrey Pankow <aubyomori@gmail.com>
- * @author Daylin Cooper <dcoop2004@gmail.com>
+ * @author Isabella <kawapure@gmail.com>
  */
 abstract class HitchhikerController
 {

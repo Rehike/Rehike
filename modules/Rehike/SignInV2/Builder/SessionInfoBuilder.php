@@ -10,7 +10,7 @@ use Rehike\SignInV2\Exception\BuilderException;
  * The builder is not a public interface, so it can be considered less volatile
  * than the final class. Temporary state can be stored here.
  * 
- * @author Daylin Cooper <dcoop2004@gmail.com>
+ * @author Isabella <kawapure@gmail.com>
  * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */

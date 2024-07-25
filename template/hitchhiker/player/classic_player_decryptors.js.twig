@@ -176,6 +176,10 @@ function getDecryptorForPlayerSig(playerScript)
 /**
  * Extract the "n" parameter decryptor from a given player script.
  * 
+ * This is a bit of a mess, especially because YouTube consistently try to obfuscate the
+ * origin of this variable in the player source code. This function will try a few
+ * different tactics to determine the location of this variable in the function body.
+ * 
  * Special thanks to Reprety (V3) for providing a reference implementation.
  * 
  * @argument {string} playerScript A copy of the text content of the latest YouTube player
@@ -197,25 +201,181 @@ function getDecryptorForPlayerN(playerScript)
     if (DEBUG)
         console.log("[NDecode] Using player script:", playerScript);
     
-    // Small little obfuscation procedure that YouTube implemented in modern players:
-    // - "n" parameter name is encoded in a String.fromCharCode(110) call.
-    // - As of 2024/07/09, this variable is created just before the base result
-    //   pattern, so working around this is quite easy.
-    var N_STRING_PARAM_PATTERN =
-        "([a-zA-Z0-9_$]*?)\\s*\\=\\s*String\\.fromCharCode\\(110\\)";
+    /**
+     * Identifies the referencing function of the "n" variable.
+     * 
+     * This is very easy to pattern search, so why not just go ahead and do it?
+     */
+    var N_REFERENCING_FUNCTION_PATTERN = "\\\"index.m3u8\\\"(.{0,100}?)\\\"/file/index.m3u8\\\"";
     
     // Resulting groups:
     //   [0]: Entire expression
     //   [1]: Assigned variable name.
     var BASE_CALL_PATTERN_TEMPLATE =
         "([a-zA-Z0-9_$]*?)\\=[a-zA-Z0-9_$]*?\\.get\\(__ARGUMENT__\\)";
-
+        
     // Resulting groups:
     //   [0]: Entire expression
     //   [1]: Obfuscator function name
     //   [2]: Only the array index
     var OBFUSCATOR_CALL_PATTERN_TEMPLATE =
         "__NAME__=([a-zA-Z0-9_$]*?(\\[[a-zA-Z0-9_$]+\\])?)\\(.*\\)";
+    
+    var TACTIC_STATUS = {
+        FAILURE: 0,
+        SUCCESS: 1,
+        FOUND: 2,
+        MISS: 3
+    };
+    
+    var nReferencingFunctionMatch = playerScript.match(N_REFERENCING_FUNCTION_PATTERN)
+    var nReferencingFunctionLocation = 0;
+    
+    if (nReferencingFunctionMatch)
+    {
+        nReferencingFunctionLocation = nReferencingFunctionMatch.index;
+    }
+    
+    var baseCallPattern;
+    var baseCallIndexText;
+    var baseCallIndex = 0;
+    
+    /**
+     * Tactics for finding the "n" variable.
+     */
+    var N_FIND_TACTICS = [
+        {
+            name: "find charcode-encoded n",
+            fn: function findCharcodeEncodedN()
+            {
+                // This tactic was used briefly in 2024-07. It is unclear if it will be applicable
+                // again. It dealt with an obfuscation measure in which the "n" variable was
+                // simply encoded in a String.fromCharCode(110) call. 
+                
+                // Small little obfuscation procedure that YouTube implemented in modern players:
+                // - "n" parameter name is encoded in a String.fromCharCode(110) call.
+                // - As of 2024/07/09, this variable is created just before the base result
+                //   pattern, so working around this is quite easy.
+                var N_STRING_PARAM_PATTERN =
+                    "([a-zA-Z0-9_$]*?)\\s*\\=\\s*String\\.fromCharCode\\(110\\)";
+                
+                var nStringMatches = playerScript.match(new RegExp(N_STRING_PARAM_PATTERN));
+                
+                if (!nStringMatches)
+                {
+                    return TACTIC_STATUS.MISS;
+                }
+                
+                // If we got here, then we have a version of the player text where the
+                // "n" parameter text is slightly obfuscated, so we look for the next
+                // pattern for the aforementioned variable name:
+                var varName = nStringMatches[1];
+                
+                // We don't have to escape anything here because the var name should
+                // always be just text.
+                baseCallPattern = BASE_CALL_PATTERN_TEMPLATE.replace(
+                    "__ARGUMENT__", 
+                    varName
+                );
+                
+                // Search the script starting from the position of the regex find:
+                baseCallIndexText = playerScript.slice(nStringMatches.index);
+                baseCallIndex = nStringMatches.index;
+                
+                if (DEBUG)
+                {
+                    console.log("[NDecode] nStringMatches == ", nStringMatches);
+                    console.log(
+                        "[NDecode] OBFUSCATED \"n\" parameter in text. " +
+                        "Look to nStringMatches for debugging information."
+                    );
+                }
+                
+                return TACTIC_STATUS.FOUND;
+            }
+        },
+        {
+            name: "array destructuring",
+            fn: function tacticArrayDestructuring()
+            {
+                // This tactic is a bit more complicated. YouTube are increasingly obfuscating
+                // the origin of the "n" string in an intentional effort to make it harder to
+                // download videos from their platform.
+                //
+                // This latest obfuscation measure resembles something like
+                //     b="nn"[+a.D],c=a.get(b)
+                // where an array is used to hide the origin of data.
+                //
+                // I'm not sure what `a.D` is in normal execution, and I don't really care to
+                // look into it. I assume that it's a boolean they pass when the "n" parameter
+                // is to be used. In this case, it's casted to an integer by the unary +, and
+                // then the second character of the string "nn" is accessed, resulting in just
+                // "n". Pretty simple shit, really.
+                //
+                // Regardless, it requires some work around to work out nicely.
+                
+                // In this search, we'll just allow any expression.
+                var N_ARRAY_STRUCTURE_SEARCH =
+                    "([a-zA-Z0-9_$]*?)\\s*\\=\\s*\\\".n([a-zA-Z0-9_$]*?)\\\"\\[\\+([a-zA-Z0-9_$]*?)\\.([a-zA-Z0-9_$]*?)\\]";
+                    
+                var matches = playerScript.slice(nReferencingFunctionLocation)
+                    .match(N_ARRAY_STRUCTURE_SEARCH);
+                    
+                if (!matches)
+                {
+                    return TACTIC_STATUS.MISS;
+                }
+                
+                var varName = matches[1];
+                
+                if (DEBUG)
+                {
+                    console.log("[NDecode:tacticArrayDestructuring] varName =", varName);
+                }
+                
+                baseCallPattern = BASE_CALL_PATTERN_TEMPLATE.replace(
+                    "__ARGUMENT__",
+                    varName
+                );
+                
+                baseCallIndexText = playerScript.slice(matches.index + nReferencingFunctionLocation);
+                baseCallIndex = matches.index + nReferencingFunctionLocation;
+                
+                return TACTIC_STATUS.FOUND;
+            }
+        },
+        {
+            name: "find raw n",
+            fn: function tacticFindRawN()
+            {
+                // This tactic is the naive approach we used from the inception of the
+                // classic player support. It simply searches the player binary for the
+                // textual content of "n" (as a quoted string literal), and then assumed
+                // that that reference was used in the context of looking up the N
+                // encryption algorithm.
+                
+                // If the string literal is embedded, then we make a base call pattern
+                // regex template with the argument "n" as a string literal. This is
+                // double escaped, once for the regex and once for the JS string
+                // literal parser.
+                baseCallPattern = BASE_CALL_PATTERN_TEMPLATE.replace(
+                    "__ARGUMENT__", 
+                    "\\\"n\\\""
+                );
+                
+                // Search the entire script.
+                baseCallIndexText = playerScript;
+                baseCallIndex = 0;
+                
+                if (DEBUG)
+                {
+                    console.log("[NDecode] No obfuscated \"n\" parameter in text.");
+                }
+                
+                return TACTIC_STATUS.FOUND;
+            }
+        }
+    ];
 
     // Base result.
     var result = {
@@ -225,81 +385,79 @@ function getDecryptorForPlayerN(playerScript)
         cacheParams: null
     };
     
-    var nStringMatches = playerScript.match(new RegExp(N_STRING_PARAM_PATTERN));
+    var declarationMatches = [null, null];
     
-    var baseCallPattern;
-    var baseCallIndexText;
-    var baseCallIndex = 0;
-    if (nStringMatches)
+    // Execute all tactics:
+    for (var i = 0, j = N_FIND_TACTICS.length; i < j; i++)
     {
-        // If we got here, then we have a version of the player text where the
-        // "n" parameter text is slightly obfuscated, so we look for the next
-        // pattern for the aforementioned variable name:
-        var varName = nStringMatches[1];
-        
-        // We don't have to escape anything here because the var name should
-        // always be just text.
-        baseCallPattern = BASE_CALL_PATTERN_TEMPLATE.replace(
-            "__ARGUMENT__", 
-            varName
-        );
-        
-        // Search the script starting from the position of the regex find:
-        baseCallIndexText = playerScript.slice(nStringMatches.index);
-        baseCallIndex = nStringMatches.index;
+        var currentTactic = N_FIND_TACTICS[i];
         
         if (DEBUG)
         {
-            console.log(
-                "[NDecode] OBFUSCATED \"n\" parameter in text. " +
-                "Look to nStringMatches for debugging information."
-            );
+            console.log("[NDecode] Trying tactic \"" + currentTactic.name + "\"...");
         }
-    }
-    else
-    {
-        // If the string literal is embedded, then we make a base call pattern
-        // regex template with the argument "n" as a string literal. This is
-        // double escaped, once for the regex and once for the JS string
-        // literal parser.
-        baseCallPattern = BASE_CALL_PATTERN_TEMPLATE.replace(
-            "__ARGUMENT__", 
-            "\\\"n\\\""
-        );
         
-        // Search the entire script.
-        baseCallIndexText = playerScript;
+        // Reset state from the previous tactic:
+        baseCallPattern = null;
+        baseCallIndexText = null;
         baseCallIndex = 0;
         
+        currentTactic.fn();
+        
         if (DEBUG)
         {
-            console.log("[NDecode] No obfuscated \"n\" parameter in text.");
+            console.log("[NDecode] baseCallPattern == ", baseCallPattern);
+            console.log("[NDecode] baseCallIndexText == ", baseCallIndexText);
+            console.log("[NDecode] baseCallIndex ==", baseCallIndex);
+            
+            if (baseCallIndexText == playerScript)
+            {
+                console.log("[NDecode] baseCallIndexText is the same as playerScript.");
+            }
         }
-    }
-    
-    if (DEBUG)
-    {
-        console.log("[NDecode] nStringMatches == ", nStringMatches);
-        console.log("[NDecode] baseCallPattern == ", baseCallPattern);
-        console.log("[NDecode] baseCallIndexText == ", baseCallIndexText);
-        console.log("[NDecode] baseCallIndex ==", baseCallIndex);
         
-        if (baseCallIndexText == playerScript)
+        if (
+            !baseCallPattern ||
+            !baseCallIndexText
+        )
         {
-            console.log("[NDecode] baseCallIndex is the same as playerScript.");
+            if (DEBUG)
+            {
+                console.log("[NDecode] Failed tactic \"" + currentTactic.name + "\" because it didn't find anything.");
+            }
+            
+            continue;
         }
-    }
-
-    var declarationMatches = baseCallIndexText.match(new RegExp(baseCallPattern));
-
-    if (DEBUG)
-        console.log("[NDecode] declarationMatches ==", declarationMatches);
-
-    if (!declarationMatches)
-    {
-        result.reason = "Failed to extract decode expression.";
-        console.error("[Rehike.NDecode]" + result.reason);
-        return result;
+    
+        var declarationMatches = baseCallIndexText.match(new RegExp(baseCallPattern));
+    
+        if (DEBUG)
+            console.log("[NDecode] declarationMatches ==", declarationMatches);
+    
+        if (!declarationMatches && i == j)
+        {
+            result.reason = "Failed to extract decode expression.";
+            console.error("[Rehike.NDecode]" + result.reason);
+            return result;
+        }
+        else if (!declarationMatches)
+        {
+            if (DEBUG)
+            {
+                console.log("[NDecode] Failed tactic \"" + currentTactic.name + "\" because we couldn't find any declaration matches.");
+            }
+            
+            // Continue the iteration, because we need to find the other one.
+            continue;
+        }
+        
+        if (DEBUG)
+        {
+            console.log("[NDecode] Tactic \"" + currentTactic.name + "\" succeeded!");
+        }
+        
+        // Break the iteration, because we have a declaration match to go with now.
+        break;
     }
 
     var declarationExpression = declarationMatches[0];
@@ -379,14 +537,30 @@ function getDecryptorForPlayerN(playerScript)
         obfuscatorFnText = obfuscatorFnText.split(endPattern2)[0] + endPattern2;
         bAlreadySplit = true;
     }
-    catch(e) {}
+    catch (e)
+    {
+        bAlreadySplit = false;
+    }
+    
+    // Make sure that our content isn't too long. We cap to 8000 characters before trying to
+    // split by the other end pattern. The size for the player URL I've been testing with
+    // https://www.youtube.com/s/player/da154528/player_ias.vflset/en_US/base.js
+    // is 5438. If we overflow, then we read upwards of 2 million characters.
+    // I think this maximum works just fine.
+    if (obfuscatorFnText.length > 8000)
+    {
+        bAlreadySplit = false;
+    }
     
     if (!bAlreadySplit) try
     {
         obfuscatorFnText = obfuscatorFnText.split(endPattern)[0] + endPattern;
         bAlreadySplit = true;
     }
-    catch(e) {}
+    catch (e)
+    {
+        bAlreadySplit = false;
+    }
 
     if (DEBUG)
         console.log("[NDecode] (final) obfuscatorFnText ==", obfuscatorFnText);

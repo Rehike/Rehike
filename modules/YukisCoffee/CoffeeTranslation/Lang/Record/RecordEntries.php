@@ -58,4 +58,17 @@ class RecordEntries extends stdClass implements ArrayAccess
     {
         return isset($this->{$this->iterationPosition});
     }
+    
+    // Rehike-specific change for now:
+    public static function __set_state(array $state): object
+    {
+        $pThis = new self();
+        
+        foreach ($state as $key => $value)
+        {
+            $pThis->{$key} = $value;
+        }
+        
+        return $pThis;
+    }
 }

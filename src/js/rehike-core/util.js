@@ -105,7 +105,7 @@ rehike.util.scrollLock.enable = function()
     var bodyInfo = rehike.util.scrollLock.getElementInfo(document.body);
     rehike.util.scrollLock._bodyInfo = bodyInfo;
 
-    // PATCH (dcooper): Required to not jump around visually if not already set on <html>
+    // PATCH (izzy): Required to not jump around visually if not already set on <html>
     document.documentElement.style.overflowY = "scroll";
     document.body.style.overflow = "hidden";
 

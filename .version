@@ -1,10 +1,10 @@
 {
-	"previousHash": "243fa90a46bdf74bdcf22d0ac88a4ca0593a0d21",
-	"currentRevisionId": 1557,
-	"subject": "Fix for MessyJsonParser",
-	"body": "Fix for MessyJsonParser",
+	"previousHash": "94208a55582e00eb8242d240accb6c2aec8d6b7a",
+	"currentRevisionId": 1565,
+	"subject": "Introduce i18n file caching",
+	"body": "Introduce i18n file caching",
 	"branch": "master",
 	"committerName": "Isabella",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1721696570
+	"time": 1721878137
 }

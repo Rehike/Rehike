@@ -8,7 +8,7 @@
 
 {%- macro dialog(data) -%}
     {# 
-        PATCH (dcooper): **This cannot have the yt-dialog class**, as it causes a bug in common.js at
+        PATCH (izzy): **This cannot have the yt-dialog class**, as it causes a bug in common.js at
         yt.ui.Dialog.prototype.isAnyDialogDisplayed_() --> goog.dom.getElementsByClass("yt-dialog")
 
         This bug breaks standard closing behaviour as implemented by YouTube's source code. The check essentially

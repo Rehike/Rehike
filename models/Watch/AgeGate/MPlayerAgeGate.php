@@ -7,7 +7,7 @@ use Rehike\i18n\i18n;
  * Represents the age gate screen for content which is age restricted.
  * 
  * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
- * @author Daylin Cooper <dcoop2004@gmail.com>
+ * @author Isabella <kawapure@gmail.com>
  * @author The Rehike Maintainers
  */
 class MPlayerAgeGate

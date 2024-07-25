@@ -8,7 +8,7 @@ namespace Rehike\SignInV2\Info;
  * Brand Account system, they share many similarities with full-on
  * Google Accounts and are implemented as a subclass as a result.
  * 
- * @author Daylin Cooper <dcoop2004@gmail.com>
+ * @author Isabella <kawapure@gmail.com>
  * @author The Rehike Maintainers
  */
 class YtChannelAccountInfo extends GoogleAccountInfo

@@ -7,7 +7,7 @@ use Rehike\SignInV2\Info\GoogleAccountInfo;
 /**
  * Builder for the YtChannelAccountInfo class.
  * 
- * @author Daylin Cooper <dcoop2004@gmail.com>
+ * @author Isabella <kawapure@gmail.com>
  * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
