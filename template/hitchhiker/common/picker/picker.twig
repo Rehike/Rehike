@@ -1,0 +1,58 @@
+{#
+ # Templates for the picker seen in the footer
+ #}
+
+{% macro render(data) %}
+    {{ _self.render_header(data.header) }}
+    {{ _self.render_content(data) }}
+{% endmacro %}
+
+{% macro render_header(data) %}
+    <div class="yt-picker-header">
+        <button class="yt-close yt-uix-close" data-close-parent-class="yt-picker" data-close-focus-target-id="{{ data.closeButtonTargetId }}">
+            <span data-tooltip-text="{{ yt.msgs.close }}" class="yt-close-img yt-uix-tooltip yt-sprite" aria-label="{{ yt.msgs.close }}"></span>
+        </button>
+        <h3 class="yt">{{ rehike.getText(data.titleText) }}</h3>
+        {% if data.notesText %}
+        <p class="yt-notes">{{ rehike.getText(data.notesText) }}</p>
+        {% endif %}
+    </div>
+{% endmacro %}
+
+{% macro render_content(data) %}
+    <div class="yt-picker-content">
+        <form action="{{ data.formAction }}" method="{{ data.formMethod }}">
+            <input type="hidden" name="base_url" value="/">
+            <input type="hidden" name="session_token" value="{{ data.sessionToken }}">
+            {% for section in data.sections %}
+                {{ _self.render_section(section) }}
+            {% endfor %}
+        </form>
+    </div>
+{% endmacro %}
+
+{% macro render_section(data) %}
+    <div class="yt-picker-section">
+        {% for item in data.items %}
+            {{ _self.render_item_button(item) }}
+        {% endfor %}
+    </div>
+{% endmacro %}
+
+{% macro render_item_button(data) %}
+    {% if not data.isCurrent %}
+    <button 
+        class="yt-uix-button yt-uix-button-size-default yt-uix-button-link yt-picker-item yt-uix-tooltip"
+        type="submit" onclick=";return true;" value="{{ data.value }}" name="{{ data.name }}"
+        title="{{ rehike.getText(data.title) }}" dir="" data-tooltip-show-delay="750"
+    >
+        <span class="yt-uix-button-content">
+            {{ rehike.getText(data.title) }}
+        </span>
+    </button>
+    {% else %}
+    <strong class="yt-picker-item">
+        {{ rehike.getText(data.title) }}
+    </strong>
+    {% endif %}
+{% endmacro %}

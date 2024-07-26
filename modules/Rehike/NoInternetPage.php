@@ -7,7 +7,7 @@ use YukisCoffee\CoffeeRequest\Enum\NetworkResult;
  * Controller for the no internet page, which displays when the server is
  * unable to connect to the internet.
  *
- * @author Daylin Cooper <dcoop2004@gmail.com>
+ * @author Isabella <kawapure@gmail.com>
  * @author The Rehike Maintainers
  */
 class NoInternetPage

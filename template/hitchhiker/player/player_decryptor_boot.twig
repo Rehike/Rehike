@@ -140,6 +140,30 @@ function streamUrlVisitor(map, fnDecodeSig, fnDecodeN)
 		console.log("map is null");
 		return;
 	}
+	if (fnDecodeN === undefined || fnDecodeN === null || typeof fnDecodeN !== 'function') {
+		var playerUnavailable = document.getElementById("player-unavailable");
+		playerUnavailable.classList = " player-width player-height player-unavailable ";
+		var iconMeh = document.createElement("img");
+		iconMeh.classList = "icon meh";
+		iconMeh['src'] = "//s.ytimg.com/yts/img/meh7-vflGevej7.png";
+		iconMeh['alt'] = "";
+		var contents = document.createElement("div");
+		contents.classList = "content";
+		var unavailableMessage = document.createElement("h1");
+		unavailableMessage.id = "unavailable-message";
+		unavailableMessage.classList = "message";
+		unavailableMessage.innerHTML = "Failed to find decryption algorithm";
+		var unavailableSubmessage = document.createElement("div");
+		unavailableSubmessage.id = "unavailable-submessage";
+		unavailableSubmessage.classList = "submessage";
+		unavailableSubmessage.innerHTML = "Please report this error to the Rehive developers. In the meantime, you can use the latest player. Sorry about that.";
+		contents.appendChild(unavailableMessage);
+		contents.appendChild(unavailableSubmessage);
+		playerUnavailable.appendChild(iconMeh);
+		playerUnavailable.appendChild(contents);
+		throw new Error('fnDecodeN is null');
+		return;
+	}
     for (var i = 0, j = map.length; i < j; i++)
     {
         if ("signatureCipher" in map[i])

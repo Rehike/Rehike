@@ -30,12 +30,12 @@ use Rehike\Player\{
  * made open to the public for anyone to use, whether that be for similar
  * or completely different purposes.
  * 
- * @author Daylin Cooper <dcoop2004@gmail.com>
+ * @author Isabella <kawapure@gmail.com>
  * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  * 
- * @license Unlicense
- * @version 3.1
+ * @license Mozilla Public License 2.0
+ * @version 3.2
  */
 class PlayerCore extends Configurable
 {

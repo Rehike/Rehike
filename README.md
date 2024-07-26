@@ -29,7 +29,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Installation
 
-***Rehike is early in development. You should not expect a perfect user experience, should you choose to use it.*** If you encounter any problems while using Rehike, [please make an issue](//github.com/Rehike/Rehike/issues) so that we can track them easily.
+***Rehike is in development. You should not expect a perfect user experience, should you choose to use it.*** If you encounter any problems while using Rehike, [please make an issue](//github.com/Rehike/Rehike/issues) so that we can track them easily.
 
 We currently do not support an automated install. If you wish to use Rehike, you must set it up manually. Fortunately, that isn't too hard!
 
@@ -53,13 +53,13 @@ Use of these third party services is governed by their respective licenses. Wher
 
 Thank you to [Prototaxis](//github.com/Prototaxis) for his work on shelves homepage on InnerTube WEB v2. We use this valuable work for the homepage.
 
-## Licence
+## License
 
 It is the belief of the team that code should generally be open and unrestricted.
 
-As such, we license all of our original code under the Unlicense; **you are free to do whatever you want with any code in the project that is authored by The Rehike Maintainers, Taniko Yamamoto, Daylin Cooper, or Aubrey Pankow, unless otherwise stated.**
+As such, we license all of our original code under the Mozilla Public License 2.0 (MPL 2.0); **you are free to do whatever you want with any code in the project that is authored by The Rehike Maintainers, Taniko Yamamoto, Isabella, or Aubrey Pankow, unless otherwise stated, as long as you distribute the source code and maintain the MPL 2.0 license.**
 
-This licence is not applicable to the third party software we incorporate in the project. Please see their respective `LICENSE` files for more information on each.
+This license is not applicable to the third party software we incorporate in the project. Please see their respective `LICENSE` files for more information on each.
 
 ## Thank you!
 

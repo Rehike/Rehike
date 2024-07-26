@@ -1,0 +1,102 @@
+<?php
+namespace Rehike\Validation;
+
+/**
+ * Validates InnerTube HL values.
+ * 
+ * @author Isabella <kawapure@gmail.com>
+ * @author The Rehike Maintainers
+ */
+class ValidHostLanguages implements IValidator
+{
+    public function validateString(string $input): bool
+    {
+        return in_array($input, self::VALID_LANGUAGES);
+    }
+    
+    public const VALID_LANGUAGES = [
+        "af",
+        "az",
+        "id",
+        "ms",
+        "bs",
+        "ca",
+        "cs",
+        "da",
+        "de",
+        "et",
+        "en-IN",
+        "en-GB",
+        "en",
+        "es",
+        "es-419",
+        "es-US",
+        "eu",
+        "fil",
+        "fr",
+        "fr-CA",
+        "gl",
+        "hr",
+        "zu",
+        "is",
+        "it",
+        "sw",
+        "lv",
+        "lt",
+        "hu",
+        "nl",
+        "no",
+        "uz",
+        "pl",
+        "pt-PT",
+        "pt",
+        "ro",
+        "sq",
+        "sk",
+        "sl",
+        "sr-Latn",
+        "fi",
+        "sv",
+        "vi",
+        "tr",
+        "be",
+        "bg",
+        "ky",
+        "kk",
+        "mk",
+        "mn",
+        "ru",
+        "sr",
+        "uk",
+        "el",
+        "hy",
+        "iw",
+        "ur",
+        "ar",
+        "fa",
+        "ne",
+        "mr",
+        "hi",
+        "as",
+        "bn",
+        "pa",
+        "gu",
+        "or",
+        "ta",
+        "te",
+        "kn",
+        "ml",
+        "si",
+        "th",
+        "lo",
+        "my",
+        "ka",
+        "am",
+        "km",
+        "zh-CN",
+        "zh-TW",
+        "zh-HK",
+        "ja",
+        "ko",
+    ]; 
+}

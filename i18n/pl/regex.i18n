@@ -27,6 +27,10 @@ nonPublishCheck: "/(Data premiery: )|(Transmisja zaczęła się )|(Premiera rozp
 # Used to isolate a channel name from the unsubscription modal message.
 unsubChannelNameMatch: "/Anulować subskrypcję kanału (.*?)\\?/"
 
+# Used on the channel about page when the user has modern information
+# enabled:
+videoCountIsolator: "/( filmów)|( filmy)|( film)/"
+
 # Miscellaneous isolators
 videoTimeIsolator: "/([0-9]?[0-9])( sekund)|(1 sekunda)/"
 secondsIsolator: "/( sekund)|( sekunda)/"

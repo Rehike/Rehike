@@ -11,7 +11,7 @@ use Rehike\Network;
  * Related (watch) ajax controller
  * 
  * @author Aubrey Pankow <aubyomori@gmail.com>
- * @author Daylin Cooper <dcoop2004@gmail.com>
+ * @author Isabella <kawapure@gmail.com>
  * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  * 

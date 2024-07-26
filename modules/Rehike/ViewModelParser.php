@@ -21,7 +21,7 @@ namespace Rehike;
  * This class mostly exists to steamline grabbing data from mutation entities,
  * so it may not be entirely necessary for all view models.
  *
- * @author Daylin Cooper <dcoop2004@gmail.com>
+ * @author Isabella <kawapure@gmail.com>
  * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */

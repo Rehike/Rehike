@@ -101,6 +101,10 @@ props:
       title: "Włącz wbudowaną blokadę reklam"
       subtitle: >
         Zapewnia stabilne blokowanie reklam w odtwarzaczu wideo.
+    showNewInfoOnChannelAboutPage:
+      title: "Pokaż nowo dodane fragmenty informacji na stronie kanału \"Informacje\""
+      subtitle: >
+        Wyświetla zaimki kanału i liczbę filmów na stronie informacji o kanale.
   
   experiments:
     displayPlayerChoice:

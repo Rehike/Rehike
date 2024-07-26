@@ -22,7 +22,7 @@ use YukisCoffee\CoffeeRequest\Exception\GeneralException;
  * Controller for the watch page.
  * 
  * @author Aubrey Pankow <aubyomori@gmail.com>
- * @author Daylin Cooper <dcoop2004@gmail.com>
+ * @author Isabella <kawapure@gmail.com>
  * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */

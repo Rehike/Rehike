@@ -17,7 +17,7 @@ use function Rehike\Async\async;
 /**
  * Manages Google Account (GAIA) authentication and initialization.
  * 
- * @author Daylin Cooper <dcoop2004@gmail.com>
+ * @author Isabella <kawapure@gmail.com>
  * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */

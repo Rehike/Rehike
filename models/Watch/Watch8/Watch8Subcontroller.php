@@ -230,7 +230,7 @@ class Watch8Subcontroller
             
             $out = $list;
 
-            // Mostly Daylin's messy work
+            // Mostly Isabella's messy work
             // TODO: cleanup
             $countText = $list->videoCountText->runs ?? null;
             
@@ -256,7 +256,7 @@ class Watch8Subcontroller
 
             // "previous/next video ids also need a little work
             //  let's just catch two cases with one"
-            // Copied from Daylin's implementation again
+            // Copied from Isabella's implementation again
             $playlistId = &WatchBase::$yt->playlistId;
 
             $out->isMix = substr($playlistId, 0, 2) == "RD";
