@@ -6,9 +6,32 @@
                 <span class="footer-logo-icon yt-sprite"></span>
             </a>
         </div>
+        {# 
+            *** Picker buttons ***
+        #}
+        {% if yt.footer.pickers is not empty %}
+            <ul class="pickers yt-uix-button-group" data-button-toggle-group="optional">
+                {%- for btn in yt.footer.pickers -%}
+                <li>
+                    {{ button(btn) }}
+                </li>
+                {%- endfor -%}
+            </ul>
+        {% endif %}
         {%- for btn in yt.footer.buttons -%}
         {{ button(btn) }}
         {%- endfor -%}
+        {# 
+            *** Picker bodies ***
+        #}
+        {% if yt.footer.pickers is not empty %}
+            {% for btn in yt.footer.pickers %}
+                <div id="{{ btn.pickerTarget }}" class="yt-picker" style="display:none">
+                    {% from "core/spinner.twig" import render as spinner %}
+                    {{ spinner(yt.msgs.loading) }}
+                </div>
+            {% endfor %}
+        {% endif %}
     </div>
     <div id="footer-links">
         <ul id="footer-links-primary">

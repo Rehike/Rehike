@@ -97,6 +97,7 @@ Router::get([
     "/rehike/version" => "rehike/version",
     "/rehike/static/**" => "rehike/static_router",
     "/share_ajax" => "ajax/share",
+    "/picker_ajax" => "ajax/picker",
     "/attribution" => "attribution",
     "/profile" => "profile",
     "/channel_switcher" => "channel_switcher",
