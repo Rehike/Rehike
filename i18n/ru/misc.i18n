@@ -9,8 +9,8 @@ viewTextPlural: "%s просмотров"
 dateTextPublic: "Опубликовано: %s"
 dateTextPrivate: "Загружено: %s"
 subscribeText: "Подписаться"
-subscribedText: "Подписан"
-unsubscribeText: "Отписаться"
+subscribedText: "Подписка оформлена"
+unsubscribeText: "Отменить подписку"
 
 # How to obtain:
 # Get your UCID from YouTube. This is on https://www.youtube.com/account_advanced
