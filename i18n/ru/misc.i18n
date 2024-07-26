@@ -9,7 +9,7 @@ viewTextPlural: "%s просмотров"
 dateTextPublic: "Опубликовано: %s"
 dateTextPrivate: "Загружено: %s"
 subscribeText: "Подписаться"
-subscribedText: "Подписан"
+subscribedText: "Подписка оформлена"
 unsubscribeText: "Отписаться"
 
 # How to obtain:
