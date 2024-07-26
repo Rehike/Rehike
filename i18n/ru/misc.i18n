@@ -10,7 +10,7 @@ dateTextPublic: "Опубликовано: %s"
 dateTextPrivate: "Загружено: %s"
 subscribeText: "Подписаться"
 subscribedText: "Подписка оформлена"
-unsubscribeText: "Отписаться"
+unsubscribeText: "Отменить подписку"
 
 # How to obtain:
 # Get your UCID from YouTube. This is on https://www.youtube.com/account_advanced
