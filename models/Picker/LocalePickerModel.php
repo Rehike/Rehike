@@ -111,7 +111,11 @@ class LocalePickerModel extends PickerModel
         {
             // If we're a language button, then we want to display the name of that
             // language in the current language upon hover.
-            i18n::tryGetRawString("language_names", $id, $tooltipText);
+            
+            // We replace - with _ in the strings, as InnerTube uses hyphens for separation
+            // instead of underscores:
+            // "en-US" instead of "en_US"
+            i18n::tryGetRawString("language_names", str_replace("-", "_", $id), $tooltipText);
             
             if ($tooltipText == null)
             {

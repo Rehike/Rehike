@@ -1,10 +1,10 @@
 {
-	"previousHash": "586651a848958bfa61d95b288db44eb2acf81f9d",
-	"currentRevisionId": 1574,
-	"subject": "Picker: Active country name & language tooltips.",
-	"body": "Picker: Active country name & language tooltips.",
+	"previousHash": "8f3690339cd83de392a7fe8fb73d82efae3eb36d",
+	"currentRevisionId": 1575,
+	"subject": "Fix bug with getting native name for foreign language",
+	"body": "Fix bug with getting native name for foreign language",
 	"branch": "master",
 	"committerName": "Isabella",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1722226086
+	"time": 1722226525
 }
