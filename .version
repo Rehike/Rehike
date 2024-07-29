@@ -1,10 +1,10 @@
 {
-	"previousHash": "4ea6851e2edcc2447531640bf88f258be709d31a",
-	"currentRevisionId": 1572,
-	"subject": "Add static language/country names to every language",
-	"body": "Add static language/country names to every language",
+	"previousHash": "771426f21db60ffdebe4dec90f9261a6f07db56e",
+	"currentRevisionId": 1573,
+	"subject": "[i18n/all] Fix country_names invalid markup...",
+	"body": "[i18n/all] Fix country_names invalid markup...",
 	"branch": "master",
 	"committerName": "Isabella",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1722221959
+	"time": 1722225556
 }
