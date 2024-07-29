@@ -1,10 +1,10 @@
 {
-	"previousHash": "771426f21db60ffdebe4dec90f9261a6f07db56e",
-	"currentRevisionId": 1573,
-	"subject": "[i18n/all] Fix country_names invalid markup...",
-	"body": "[i18n/all] Fix country_names invalid markup...",
+	"previousHash": "586651a848958bfa61d95b288db44eb2acf81f9d",
+	"currentRevisionId": 1574,
+	"subject": "Picker: Active country name & language tooltips.",
+	"body": "Picker: Active country name & language tooltips.",
 	"branch": "master",
 	"committerName": "Isabella",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1722225556
+	"time": 1722226086
 }
