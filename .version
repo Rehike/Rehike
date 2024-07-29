@@ -1,10 +1,10 @@
 {
-	"previousHash": "af0e35e7e004aecabe403e67572cd3fed20a3e49",
-	"currentRevisionId": 1566,
-	"subject": "Introduce picker!!! (unfinished)",
-	"body": "Introduce picker!!! (unfinished)",
+	"previousHash": "4ea6851e2edcc2447531640bf88f258be709d31a",
+	"currentRevisionId": 1572,
+	"subject": "Add static language/country names to every language",
+	"body": "Add static language/country names to every language",
 	"branch": "master",
 	"committerName": "Isabella",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1721956196
+	"time": 1722221959
 }
