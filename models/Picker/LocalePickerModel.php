@@ -2,6 +2,7 @@
 namespace Rehike\Model\Picker;
 
 use Rehike\i18n\i18n;
+use Rehike\i18n\RehikeLocale;
 use Rehike\Model\Common\MButton;
 use Rehike\Util\ParsingUtils;
 
@@ -105,6 +106,26 @@ class LocalePickerModel extends PickerModel
         }
         
         $result->title = ParsingUtils::getText($data->title);
+        
+        if ($this->type == self::TYPE_LANGUAGE)
+        {
+            // If we're a language button, then we want to display the name of that
+            // language in the current language upon hover.
+            
+            // We replace - with _ in the strings, as InnerTube uses hyphens for separation
+            // instead of underscores:
+            // "en-US" instead of "en_US"
+            i18n::tryGetRawString("language_names", str_replace("-", "_", $id), $tooltipText);
+            
+            if ($tooltipText == null)
+            {
+                // Fallback.
+                $tooltipText = $result->title;
+            }
+            
+            $result->setTooltip($tooltipText);
+        }
+        
         $result->name = $name;
         $result->value = $id;
         

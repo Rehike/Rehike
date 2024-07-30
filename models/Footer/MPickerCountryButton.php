@@ -2,6 +2,7 @@
 namespace Rehike\Model\Footer;
 
 use Rehike\i18n\i18n;
+use Rehike\i18n\RehikeLocale;
 use Rehike\Model\Common\MButton;
 
 class MPickerCountryButton extends MPickerButton
@@ -16,7 +17,14 @@ class MPickerCountryButton extends MPickerButton
         $i18n = i18n::getNamespace("footer");
         
         $label = $i18n->get("pickerLocation");
-        $currentCountryName = "COUNTRY NAME";
+                
+        i18n::tryGetRawString("country_names", RehikeLocale::getCountryId(), $currentCountryName);
+        
+        if ($currentCountryName == null)
+        {
+            // Fallback.
+            $currentCountryName = "Unknown";
+        }
         
         $this->text = $this->getFormattedLabel($label, $currentCountryName);
         
