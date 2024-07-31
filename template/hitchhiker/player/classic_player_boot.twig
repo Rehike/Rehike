@@ -149,6 +149,7 @@ function getLatestPlayerJsInfo()
         xhr.onload = function() {
             if (200 == xhr.status)
             {
+				try {
                 var text = xhr.responseText;
 
                 var cbDecodeSig, cbDecodeN;
@@ -181,6 +182,10 @@ function getLatestPlayerJsInfo()
                     cbDecodeSig: cbDecodeSig,
                     cbDecodeN: cbDecodeN
                 });
+				} catch (e) {
+					showDecryptionError();
+					throw e;
+				}
             }
             else
             {
@@ -190,6 +195,34 @@ function getLatestPlayerJsInfo()
         };
         xhr.send();
     });
+}
+
+/**
+ * Tells the user that an error occurred while getting the decryptors from the latest player,
+ * because ofc Google has to make our lives hell.
+ */
+function showDecryptionError() {
+	var playerUnavailable = document.getElementById("player-unavailable");
+	playerUnavailable.classList = " player-width player-height player-unavailable ";
+	playerUnavailable.innerHTML = ""; // clear the contents of the error
+	var iconMeh = document.createElement("img");
+	iconMeh.classList = "icon meh";
+	iconMeh['src'] = "//s.ytimg.com/yts/img/meh7-vflGevej7.png";
+	iconMeh['alt'] = "";
+	var contents = document.createElement("div");
+	contents.classList = "content";
+	var unavailableMessage = document.createElement("h1");
+	unavailableMessage.id = "unavailable-message";
+	unavailableMessage.classList = "message";
+	unavailableMessage.innerHTML = "Failed to find decryption algorithm";
+	var unavailableSubmessage = document.createElement("div");
+	unavailableSubmessage.id = "unavailable-submessage";
+	unavailableSubmessage.classList = "submessage";
+	unavailableSubmessage.innerHTML = "Please report this error to the Rehive developers. In the meantime, you can use the latest player. Sorry about that.";
+	contents.appendChild(unavailableMessage);
+	contents.appendChild(unavailableSubmessage);
+	playerUnavailable.appendChild(iconMeh);
+	playerUnavailable.appendChild(contents);
 }
 
 /**
@@ -210,26 +243,7 @@ function streamUrlVisitor(map, fnDecodeSig, fnDecodeN)
 		return;
 	}
 	if (fnDecodeN === undefined || fnDecodeN === null || typeof fnDecodeN !== 'function') {
-		var playerUnavailable = document.getElementById("player-unavailable");
-		playerUnavailable.classList = " player-width player-height player-unavailable ";
-		var iconMeh = document.createElement("img");
-		iconMeh.classList = "icon meh";
-		iconMeh['src'] = "//s.ytimg.com/yts/img/meh7-vflGevej7.png";
-		iconMeh['alt'] = "";
-		var contents = document.createElement("div");
-		contents.classList = "content";
-		var unavailableMessage = document.createElement("h1");
-		unavailableMessage.id = "unavailable-message";
-		unavailableMessage.classList = "message";
-		unavailableMessage.innerHTML = "Failed to find decryption algorithm";
-		var unavailableSubmessage = document.createElement("div");
-		unavailableSubmessage.id = "unavailable-submessage";
-		unavailableSubmessage.classList = "submessage";
-		unavailableSubmessage.innerHTML = "Please report this error to the Rehive developers. In the meantime, you can use the latest player. Sorry about that.";
-		contents.appendChild(unavailableMessage);
-		contents.appendChild(unavailableSubmessage);
-		playerUnavailable.appendChild(iconMeh);
-		playerUnavailable.appendChild(contents);
+		showDecryptionError();
 		throw new Error('fnDecodeN is null');
 		return;
 	}
