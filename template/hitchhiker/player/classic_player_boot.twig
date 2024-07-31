@@ -214,11 +214,11 @@ function showDecryptionError() {
 	var unavailableMessage = document.createElement("h1");
 	unavailableMessage.id = "unavailable-message";
 	unavailableMessage.classList = "message";
-	unavailableMessage.innerHTML = "Failed to find decryption algorithm";
+	unavailableMessage.innerHTML = "Failed to find decryption algorithm. Please report this error to the Rehive developers. In the meantime, you can use the <a href=\"https://www.youtube.com/rehike/config/appearance\">latest player</a>. ";
 	var unavailableSubmessage = document.createElement("div");
 	unavailableSubmessage.id = "unavailable-submessage";
 	unavailableSubmessage.classList = "submessage";
-	unavailableSubmessage.innerHTML = "Please report this error to the Rehive developers. In the meantime, you can use the latest player. Sorry about that.";
+	unavailableSubmessage.innerHTML = "Sorry about that.";
 	contents.appendChild(unavailableMessage);
 	contents.appendChild(unavailableSubmessage);
 	playerUnavailable.appendChild(iconMeh);
