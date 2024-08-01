@@ -1,10 +1,10 @@
 {
-	"previousHash": "8f3690339cd83de392a7fe8fb73d82efae3eb36d",
-	"currentRevisionId": 1575,
-	"subject": "Fix bug with getting native name for foreign language",
-	"body": "Fix bug with getting native name for foreign language",
+	"previousHash": "01dcb6b020fb8b53c76e2d68761965a1a8315f7c",
+	"currentRevisionId": 1578,
+	"subject": "Fix typo in classic_player_boot.twig",
+	"body": "Fix typo in classic_player_boot.twig",
 	"branch": "master",
 	"committerName": "Isabella",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1722226525
+	"time": 1722482600
 }
