@@ -1,10 +1,10 @@
 {
-	"previousHash": "224d7ad1801ad4d225314b8950eda5671b261beb",
-	"currentRevisionId": 1580,
-	"subject": "[player/classic] Revise decryption unavailable message",
-	"body": "[player/classic] Revise decryption unavailable message",
+	"previousHash": "957fe9581c332e234b24286b721a7534a191243e",
+	"currentRevisionId": 1581,
+	"subject": "Update ISSUE_TEMPLATE for 0.8.2",
+	"body": "Update ISSUE_TEMPLATE for 0.8.2",
 	"branch": "master",
 	"committerName": "Isabella",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1722483512
+	"time": 1722483628
 }
