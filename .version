@@ -1,10 +1,10 @@
 {
-	"previousHash": "957fe9581c332e234b24286b721a7534a191243e",
-	"currentRevisionId": 1581,
-	"subject": "Update ISSUE_TEMPLATE for 0.8.2",
-	"body": "Update ISSUE_TEMPLATE for 0.8.2",
+	"previousHash": "e5fa27dabea58efaee19f59d7ada8885fb23afcb",
+	"currentRevisionId": 1582,
+	"subject": "[Nepeta] Nuke IPC test code",
+	"body": "[Nepeta] Nuke IPC test code",
 	"branch": "master",
 	"committerName": "Isabella",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1722483628
+	"time": 1722484366
 }
