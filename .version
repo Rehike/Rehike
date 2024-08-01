@@ -1,10 +1,10 @@
 {
-	"previousHash": "9eb4e2da1f92d8bd6db836df67fcaa282cd7f38b",
-	"currentRevisionId": 1579,
-	"subject": "[player/classic] i18nize decryption failed message",
-	"body": "[player/classic] i18nize decryption failed message",
+	"previousHash": "224d7ad1801ad4d225314b8950eda5671b261beb",
+	"currentRevisionId": 1580,
+	"subject": "[player/classic] Revise decryption unavailable message",
+	"body": "[player/classic] Revise decryption unavailable message",
 	"branch": "master",
 	"committerName": "Isabella",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1722483241
+	"time": 1722483512
 }

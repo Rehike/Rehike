@@ -202,30 +202,30 @@ function getLatestPlayerJsInfo()
  * because ofc Google has to make our lives hell.
  */
 function showDecryptionError() {
-	var playerUnavailable = document.getElementById("player-unavailable");
-	playerUnavailable.classList = " player-width player-height player-unavailable ";
-	playerUnavailable.innerHTML = ""; // clear the contents of the error
-	var iconMeh = document.createElement("img");
-	iconMeh.classList = "icon meh";
-	iconMeh['src'] = "//s.ytimg.com/yts/img/meh7-vflGevej7.png";
-	iconMeh['alt'] = "";
-	var contents = document.createElement("div");
-	contents.classList = "content";
-	var unavailableMessage = document.createElement("h1");
-	unavailableMessage.id = "unavailable-message";
-	unavailableMessage.classList = "message";
+    var playerUnavailable = document.getElementById("player-unavailable");
+    playerUnavailable.classList = " player-width player-height player-unavailable ";
+    playerUnavailable.innerHTML = ""; // clear the contents of the error
+    var iconMeh = document.createElement("img");
+    iconMeh.classList = "icon meh";
+    iconMeh['src'] = "//s.ytimg.com/yts/img/meh7-vflGevej7.png";
+    iconMeh['alt'] = "";
+    var contents = document.createElement("div");
+    contents.classList = "content";
+    var unavailableMessage = document.createElement("h1");
+    unavailableMessage.id = "unavailable-message";
+    unavailableMessage.classList = "message";
+    unavailableMessage.innerHTML = {{ rehike.i18n.get("player_classic", "decryptionUnavailable")|json_encode|raw }};
+    var unavailableSubmessage = document.createElement("div");
+    unavailableSubmessage.id = "unavailable-submessage";
+    unavailableSubmessage.classList = "submessage";
     {%- set unavailableMessageLink -%}
         <a href="/rehike/config/appearance">{{ rehike.i18n.get("player_classic", "decryptionUnavailableLink") }}</a>
     {%- endset -%}
-	unavailableMessage.innerHTML = {{ rehike.i18n.format("player_classic", "decryptionUnavailable", unavailableMessageLink)|json_encode|raw }};
-	var unavailableSubmessage = document.createElement("div");
-	unavailableSubmessage.id = "unavailable-submessage";
-	unavailableSubmessage.classList = "submessage";
-	unavailableSubmessage.innerHTML = {{ rehike.i18n.get("player_classic", "sorryAboutThat")|json_encode|raw }};
-	contents.appendChild(unavailableMessage);
-	contents.appendChild(unavailableSubmessage);
-	playerUnavailable.appendChild(iconMeh);
-	playerUnavailable.appendChild(contents);
+    unavailableSubmessage.innerHTML = {{ rehike.i18n.format("player_classic", "decryptionUnavailableFooter", unavailableMessageLink)|json_encode|raw }};
+    contents.appendChild(unavailableMessage);
+    contents.appendChild(unavailableSubmessage);
+    playerUnavailable.appendChild(iconMeh);
+    playerUnavailable.appendChild(contents);
 }
 
 /**

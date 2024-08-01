@@ -38,10 +38,10 @@
 
 # Decryption unavailable messages:
 decryptionUnavailable: >
-    Failed to find decryption algorithm. Please report this error to the Rehike developers.
-    In the meantime, you can use the %s.
+    Rehike error: Failed to find decryption algorithm.
+decryptionUnavailableFooter: >
+    Please report this error to the Rehike developers. In the meantime, you can use the %s.
 decryptionUnavailableLink: "latest player"
-sorryAboutThat: "Sorry about that."
 
 # Looping wasn't supported in this player revision, so we had to add a custom
 # implementation. As such, a custom string is also required.
