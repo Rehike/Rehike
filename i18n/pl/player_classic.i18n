@@ -36,6 +36,13 @@
 
 # BEGIN UNIQUE STRINGS
 
+# Decryption unavailable messages:
+decryptionUnavailable: >
+    Błąd Rehike: nie znaleziono algorytmu odszyfrowania.
+decryptionUnavailableFooter: >
+    Zgłoś ten błąd deweloperom Rehike. Tymczasem możesz użyć %s.
+decryptionUnavailableLink: "najnowszego odtwarzacza"
+
 # Looping wasn't supported in this player revision, so we had to add a custom
 # implementation. As such, a custom string is also required.
 playerClassicLoop: "Odtwarzaj w pętli"
