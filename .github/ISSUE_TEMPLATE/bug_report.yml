@@ -20,6 +20,7 @@ body:
       description: What version of Rehike are you using?
       multiple: false
       options:
+        - 0.8.2
         - 0.8.1
         - 0.8.0
         - 0.7
