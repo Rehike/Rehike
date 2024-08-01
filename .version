@@ -1,10 +1,10 @@
 {
-	"previousHash": "01dcb6b020fb8b53c76e2d68761965a1a8315f7c",
-	"currentRevisionId": 1578,
-	"subject": "Fix typo in classic_player_boot.twig",
-	"body": "Fix typo in classic_player_boot.twig",
+	"previousHash": "9eb4e2da1f92d8bd6db836df67fcaa282cd7f38b",
+	"currentRevisionId": 1579,
+	"subject": "[player/classic] i18nize decryption failed message",
+	"body": "[player/classic] i18nize decryption failed message",
 	"branch": "master",
 	"committerName": "Isabella",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1722482600
+	"time": 1722483241
 }
