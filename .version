@@ -1,10 +1,10 @@
 {
-	"previousHash": "2dd3cff38b6201ebc7e685066a6a47ba2db1ff4c",
-	"currentRevisionId": 1583,
-	"subject": "Attempt to fix player stream issues (#593)",
-	"body": "Attempt to fix player stream issues (#593)",
+	"previousHash": "c8ba13ae843ebe97a92ea00fa4a27d3b8d37707f",
+	"currentRevisionId": 1585,
+	"subject": "Second attempt at fixing #593",
+	"body": "Second attempt at fixing #593",
 	"branch": "master",
 	"committerName": "Isabella",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1722485687
+	"time": 1722750359
 }
