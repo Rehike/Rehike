@@ -38,7 +38,7 @@ class BuildNumber
         $lastUpdateTime = VersionController::$versionInfo->time;
         $diff = $lastUpdateTime - self::BUILDNUM_EPOCH;
         
-        $baseNum = round($diff / (60 * 60 * 24));
+        $baseNum = floor($diff / (60 * 60 * 24));
         
         return self::LEGACY_BUILDNUM_CUTOFF_NUM + $baseNum;
     }
