@@ -115,7 +115,7 @@ class WatchModel
                 }
             }
             
-            if (in_array(Config::getConfigProp("temp20240805_playerMode"), [
+            if (in_array(Config::getConfigProp("experiments.temp20240805_playerMode"), [
                 "USE_EMBEDDED_PLAYER_DIRECTLY",
                 "USE_EMBEDDED_PLAYER_REQUEST"
             ]))
