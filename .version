@@ -1,10 +1,10 @@
 {
-	"previousHash": "2190dbdfde71b30aeec2c7613004b4fc6ca29700",
-	"currentRevisionId": 1589,
-	"subject": "Amendment to 2190dbd",
-	"body": "Amendment to 2190dbd",
+	"previousHash": "082e2aa43def6f11da1190d2a2bebe3344ccf93a",
+	"currentRevisionId": 1590,
+	"subject": "Fix branching issue with embed player hack",
+	"body": "Fix branching issue with embed player hack",
 	"branch": "master",
 	"committerName": "Isabella",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1722883249
+	"time": 1722898082
 }
