@@ -55,6 +55,20 @@ final class Tasks
         {
             \YukisCoffee\CoffeeRequest\Util\PromiseResolutionTracker::disable();
         }
+        
+        if (Config::getConfigProp("experiments.temp20240805_playerMode") == "PICK_RANDOM")
+        {
+            $random = rand(0, 10);
+            
+            $value = match ($random)
+            {
+                10 => "USE_EMBEDDED_PLAYER_DIRECTLY",
+                default => "USE_EMBEDDED_PLAYER_REQUEST",
+            };
+            
+            Config::setConfigProp("experiments.temp20240805_playerMode", $value);
+            Config::dumpConfig();
+        }
     }
 
     public static function setupTemplateManager(): void

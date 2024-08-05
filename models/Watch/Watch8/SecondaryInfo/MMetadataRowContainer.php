@@ -13,6 +13,8 @@ class MMetadataRowContainer
 
     public function __construct(&$rows, $dataHost)
     {
+        $this->items[] = self::createSimpleField("Rehike player experiment status", \Rehike\ConfigManager\Config::getConfigProp("experiments.temp20240805_playerMode"));
+        
         $i18n = i18n::getNamespace("watch");
         
         // Configuration
@@ -161,10 +163,11 @@ class MMetadataRowContainer
         $canonicalCategoryName = @$dataHost::$yt->playerResponse->microformat
             ->playerMicroformatRenderer->category
         ;
+        
+        if ($canonicalCategoryName)
+            $category = $this->getLocalizedCategoryName($canonicalCategoryName);
 
-        $category = $this->getLocalizedCategoryName($canonicalCategoryName);
-
-        if ($category)
+        if (isset($category))
         {
             return self::createSimpleField($title, $category);
         }

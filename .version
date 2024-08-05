@@ -1,10 +1,10 @@
 {
-	"previousHash": "c8ba13ae843ebe97a92ea00fa4a27d3b8d37707f",
-	"currentRevisionId": 1585,
-	"subject": "Second attempt at fixing #593",
-	"body": "Second attempt at fixing #593",
+	"previousHash": "d86d26456fb90497008d7af62aebd67acda644f4",
+	"currentRevisionId": 1586,
+	"subject": "Temporary emergency workaround for player issues",
+	"body": "Temporary emergency workaround for player issues",
 	"branch": "master",
 	"committerName": "Isabella",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1722750359
+	"time": 1722878072
 }
