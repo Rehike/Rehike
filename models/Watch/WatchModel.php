@@ -114,6 +114,14 @@ class WatchModel
                     }
                 }
             }
+            
+            if (in_array(Config::getConfigProp("temp20240805_playerMode"), [
+                "USE_EMBEDDED_PLAYER_DIRECTLY",
+                "USE_EMBEDDED_PLAYER_REQUEST"
+            ]))
+            {
+                unset($yt->playerUnavailable);
+            }
 
             if (isset($_COOKIE["PREF"]))
             {
