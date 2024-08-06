@@ -62,8 +62,8 @@ final class Tasks
             
             $value = match ($random)
             {
-                10 => "USE_EMBEDDED_PLAYER_DIRECTLY",
-                default => "USE_EMBEDDED_PLAYER_REQUEST",
+                10 => "USE_EMBEDDED_PLAYER_REQUEST",
+                default => "USE_EMBEDDED_PLAYER_DIRECTLY",
             };
             
             Config::setConfigProp("experiments.temp20240805_playerMode", $value);

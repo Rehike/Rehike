@@ -1,10 +1,10 @@
 {
-	"previousHash": "3cf661d2d3f7d104061e99edb680c47730109dcc",
-	"currentRevisionId": 1591,
-	"subject": "Improve visitor data handling; possible player fix!",
-	"body": "Improve visitor data handling; possible player fix!",
+	"previousHash": "23708f7cbafe6f36f5089e5c7dad91fb60bddc54",
+	"currentRevisionId": 1592,
+	"subject": "Invert weight of player temporary workaround experiments",
+	"body": "Invert weight of player temporary workaround experiments",
 	"branch": "master",
 	"committerName": "Isabella",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1722912991
+	"time": 1722917621
 }
