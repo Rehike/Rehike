@@ -1,10 +1,10 @@
 {
-	"previousHash": "4ed21fe5dbb53829da6f90d25a2216de5eba822d",
-	"currentRevisionId": 1594,
-	"subject": "Change player experiment differentiation",
-	"body": "Change player experiment differentiation",
+	"previousHash": "e160aa1cca42598eb9ab236edf96fece5ed2bc03",
+	"currentRevisionId": 1595,
+	"subject": "Reset player choice when the experiment is disabled",
+	"body": "Reset player choice when the experiment is disabled",
 	"branch": "master",
 	"committerName": "Isabella",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1722979024
+	"time": 1722979338
 }

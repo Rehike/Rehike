@@ -85,7 +85,15 @@ class ConfigDefinitions
                 "enableAdblock" => new BoolProp(true)
             ],
             "experiments" => [
-                "displayPlayerChoice" => new BoolProp(false),
+                "displayPlayerChoice" => (new BoolProp(false))->registerUpdateCb(function() {
+                    // When this configuration option is changed, there is an expectation from
+                    // the user for it to reset the player setting back to the latest player,
+                    // as would be the only possible state prior to enabling the option.
+                    // https://github.com/Rehike/Rehike/issues/593#issuecomment-2272158302
+                    
+                    Config::setConfigProp("appearance.playerChoice", "CURRENT");
+                    Config::dumpConfig();
+                }),
                 "useSignInV2" => new BoolProp(false),
                 "disableSignInOnHome" => new BoolProp(false),
                 "tickInjectionForScheduling" => (new BoolProp(false))->registerUpdateCb(function() {
