@@ -4,7 +4,7 @@
       <div id="player-unavailable" class="{% include "page_fragments/player_unavailable.class.twig" %}">
          {% include "page_fragments/player_unavailable.twig" %}
       </div>
-{% if rehike.config.experiments.temp20240805_playerMode != "USE_EMBEDDED_PLAYER_DIRECTLY" %}
+{% if rehike.config.experiments.temp20240806_playerMode != "USE_EMBEDDED_PLAYER_DIRECTLY" %}
       <div id="player-api" class="player-width player-height off-screen-target player-api" tabIndex="-1"></div>
       <script >if (window.ytcsi) {window.ytcsi.tick("cfg", null, '');}</script>
       {#

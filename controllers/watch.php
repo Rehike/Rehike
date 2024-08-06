@@ -152,7 +152,7 @@ return new class extends NirvanaController {
         $playerRequestClient = "WEB";
         $playerRequestClientVersion = "2.20230331.00.00";
         
-        if (Config::getConfigProp("experiments.temp20240805_playerMode") == "USE_EMBEDDED_PLAYER_REQUEST")
+        if (Config::getConfigProp("experiments.temp20240806_playerMode") == "USE_EMBEDDED_PLAYER_REQUEST")
         {
             $playerRequestClient = "WEB_EMBEDDED_PLAYER";
             $playerRequestClientVersion = "1.20230331.00.00";
@@ -160,7 +160,7 @@ return new class extends NirvanaController {
         
         // XXX: indentation level unchanged to avoid messing with history;
         // this code WILL be removed.
-        if (Config::getConfigProp("experiments.temp20240805_playerMode") != "USE_EMBEDDED_PLAYER_DIRECTLY")
+        if (Config::getConfigProp("experiments.temp20240806_playerMode") != "USE_EMBEDDED_PLAYER_DIRECTLY")
         {
 
         // Unlike Polymer, Hitchhiker had all of the player data already

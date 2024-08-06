@@ -56,17 +56,20 @@ final class Tasks
             \YukisCoffee\CoffeeRequest\Util\PromiseResolutionTracker::disable();
         }
         
-        if (Config::getConfigProp("experiments.temp20240805_playerMode") == "PICK_RANDOM")
+        if (Config::getConfigProp("experiments.temp20240806_playerMode") == "PICK_RANDOM")
         {
             $random = rand(0, 10);
             
             $value = match ($random)
             {
+                1 => "USE_WEB_V2",
+                2 => "USE_WEB_V2",
+                3 => "USE_WEB_V2",
                 10 => "USE_EMBEDDED_PLAYER_REQUEST",
                 default => "USE_EMBEDDED_PLAYER_DIRECTLY",
             };
             
-            Config::setConfigProp("experiments.temp20240805_playerMode", $value);
+            Config::setConfigProp("experiments.temp20240806_playerMode", $value);
             Config::dumpConfig();
         }
     }
