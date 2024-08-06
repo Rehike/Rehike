@@ -39,6 +39,9 @@ return new class extends HitchhikerController
 
                 if (isset($data->adPlacements))
                     unset($data->adPlacements);
+                
+                if (isset($data->adSlots))
+                    unset($data->adSlots);
 
                 $modifiedResponse = json_encode($data);
             }

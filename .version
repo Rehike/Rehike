@@ -1,10 +1,10 @@
 {
-	"previousHash": "23708f7cbafe6f36f5089e5c7dad91fb60bddc54",
-	"currentRevisionId": 1592,
-	"subject": "Invert weight of player temporary workaround experiments",
-	"body": "Invert weight of player temporary workaround experiments",
+	"previousHash": "b7c17396dfe8d42db3d4a67ca94f0bed33077990",
+	"currentRevisionId": 1593,
+	"subject": "Remove adSlots data from client-side player responses",
+	"body": "Remove adSlots data from client-side player responses",
 	"branch": "master",
 	"committerName": "Isabella",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1722917621
+	"time": 1722919888
 }
