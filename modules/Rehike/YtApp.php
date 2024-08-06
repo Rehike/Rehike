@@ -145,4 +145,15 @@ class YtApp extends stdClass
      * The user's geolocation (as obtained from YouTube).
      */
     public string $gl = "US";
+    
+    /**
+     * The protobuf-encoded visitor data string for tracking logged-out
+     * sessions.
+     */
+    public string $visitorData = "";
+    
+    /**
+     * The raw visitor data string (i.e. how it's represented in the cookie).
+     */
+    public string $rawVisitorData = "";
 }

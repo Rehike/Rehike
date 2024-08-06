@@ -1,10 +1,10 @@
 {
-	"previousHash": "082e2aa43def6f11da1190d2a2bebe3344ccf93a",
-	"currentRevisionId": 1590,
-	"subject": "Fix branching issue with embed player hack",
-	"body": "Fix branching issue with embed player hack",
+	"previousHash": "3cf661d2d3f7d104061e99edb680c47730109dcc",
+	"currentRevisionId": 1591,
+	"subject": "Improve visitor data handling; possible player fix!",
+	"body": "Improve visitor data handling; possible player fix!",
 	"branch": "master",
 	"committerName": "Isabella",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1722898082
+	"time": 1722912991
 }

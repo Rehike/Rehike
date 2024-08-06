@@ -1,6 +1,8 @@
 <?php
 namespace Rehike;
 
+use Rehike\i18n\RehikeLocale;
+
 /**
  * Used for storing information about the current session.
  * 
@@ -40,5 +42,10 @@ class ContextManager
     public static function setVisitorData(string $visitor): void
     {
         self::$visitorData = $visitor;
+        YtApp::getInstance()->visitorData = InnertubeContext::genVisitorData2(
+            self::$visitorData,
+            RehikeLocale::getCountryId()
+        );
+        YtApp::getInstance()->rawVisitorData = self::$visitorData;
     }
 }

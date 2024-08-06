@@ -19,57 +19,73 @@ class InnertubeContext
      * Convert an integer to a ULEB128 binary for use in
      * synthesising protobuf.
      * 
-     * This should be deprecated in the future.
+     * ULEB128 utilizes the most-significant bit of each byte to signify if it
+     * should continue parsing. For instance, the number 12000 is represented
+     * as a 16-bit integer as something like this:
+     * 
+     *     E0          2E
+     * 
+     *     1110 0000   0010 1110
+     * 
+     * (Note that, while you would often write this number in hexadecimal like
+     * 0x2EE0, it's often stored in memory in the reversed byte order because
+     * most processors use this order)
+     * 
+     * and in ULEB128 like this:
+     * 
+     *     E0         DD         00
+     *     1110 0000  1101 1101  0000 0000
+     * 
+     * The contents of the number stay in the little-endian byte order (i.e.
+     * this works quite efficiently in native machine code of most processors).
+     * The number is simply split up into multiple bytes to introduce a new use
+     * for the most-significant bit as a continuation check.
      * 
      * @param int $int to convert
      * @return string uleb128 binary
      */
     public static function int2uleb128(int $int): string
     {
-        // this is awful
-        // i hate the person who wrot ethis
-        
-        if ($int < 128) return chr($int);
-        
-        $out = decbin($int);
-        
-        while (0 != strlen($out) % 7)
+        if ($int < 128)
         {
-            $out = '0' . $out;
+            // Integers less than 128 don't differ between standard in-memory
+            // representation and ULEB128 representation.
+            return chr($int);
         }
         
-        $out = str_split($out, 7);
+        $buffer = $int;
+        $bytes = "";
         
+        $LOW_ORDER_7_BITS_MASK = 0b0111_1111;
+        $HIGHEST_ORDER_BIT_MASK = 0b1000_0000;
+        $SINGLE_BYTE_MASK = 0b1111_1111;
         
-        for ($i = 0; $i < count($out); $i++)
+        do
         {
-            if (0 != $i)
+            $byte = $buffer & $LOW_ORDER_7_BITS_MASK;
+            $buffer >>= 7;
+            
+            if ($buffer != 0)
             {
-                $out[$i] = '1' . $out[$i];
+                $byte |= $HIGHEST_ORDER_BIT_MASK;
             }
-            else
-            {
-                $out[$i] = '0' . $out[$i];
-            }
+            
+            $bytes .= chr($byte & $SINGLE_BYTE_MASK);
         }
+        while ($buffer != 0);
         
-        $out = array_reverse($out);
-        $out = implode('', $out);
-        
-        $out = str_split($out, 8);
-        
-        $out2 = "";
-        
-        for ($i = 0; $i < count($out); $i++)
-        {
-            $out2 .= chr( bindec($out[$i]) );
-        }
-        
-        return $out2;
+        return $bytes;
     }
 
     /**
      * Generate an encoded YouTube visitor data string.
+     * 
+     * This is encoded in the Protocol Buffers format specifying the following
+     * information:
+     * {
+     *     1: VISITOR_INFO1_LIVE cookie value,
+     *     5: current unix timestamp
+     * }
      * 
      * @param string $visitor
      * @return string encoded visitor data
@@ -85,6 +101,46 @@ class InnertubeContext
         return Base64Url::encode(
             chr(0x0a) . self::int2uleb128( strlen($visitor) ) . $visitor . chr(0x28) . self::int2uleb128($date)
         );
+    }
+    
+    /**
+     * Generate a protobuf-encoded vistor data string with more information.
+     * 
+     * This specifies the following information:
+     * {
+     *     1: VISITOR_INFO1_LIVE cookie value,
+     *     5: current unix timestamp,
+     *     6: {
+     *         1: current GL value
+     *     }
+     * }
+     */
+    public static function genVisitorData2(string $visitor, string $gl): string
+    {
+        $PB_WIRE_TYPE_VARINT = 0;
+        $PB_WIRE_TYPE_DOUBLE = 1;
+        $PB_WIRE_TYPE_LENGTH_DETERMINED = 2;
+        $PB_WIRE_TYPE_GROUP_START = 3;
+        $PB_WIRE_TYPE_GROUP_END = 4;
+        $PB_WIRE_TYPE_FLOAT = 5;
+        
+        $date = time();
+        
+        $localeInnerBin =
+            // This group is always empty for some reason.
+            chr( 3 << 3 | $PB_WIRE_TYPE_LENGTH_DETERMINED ) . chr(0) .
+            chr( 4 << 3 | $PB_WIRE_TYPE_VARINT ) . self::int2uleb128(17);
+            
+        $localeBin =
+            chr( 1 << 3 | $PB_WIRE_TYPE_LENGTH_DETERMINED ) . self::int2uleb128( strlen($gl) ) . $gl .
+            chr( 2 << 3 | $PB_WIRE_TYPE_LENGTH_DETERMINED ) . self::int2uleb128( strlen($localeInnerBin) ) . $localeInnerBin;
+        
+        $bin =
+            chr( 1 << 3 | $PB_WIRE_TYPE_LENGTH_DETERMINED ) . self::int2uleb128( strlen($visitor) ) . $visitor .
+            chr( 5 << 3 | $PB_WIRE_TYPE_VARINT ) . self::int2uleb128($date) .
+            chr( 6 << 3 | $PB_WIRE_TYPE_LENGTH_DETERMINED ) . self::int2uleb128( strlen($localeBin) ) . $localeBin;
+            
+        return Base64Url::encode($bin);
     }
 
     /**
