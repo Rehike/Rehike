@@ -92,6 +92,13 @@ class InnertubeContext
      */
     public static function genVisitorData(string $visitor): string
     {
+        $PB_WIRE_TYPE_VARINT = 0;
+        $PB_WIRE_TYPE_DOUBLE = 1;
+        $PB_WIRE_TYPE_LENGTH_DETERMINED = 2;
+        $PB_WIRE_TYPE_GROUP_START = 3;
+        $PB_WIRE_TYPE_GROUP_END = 4;
+        $PB_WIRE_TYPE_FLOAT = 5;
+        
         // Generate visitorData string
         if (is_null($visitor))
             return "";
@@ -99,7 +106,8 @@ class InnertubeContext
         $date = time();
         
         return Base64Url::encode(
-            chr(0x0a) . self::int2uleb128( strlen($visitor) ) . $visitor . chr(0x28) . self::int2uleb128($date)
+            chr( 1 << 3 | $PB_WIRE_TYPE_LENGTH_DETERMINED ) . self::int2uleb128( strlen($visitor) ) . $visitor .
+            chr( 5 << 3 | $PB_WIRE_TYPE_VARINT ) . self::int2uleb128($date)
         );
     }
     
