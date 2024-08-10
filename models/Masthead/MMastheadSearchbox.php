@@ -42,4 +42,9 @@ class MMastheadSearchbox
             ]
         ]);
     }
+    
+    public function setSearchQuery(string $query): void
+    {
+        $this->query = $query;
+    }
 }

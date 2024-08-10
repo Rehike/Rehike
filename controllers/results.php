@@ -52,7 +52,7 @@ class ResultsController extends NirvanaController
             self::$query = $query;
 
             // Display query in the searchbox.
-            $yt->masthead->searchbox->query = $query;
+            $yt->masthead->setSearchQuery($query);
             $this->setTitle($query);
 
             // used for filters

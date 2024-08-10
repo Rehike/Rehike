@@ -105,4 +105,9 @@ class MMasthead
         $this->logoIsDoodle = true;
         $this->doodleImageUrl = $yoodleUrl;
     }
+    
+    public function setSearchQuery(string $query): void
+    {
+        $this->searchbox->setSearchQuery($query);
+    }
 }
