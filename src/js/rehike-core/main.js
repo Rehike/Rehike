@@ -53,4 +53,26 @@ rehike.inherits = function(childClass, parentClass)
     };
 };
 
+rehike.rehikeCoreInit_ = function()
+{
+    // Load delayloaded modules:
+    var dlmPath = "_rehikeCoreDelayLoadModules";
+    if (dlmPath in window && Array.isArray(window[dlmPath]))
+    {
+        for (var i = 0, j = window[dlmPath].length; i < j; i++)
+        {
+            var func = window[dlmPath][i];
+            
+            if (typeof func == "function")
+            {
+                func();
+            }
+        }
+        
+        delete window[dlmPath];
+    }
+};
+
+rehike.rehikeCoreInit_();
+
 })();
