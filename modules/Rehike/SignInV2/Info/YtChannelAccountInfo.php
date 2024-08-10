@@ -11,7 +11,7 @@ namespace Rehike\SignInV2\Info;
  * @author Isabella <kawapure@gmail.com>
  * @author The Rehike Maintainers
  */
-class YtChannelAccountInfo extends GoogleAccountInfo
+class YtChannelAccountInfo extends GoogleAccountInfo implements IBuiltObject
 {
     /**
      * The Google Account which owns the channel's Brand Account, or which

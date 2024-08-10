@@ -1,6 +1,8 @@
 <?php
 namespace Rehike\SignInV2\Info;
 
+use Rehike\SignInV2\Enum\SessionErrors;
+
 /**
  * Provides information about the current user session. This is the top-most
  * class for accessing data about the user session in the PHP world.
@@ -9,7 +11,7 @@ namespace Rehike\SignInV2\Info;
  * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
-class SessionInfo
+class SessionInfo implements IBuiltObject
 {
     /**
      * States whether or not the user is signed into a valid session.
@@ -112,5 +114,13 @@ class SessionInfo
     public function getSessionErrors(): int
     {
         return $this->sessionErrors;
+    }
+    
+    /**
+     * Checks if any request had failed.
+     */
+    public function didAnyRequestFail(): bool
+    {
+        return $this->sessionErrors & SessionErrors::FAILED_REQUEST;
     }
 }

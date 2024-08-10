@@ -29,9 +29,14 @@ class GaiaAuthManager
      * 
      * If the cookie is unavailable, then this will be unset.
      */
-    private static string $sapisid;
+    private static string $sapisid = "";
     
-    private static string $loginInfoCookie;
+    /**
+     * Stores the user's "LOGIN_INFO" session cookie. This changes whenever the
+     * user's session changes, so we use this to check if we should reject the
+     * current cache.
+     */
+    private static string $loginInfoCookie = "";
 
     public static function __initStatic(): void
     {

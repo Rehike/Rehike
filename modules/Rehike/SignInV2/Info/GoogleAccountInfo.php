@@ -1,6 +1,10 @@
 <?php
 namespace Rehike\SignInV2\Info;
 
+use Rehike\SignInV2\Cache\ICacheable;
+use Rehike\SignInV2\Builder\GoogleAccountInfoBuilder;
+use Rehike\SignInV2\Cache\CacheReader;
+
 /**
  * Used to store and retrieve information about a Google Account.
  * 
@@ -8,7 +12,7 @@ namespace Rehike\SignInV2\Info;
  * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
-class GoogleAccountInfo
+class GoogleAccountInfo implements IBuiltObject, ICacheable
 {
     /**
      * The public display name of the account, used to identify the account
@@ -42,19 +46,41 @@ class GoogleAccountInfo
      */
     protected string $avatarUrl;
 
-    public function __construct(
-            ?string $displayName = null,
-            string $gaiaId,
-            int $authUserId,
-            string $accountEmail,
-            string $avatarUrl
-    )
+    public static function fromBuilder(GoogleAccountInfoBuilder $builder): self
     {
-        $this->displayName = $displayName;
-        $this->gaiaId = $gaiaId;
-        $this->authUserId = $authUserId;
-        $this->accountEmail = $accountEmail;
-        $this->avatarUrl = $avatarUrl;
+        $me = new self();
+        
+        $me->displayName = $builder->displayName;
+        $me->gaiaId = $builder->gaiaId;
+        $me->authUserId = $builder->authUserId;
+        $me->accountEmail = $builder->accountEmail;
+        $me->avatarUrl = $builder->avatarUrl;
+        
+        $me->assertComplete();
+        
+        return $me;
+    }
+    
+    public function restoreFromCache(CacheReader $cache): void
+    {
+        $this->displayName = $cache->props->displayName;
+        $this->gaiaId = $cache->props->gaiaId;
+        $this->authUserId = $cache->props->authUserId;
+        $this->accountEmail = $cache->props->accountEmail;
+        $this->avatarUrl = $cache->props->avatarUrl;
+        
+        $this->assertComplete();
+    }
+    
+    private function assertComplete(): void
+    {
+        assert(
+            isset($this->displayName) &&
+            isset($this->gaiaId) &&
+            isset($this->authUserId) &&
+            isset($this->accountEmail) &&
+            isset($this->avatarUrl)
+        );
     }
 
     /**
