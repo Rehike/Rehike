@@ -20,8 +20,15 @@ class Switcher
     public static function parseResponse(string $response): array
     {
         $response = json_decode(substr($response, 4, strlen($response)));
+        
+        if ($response->data->responseContext->mainAppWebResponseContext->datasyncId)
+        {
+            $datasyncId = $response->data->responseContext->mainAppWebResponseContext->datasyncId;
+        }
+        
         $info =
             [
+                "datasyncId" => $datasyncId,
                 "googleAccount" => self::getGoogAccInfo($response),
                 "activeChannel" => self::getActiveChannel($response),
                 "channelPicker" => self::getChannels($response)
