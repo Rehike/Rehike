@@ -49,7 +49,9 @@ function generateVflMapping(buildTask)
         .createHash("md5")
         .update(fileContents)
         .digest("base64")
-        .substring(0, 6);
+        .substring(0, 6)
+        .replace(/\+/g, "-")
+        .replace(/\//g, "_");
         
     let origPath = buildTask.outputFileName;
         
