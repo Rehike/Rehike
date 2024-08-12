@@ -164,11 +164,33 @@ rehike.util.scrollLock.disable = function()
 rehike.util.events = {};
 
 /**
+ * Wraps an event for easy unregistration.
+ * 
+ * @constructor
+ */
+rehike.util.events.EventWrapper = function(target, name, cb)
+{
+    this.target = target;
+    this.name = name;
+    this.cb = cb;
+};
+
+/**
+ * Removes this event listener.
+ */
+rehike.util.events.EventWrapper.prototype.remove = function()
+{
+    rehike.util.events.remove(this.target, this.name, this.cb);
+};
+
+/**
  * Add an event listener.
  * 
  * @param {Element} target 
  * @param {string} name 
  * @param {function(Event)} cb 
+ * 
+ * @return {rehike.util.events.EventWrapper}
  */
 rehike.util.events.add = function(target, name, cb)
 {
@@ -180,6 +202,8 @@ rehike.util.events.add = function(target, name, cb)
     {
         target.attachEvent("on" + name, cb);
     }
+    
+    return new rehike.util.events.EventWrapper(target, name, cb);
 };
 
 /**
