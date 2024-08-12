@@ -38,9 +38,9 @@
 
 # Decryption unavailable messages:
 decryptionUnavailable: >
-    Erro de rehike: Falha ao encontrar o algoritmo de desencriptação.
+    Erro do rehike: Falha ao encontrar o algoritmo de desencriptação.
 decryptionUnavailableFooter: >
-    Por favor, comunique este erro aos programadores do Rehike. Entretanto, pode utilizar o %s.
+    Por favor, comunique este erro aos desenvolvedores do Rehike. Entretanto, pode utilizar o %s.
 decryptionUnavailableLink: "Player atual"
 
 # Looping wasn't supported in this player revision, so we had to add a custom
