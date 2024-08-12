@@ -102,6 +102,10 @@ props:
       title: "Ativar o ad-blocker incluso"
       subtitle: >
         Providência um ad-blocker estável pro player.
+    showNewInfoOnChannelAboutPage:
+      title: "Mostrar fragmentos de informações recentemente adicionados na página \"Sobre\" do canal"
+      subtitle: >
+        Mostra os pronomes do canal e a contagem de vídeos na página sobre o canal.
   
   experiments:
     displayPlayerChoice:

@@ -17,6 +17,7 @@ errorNotice: "Nota"
 errorDeprecated: "Obsoleto"
 
 tabErrorTitle: "Erros (%s)"
+tabLogTitle: "Logs"
 tabConsoleTitle: "PHP console"
 tabNetworkTitle: "Network"
 tabPerformanceTitle: "Performance"
