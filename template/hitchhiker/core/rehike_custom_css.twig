@@ -42,6 +42,13 @@
         margin-bottom: 6px;
     }
 </style>
+{%- if yt.masthead.ponyEasterEgg -%}
+    <style id="rh-ponies-style">
+        {% from "rehike/egg/ponies_css_rules.twig" import render as ponies_css_rules %}
+        {{ ponies_css_rules(yt.masthead.ponyEasterEgg) }}
+    </style>
+    <script type="text/javascript" src="{{ rehike.resource.resolveVersioned("rehike/js/www-ponies.js") }}"></script>
+{%- endif -%}
 {%- if rehike.config.appearance.cssFixes -%}
 <style id="hh-css-fix">
     #watch-description-text {

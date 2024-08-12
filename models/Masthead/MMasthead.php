@@ -12,7 +12,9 @@ use Rehike\Model\Masthead\{
     CreationMenu\MCreationMenu,
     Notifications\MNotificationButton,
     UploadButton\MUploadButton,
-    UploadButton\MUploadIconButton
+    UploadButton\MUploadIconButton,
+    Pony\PonyEasterEggManager,
+    Pony\Pony,
 };
 
 class MMasthead
@@ -48,6 +50,11 @@ class MMasthead
      */
     public string $doodleImageUrl = "";
 
+    /**
+     * Used for the My Little Pony search results easter egg.
+     */
+    public ?Pony $ponyEasterEgg;
+    
     public function __construct($appbarEnabled)
     {
         $i18n = i18n::getNamespace("masthead");
@@ -109,5 +116,11 @@ class MMasthead
     public function setSearchQuery(string $query): void
     {
         $this->searchbox->setSearchQuery($query);
+        
+        $pony = PonyEasterEggManager::getPonyForSearchQuery($query);
+        if (!is_null($pony))
+        {
+            $this->ponyEasterEgg = $pony;
+        }
     }
 }

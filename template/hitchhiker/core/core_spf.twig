@@ -79,6 +79,7 @@
             {{ core.js('www-core/www-core') }}
         {% endif %}
         {%- block foot_scripts -%}{%- endblock -%}
+        {% include 'rehike/egg/ponies_spf_fragment.twig' %}
         {% include 'core/yt_global_js_config.twig' %}
     {%- endapply -%},
     "title": {% apply spaceless|json_encode|raw %}

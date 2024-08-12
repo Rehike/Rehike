@@ -1,0 +1,19 @@
+{% if yt.masthead.ponyEasterEgg %}
+    {#
+        We need to import the ponies client-side manager in order to remove
+        the previous setting (probably static).
+    #}
+    <script type="text/javascript" src="{{ rehike.resource.resolveVersioned("rehike/js/www-ponies.js") }}"></script>
+    <script>
+    {#
+        The client-side manager should always load instantly during SPF navigation,
+        so we'll just assume it's there instead of waiting for it.
+    #}
+    if (window.rehike && window.rehike.ponies && window.rehike.ponies.setPonyRules)
+    {
+        {# The following variable is passed through json_encode to escape the string for JS. #}
+        {% from "rehike/egg/ponies_css_rules.twig" import render as ponies_css_rules %}
+        rehike.ponies.setPonyRules({{ ponies_css_rules(yt.masthead.ponyEasterEgg)|json_encode|raw }});
+    }
+    </script>
+{% endif %}

@@ -1,0 +1,5 @@
+JS_BUILD_FILES = [
+    "ponies.js"
+]
+
+JS_OUTPUT_BUNDLE = "static/rehike/js/www-ponies.js"
