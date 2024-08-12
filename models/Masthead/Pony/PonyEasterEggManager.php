@@ -35,19 +35,19 @@ class PonyEasterEggManager
             strpos($query, "eg") !== false ||
             strpos($query, "pony") !== false;
         
-        // Pony match mode (bitmask)
-        $PMM_CONTAINS           = 0b0000;
-        $PMM_DIRECTLY_RELATED   = 0b0001;
-        $PMM_SEARCH_FOR_KEYWORD = 0b0010;
+        // Pony match flags (bitmask)
+        $PMF_CONTAINS           = 0b0000;
+        $PMF_DIRECTLY_RELATED   = 0b0001;
+        $PMF_SEARCH_FOR_KEYWORD = 0b0010;
         
         // Match helper function:
-        $hasPony = function(string $name, int $mode = /* $PMM_CONTAINS */ 0, mixed $modeSpecificInfo = null)
-                use ($query, $isDirectlyMlpRelated, $PMM_CONTAINS, $PMM_DIRECTLY_RELATED, 
-                     $PMM_SEARCH_FOR_KEYWORD): bool
+        $hasPony = function(string $name, int $flags = /* $PMF_CONTAINS */ 0, mixed $modeSpecificInfo = null)
+                use ($query, $isDirectlyMlpRelated, $PMF_CONTAINS, $PMF_DIRECTLY_RELATED, 
+                     $PMF_SEARCH_FOR_KEYWORD): bool
         {
             $searchForKeywordSucceeded = false;
             
-            if ($mode & $PMM_SEARCH_FOR_KEYWORD)
+            if ($flags & $PMF_SEARCH_FOR_KEYWORD)
             {
                 // $modeSpecificInfo will be a comma-delinated string of keywords
                 // to search for.
@@ -67,9 +67,9 @@ class PonyEasterEggManager
             }
             
             if (
-                ($mode == $PMM_CONTAINS) ||
-                ($mode & $PMM_DIRECTLY_RELATED && $isDirectlyMlpRelated) ||
-                ($mode & $PMM_SEARCH_FOR_KEYWORD && $searchForKeywordSucceeded)
+                ($flags == $PMF_CONTAINS) ||
+                ($flags & $PMF_DIRECTLY_RELATED && $isDirectlyMlpRelated) ||
+                ($flags & $PMF_SEARCH_FOR_KEYWORD && $searchForKeywordSucceeded)
             )
             {
                 return strpos($query, $name) !== false;
@@ -84,7 +84,7 @@ class PonyEasterEggManager
         {
             $hasPony("twilight sparkle") => new Pony(Pony::TWILIGHT_SPARKLE),
             // variant
-            $hasPony("twilight", $PMM_DIRECTLY_RELATED) => new Pony(Pony::TWILIGHT_SPARKLE),
+            $hasPony("twilight", $PMF_DIRECTLY_RELATED) => new Pony(Pony::TWILIGHT_SPARKLE),
             $hasPony("pinkie pie") => new Pony(Pony::PINKIE_PIE),
             $hasPony("applejack") => new Pony(Pony::APPLEJACK),
             // variant
@@ -98,19 +98,19 @@ class PonyEasterEggManager
             // variant name
             $hasPony("ditzy doo") => new Pony(Pony::DERPY),
             // variant name
-            $hasPony("muffins", $PMM_DIRECTLY_RELATED) => new Pony(Pony::DERPY),
+            $hasPony("muffins", $PMF_DIRECTLY_RELATED) => new Pony(Pony::DERPY),
             
             $hasPony("princess celestia") => new Pony(Pony::CELESTIA),
             // variant
-            $hasPony("celestia", $PMM_DIRECTLY_RELATED) => new Pony(Pony::CELESTIA),
+            $hasPony("celestia", $PMF_DIRECTLY_RELATED) => new Pony(Pony::CELESTIA),
             $hasPony("princess luna") => new Pony(Pony::LUNA),
-            $hasPony("luna", $PMM_DIRECTLY_RELATED) => new Pony(Pony::LUNA),
+            $hasPony("luna", $PMF_DIRECTLY_RELATED) => new Pony(Pony::LUNA),
             $hasPony("princess cadance") => new Pony(Pony::CADANCE),
             // common misspelling
             $hasPony("princess cadence") => new Pony(Pony::CADANCE),
-            $hasPony("cadance", $PMM_DIRECTLY_RELATED) => new Pony(Pony::CADANCE),
+            $hasPony("cadance", $PMF_DIRECTLY_RELATED) => new Pony(Pony::CADANCE),
             // common misspelling
-            $hasPony("cadence", $PMM_DIRECTLY_RELATED) => new Pony(Pony::CADANCE),
+            $hasPony("cadence", $PMF_DIRECTLY_RELATED) => new Pony(Pony::CADANCE),
             $hasPony("shining armor") => new Pony(Pony::SHINING_ARMOR),
             // possibly common british misspelling of proper name
             $hasPony("shining armour") => new Pony(Pony::SHINING_ARMOR),
@@ -125,7 +125,7 @@ class PonyEasterEggManager
             $hasPony("big macintosh") => new Pony(Pony::BIG_MCINTOSH),
             // revised variant
             $hasPony("big mcintosh") => new Pony(Pony::BIG_MCINTOSH),
-            $hasPony("big mac", $PMM_DIRECTLY_RELATED) => new Pony(Pony::BIG_MCINTOSH),
+            $hasPony("big mac", $PMF_DIRECTLY_RELATED) => new Pony(Pony::BIG_MCINTOSH),
             
             $hasPony("babs seed") => new Pony(Pony::BABS_SEED),
             
@@ -139,7 +139,7 @@ class PonyEasterEggManager
              * 
              * (btw discord is very dubiously a pony lol)
              */
-            $hasPony("discord", $PMM_DIRECTLY_RELATED) => new Pony(Pony::DISCORD),
+            $hasPony("discord", $PMF_DIRECTLY_RELATED) => new Pony(Pony::DISCORD),
             
             $hasPony("king sombra") => new Pony(Pony::SOMBRA),
             $hasPony("queen chrysalis") => new Pony(Pony::CHRYSALIS),
@@ -157,7 +157,7 @@ class PonyEasterEggManager
              * it doesn't result in focused results, particularly because it can
              * also refer commonly to Spike, the dog from Tom and Jerry.
              */
-            $hasPony("spike", $PMM_DIRECTLY_RELATED | $PMM_SEARCH_FOR_KEYWORD, [
+            $hasPony("spike", $PMF_DIRECTLY_RELATED | $PMF_SEARCH_FOR_KEYWORD, [
                 "keywords" => "dragon"
             ]) => new Pony(Pony::SPIKE),
             
@@ -170,9 +170,9 @@ class PonyEasterEggManager
             
             // Also captures full name "Lyra Heartstrings"
             $hasPony("lyra") => new Pony(Pony::LYRA),
-            $hasPony("bonbon", $PMM_DIRECTLY_RELATED) => new Pony(Pony::BONBON),
+            $hasPony("bonbon", $PMF_DIRECTLY_RELATED) => new Pony(Pony::BONBON),
             // variant
-            $hasPony("bon bon", $PMM_DIRECTLY_RELATED) => new Pony(Pony::BONBON),
+            $hasPony("bon bon", $PMF_DIRECTLY_RELATED) => new Pony(Pony::BONBON),
             // variant name
             $hasPony("sweetie drops") => new Pony(Pony::BONBON),
             
@@ -188,7 +188,7 @@ class PonyEasterEggManager
              */
             $hasPony("octavia melody") => new Pony(Pony::OCTAVIA),
             // variant
-            $hasPony("octavia", $PMM_DIRECTLY_RELATED) => new Pony(Pony::OCTAVIA),
+            $hasPony("octavia", $PMF_DIRECTLY_RELATED) => new Pony(Pony::OCTAVIA),
             
             // Dr Hooves has 6 different spelling variations:
             $hasPony("dr. hooves") => new Pony(Pony::DR_HOOVES),
@@ -208,7 +208,7 @@ class PonyEasterEggManager
             
             $hasPony("starlight glimmer") => new Pony(Pony::STARLIGHT),
             // variant
-            $hasPony("starlight", $PMM_DIRECTLY_RELATED) => new Pony(Pony::STARLIGHT),
+            $hasPony("starlight", $PMF_DIRECTLY_RELATED) => new Pony(Pony::STARLIGHT),
             
             default => null
         };

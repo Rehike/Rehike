@@ -62,9 +62,7 @@ rehike.ponies.setPonyRules = function(rules)
 rehike.ponies.removePonies_ = function()
 {
     var a;
-    
-    // Initial style uses a different ID to avoid multiple elements sharing the
-    // same ID in the event of a mistake.
+
     if (a = document.getElementById(module.CSS_TARGET_ID))
     {
         a.parentNode.removeChild(a);
