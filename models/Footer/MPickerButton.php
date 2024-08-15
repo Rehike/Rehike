@@ -6,7 +6,7 @@ use Rehike\Model\Common\MButton;
 
 abstract class MPickerButton extends MButton
 {
-    public $hasArrow = true;
+    public bool $hasArrow = true;
     
     /**
      * Gets a formatted text label for the frontend.

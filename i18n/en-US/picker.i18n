@@ -2,3 +2,17 @@ languageTitle: "Choose your language"
 languageSubtitle: >
   This changes the language of the site. It won't change any text entered 
   by users.
+
+countryTitle: "Choose your content location"
+countrySubtitle: >
+  This changes the videos and channels shown to you. It won't change the
+  language of the site.
+
+safetyModeTitle: "Restricted Mode"
+safetyModeSubtitle: >
+  Restricted Mode hides videos that may contain inappropriate content flagged
+  by users and other signals. No filter is 100% accurate, but it should help
+  you avoid most inappropriate content.
+safetyModeSubtitle2: "Your Restricted Mode setting will apply to this browser only."
+safetyModeLockSectionTemplate: "You can lock Restricted Mode after you %s"
+safetyModeLockSectionSignIn: "sign in"

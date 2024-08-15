@@ -37,9 +37,9 @@ class MFooter
 
         $this->logoTooltip = $i18n->get("logoTooltip");
         
-        // $this->pickers[] = new MPickerLanguageButton();
-        // $this->pickers[] = new MPickerCountryButton();
-        // $this->pickers[] = new MPickerSafetyButton();
+        $this->pickers[] = new MPickerLanguageButton();
+        $this->pickers[] = new MPickerCountryButton();
+        $this->pickers[] = new MPickerSafetyButton();
 
         $this->primaryLinks[] = new MFooterLink(
             $i18n->get("primaryAbout"),

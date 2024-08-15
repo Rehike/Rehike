@@ -121,6 +121,7 @@ Router::post([
     "/related_ajax" => "ajax/related",
     "/playlist_video_ajax" => "ajax/playlist_video",
     "/playlist_ajax" => "ajax/playlist",
+    "/picker_ajax" => "ajax/picker",
     "/subscription_ajax" => "ajax/subscription",
     "/service_ajax" => "ajax/service",
     "/comment_service_ajax" => "ajax/comment_service",

@@ -196,10 +196,12 @@ function getDecryptorForPlayerSig(playerScript)
  */
 function getDecryptorForPlayerN(playerScript)
 {
-    var DEBUG = false;
+    var DEBUG = true;
 
     if (DEBUG)
         console.log("[NDecode] Using player script:", playerScript);
+    
+    var JS_VAR_REGEX = "([a-zA-Z0-9_$]*?)";
     
     /**
      * Identifies the referencing function of the "n" variable.
@@ -374,6 +376,39 @@ function getDecryptorForPlayerN(playerScript)
                 
                 return TACTIC_STATUS.FOUND;
             }
+        },
+        {
+            name: "direct access",
+            fn: function tacticDirectAccess()
+            {
+                // In this case, we check to see if the N value is directly accessed in the
+                // calling function. This is the case in d2e656ee from early 2024/08.
+                
+                var v = JS_VAR_REGEX;
+                
+                // b=xxx[0](b),x.set("n",b)
+                var DIRECT_ACCESS_PATTERN =
+                    "(" + v + ")" + "\\s*\\=\\s*" + v + "\\s*\\[([0-9]+)?\\]\\s*\\(\\1\\),\\s*" + v +
+                    "\\.set\\(\\\"n\\\",\\s*\\1\\)";
+                
+                // var matches = playerScript.slice(N_REFERENCING_FUNCTION_PATTERN)
+                //     .match(DIRECT_ACCESS_PATTERN);
+                    
+                // if (!matches)
+                // {
+                //     return TACTIC_STATUS.MISS;
+                // }
+                
+                baseCallPattern = DIRECT_ACCESS_PATTERN;
+                
+                // If we succeeded, then we already know the declaration variable as it's
+                // included in the regex. There isn't much work that we need to do from here
+                // other than shifting the script so we parse for the declaration variable
+                // again to find it the general way.
+                
+                baseCallIndexText = playerScript.slice(nReferencingFunctionLocation);
+                baseCallIndex = nReferencingFunctionLocation;
+            }
         }
     ];
 
@@ -518,48 +553,53 @@ function getDecryptorForPlayerN(playerScript)
     nextVariableDef = patternSearch.search("=");
     patternSearch = patternSearch.slice(0, nextVariableDef).slice(4);
     
-    var endPattern = 'return ' + patternSearch + '.join("")};';
-    
-    // This alternative style may be used in some cases:
-    var endPattern2 = 'return Array.prototype.join.call(' + patternSearch + ',"")};';
-    var bAlreadySplit = false;
-    
     if (DEBUG)
     {
         console.log("[NDecode] nextVariableDef ==", nextVariableDef);
         console.log("[NDecode] patternSearch ==", patternSearch);
-        console.log("[NDecode] endPattern ==", endPattern);
-        console.log("[NDecode] endPattern2 ==", endPattern2);
     }
     
-    if (!bAlreadySplit) try
-    {
-        obfuscatorFnText = obfuscatorFnText.split(endPattern2)[0] + endPattern2;
-        bAlreadySplit = true;
-    }
-    catch (e)
-    {
-        bAlreadySplit = false;
-    }
+    var openParenthesesCount = 0;
+    var lastQuoteCharacter = "";
+    var isInQuote = false;
+    var parsedFirstParenthesisAlready = false;
     
-    // Make sure that our content isn't too long. We cap to 8000 characters before trying to
-    // split by the other end pattern. The size for the player URL I've been testing with
-    // https://www.youtube.com/s/player/da154528/player_ias.vflset/en_US/base.js
-    // is 5438. If we overflow, then we read upwards of 2 million characters.
-    // I think this maximum works just fine.
-    if (obfuscatorFnText.length > 8000)
+    for (var i = 0, j = obfuscatorFnText.length; i < j; i++)
     {
-        bAlreadySplit = false;
-    }
-    
-    if (!bAlreadySplit) try
-    {
-        obfuscatorFnText = obfuscatorFnText.split(endPattern)[0] + endPattern;
-        bAlreadySplit = true;
-    }
-    catch (e)
-    {
-        bAlreadySplit = false;
+        switch (obfuscatorFnText[i])
+        {
+            case "`":
+            case "'":
+            case "\"":
+                isInQuote = !isInQuote;
+                lastQuoteCharacter = obfuscatorFnText[i];
+                break;
+                
+            case "{":
+                openParenthesesCount++;
+                parsedFirstParenthesisAlready = true;
+                break;
+            
+            case "}":
+                openParenthesesCount--;
+                break;
+        }
+        
+        if (parsedFirstParenthesisAlready && openParenthesesCount == 0)
+        {
+            // Split the text here and break
+            obfuscatorFnText = obfuscatorFnText.substring(0, i + 2);
+            
+            // Ensure that the string ends in the sequence "};"
+            if (obfuscatorFnText.substring(i, i + 2) != "};")
+            {
+                result.reason = "Failed to properly decode end of obfuscator function text.";
+                console.log("[Rehike.NDecode] " + result.reason);
+                return result;
+            }
+            
+            break;
+        }
     }
 
     if (DEBUG)

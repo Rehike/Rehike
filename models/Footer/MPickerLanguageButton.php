@@ -6,10 +6,10 @@ use Rehike\Model\Common\MButton;
 
 class MPickerLanguageButton extends MPickerButton
 {
-    public $targetId = "yt-picker-language-button";
-    public $pickerTarget = "yt-picker-language-footer";
+    public string $targetId = "yt-picker-language-button";
+    public string $pickerTarget = "yt-picker-language-footer";
     public $icon;
-    public $hasArrow = true;
+    public bool $hasArrow = true;
     
     public function __construct()
     {

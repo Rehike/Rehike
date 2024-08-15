@@ -3,16 +3,19 @@
  #}
 
 {% macro render(data) %}
-    {{ _self.render_header(data.header) }}
+    {{ _self.render_header(data.header, data) }}
     {{ _self.render_content(data) }}
 {% endmacro %}
 
-{% macro render_header(data) %}
+{% macro render_header(data, rootData) %}
     <div class="yt-picker-header">
         <button class="yt-close yt-uix-close" data-close-parent-class="yt-picker" data-close-focus-target-id="{{ data.closeButtonTargetId }}">
             <span data-tooltip-text="{{ yt.msgs.close }}" class="yt-close-img yt-uix-tooltip yt-sprite" aria-label="{{ yt.msgs.close }}"></span>
         </button>
         <h3 class="yt">{{ rehike.getText(data.titleText) }}</h3>
+        {% if rootData.safetyModeDescription %}
+            {{ _self.render_safety_mode_description(rootData) }}
+        {% endif %}
         {% if data.notesText %}
         <p class="yt-notes">{{ rehike.getText(data.notesText) }}</p>
         {% endif %}
@@ -21,14 +24,22 @@
 
 {% macro render_content(data) %}
     <div class="yt-picker-content">
-        <form action="{{ data.formAction }}" method="{{ data.formMethod }}">
-            <input type="hidden" name="base_url" value="/">
-            <input type="hidden" name="session_token" value="{{ data.sessionToken }}">
-            {% for section in data.sections %}
-                {{ _self.render_section(section) }}
-            {% endfor %}
-        </form>
+        {% if data.pickerType == "LOCALE" %}
+            {{ _self.render_locale_form(data) }}
+        {% elseif data.pickerType == "SAFETY_MODE" %}
+            {{ _self.render_safety_mode_form(data) }}
+        {% endif %}
     </div>
+{% endmacro %}
+
+{% macro render_locale_form(data) %}
+    <form action="{{ data.formAction }}" method="{{ data.formMethod }}">
+        <input type="hidden" name="base_url" value="{{ data.baseUrl }}">
+        <input type="hidden" name="session_token" value="{{ data.sessionToken }}">
+        {% for section in data.sections %}
+            {{ _self.render_section(section) }}
+        {% endfor %}
+    </form>
 {% endmacro %}
 
 {% macro render_section(data) %}
@@ -55,4 +66,64 @@
         {{ rehike.getText(data.title) }}
     </strong>
     {% endif %}
+{% endmacro %}
+
+{% macro render_safety_mode_description(rootData) %}
+    <div id="safety-mode-description" class="yt-default">
+        <ul class="yt-notes">
+            {% for subtitle in rootData.safetyModeDescription %}
+                <li>{{ subtitle }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endmacro %}
+
+{% macro render_safety_mode_form(data) %}
+    <form id="safety-form" action="/set_safety_mode" method="post">
+        <p>
+            <label>
+                {{ _self.render_safety_mode_form_input(data.onButton) }}
+            </label>
+            <label>
+                {{ _self.render_safety_mode_form_input(data.offButton) }}
+            </label>
+        </p>
+    </form>
+    <div id="safety-mode-lock-section" class="hid">
+        {#
+            This text is only supposed to display when logged out, but I have yet
+            to look into the correct behaviour when signed in.
+        
+            By the way, we really need a macro for this pattern, since it's just
+            copied between a bunch of different template files. 
+         #}
+        <p>
+        {% if data.lockedSectionText.runs %}
+            {% for run in data.lockedSectionText.runs %}
+                {% if run.navigationEndpoint %}
+                {% set href = rehike.getUrl(run) %}
+                    <a href="{{ href }}">
+                {% endif %}
+                        {{ run.text }}
+                {% if run.navigationEndpoint %}
+                    </a>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+        </p>
+    </div>
+    <p class="safety-submit">
+        <input type="hidden" name="next_url" value="{{ data.baseUrl }}">
+        <input type="hidden" name="session_token" value="">
+        {% from "common/uix/button.twig" import render as button %}
+        {{ button(data.saveButton) }}
+    </p>
+{% endmacro %}
+
+{% macro render_safety_mode_form_input(data) %}
+    <input id="safety-mode-{{ data.inputId }}" name="safety_mode" type="radio" value="{{ data.inputValue }}"
+        onchange="yt.style.{{ data.inputId == 'on' ? 'show' : 'hide' }}('safety-mode-lock-section')"
+        onpropertychange="yt.style.{{ data.inputId == 'on' ? 'show' : 'hide' }}('safety-mode-lock-section')"
+        {{ data.selected ? 'checked=""' }}
+    >{{ data.text }}</input>
 {% endmacro %}

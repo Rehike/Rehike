@@ -14,14 +14,18 @@ use Rehike\Util\ParsingUtils;
  */
 class LocalePickerModel extends PickerModel
 {
+    public string $pickerType = "LOCALE";
+    
     public const TYPE_LANGUAGE = 0;
     public const TYPE_COUNTRY = 1;
     
     private int $type = 0;
     private MPickerSection $section;
     
-    public function __construct(int $type, object $data)
+    public function __construct(int $type, object $data, string $baseUrl)
     {
+        parent::__construct($baseUrl);
+        
         $i18n = i18n::getNamespace("picker");
         
         $this->type = $type;
@@ -36,7 +40,10 @@ class LocalePickerModel extends PickerModel
         }
         else if ($type == self::TYPE_COUNTRY)
         {
-            
+            $this->header->titleText = $i18n->get("countryTitle");
+            $this->header->notesText = $i18n->get("countrySubtitle");
+            $this->header->closeButtonTargetId = "yt-picker-country-button";
+            $this->formAction = "/picker_ajax?action_update_country=1";
         }
         
         $this->section = new MPickerSection();
@@ -102,7 +109,12 @@ class LocalePickerModel extends PickerModel
         }
         else if ($this->type == self::TYPE_COUNTRY)
         {
-            
+            try
+            {
+                $id = @$data->serviceEndpoint->signalServiceEndpoint->actions[0]
+                    ->selectCountryCommand->gl;
+            }
+            catch (\Throwable $e) {}
         }
         
         $result->title = ParsingUtils::getText($data->title);

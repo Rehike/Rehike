@@ -7,10 +7,10 @@ use Rehike\Model\Common\MButton;
 
 class MPickerCountryButton extends MPickerButton
 {
-    public $targetId = "yt-picker-country-button";
-    public $pickerTarget = "yt-picker-country-footer";
+    public string $targetId = "yt-picker-country-button";
+    public string $pickerTarget = "yt-picker-country-footer";
     public $icon;
-    public $hasArrow = true;
+    public bool $hasArrow = true;
     
     public function __construct()
     {

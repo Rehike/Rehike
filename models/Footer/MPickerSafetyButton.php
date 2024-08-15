@@ -6,10 +6,10 @@ use Rehike\Model\Common\MButton;
 
 class MPickerSafetyButton extends MPickerButton
 {
-    public $targetId = "yt-picker-safetymode-button";
-    public $pickerTarget = "yt-picker-safetymode-footer";
+    public string $targetId = "yt-picker-safetymode-button";
+    public string $pickerTarget = "yt-picker-safetymode-footer";
     public $icon;
-    public $hasArrow = true;
+    public bool $hasArrow = true;
     
     public function __construct()
     {
