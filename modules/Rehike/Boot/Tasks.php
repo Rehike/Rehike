@@ -16,10 +16,12 @@ use Rehike\{
     TemplateUtilsDelegate\RehikeUtilsDelegate,
     ResourceConstantsStore,
     ConfigManager\Config,
+    ConfigManager\LoadConfigException,
     Util\Nameserver\Nameserver,
     Util\Base64Url,
     i18n\BootServices as i18nBoot,
     i18n\i18n,
+    ErrorHandler\ErrorHandler,
     InnertubeContext
 };
 
@@ -48,7 +50,24 @@ final class Tasks
         Config::registerConfigDefinitions(
             ConfigDefinitions::getConfigDefinitions()
         );
-        Config::loadConfig();
+        
+        try
+        {
+            Config::loadConfig();
+        }
+        catch (LoadConfigException $e)
+        {
+            $reason = $e->getReason();
+            
+            if ($reason == LoadConfigException::REASON_COULD_NOT_OPEN_FILE_HANDLE)
+            {
+                // macOS and Linux may have default permissions on the htdocs
+                // folder which don't permit the PHP script to write files. In
+                // this case, we have no choice other than to display an error
+                // message to the user telling them to change their permissions.
+                ErrorHandler::reportFailedToWriteConfig();
+            }
+        }
 
         // Apply early configuration properties for other modules:
         if (Config::getConfigProp("advanced.developer.ignoreUnresolvedPromises"))

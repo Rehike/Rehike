@@ -112,6 +112,14 @@ class FileSystem
         // Use fopen to write the file
         $fh = @\fopen($path, $fopenMode);
         
+        if ($fh === false)
+        {
+            // Issue #598: The lack of error checking at this point caused the
+            // PHP interpreter itself to throw a TypeError when the next call
+            // happened with a null file handle.
+            throw new FsWriteFileException("Failed to open file for writing.");
+        }
+        
         $status = @\fwrite($fh, $contents);
 
         // Validate

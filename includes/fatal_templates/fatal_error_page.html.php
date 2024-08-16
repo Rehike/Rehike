@@ -2,6 +2,7 @@
     namespace Rehike\ErrorHandler\FatalErrorTemplate;
 
     use Rehike\ErrorHandler\ErrorHandler;
+    use Rehike\ErrorHandler\ErrorPage\FailedToWriteConfigPage;
     use Rehike\ErrorHandler\ErrorPage\UncaughtExceptionPage;
     use Rehike\ErrorHandler\ErrorPage\InnertubeFailedRequestPage;
     use Rehike\ErrorHandler\ErrorPage\FatalErrorPage;
@@ -36,8 +37,14 @@
                 <h1><?= $page->getTitle() ?></h1>
             </div>
             <p>
+                <?php if ($page instanceof FailedToWriteConfigPage): ?>
+                We failed to write the configuration. This is probably due to insufficient permissions.
+                On macOS and Linux, please try running <code>chmod -R +rw /path/to/htdocs</code> and try
+                again.
+                <?php else: ?>
                 A fatal error has occurred and Rehike cannot continue. Sorry for the inconvenience.
-                <?php if (true == GH_ENABLED): ?>
+                <?php endif ?>
+                <?php if (true == GH_ENABLED && $page->shouldDisplayIssueTrackerLink()): ?>
                     <div class="github-link">
                         <a href="//github.com/<?= GH_REPO ?>/issues/new">
                             Please submit an issue to the GitHub repository, including the crash log.
@@ -125,6 +132,7 @@
                         </li>
                     </ul>
                 <?php endif ?>
+                <?php if ($page->shouldDisplayMessageLogs()): ?>
                 <div>
                     <h3 class="section-header">
                         Message logs
@@ -137,6 +145,7 @@
                         <?php endforeach ?>
                     </ul>
                 </div>
+                <?php endif ?>
             </p>
         </div>
     </body>

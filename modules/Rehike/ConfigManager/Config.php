@@ -7,7 +7,10 @@ use Rehike\ConfigManager\Properties\{
     DependentProp,
     PropGroup
 };
+
+use Rehike\Exception\FileSystem\FsWriteFileException;
 use Rehike\FileSystem;
+
 use YukisCoffee\PropertyAtPath;
 
 /**
@@ -48,14 +51,7 @@ class Config
      */
     protected static function dump(string $file, string $cfg): void
     {
-        try
-        {
-            FileSystem::writeFile($file, $cfg, false);
-        }
-        catch (\Throwable $e)
-        {
-            throw DumpFileException::from($e);
-        }
+        FileSystem::writeFile($file, $cfg, false);
     }
 
     /**
@@ -275,7 +271,21 @@ class Config
     {
         if (!FileSystem::fileExists(self::$file))
         {
-            static::dumpDefaultConfig();
+            try
+            {
+                static::dumpDefaultConfig();
+            }
+            catch (FsWriteFileException $e)
+            {
+                // In this case, we can't write the config (probably because FS
+                // permissions are too restrictive), so we'll inform the caller
+                // of this problem to display a GUI error message.
+                throw new LoadConfigException(
+                    LoadConfigException::REASON_COULD_NOT_OPEN_FILE_HANDLE,
+                    "Could not open file handle",
+                    $e
+                );
+            }
         }
 
         self::_loadConfig();
@@ -324,7 +334,12 @@ class Config
         // This is because PHP does not throw an exception if
         // json_decode fails.
         if (!is_object($object))
-            throw new LoadConfigException("Failed to parse config file \"{$file}\"");
+        {
+            throw new LoadConfigException(
+                LoadConfigException::REASON_PARSE_FAILURE,
+                "Failed to parse config file \"{$file}\""
+            );
+        }
 
         // Else, set the active config used to this.
         static::$config = $object;
