@@ -1,10 +1,10 @@
 {
-	"previousHash": "0e5bbaec6bf337bf0a95a2d88688bd4dec285442",
-	"currentRevisionId": 1611,
-	"subject": "Fix guide model to account for new Cairo icons",
-	"body": "Fix guide model to account for new Cairo icons",
+	"previousHash": "5ee4e351b4d45cd89126cad34a006724356fb128",
+	"currentRevisionId": 1612,
+	"subject": "Fix crash on guide converter failure",
+	"body": "Fix crash on guide converter failure",
 	"branch": "master",
 	"committerName": "Isabella",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1723851290
+	"time": 1723851916
 }

@@ -838,8 +838,11 @@ class Converter
     /**
      * Sets the icon of a guide item.
      */
-    public static function setIcon(object $itemRoot, string $icon): object
+    public static function setIcon(?object $itemRoot, string $icon): ?object
     {
+        if (is_null($itemRoot))
+            return null;
+        
         $item = $itemRoot->guideEntryRenderer ?? $itemRoot;
         
         if ("SYSTEM::" == substr($icon, 0, 8))
