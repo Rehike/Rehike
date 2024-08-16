@@ -38,7 +38,7 @@
 
 # Decryption unavailable messages:
 decryptionUnavailable: >
-    Erro do rehike: Falha ao encontrar o algoritmo de desencriptação.
+    Erro do Rehike: Falha ao encontrar o algoritmo de desencriptação.
 decryptionUnavailableFooter: >
     Por favor, comunique este erro aos desenvolvedores do Rehike. Entretanto, pode utilizar o %s.
 decryptionUnavailableLink: "Player atual"
