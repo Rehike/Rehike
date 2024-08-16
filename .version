@@ -1,10 +1,10 @@
 {
-	"previousHash": "8dc34443c1c78f32eede20d43e59b0df33e49c1c",
-	"currentRevisionId": 1608,
-	"subject": "Pretty up error handling for config permissions errors",
-	"body": "Pretty up error handling for config permissions errors",
+	"previousHash": "e9c7c505ab9f32c8f2eb711878347e126c29b034",
+	"currentRevisionId": 1610,
+	"subject": "Remove temporary emergency player workaround (b7c21e5)",
+	"body": "Remove temporary emergency player workaround (b7c21e5)",
 	"branch": "master",
 	"committerName": "Isabella",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1723820538
+	"time": 1723846100
 }

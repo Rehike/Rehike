@@ -103,12 +103,6 @@ class ConfigDefinitions
                     if (function_exists("opcache_reset"))
                         opcache_reset();
                 }),
-                "temp20240806_playerMode" => new EnumProp("PICK_RANDOM", [
-                    "PICK_RANDOM",
-                    "USE_WEB_V2",
-                    "USE_EMBEDDED_PLAYER_REQUEST",
-                    "USE_EMBEDDED_PLAYER_DIRECTLY",
-                ]),
             ],
             "advanced" => [
                 "enableDebugger" => new BoolProp(false),

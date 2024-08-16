@@ -114,14 +114,6 @@ class WatchModel
                     }
                 }
             }
-            
-            if (in_array(Config::getConfigProp("experiments.temp20240806_playerMode"), [
-                "USE_EMBEDDED_PLAYER_DIRECTLY",
-                "USE_EMBEDDED_PLAYER_REQUEST"
-            ]))
-            {
-                unset($yt->playerUnavailable);
-            }
 
             if (isset($_COOKIE["PREF"]))
             {

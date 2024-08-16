@@ -13,8 +13,6 @@ class MMetadataRowContainer
 
     public function __construct(&$rows, $dataHost)
     {
-        $this->items[] = self::createSimpleField("Rehike player experiment status", \Rehike\ConfigManager\Config::getConfigProp("experiments.temp20240806_playerMode"));
-        
         $i18n = i18n::getNamespace("watch");
         
         // Configuration
