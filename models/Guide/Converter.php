@@ -126,14 +126,10 @@ class Converter
 
         $mainSection = $data->items[0]->guideSectionRenderer->items;
 
-        $homeItem = self::getItemByIcon($mainSection, "WHAT_TO_WATCH");
-        $subscriptionsItem = self::getItemByIcon($mainSection, "SUBSCRIPTIONS");
-        
-        // Correct icon type for subscriptions icon
-        if (null != $subscriptionsItem)
-        {
-            $subscriptionsItem->guideEntryRenderer->icon->iconType = "MY_SUBSCRIPTIONS";
-        }
+        $homeItem = self::getItemByIcon($mainSection, InnertubeIcons::WHAT_TO_WATCH);
+        self::setIcon($homeItem, "SYSTEM::WHAT_TO_WATCH");
+        $subscriptionsItem = self::getItemByIcon($mainSection, InnertubeIcons::SUBSCRIPTIONS);
+        self::setIcon($subscriptionsItem, "SYSTEM::MY_SUBSCRIPTIONS");
 
         //
         // Push the main section items to the response array
@@ -167,10 +163,10 @@ class Converter
         if (!$signedIn)
         {
             $secondarySection = $data->items[1]->guideSectionRenderer->items;
-            $historyItem = self::getItemByIcon($secondarySection, "WATCH_HISTORY");
+            $historyItem = self::getItemByIcon($secondarySection, InnertubeIcons::WATCH_HISTORY);
             
             // Correct icon type
-            $historyItem->guideEntryRenderer->icon->iconType = "HISTORY";
+            self::setIcon($historyItem, "SYSTEM::HISTORY");
 
             $response[] = $historyItem;
         }
@@ -337,6 +333,12 @@ class Converter
                 "WATCH_HISTORY"  => "HISTORY",
                 "WATCH_LATER"    => "WATCH_LATER",
                 "LIKES_PLAYLIST" => "LIKES_PLAYLIST",
+                
+                // Cairo icon names all need to be accounted for too:
+                "WATCH_HISTORY_CAIRO"  => "HISTORY",
+                "WATCH_LATER_CAIRO"    => "WATCH_LATER",
+                "LIKES_PLAYLIST_CAIRO" => "LIKES_PLAYLIST",
+                "PLAYLIST_CAIRO" => "PLAYLIST",
             ];
 
             // Count all items and add them if they're a supported type
@@ -770,6 +772,40 @@ class Converter
             "guideEntryRenderer" => $item
         ];
     }
+    
+    /**
+     * This is a convenient helper function for crawling the InnerTube response. 
+     * 
+     * This allows me to search for a specific item by using its icon type, which
+     * is the most consistent variable for finding them.
+     * 
+     * 2024/08/16(izzy): Restructured to support array inputs to specify multiple
+     * icon variations to search for.
+     * 
+     * @param object[] $items array
+     * @param string|string[] $iconNames  Name of icons to search for
+     * 
+     * @return object|null
+     */
+    public static function getItemByIcon(array $items, string|array $iconNames): ?object
+    {
+        if (is_string($iconNames))
+        {
+            return self::getItemByIconNameString($items, $iconNames);
+        }
+        
+        foreach ($iconNames as $name)
+        {
+            $result = self::getItemByIconNameString($items, $name);
+            
+            if (!is_null($result))
+            {
+                return $result;
+            }
+        }
+        
+        return null;
+    }
 
     /**
      * This is a convenient helper function for crawling the InnerTube response.
@@ -781,7 +817,7 @@ class Converter
      * @param string $icon to search for
      * @return object|null
      */
-    public static function getItemByIcon($items, $icon)
+    public static function getItemByIconNameString(array $items, string $icon): ?object
     {
         // Skip all non-guide-entry-renderers because I don't want them
         // anyways
@@ -797,6 +833,35 @@ class Converter
 
         // Otherwise it doesn't exist
         return null;
+    }
+    
+    /**
+     * Sets the icon of a guide item.
+     */
+    public static function setIcon(object $itemRoot, string $icon): object
+    {
+        $item = $itemRoot->guideEntryRenderer ?? $itemRoot;
+        
+        if ("SYSTEM::" == substr($icon, 0, 8))
+        {
+            $icon = substr($icon, 8);
+
+            $item->icon = (object)[
+                "iconType" => $icon
+            ];
+        }
+        else
+        {
+            $item->thumbnail = (object)[
+                "thumbnails" => [
+                    (object)[
+                        "url" => $icon
+                    ]
+                ]
+            ];
+        }
+        
+        return $item;
     }
 
     /**
@@ -823,7 +888,11 @@ class Converter
         {
             $a = $librarySection->sectionItems[0]->guideEntryRenderer;
 
-            if ("ACCOUNT_BOX" == $a->icon->iconType)
+            if (
+                "ACCOUNT_BOX" == $a->icon->iconType ||
+                // I'm guessing it's this, but it might be TAB_ACCOUNT_CAIRO instead...
+                "ACCOUNT_BOX_CAIRO" == $a->icon->iconType
+            )
             {
                 self::$ucid = $a->navigationEndpoint->browseEndpoint->browseId;
             }

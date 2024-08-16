@@ -1,10 +1,10 @@
 {
-	"previousHash": "e9c7c505ab9f32c8f2eb711878347e126c29b034",
-	"currentRevisionId": 1610,
-	"subject": "Remove temporary emergency player workaround (b7c21e5)",
-	"body": "Remove temporary emergency player workaround (b7c21e5)",
+	"previousHash": "0e5bbaec6bf337bf0a95a2d88688bd4dec285442",
+	"currentRevisionId": 1611,
+	"subject": "Fix guide model to account for new Cairo icons",
+	"body": "Fix guide model to account for new Cairo icons",
 	"branch": "master",
 	"committerName": "Isabella",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1723846100
+	"time": 1723851290
 }
