@@ -104,7 +104,7 @@ class Network
         string $action, 
         array $body = [],
         string $clientName = "WEB", 
-        string $clientVersion = "2.20230331.00.00",
+        string $clientVersion = "2.20240816.01.00",
         bool $ignoreErrors = false,
         bool $useAuthentication = true
     ): Promise/*<Response>*/
@@ -214,7 +214,7 @@ class Network
         string $action, 
         array $body = [],
         string $clientName = "WEB", 
-        string $clientVersion = "2.20230331.00.00",
+        string $clientVersion = "2.20240816.01.00",
         bool $ignoreErrors = false,
         bool $useAuthentication = true
     ): Promise/*<Response>*/

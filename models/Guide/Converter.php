@@ -127,15 +127,14 @@ class Converter
         $mainSection = $data->items[0]->guideSectionRenderer->items;
 
         $homeItem = self::getItemByIcon($mainSection, InnertubeIcons::WHAT_TO_WATCH);
-        self::setIcon($homeItem, "SYSTEM::WHAT_TO_WATCH");
         $subscriptionsItem = self::getItemByIcon($mainSection, InnertubeIcons::SUBSCRIPTIONS);
-        self::setIcon($subscriptionsItem, "SYSTEM::MY_SUBSCRIPTIONS");
 
         //
         // Push the main section items to the response array
         //
 
         // Home item
+        self::setIcon($homeItem, "SYSTEM::WHAT_TO_WATCH");
         $response[] = $homeItem;
 
         // My channel item (if signed in)
@@ -156,6 +155,7 @@ class Converter
         // Subscriptions item (if signed in)
         if ($signedIn)
         {
+            self::setIcon($subscriptionsItem, "SYSTEM::MY_SUBSCRIPTIONS");
             $response[] = $subscriptionsItem;
         }
 
@@ -793,15 +793,19 @@ class Converter
         {
             return self::getItemByIconNameString($items, $iconNames);
         }
-        
-        foreach ($iconNames as $name)
+        else
         {
-            $result = self::getItemByIconNameString($items, $name);
-            
-            if (!is_null($result))
+            foreach ($iconNames as $name)
             {
-                return $result;
-            }
+                \Rehike\Logging\DebugLogger::print("%s", $name);
+                $result = self::getItemByIconNameString($items, $name);
+                \Rehike\Logging\DebugLogger::print("%s", json_encode($result));
+                
+                if (!is_null($result))
+                {
+                    return $result;
+                }
+            }   
         }
         
         return null;
@@ -819,6 +823,8 @@ class Converter
      */
     public static function getItemByIconNameString(array $items, string $icon): ?object
     {
+        \Rehike\Logging\DebugLogger::print("%s %s", $icon, json_encode($items));
+        
         // Skip all non-guide-entry-renderers because I don't want them
         // anyways
         foreach ($items as $item) if ($content = @$item->guideEntryRenderer)
@@ -838,10 +844,10 @@ class Converter
     /**
      * Sets the icon of a guide item.
      */
-    public static function setIcon(?object $itemRoot, string $icon): ?object
+    public static function setIcon(?object $itemRoot, string $icon): void
     {
         if (is_null($itemRoot))
-            return null;
+            return;
         
         $item = $itemRoot->guideEntryRenderer ?? $itemRoot;
         
@@ -863,8 +869,6 @@ class Converter
                 ]
             ];
         }
-        
-        return $item;
     }
 
     /**
