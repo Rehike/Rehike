@@ -797,9 +797,7 @@ class Converter
         {
             foreach ($iconNames as $name)
             {
-                \Rehike\Logging\DebugLogger::print("%s", $name);
                 $result = self::getItemByIconNameString($items, $name);
-                \Rehike\Logging\DebugLogger::print("%s", json_encode($result));
                 
                 if (!is_null($result))
                 {
@@ -823,8 +821,6 @@ class Converter
      */
     public static function getItemByIconNameString(array $items, string $icon): ?object
     {
-        \Rehike\Logging\DebugLogger::print("%s %s", $icon, json_encode($items));
-        
         // Skip all non-guide-entry-renderers because I don't want them
         // anyways
         foreach ($items as $item) if ($content = @$item->guideEntryRenderer)

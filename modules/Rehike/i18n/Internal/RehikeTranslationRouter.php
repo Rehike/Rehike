@@ -46,9 +46,6 @@ class RehikeTranslationRouter extends SimpleRouter implements IRouter
             catch (\Throwable $e)
             {
                 throw $e;
-                \Rehike\Logging\DebugLogger::print(
-                    "Failed to read i18n file cache for paths: \"$path\" \"$latestCachePath\""
-                );
             }
         }
         

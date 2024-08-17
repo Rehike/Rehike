@@ -47,7 +47,6 @@ class VersionController
 
         if ($dg || $dv)
         {
-            \Rehike\Logging\DebugLogger::print(json_encode(self::$versionInfo));
             self::$versionInfo->buildNumber = BuildNumber::getBuildNumber();
             $hasRun = true;
             return true;

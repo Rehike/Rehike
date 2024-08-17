@@ -24,8 +24,6 @@ class NoInternetPage
 
     public static function isNoInternetResult(int $networkResult): bool
     {
-        \Rehike\Logging\DebugLogger::print($networkResult);
-
         switch ($networkResult)
         {
             case NetworkResult::E_COULDNT_RESOLVE_HOST:

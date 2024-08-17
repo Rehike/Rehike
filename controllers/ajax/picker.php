@@ -97,8 +97,6 @@ return new class extends AjaxController
             
             $menuPage = $this->findMenuPageFromIconId($data, "TRANSLATE");
             
-            //\Rehike\Logging\DebugLogger::print(var_export($menuPage, true));
-            
             if ($menuPage)
             {
                 $this->yt->page = new LocalePickerModel(
@@ -140,16 +138,9 @@ return new class extends AjaxController
         )->then(function ($response) {
             $data = $response->getJson();
             
-            //\Rehike\Logging\DebugLogger::print("%s", var_export($data, true));
-            // echo var_export($data, true);
-            // \YukisCoffee\CoffeeRequest\Util\PromiseResolutionTracker::disable();
-            // die();
-            
             // They use the "LANGUAGE" icon for the country. I'm not entirely sure
             // why.
             $menuPage = $this->findMenuPageFromIconId($data, "LANGUAGE");
-            
-            //\Rehike\Logging\DebugLogger::print(var_export($menuPage, true));
             
             if ($menuPage)
             {
