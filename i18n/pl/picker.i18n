@@ -1,4 +1,18 @@
-languageTitle: "Wybierz swój język"
+languageTitle: "Wybierz język"
 languageSubtitle: >
   Zmieni to język strony. Nie zmieni żadnego tekstu wprowadzonego przez
   użytkowników.
+
+countryTitle: "Wybierz swoją lokalizację"
+countrySubtitle: >
+  Zmieni to filmy i kanały, które widzisz. Nie zmieni języka strony.
+
+safetyModeTitle: "Tryb ograniczonego dostępu"
+safetyModeSubtitle: >
+  Tryb ograniczonego dostępu ukrywa filmy, które mogą zawierać nieodpowiednie
+  treści zgłoszone przez użytkowników lub w inny sposób. Żaden filtr nie jest
+  skuteczny w 100%, ale po włączeniu tego trybu unikniesz większości takich
+  treści.
+safetyModeSubtitle2: "Ustawienie trybu ograniczonego dostępu będzie dotyczyć tylko tej przeglądarki."
+safetyModeLockSectionTemplate: "Możesz zablokować tryb ograniczonego dostępu po %s"
+safetyModeLockSectionSignIn: "zalogowaniu się"
