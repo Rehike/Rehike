@@ -1,30 +1,30 @@
 # Common strings that show in the footer at the bottom of the page:
 
-logoTooltip: "YouTube home"
+logoTooltip: "Домашня сторінка YouTube"
 
-pickerLanguage: "Язык: %s"
-pickerLocation: "Страна: %s"
+pickerLanguage: "Мова: %s"
+pickerLocation: "Місцезнаходження: %s"
 
-pickerSafety: "Безопасный режим: %s"
-safetyOn: "вкл."
-safetyOff: "выкл."
+pickerSafety: "Режим безпечного перегляду: %s"
+safetyOn: "увімк."
+safetyOff: "вимк."
 
-buttonHistory: "История"
-buttonHelp: "Справка"
+buttonHistory: "Історія"
+buttonHelp: "Довідка"
 
 # Primary (top) links:
-primaryAbout: "О сервисе"
-primaryPress: "Прессе"
-primaryCopyright: "Правообладателям"
+primaryAbout: "Інфо"
+primaryPress: "Преса"
+primaryCopyright: "Творці"
 primaryCreators: "Авторам"
-primaryAdvertise: "Рекламодателям"
-primaryDevs: "Разработчикам"
+primaryAdvertise: "Реклама"
+primaryDevs: "Розробники"
 primaryVersion: "Rehike v%s [%s]" # Rehike-specific
 
 # Secondary (bottom) links:
-secondaryTerms: "Условия использования"
-secondaryPrivacy: "Конфиденциальность"
-secondaryPolicySafety: " Правила и безопасность"
-secondaryFeedback: "Отправить отзыв"
-secondaryTestTube: "Новые функции"
+secondaryTerms: "Умови"
+secondaryPrivacy: "Конфіденційність"
+secondaryPolicySafety: " Політика та безпека"
+secondaryFeedback: "Надіслати відгук"
+secondaryTestTube: "Спробувати нові функції"
 secondaryCopyright: "© %s Google LLC"
