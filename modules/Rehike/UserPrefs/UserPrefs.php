@@ -12,6 +12,7 @@ namespace Rehike\UserPrefs;
  * permitted by YouTube's code, but they seem to be unused.
  * 
  * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
+ * @author Isabella <kawapure@gmail.com>
  * @author The Rehike Maintainers
  */
 class UserPrefs
@@ -61,7 +62,19 @@ class UserPrefs
     {
         [$index, $bitmask] = self::calcFlagVars($flag);
 
-        // todo finish!!
+        $flagBits = $this->getNumber($flag) ?? 0;
+        $flagBits = $value
+            ? $flagBits | $bitmask
+            : $flagBits & ~$bitmask;
+            
+        if (0 == $flagBits)
+        {
+            $this->deleteValue("f" . $index);
+        }
+        else
+        {
+            $this->setValue("f" . $index, dechex($flagBits));
+        }
     }
 
     /**
@@ -106,7 +119,7 @@ class UserPrefs
     /**
      * Get the number of a numeric field, i.e. flags.
      */
-    protected function getNumber(int $index): ?int
+    protected function getNumber(string $index): ?int
     {
         if (isset($this->prefs[$index]))
         {
@@ -127,11 +140,21 @@ class UserPrefs
      * If the result of the AND is 0, this will return false. Otherwise
      * it always returns true.
      */
-    protected function getFlagValue(int $index, int $bitmask): bool
+    protected function getFlagValue(string $index, int $bitmask): bool
     {
         $result = ($this->getNumber($index) ?? 0) & $bitmask;
 
         return (0 != $result) ? true : false;
+    }
+    
+    protected function deleteValue(int $key): void
+    {
+        unset($this->prefs[$key]);
+    }
+    
+    protected function setValue(int $key, $value): void
+    {
+        $this->prefs[$key] = (string)$value;
     }
 
     /**

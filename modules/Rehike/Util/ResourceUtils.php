@@ -2,6 +2,10 @@
 namespace Rehike\Util;
 
 use Rehike\ResourceConstantsStore;
+use Rehike\UserPrefs\{
+    UserPrefs,
+    UserPrefFlags,
+};
 
 use Rehike\Util\Exception\ResourceUtils\BadResourceException;
 
@@ -22,11 +26,16 @@ class ResourceUtils
         $constants = ResourceConstantsStore::get();
 
         $css2x = false;
+        if (UserPrefs::getInstance()->getFlag(UserPrefFlags::FLAG_HDPI))
+        {
+            $css2x = true;
+        }
 
-        // TODO: add css 2x check
-        // old code: if (isset($pref->f4) && substr($pref->f4, 0, 1) == "4")
-
-        if (isset($constants->css->{$name}))
+        if ($css2x && isset($constants->css2x->{$name}))
+        {
+            return $constants->css2x->{$name};
+        }
+        else if (isset($constants->css->{$name}))
         {
             return $constants->css->{$name};
         }
