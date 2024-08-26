@@ -10,6 +10,7 @@
     "through2": "^4.0.2"
   },
   "devDependencies": {
-    "gulp-preprocess": "^5.0.0"
+    "gulp-preprocess": "^5.0.0",
+    "image-size": "^1.1.1"
   }
 }

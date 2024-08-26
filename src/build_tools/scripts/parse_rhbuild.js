@@ -54,6 +54,7 @@ function doParse(filePath, scriptContents)
     let JS_BUILD_FILES = null;
     let JS_OUTPUT_BUNDLE = null;
     let CSS_BUILD_FILES = null;
+    let CSS_2X_BUILD = false;
     let PROTOBUF_BUILD_FILES = null;
     
     function runInParserContext()
@@ -90,6 +91,7 @@ function doParse(filePath, scriptContents)
         jsBuildFiles: JS_BUILD_FILES,
         jsOutputBundle: JS_OUTPUT_BUNDLE,
         cssBuildFiles: CSS_BUILD_FILES,
+        css2xBuild: CSS_2X_BUILD,
         protobufBuildFiles: PROTOBUF_BUILD_FILES,
     });
 }

@@ -1,9 +1,11 @@
 {
     "static/rehike/css/www-rehike-config.css": "static/rehike/css/www-rehike-config-vflfPK1JW.css",
     "static/rehike/css/www-rebug.css": "static/rehike/css/www-rebug-vflYjsUc6.css",
-    "static/rehike/css/www-rehike-panel.css": "static/rehike/css/www-rehike-panel-vfleGkK9j.css",
-    "static/rehike/css/www-rehike-version.css": "static/rehike/css/www-rehike-version-vflzHVU7h.css",
+    "static/rehike/css/www-rehike-panel.css": "static/rehike/css/www-rehike-panel-vfl1t539W.css",
+    "static/rehike/css/www-rehike-version.css": "static/rehike/css/www-rehike-version-vflL8ivGW.css",
     "static/rehike/js/www-rebug.js": "static/rehike/js/www-rebug-vflDHHpkV.js",
     "static/rehike/js/www-rehike-core.js": "static/rehike/js/www-rehike-core-vflmlijJp.js",
-    "static/rehike/js/www-ponies.js": "static/rehike/js/www-ponies-vfl5YYce9.js"
+    "static/rehike/js/www-ponies.js": "static/rehike/js/www-ponies-vfl5YYce9.js",
+    "static/rehike/css/www-rehike-version-2x.css": "static/rehike/css/www-rehike-version-2x-vfl5_oISZ.css",
+    "static/rehike/css/www-rehike-panel-2x.css": "static/rehike/css/www-rehike-panel-2x-vflKqxAib.css"
 }

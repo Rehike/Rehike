@@ -11,51 +11,39 @@
 }
 
 #creator-sidebar .studio-icon.creator-sidebar-rehike-version {
-    background: no-repeat url(/rehike/static/rehike/www-sidebar.png) 0 0;
-    background-size: auto;
-    width: 24px;
-    height: 24px
+    @include rehike.sprite("/rehike/static/rehike/www-sidebar.png", 0, 0, 24, 24);
 }
 
 #creator-sidebar .studio-icon.creator-sidebar-rehike-version.selected,
 #creator-sidebar a:hover .studio-icon.creator-sidebar-rehike-version.selected {
-    background: no-repeat url(/rehike/static/rehike/www-sidebar.png) -24px 0;
+    @include rehike.sprite("/rehike/static/rehike/www-sidebar.png", 24, 0, 24, 24);
 }
 
 #creator-sidebar .studio-icon.creator-sidebar-rehike-appearance {
-    background: no-repeat url(/rehike/static/rehike/www-sidebar.png) 0 -24px;
-    background-size: auto;
-    width: 24px;
-    height: 24px
+    @include rehike.sprite("/rehike/static/rehike/www-sidebar.png", 0, 24, 24, 24);
 }
 
 #creator-sidebar .studio-icon.creator-sidebar-rehike-appearance.selected,
 #creator-sidebar a:hover .studio-icon.creator-sidebar-rehike-appearance.selected {
-    background: no-repeat url(/rehike/static/rehike/www-sidebar.png) -24px -24px;
+    @include rehike.sprite("/rehike/static/rehike/www-sidebar.png", 24, 24, 24, 24);
 }
 
 #creator-sidebar .studio-icon.creator-sidebar-rehike-experiments {
-    background: no-repeat url(/rehike/static/rehike/www-sidebar.png) 0 -48px;
-    background-size: auto;
-    width: 24px;
-    height: 24px
+    @include rehike.sprite("/rehike/static/rehike/www-sidebar.png", 0, 48, 24, 24);
 }
 
 #creator-sidebar .studio-icon.creator-sidebar-rehike-experiments.selected,
 #creator-sidebar a:hover .studio-icon.creator-sidebar-rehike-experiments.selected {
-    background: no-repeat url(/rehike/static/rehike/www-sidebar.png) -24px -48px ;
+    @include rehike.sprite("/rehike/static/rehike/www-sidebar.png", 24, 48, 24, 24);
 }
 
 #creator-sidebar .studio-icon.creator-sidebar-rehike-advanced {
-    background: no-repeat url(/rehike/static/rehike/www-sidebar.png) 0 -72px;
-    background-size: auto;
-    width: 24px;
-    height: 24px
+    @include rehike.sprite("/rehike/static/rehike/www-sidebar.png", 0, 72, 24, 24);
 }
 
 #creator-sidebar .studio-icon.creator-sidebar-rehike-advanced.selected,
 #creator-sidebar a:hover .studio-icon.creator-sidebar-rehike-advanced.selected {
-    background: no-repeat url(/rehike/static/rehike/www-sidebar.png) -24px -72px;
+    @include rehike.sprite("/rehike/static/rehike/www-sidebar.png", 24, 72, 24, 24);
 }
 
 #creator-sidebar .rehike-creator-footer-button {

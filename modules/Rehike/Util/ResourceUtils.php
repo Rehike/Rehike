@@ -1,6 +1,7 @@
 <?php
 namespace Rehike\Util;
 
+use Rehike\FileSystem;
 use Rehike\ResourceConstantsStore;
 use Rehike\UserPrefs\{
     UserPrefs,
@@ -101,11 +102,32 @@ class ResourceUtils
             $lookupUri = $name;
         }
         
-        $resultName = $lookupUri;
+        $extension = FileSystem::getExtension($name);
         
-        if (isset($constants->{$lookupUri}))
+        $doneAlready = false;
+        
+        if ($extension == "css")
         {
-            $resultName = $constants->{$lookupUri};
+            if (UserPrefs::getInstance()->getFlag(UserPrefFlags::FLAG_HDPI))
+            {
+                $lookupUri2x = explode(".$extension", $lookupUri)[0] . "-2x." . $extension;
+        
+                if (isset($constants->{$lookupUri2x}))
+                {
+                    $resultName = $constants->{$lookupUri2x};
+                    $doneAlready = true;
+                }
+            }
+        }
+        
+        if (!$doneAlready)
+        {
+            $resultName = $lookupUri;
+            
+            if (isset($constants->{$lookupUri}))
+            {
+                $resultName = $constants->{$lookupUri};
+            }
         }
         
         return $prefixUri ? "/rehike/$resultName" : $resultName;

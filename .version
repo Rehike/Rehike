@@ -1,10 +1,10 @@
 {
-	"previousHash": "9c6ebd8ebabbf2fcdb39871f56e26b683cb44686",
-	"currentRevisionId": 1619,
-	"subject": "Finish UserPrefs parser (+ 2x CSS support)",
-	"body": "Finish UserPrefs parser (+ 2x CSS support)",
+	"previousHash": "f32a3ed8f88a1cb0444706388ef0a53efca51665",
+	"currentRevisionId": 1620,
+	"subject": "Support HiDPI Rehike custom resources",
+	"body": "Support HiDPI Rehike custom resources",
 	"branch": "master",
 	"committerName": "Isabella",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1724699928
+	"time": 1724707185
 }
