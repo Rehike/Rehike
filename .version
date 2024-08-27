@@ -1,10 +1,10 @@
 {
-	"previousHash": "f32a3ed8f88a1cb0444706388ef0a53efca51665",
-	"currentRevisionId": 1620,
-	"subject": "Support HiDPI Rehike custom resources",
-	"body": "Support HiDPI Rehike custom resources",
+	"previousHash": "8ddcd30348b30235aba5a466e49ad076fbffa008",
+	"currentRevisionId": 1622,
+	"subject": "Partially restore the temporary player workaround",
+	"body": "Partially restore the temporary player workaround",
 	"branch": "master",
 	"committerName": "Isabella",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1724707185
+	"time": 1724784224
 }

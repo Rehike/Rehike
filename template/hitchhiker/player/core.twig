@@ -4,6 +4,7 @@
       <div id="player-unavailable" class="{% include "page_fragments/player_unavailable.class.twig" %}">
          {% include "page_fragments/player_unavailable.twig" %}
       </div>
+{% if rehike.config.experiments.temp20240827_playerMode != "USE_EMBEDDED_PLAYER_DIRECTLY" %}
       <div id="player-api" class="player-width player-height off-screen-target player-api" tabIndex="-1"></div>
       <script >if (window.ytcsi) {window.ytcsi.tick("cfg", null, '');}</script>
       {#
@@ -94,6 +95,11 @@ ytplayer.load = function() {
 };
 {% endif %}
 </script>
+{% else %}
+<div id="player-api" class="player-width player-height off-screen-target player-api" tabIndex="-1">
+   <iframe id="hackhackplayer" class="html5-video-player" type="text/html" width="640" height="360" src="/embed/{{ yt.videoId }}?autoplay=1&enablejsapi=1" frameborder="0"></iframe>
+</div>
+{% endif %}
       <div id="player-playlist" class="{{ include("page_fragments/player_playlist.class.twig") }}">
          {% include 'page_fragments/player_playlist.twig' %}
       </div>

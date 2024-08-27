@@ -1,7 +1,12 @@
 {% import 'core/macros.twig' as core %}
 <script>
     var ytspf = ytspf || {};
+    {% if rehike.config.experiments.temp20240827_playerMode == "USE_EMBEDDED_PLAYER_DIRECTLY" %}
+    {# SPF fucks with the workaround, so we just disable it globally. #}
+    ytspf.enabled = false;
+    {% else %}
     ytspf.enabled = {{ yt.spfEnabled ? 'true' : 'false' }};
+    {% endif %}
     {%- if yt.spfEnabled -%}
     ytspf.config = {
         'reload-identifier': 'spfreload'

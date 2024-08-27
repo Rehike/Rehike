@@ -148,6 +148,20 @@ return new class extends NirvanaController {
             "next",
             $sharedRequestParams + $nextOnlyParams
         );
+        
+        $playerRequestClient = "WEB";
+        $playerRequestClientVersion = "2.20230331.00.00";
+        
+        if (Config::getConfigProp("experiments.temp20240827_playerMode") == "USE_EMBEDDED_PLAYER_REQUEST")
+        {
+            $playerRequestClient = "WEB_EMBEDDED_PLAYER";
+            $playerRequestClientVersion = "1.20230331.00.00";
+        }
+        
+        // XXX: indentation level unchanged to avoid messing with history;
+        // this code WILL be removed.
+        if (Config::getConfigProp("experiments.temp20240827_playerMode") != "USE_EMBEDDED_PLAYER_DIRECTLY")
+        {
 
         // Unlike Polymer, Hitchhiker had all of the player data already
         // available in the initial response. So an additional player request
@@ -169,8 +183,22 @@ return new class extends NirvanaController {
                 ],
                 "startTimeSecs" => $startTime ?? 0,
                 "params" => $yt->playerParams
-            ] + $sharedRequestParams
+            ] + $sharedRequestParams,
+            $playerRequestClient,
+            $playerRequestClientVersion
         );
+        
+        }
+        else
+        {
+            $playerRequest = new Promise(fn($r) => $r(new class extends stdClass
+            {
+                public function getJson(): object
+                {
+                    return (object)[];
+                }
+            }));
+        }
         
         $storyboardRequest = new Promise(fn($r) => $r());
 
