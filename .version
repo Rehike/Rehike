@@ -1,10 +1,10 @@
 {
-	"previousHash": "909ee75d2444a58241a60ecba7dd2e0c659140c4",
-	"currentRevisionId": 1623,
-	"subject": "Add support for new Ringo2 branding (2024)",
-	"body": "Add support for new Ringo2 branding (2024)",
+	"previousHash": "a8c9c4762f337a2a717da763fdbc98a57749fb3e",
+	"currentRevisionId": 1624,
+	"subject": "Adjust subscribe button colours for ringo2",
+	"body": "Adjust subscribe button colours for ringo2",
 	"branch": "master",
 	"committerName": "Isabella",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1724791552
+	"time": 1724793978
 }
