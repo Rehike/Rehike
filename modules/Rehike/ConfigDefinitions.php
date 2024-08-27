@@ -19,7 +19,7 @@ use Rehike\ConfigManager\Properties\{
  * @author The Rehike Maintainers
  */
 class ConfigDefinitions
-{
+{    
     public static function getConfigDefinitions(): array
     {
         return [
@@ -64,7 +64,11 @@ class ConfigDefinitions
                             new BoolProp(true)
                         ),
                 ]),
-                "modernLogo" => new BoolProp(true),
+                "branding" => new EnumProp("BRANDING_2024_RINGO2", [
+                    "BRANDING_2024_RINGO2",
+                    "BRANDING_2017_RINGO",
+                    "BRANDING_2015"
+                ]),
                 "uploadButtonType" => new EnumProp("MENU", [
                     "BUTTON",
                     "ICON",
@@ -123,5 +127,33 @@ class ConfigDefinitions
                 "enableProfiler" => new BoolProp(false)
             ]
         ];
+    }
+    
+    public static function migrateOldOptions(): void
+    {
+        $changedAnything = false;
+        
+        $migrateAndRemoveOriginal = function(string $prop, \Closure $cb) use (&$changedAnything) {
+            $originalProperty = null;
+            $originalProperty = Config::getConfigProp($prop);
+            if ($originalProperty !== null)
+            {
+                $cb($originalProperty);
+                Config::removeConfigProp($prop);
+                $changedAnything = true;
+            }
+        };
+        
+        $migrateAndRemoveOriginal("appearance.modernLogo", fn($modernLogo) =>
+            Config::setConfigProp("appearance.branding", $modernLogo
+                ? "BRANDING_2024_RINGO2"
+                : "BRANDING_2015"
+            )
+        );
+        
+        if ($changedAnything)
+        {
+            Config::dumpConfig();
+        }
     }
 }

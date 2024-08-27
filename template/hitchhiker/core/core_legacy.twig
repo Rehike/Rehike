@@ -30,9 +30,7 @@
       {{ core.css('www-guide') }}
       <title>{{ yt.title ?? "YouTube" }}</title>
       {% include 'core/meta.twig' %}
-      {%- if rehike.config.appearance.modernLogo -%}
-        {% include 'experiment/ringo/ringo.twig' %}
-      {% endif %}
+      {% include "experiment/ringo/get_ringo_css_for_config.twig" %}
       {% include "core/rehike_custom_css.twig" %}
    </head>
    <body id="" class="{%- block body_class -%}  

@@ -1,0 +1,213 @@
+{#
+    Custom styles for a Hitchhiker-style ringo2 logo rebrand.
+    
+    This includes the new accent colour (slightly more pink than the 2017 redesign),
+    and the new logo including the new accent colour and a slightly refined font.
+    
+    Ringo2 makes stronger use of red-to-reddish-pink gradients.
+#}
+<style>
+    .exp-ringo2 .hats-logo {
+        background: no-repeat url(//s.ytimg.com/yts/img/ringo/hitchhiker/logo_mini_gray-vflfanGkh.png);
+        width: 65px;
+        height: 15px;
+    }
+
+    .exp-ringo2 #header:before,
+    .exp-ringo2 .ypc-join-family-header .logo,
+    .exp-ringo2 #footer-logo .footer-logo-icon,
+    .exp-ringo2 #yt-masthead #logo-container .logo,
+    .exp-ringo2 #masthead #logo-container,
+    .exp-ringo2 .admin-masthead-logo a,
+    .exp-ringo2 #yt-sidebar-styleguide-logo #logo {
+        background: no-repeat url(/rehike/static/img/ringo2/hitchhiker/logo_small.png);
+        width: 100px;
+        height: 30px;
+    }
+
+    .exp-ringo2.inverted-hdpi #header:before,
+    .exp-ringo2.inverted-hdpi .ypc-join-family-header .logo,
+    .exp-ringo2.inverted-hdpi #footer-logo .footer-logo-icon,
+    .exp-ringo2.inverted-hdpi #yt-masthead #logo-container .logo,
+    .exp-ringo2.inverted-hdpi #masthead #logo-container,
+    .exp-ringo2.inverted-hdpi .admin-masthead-logo a,
+    .exp-ringo2.inverted-hdpi #yt-sidebar-styleguide-logo #logo {
+        background: no-repeat url(/rehike/static/img/ringo2/hitchhiker/logo_small_2x.png);
+        background-size: 100px 30px;
+        width: 100px;
+        height: 30px;
+    }
+
+    .exp-ringo2.exp-fusion-nav-redesign .masthead-logo-renderer-logo {
+        background: no-repeat url(//s.ytimg.com/yts/img/ringo/hitchhiker/yt_play_logo-vflLfk4yD.png);
+        width: 40px;
+        height: 28px;
+    }
+
+    .exp-ringo2.inverted-hdpi.exp-fusion-nav-redesign .masthead-logo-renderer-logo {
+        background: no-repeat url(//s.ytimg.com/yts/img/ringo/hitchhiker/yt_play_logo_2x-vflXx5Pg3.png);
+        width: 40px;
+        height: 28px;
+    }
+
+    @media screen and (max-width: 656px) {
+        .exp-ringo2 #yt-masthead #logo-container .logo {
+            background: no-repeat url(//s.ytimg.com/yts/img/ringo/hitchhiker/yt_play_logo-vflLfk4yD.png);
+            width: 40px;
+            height: 28px;
+        }
+
+        .exp-ringo2.inverted-hdpi #yt-masthead #logo-container .logo {
+            background: no-repeat url(//s.ytimg.com/yts/img/ringo/hitchhiker/yt_play_logo_2x-vflXx5Pg3.png);
+            background-size: 40px 28px;
+            width: 40px;
+            height: 28px;
+        }
+    }
+
+    @media only screen and (min-width: 0px) and (max-width: 498px),
+    only screen and (min-width: 499px) and (max-width: 704px) {
+        .exp-ringo2.exp-responsive #yt-masthead #logo-container {
+            background: no-repeat url(//s.ytimg.com/yts/img/ringo/hitchhiker/yt_play_logo-vflLfk4yD.png);
+            width: 40px;
+            height: 28px;
+        }
+
+        .exp-ringo2.inverted-hdpi.exp-responsive #yt-masthead #logo-container {
+            background: no-repeat url(//s.ytimg.com/yts/img/ringo/hitchhiker/yt_play_logo_2x-vflXx5Pg3.png);
+            background-size: 40px 28px;
+            width: 40px;
+            height: 28px;
+        }
+    }
+
+    .exp-ringo2 #yt-masthead #logo-container .logo-red {
+        background: no-repeat url(//s.ytimg.com/yts/img/ringo/hitchhiker/logo_youtube_red-vflZxcSR1.png);
+        width: 132px;
+        height: 30px;
+    }
+
+    .exp-ringo2.inverted-hdpi #yt-masthead #logo-container .logo-red {
+        background: no-repeat url(//s.ytimg.com/yts/img/ringo/hitchhiker/logo_youtube_red_2x-vflOSHA_n.png);
+        background-size: 132px 30px;
+        width: 132px;
+        height: 30px;
+    }
+
+    .exp-ringo2 .guide-item .guide-video-youtube-red-icon {
+        background: no-repeat url(//s.ytimg.com/yts/img/ringo/hitchhiker/video_youtube_red-vflovGTdz.png);
+        width: 20px;
+        height: 20px;
+    }
+
+    .exp-ringo2.inverted-hdpi .guide-item .guide-video-youtube-red-icon {
+        background: no-repeat url(//s.ytimg.com/yts/img/ringo/hitchhiker/video_youtube_red_2x-vflqMdgEM.png);
+        background-size: 20px 20px;
+        width: 20px;
+        height: 20px;
+    }
+
+    .exp-ringo2 .guide-item:hover .guide-video-youtube-red-icon,
+    .exp-ringo2 .guide-item.guide-item-selected .guide-video-youtube-red-icon {
+        background: no-repeat url(//s.ytimg.com/yts/img/ringo/hitchhiker/video_youtube_red_hover-vflgV4Gv0.png);
+        width: 20px;
+        height: 20px;
+    }
+
+    .exp-ringo2.inverted-hdpi .guide-item:hover .guide-video-youtube-red-icon,
+    .exp-ringo2.inverted-hdpi .guide-item.guide-item-selected .guide-video-youtube-red-icon {
+        background: no-repeat url(//s.ytimg.com/yts/img/ringo/hitchhiker/video_youtube_red_hover_2x-vflYjZHvf.png);
+        background-size: 20px 20px;
+        width: 20px;
+        height: 20px;
+    }
+
+    .exp-ringo2 li.guide-section h3,
+    .exp-ringo2 li.guide-section h3 a {
+        color: #f03;
+    }
+
+    .exp-ringo2 a.yt-uix-button-epic-nav-item:hover,
+    .exp-ringo2 a.yt-uix-button-epic-nav-item.selected,
+    .exp-ringo2 a.yt-uix-button-epic-nav-item.yt-uix-button-toggled,
+    .exp-ringo2 button.yt-uix-button-epic-nav-item:hover,
+    .exp-ringo2 button.yt-uix-button-epic-nav-item.selected,
+    .exp-ringo2 button.yt-uix-button-epic-nav-item.yt-uix-button-toggled,
+    .exp-ringo2 .epic-nav-item:hover,
+    .exp-ringo2 .epic-nav-item.selected,
+    .exp-ringo2 .epic-nav-item.yt-uix-button-toggled,
+    .exp-ringo2 .epic-nav-item-heading,
+    .exp-ringo2 .yt-gb-shelf-item-thumbtab.yt-gb-selected-shelf-tab::before {
+        border-color: #f03;
+    }
+
+    .exp-ringo2 .resume-playback-progress-bar,
+    .exp-ringo2 .yt-uix-button-subscribe-branded,
+    .exp-ringo2 .yt-uix-button-subscribe-branded[disabled],
+    .exp-ringo2 .yt-uix-button-subscribe-branded[disabled]:hover,
+    .exp-ringo2 .yt-uix-button-subscribe-branded[disabled]:active,
+    .exp-ringo2 .yt-uix-button-subscribe-branded[disabled]:focus,
+    .exp-ringo2 .sb-notif-on .yt-uix-button-content,
+    .exp-ringo2 .guide-item.guide-item-selected,
+    .exp-ringo2 .guide-item.guide-item-selected:hover,
+    .exp-ringo2 .guide-item.guide-item-selected .yt-deemphasized-text,
+    .exp-ringo2 .guide-item.guide-item-selected:hover .yt-deemphasized-text {
+        background-color: #f03;
+    }
+
+    .exp-ringo2 .yt-uix-button-subscribe-branded:hover {
+        background-color: #d90a17;
+    }
+
+    .exp-ringo2 .yt-uix-button-subscribe-branded.yt-is-buffered,
+    .exp-ringo2 .yt-uix-button-subscribe-branded:active,
+    .exp-ringo2 .yt-uix-button-subscribe-branded.yt-uix-button-toggled,
+    .exp-ringo2 .yt-uix-button-subscribe-branded.yt-uix-button-active,
+    .exp-ringo2 .yt-uix-button-subscribed-branded.external,
+    .exp-ringo2 .yt-uix-button-subscribed-branded.external[disabled],
+    .exp-ringo2 .yt-uix-button-subscribed-branded.external:active,
+    .exp-ringo2 .yt-uix-button-subscribed-branded.external.yt-uix-button-toggled,
+    .exp-ringo2 .yt-uix-button-subscribed-branded.external.yt-uix-button-active {
+        background-color: #a60812;
+    }
+</style>
+<style>
+    .exp-ringo2 #header:before,
+    .exp-ringo2 .ypc-join-family-header .logo,
+    .exp-ringo2 #footer-logo .footer-logo-icon,
+    .exp-ringo2 #yt-masthead #logo-container .logo,
+    .exp-ringo2 #masthead #logo-container,
+    .exp-ringo2 .admin-masthead-logo a,
+    .exp-ringo2 #yt-sidebar-styleguide-logo #logo {
+        background: no-repeat url(/rehike/static/img/ringo2/hitchhiker/logo_small_2x.png);
+        background-size: 100px 30px;
+    }
+
+    .exp-ringo2 #yt-masthead #logo-container .logo-red {
+        background: no-repeat url(//s.ytimg.com/yts/img/ringo/hitchhiker/logo_youtube_red_2x-vflOSHA_n.png);
+        background-size: 132px 30px;
+    }
+
+    @media only screen and (min-width: 0px) and (max-width: 498px),
+    only screen and (min-width: 499px) and (max-width: 704px) {
+        .exp-ringo2.exp-responsive #yt-masthead #logo-container {
+            background: no-repeat url(//s.ytimg.com/yts/img/ringo/hitchhiker/yt_play_logo_2x-vflXx5Pg3.png);
+            background-size: 40px 28px;
+        }
+    }
+</style>
+<style name="ringo-fix">
+    .exp-ringo2 #creator-sidebar .creator-sidebar-item.selected,
+    .exp-ringo2 #creator-sidebar .creator-sidebar-submenu .creator-sidebar-item.selected a:hover,
+    .exp-ringo2 #creator-sidebar .creator-sidebar-submenu a.creator-sidebar-section-link.selected,
+    .exp-ringo2 #creator-sidebar .creator-sidebar-single-section.selected a,
+    .exp-ringo2 #creator-sidebar .creator-sidebar-single-section.selected a:hover,
+    .exp-ringo2 #progress {
+        background: linear-gradient(to right,#f03 80%,#ff2791 100%);
+    }
+
+    .exp-ringo2 #progress dd,
+    .exp-ringo2 #progress dt {
+        box-shadow: linear-gradient(to right,#f03 80%,#ff2791 100%) 1px 0 6px 1px;
+    }
+</style>

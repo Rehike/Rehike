@@ -32,6 +32,12 @@ props:
       values:
         RED: "赤"
         WHITE: "白" # For whatever reason this is a thing
+    branding:
+      title: "YouTube のブランディング"
+      values:
+        BRANDING_2015: "2015: 古いロゴ、濃い赤"
+        BRANDING_2017_RINGO: "2017: 新しいロゴ、明るい赤"
+        BRANDING_2024_RINGO2: "2024: 新しいロゴ、ピンクがかった赤とグラデーション"
     modernLogo:
       title: "現行のYouTubeロゴを使用"
       subtitle: >

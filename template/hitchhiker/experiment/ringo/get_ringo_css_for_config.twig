@@ -1,0 +1,9 @@
+{#
+    This file determines the correct Ringo branding CSS to use for the current
+    user configuration.
+#}
+{%- if rehike.config.appearance.branding == "BRANDING_2024_RINGO2" -%}
+    {% include "experiment/ringo/ringo2.twig" %}
+{%- elseif rehike.config.appearance.branding == "BRANDING_2017_RINGO" -%}
+    {% include "experiment/ringo/ringo.twig" %}
+{% endif %}

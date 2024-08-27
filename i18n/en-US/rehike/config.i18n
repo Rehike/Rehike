@@ -34,11 +34,12 @@ props:
       values:
         RED: "Red"
         WHITE: "White" # For whatever reason this is a thing
-    modernLogo:
-      title: "Use the current YouTube logo"
-      subtitle: >
-        Used since 2017. Enabling this may break some custom themes made 
-        before 2017.
+    branding:
+      title: "YouTube branding"
+      values:
+        BRANDING_2015: "2015: Old logo, dark reds"
+        BRANDING_2017_RINGO: "2017: New logo, bright reds"
+        BRANDING_2024_RINGO2: "2024: New logo, pinkish reds with gradients"
     uploadButtonType:
       title: "Upload button type:"
       values:

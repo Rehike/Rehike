@@ -1,10 +1,10 @@
 {
-	"previousHash": "8ddcd30348b30235aba5a466e49ad076fbffa008",
-	"currentRevisionId": 1622,
-	"subject": "Partially restore the temporary player workaround",
-	"body": "Partially restore the temporary player workaround",
+	"previousHash": "909ee75d2444a58241a60ecba7dd2e0c659140c4",
+	"currentRevisionId": 1623,
+	"subject": "Add support for new Ringo2 branding (2024)",
+	"body": "Add support for new Ringo2 branding (2024)",
 	"branch": "master",
 	"committerName": "Isabella",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1724784224
+	"time": 1724791552
 }

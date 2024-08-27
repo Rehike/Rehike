@@ -6,11 +6,13 @@
         {{ core.css("www-error") }}
         {{ core.css("www-pageframe") }}
         <style name="www-roboto">@font-face{font-family:'Roboto';font-style:normal;font-weight:500;src:local('Roboto Medium'),local('Roboto-Medium'),url(//fonts.gstatic.com/s/roboto/v18/KFOlCnqEu92Fr1MmEU9fBBc9.ttf)format('truetype');}@font-face{font-family:'Roboto';font-style:normal;font-weight:400;src:local('Roboto Regular'),local('Roboto-Regular'),url(//fonts.gstatic.com/s/roboto/v18/KFOmCnqEu92Fr1Mu4mxP.ttf)format('truetype');}@font-face{font-family:'Roboto';font-style:italic;font-weight:500;src:local('Roboto Medium Italic'),local('Roboto-MediumItalic'),url(//fonts.gstatic.com/s/roboto/v18/KFOjCnqEu92Fr1Mu51S7ACc6CsE.ttf)format('truetype');}@font-face{font-family:'Roboto';font-style:italic;font-weight:400;src:local('Roboto Italic'),local('Roboto-Italic'),url(//fonts.gstatic.com/s/roboto/v18/KFOkCnqEu92Fr1Mu51xIIzc.ttf)format('truetype');}</style>
-        {% if rehike.config.appearance.modernLogo %}
-        {% include 'experiment/ringo/ringo.twig' %}
-        {% endif %}
+        {% include 'experiment/ringo/get_ringo_css_for_config.twig' %}
     </head>
-    <body class="{{ rehike.config.appearance.modernLogo ? "exp-invert-logo" }}">
+    <body class="{{ rehike.config.appearance.branding == "BRANDING_2024_RINGO2" ? 'exp-ringo2 ' }}{{ 
+        rehike.config.appearance.branding == "BRANDING_2017_RINGO" or
+        rehike.config.appearance.branding == "BRANDING_2024_RINGO2"
+            ? 'exp-invert-logo' 
+    }}">
         <div id="error-page">
             <div id="error-page-content">
                 <img src="/yts/img/ringo/img/image-hh-404-vflP3hqNT.png" alt="" id="error-page-hh-illustration">

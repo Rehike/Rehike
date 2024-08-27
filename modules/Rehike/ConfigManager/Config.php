@@ -12,6 +12,7 @@ use Rehike\Exception\FileSystem\FsWriteFileException;
 use Rehike\FileSystem;
 
 use YukisCoffee\PropertyAtPath;
+use YukisCoffee\PropertyAtPathException;
 
 /**
  * Manages Rehike user configuration.
@@ -235,6 +236,29 @@ class Config
             catch (\YukisCoffee\PropertyAtPathException $e) {}
         }
         catch (\YukisCoffee\PropertyAtPathException $e)
+        {
+            return;
+        }
+    }
+    
+    /**
+     * Removes the value of a configuration property; unsets it.
+     */
+    public static function removeConfigProp(string $path): void
+    {
+        $parts = explode(".", $path);
+        $target = array_pop($parts);
+        $parent = join(".", $parts);
+        
+        \Rehike\Logging\DebugLogger::print("%s %s", $parent, $target);
+        
+        try
+        {
+            $parentObj = PropertyAtPath::get(self::$config, $parent);
+            
+            unset($parentObj->{$target});
+        }
+        catch (PropertyAtPathException $e)
         {
             return;
         }

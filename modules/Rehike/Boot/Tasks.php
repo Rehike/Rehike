@@ -54,6 +54,7 @@ final class Tasks
         try
         {
             Config::loadConfig();
+            ConfigDefinitions::migrateOldOptions();
         }
         catch (LoadConfigException $e)
         {

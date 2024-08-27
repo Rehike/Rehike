@@ -5,14 +5,21 @@
 <meta name="keywords" content="video, sharing, camera phone, video phone, free, upload">
 <link rel="manifest" href="/manifest.json">
 <link rel="search" type="application/opensearchdescription+xml" href="https://www.youtube.com/opensearch?locale=en_US" title="YouTube Video Search">
-{% if rehike.config.appearance.modernLogo %}
+{% if rehike.config.appearance.branding == "BRANDING_2024_RINGO2" %}
+<link rel="shortcut icon" href="/rehike/static/img/ringo2/hitchhiker/favicon.ico" type="image/x-icon">
+<link rel="icon" href="/rehike/static/img/ringo2/hitchhiker/favicon_32x32.png" sizes="32x32">
+<link rel="icon" href="/rehike/static/img/ringo2/hitchhiker/favicon_48x48.png" sizes="48x48">
+<link rel="icon" href="/rehike/static/img/ringo2/hitchhiker/favicon_96x96.png" sizes="96x96">
+<link rel="icon" href="/rehike/static/img/ringo2/hitchhiker/favicon_144x144.png" sizes="144x144">
+<meta name="theme-color" content="rgba(255, 255, 255, 0.98)">
+{% elseif rehike.config.appearance.branding == "BRANDING_2017_RINGO" %}
 <link rel="shortcut icon" href="https://s.ytimg.com/yts/img/favicon-vfl8qSV2F.ico" type="image/x-icon">
 <link rel="icon" href="//s.ytimg.com/yts/img/favicon_32-vflOogEID.png" sizes="32x32">
 <link rel="icon" href="//s.ytimg.com/yts/img/favicon_48-vflVjB_Qk.png" sizes="48x48">
 <link rel="icon" href="//s.ytimg.com/yts/img/favicon_96-vflW9Ec0w.png" sizes="96x96">
 <link rel="icon" href="//s.ytimg.com/yts/img/favicon_144-vfliLAfaB.png" sizes="144x144">
 <meta name="theme-color" content="#ff0000">
-{% else %}
+{% else %}{# BRANDING_2015 for anything else #}
 <link rel="shortcut icon" href="https://s.ytimg.com/yts/img/favicon-vflz7uhzw.ico" type="image/x-icon">
 <link rel="icon" href="//s.ytimg.com/yts/img/favicon_32-vfl8NGn4k.png" sizes="32x32">
 <link rel="icon" href="//s.ytimg.com/yts/img/favicon_48-vfl1s0rGh.png" sizes="48x48">
