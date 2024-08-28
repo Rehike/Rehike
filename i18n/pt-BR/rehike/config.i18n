@@ -35,7 +35,7 @@ props:
         RED: "Vermelho"
         WHITE: "Branco" # Por algum motivo isso existe
     branding:
-      title: "Branding do YouTube"
+      title: "Logótipo do YouTube"
       values:
         BRANDING_2015: "2015: Logótipo antigo, vermelhos escuros"
         BRANDING_2017_RINGO: "2017: Nova logótipo, vermelhos claros"
