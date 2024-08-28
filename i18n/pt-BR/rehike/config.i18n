@@ -34,11 +34,12 @@ props:
       values:
         RED: "Vermelho"
         WHITE: "Branco" # Por algum motivo isso existe
-    modernLogo:
-      title: "Usar a logo atual do YouTube"
-      subtitle: >
-        Usado desde 2017. Habilitar essa opção pode quebrar alguns temas feitos 
-        antes de 2017.
+    branding:
+      title: "Branding do YouTube"
+      values:
+        BRANDING_2015: "2015: Logótipo antigo, vermelhos escuros"
+        BRANDING_2017_RINGO: "2017: Nova logótipo, vermelhos claros"
+        BRANDING_2024_RINGO2: "2024: Nova logótipo, vermelhos rosados com gradientes"
     uploadButtonType:
       title: "Tipo do botão de \"Enviar\":"
       values:
