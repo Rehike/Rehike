@@ -34,11 +34,12 @@ props:
       values:
         RED: "Czerwony"
         WHITE: "Biały" # For whatever reason this is a thing
-    modernLogo:
-      title: "Użyj aktualnego logo YouTube"
-      subtitle: >
-        Używane od 2017 r. Włączenie tego może zepsuć niektóre niestandardowe
-        motywy wykonane przed 2017 r.
+    branding:
+      title: "Branding YouTube"
+      values:
+        BRANDING_2015: "2015: Stare logo, ciemne czerwienie"
+        BRANDING_2017_RINGO: "2017: Nowe logo, jaskrawe czerwienie"
+        BRANDING_2024_RINGO2: "2024: Nowe logo, różowawe czerwienie z gradientami"
     uploadButtonType:
       title: "Typ przycisku przesłania:"
       values:
