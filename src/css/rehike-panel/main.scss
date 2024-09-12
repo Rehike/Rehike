@@ -46,6 +46,15 @@
     @include rehike.sprite("/rehike/static/rehike/www-sidebar.png", 24, 72, 24, 24);
 }
 
+#creator-sidebar .studio-icon.creator-sidebar-rehike-nepeta {
+    @include rehike.sprite("/rehike/static/rehike/www-sidebar.png", 0, 120, 24, 24);
+}
+
+#creator-sidebar .studio-icon.creator-sidebar-rehike-nepeta.selected,
+#creator-sidebar a:hover .studio-icon.creator-sidebar-rehike-nepeta.selected {
+    @include rehike.sprite("/rehike/static/rehike/www-sidebar.png", 24, 120, 24, 24);
+}
+
 #creator-sidebar .rehike-creator-footer-button {
     margin-top: 15px;
     padding: 0 16px 6px;

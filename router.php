@@ -105,6 +105,7 @@ Router::get([
     "/rehike/config/**" => "rehike/config",
     "/rehike/ajax/git_ajax" => "rehike/ajax/git_ajax",
     "/rehike/server_info" => "rehike/server_info",
+    "/rehike/extensions" => "rehike/extensions",
 	"/watch" => "watch",
 	"/html5" => "html5",
 	"/annotations_invideo" => "ajax/annotations_invideo",

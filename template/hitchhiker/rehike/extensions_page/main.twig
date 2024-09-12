@@ -1,0 +1,38 @@
+{% extends "core.twig" %}
+
+{% set appbarEnabled = true %}
+{% set defaultGuideVisibility = false %}
+{% set defaultAppbarVisibility = false %}
+{% set enableSnapScaling = true %}
+{% set flexWidthSnapDisabled = true %}
+
+{% block head_css %}
+{% import 'core/macros.twig' as core %}
+{{ core.css("www-account-settings") }}
+{{ core.css("www-creatorpage") }}
+<link rel="stylesheet" href="{{ rehike.resource.resolveVersioned("rehike/css/www-rehike-panel.css") }}">
+{% endblock %}
+
+{% block content %}
+{% embed "rehike/panel/base.twig" %}
+
+{% block creator_page_content_class %}account-settings-container{% endblock %}
+
+{% macro render_inner() %}
+<h1>:33 &lt; hello</h1>
+{% endmacro %}
+
+{% macro render_scripts() %}
+{% endmacro %}
+
+{% block creator_page_content %}
+    {% from "rehike/panel/content.twig" import render as panel_content %}
+    {{ panel_content({
+        title: "Nepeta",
+        inner_content: _self.render_inner(),
+        footer_content: _self.render_scripts()
+    }) }}
+{% endblock %}
+
+{% endembed %}
+{% endblock %}
