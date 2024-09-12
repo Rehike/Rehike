@@ -1,5 +1,5 @@
 <?php
-namespace Rehike\SignInV2\Enum;
+namespace Rehike\SignInV2;
 
 /**
  * Defines enumerations for types of session errors. These are used as a

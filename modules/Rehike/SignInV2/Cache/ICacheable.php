@@ -13,4 +13,6 @@ interface ICacheable
      * Restores the object properties from an abstract cache object.
      */
     public function restoreFromCache(CacheReader $cache): void;
+    
+    public function exportCacheObject(): CacheObject;
 }

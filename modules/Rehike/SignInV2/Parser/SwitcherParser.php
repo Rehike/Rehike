@@ -3,8 +3,11 @@ namespace Rehike\SignInV2\Parser;
 
 use Rehike\SignInV2\{
     Builder\SessionInfoBuilder,
-    Parser\Exception\UnfinishedParsingException
+    Builder\GoogleAccountInfoBuilder,
+    Builder\YtChannelAccountInfoBuilder,
 };
+
+use Rehike\Util\ParsingUtils;
 
 /**
  * Parses and retrieves information from the account switcher, requested at
@@ -51,35 +54,6 @@ class SwitcherParser
      */
     private array $channels = [];
 
-    /**
-     * Creates an array structure following the internal Google Account info
-     * schema used by the parser.
-     */
-    protected static function createGoogleAccountInfo(): array
-    {
-        return [
-            "email" => null,
-            "name" => null
-        ];
-    }
-    
-    /**
-     * Creates an array structure following the internal channel info schema
-     * used by the parser.
-     */
-    protected static function createChannelInfo(): array
-    {
-        return [
-            "name" => null,
-            "photo" => null,
-            "byline" => null,
-            "selected" => null,
-            "hasChannel" => null,
-            "gaiaId" => null,
-            "switchUrl" => null
-        ];
-    }
-
     public function __construct(SessionInfoBuilder $builder, object $response)
     {
         $this->builder = $builder;
@@ -87,144 +61,258 @@ class SwitcherParser
     }
 
     /**
-     * Parse the given account switcher response and modify this class's
-     * data accordingly.
+     * 
      */
     public function parse(): self
     {
-        $this->retrieveGoogleAccountInfo();
-        $this->retrieveChannels();
+        $accountSections = $this->getAccountSections();
+        
+        foreach ($accountSections as $accountSectionIndex => $accountSection)
+        {
+            $googleAccountBuilder = new GoogleAccountInfoBuilder($this->builder);
+            
+            $accountHeaderInfo = $this->retrieveGoogleAccountInfo($accountSection);
+            $googleAccountBuilder->displayName = $accountHeaderInfo->displayName;
+            $googleAccountBuilder->accountEmail = $accountHeaderInfo->email;
+            
+            // The default Google here means the active one:
+            if ($accountHeaderInfo->isDefault)
+            {
+                $googleAccountBuilder->isActive = true;
+            }
+            
+            foreach ($accountSection->contents as $contentSection)
+            {
+                if (isset($contentSection->accountItemSectionRenderer->contents[0]->accountItem))
+                {
+                    $channelItem = $contentSection->accountItemSectionRenderer->contents[0]->accountItem;
+                    
+                    // If the current channel item is the default channel for the Google
+                    // account, then we can obtain a lot of information about the Google
+                    // account from it:
+                    if ($this->isGoogleAccountDefaultChannel($channelItem))
+                    {
+                        $this->addInfoToGoogleAccountBuilderFromDefaultChannel(
+                            $googleAccountBuilder,
+                            $channelItem
+                        );
+                    }
+                    
+                    // If we don't already know the authuser ID for the current Google
+                    // account, then we'll check to see if we can obtain it from the
+                    // current channel item:
+                    if (!$googleAccountBuilder->authUserId)
+                    {
+                        if ($authUserId = $this->getAuthUserId($channelItem))
+                        {
+                            $googleAccountBuilder->authUserId = $authUserId;
+                        }
+                    }
+                    
+                    $channelBuilder = new YtChannelAccountInfoBuilder($googleAccountBuilder);
+                    $this->addInfoToChannelBuilder($channelBuilder, $channelItem);
+                }
+            }
+        }
 
         $this->hasParsed = true;
         return $this;
     }
 
     // ========================================================================
+    
+    /**
+     * Helper function to find a supported token for a YouTube channel.
+     */
+    protected function findSupportedToken(array $supportedTokens, string $name): ?object
+    {
+        foreach ($supportedTokens as $token)
+        {
+            if (isset($token->{$name}))
+            {
+                return $token->{$name};
+            }
+        }
+        
+        return null;
+    }
 
     /**
-     * Get the main renderer, which is the root of most other information
-     * sources.
      * 
-     * This is an array that will an array containing various information
-     * about each of the Google Accounts.
      */
-    protected function getMainRenderer(): array
+    protected function getAccountSections(): array
     {
         return $this->response->data->actions[0]->getMultiPageMenuAction
             ->menu->multiPageMenuRenderer->sections;
     }
 
     /**
-     * Parse the available Google Accounts in the response and set class
-     * properties accordingly.
-     */
-    protected function retrieveAccounts(): void
-    {
-        $mainRenderer = $this->getMainRenderer();
-
-        foreach ($mainRenderer as $i => $account)
-        {
-
-        }
-    }
-
-    /**
-     * Get the account header renderer, which contains certain information
-     * about the currently used Google Account.
-     */
-    protected function getAccountHeaderRenderer(object $accSection): object
-    {
-        return $this->getMainRenderer()->header->googleAccountHeaderRenderer;
-    }
-
-    /**
-     * Get the root rendererer of all available YouTube channels on a given
-     * account.
+     * 
      */
     protected function getChannelItemsRenderer(object $acc): array
     {
         return $acc->contents ?? [];
     }
-
+    
     /**
-     * Parse the Google Account information available in the response and
-     * set class properties accordingly.
-     */
-    protected function retrieveGoogleAccountInfo(): void
-    {
-        $headerInfo = $this->getAccountHeaderRenderer();
-
-        $this->googleAccountInfo["email"] = $headerInfo->email->simpleText;
-        $this->googleAccountInfo["name"] = $headerInfo->name->simpleText;
-    }
-
-    /**
-     * Parse all of the channels listed in the response and set class
-     * properties accordingly.
-     */
-    protected function retrieveChannelsForAccount(object $acc): void
-    {
-        $items = $this->getChannelItemsRenderer($acc);
-
-        foreach ($items as $item)
-        {
-            if (isset($item->accountItem))
-            {
-                $channelInfo = $this->getChannelInfo($item->accountItem);
-
-                if ($channelInfo["selected"])
-                {
-                    // TODO (kirasicecreamm) !!
-                }
-
-                $this->channels[] = $channelInfo;
-            }
-        }
-    }
-
-    /**
-     * Get the information of a single channel.
      * 
-     * @see getChannels()   Source of the iteration of $channel.
      */
-    protected function getChannelInfo(object $channel): array
+    protected function retrieveGoogleAccountInfo(object $accountSection): ?AccountHeaderInfo
     {
-        if (isset(
-            $channel->serviceEndpoint->selectActiveIdentityEndpoint
-                ->supportedTokens
-        ))
+        if (isset($accountSection->header->googleAccountHeaderRenderer))
         {
-            $supportedTokens = $channel->serviceEndpoint
-                ->selectActiveIdentityEndpoint->supportedTokens;
+            return $this->retrieveMainGoogleAccountInfo();
+        }
+        else if (isset($accountSection->header->accountItemSectionHeaderRenderer))
+        {
+            return $this->retrieveSecondaryGoogleAccountInfo($accountSection);
+        }
+        
+        return null;
+    }
+    
+    /**
+     * 
+     */
+    protected function retrieveMainGoogleAccountInfo(): AccountHeaderInfo
+    {
+        // The header information for the zeroth item is a googleAccountHeaderRenderer,
+        // which contains information about the user's email address as well as name.
+        $headerInfo = $this->getAccountSections()[0]->header->googleAccountHeaderRenderer;
+        
+        return new AccountHeaderInfo(
+            email: $headerInfo->email->simpleText,
+            displayName: $headerInfo->name->simpleText,
+            isDefault: true
+        );
+    }
+    
+    protected function retrieveSecondaryGoogleAccountInfo(object $accountSection): ?AccountHeaderInfo
+    {
+        if (!isset($accountSection->header->accountItemSectionHeaderRenderer))
+        {
+            return null;
+        }
+        
+        $headerInfo = $accountSection->header->accountItemSectionHeaderRenderer;
 
-            foreach ($supportedTokens as $token)
+        $emailTitle = ParsingUtils::getText($headerInfo->title);
+        
+        return new AccountHeaderInfo(
+            email: $emailTitle,
+            displayName: null
+        );
+    }
+    
+    protected function getAuthUserId(object $accountItem): ?string
+    {
+        $supportedTokens = $accountItem->serviceEndpoint->selectActiveIdentityEndpoint
+            ->supportedTokens;
+        
+        $accountSigninToken = $this->findSupportedToken($supportedTokens, "accountSigninToken");
+        
+        $authUserId = explode("&", explode("authuser=", $accountSigninToken->signinUrl)[1])[0];
+        
+        return $authUserId;
+    }
+    
+    /**
+     * 
+     */
+    protected function isGoogleAccountDefaultChannel(object $accountItem): bool
+    {
+        $supportedTokens = $accountItem->serviceEndpoint->selectActiveIdentityEndpoint
+            ->supportedTokens;
+        
+        $accountStateToken = $this->findSupportedToken($supportedTokens, "accountStateToken");
+        $datasyncIdToken = $this->findSupportedToken($supportedTokens, "datasyncIdToken");
+        
+        $obfuscatedGaiaId = null;
+        $datasyncId = null;
+        
+        if ($accountStateToken)
+        {
+            $obfuscatedGaiaId = $accountStateToken->obfuscatedGaiaId;
+        }
+        
+        if ($datasyncIdToken)
+        {
+            $datasyncId = $datasyncIdToken->datasyncIdToken;
+        }
+        
+        if ($obfuscatedGaiaId && $datasyncId)
+        {
+            // Datasync IDs for the main account are equivalent to the GAIA ID
+            // plus an "||" terminator. This contrasts with brand accounts,
+            // which put the brand account GAIA ID first and the primary GAIA
+            // ID after the "||" sequence.
+            if ($obfuscatedGaiaId == ($datasyncId . "||"))
             {
-                if (isset($token->pageIdToken))
-                {
-                    $gaiaId = $token->pageIdToken->pageId;
-                }
-
-                if (isset($token->accountSigninToken))
-                {
-                    $switchUrl = $token->accountSigninToken->signinUrl;
-                }
+                return true;
             }
         }
-
-        $nameText = $channel->accountName->simpleText;
-        $photoUrl = $channel->accountPhoto->thumbnails[0]->url;
-        $bylineText = $channel->accountByline->simpleText;
-        $selectedState = $channel->isSelected;
-        $hasChannel = $channel->hasChannel;
-
-        return [
-            "name" => $nameText,
-            "photo" => $photoUrl,
-            "byline" => $bylineText,
-            "selected" => $selectedState,
-            "hasChannel" => $hasChannel,
-            "gaiaId" => $gaiaId ?? null,
-            "switchUrl" => $switchUrl ?? null
-        ];
+        
+        return false;
+    }
+    
+    protected function addInfoToGoogleAccountBuilderFromDefaultChannel(
+        GoogleAccountInfoBuilder $builder,
+        object $defaultChannelItem
+    ): void
+    {
+        $supportedTokens = $defaultChannelItem->serviceEndpoint->selectActiveIdentityEndpoint
+            ->supportedTokens;
+        
+        $accountStateToken = $this->findSupportedToken($supportedTokens, "accountStateToken");
+        
+        if ($accountStateToken)
+        {
+            $gaiaId = $accountStateToken->obfuscatedGaiaId;
+            $builder->gaiaId = $gaiaId;
+        }
+        
+        if (!$builder->displayName)
+        {
+            $builder->displayName = ParsingUtils::getText($defaultChannelItem->accountName);
+        }
+        
+        if (!$builder->avatarUrl)
+        {
+            $builder->avatarUrl = ParsingUtils::getThumb($defaultChannelItem->accountPhoto);
+        }
+    }
+    
+    protected function addInfoToChannelBuilder(
+        YtChannelAccountInfoBuilder $builder,
+        object $channelItem
+    ): void
+    {
+        $supportedTokens = $channelItem->serviceEndpoint->selectActiveIdentityEndpoint
+            ->supportedTokens;
+        
+        $accountStateToken = $this->findSupportedToken($supportedTokens, "accountStateToken");
+        
+        if ($accountStateToken)
+        {
+            $gaiaId = $accountStateToken->obfuscatedGaiaId;
+            $builder->gaiaId = $gaiaId;
+        }
+        
+        if (!$builder->displayName)
+        {
+            $builder->displayName = ParsingUtils::getText($channelItem->accountName);
+        }
+        
+        if (!$builder->avatarUrl)
+        {
+            $builder->avatarUrl = ParsingUtils::getThumb($channelItem->accountPhoto);
+        }
+        
+        $builder->isActive = $channelItem->isSelected ?? false;
+        
+        if ($builder->isActive && !isset($this->builder->activeChannelBuilder))
+        {
+            $this->builder->activeChannelBuilder = $builder;
+        }
     }
 }

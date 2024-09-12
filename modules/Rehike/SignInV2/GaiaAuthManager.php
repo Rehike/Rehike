@@ -2,17 +2,20 @@
 namespace Rehike\SignInV2;
 
 use Rehike\SignInV2\{
+    SessionErrors,
     Builder\SessionInfoBuilder,
-    Enum\SessionErrors,
-    Exception\FailedSwitcherRequestException,
     Info\SessionInfo,
     Parser\SwitcherParser
 };
 
 use Rehike\Network;
+use Rehike\Logging\DebugLogger;
 
 use Rehike\Async\Promise;
 use function Rehike\Async\async;
+
+use Exception;
+use Rehike\Helper\ChannelUtils;
 
 /**
  * Manages Google Account (GAIA) authentication and initialization.
@@ -97,11 +100,24 @@ class GaiaAuthManager
 
                 $switcherParser = new SwitcherParser($infoBuilder, $accSwitcher);
                 $switcherParser->parse();
+                
+                try
+                {
+                    $ucid = yield self::requestUcid();
+                    $infoBuilder->activeChannelBuilder->ucid = $ucid;
+                }
+                catch (Exception $e)
+                {
+                    // cancel build
+                    $infoBuilder->pushSessionError(-1);
+                    return $infoBuilder->build();
+                }
 
                 return $infoBuilder->build();
             }
-            catch (FailedSwitcherRequestException $e)
+            catch (Exception $e)
             {
+                DebugLogger::print("[GaiaAuthManager::getFreshInfoFromRemote] %s", $e->getMessage());
                 $infoBuilder->pushSessionError(SessionErrors::FAILED_REQUEST);
                 return $infoBuilder->build();
             }
@@ -145,12 +161,42 @@ class GaiaAuthManager
             // data we received is invalid, then throw an exception.
             if ($response->status != 200 || !is_object($object))
             {
-                throw new FailedSwitcherRequestException(
-                    "Failed to request account switcher data."
+                throw new Exception(
+                    "Account switcher data is invalid."
                 );
             }
 
             return $object;
+        });
+    }
+    
+    /**
+     * 
+     * 
+     * @return Promise<string>
+     */
+    private static function requestUcid(): Promise/*<string>*/
+    {
+        return async(function() {
+            $profileResponseRaw = yield Network::innertubeRequest(
+                action: "navigation/resolve_url",
+                body: [
+                    "url" => "https://www.youtube.com/profile"
+                ]
+            );
+            
+            $profileResponse = $profileResponseRaw->getJson();
+            
+            $endpoint = $profileResponse->endpoint->urlEndpoint->url;
+            
+            if (strpos($endpoint, "/channel/") !== false)
+            {
+                $ucid = explode("/channel/", $endpoint)[1];
+                
+                return $ucid;
+            }
+            
+            return yield ChannelUtils::getUcid($endpoint);
         });
     }
 }

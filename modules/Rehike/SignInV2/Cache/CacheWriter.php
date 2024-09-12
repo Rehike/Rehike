@@ -43,4 +43,9 @@ class CacheWriter
     {
         $this->targetObj->{$keyName} = $value;
     }
+    
+    public function finish(): CacheObject
+    {
+        return $this->targetObj;
+    }
 }

@@ -2,7 +2,6 @@
 namespace Rehike\SignInV2\Builder;
 
 use Rehike\SignInV2\Info\SessionInfo;
-use Rehike\SignInV2\Exception\BuilderException;
 
 /**
  * Builds a session info object using data that is collected elsewhere.
@@ -14,54 +13,33 @@ use Rehike\SignInV2\Exception\BuilderException;
  * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
-class SessionInfoBuilder
+class SessionInfoBuilder implements IBuilder
 {
-    private array $googleAccounts = [];
+    public bool $isSignedIn = false;
     
-    private int $sessionErrors;
+    public BuilderCollection $googleAccounts;
+    
+    public ?YtChannelAccountInfoBuilder $activeChannelBuilder = null;
+    
+    //public BuilderCollection $otherAccountBuilders;
+    
+    public string $datasyncId;
+    
+    public int $sessionErrors = 0;
+    
+    public function __construct()
+    {
+        $this->googleAccounts = new BuilderCollection(GoogleAccountInfoBuilder::class);
+        //$this->otherAccountBuilders = new BuilderCollection(YtChannelAccountInfoBuilder::class);
+    }
 
     public function build(): SessionInfo
     {
-        $googleAccounts = $this->recursiveBuildGoogleAccounts();
-
-        return new SessionInfo(
-            isSignedIn: false
-        );
+        return new SessionInfo($this);
     }
 
     public function pushSessionError(int $error): void
     {
         $this->sessionErrors |= $error;
-    }
-
-    public function insertGoogleAccount(): GoogleAccountInfoBuilder
-    {
-        $instance = new GoogleAccountInfoBuilder($this);
-        $this->googleAccounts[] = $instance;
-        return $instance;
-    }
-
-    private function recursiveBuildGoogleAccounts(): array
-    {
-        $result = [];
-
-        foreach ($this->googleAccounts as $i => $acc)
-        {
-            try
-            {
-                $result[] = $acc->build();
-            }
-            catch (BuilderException $e)
-            {
-                // TODO (kirasicecreamm): Better global error handling?
-                trigger_error(
-                    "Failed to build information class for Google Account at " .
-                    "index $i.",
-                    E_USER_WARNING
-                );
-            }
-        }
-
-        return $result;
     }
 }

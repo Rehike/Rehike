@@ -6,7 +6,8 @@ use Rehike\{
     TemplateManager,
     ControllerV2\Core as ControllerV2,
     Debugger\Debugger,
-    Signin\AuthManager,
+    Signin\AuthManager as LegacyAuthManager,
+    SignInV2\SignIn,
     ConfigManager\Config,
     Player\PlayerCore
 };
@@ -46,7 +47,9 @@ final class YtStateManager
          */
         if (Config::getConfigProp("experiments.useSignInV2") !== true)
         {
-            AuthManager::use($yt);
+            LegacyAuthManager::use($yt);
+            
+            //$yt->tempSv2Test = SignIn::getSessionInfo();
         }
     }
 }

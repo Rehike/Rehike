@@ -1,7 +1,11 @@
 <?php
 namespace Rehike\SignInV2\Info;
 
-use Rehike\SignInV2\Enum\SessionErrors;
+use Rehike\SignInV2\Builder\SessionInfoBuilder;
+use Rehike\SignInV2\Cache\AutoCacheable;
+use Rehike\SignInV2\Cache\CacheProperty;
+use Rehike\SignInV2\Cache\ICacheable;
+use Rehike\SignInV2\SessionErrors;
 
 /**
  * Provides information about the current user session. This is the top-most
@@ -11,8 +15,10 @@ use Rehike\SignInV2\Enum\SessionErrors;
  * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
-class SessionInfo implements IBuiltObject
+class SessionInfo implements IBuiltObject, ICacheable
 {
+    use AutoCacheable;
+    
     /**
      * States whether or not the user is signed into a valid session.
      */
@@ -22,11 +28,18 @@ class SessionInfo implements IBuiltObject
      * Stores information about all accessible Google Accounts.
      */
     protected array $googleAccounts = [];
+    
+    /**
+     * 
+     */
+    #[CacheProperty(CacheProperty::CACHE_NEVER)]
+    protected ?GoogleAccountInfo $activeGoogleAccount = null;
 
     /**
      * Stores information about the currently used YouTube channel.
      */
-    protected YtChannelAccountInfo $activeChannel;
+    #[CacheProperty(CacheProperty::CACHE_NEVER)]
+    protected ?YtChannelAccountInfo $activeChannel = null;
 
     /**
      * Stores a list of other YouTube channels accessible under the current
@@ -34,7 +47,10 @@ class SessionInfo implements IBuiltObject
      * 
      * @var YtChannelAccountInfo[]
      */
-    protected array $otherAccounts;
+    #[CacheProperty(CacheProperty::CACHE_NEVER)]
+    protected array $otherChannels;
+    
+    protected ?string $currentDatasyncId = null;
 
     /**
      * A bitmask that stores information about various errors that may have
@@ -44,24 +60,22 @@ class SessionInfo implements IBuiltObject
      */
     protected int $sessionErrors = 0;
 
-    public function __construct(
-            bool $isSignedIn,
-            array $googleAccounts = null,
-            YtChannelAccountInfo $activeChannel = null,
-            array $otherAccounts = [],
-            array $sessionErrors = []
-    )
+    public function __construct(SessionInfoBuilder $builder)
     {
-        $this->isSignedIn = $isSignedIn && !empty($googleAccounts);
+        $this->isSignedIn = $builder->isSignedIn && !empty($builder->googleAccounts);
+        $this->currentDatasyncId = $builder->datasyncId;
 
-        if (!empty($googleAccounts))
-            $this->googleAccounts = $googleAccounts;
-
-        if ($activeChannel != null)
-            $this->activeChannel = $activeChannel;
-
-        $this->otherAccounts = $otherAccounts;
-        $this->sessionErrors = $sessionErrors;
+        if (!empty($builder->googleAccounts))
+        {
+            $this->googleAccounts = $builder->googleAccounts->buildAll();
+        }
+            
+        $this->sessionErrors = $builder->sessionErrors;
+        
+        // Precache these references:
+        $this->getCurrentGoogleAccount();
+        $this->getActiveChannel();
+        $this->getOtherChannels();
     }
 
     /**
@@ -74,6 +88,8 @@ class SessionInfo implements IBuiltObject
 
     /**
      * Get information about all accessible Google Accounts.
+     * 
+     * @return GoogleAccountInfo[]
      */
     public function getGoogleAccounts(): array
     {
@@ -83,16 +99,44 @@ class SessionInfo implements IBuiltObject
     /**
      * Gets information about the currently signed in Google Account.
      */
-    public function getCurrentGoogleAccount(): GoogleAccountInfo
+    public function getCurrentGoogleAccount(): ?GoogleAccountInfo
     {
-        return $this->activeChannel->getOwnerAccount();
+        if (!is_null($this->activeGoogleAccount))
+        {
+            return $this->activeGoogleAccount;
+        }
+        
+        foreach ($this->getGoogleAccounts() as $googleAccount)
+        {
+            if ($googleAccount->isActive())
+            {
+                $this->activeGoogleAccount = $googleAccount;
+                break;
+            }
+        }
+        
+        return $this->activeGoogleAccount;
     }
 
     /**
      * Gets information about the currently used YouTube channel.
      */
-    public function getActiveChannel(): YtChannelAccountInfo
+    public function getActiveChannel(): ?YtChannelAccountInfo
     {
+        if (!is_null($this->activeChannel))
+        {
+            return $this->activeChannel;
+        }
+        
+        foreach ($this->getCurrentGoogleAccount()->getYoutubeChannels() as $channel)
+        {
+            if ($channel->isActive())
+            {
+                $this->activeChannel = $channel;
+                break;
+            }
+        }
+        
         return $this->activeChannel;
     }
 
@@ -100,9 +144,28 @@ class SessionInfo implements IBuiltObject
      * Gets a list of other YouTube channels accessible under the current
      * Google Account.
      */
-    public function getOtherAccounts(): array
+    public function getOtherChannels(): array
     {
-        return $this->otherAccounts;
+        if (isset($this->otherChannels))
+        {
+            return $this->otherChannels;
+        }
+        
+        if ($activeGoogAcc = $this->getCurrentGoogleAccount())
+        {
+            $this->otherChannels = $activeGoogAcc->getYoutubeChannels();
+        }
+        else
+        {
+            $this->otherChannels = [];
+        }
+        
+        return $this->otherChannels;
+    }
+    
+    public function getDatasyncId(): string
+    {
+        return $this->currentDatasyncId;
     }
 
     /**
