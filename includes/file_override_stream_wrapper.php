@@ -98,16 +98,16 @@ class FileOverrideStreamWrapper
     
     public function dir_closedir(): bool
     {
-        return $this->native(fn() => closedir($this->handle));
+        return (bool)$this->native(fn() => closedir($this->handle));
     }
     
     public function dir_opendir(string $path, int $options): bool
     {
-        $this->handle = $this->native(fn() => opendir($path, $options));
+        $this->handle = $this->native(fn() => opendir($path, $this->context));
         return $this->handle !== false;
     }
     
-    public function dir_readdir(): string
+    public function dir_readdir(): string|false
     {
         return $this->native(fn() => readdir($this->handle));
     }
