@@ -4,6 +4,7 @@ namespace Rehike\Boot;
 use Rehike\{
     Debugger\Debugger,
     DisableRehike\DisableRehike,
+    Logging\LogFileManager,
     Nepeta\NepetaCore
 };
 use Rehike\ConfigManager\Config;
@@ -58,6 +59,50 @@ final class Bootloader
     }
 
     /**
+     * Finishes the HTTP request without ending the PHP script.
+     * 
+     * This must be called before any output is sent to the server. A good idea
+     * is to rely on the automatic output buffering and call the function with
+     * the default arguments.
+     * 
+     * @see https://stackoverflow.com/a/15273676
+     */
+    public static function finishRequest(bool $handleOutputBuffering = true, ?string &$output = null): void
+    {
+        ignore_user_abort(true);
+        set_time_limit(0);
+
+        if ($handleOutputBuffering)
+        {
+            $contentLength = ob_get_length();
+        }
+        else
+        {
+            $contentLength = strlen($output);
+        }
+
+        header("Connection: close");
+        header("Content-Length: $contentLength");
+
+        // Compressed responses are not yet supported.
+        header("Content-Encoding: none");
+
+        if ($handleOutputBuffering)
+        {
+            if (ob_get_level() > 1)
+                ob_end_flush();
+
+            @ob_flush();
+        }
+
+        flush();
+
+        // Required for PHP-FPM (PHP > 5.3.3)
+        if (function_exists("fastcgi_finish_request"))
+            fastcgi_finish_request();
+    }
+
+    /**
      * Sets up everything necessary to load a Rehike page.
      */
     private static function boot(): void
@@ -105,8 +150,11 @@ final class Bootloader
             );
         }
 
-        if (ob_get_level() > 1)
-            ob_end_flush();
+        self::finishRequest();
+
+        LogFileManager::pruneLogFiles();
+
+        exit;
     }
 
     /**

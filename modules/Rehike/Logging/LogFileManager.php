@@ -6,6 +6,8 @@ use Rehike\ErrorHandler\ErrorPage\FatalErrorPage;
 use Rehike\FileSystem;
 use Rehike\Logging\Common\FormattedString;
 
+use DateTime;
+
 /**
  * Manages the creation of log files.
  * 
@@ -48,6 +50,26 @@ class LogFileManager
 
         FileSystem::writeFile($path, $data);
         ErrorHandler::setLogFileName($path);
+    }
+
+    public static function pruneLogFiles(): void
+    {
+        foreach (glob("logs/*.txt") as $filePath)
+        {
+            if (!preg_match("/(\d+)\-/", $filePath, $matches))
+            {
+                continue;
+            }
+
+            $timestamp = $matches[1];
+            $fileTime = new DateTime($timestamp);
+            $currentTime = new DateTime();
+
+            if ($fileTime->diff($currentTime)->days > 5)
+            {
+                unlink($filePath);
+            }
+        }
     }
 
     private static function getLogFileName(): string
