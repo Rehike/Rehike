@@ -31,7 +31,7 @@
     {# Global walker config #}
     {% set globalAttr = rebug.jsAttrs %}
     <script async="true">
-        _rebugcfg.globalWalker.data["yt"] = {{ yt|json_encode|raw }};
+        _rebugcfg.globalWalker.data["yt"] = {{ rebug.jsonEncode(yt)|raw }};
         _rebugcfg.globalWalker.attr["yt"] = {{ globalAttr|json_encode|raw }};
     </script>
 </div>

@@ -36,6 +36,11 @@ class Context extends stdClass
      * Reports if the debugger is in condensed mode (disabled generally).
      */
     public bool $condensed = false;
+    
+    public function jsonEncode(object $obj): string
+    {
+        return RebugJsonEncodeManager::jsonEncode($obj);
+    }
 
     /**
      * Get all tabs in the dialog.

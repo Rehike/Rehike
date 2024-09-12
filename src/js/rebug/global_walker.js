@@ -158,6 +158,14 @@ rebug.globalWalker.templates = {
         var itemPath = path + "." + name;
 
         var attrs = rebug.globalWalker.getAttributes(itemPath);
+        
+        var commonInfo = {
+            name: name,
+            itemPath: itemPath,
+            attrs: attrs,
+            type: type,
+            data: data
+        };
 
         switch (type)
         {
@@ -170,7 +178,7 @@ rebug.globalWalker.templates = {
                     {
                         return this.abstractItem(
                             name,
-                            this.itemEmptyArrayHandler(name),
+                            this.itemEmptyArrayHandler(commonInfo),
                             "array"
                         );
                     }
@@ -179,11 +187,8 @@ rebug.globalWalker.templates = {
                         return this.abstractItem(
                             name,
                             this.itemArrayHandler(
-                                name, 
-                                itemPath, 
-                                data, 
-                                data.length || Object.keys(data).length,
-                                attrs.associativeArray || false
+                                commonInfo,
+                                data.length || Object.keys(data).length
                             ),
                             "array",
                             this.HAS_EXPANDER
@@ -194,11 +199,7 @@ rebug.globalWalker.templates = {
                 {
                     return this.abstractItem(
                         name,
-                        this.itemObjectHandler(
-                            name, 
-                            itemPath, 
-                            data
-                        ),
+                        this.itemObjectHandler(commonInfo),
                         "object",
                         this.HAS_EXPANDER
                     );
@@ -206,18 +207,18 @@ rebug.globalWalker.templates = {
             case "string":
                 return this.abstractItem(
                     name,
-                    this.itemStringHandler(name, data),
+                    this.itemStringHandler(commonInfo),
                     "string"
                 );
             case "number":
                 return this.abstractItem(
                     name,
-                    this.itemNumberHandler(name, data)
+                    this.itemNumberHandler(commonInfo)
                 );
             case "boolean":
                 return this.abstractItem(
                     name,
-                    this.itemBoolHandler(name, data)
+                    this.itemBoolHandler(commonInfo)
                 );
             case "undefined":
                 type = "null";
@@ -226,7 +227,7 @@ rebug.globalWalker.templates = {
             default:
                 return this.abstractItem(
                     name,
-                    this.itemUnknownHandler(name, type)
+                    this.itemUnknownHandler(commonInfo)
                 );
         }
     },
@@ -294,12 +295,12 @@ rebug.globalWalker.templates = {
     /**
      * Renders a base header wrapper.
      * 
-     * @param {string} name 
+     * @param {object} commonInfo 
      * @param {Element[]|Element} subElement 
      * @param {boolean} hasExpander 
      * @return {Element}
      */
-    abstractItemHeader: function(name, subElement, hasExpander) {
+    abstractItemHeader: function(commonInfo, subElement, hasExpander) {
         var itemChildren = [];
 
         if (hasExpander)
@@ -308,10 +309,20 @@ rebug.globalWalker.templates = {
                 class: ["toggle-icon"]
             }));
         }
+        
+        if (commonInfo.attrs.privacy)
+        {
+            itemChildren.push(this.element("span", {
+                class: ["variable-privacy", "type-other"], // Style from .type-other
+                text: commonInfo.attrs.privacy
+            }));
+            
+            itemChildren.push(this.text(" "));
+        }
 
         itemChildren.push(this.element("span", {
             class: ["variable-name"],
-            text: name
+            text: commonInfo.name
         }));
 
         itemChildren.push(this.element("span", {
@@ -343,9 +354,9 @@ rebug.globalWalker.templates = {
      * 
      * @return {Element[]}
      */
-    itemObjectHandler: function(name, path, data) {
-        var attrs = rebug.globalWalker.getAttributes(path);
-
+    itemObjectHandler: function(commonInfo) {
+        var attrs = commonInfo.attrs;
+        
         var header = [];
 
         if (attrs.type)
@@ -387,12 +398,12 @@ rebug.globalWalker.templates = {
             class: ["children"]
         });
 
-        childrenEl.childrenObj = data;
-        childrenEl.childrenPath = path;
+        childrenEl.childrenObj = commonInfo.data;
+        childrenEl.childrenPath = commonInfo.itemPath;
 
         return [
             this.abstractItemHeader(
-                name, 
+                commonInfo, 
                 header,
                 this.HAS_EXPANDER
             ),
@@ -416,12 +427,11 @@ rebug.globalWalker.templates = {
      * @param {string} path
      * @param {*[]} data 
      * @param {number} length Length of the array
-     * @param {boolean} assoc Is the array associative?
      * 
      * @return {Element[]}
      */
-    itemArrayHandler: function(name, path, data, length, assoc) {
-        assoc = assoc || false; // ES3 doesn't support defaults
+    itemArrayHandler: function(commonInfo, length) {
+        var assoc = commonInfo.attrs.associativeArray || false;
 
         var header = [];
 
@@ -465,11 +475,12 @@ rebug.globalWalker.templates = {
             ]
         });
 
-        childrenEl.childrenObj = data;
-        childrenEl.childrenPath = path;
+        childrenEl.childrenObj = commonInfo.data;
+        childrenEl.childrenPath = commonInfo.itemPath;
         
         return [
-            this.abstractItemHeader(name,
+            this.abstractItemHeader(
+                commonInfo,
                 header,
                 this.HAS_EXPANDER 
             ),
@@ -492,8 +503,8 @@ rebug.globalWalker.templates = {
      * @param {string} name
      * @return {Element[]}
      */
-    itemEmptyArrayHandler: function(name) {
-        return this.abstractItemHeader(name, [
+    itemEmptyArrayHandler: function(commonInfo) {
+        return this.abstractItemHeader(commonInfo, [
             this.element("span", {
                 class: ["brace"],
                 text: "["
@@ -517,13 +528,13 @@ rebug.globalWalker.templates = {
      * @param {string} data 
      * @return {Element}
      */
-    itemStringHandler: function(name, data) {
-        return this.abstractItemHeader(name, 
+    itemStringHandler: function(commonInfo) {
+        return this.abstractItemHeader(commonInfo, 
             this.element("span", {
                 class: [
                     "type-string"
                 ],
-                text: String(data)
+                text: String(commonInfo.data)
             }
         ));
     },
@@ -535,13 +546,13 @@ rebug.globalWalker.templates = {
      * @param {number} data 
      * @return {Element}
      */
-    itemNumberHandler: function(name, data) {
-        return this.abstractItemHeader(name,
+    itemNumberHandler: function(commonInfo) {
+        return this.abstractItemHeader(commonInfo,
             this.element("span", {
                 class: [
                     "type-number"
                 ],
-                text: String(data)
+                text: String(commonInfo.data)
             })
         );
     },
@@ -553,13 +564,13 @@ rebug.globalWalker.templates = {
      * @param {boolean} data 
      * @return {Element}
      */
-    itemBoolHandler: function(name, data) {
-        return this.abstractItemHeader(name,
+    itemBoolHandler: function(commonInfo) {
+        return this.abstractItemHeader(commonInfo,
             this.element("span", {
                 class: [
                     "type-bool"
                 ],
-                text: data ? "true" : "false"
+                text: commonInfo.data ? "true" : "false"
             })
         );
     },
@@ -571,13 +582,13 @@ rebug.globalWalker.templates = {
      * @param {string} type 
      * @return {Element}
      */
-    itemUnknownHandler: function(name, type) {
-        return this.abstractItemHeader(name, 
+    itemUnknownHandler: function(commonInfo) {
+        return this.abstractItemHeader(commonInfo, 
             this.element("span", {
                 class: [
                     "type-other"
                 ],
-                text: String(type).toLowerCase()
+                text: String(commonInfo.data).toLowerCase()
             })
         );
     }
