@@ -24,6 +24,7 @@ use Rehike\{
     ErrorHandler\ErrorHandler,
     InnertubeContext
 };
+use Rehike\SignInV2\SignIn;
 
 /**
  * Implements boot tasks for Rehike.
@@ -121,7 +122,7 @@ final class Tasks
         {
             $visitor = $_COOKIE["VISITOR_INFO1_LIVE"];
         }
-        else
+        else if (!SignIn::isSignedIn())
         {
             // Hacky algo to get it from the server:
             $request = Network::urlRequest(
