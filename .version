@@ -1,10 +1,10 @@
 {
-	"previousHash": "9fbf0e1fe75745ffdd78c9584aca0df27059a581",
-	"currentRevisionId": 1629,
-	"subject": "Significant progress on SignInV2",
-	"body": "Significant progress on SignInV2",
+	"previousHash": "083c55c9b4eea412caec92a7e35b6c867304455e",
+	"currentRevisionId": 1630,
+	"subject": "Expose rehike.signin API for Twig",
+	"body": "Expose rehike.signin API for Twig",
 	"branch": "master",
 	"committerName": "Isabella",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1726101024
+	"time": 1726101416
 }
