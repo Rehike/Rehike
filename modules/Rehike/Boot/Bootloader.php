@@ -117,7 +117,16 @@ final class Bootloader
      */
     private static function runInitTasks(): void
     {
-        //NepetaCore::init();
+        // NepetaCore::isNepetaEnabled cannot be used because the ConfigManager
+        // isn't available yet. The check is performed in
+        // includes/startup_config.php, where the following global variable is
+        // set:
+        global $g_fRehikeNepetaEnabled;
+        if ($g_fRehikeNepetaEnabled ?? false)
+        {
+            NepetaCore::init();
+        }
+
         Tasks::initNetwork();
         Tasks::initResourceConstants();
         Tasks::initConfigManager();

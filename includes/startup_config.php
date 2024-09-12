@@ -18,5 +18,17 @@ if (file_exists("config.json"))
             require "includes/file_override_stream_wrapper.php";
             RehikeBase\FileOverrideStreamWrapper::wrap();
         }
+
+        // Nepeta startup: We want to know if Nepeta is enabled before startup
+        // is conducted, but need to be careful about calling anything before
+        // the autoloader is available, so we just set a global flag.
+        if (
+            isset($json->experiments->enableNepeta) &&
+            $json->experiments->enableNepeta
+        )
+        {
+            global $g_fRehikeNepetaEnabled;
+            $g_fRehikeNepetaEnabled = true;
+        }
     }
 }

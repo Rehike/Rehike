@@ -1,6 +1,7 @@
 <?php
 namespace Rehike\Nepeta;
 
+use Rehike\ConfigManager\Config;
 use Rehike\FileSystem;
 
 /**
@@ -13,7 +14,12 @@ class NepetaCore
 {
     public const NEPETA_EXT_PATH = "nepeta_test";
 
+    /**
+     * Stores all loaded packages.
+     */
     private static array $packages = [];
+
+    private static ?NepetaTheme $currentTheme = null;
 
     /**
      * Performs early startup services.
@@ -21,6 +27,22 @@ class NepetaCore
     public static function init(): void
     {
         self::loadAllPackages();
+    }
+
+    /**
+     * Checks if Nepeta is enabled.
+     */
+    public static function isNepetaEnabled(): bool
+    {
+        return true == Config::getConfigProp("experiments.enableNepeta");
+    }
+
+    /**
+     * Get the current theme set by the user.
+     */
+    public static function getTheme(): ?NepetaTheme
+    {
+        return self::$currentTheme;
     }
 
     private static function enumeratePackages(): array
@@ -50,11 +72,6 @@ class NepetaCore
                 return $result;
             }
         }
-
-        // while (ob_get_level() > 0)
-        //     ob_end_clean();
-        // var_dump(self::$packages);
-        // die();
 
         return $result;
     }
@@ -95,9 +112,18 @@ class NepetaCore
         $info->name = $manifest->name;
         $info->author = $manifest->author;
         $info->insertionPoint = $manifest->insertion_point;
+        $info->templatesPath = $manifest?->templates_path;
+        $info->type = NepetaPackageType::fromString($manifest->extension_type);
         $info->pathOnDisk = $manifestPath;
 
         self::$packages[$info->id] = $info;
+
+        if (NepetaPackageType::TYPE_THEME == $info->type && null != $info->templatesPath)
+        {
+            self::$currentTheme = new NepetaTheme(
+                $packagePath . "/" . $info->templatesPath
+            );
+        }
 
         $result->set(NepetaResult::SUCCESS);
 

@@ -3,6 +3,7 @@ namespace Rehike;
 
 use Twig\TwigFunction, Twig\TwigFilter;
 use Rehike\ControllerV2\Core as ControllerV2;
+use Rehike\Nepeta\NepetaCore;
 
 /**
  * Implements the template manager.
@@ -29,11 +30,20 @@ class TemplateManager
 
     public static function __initStatic()
     {
-        $viewsDir = Constants\VIEWS_DIR;
+        $defaultViewsDir = Constants\VIEWS_DIR;
+        
+        $templateDirs = [];
+
+        if (NepetaCore::isNepetaEnabled() && ($theme = NepetaCore::getTheme()))
+        {
+            $templateDirs[] = $theme->getTemplatesPath();
+        }
+
+        $templateDirs[] = $_SERVER["DOCUMENT_ROOT"] . "/" . $defaultViewsDir;
 
         self::$twig = new \Twig\Environment(
             new \Twig\Loader\FilesystemLoader(
-                $_SERVER["DOCUMENT_ROOT"] . "/" . $viewsDir
+                $templateDirs
             ),
             [
                 "cache" => $_SERVER["DOCUMENT_ROOT"] . "/cache/templates",

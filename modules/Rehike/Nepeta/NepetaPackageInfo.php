@@ -30,6 +30,16 @@ class NepetaPackageInfo
     public string $author;
 
     /**
+     * The type of the package.
+     */
+    public int $type;
+
+    /**
+     * An optional path to a directory storing template files.
+     */
+    public ?string $templatesPath = null;
+
+    /**
      * An insertion point script to be loaded.
      */
     public ?string $insertionPoint = null;

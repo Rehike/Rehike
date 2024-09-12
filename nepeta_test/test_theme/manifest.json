@@ -2,5 +2,7 @@
     "name": "Test mod",
     "author": "Taniko Yamamoto",
     "id": "nikos-test-mod",
+    "extension_type": "theme",
+    "templates_path": "templates",
     "insertion_point": "main.php"
 }
