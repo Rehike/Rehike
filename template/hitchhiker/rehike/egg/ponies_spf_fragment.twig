@@ -14,6 +14,9 @@
         {# The following variable is passed through json_encode to escape the string for JS. #}
         {% from "rehike/egg/ponies_css_rules.twig" import render as ponies_css_rules %}
         rehike.ponies.setPonyRules({{ ponies_css_rules(yt.masthead.ponyEasterEgg)|json_encode|raw }});
+        {% if yt.masthead.ponyEasterEgg.shouldUseDarkLogo() %}
+            rehike.ponies.setDarkLogo(true);
+        {% endif %}
     }
     </script>
 {% endif %}

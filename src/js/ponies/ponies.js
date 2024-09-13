@@ -59,6 +59,31 @@ rehike.ponies.setPonyRules = function(rules)
     cssTarget.textContent = rules;
 };
 
+/**
+ * Set the color of the logo in the masthead.
+ * 
+ * @param {boolean} value 
+ */
+rehike.ponies.setDarkLogo = function(value)
+{
+    var DARK_LOGO_CLASS = "rh-dark-logo";
+
+    if (value)
+    {
+        if (!rehike.class.has(document.body, DARK_LOGO_CLASS))
+        {
+            rehike.class.add(document.body, DARK_LOGO_CLASS);
+        }
+    }
+    else
+    {
+        while (rehike.class.has(document.body, DARK_LOGO_CLASS))
+        {
+            rehike.class.remove(document.body, DARK_LOGO_CLASS);
+        }
+    }
+};
+
 rehike.ponies.removePonies_ = function()
 {
     var a;
@@ -67,6 +92,8 @@ rehike.ponies.removePonies_ = function()
     {
         a.parentNode.removeChild(a);
     }
+
+    rehike.ponies.setDarkLogo(false);
 };
 
 /**

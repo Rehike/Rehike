@@ -25,6 +25,14 @@ class Pony extends PonyConstantsBase
     {
         return $this->color->getCssColor();
     }
+
+    /**
+     * Determines if the dark logo should be used for this color.
+     */
+    public function shouldUseDarkLogo(): bool
+    {
+        return $this->color->shouldUseDarkLogo();
+    }
     
     protected function setUpPonyFromType(int $type): void
     {

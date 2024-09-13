@@ -55,4 +55,13 @@ class PonyColor
     {
         return "#" . strtolower($this->getHexColor());
     }
+
+    /**
+     * Determines if the dark logo should be used for this color.
+     */
+    public function shouldUseDarkLogo(): bool
+    {
+        return (0.2126 * $this->red + 0.7152 * $this->green + 0.0722 * $this->blue)
+            <= 50;
+    }
 }

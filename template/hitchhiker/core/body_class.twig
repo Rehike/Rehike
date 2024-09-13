@@ -25,3 +25,6 @@ not-nirvana-dogfood
 {{ yt.spf ? '' : 'delayed-frame-styles-not-in' }}
 {{ yt.page.ticker ? "sitewide-ticker-visible" }}
 {{ yt.signin.isSignedIn ? "yt-user-logged-in" }}
+{% if yt.masthead.ponyEasterEgg and yt.masthead.ponyEasterEgg.shouldUseDarkLogo() %}
+    rh-dark-logo
+{% endif %}

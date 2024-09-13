@@ -41,6 +41,43 @@
     .feed-nudge h1 {
         margin-bottom: 6px;
     }
+
+    /*
+     * Used by ponies and possibly other things.
+     */
+    .rh-dark-logo #yt-masthead #logo-container .logo
+    {
+        /* TODO: No way of detecting hidpi in CSS alone yet */
+        background: url("/rehike/static/img/hitchhiker/logo_small_dark_2x.png");
+        background-size: 73px 30px;
+        width: 73.5px;
+        height: 30px;
+    }
+
+    .rh-dark-logo #yt-masthead #logo-container .logo-red
+    {
+        /* TODO: No way of detecting hidpi in CSS alone yet */
+        background: url("/rehike/static/img/hitchhiker/logo_youtube_red_dark_2x.png");
+        background-size: 102px 30px;
+        width: 102px;
+        height: 30px;
+    }
+
+    .exp-invert-logo.rh-dark-logo #yt-masthead #logo-container .logo
+    {
+        background: url("/rehike/static/img/ringo/hitchhiker/logo_small_dark_2x.png");
+        background-size: 100px 30px;
+        width: 100px;
+        height: 30px;
+    }
+
+    .exp-ringo2.rh-dark-logo #yt-masthead #logo-container .logo
+    {
+        background: url("/rehike/static/img/ringo2/hitchhiker/logo_small_dark_2x.png");
+        background-size: 100px 30px;
+        width: 100px;
+        height: 30px;
+    }
 </style>
 {%- if yt.masthead.ponyEasterEgg -%}
     <style id="rh-ponies-style">
