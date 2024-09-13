@@ -37,7 +37,7 @@ class NepetaPackageInfo
     /**
      * An optional path to a directory storing template files.
      */
-    public ?string $templatesPath = null;
+    public ?array $templates = null;
 
     /**
      * An insertion point script to be loaded.

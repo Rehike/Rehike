@@ -31,20 +31,61 @@ class TemplateManager
     public static function __initStatic()
     {
         $defaultViewsDir = Constants\VIEWS_DIR;
+
+        $fileSystemLoader = new \Twig\Loader\FilesystemLoader();
         
         $templateDirs = [];
 
-        if (NepetaCore::isNepetaEnabled() && ($theme = NepetaCore::getTheme()))
+        // Load override themes from Nepeta if it's available.
+        if (NepetaCore::isNepetaEnabled())
         {
-            $templateDirs[] = $theme->getTemplatesPath();
+            // This is available in above scopes.
+            $theme = NepetaCore::getTheme();
+
+            foreach ($theme->getOverrideTemplatesPaths() as $namespace => $path)
+            {
+                $overrideNamespace = explode("override:", $namespace)[1];
+
+                $fileSystemLoader->addPath(
+                    $path,
+                    $overrideNamespace
+                );
+
+                // If the override namespace is the Rehike templates namespace,
+                // then we also 
+                if ("rehike" == $overrideNamespace)
+                {
+                    $fileSystemLoader->addPath(
+                        $path
+                    );
+                }
+            }
         }
 
-        $templateDirs[] = $_SERVER["DOCUMENT_ROOT"] . "/" . $defaultViewsDir;
+        // Add default (no extensions) template paths:
+        $fileSystemLoader->addPath(
+            $_SERVER["DOCUMENT_ROOT"] . "/" . $defaultViewsDir,
+            "rehike"
+        );
+
+        $fileSystemLoader->addPath(
+            $_SERVER["DOCUMENT_ROOT"] . "/" . $defaultViewsDir
+        );
+
+        // Add extra template paths provided by Nepeta mods:
+        if (NepetaCore::isNepetaEnabled())
+        {
+            foreach ($theme->getAddedTemplatePaths() as $namespace => $path)
+            {
+                $fileSystemLoader->addPath(
+                    $path,
+                    $namespace
+                );
+            }
+        }
 
         self::$twig = new \Twig\Environment(
-            new \Twig\Loader\FilesystemLoader(
-                $templateDirs
-            ),
+            $fileSystemLoader,
             [
                 "cache" => $_SERVER["DOCUMENT_ROOT"] . "/cache/templates",
                 "auto_reload" => true

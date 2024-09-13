@@ -112,16 +112,17 @@ class NepetaCore
         $info->name = $manifest->name;
         $info->author = $manifest->author;
         $info->insertionPoint = $manifest->insertion_point;
-        $info->templatesPath = $manifest?->templates_path;
+        $info->templates = ((array)$manifest->templates) ?? null;
         $info->type = NepetaPackageType::fromString($manifest->extension_type);
-        $info->pathOnDisk = $manifestPath;
+        $info->pathOnDisk = $packagePath;
 
         self::$packages[$info->id] = $info;
 
-        if (NepetaPackageType::TYPE_THEME == $info->type && null != $info->templatesPath)
+        if (NepetaPackageType::TYPE_THEME == $info->type && null != $info->templates)
         {
             self::$currentTheme = new NepetaTheme(
-                $packagePath . "/" . $info->templatesPath
+                $info,
+                $info->templates
             );
         }
 

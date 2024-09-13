@@ -9,15 +9,59 @@ namespace Rehike\Nepeta;
  */
 class NepetaTheme
 {
-    private string $templatesPath;
+    private array $templates = [];
+    private NepetaPackageInfo $ownerPackage;
 
-    public function __construct(string $templatesPath)
+    public function __construct(NepetaPackageInfo $package, array $templates)
     {
-        $this->templatesPath = $templatesPath;
+        $this->ownerPackage = $package;
+        $packagePath = $package->pathOnDisk;
+
+        foreach ($templates as $namespace => $path)
+        {
+            if ("/" != $path[0])
+            {
+                $this->templates[$namespace] = $packagePath . "/" . $path;
+            }
+            else
+            {
+                $this->templates[$namespace] = $path;
+            }
+        }
     }
 
-    public function getTemplatesPath(): string
+    public function getOverrideTemplatesPaths(): array
     {
-        return $this->templatesPath;
+        $out = [];
+
+        foreach ($this->templates as $namespace => $path)
+        {
+            if (0 === strpos($namespace, "override:"))
+            {
+                $out[$namespace] = $path;
+            }
+        }
+
+        return $out;
+    }
+
+    public function getAddedTemplatePaths(): array
+    {
+        $out = [];
+
+        foreach ($this->templates as $namespace => $path)
+        {
+            if ("override:" != substr($namespace, strlen("override:")))
+            {
+                $out[$namespace] = $path;
+            }
+        }
+
+        return $out;
+    }
+
+    public function getAllTemplatePaths(): array
+    {
+        return $this->templates;
     }
 }
