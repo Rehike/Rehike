@@ -1,51 +1,243 @@
 <?php
-namespace Rehike\Model\Watch\Watch8;
+namespace Rehike\Model\Watch;
 
-use Rehike\Model\Watch\WatchModel as WatchBase;
-use Rehike\Model\Watch\Watch7\MVideoDiscussionDelayloadRenderer;
-use Rehike\Model\Watch\Watch7\MVideoDiscussionNotice;
-use Rehike\Model\Watch\Watch7\MCreatorBar;
-use Rehike\i18n\i18n;
 use Rehike\ConfigManager\Config;
-use Rehike\Util\PrefUtils;
 use Rehike\Signin\API as SignIn;
-use Rehike\Model\Browse\InnertubeBrowseConverter;
-use Rehike\Model\Common\MButton;
-use Rehike\Model\Traits\NavigationEndpoint;
-use Rehike\Model\Clickcard\MSigninClickcard;
-use Rehike\Model\Comments\CommentThread;
-use Rehike\Model\Comments\CommentsHeader;
+use Rehike\Util\PrefUtils;
 
+use Rehike\Model\Watch\{
+    AgeGate\MPlayerAgeGate,
+    AgeGate\MPlayerContentGate,
+    Watch8\MCreatorBar,
+    Watch8\MCreatorBarEditButton,
+    Watch8\MVideoDiscussionDelayloadRenderer,
+    Watch8\MVideoDiscussionNotice,
+    Watch8\MVideoPrimaryInfoRenderer,
+    Watch8\MVideoSecondaryInfoRenderer,
+    Watch8\PrimaryInfo\MOwner,
+};
+
+use Rehike\Model\Comments\CommentsHeader;
+use Rehike\Model\Comments\CommentThread;
+
+use Rehike\Model\Browse\InnertubeBrowseConverter;
+
+use Rehike\Model\Common\MButton;
+
+use Rehike\Model\Clickcard\MSigninClickcard;
+
+use Rehike\Model\Traits\NavigationEndpoint;
+
+use Rehike\Async\Promise;
 use function Rehike\Async\async;
+use Rehike\i18n\i18n;
+use Rehike\YtApp;
 
 /**
- * Implements the watch8 subcontroller for the watch model
- * implementation.
+ * Implements all logic pertaining to the generation of watch
+ * page data.
+ * 
+ * This is fed into the templater just as a raw response would.
+ * Please perform any processing within this scope.
  * 
  * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
+ * @author Isabella <kawapure@gmail.com>
  * @author The Rehike Maintainers
  */
-class Watch8Subcontroller
+class WatchBakery
 {
+    public bool $useRyd = false;
+
+    public YtApp $yt;
+    public object $response;
+    public ?object $rydData = null;
+    public bool $isLive = false;
+    public bool $isKidsVideo = false;
+    public bool $isOwner = false;
+
+    // Set with the primary info renderer
+    public string $title;
+
+    // Shorthand data references
+    public $results = null;
+    public $secondaryResults = null;
+    public $playlist = null;
+    public $primaryInfo = null;
+    public $secondaryInfo = null;
+    public $commentSection = null;
+    public $liveChat = null;
+    public $engagementPanels = null;
+    public $frameworkUpdates = null;
+
     /**
-     * Called from the main watch model
+     * Bake a watch page model
      * 
-     * @param object $data
-     * @return object[]
+     * This is the insertion point, so other operations are
+     * performed within this function as well.
+     * 
+     * @param object $yt (global state)
+     * @param object $data from watch results response
+     * @param object $rydData from RYD API response
+     * 
+     * @return Promise<object>
      */
-    public static function bakeResults(&$data, $videoId)
+    public function bake(YtApp &$yt, object $data, string $videoId, ?object $rydData = null): Promise/*<object>*/
+    {
+        return async(function() use (&$yt, $data, $videoId, $rydData) {
+            // Initial logic
+            $this->yt = &$yt;
+            $this->response = &$data;
+            $this->rydData = $rydData;
+            $this->useRyd = $this->shouldUseRyd();
+            $this->destructureData($data->contents);
+            $this->engagementPanels = $data->engagementPanels ?? null;
+            $this->frameworkUpdates = $data->frameworkUpdates ?? null;
+
+            $this->isKidsVideo = $this->getIsKidsVideo($this->secondaryInfo);
+            $this->isLive = $this->getIsLive($this->primaryInfo);
+            $this->isOwner = $this->getIsOwner($this->secondaryInfo);
+
+            // Get player error
+            if ($error = @$yt->playerResponse->playabilityStatus->errorScreen->playerErrorMessageRenderer)
+            {
+                $status = $yt->playerResponse->playabilityStatus->status ?? "";
+
+                // If it's age restriction, show that
+                if ("LOGIN_REQUIRED" == $status)
+                {
+                    $yt->playerUnavailable = new MPlayerAgeGate();
+                }
+                else if ("AGE_CHECK_REQUIRED" == $status)
+                {
+                    $yt->playerUnavailable = new MPlayerAgeGate($error);
+                }
+                else if ("CONTENT_CHECK_REQUIRED" == $status)
+                {
+                    /*
+                    * Content that requires a content check (i.e. suicide-related)
+                    * does not require the user to be signed in.
+                    */
+                    $yt->playerUnavailable = new MPlayerContentGate($error);
+                }
+                else
+                {
+                    $yt->playerUnavailable = $error;
+
+                    if (!isset($yt->playerUnavailable->subreason))
+                    {
+                        $yt->playerUnavailable->subreason = (object)[
+                            "simpleText" => i18n::getRawString(
+                                "global", "sorryAboutThat"
+                            )
+                        ];
+                    }
+                }
+            }
+
+            if (isset($_COOKIE["PREF"]))
+            {
+                $pref = PrefUtils::parse($_COOKIE["PREF"]);
+            }
+            else
+            {
+                $pref = (object) [];
+            }
+
+            // Model baking logic
+            return (object) [
+                "isLive" => $this->isLive,
+                "isOwner" => $this->isOwner,
+                "results" => yield $this->bakeResults($data, $videoId),
+                "secondaryResults" => $this->bakeSecondaryResults($data),
+                "title" => $this->title,
+                "playlist" => $this->bakePlaylist(),
+                "liveChat" => $this->liveChat,
+                "autonavEnabled" => PrefUtils::autoplayEnabled($pref)
+            ];
+        });
+    }
+
+    /**
+     * Parse the data provided by the bake function
+     * and store global references within here.
+     */
+    public function destructureData(object &$data): void
+    {
+        $this->results = null;
+
+        // Wrapped in isset to prevent crashes
+        if (isset($data->twoColumnWatchNextResults->results->results))
+        {
+            $this->results = &$data->twoColumnWatchNextResults->results->results;
+        }
+
+        $this->secondaryResults = null;
+        if (isset($data->twoColumnWatchNextResults->secondaryResults->secondaryResults))
+        {
+            $this->secondaryResults = &$data->twoColumnWatchNextResults->secondaryResults->secondaryResults;
+        }
+
+        if (isset($data->twoColumnWatchNextResults->conversationBar->liveChatRenderer))
+        {
+            $this->liveChat = &$data->twoColumnWatchNextResults->conversationBar->liveChatRenderer;
+        }
+
+        // This one doesn't need to be isset wrapped for some reason
+        $this->playlist = &$data->twoColumnWatchNextResults->playlist ?? null;
+
+        // For sub-result references, iteration must be used
+        if (isset($this->results->contents))
+        for ($i = 0; $i < count($this->results->contents); $i++) 
+        foreach ($this->results->contents[$i] as $name => &$value)
+        switch ($name)
+        {
+            case "videoPrimaryInfoRenderer":
+                $this->primaryInfo = &$value;
+                break;
+            case "videoSecondaryInfoRenderer":
+                $this->secondaryInfo = &$value;
+                break;
+            case "itemSectionRenderer":
+                // Determine based on section ID instead
+                if (isset($value->sectionIdentifier))
+                switch ($value->sectionIdentifier)
+                {
+                    case "comment-item-section":
+                        $this->commentSection = &$value;
+                        break;
+                }
+                break;
+        }
+    }
+
+    /**
+     * Determine whether or not to use the Return YouTube Dislike
+     * API to return dislikes. Retrieved from application config.
+     */
+    public function shouldUseRyd(): bool
+    {
+        return null != $this->rydData;
+    }
+
+    /**
+     * Bake results
+     * 
+     * @param object $data from watch results response
+     * @return object
+     */
+    public function bakeResults(object &$data, string &$videoId): object
     {
         return async(function () use (&$data, $videoId)
         {
             // Create references
-            $primaryInfo = &WatchBase::$primaryInfo;
-            $secondaryInfo = &WatchBase::$secondaryInfo;
-            $commentSection = &WatchBase::$commentSection;
+            $primaryInfo = $this->primaryInfo;
+            $secondaryInfo = $this->secondaryInfo;
+            $commentSection = $this->commentSection;
 
             $results = [];
 
             // Push creator bar if the video is yours
-            if (WatchBase::$isOwner)
+            if ($this->isOwner)
             {
                 $results[] = (object) [
                     "videoCreatorBarRenderer" => new MCreatorBar($videoId)
@@ -54,12 +246,12 @@ class Watch8Subcontroller
 
             // Push primary info (if it exists)
             if (!is_null($primaryInfo)) $results[] = (object)[
-                "videoPrimaryInfoRenderer" => new MVideoPrimaryInfoRenderer(WatchBase::class, $videoId)
+                "videoPrimaryInfoRenderer" => new MVideoPrimaryInfoRenderer($this, $videoId)
             ];
 
             // Push secondary info (if it exists)
             if (!is_null($secondaryInfo)) $results[] = (object)[
-                "videoSecondaryInfoRenderer" => new MVideoSecondaryInfoRenderer(WatchBase::class)
+                "videoSecondaryInfoRenderer" => new MVideoSecondaryInfoRenderer($this)
             ];
 
             // Push comments (if they exist)
@@ -82,7 +274,7 @@ class Watch8Subcontroller
                         ->continuationEndpoint->continuationCommand->token;
                     
                     // Push the continuation token to yt global
-                    WatchBase::$yt->commentsToken = $continuationToken;
+                    $this->yt->commentsToken = $continuationToken;
 
                     $results[] = (object)[
                         "videoDiscussionDelayloadRenderer" => new MVideoDiscussionDelayloadRenderer(
@@ -104,13 +296,13 @@ class Watch8Subcontroller
                 {
                     // In this case, the comments are baked into the response rather
                     // than delayloaded.
-                    $videoId = WatchBase::$yt->videoId ?? $_GET["v"];
+                    $videoId = $this->yt->videoId ?? $_GET["v"];
 
                     $headerRenderer = CommentsHeader::fromData(
                         $commentSection?->header[0]?->commentsHeaderRenderer
                     );
 
-                    $commentsBakery = new CommentThread(WatchBase::$response);
+                    $commentsBakery = new CommentThread($this->response);
                     $contentsRenderer = yield $commentsBakery->bakeComments($commentContents);
 
                     $results[] = (object)[
@@ -127,19 +319,18 @@ class Watch8Subcontroller
     }
 
     /**
-     * Called from main watch model
+     * Bake secondary results (recommendations)
      * 
      * This performs check for autoplay and moves the video
      * to its respective position if so.
      * 
-     * @param object $data
+     * @param object $data from watch results response
      * @return object
      */
-    public static function bakeSecondaryResults(&$data)
+    public function bakeSecondaryResults(object &$data): object
     {
-        $yt = &WatchBase::$yt;
         // Get data from the reference in the datahost
-        $origResults = &WatchBase::$secondaryResults;
+        $origResults = &$this->secondaryResults;
         $response = [];
         $i18n = i18n::getNamespace("watch");
 
@@ -171,11 +362,11 @@ class Watch8Subcontroller
 
             InnertubeBrowseConverter::generalLockupConverter($recomsList);
 
-            if (self::shouldUseAutoplay($data))
+            if ($this->shouldUseAutoplay())
             {
                 if (is_countable($recomsList) && count($recomsList) > 0)
                 {
-                    $autoplayIndex = self::getRecomAutoplay($recomsList);
+                    $autoplayIndex = $this->getRecomAutoplay($recomsList);
 
                     if (isset($_COOKIE["PREF"]))
                     {
@@ -198,7 +389,7 @@ class Watch8Subcontroller
 
                     // Remove the original reference to prevent it from 
                     // rendering twice
-                    array_splice($recomsList, $autoplayIndex, 1);
+                    array_splice($recomsList, $autoplayIndex, 1); // ignore IDE type error
                 }
             }
 
@@ -210,14 +401,14 @@ class Watch8Subcontroller
     }
 
     /**
-     * Called from main watch model
+     * Bake playlist
      * 
      * This checks if the playlist is present and returns
      * the playlist data if so.
      */
-    public static function bakePlaylist(): ?object
+    public function bakePlaylist(): ?object
     {
-        $playlist = &WatchBase::$playlist;
+        $playlist = &$this->playlist;
         $i18n = i18n::getNamespace("watch");
 
         // Return null if there is no playlist, this
@@ -257,7 +448,7 @@ class Watch8Subcontroller
             // "previous/next video ids also need a little work
             //  let's just catch two cases with one"
             // Copied from Isabella's implementation again
-            $playlistId = &WatchBase::$yt->playlistId;
+            $playlistId = &$this->yt->playlistId;
 
             $out->isMix = substr($playlistId, 0, 2) == "RD";
 
@@ -366,16 +557,16 @@ class Watch8Subcontroller
 
         return $out;
     }
-
+    
     /**
      * Determine autoplay use status
      * 
      * @return bool
      */
-    public static function shouldUseAutoplay(&$data)
+    public function shouldUseAutoplay(): bool
     {
         // Disable if watch playlists available at all.
-        if (is_null(WatchBase::$playlist))
+        if (is_null($this->playlist))
         {
             return true;
         }
@@ -391,7 +582,7 @@ class Watch8Subcontroller
      * @param object $results (index of the results)
      * @return int The index of the recommendation.
      */
-    public static function getRecomAutoplay(&$results)
+    public function getRecomAutoplay(&$results)
     {
         for ($i = 0; $i < count($results); $i++) if (isset($results[$i]->compactVideoRenderer))
         {
@@ -399,5 +590,69 @@ class Watch8Subcontroller
         }
 
         return 0;
+    }
+
+    /**
+     * Determine if a video is a kids video or not
+     * 
+     * @param object $secondaryInfo
+     * @return bool
+     */
+    public function getIsKidsVideo(&$secondaryInfo)
+    {
+        if (!isset($secondaryInfo->metadataRowContainer->rows)) return false;
+
+        if ($rows = $secondaryInfo->metadataRowContainer)
+        {
+            foreach ($rows->metadataRowContainerRenderer->rows as $item)
+            foreach ($item as $name => $contents)
+            if ("richMetadataRowRenderer" == $name &&
+                "https://www.youtubekids.com" == $contents->contents[0]->richMetadataRenderer->endpoint->urlEndpoint->url
+            )
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Determine if a video is live or not
+     * 
+     * @param object $primaryInfo
+     * @return bool
+     */
+    public function getIsLive(&$primaryInfo)
+    {
+        if (true == @$primaryInfo->viewCount->videoViewCountRenderer->isLive)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public function getIsOwner(&$secondaryInfo)
+    {
+        if (!SignIn::isSignedIn()) return false;
+        
+        if ($ucid = SignIn::getInfo()["ucid"])
+        {
+            if ($ucid == @$secondaryInfo->owner->videoOwnerRenderer->navigationEndpoint->browseEndpoint->browseId)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else
+        {
+            return false;
+        }
     }
 }

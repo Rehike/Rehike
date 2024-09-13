@@ -4,6 +4,7 @@ namespace Rehike\Model\Watch\Watch8;
 use Rehike\Util\ExtractUtils;
 use Rehike\Util\ParsingUtils;
 use Rehike\Model\Watch\Watch8\SecondaryInfo\MMetadataRowContainer;
+use Rehike\Model\Watch\WatchBakery;
 
 /**
  * Implement the model used by the video's secondary info renderer.
@@ -22,12 +23,12 @@ class MVideoSecondaryInfoRenderer
 
     public const REDIRECT_URL_REGEX = "/(?<=\?q=|&q=)(?=(.*?)&|$)/";
 
-    public function __construct($dataHost)
+    public function __construct(WatchBakery $bakery)
     {
-        if (!is_null($dataHost::$secondaryInfo))
+        if (!is_null($bakery->secondaryInfo))
         {
-            $info = &$dataHost::$secondaryInfo;
-            $primaryInfo = &$dataHost::$primaryInfo;
+            $info = &$bakery->secondaryInfo;
+            $primaryInfo = &$bakery->primaryInfo;
             
             if (isset($info->attributedDescription))
             {
@@ -53,8 +54,8 @@ class MVideoSecondaryInfoRenderer
                 ? ExtractUtils::resolveDate($primaryInfo->dateText, $isPrivate)
                 : null;
             $this->metadataRowContainer = new MMetadataRowContainer(
-                $info->metadataRowContainer->metadataRowContainerRenderer->rows,
-                $dataHost
+                $bakery,
+                $info->metadataRowContainer->metadataRowContainerRenderer->rows
             );
             $this->showMoreText = $info->showMoreText ?? null;
             $this->showLessText = $info->showLessText ?? null;

@@ -15,7 +15,7 @@ use Rehike\ConfigManager\Config;
 use Rehike\Helper\WatchUtils;
 use Rehike\Util\ExtractUtils;
 
-use Rehike\Model\Watch\WatchModel;
+use Rehike\Model\Watch\WatchBakery;
 use YukisCoffee\CoffeeRequest\Exception\GeneralException;
 
 /**
@@ -260,8 +260,10 @@ return new class extends NirvanaController {
              $yt->watchNextResponse = $nextResponse;
 
             \Rehike\Profiler::start("modelbake");
+            
+            $watchBakery = new WatchBakery();
 
-            WatchModel::bake(
+            $watchBakery->bake(
                 yt:      $yt,
                 data:    $nextResponse,
                 videoId: $yt->videoId,

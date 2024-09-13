@@ -6,7 +6,7 @@ use Rehike\Model\Common\Menu\MMenu;
 use Rehike\Model\Common\Menu\MMenuItem;
 use Rehike\Signin\API as SignIn;
 use Rehike\i18n\i18n;
-use Rehike\Model\Watch\WatchModel;
+use Rehike\YtApp;
 
 class MActionPanelOverflowMenu extends MMenu
 {
@@ -49,7 +49,7 @@ class MActionPanelOverflowMenu extends MMenu
 
         $this->items[] = new MMenuItem($reportCfg);
 
-        if (isset(WatchModel::$yt->playerResponse->captions->playerCaptionsTracklistRenderer->captionTracks[0]->baseUrl))
+        if (isset(YtApp::getInstance()->playerResponse->captions->playerCaptionsTracklistRenderer->captionTracks[0]->baseUrl))
         {
             $this->items[] = new MMenuItem([
                 "actionPanelTrigger" => "transcript",

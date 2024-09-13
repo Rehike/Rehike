@@ -1,5 +1,5 @@
 <?php
-namespace Rehike\Model\Watch\Watch7;
+namespace Rehike\Model\Watch\Watch8;
 
 /**
  * Implements a model for a notice that displays in

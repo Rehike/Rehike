@@ -4,6 +4,7 @@ namespace Rehike\Model\Watch\Watch8\SecondaryInfo;
 use Rehike\Model\Traits\Runs;
 use Rehike\Util\ParsingUtils;
 use Rehike\i18n\i18n;
+use Rehike\Model\Watch\WatchBakery;
 
 class MMetadataRowContainer
 {
@@ -11,7 +12,7 @@ class MMetadataRowContainer
 
     public $items = [];
 
-    public function __construct(&$rows, $dataHost)
+    public function __construct(WatchBakery $bakery, &$rows)
     {
         $i18n = i18n::getNamespace("watch");
         
@@ -69,9 +70,9 @@ class MMetadataRowContainer
          * So enjoy this mess
          */
         // Check if engagement panels exist.
-        if (isset($dataHost::$engagementPanels))
+        if (isset($bakery->engagementPanels))
         // Go through the panels
-        foreach ($dataHost::$engagementPanels as $panel)
+        foreach ($bakery->engagementPanels as $panel)
         // Check the name of the current panel
         foreach ($panel->engagementPanelSectionListRenderer->content as $name => $content)
         if ("structuredDescriptionContentRenderer" == $name)
@@ -121,11 +122,11 @@ class MMetadataRowContainer
         }
 
         // If specified, add a license field for standard.
-        if ($addLicense && !$dataHost::$isLive)
+        if ($addLicense && !$bakery->isLive)
             array_unshift($this->items, self::getLicenseField());
 
         // Add category option
-        array_unshift($this->items, self::getCategoryField($dataHost));
+        array_unshift($this->items, $this->getCategoryField($bakery));
 
         // Add rich items (game in gaming video)
         if (isset($richItems) && count($richItems) > 0)
@@ -153,12 +154,12 @@ class MMetadataRowContainer
         ];
     }
 
-    protected function getCategoryField($dataHost)
+    protected function getCategoryField(WatchBakery $bakery)
     {
         $i18n = i18n::getNamespace("watch");
         $title = $i18n->get("metadataCategory");
 
-        $canonicalCategoryName = @$dataHost::$yt->playerResponse->microformat
+        $canonicalCategoryName = @$bakery->yt->playerResponse->microformat
             ->playerMicroformatRenderer->category
         ;
         

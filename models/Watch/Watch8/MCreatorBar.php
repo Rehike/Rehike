@@ -1,5 +1,5 @@
 <?php
-namespace Rehike\Model\Watch\Watch7;
+namespace Rehike\Model\Watch\Watch8;
 
 use Rehike\Model\Common\MButton;
 use Rehike\i18n\i18n;

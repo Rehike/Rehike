@@ -2,6 +2,7 @@
 namespace Rehike\Model\Watch\Watch8\LikeButton;
 
 use Rehike\Model\ViewModelConverter\LikeButtonViewModelConverter;
+use Rehike\Model\Watch\WatchBakery;
 use Rehike\Util\ExtractUtils;
 
 /**
@@ -24,14 +25,14 @@ class MLikeButtonRenderer
     /** @var MSparkbars */
     public $sparkbars;
 
-    public function __construct($dataHost, &$info, &$videoId)
+    public function __construct(WatchBakery $bakery, &$info, &$videoId)
     {
         // Perform view model conversion if we need to:
         if (isset($info->topLevelButtons[0]->segmentedLikeDislikeButtonViewModel))
         {
             $vmConverter = new LikeButtonViewModelConverter(
                 $info->topLevelButtons[0]->segmentedLikeDislikeButtonViewModel,
-                $dataHost::$frameworkUpdates
+                $bakery->frameworkUpdates
             );
 
             $converted = $vmConverter->bakeSegmentedLikeDislikeButtonRenderer();
@@ -65,8 +66,8 @@ class MLikeButtonRenderer
             $likeCountInt = (int)str_replace(",", "", $likeCount);
 
         // Account for RYD API data if it exists
-        $rydData = &$dataHost::$rydData;
-        if ($dataHost::$useRyd && "" !== $likeCount && isset($rydData->dislikes))
+        $rydData = &$bakery->rydData;
+        if ($bakery->useRyd && "" !== $likeCount && isset($rydData->dislikes))
         {
             $dislikeCountInt = (int)$rydData->dislikes;
 

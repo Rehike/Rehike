@@ -17,7 +17,6 @@ use Rehike\Helper\WatchUtils;
 use Rehike\Util\ExtractUtils;
 use Rehike\Util\ParsingUtils;
 
-use Rehike\Model\Watch\WatchModel;
 use YukisCoffee\CoffeeRequest\Exception\GeneralException;
 
 /**

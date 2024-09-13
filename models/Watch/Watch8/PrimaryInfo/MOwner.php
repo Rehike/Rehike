@@ -7,6 +7,7 @@ use Rehike\Model\Common\MButton;
 use Rehike\Signin\API as SignIn;
 use Rehike\Util\ExtractUtils;
 use Rehike\i18n\i18n;
+use Rehike\Model\Watch\WatchBakery;
 
 /**
  * Defines the video owner information, which appears in the bottom
@@ -44,9 +45,9 @@ class MOwner
      */
     public $channelSettingsButtonRenderer;
 
-    public function __construct($dataHost)
+    public function __construct(WatchBakery $bakery)
     {
-        $secInfo = &$dataHost::$secondaryInfo;
+        $secInfo = &$bakery->secondaryInfo;
         $info = $secInfo->owner->videoOwnerRenderer;
         $i18n = i18n::getNamespace("watch");
 
