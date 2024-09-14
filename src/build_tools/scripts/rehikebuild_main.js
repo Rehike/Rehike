@@ -13,6 +13,9 @@ const {
     g_buildTaskRegistry: buildTaskRegistry 
 } = require("./build_task");
 
+// RehikeBuild root directory.
+const REHIKEBUILD_DIR = path.resolve(__dirname, "../");
+
 // Includes should be relative to the src/ directory, and this script resides in
 // src/build_tools/scripts, so we need to up two directories.
 const BASE_SRC_DIR = path.resolve(__dirname, "../..");
@@ -129,6 +132,7 @@ function unwindows(pathToModify)
 }
 
 // Exported constants:
+exports.REHIKEBUILD_DIR = REHIKEBUILD_DIR;
 exports.BASE_SRC_DIR = BASE_SRC_DIR;
 exports.REHIKE_ROOT_DIR = REHIKE_ROOT_DIR;
 

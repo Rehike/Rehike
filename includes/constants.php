@@ -36,6 +36,13 @@ const VERSION_MAJOR_INT = 0;
 const VERSION_MINOR_INT = 8;
 const VERSION_SUB_INT   = 2;
 
+/**
+ * Is the current Rehike build a release build?
+ * 
+ * @var bool
+ */
+const IS_RELEASE = false;
+
 /** 
  * The location of views (templates) relative to the root. 
  * 

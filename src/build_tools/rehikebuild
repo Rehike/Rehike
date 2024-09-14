@@ -10,6 +10,7 @@
 const gulp = require("gulp");
 const GulpManager = require("./scripts/gulp_manager");
 const RehikeBuild = require("./scripts/rehikebuild_main");
+const { ReleasePackager } = require("./scripts/pack_release");
 const VflGenerator = require("./scripts/vfl_gen");
 const ArgumentsParser = require("./scripts/parse_args");
 
@@ -133,8 +134,21 @@ BuildAll.displayName = "@RHBUILD::NOLOG";
 
 console.log("Welcome to RehikeBuild!");
 
-// Main build action
-GulpManager.runGulpTask(gulp.series(
-    CommonStartupTask,
-    BuildAll
-));
+switch (true)
+{
+    case ("pack-release" in g_args):
+    case ("pack_release" in g_args):
+    {
+        ReleasePackager.buildAndPack();
+        break;
+    }
+    
+    default:
+    {
+        GulpManager.runGulpTask(gulp.series(
+            CommonStartupTask,
+            BuildAll
+        ));
+        break;
+    }
+}
