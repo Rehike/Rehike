@@ -74,8 +74,8 @@ class SessionInfo implements IBuiltObject, ICacheable
         
         // Precache these references:
         $this->getCurrentGoogleAccount();
-        $this->getActiveChannel();
-        $this->getOtherChannels();
+        $this->getCurrentChannel();
+        $this->getYoutubeChannels();
     }
 
     /**
@@ -121,7 +121,7 @@ class SessionInfo implements IBuiltObject, ICacheable
     /**
      * Gets information about the currently used YouTube channel.
      */
-    public function getActiveChannel(): ?YtChannelAccountInfo
+    public function getCurrentChannel(): ?YtChannelAccountInfo
     {
         if (!is_null($this->activeChannel))
         {
@@ -144,7 +144,7 @@ class SessionInfo implements IBuiltObject, ICacheable
      * Gets a list of other YouTube channels accessible under the current
      * Google Account.
      */
-    public function getOtherChannels(): array
+    public function getYoutubeChannels(): array
     {
         if (isset($this->otherChannels))
         {
