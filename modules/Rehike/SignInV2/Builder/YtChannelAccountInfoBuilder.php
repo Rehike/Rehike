@@ -36,12 +36,6 @@ class YtChannelAccountInfoBuilder implements IBuilder, IBuilderWithParent
     public ?string $gaiaId = null;
 
     /**
-     * The user session index for this account, used when multiple Google Accounts are
-     * accessible.
-     */
-    public ?int $authUserId = null;
-
-    /**
      * The email address associated with this Google Account.
      */
     public ?string $accountEmail = null;

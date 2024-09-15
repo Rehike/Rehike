@@ -19,6 +19,12 @@ class GoogleAccountInfo extends GoogleAccountInfoBase implements IBuiltObject, I
     use AutoCacheable;
     
     /**
+     * The user session index for this account, used when multiple Google Accounts are
+     * accessible.
+     */
+    protected ?int $authUserId;
+    
+    /**
      * @var YtChannelAccountInfo[]
      */
     protected array $youtubeChannels = [];
@@ -35,6 +41,14 @@ class GoogleAccountInfo extends GoogleAccountInfoBase implements IBuiltObject, I
         $this->youtubeChannels = $builder->ytChannels
             ->forEach(fn(YtChannelAccountInfoBuilder $item) => $item->setFinalizedParent($this))
             ->buildAll();
+    }
+    
+    /**
+     * @override
+     */
+    public function getAuthUserId(): ?int
+    {
+        return $this->authUserId;
     }
 
     /**

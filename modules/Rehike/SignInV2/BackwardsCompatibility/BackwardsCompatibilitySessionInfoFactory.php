@@ -23,8 +23,20 @@ use Rehike\Signin\AuthManager as LegacyAuthManager;
  */
 class BackwardsCompatibilitySessionInfoFactory implements IBuilder
 {
+    private static self $instance;
+    
     private SessionInfoBuilder $builder;
     private SessionInfo $cachedSessionInfo;
+    
+    public static function __initStatic()
+    {
+        self::$instance = new self();
+    }
+    
+    public static function getInstance()
+    {
+        return self::$instance;
+    }
     
     public function __construct()
     {

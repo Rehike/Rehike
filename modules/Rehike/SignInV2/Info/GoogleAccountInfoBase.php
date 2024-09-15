@@ -1,10 +1,6 @@
 <?php
 namespace Rehike\SignInV2\Info;
 
-use Rehike\SignInV2\Cache\ICacheable;
-use Rehike\SignInV2\Builder\GoogleAccountInfoBuilder;
-use Rehike\SignInV2\Cache\CacheReader;
-
 /**
  * Used to store and retrieve information about a Google Account.
  * 
@@ -31,12 +27,6 @@ abstract class GoogleAccountInfoBase
     protected ?string $gaiaId;
 
     /**
-     * The user session index for this account, used when multiple Google Accounts are
-     * accessible.
-     */
-    protected ?int $authUserId;
-
-    /**
      * The email address associated with this Google Account.
      */
     protected ?string $accountEmail;
@@ -61,10 +51,7 @@ abstract class GoogleAccountInfoBase
      * Get the user session index for this account, used when multiple Google 
      * Accounts are accessible.
      */
-    public function getAuthUserId(): ?int
-    {
-        return $this->authUserId;
-    }
+    abstract public function getAuthUserId(): ?int;
 
     /**
      * Get the internal GAIA ID of the account, used to identify the account

@@ -39,8 +39,7 @@ class SignIn
     {
         if (SIGNINV2_ENABLE_V1_BACKWARDS_COMPAT && !self::shouldUseSV2())
         {
-            $factory = new BackwardsCompatibilitySessionInfoFactory();
-            return $factory->build();
+            return BackwardsCompatibilitySessionInfoFactory::getInstance()->build();
         }
         
         // temporary
