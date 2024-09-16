@@ -70,6 +70,7 @@ class BackwardsCompatibilitySessionInfoFactory implements IBuilder
         
         $googleInfo->isActive = true;
         
+        if (isset($legacyInfo["channelPicker"]))
         foreach ($legacyInfo["channelPicker"] as $legacyChannel)
         {
             $channelInfo = new YtChannelAccountInfoBuilder($googleInfo);

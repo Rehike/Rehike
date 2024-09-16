@@ -1,10 +1,10 @@
 {
-	"previousHash": "1079d758e9740dc40f1ca3fa0040cff5ad2250f6",
-	"currentRevisionId": 1648,
-	"subject": "[SignInV2] Fix datasync ID type errors",
-	"body": "[SignInV2] Fix datasync ID type errors",
+	"previousHash": "a7e3c0600343688849f548040ea76d670ce70b56",
+	"currentRevisionId": 1649,
+	"subject": "[SignInV2] Fix backwards compatibility errors when logged out",
+	"body": "[SignInV2] Fix backwards compatibility errors when logged out",
 	"branch": "master",
 	"committerName": "Isabella",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1726449876
+	"time": 1726458546
 }
