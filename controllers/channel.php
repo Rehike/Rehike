@@ -18,7 +18,7 @@ use YukisCoffee\CoffeeRequest\Network\Response;
 use Rehike\Util\Base64Url;
 use Rehike\Util\ExtractUtils;
 use Rehike\Helper\ChannelUtils;
-use Rehike\Signin\API as SignIn;
+use Rehike\SignInV2\SignIn;
 
 use \Rehike\Model\Channels\Channels4Model as Channels4;
 use YukisCoffee\CoffeeRequest\Exception\PromiseAllException;
@@ -67,7 +67,7 @@ class channel extends NirvanaController
             // If user is signed in and channel owner, get data for the
             // secondary channel header.
             $ownerData = null;
-            if ($ucid == @SignIn::getInfo()["ucid"])
+            if ($ucid == SignIn::getSessionInfo()->getUcid())
             {
                 $ownerData = yield ChannelUtils::getOwnerData($ucid);
             }

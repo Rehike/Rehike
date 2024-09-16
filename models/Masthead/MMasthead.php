@@ -3,7 +3,7 @@ namespace Rehike\Model\Masthead;
 
 use Rehike\Model\Common\MButton;
 use Rehike\i18n\i18n;
-use Rehike\Signin\API as SignIn;
+use Rehike\SignInV2\SignIn;
 use Rehike\ConfigManager\Config;
 use Rehike\YtApp;
 

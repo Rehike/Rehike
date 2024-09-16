@@ -3,7 +3,7 @@ namespace Rehike\Model\Masthead\UploadButton;
 
 use Rehike\Model\Common\MButton;
 use Rehike\i18n\i18n;
-use Rehike\Signin\API as SignIn;
+use Rehike\SignInV2\SignIn;
 
 class MUploadIconButton extends MButton
 {
@@ -14,10 +14,13 @@ class MUploadIconButton extends MButton
     {
         $i18n = i18n::getNamespace("masthead");
 
-        $signInInfo = (object) SignIn::getInfo();
-        $hasChannel = SignIn::isSignedIn() && isset($signInInfo->ucid);
+        $signInInfo = SignIn::getSessionInfo();
+        $hasChannel = SignIn::isSignedIn() && !is_null($signInInfo->getUcid());
         
-        if ($hasChannel) $ucid = $signInInfo->ucid;
+        if ($hasChannel)
+        {
+            $ucid = $signInInfo->getUcid();
+        }
 
         $this->tooltip = $i18n->get("uploadButton");
         $this->navigationEndpoint = (object) [

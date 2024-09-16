@@ -3,7 +3,7 @@ namespace Rehike\Model\Channels\Channels4;
 
 use Rehike\i18n\i18n;
 use Rehike\Model\Channels\Channels4\SecondaryHeader\MSecondaryHeaderLink;
-use Rehike\Signin\API as SignIn;
+use Rehike\SignInV2\SignIn;
 
 class MSecondaryHeader
 {
@@ -14,7 +14,7 @@ class MSecondaryHeader
     {
         $i18n = i18n::getNamespace("channels");
 
-        $ucid = SignIn::getInfo()["ucid"];
+        $ucid = SignIn::getSessionInfo()->getUcid();
 
         if (isset($data->subscribers))
         {

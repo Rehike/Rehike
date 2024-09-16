@@ -4,7 +4,7 @@ namespace Rehike\Model\Watch\Watch8\PrimaryInfo;
 use Rehike\Util\ParsingUtils;
 use Rehike\Model\Common\Subscription\MSubscriptionActions;
 use Rehike\Model\Common\MButton;
-use Rehike\Signin\API as SignIn;
+use Rehike\SignInV2\SignIn;
 use Rehike\Util\ExtractUtils;
 use Rehike\i18n\i18n;
 use Rehike\Model\Watch\WatchBakery;
@@ -51,9 +51,12 @@ class MOwner
         $info = $secInfo->owner->videoOwnerRenderer;
         $i18n = i18n::getNamespace("watch");
 
-        $signInInfo = (object) SignIn::getInfo();
-        $hasChannel = SignIn::isSignedIn() && isset($signInInfo->ucid);
-        if ($hasChannel) $ucid = $signInInfo->ucid;
+        $signInInfo = SignIn::getSessionInfo();
+        $hasChannel = SignIn::isSignedIn() && !is_null($signInInfo->getUcid());
+        if ($hasChannel)
+        {
+            $ucid = $signInInfo->getUcid();
+        }
 
         if (isset($info))
         {

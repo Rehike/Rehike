@@ -4,7 +4,7 @@ namespace Rehike\Helper;
 use Rehike\Exception\Network\InnertubeFailedRequestException;
 use Rehike\Network;
 use YukisCoffee\CoffeeRequest\Promise;
-use Rehike\Signin\API as SignIn;
+use Rehike\SignInV2\SignIn;
 use YukisCoffee\CoffeeRequest\Exception\GeneralException;
 
 use function Rehike\Async\async;
@@ -60,8 +60,8 @@ class ChannelUtils
             $ownerData = null;
             if (SignIn::isSignedIn())
             {
-                $info = SignIn::getInfo();
-                if (@$info["ucid"] == $ucid)
+                $info = SignIn::getSessionInfo();
+                if ($info->getUcid() == $ucid)
                 {
                     $analytics = yield Network::innertubeRequest(
                         action: "analytics_data/get_screen",

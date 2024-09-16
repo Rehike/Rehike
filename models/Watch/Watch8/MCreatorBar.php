@@ -3,7 +3,7 @@ namespace Rehike\Model\Watch\Watch8;
 
 use Rehike\Model\Common\MButton;
 use Rehike\i18n\i18n;
-use Rehike\Signin\API as SignIn;
+use Rehike\SignInV2\SignIn;
 
 class MCreatorBar
 {
@@ -19,7 +19,7 @@ class MCreatorBar
     public function __construct($vid)
     {
         $i18n = i18n::getNamespace("watch");
-        $ucid = SignIn::getInfo()["ucid"];
+        $ucid = SignIn::getSessionInfo()->getUcid();
 
         $this->navButtons[] = new MButton([
             "text" => (object) [

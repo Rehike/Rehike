@@ -2,7 +2,7 @@
 namespace Rehike\Model\Guide;
 
 use Rehike\i18n\i18n;
-use Rehike\Signin\API as Signin;
+use Rehike\SignInV2\SignIn;
 use Rehike\ConfigManager\Config;
 use Rehike\Model\Common\MButton;
 use Rehike\Model\Traits\NavigationEndpoint;
@@ -122,7 +122,7 @@ class Converter
 
         // Casted to object in order to access in string interpolation
         if ($signedIn)
-            $signinInfo = (object)Signin::getInfo();
+            $signinInfo = Signin::getSessionInfo();
 
         $mainSection = $data->items[0]->guideSectionRenderer->items;
 
@@ -877,15 +877,13 @@ class Converter
 
     private static function initUcid(object $librarySection): void
     {
-        $signinInfo = Signin::getInfo();
+        $signinInfo = Signin::getSessionInfo();
+        
+        $ucid = $signinInfo->getUcid() ?? null;
 
-        if (
-            isset($signinInfo["ucid"]) && 
-            is_string($signinInfo["ucid"]) && 
-            !empty($signinInfo["ucid"])
-        )
+        if (!is_null($ucid))
         {
-            self::$ucid = $signinInfo["ucid"];
+            self::$ucid = $signinInfo->getUcid();
         }
         else if (isset($librarySection->sectionItems[0]->guideEntryRenderer->icon->iconType))
         {

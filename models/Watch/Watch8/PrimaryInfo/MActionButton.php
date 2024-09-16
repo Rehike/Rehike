@@ -3,7 +3,7 @@ namespace Rehike\Model\Watch\Watch8\PrimaryInfo;
 
 use Rehike\Model\Common\MButton;
 use Rehike\Model\Clickcard\MSigninClickcard;
-use Rehike\Signin\API as SignIn;
+use Rehike\SignInV2\SignIn;
 use Rehike\i18n\i18n;
 
 /**

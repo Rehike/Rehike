@@ -8,7 +8,7 @@ use Rehike\Async\Promise;
 use \Rehike\Controller\core\AjaxController;
 use \Rehike\Network;
 use \Rehike\Util\ParsingUtils;
-use Rehike\Signin\API as SignIn;
+use Rehike\SignInV2\SignIn;
 use \Rehike\Model\Share\ShareBoxModel;
 use \Rehike\Model\Share\ShareEmbedModel;
 use \Rehike\Model\Share\ShareEmailModel;
@@ -127,13 +127,13 @@ return new class extends AjaxController {
             $priInfo = $vidInfo->videoPrimaryInfoRenderer;
             $secInfo = $vidInfo->videoSecondaryInfoRenderer;
 
-            $userData = SignIn::getInfo();
+            $userData = SignIn::getSessionInfo()->getCurrentChannel();
 
             $yt->page = ShareEmailModel::bake(
                 videoId: $this->videoId,
                 title: ParsingUtils::getText($priInfo->title),
-                userId: $userData["ucid"],
-                userName: $userData["activeChannel"]["name"],
+                userId: $userData->getUcid(),
+                userName: $userData->getDisplayName(),
                 desc: $secInfo->attributedDescription->content
             );
         });

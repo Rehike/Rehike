@@ -2,7 +2,7 @@
 namespace Rehike\Model\Watch;
 
 use Rehike\ConfigManager\Config;
-use Rehike\Signin\API as SignIn;
+use Rehike\SignInV2\SignIn;
 use Rehike\Util\PrefUtils;
 
 use Rehike\Model\Watch\{
@@ -639,7 +639,7 @@ class WatchBakery
     {
         if (!SignIn::isSignedIn()) return false;
         
-        if ($ucid = SignIn::getInfo()["ucid"])
+        if ($ucid = SignIn::getSessionInfo()->getUcid())
         {
             if ($ucid == @$secondaryInfo->owner->videoOwnerRenderer->navigationEndpoint->browseEndpoint->browseId)
             {

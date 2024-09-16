@@ -3,7 +3,7 @@ namespace Rehike\Model\Masthead\AccountPicker;
 
 use Rehike\Model\Common\MButton;
 use Rehike\i18n\i18n;
-use Rehike\Signin\API as SignIn;
+use Rehike\SignInV2\SignIn;
 
 class MAccountPickerStudioButton extends MButton
 {
@@ -15,8 +15,8 @@ class MAccountPickerStudioButton extends MButton
     public function __construct()
     {
         $i18n = i18n::getNamespace("masthead");
-        $signInInfo = (object) SignIn::getInfo();
-        $hasChannel = SignIn::isSignedIn() && isset($signInInfo->ucid);
+        $signInInfo = SignIn::getSessionInfo();
+        $hasChannel = SignIn::isSignedIn() && !is_null($signInInfo->getUcid());
 
         if ($hasChannel)
         {

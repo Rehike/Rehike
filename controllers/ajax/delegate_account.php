@@ -3,8 +3,37 @@ namespace Rehike\Controller\ajax;
 
 use Rehike\YtApp;
 use Rehike\ControllerV2\RequestMetadata;
+use Rehike\SignInV2\Info\YtChannelAccountInfo;
+use Rehike\SignInV2\SignIn;
 
-use \Rehike\Signin\API as SignIn;
+/**
+ * Model for delegate accounts
+ * 
+ * This is a lazy hack to maintain the model structure that the template expects
+ * from sign in V1.
+ * 
+ * @author Isabella <kawapure@gmail.com>
+ * @author The Rehike Maintainers
+ */
+class MDelegateAccountItem
+{
+    public string $name;
+    public string $byline;
+    public string $photo;
+    public string $switchUrl;
+    
+    public YtChannelAccountInfo $infoSource;
+    
+    public function __construct(YtChannelAccountInfo $channelInfo)
+    {
+        $this->name = $channelInfo->getDisplayName() ?? "";
+        $this->byline = $channelInfo->getLocalizedSubscriberCount() ?? "";
+        $this->photo = $channelInfo->getAvatarUrl() ?? "";
+        $this->switchUrl = $channelInfo->getSwitchUrl("/?feature=masthead_switcher") ?? "";
+        
+        $this->infoSource = $channelInfo;
+    }
+}
 
 return new class extends \Rehike\Controller\core\AjaxController 
 {
@@ -22,17 +51,17 @@ return new class extends \Rehike\Controller\core\AjaxController
             self::error();
         }
 
-        $info = SignIn::getInfo();
+        $sessionInfo = SignIn::getSessionInfo();
 
         $channelList = [];
-        foreach ($info["channelPicker"] as $channel) 
+        foreach ($sessionInfo->getCurrentGoogleAccount()->getYoutubeChannels() as $channel) 
         {
-            $channelList[] = (object) $channel;
+            $channelList[] = new MDelegateAccountItem($channel);
         }
 
         for ($i = 0; $i < count($channelList); $i++) 
         {
-            if ($channelList[$i]->selected) 
+            if ($channelList[$i]->infoSource->isActive()) 
             {
                 array_splice($channelList, $i, 1);
                 $i--;

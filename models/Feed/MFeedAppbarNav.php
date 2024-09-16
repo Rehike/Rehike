@@ -2,7 +2,7 @@
 namespace Rehike\Model\Feed;
 use Rehike\Model\Appbar\MAppbarNav;
 use Rehike\i18n\i18n;
-use Rehike\Signin\API as SignIn;
+use Rehike\SignInV2\SignIn;
 
 class MFeedAppbarNav extends MAppbarNav
 {

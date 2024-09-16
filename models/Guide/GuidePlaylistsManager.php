@@ -3,7 +3,7 @@ namespace Rehike\Model\Guide;
 
 use Rehike\Network;
 use Rehike\FileSystem;
-use Rehike\Signin\AuthManager;
+use Rehike\SignInV2\SignIn;
 
 // Async imports:
 use function Rehike\Async\async;
@@ -139,7 +139,7 @@ class GuidePlaylistsManager
      */
     protected function buildCache(array $items): object
     {
-        $accountId = AuthManager::getGaiaId();
+        $accountId = SignIn::getSessionInfo()->getCurrentGoogleAccount()->getGaiaId();
         $expire = time() + self::EXPIRE_TIME;
 
         return (object)[
@@ -161,7 +161,8 @@ class GuidePlaylistsManager
             if (time() > $cacheObj->expire)
             {
                 // The account ID must match, meaning the user has not switched accounts.
-                if (AuthManager::getGaiaId() == $cacheObj->accountId)
+                $currentGaiaId = SignIn::getSessionInfo()->getCurrentGoogleAccount()->getGaiaId();
+                if ($currentGaiaId == $cacheObj->accountId)
                 {
                     return (object)[
                         "isValid" => true,

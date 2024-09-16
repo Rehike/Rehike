@@ -5,7 +5,7 @@ use Rehike\YtApp;
 use Rehike\ControllerV2\RequestMetadata;
 
 use Rehike\Network;
-use Rehike\Signin\API as SignIn;
+use Rehike\SignInV2\SignIn;
 
 /**
  * Controller for the /profile endpoint.

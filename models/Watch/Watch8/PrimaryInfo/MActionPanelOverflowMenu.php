@@ -4,7 +4,7 @@ namespace Rehike\Model\Watch\Watch8\PrimaryInfo;
 use Rehike\Model\Clickcard\MSigninClickcard;
 use Rehike\Model\Common\Menu\MMenu;
 use Rehike\Model\Common\Menu\MMenuItem;
-use Rehike\Signin\API as SignIn;
+use Rehike\SignInV2\SignIn;
 use Rehike\i18n\i18n;
 use Rehike\YtApp;
 

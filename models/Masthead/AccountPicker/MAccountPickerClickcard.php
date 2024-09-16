@@ -2,7 +2,7 @@
 namespace Rehike\Model\Masthead\AccountPicker;
 
 use Rehike\i18n\i18n;
-use Rehike\Signin\API as SignIn;
+use Rehike\SignInV2\SignIn;
 use Rehike\Model\Common\Thumb\MThumbSquare;
 use Rehike\Util\ImageUtils;
 
@@ -20,14 +20,14 @@ class MAccountPickerClickcard
     public function __construct()
     {
         $i18n = i18n::getNamespace("masthead");
-        $signInInfo = (object) SignIn::getInfo();
-        $activeChannel = $signInInfo->activeChannel;
+        $signInInfo = SignIn::getSessionInfo();
+        $activeChannel = $signInInfo->getCurrentChannel();
 
         $this->content = (object) [];
         $content = &$this->content;
 
         $content->email = (object) [
-            "simpleText" => $signInInfo->googleAccount["email"],
+            "simpleText" => $signInInfo->getCurrentGoogleAccount()->getAccountEmail(),
             "navigationEndpoint" => (object) [
                 "commandMetadata" => (object) [
                     "webCommandMetadata" => (object) [
@@ -36,8 +36,8 @@ class MAccountPickerClickcard
                 ]
             ]
         ];
-        $content->username = $activeChannel["name"];
-        $content->subCount = $activeChannel["byline"];
+        $content->username = $activeChannel->getDisplayName();
+        $content->subCount = $activeChannel->getLocalizedSubscriberCount();
         $content->photo = (object) [
             "simpleText" => $i18n->get("accountPickerPhotoChange"),
             "navigationEndpoint" => (object) [
@@ -48,7 +48,7 @@ class MAccountPickerClickcard
                 ]
             ],
             "thumb" => new MThumbSquare([
-                "image" => ImageUtils::changeSize($activeChannel["photo"], 64),
+                "image" => ImageUtils::changeSize($activeChannel->getAvatarUrl(), 64),
                 "size" => 64,
                 "delayload" => true
             ])

@@ -6,7 +6,7 @@ use Rehike\ControllerV2\RequestMetadata;
 
 use Rehike\Controller\core\HitchhikerController;
 use Rehike\Network;
-use Rehike\Signin\API as SignIn;
+use Rehike\SignInV2\SignIn;
 use \Rehike\Model\ChannelSwitcher\ChannelSwitcherModel;
 
 use function Rehike\Async\async;

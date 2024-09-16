@@ -163,7 +163,7 @@ class MHeader
             // Channel owner
             $this->subscriptionButton = MSubscriptionActions::buildMock($subscriberCount);
         }
-        else if (!\Rehike\Signin\API::isSignedIn())
+        else if (!\Rehike\SignInV2\SignIn::isSignedIn())
         {
             $this->subscriptionButton = MSubscriptionActions::signedOutStub($subscriberCount);
         }

@@ -5,7 +5,7 @@ use Rehike\i18n\i18n;
 use Rehike\Util\ParsingUtils;
 use Rehike\Util\ExtractUtils;
 use Rehike\Model\Channels\Channels4\BrandedPageV2\MSubnav;
-use Rehike\Signin\API as SignIn;
+use Rehike\SignInV2\SignIn;
 
 use Rehike\Model\Common\Subscription\MSubscriptionActions;
 

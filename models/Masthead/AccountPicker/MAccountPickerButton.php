@@ -3,7 +3,7 @@ namespace Rehike\Model\Masthead\AccountPicker;
 
 use Rehike\Model\Common\MButton;
 use Rehike\i18n\i18n;
-use Rehike\Signin\API as SignIn;
+use Rehike\SignInV2\SignIn;
 use Rehike\Model\Common\Thumb\MThumbSquare;
 use Rehike\Util\ImageUtils;
 
@@ -23,9 +23,9 @@ class MAccountPickerButton extends MButton
     public function __construct()
     {
         $i18n = i18n::getNamespace("masthead");
-        $signInInfo = (object) SignIn::getInfo();
+        $signInInfo = SignIn::getSessionInfo();
         $this->thumb = new MThumbSquare([
-            "image" => ImageUtils::changeSize($signInInfo->activeChannel["photo"], 27),
+            "image" => ImageUtils::changeSize($signInInfo->getCurrentChannel()?->getAvatarUrl() ?? "", 27),
             "size" => 27,
             "delayload" => true
         ]);

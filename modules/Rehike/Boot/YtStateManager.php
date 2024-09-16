@@ -49,7 +49,7 @@ final class YtStateManager
         {
             LegacyAuthManager::use($yt);
             
-            //$yt->tempSv2Test = SignIn::getSessionInfo();
+            $yt->tempSv2Test = SignIn::getSessionInfo();
         }
     }
 }

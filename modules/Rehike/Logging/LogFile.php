@@ -6,7 +6,7 @@ use Rehike\RuntimeInfo;
 use Rehike\ConfigManager\Config;
 use Rehike\ControllerV2\Router;
 use Rehike\Logging\Common\FormattedString;
-use Rehike\Signin\API as Signin;
+use Rehike\SignInV2\SignIn;
 use Rehike\Network;
 use Rehike\ErrorHandler\ErrorPage\FatalErrorPage;
 
@@ -49,7 +49,7 @@ class LogFile
 
         $out .= "=== Request/session information ===\n";
         $out .= " - Page URL: " . $_SERVER["REQUEST_URI"] . "\n";
-        $out .= " - Logged in: " . (Signin::isSignedIn() ? "Yes" : "No") . "\n";
+        $out .= " - Logged in: " . (SignIn::isSignedIn() ? "Yes" : "No") . "\n";
         $out .= " - Successful requests: " . $this->getSuccessfulRequests() . "\n";
         $out .= " - Router destination: " . $this->getRouterInfo() . "\n";
 

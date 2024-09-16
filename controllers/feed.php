@@ -11,7 +11,7 @@ use Rehike\Network;
 use Rehike\Helper\WebV2Shelves;
 use Rehike\Util\RichShelfUtils;
 use Rehike\Model\Feed\MFeedAppbarNav;
-use Rehike\Signin\API as SignIn;
+use Rehike\SignInV2\SignIn;
 use \Com\Youtube\Innertube\Request\BrowseRequestParams;
 use \Rehike\Util\Base64Url;
 use \Rehike\Model\History\HistoryModel;

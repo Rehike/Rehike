@@ -8,9 +8,6 @@ use \Rehike\Controller\core\AjaxController;
 use \Rehike\Network;
 use \Rehike\Model\Picker\LocalePickerModel;
 use Rehike\Model\Picker\SafetyModePickerModel;
-use \Rehike\Signin\API as SignIn;
-use \Rehike\Signin\AuthManager;
-use \Rehike\Signin\Cacher;
 use \Rehike\TemplateManager;
 
 /**
