@@ -16,6 +16,8 @@ use Rehike\Signin\{
 use Rehike\SignInV2\{
     BackwardsCompatibility\BackwardsCompatibilitySessionInfoFactory,
 };
+use Rehike\SignInV2\Info\GoogleAccountInfo;
+use Rehike\SignInV2\Info\YtChannelAccountInfo;
 
 /**
  * Implements the main sign-in API.
@@ -44,6 +46,21 @@ class SignIn
         
         // temporary
         return null;
+    }
+    
+    public static function getCurrentGoogleAccount(): ?GoogleAccountInfo
+    {
+        return self::getSessionInfo()?->getCurrentGoogleAccount();
+    }
+    
+    public static function getCurrentChannel(): ?YtChannelAccountInfo
+    {
+        return self::getSessionInfo()?->getCurrentChannel();
+    }
+    
+    public static function getDatasyncId(): ?string
+    {
+        return self::getSessionInfo()?->getDatasyncId() ?? null;
     }
     
     protected static function shouldUseSV2(): bool
