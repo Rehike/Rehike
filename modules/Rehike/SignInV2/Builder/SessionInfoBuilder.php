@@ -23,7 +23,7 @@ class SessionInfoBuilder implements IBuilder
     
     //public BuilderCollection $otherAccountBuilders;
     
-    public string $datasyncId;
+    public ?string $datasyncId = null;
     
     public int $sessionErrors = 0;
     

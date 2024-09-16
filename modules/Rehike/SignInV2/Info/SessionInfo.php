@@ -171,7 +171,7 @@ class SessionInfo implements IBuiltObject, ICacheable
         return $this->otherChannels;
     }
     
-    public function getDatasyncId(): string
+    public function getDatasyncId(): ?string
     {
         return $this->currentDatasyncId;
     }
