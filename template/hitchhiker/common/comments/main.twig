@@ -95,7 +95,7 @@
             {% if comment.actionButtons.commentActionButtonsRenderer.creatorHeart %}
                {{ _self.creator_heart(comment.actionButtons.commentActionButtonsRenderer.creatorHeart.creatorHeartRenderer)  }}
             {% endif %}
-            {% if yt.signin.isSignedIn %}
+            {% if rehike.signin.isSignedIn() %}
             <div class="yt-uix-menu-container comment-renderer-action-menu yt-section-hover-container">
                <div class="yt-uix-menu yt-uix-menu-flipped hide-until-delayloaded">
                   <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-action-menu yt-uix-button-empty yt-uix-button-has-icon no-icon-markup  yt-uix-menu-trigger" type="button" onclick=";return false;" aria-haspopup="true" aria-label="{{ rehike.i18n.get("global", "actionMenuLabel") }}" aria-pressed="false" role="button"><span class="yt-uix-button-arrow yt-sprite"></span></button>
@@ -114,12 +114,12 @@
             </div>
          {% endif %}
          </div>
-         {% if yt.signin.isSignedIn %}
+         {% if rehike.signin.isSignedIn() %}
          <div class="comment-renderer-replybox" id="comment-simplebox-reply-{{ comment.commentId }}">
             <span class="video-thumb comment-author-thumbnail yt-thumb yt-thumb-32">
                <span class="yt-thumb-square">
                   <span class="yt-thumb-clip">
-                     <img alt="{{ yt.signin.activeChannel.name }}" data-ytimg="1" height="32" onload=";window.__ytRIL &amp;&amp; __ytRIL(this)" role="img" src="{{ yt.signin.activeChannel.photo }}" tabindex="0" width="32">
+                     <img alt="{{ rehike.signin.getCurrentChannel().getDisplayName() }}" data-ytimg="1" height="32" onload=";window.__ytRIL &amp;&amp; __ytRIL(this)" role="img" src="{{ rehike.signin.getCurrentChannel().getAvatarUrl() }}" tabindex="0" width="32">
                      <span class="vertical-align"></span>
                   </span>
                </span>

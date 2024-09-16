@@ -1,6 +1,6 @@
 {%- macro render(data, videoId) -%}
 {% import "common/uix/button.twig" as btn %}
-{% if yt.signin.isSignedIn %}
+{% if rehike.signin.isSignedIn() %}
 {{ btn.render({
     size: "SIZE_SMALL",
     style: "STYLE_DEFAULT",

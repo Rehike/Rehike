@@ -1,10 +1,10 @@
 {
-	"previousHash": "54fd208c8841644b6aad4a5d486c93f136a2bef1",
-	"currentRevisionId": 1646,
-	"subject": "Use SignInV2 API across all PHP code",
-	"body": "Use SignInV2 API across all PHP code",
+	"previousHash": "69d73f0a245e77975819dc0ce69fd8c8acfcc25a",
+	"currentRevisionId": 1647,
+	"subject": "Use SignInV2 API across all Twig code",
+	"body": "Use SignInV2 API across all Twig code",
 	"branch": "master",
 	"committerName": "Isabella",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1726445393
+	"time": 1726445452
 }

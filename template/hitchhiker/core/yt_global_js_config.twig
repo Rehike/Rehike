@@ -17,7 +17,7 @@
         APIARY_HOST: "",
         'VISITOR_DATA': "{{ yt.visitorData }}",
         'DELEGATED_SESSION_ID': null,
-        'DATASYNC_ID': "{{ yt.signin.datasyncId ?? 'V3cc04582||' }}",
+        'DATASYNC_ID': "{{ rehike.signin.getDatasyncId() ?? 'V3cc04582||' }}",
         'GAPI_HOST': "https:\/\/apis.google.com",
         'GAPI_LOCALE': "en_US",
         'INNERTUBE_CONTEXT_HL': "{{ yt.hl }}",
@@ -76,7 +76,7 @@
     });
     yt.setConfig({
         'PAGE_NAME': "{{ pageName ?? pageType }}", {# page type usually works, but some pages (index) differ #}
-        'LOGGED_IN': {{ yt.signin.isSignedIn ? "true" : "false" }},
+        'LOGGED_IN': {{ rehike.signin.isSignedIn() ? "true" : "false" }},
         'SESSION_INDEX': 0,
         'VALID_SESSION_TEMPDATA_DOMAINS': ["www.youtube.com", "gaming.youtube.com"],
         'PARENT_TRACKING_PARAMS': "",

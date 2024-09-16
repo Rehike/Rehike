@@ -1,7 +1,7 @@
 {% import '/core/spinner.twig' as spinner %}
 
 <div id="hidden-component-template-wrapper" class="hid">
-    {% if not yt.signin.isSignedIn %}
+    {% if not rehike.signin.isSignedIn() %}
         <div id="shared-addto-watch-later-login" class="hid">
             {{ yt.msgs.watchLaterSignIn|format('<a href="https://accounts.google.com/ServiceLogin?service=youtube&amp;uilel=3&amp;hl=en&amp;continue=https%3A%2F%2Fwww.youtube.com%2Fsignin%3Fapp%3Ddesktop%26action_handle_signin%3Dtrue%26hl%3Den%26next%3D%252F%26feature%3Dsign_in_button&amp;passive=true">', '</a>')|raw }}
         </div>
