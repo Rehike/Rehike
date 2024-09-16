@@ -139,6 +139,14 @@ class SessionInfo implements IBuiltObject, ICacheable
         
         return $this->activeChannel;
     }
+    
+    /**
+     * Get the UCID of the current channel.
+     */
+    public function getUcid(): ?string
+    {
+        return $this->getCurrentChannel()?->getUcid();
+    }
 
     /**
      * Gets a list of other YouTube channels accessible under the current
