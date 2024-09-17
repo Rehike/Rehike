@@ -45,7 +45,16 @@
          </span>
       </span>
    </a>
-   <div id="comment-renderer-edit-{{ comment.commentId }}" class="comment-simplebox-edit" data-editable-content-text="" data-image-src="" data-video-id="">
+   {# If we support editing this comment, then we want to encode the text as a HTML attribute
+      for the data-editable-content-text attribute. #}
+   {%- if comment.actionMenu.rhButtonsSupported.edit -%}
+      {# This should technically be something like find the edit button and then put
+         .menuNavigationItemRenderer.navigationEndpoint.updateCommentReplyDialogEndpoint
+         .dialog.commentReplyDialogRenderer.editableText, but this works just as well... #}
+      {% set editableContentText = rehike.getText(comment.actionMenu.rhButtonsSupported.edit.rhEditDialog.editableText)
+      %}
+   {%- endif -%}
+   <div id="comment-renderer-edit-{{ comment.commentId }}" class="comment-simplebox-edit" data-editable-content-text="{{ editableContentText|e('html_attr') }}" data-image-src="" data-video-id="">
    </div>
    <div class="comment-renderer-content">
       {% if comment.pinnedCommentBadge %}
@@ -100,15 +109,67 @@
                <div class="yt-uix-menu yt-uix-menu-flipped hide-until-delayloaded">
                   <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-action-menu yt-uix-button-empty yt-uix-button-has-icon no-icon-markup  yt-uix-menu-trigger" type="button" onclick=";return false;" aria-haspopup="true" aria-label="{{ rehike.i18n.get("global", "actionMenuLabel") }}" aria-pressed="false" role="button"><span class="yt-uix-button-arrow yt-sprite"></span></button>
                   <div class="yt-uix-menu-content yt-ui-menu-content yt-uix-menu-content-hidden" role="menu">
-                     <ul>
-                        <li role="menuitem">
-                           <div class="service-endpoint-action-container hid">
-                           </div>
-                           <button type="button" class="yt-ui-menu-item yt-uix-menu-close-on-select  report-form-modal-renderer" data-params="GhpVZ3lROGljZVlqcU1ZMDAwbUo1NEFhQUJBZygCMgFGOmkIARACGhpVZ3lROGljZVlqcU1ZMDAwbUo1NEFhQUJBZyoLbXkyaF9fbDQxcWMwAEoVMTEyOTM1MjAzMzA1OTEyODQ0ODg1UACoAQy6ARhVQ202eUQyNkhsYWZ6cU5sWWFLN3VFYUHgAQA%3D" data-url="/flag_service_ajax?action_get_report_form=1">
-                           <span class="yt-ui-menu-item-label">{{ rehike.i18n.get("comments", "reportText") }}</span>
-                           </button>
-                        </li>
-                     </ul>
+                     {% if comment.actionMenu.rhButtonsSupported.pin %}
+                        <ul>
+                           <li role="menuitem">
+                              <button type="button" class="yt-ui-menu-item yt-uix-menu-close-on-select">
+                                 <span class="yt-ui-menu-item-label">{{ rehike.i18n.get("comments", "pinText") }}</span>
+                              </button>
+                           </li>
+                        </ul>
+                     {% endif %}
+                     {% if comment.actionMenu.rhButtonsSupported.edit %}
+                        {% set editButton = comment.actionMenu.rhButtonsSupported.edit %}
+                        {% set editSimpleboxParams = comment.navigationEndpoint.updateCommentReplyDialogEndpoint
+                         %}
+                        <ul>
+                           <li role="menuitem">
+                              <button type="button" class="yt-ui-menu-item yt-uix-menu-close-on-select comment-renderer-edit"
+                                 {# data-simplebox-id="comment-simplebox-edit-{{ comment.commentId }}" #}
+                                 data-simplebox-label="{{ rehike.i18n.get("comments", "editText")|e('html_attr') }}"
+                                 data-target="{{ comment.isReply 
+                                    ? '/comment_service_ajax?action_update_comment_reply=1'
+                                    : '/comment_service_ajax?action_update_comment=1' }}"
+                                 data-params="{{ editButton.rhEditParams }}"
+                                 {# data-simplebox-event="{{ comment.isReply ? 'replyupdated' : 'commentupdated' }}" #}
+                              >
+                                 <span class="yt-ui-menu-item-label">{{ rehike.i18n.get("comments", "editText") }}</span>
+                              </button>
+                           </li>
+                        </ul>
+                     {% endif %}
+                     {% if comment.actionMenu.rhButtonsSupported.delete %}
+                        {# TODO: Delete button needs a little more work to possibly work #}
+                        <ul>
+                           <li role="menuitem">
+                              <button type="button" class="yt-ui-menu-item yt-uix-menu-close-on-select" data-params="GhpVZ3lROGljZVlqcU1ZMDAwbUo1NEFhQUJBZygCMgFGOmkIARACGhpVZ3lROGljZVlqcU1ZMDAwbUo1NEFhQUJBZyoLbXkyaF9fbDQxcWMwAEoVMTEyOTM1MjAzMzA1OTEyODQ0ODg1UACoAQy6ARhVQ202eUQyNkhsYWZ6cU5sWWFLN3VFYUHgAQA%3D" data-url="/flag_service_ajax?action_get_report_form=1">
+                                 <span class="yt-ui-menu-item-label">{{ rehike.i18n.get("comments", "deleteText") }}</span>
+                              </button>
+                           </li>
+                        </ul>
+                     {% endif %}
+                     {% if comment.actionMenu.rhButtonsSupported.report %}
+                        <ul>
+                           <li role="menuitem">
+                              <div class="service-endpoint-action-container hid">
+                              </div>
+                              <button type="button" class="yt-ui-menu-item yt-uix-menu-close-on-select  report-form-modal-renderer" data-params="GhpVZ3lROGljZVlqcU1ZMDAwbUo1NEFhQUJBZygCMgFGOmkIARACGhpVZ3lROGljZVlqcU1ZMDAwbUo1NEFhQUJBZyoLbXkyaF9fbDQxcWMwAEoVMTEyOTM1MjAzMzA1OTEyODQ0ODg1UACoAQy6ARhVQ202eUQyNkhsYWZ6cU5sWWFLN3VFYUHgAQA%3D" data-url="/flag_service_ajax?action_get_report_form=1">
+                                 <span class="yt-ui-menu-item-label">{{ rehike.i18n.get("comments", "reportText") }}</span>
+                              </button>
+                           </li>
+                        </ul>
+                     {% endif %}
+                     {% if comment.actionMenu.rhButtonsSupported.block %}
+                        <ul>
+                           <li role="menuitem">
+                              <div class="service-endpoint-action-container hid">
+                              </div>
+                              <button type="button" class="yt-ui-menu-item yt-uix-menu-close-on-select  report-form-modal-renderer" data-url="/flag_service_ajax?action_get_report_form=1">
+                                 <span class="yt-ui-menu-item-label">Block{# TODO: i18n #}</span>
+                              </button>
+                           </li>
+                        </ul>
+                     {% endif %}
                   </div>
                </div>
             </div>

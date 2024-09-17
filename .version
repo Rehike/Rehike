@@ -1,10 +1,10 @@
 {
-	"previousHash": "b2eb0cce9a5c01987c4dce67ee23be0b240b8773",
-	"currentRevisionId": 1650,
-	"subject": "Introduce a shutdown event manager",
-	"body": "Introduce a shutdown event manager",
+	"previousHash": "ddb8ff784a1c8db90c6956037fcef748a6317651",
+	"currentRevisionId": 1651,
+	"subject": "Comments overhaul (part 1) - editing & continuations",
+	"body": "Comments overhaul (part 1) - editing & continuations",
 	"branch": "master",
 	"committerName": "Isabella",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1726600573
+	"time": 1726601816
 }

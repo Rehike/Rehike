@@ -1,0 +1,8 @@
+{% import "common/comments/main.twig" as comments %}
+{#
+    Editing comments expects only a single comment's HTML in response, not an entire
+    thread.
+ #}
+{
+    "html_content": {{ comments.comment(yt.page.comment.commentThreadRenderer.commentRenderer, true)|json_encode|raw }}
+}

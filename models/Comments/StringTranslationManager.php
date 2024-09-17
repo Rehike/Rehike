@@ -42,6 +42,8 @@ class StringTranslationManager
             "Weniger anzeigen" => $i18n->get("collapseButtonText"),
             "Kommentieren" => $i18n->get("commentText"),
             "Markierter Kommentar" => $i18n->get("linkedComment"),
+            "Herz geben" => $i18n->get("heartButtonText"),
+            "Herz entfernen" => $i18n->get("unheartButtonText"),
 
             default => $in
         };
@@ -82,7 +84,10 @@ class StringTranslationManager
             "Monat" => "monthsAgoSingular",
             "Monaten" => "monthsAgoPlural",
             "Jahr" => "yearsAgoSingular",
-            "Jahren" => "yearsAgoPlural"
+            "Jahren" => "yearsAgoPlural",
+            
+            // why not??
+            default => "yearsAgoPlural"
         };
 
         /*
@@ -178,7 +183,15 @@ class StringTranslationManager
 
     public static function convertHeart(?string $in): ?string
     {
+        // Comments will say
         // "<3 von USERNAME"
+        // if they are not editable. If they are editable, then they will have
+        // the tooltip "Unheart". We'll perform a simple check here:
+        if (strstr($in, /* U-2764 = heart symbol */ "\u{2764} von ") === false)
+        {
+            return self::get($in);
+        }
+            
         $i18n = i18n::getNamespace("comments");
         return $i18n->format(
             "heartTooltipText", 

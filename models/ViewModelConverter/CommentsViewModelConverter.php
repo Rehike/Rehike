@@ -21,7 +21,8 @@ class CommentsViewModelConverter extends BasicVMC
     private bool $isLiked = false;
     private bool $isDisliked = false;
     private bool $isHearted = false;
-
+    
+    private bool $isHeartEditable = false;
     private bool $isOwnComment = false;
     private bool $isCreatorComment = false;
     private bool $isVerifiedAuthor = false;
@@ -63,7 +64,14 @@ class CommentsViewModelConverter extends BasicVMC
 
         $this->isLiked = $toolbarStatePayload->likeState == "TOOLBAR_LIKE_STATE_LIKED";
         $this->isDisliked = ($toolbarStatePayload->dislikeState ?? $toolbarStatePayload->likeState) == "TOOLBAR_LIKE_STATE_DISLIKED";
-        $this->isHearted = $toolbarStatePayload->heartState != "TOOLBAR_HEART_STATE_UNHEARTED";
+        $this->isHearted = !in_array($toolbarStatePayload->heartState, [
+            "TOOLBAR_HEART_STATE_UNHEARTED",
+            "TOOLBAR_HEART_STATE_UNHEARTED_EDITABLE"
+        ]);
+        $this->isHeartEditable = in_array($toolbarStatePayload->heartState, [
+            "TOOLBAR_HEART_STATE_UNHEARTED_EDITABLE",
+            "TOOLBAR_HEART_STATE_HEARTED_EDITABLE"
+        ]);
 
         $likeToolbarState = str_replace("TOOLBAR_LIKE_STATE_", "", $toolbarStatePayload->heartState);
 
@@ -138,6 +146,11 @@ class CommentsViewModelConverter extends BasicVMC
         $out["actionButtons"] = (object)[
             "commentActionButtonsRenderer" => $this->internalBakeCommentActionButtonsRenderer()
         ];
+        
+        if (isset($toolbarPayload->menuCommand->innertubeCommand))
+        {
+            $out["actionMenu"] = $toolbarPayload->menuCommand->innertubeCommand->menuEndpoint->menu;
+        }
         
         $i18n = i18n::getNamespace("comments");
         $expandButtonText = $i18n->get("expandButtonText");
@@ -259,7 +272,7 @@ class CommentsViewModelConverter extends BasicVMC
             ]
         ];
 
-        if ($this->isOwnComment || $this->isHearted)
+        if ($this->isHeartEditable || $this->isHearted)
         {
             $out["creatorHeart"] = (object)[
                 "creatorHeartRenderer" => (object)[
@@ -277,6 +290,7 @@ class CommentsViewModelConverter extends BasicVMC
                             ]
                         ]
                     ],
+                    "unheartedTooltip" => $commentPayload->toolbar->heartInactiveTooltip,
                     "heartedTooltip" => $commentPayload->toolbar->heartActiveTooltip,
                     "heartedAccessibility" => (object)[
                         "accessibilityData" => (object)[
@@ -296,7 +310,7 @@ class CommentsViewModelConverter extends BasicVMC
                             "foregroundTitleColor" => 4294901760
                         ]
                     ],
-                    "isEnabled" => $this->isOwnComment,
+                    "isEnabled" => $this->isHeartEditable,
                     "isHearted" => $this->isHearted,
                     "kennedyHeartColorString" => "#ff0000"
                 ]

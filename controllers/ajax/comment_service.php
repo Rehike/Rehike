@@ -1,11 +1,15 @@
 <?php
 namespace Rehike\Controller\ajax;
 
+use Rehike\Async\Promise;
+use function Rehike\Async\async;
+
 use Rehike\Model\ViewModelConverter\CommentsViewModelConverter;
 use Rehike\YtApp;
 use Rehike\ControllerV2\RequestMetadata;
 
 use \Rehike\Controller\core\AjaxController;
+use Rehike\Helper\CommentsContinuation;
 use \Rehike\Model\Comments\CommentThread;
 use \Rehike\Network;
 
@@ -20,7 +24,7 @@ return new class extends AjaxController
 {
     public function onPost(YtApp $yt, RequestMetadata $request): void
     {
-        $action = self::findAction();
+        $action = $this->findAction();
         if (!@$action) self::error();
 
         $yt->page = (object) [];
@@ -28,20 +32,26 @@ return new class extends AjaxController
         switch ($action)
         {
             case "create_comment":
-                self::createComment($yt);
+                $this->createComment($yt);
                 break;
             case "create_comment_reply":
-                self::createCommentReply($yt);
+                $this->createCommentReply($yt);
                 break;
             case "get_comments":
-                self::getComments($yt);
+                $this->getComments($yt);
                 break;
             case "get_comment_replies":
-                self::getCommentReplies($yt);
+                $this->getCommentReplies($yt);
                 break;
             case "perform_comment_action":
-                self::performCommentAction();
-                break;       
+                $this->performCommentAction();
+                break;
+            case "update_comment":
+                $this->updateComment($yt);
+                break;
+            case "update_comment_reply":
+                $this->updateCommentReply($yt);
+                break;
         }
     }
 
@@ -83,44 +93,8 @@ return new class extends AjaxController
 
             if (isset($renderer->commentViewModel->commentViewModel))
             {
-                $converter = new CommentsViewModelConverter(
-                    $renderer->commentViewModel->commentViewModel,
-                    $ytdata->frameworkUpdates
-                );
-                $renderer = (object) [
-                    "comment" => (object) [
-                        "commentRenderer" => $converter->bakeCommentRenderer()
-                    ]
-                ];
+                $this->renderCommentFromResponse($renderer->commentViewModel->commentViewModel, $ytdata);
             }
-
-            $data = $renderer->comment->commentRenderer;
-
-
-            $cids = [];
-            $cids[] = $data->authorEndpoint->browseEndpoint->browseId;
-
-            foreach ($data->contentText->runs as $run)
-            {
-                if ($a = @$run->navigationEndpoint->browseEndpoint->browseId)
-                {
-                    if (!in_array($a, $cids))
-                    $cids[] = $a;
-                }
-            }
-
-            $commentsBakery = new CommentThread($ytdata);
-
-            $commentsBakery->populateDataApiData($cids)->then(function() use (&$yt, $renderer, $commentsBakery) {
-                if (null != $renderer)
-                {
-                    $yt->page->comment = $commentsBakery->commentThreadRenderer($renderer);
-                }
-                else
-                {
-                    self::error();
-                }
-            });
         });
     }
 
@@ -161,44 +135,8 @@ return new class extends AjaxController
 
             if (isset($renderer->commentViewModel))
             {
-                $converter = new CommentsViewModelConverter(
-                    $renderer->commentViewModel,
-                    $ytdata->frameworkUpdates
-                );
-                $renderer = (object) [
-                    "comment" => (object) [
-                        "commentRenderer" => $converter->bakeCommentRenderer()
-                    ]
-                ];
+                $this->renderCommentFromResponse($renderer->commentViewModel, $ytdata);
             }
-
-            $data = $renderer->comment->commentRenderer;
-
-
-            $cids = [];
-            $cids[] = $data->authorEndpoint->browseEndpoint->browseId;
-
-            foreach ($data->contentText->runs as $run)
-            {
-                if ($a = @$run->navigationEndpoint->browseEndpoint->browseId)
-                {
-                    if (!in_array($a, $cids))
-                        $cids[] = $a;
-                }
-            }
-
-            $commentsBakery = new CommentThread($ytdata);
-
-            $commentsBakery->populateDataApiData($cids)->then(function() use (&$yt, $renderer, $commentsBakery) {
-                if (null != $renderer)
-                {
-                    $yt->page->comment = $commentsBakery->commentRenderer($renderer);
-                }
-                else
-                {
-                    self::error();
-                }
-            });
         });
     }
 
@@ -264,15 +202,23 @@ return new class extends AjaxController
 
         $ctoken = $_POST["page_token"] ?? null;
         if (!@$ctoken) self::error();
+        
+        $customToken = null;
+        
+        if (CommentsContinuation::isCustom($ctoken))
+        {
+            $customToken = CommentsContinuation::parse($ctoken);
+            $ctoken = $customToken->originalContinuation;
+        }
 
         Network::innertubeRequest(
             action: "next",
             body: [
-                "continuation" => $_POST["page_token"],
+                "continuation" => $ctoken,
                 // We use German as a base language because it has full counts
                 "hl" => "de_DE"
             ]
-        )->then(function ($response) use ($yt) {
+        )->then(function ($response) use ($yt, $customToken) {
             $ytdata = $response->getJson();
 
             foreach ($ytdata->onResponseReceivedEndpoints as $endpoint)
@@ -286,6 +232,12 @@ return new class extends AjaxController
             if (!is_null($data))
             {
                 $commentsBakery = new CommentThread($ytdata);
+                
+                if (!is_null($customToken))
+                {
+                    $commentsBakery->supplyDisplayNameMap($customToken->displayNameMap);
+                }
+                
                 $commentsBakery->bakeReplies($data)->then(function ($response) use ($yt)
                 {
                     $yt->page = (object)$response;
@@ -326,6 +278,177 @@ return new class extends AjaxController
             {
                 self::error();
             }
+        });
+    }
+    
+    /**
+     * Reconstruct a comment view model from mutation entities in response data.
+     */
+    private function reconstructCommentViewModel(object $ytdata): object
+    {
+        // We're only given a mutation set, so we have to regenerate the comment renderer
+        // from this data.
+        $commentViewModel = (object)[];
+        
+        foreach ($ytdata->frameworkUpdates->entityBatchUpdate->mutations as $mutation)
+        {
+            $entityKey = $mutation->entityKey;
+            
+            if (isset($mutation->payload->commentEntityPayload))
+            {
+                $commentViewModel->commentKey = $entityKey;
+            }
+            else if (isset($mutation->payload->engagementToolbarStateEntityPayload))
+            {
+                $commentViewModel->toolbarStateKey = $entityKey;
+            }
+            else if (isset($mutation->payload->engagementToolbarSurfaceEntityPayload))
+            {
+                $commentViewModel->toolbarSurfaceKey = $entityKey;
+            }
+            else if (isset($mutation->payload->commentSurfaceEntityPayload))
+            {
+                $commentViewModel->commentSurfaceKey = $entityKey;
+            }
+            else if (isset($mutation->payload->commentPinnedStateEntityPayload))
+            {
+                // I have no idea where this is exposed in CommentViewModel
+            }
+        }
+        
+        return $commentViewModel;
+    }
+    
+    private function renderCommentFromResponse(object $commentViewModel, object $ytdata): Promise/*<>*/
+    {
+        $yt = YtApp::getInstance();
+        
+        $converter = new CommentsViewModelConverter(
+            $commentViewModel,
+            $ytdata->frameworkUpdates
+        );
+        $renderer = (object) [
+            "comment" => (object) [
+                "commentRenderer" => $converter->bakeCommentRenderer()
+            ]
+        ];
+        
+        $data = $renderer->comment->commentRenderer;
+        
+        $cids = [];
+        $cids[] = $data->authorEndpoint->browseEndpoint->browseId;
+        
+        foreach ($data->contentText->runs as $run)
+        {
+            if ($a = @$run->navigationEndpoint->browseEndpoint->browseId)
+            {
+                if (!in_array($a, $cids))
+                {
+                    $cids[] = $a;
+                }
+            }
+        }
+        
+        $commentsBakery = new CommentThread($ytdata);
+        
+        return $commentsBakery->ensureDisplayNamesAvailable($cids)->then(function() use (&$yt, $renderer, $commentsBakery) {
+            if (null != $renderer)
+            {
+                $yt->page->comment = $commentsBakery->commentThreadRenderer($renderer);
+            }
+            else
+            {
+                self::error();
+            }
+        });
+    }
+    
+    /**
+     * Edit a comment.
+     */
+    private function updateComment(YtApp $yt): void
+    {
+        // This doesn't behave any different to creating a comment, so we reuse
+        // the same template.
+        $this->template = "ajax/comment_service/update_comment";
+        
+        /*/
+        Network::innertubeRequestFake(
+             localFilePath: "aa.json",
+        /*/
+        Network::innertubeRequest(
+        //*/
+            action: "comment/update_comment",
+            body: [
+                "commentText" => $_POST["content"],
+                "updateCommentParams" => $_POST["params"],
+                "hl" => "de_DE",
+            ]
+        )->then(function ($response) use ($yt) {
+            $ytdata = $response->getJson();
+            
+            foreach ($ytdata->actions as $action)
+            {
+                if (!isset($action->updateCommentAction))
+                {
+                    continue;
+                }
+                else
+                {
+                    $updateCommentAction = $action->updateCommentAction;
+                }
+            }
+            
+            echo $action->actionResult->status;
+            
+            if (!isset($updateCommentAction) || $updateCommentAction->actionResult->status != "STATUS_SUCCEEDED")
+            {
+                self::error();
+            }
+            
+            $commentViewModel = $this->reconstructCommentViewModel($ytdata);
+
+            $this->renderCommentFromResponse($commentViewModel, $ytdata);
+        });
+    }
+    
+    /**
+     * Edit a comment reply.
+     */
+    private function updateCommentReply(YtApp $yt): void
+    {
+        $this->template = "ajax/comment_service/update_comment_reply";
+        
+        Network::innertubeRequest(
+            action: "comment/update_comment_reply",
+            body: [
+                "replyText" => $_POST["content"],
+                "updateReplyParams" => $_POST["params"],
+                "hl" => "de_DE",
+            ]
+        )->then(function ($response) use ($yt) {
+            $ytdata = $response->getJson();
+            
+            foreach ($ytdata->actions as $action)
+            {
+                if (!isset($action->updateCommentReplyAction))
+                {   
+                    continue;
+                }
+                else
+                {
+                    $updateCommentAction = $action->updateCommentReplyAction;
+                }
+            }
+            
+            if (!isset($updateCommentAction) || $updateCommentAction->actionResult->status != "STATUS_SUCCEEDED")
+            {
+                self::error();
+            }
+            
+            $commentViewModel = $this->reconstructCommentViewModel($ytdata);
+            
+            $this->renderCommentFromResponse($commentViewModel, $ytdata);
         });
     }
 };

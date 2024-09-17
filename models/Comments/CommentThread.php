@@ -12,6 +12,7 @@ use \Rehike\Model\Comments\{
 
 use \Rehike\i18n\i18n;
 use \Rehike\ConfigManager\Config;
+use Rehike\Helper\CommentsContinuation;
 use Rehike\Model\ViewModelConverter\CommentsViewModelConverter;
 use \Rehike\Network;
 use Rehike\Util\ParsingUtils;
@@ -19,6 +20,14 @@ use Rehike\ViewModelParser;
 
 use function \Rehike\Async\async;
 
+/**
+ * Bakery for comments.
+ * 
+ * @author Aubrey Pankow <aubyomori@gmail.com>
+ * @author Isabella <kawapure@gmail.com>
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
+ * @author The Rehike Maintainers
+ */
 class CommentThread
 {
     // Excepted structure is very similar to the InnerTube
@@ -31,38 +40,37 @@ class CommentThread
     const COMMON_A11Y_LABEL = "accessibilityData.label";
 
     protected object $data;
-    protected array $dataApiData = [];
+    protected DisplayNameManager $displayNameManager;
 
     public function __construct(object $data)
     {
         $this->data = $data;
+        $this->displayNameManager = new DisplayNameManager();
     }
-
-    /**
-     * Populate $dataApiData with channel data.
-     * 
-     * @param string[] $cids  List of channel IDs to get display names for.
-     */
-    public function populateDataApiData(array $cids)
+    
+    public function getDisplayNameManager(): DisplayNameManager
     {
-        return async(function() use ($cids) {
-            $response = yield Network::dataApiRequest(
-                action: "channels",
-                params: [
-                    "part" => "id,snippet",
-                    "id" => implode(",", $cids)
-                ]
-            );
-            $data = $response->getJson();
-
-            if (isset($data->items))
-            foreach ($data->items as $item)
-            {
-                $this->dataApiData += [
-                    $item->id => $item->snippet
-                ];
-            }
-        });
+        return $this->displayNameManager;
+    }
+    
+    public function supplyDisplayNameMap(object $displayNameMap): void
+    {
+        $this->getDisplayNameManager()->supplyDisplayNameMap($displayNameMap);
+    }
+    
+    public function ensureDisplayNamesAvailable(array $cids): Promise/*<void>*/
+    {
+        return $this->getDisplayNameManager()->ensureDataAvailable($cids);
+    }
+    
+    public function createDisplayNameMap(): object
+    {
+        return $this->getDisplayNameManager()->createDisplayNameMap();
+    }
+    
+    public function getDisplayName(string $ucid): ?string
+    {
+        return $this->getDisplayNameManager()->getDisplayName($ucid);
     }
 
     public function bakeComments($context): Promise
@@ -124,7 +132,7 @@ class CommentThread
                 }
             }
 
-            $this->populateDataApiData($cids)->then(function() use (&$context, &$out, $resolve) {
+            $this->ensureDisplayNamesAvailable($cids)->then(function() use (&$context, &$out, $resolve) {
                 if (is_countable($context))
                 {
                     for ($i = 0, $count = count($context); $i < $count; $i++)
@@ -160,27 +168,6 @@ class CommentThread
             // Top level function
             // $context = (Array containing all commentRenderer items)
 
-            /*
-             * WHY THE FUCK did you think it'd be a good idea to rename this variable from:
-             *    $items = @$context->continuationItems;
-             * to the less clear and infinitely more confusing:
-             *    $context = @$context->continuationItems;
-             * IGNORING pre-existing use of the original variable, and overriding it entirely,
-             * thus breaking reply continuations for MONTHS?
-             * 
-             * For the record, the distinction was used for setting the target ID, which is required
-             * for subsequent continautions. You can see this... IN THE VERY NEXT FUCKING LINE AFTER
-             * THE DECLARATION OF THE VARIABLE THAT YOU RENAMED.
-             * 
-             * It was supposed to read the target ID of the top-level context (i.e. the $context ARGUMENT
-             * TO THIS FUNCTION), but since the variable name now points to a DIFFERENT thing, it attempted
-             * to read the targetId property from an object ON WHICH IT DOESN'T EXIST. As such, this variable
-             * would become NULL and the templater would receive bad data for the continuation item (see
-             * common/comments/replies_list.twig), so all reply continuations but the very first (show more
-             * replies) simply stop working, even if the response seems to be perfectly legal (because it is).
-             * 
-             * Also see pre-rename: https://github.com/Rehike/Rehike/blob/a0c3783673be075ca13c75fda20c627be66f5630/models/Comments/CommentThread.php#L84-L90
-             */
             $topLevelContext = $context;
             $context = @$context->continuationItems;
 
@@ -206,7 +193,7 @@ class CommentThread
                 }
             }
 
-            $this->populateDataApiData($cids)->then(function() use (&$context, &$out, $resolve) {
+            $this->ensureDisplayNamesAvailable($cids)->then(function() use (&$context, &$out, $resolve) {
                 if ($context) for ($i = 0, $count = count($context); $i < $count; $i++)
                 {
                     if (isset($context[$i]->commentRenderer))
@@ -298,17 +285,19 @@ class CommentThread
         return ['commentThreadRenderer' => $out];
     }
 
-    public function commentRenderer($context, $isReply = false)
+    public function commentRenderer(object $context, bool $isReply = false)
     {
         // Right now, the method is to modify a
         // standard InnerTube response.
 
         $context->isReply = $isReply;
+        
+        $authorDisplayName = $this->getDisplayName($context->authorEndpoint->browseEndpoint->browseId);
 
-        if ($data = @$this->dataApiData[$context->authorEndpoint->browseEndpoint->browseId])
+        if (!is_null($authorDisplayName))
         {
             $context->authorText = (object) [
-                "simpleText" => $data->title
+                "simpleText" => $authorDisplayName
             ];
         }
 
@@ -317,14 +306,15 @@ class CommentThread
         {
             if ($ucid = @$run->navigationEndpoint->browseEndpoint->browseId)
             {
+                $mentionDisplayName = $this->getDisplayName($ucid);
+                
                 /** 
                  * Redo the whole @ string. This also removes the automatic spaces
                  * put around it.
                  */
-                if (substr($ucid, 0, 2) == "UC"
-                &&  isset($this->dataApiData[$ucid]))
+                if (substr($ucid, 0, 2) == "UC" && !is_null($mentionDisplayName))
                 {
-                    $run->text = "@" . $this->dataApiData[$ucid]->title . "";
+                    $run->text = "@" . $mentionDisplayName . "";
                 }
 
                 /**
@@ -370,6 +360,13 @@ class CommentThread
             {
                 StringTranslationManager::setText(
                     $heart->heartedTooltip,
+                    StringTranslationManager::convertHeart($text)
+                );
+            }
+            if ($text = ParsingUtils::getText($heart->unheartedTooltip))
+            {
+                StringTranslationManager::setText(
+                    $heart->unheartedTooltip,
                     StringTranslationManager::convertHeart($text)
                 );
             }
@@ -435,6 +432,72 @@ class CommentThread
         {
             $context->creatorHeart = null;
         }
+        
+        // ==== Menu ====
+        
+        if (isset($context->actionMenu->menuRenderer))
+        {
+            $nativeMenu = $context->actionMenu->menuRenderer;
+            
+            $context->actionMenu->rhButtonsSupported = (object)[];
+            
+            foreach ($nativeMenu->items as $menuItem)
+            {
+                if (isset($menuItem->menuNavigationItemRenderer->icon->iconType))
+                {
+                    $item = $menuItem->menuNavigationItemRenderer;
+                    $iconType = $menuItem->menuNavigationItemRenderer->icon->iconType;
+                    
+                    if ($iconType == "FLAG") // Report
+                    {
+                        $context->actionMenu->rhButtonsSupported->report = $item;
+                    }
+                    else if ($iconType == "DELETE")
+                    {
+                        $context->actionMenu->rhButtonsSupported->delete = $item;
+                    }
+                    else if ($iconType == "EDIT")
+                    {
+                        $context->actionMenu->rhButtonsSupported->edit = $item;
+                        
+                        if (isset($item->navigationEndpoint->updateCommentDialogEndpoint))
+                        {
+                            $item->rhEditDialog = $item->navigationEndpoint->updateCommentDialogEndpoint
+                                ->dialog->commentDialogRenderer;
+                        }
+                        else if (isset($item->navigationEndpoint->updateCommentReplyDialogEndpoint))
+                        {
+                            $item->rhEditDialog = $item->navigationEndpoint->updateCommentReplyDialogEndpoint
+                                ->dialog->commentReplyDialogRenderer;
+                        }
+                        
+                        if (isset($item->rhEditDialog))
+                        {
+                            if (isset($item->rhEditDialog->submitButton))
+                            {
+                                $item->rhEditParams = $item->rhEditDialog->submitButton
+                                    ->buttonRenderer->serviceEndpoint->updateCommentEndpoint
+                                    ->updateCommentParams;
+                            }
+                            else if (isset($item->rhEditDialog->replyButton))
+                            {
+                                $item->rhEditParams = $item->rhEditDialog->replyButton
+                                    ->buttonRenderer->serviceEndpoint->updateCommentReplyEndpoint
+                                    ->updateReplyParams;
+                            }
+                        }
+                    }
+                    else if ($iconType == "KEEP") // Pin
+                    {
+                        $context->actionMenu->rhButtonsSupported->pin = $item;
+                    }
+                    else if ($iconType == "BLOCK")
+                    {
+                        $context->actionMenu->rhButtonsSupported->block = $item;
+                    }
+                }
+            }
+        }
 
         return $context;
     }
@@ -495,6 +558,22 @@ class CommentThread
             if (isset($item->commentRenderer))
                 $item->commentRenderer = $this->commentRenderer($item->commentRenderer, true);
         }
+        
+        /*
+         * Make the comment use our custom token.
+         * 
+         * The custom token is used to maintain display names between comment continuations.
+         */
+        if (isset($context->contents[0]->continuationItemRenderer->continuationEndpoint->continuationCommand))
+        {
+            $continuationCommand = $context->contents[0]->continuationItemRenderer
+                ->continuationEndpoint->continuationCommand;
+            
+            $rhToken = new CommentsContinuation($continuationCommand->token);
+            $rhToken->supplyDisplayNameMap($this->createDisplayNameMap());
+            
+            $continuationCommand->token = $rhToken;
+        }
 
         return $context;
     }
@@ -507,9 +586,13 @@ class CommentThread
     private function repliesContinuationRenderer($context)
     {
         $context = $context->button->buttonRenderer;
+        
+        $rhToken = new CommentsContinuation($context->command->continuationCommand->token);
+        $rhToken->supplyDisplayNameMap($this->createDisplayNameMap());
+        
         return
             [
-                "token" => $context->command->continuationCommand->token,
+                "token" => $rhToken,
                 "text" => StringTranslationManager::get(ParsingUtils::getText($context->text))
             ];
     }

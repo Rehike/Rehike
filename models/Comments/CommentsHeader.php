@@ -4,15 +4,21 @@ namespace Rehike\Model\Comments;
 use Rehike\Util\ParsingUtils;
 use Rehike\i18n\i18n;
 
+/**
+ * Model for the comments header on the watch page.
+ * 
+ * @author Aubrey Pankow <aubyomori@gmail.com>
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
+ * @author The Rehike Maintainers
+ */
 class CommentsHeader
 {
-    public $title;
-    public $commentsCountText;
-    public $sortRenderer;
-    public $simpleBoxRenderer;
-    public $createParams;
-    public $commentsCountEndpoint;
-    public $commentText;
+    public ?string $title;
+    public ?string $commentsCountText;
+    public ?object $sortRenderer;
+    public ?object $simpleBoxRenderer;
+    public ?string $createParams;
+    public ?string $commentText;
 
     public static function fromData($data)
     {
