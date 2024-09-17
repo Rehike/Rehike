@@ -153,6 +153,7 @@ final class Bootloader
         self::finishRequest();
 
         LogFileManager::pruneLogFiles();
+        ShutdownEvents::runAllEvents();
 
         exit;
     }
