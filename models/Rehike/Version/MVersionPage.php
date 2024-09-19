@@ -7,6 +7,7 @@ use Rehike\i18n\i18n;
 use Rehike\Model\Common\MButton;
 use Rehike\Version\VersionInfo;
 
+use const Rehike\Constants\IS_RELEASE;
 use const Rehike\Constants\GH_ENABLED;
 use const Rehike\Constants\GH_REPO;
 
@@ -38,7 +39,7 @@ class MVersionPage extends RehikePanelPage
             $this->version = $strings->format("versionHeader", $data->semanticVersion);
         }
 
-        if (!@$data->isRelease && null != $data)
+        if (!IS_RELEASE && null != $data)
         {
             $this->nightlyNotice = new MNightlyNotice();
             $this->nightlyInfo = new MNightlyInfo($data);
@@ -51,7 +52,7 @@ class MVersionPage extends RehikePanelPage
         }
 
 		// We don't want this to show up if the failed notice is already visible.
-        if (!@$data->supportsDotGit && !isset($this->failedNotice))
+        if (!IS_RELEASE && !@$data->supportsDotGit && !isset($this->failedNotice))
         {
             $this->nonGitNotice = new MNonGitNotice();
         }
