@@ -7,6 +7,7 @@ use Rehike\Nepeta\Internal\{
     NepetaPackageType,
     NepetaResult,
     NepetaTheme,
+    PackageManager,
 };
 
 /**
@@ -46,7 +47,7 @@ class NepetaApi
      */
     public static function getAvailablePackages(): array
     {
-        return NepetaCore::getAvailablePackages();
+        return PackageManager::getAvailablePackages();
     }
 
     /**
@@ -54,6 +55,6 @@ class NepetaApi
      */
     public static function getPackageInfo(string $packageName): ?NepetaPackageInfo
     {
-        return NepetaCore::getPackageInfo($packageName);
+        return PackageManager::getPackageInfo($packageName);
     }
 }

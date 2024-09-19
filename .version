@@ -1,10 +1,10 @@
 {
-	"previousHash": "d389513bfff0f232193337a8b7ede717da670d37",
-	"currentRevisionId": 1653,
-	"subject": "[Nepeta] Move internal code to Internal folder",
-	"body": "[Nepeta] Move internal code to Internal folder",
+	"previousHash": "b90c27e103ba00bd4bf81316f7456c952bddcb62",
+	"currentRevisionId": 1654,
+	"subject": "[Nepeta] Split package management into own module",
+	"body": "[Nepeta] Split package management into own module",
 	"branch": "master",
 	"committerName": "Taniko Yamamoto",
 	"committerEmail": "kirasicecreamm@gmail.com",
-	"time": 1726732439
+	"time": 1726732913
 }
