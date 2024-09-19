@@ -10,6 +10,11 @@ namespace Rehike\Nepeta\Internal;
 class NepetaPackageInfo
 {
     /**
+     * Is the package loaded in the current session?
+     */
+    public bool $isLoaded = false;
+
+    /**
      * A unique ID used to refer to the package.
      */
     public string $id;

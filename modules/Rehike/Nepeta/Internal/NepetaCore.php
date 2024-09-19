@@ -23,6 +23,10 @@ class NepetaCore
      */
     public static function init(): void
     {
+        // Startup the lightweight config manager, as it's needed by the rest of
+        // the initialization process:
+        LightweightConfigManager::init();
+
         // Startup the package manager:
         PackageManager::init();
     }

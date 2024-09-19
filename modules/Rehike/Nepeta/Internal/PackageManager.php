@@ -1,7 +1,7 @@
 <?php
 namespace Rehike\Nepeta\Internal;
 
-use Rehike\FileSystem;
+use Rehike\Nepeta\Internal\NepetaFileSystemManager as FileSystem;
 
 /**
  * Implements the Nepeta extension package manager.
@@ -24,18 +24,49 @@ class PackageManager
      */
     private static array $packages = [];
 
+    /**
+     * Used to check if we are currently initializing.
+     */
+    private static bool $isInitializing = false;
+
+    /**
+     * Caches package information in memory while Nepeta loads.
+     */
+    private static array $packageInfoCache = [];
+
     public static function init(): void
     {
+        self::$isInitializing = true;
+        
         self::$availablePackages = self::enumeratePackages();
 
         self::loadAllPackages();
+
+        self::finishInitialization();
     }
 
+    public static function finishInitialization(): void
+    {
+        self::$isInitializing = false;
+
+        // We can now clear the package information cache, since we won't be
+        // looking at them every five seconds.
+        self::$packageInfoCache = [];
+    }
+
+    /**
+     * PUBLIC API : Get all available packages.
+     */
     public static function getAvailablePackages(): array
     {
         return self::$availablePackages;
     }
 
+    /**
+     * Enumerates all packages in the installation folder.
+     * 
+     * @see NepetaCore::NEPETA_EXT_PATH  Installation path constant.
+     */
     private static function enumeratePackages(): array
     {
         $scan = scandir(
@@ -52,49 +83,83 @@ class PackageManager
         return [];
     }
 
+    /**
+     * Loads all packages found on the disk.
+     */
     private static function loadAllPackages(): NepetaResult
     {
         $result = new NepetaResult(NepetaResult::SUCCESS);
 
         foreach (self::enumeratePackages() as $packageRequest)
         {
-            $result->set(self::loadPackageByName($packageRequest));
+            $packageInfo = self::getPackageInfo($packageRequest);
 
-            if ($result != NepetaResult::SUCCESS)
+            if (self::shouldLoadPackage($packageInfo->id))
             {
-                return $result;
+                $result->set(self::loadPackage($packageInfo));
+
+                if ($result != NepetaResult::SUCCESS)
+                {
+                    return $result;
+                }
             }
         }
 
         return $result;
     }
 
+    /**
+     * Gets the path of a package on disk.
+     */
     private static function getPackagePath(string $package): string
     {
         return $_SERVER["DOCUMENT_ROOT"] . "/" . 
             NepetaCore::NEPETA_EXT_PATH . "/" . $package;
     }
 
-    private static function loadPackageByName(string $packageName): NepetaResult
+    /**
+     * Determines if a package has been seen before.
+     */
+    private static function isKnownPackage(string $packageId): bool
     {
-        $result = new NepetaResult(NepetaResult::FAILED);
-
-        $path = self::getPackagePath($packageName);
-        $result->set(self::loadPackage($path));
-
-        return $result;
+        return null !== LightweightConfigManager::getProp(
+            "nepetaSettings.$packageId"
+        );
     }
 
     /**
-     * Loads information about a package.
+     * Determine if we should load a package.
+     * 
+     * Unknown packages are loaded by default. The only time an installed
+     * package will not be loaded is if it is manually disabled in the user
+     * config.
+     */
+    private static function shouldLoadPackage(string $packageId): bool
+    {
+        return !self::isKnownPackage($packageId) ||
+            false !== LightweightConfigManager::getProp(
+                "nepetaSettings.$packageId.enabled"
+            );
+    }
+
+    /**
+     * PUBLIC API : Loads information about a package from disk.
      */
     public static function getPackageInfo(string $packageName): ?NepetaPackageInfo
     {
         return self::getPackageInfoByPath(self::getPackagePath($packageName));
     }
 
+    /**
+     * Loads information about a package from the manifest file on disk.
+     */
     private static function getPackageInfoByPath(string $packagePath): ?NepetaPackageInfo
     {
+        if (isset(self::$packageInfoCache[$packagePath]))
+        {
+            return self::$packageInfoCache[$packagePath];
+        }
+
         $manifestPath = $packagePath . "/manifest.json";
         if (!file_exists($manifestPath))
         {
@@ -116,19 +181,20 @@ class PackageManager
         $info->type = NepetaPackageType::fromString($manifest->extension_type);
         $info->pathOnDisk = $packagePath;
 
+        if (self::$isInitializing)
+        {
+            self::$packageInfoCache[$packagePath] = $info;
+        }
+
         return $info;
     }
 
-    private static function loadPackage(string $packagePath): NepetaResult
+    /**
+     * Loads a package into the session.
+     */
+    private static function loadPackage(NepetaPackageInfo $info): NepetaResult
     {
         $result = new NepetaResult(NepetaResult::FAILED);
-
-        $info = self::getPackageInfoByPath($packagePath);
-
-        if (null == $info)
-        {
-            return $result;
-        }
 
         // Insert the package into the loaded packages registry:
         self::$packages[$info->id] = $info;

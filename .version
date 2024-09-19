@@ -1,10 +1,10 @@
 {
-	"previousHash": "8f27e4c44ac6e609090c0bf4ccef856c86469bf6",
-	"currentRevisionId": 1655,
-	"subject": "[Nepeta] Fix TemplateManager crash when no theme available",
-	"body": "[Nepeta] Fix TemplateManager crash when no theme available",
+	"previousHash": "189576ec6f9af250c7293a17ed049d15505a927b",
+	"currentRevisionId": 1656,
+	"subject": "[Nepeta] Improve theme loading, allow disabling mods",
+	"body": "[Nepeta] Improve theme loading, allow disabling mods",
 	"branch": "master",
 	"committerName": "Taniko Yamamoto",
 	"committerEmail": "kirasicecreamm@gmail.com",
-	"time": 1726735977
+	"time": 1726736090
 }
