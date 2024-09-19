@@ -6,7 +6,7 @@ use Rehike\i18n\i18n;
 use Rehike\ConfigManager\Config;
 use Rehike\Model\Common\MButton;
 use Rehike\Model\Dialog\MConfirmDialog;
-use Rehike\Nepeta\NepetaCore;
+use Rehike\Nepeta\NepetaApi;
 
 /**
  * Data model for the shared sidebar for Rehike Panel pages (version/config).
@@ -56,7 +56,7 @@ class Sidebar
     {
         $configStrings = i18n::getNamespace("rehike/config");
         
-        $nepetaEnabled = NepetaCore::isNepetaEnabled();
+        $nepetaEnabled = NepetaApi::isNepetaEnabled();
         
         return [
             $this->createSidebarSectionLink(

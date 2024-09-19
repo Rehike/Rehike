@@ -5,14 +5,22 @@ use Rehike\ConfigManager\Config;
 use Rehike\FileSystem;
 
 /**
- * Provides core services for Nepeta.
+ * Provides core services for the Nepeta extensions system.
  * 
  * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class NepetaCore
 {
+    /**
+     * The folder name in which extensions are stored.
+     */
     public const NEPETA_EXT_PATH = "nepeta_test";
+
+    /**
+     * Stores all available packages.
+     */
+    private static array $availablePackages = [];
 
     /**
      * Stores all loaded packages.
@@ -26,6 +34,8 @@ class NepetaCore
      */
     public static function init(): void
     {
+        self::$availablePackages = self::enumeratePackages();
+
         self::loadAllPackages();
     }
 
@@ -43,6 +53,11 @@ class NepetaCore
     public static function getTheme(): ?NepetaTheme
     {
         return self::$currentTheme;
+    }
+
+    public static function getAvailablePackages(): array
+    {
+        return self::$availablePackages;
     }
 
     private static function enumeratePackages(): array
@@ -91,20 +106,26 @@ class NepetaCore
         return $result;
     }
 
-    private static function loadPackage(string $packagePath): NepetaResult
+    /**
+     * Loads information about a package.
+     */
+    public static function getPackageInfo(string $packageName): ?NepetaPackageInfo
     {
-        $result = new NepetaResult(NepetaResult::FAILED);
+        return self::getPackageInfoByPath(self::getPackagePath($packageName));
+    }
 
+    private static function getPackageInfoByPath(string $packagePath): ?NepetaPackageInfo
+    {
         $manifestPath = $packagePath . "/manifest.json";
         if (!file_exists($manifestPath))
         {
-            return $result;
+            return null;
         }
 
         $manifest = json_decode(FileSystem::getFileContents($manifestPath));
         if (!$manifest)
         {
-            return $result;
+            return null;
         }
 
         $info = new NepetaPackageInfo;
@@ -115,7 +136,20 @@ class NepetaCore
         $info->templates = ((array)$manifest->templates) ?? null;
         $info->type = NepetaPackageType::fromString($manifest->extension_type);
         $info->pathOnDisk = $packagePath;
+    }
 
+    private static function loadPackage(string $packagePath): NepetaResult
+    {
+        $result = new NepetaResult(NepetaResult::FAILED);
+
+        $info = self::getPackageInfoByPath($packagePath);
+
+        if (null == $info)
+        {
+            return $result;
+        }
+
+        // Insert the package into the loaded packages registry:
         self::$packages[$info->id] = $info;
 
         if (NepetaPackageType::TYPE_THEME == $info->type && null != $info->templates)

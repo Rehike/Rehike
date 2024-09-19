@@ -3,7 +3,7 @@ namespace Rehike;
 
 use Twig\TwigFunction, Twig\TwigFilter;
 use Rehike\ControllerV2\Core as ControllerV2;
-use Rehike\Nepeta\NepetaCore;
+use Rehike\Nepeta\NepetaApi;
 
 /**
  * Implements the template manager.
@@ -37,10 +37,10 @@ class TemplateManager
         $templateDirs = [];
 
         // Load override themes from Nepeta if it's available.
-        if (NepetaCore::isNepetaEnabled())
+        if (NepetaApi::isNepetaEnabled())
         {
             // This is available in above scopes.
-            $theme = NepetaCore::getTheme();
+            $theme = NepetaApi::getTheme();
 
             foreach ($theme->getOverrideTemplatesPaths() as $namespace => $path)
             {
@@ -73,7 +73,7 @@ class TemplateManager
         );
 
         // Add extra template paths provided by Nepeta mods:
-        if (NepetaCore::isNepetaEnabled())
+        if (NepetaApi::isNepetaEnabled())
         {
             foreach ($theme->getAddedTemplatePaths() as $namespace => $path)
             {
