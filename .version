@@ -1,10 +1,10 @@
 {
-	"previousHash": "b90c27e103ba00bd4bf81316f7456c952bddcb62",
-	"currentRevisionId": 1654,
-	"subject": "[Nepeta] Split package management into own module",
-	"body": "[Nepeta] Split package management into own module",
+	"previousHash": "8f27e4c44ac6e609090c0bf4ccef856c86469bf6",
+	"currentRevisionId": 1655,
+	"subject": "[Nepeta] Fix TemplateManager crash when no theme available",
+	"body": "[Nepeta] Fix TemplateManager crash when no theme available",
 	"branch": "master",
 	"committerName": "Taniko Yamamoto",
 	"committerEmail": "kirasicecreamm@gmail.com",
-	"time": 1726732913
+	"time": 1726735977
 }

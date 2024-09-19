@@ -42,6 +42,7 @@ class TemplateManager
             // This is available in above scopes.
             $theme = NepetaApi::getTheme();
 
+            if (null != $theme)
             foreach ($theme->getOverrideTemplatesPaths() as $namespace => $path)
             {
                 $overrideNamespace = explode("override:", $namespace)[1];
@@ -73,7 +74,7 @@ class TemplateManager
         );
 
         // Add extra template paths provided by Nepeta mods:
-        if (NepetaApi::isNepetaEnabled())
+        if (NepetaApi::isNepetaEnabled() && null != $theme)
         {
             foreach ($theme->getAddedTemplatePaths() as $namespace => $path)
             {
