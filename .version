@@ -1,10 +1,10 @@
 {
-	"previousHash": "189576ec6f9af250c7293a17ed049d15505a927b",
-	"currentRevisionId": 1656,
-	"subject": "[Nepeta] Improve theme loading, allow disabling mods",
-	"body": "[Nepeta] Improve theme loading, allow disabling mods",
+	"previousHash": "3fb54f9becd8e95fedfcd73984e0d0ffa7de66a1",
+	"currentRevisionId": 1657,
+	"subject": "Bump Rehike version number to 0.8.3",
+	"body": "Bump Rehike version number to 0.8.3",
 	"branch": "master",
 	"committerName": "Taniko Yamamoto",
 	"committerEmail": "kirasicecreamm@gmail.com",
-	"time": 1726736090
+	"time": 1726736950
 }
