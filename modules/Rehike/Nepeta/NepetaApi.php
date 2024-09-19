@@ -1,6 +1,14 @@
 <?php
 namespace Rehike\Nepeta;
 
+use Rehike\Nepeta\Internal\{
+    NepetaCore,
+    NepetaPackageInfo,
+    NepetaPackageType,
+    NepetaResult,
+    NepetaTheme,
+};
+
 /**
  * Public API for the Nepeta extensions system.
  * 

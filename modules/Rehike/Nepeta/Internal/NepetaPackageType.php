@@ -1,5 +1,5 @@
 <?php
-namespace Rehike\Nepeta;
+namespace Rehike\Nepeta\Internal;
 
 /**
  * The type of a Nepeta package.

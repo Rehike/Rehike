@@ -1,5 +1,5 @@
 <?php
-namespace Rehike\Nepeta;
+namespace Rehike\Nepeta\Internal;
 
 /**
  * API for Nepeta themes.

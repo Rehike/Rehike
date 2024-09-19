@@ -1,5 +1,5 @@
 <?php
-namespace Rehike\Nepeta;
+namespace Rehike\Nepeta\Internal;
 
 /**
  * Used for storing a package manifest.
