@@ -116,13 +116,15 @@ final class Tasks
 
     public static function setupVisitorData(): void
     {
+        $visitor = null;
+
         // Obtain the info from the user if it exists, otherwise
         // request it and store that.
         if (isset($_COOKIE["VISITOR_INFO1_LIVE"]))
         {
             $visitor = $_COOKIE["VISITOR_INFO1_LIVE"];
         }
-        else if (!SignIn::isSignedIn())
+        else if (!SignIn::isSignedIn() || !is_string($visitor))
         {
             // Hacky algo to get it from the server:
             $request = Network::urlRequest(
