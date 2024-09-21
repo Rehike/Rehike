@@ -163,18 +163,11 @@ class CommentThread
     {
         if (!isset($context->continuationItems))
         {
-            return new Promise(function($ignored, $reject) use ($context)
-            {
-                // Promise rejection currently doesn't work right for
-                // instant resolution (non-generator), so we have to
-                // coerce us into a generator to work.
-                if (false)
-                {
-                    yield;
-                }
-                
-                $reject(new \Exception("Bad response from InnerTube: " . json_encode($context)));
-            });
+            return new Promise(fn($ignored, $reject) =>
+                $reject(new \Exception(
+                    "Bad response from InnerTube: " . json_encode($context)
+                ))
+            );
         }
         
         // Account for view model update:

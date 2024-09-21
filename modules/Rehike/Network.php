@@ -164,6 +164,7 @@ class Network
             )->then(function ($response) use ($resolve, $reject, $ignoreErrors, $profilerRid, $action) {
                 if ((200 == $response->status) || (true == $ignoreErrors) )
                 {
+                    \Rehike\Profiler::end("innertube-$action-$profilerRid");
                     $resolve($response);
                 }
                 else if (NoInternetPage::isNoInternetResult($response->resultCode))
@@ -173,11 +174,11 @@ class Network
                 }
                 else
                 {
+                    \Rehike\Profiler::end("innertube-$action-$profilerRid");
                     $reject(new InnertubeFailedRequestException(
                         $response
                     ));
                 }
-                \Rehike\Profiler::end("innertube-$action-$profilerRid");
             });
         });
 
@@ -241,7 +242,6 @@ class Network
                         []
                     )
                 ));
-                return;
             }
 
             $fileContents = FileSystem::getFileContents($localFilePath);
