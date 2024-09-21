@@ -241,6 +241,12 @@ return new class extends AjaxController
                 $commentsBakery->bakeReplies($data)->then(function ($response) use ($yt)
                 {
                     $yt->page = (object)$response;
+                })->catch(function ($exception)
+                {
+                    echo json_encode((object)[
+                        "errors" => [$exception->getMessage()]
+                    ]);
+                    \Rehike\Boot\Bootloader::doEarlyShutdown();
                 });
             }
             else
