@@ -3,6 +3,7 @@ namespace YukisCoffee\CoffeeRequest;
 
 use YukisCoffee\CoffeeRequest\Exception\GeneralException;
 use YukisCoffee\CoffeeRequest\Debugging\PromiseStackTrace;
+use YukisCoffee\CoffeeRequest\Util\PromiseHandlerPrematureReturnException;
 
 use Exception;
 use Generator;
@@ -127,7 +128,19 @@ abstract class PromiseEvent/*<T>*/ extends Event
 
             final protected function onRun(): Generator/*<T>*/
             {
-                return ($this->onRunCb)($this->resolveApi, $this->rejectApi);
+                try
+                {
+                    return ($this->onRunCb)($this->resolveApi, $this->rejectApi);
+                }
+                catch (PromiseHandlerPrematureReturnException $e)
+                {
+                    // Evil, but we use exceptions for control flow. This will
+                    // break the execution of the function early on so that it
+                    // doesn't continue executing anything after resolving or
+                    // rejecting.
+                    //
+                    // [[ fallthrough ]]
+                }
             }
         };
     }
@@ -149,8 +162,21 @@ abstract class PromiseEvent/*<T>*/ extends Event
     {
         /** @param mixed[] $args */
         return function (...$args) use ($myself, $api) {
-            $api(...$args);
-            $myself->fulfill();
+            try
+            {
+                $api(...$args);
+                $myself->fulfill();
+            }
+            catch (PromiseHandlerPrematureReturnException $e)
+            {
+                // Evil, but we use exceptions for control flow. This will
+                // break the execution of the function early on so that it
+                // doesn't continue executing anything after resolving or
+                // rejecting.
+                //
+                // [[ fallthrough ]]
+                $myself->fulfill();
+            }
         };
     }
 }

@@ -51,14 +51,26 @@ class QueuedPromiseResolver
 
     public function finish(): void
     {
-        switch ($this->state)
+        try
         {
-            case PromiseStatus::RESOLVED:
-                $this->promise->resolve($this->data);
-                return;
-            case PromiseStatus::REJECTED:
-                $this->promise->reject($this->data);
-                return;
+            switch ($this->state)
+            {
+                case PromiseStatus::RESOLVED:
+                    $this->promise->resolve($this->data);
+                    return;
+                case PromiseStatus::REJECTED:
+                    $this->promise->reject($this->data);
+                    return;
+            }
+        }
+        catch (PromiseHandlerPrematureReturnException $e)
+        {
+            // Evil, but we use exceptions for control flow. This will
+            // break the execution of the function early on so that it
+            // doesn't continue executing anything after resolving or
+            // rejecting.
+            //
+            // [[ fallthrough ]]
         }
     }
 }

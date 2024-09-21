@@ -6,11 +6,13 @@ use YukisCoffee\CoffeeRequest\Exception\UncaughtPromiseException;
 use YukisCoffee\CoffeeRequest\Util\PromiseAllBase;
 use YukisCoffee\CoffeeRequest\Util\QueuedPromiseResolver;
 use YukisCoffee\CoffeeRequest\Util\PromiseResolutionTracker;
+use YukisCoffee\CoffeeRequest\Util\PromiseHandlerPrematureReturnException;
 use YukisCoffee\CoffeeRequest\Debugging\PromiseStackTrace;
 
 use Exception;
 use ReflectionFunction;
 use ReflectionMethod;
+use YukisCoffee\CoffeeRequest\Util\PromiseSettings;
 
 /**
  * A simple Promise implementation for PHP.
@@ -95,9 +97,24 @@ class Promise/*<T>*/
     private array $catches = [];
 
     /**
+     * Deferred promise rejections.
+     * 
+     * This handles cases where rejection catch callbacks are registered after
+     * a Promise has already been rejected.
+     * 
+     * @var ?Exception[]
+     */
+    private array $deferredRejections = [];
+
+    /**
      * Requires the Promise to be resolved before the script ends.
      */
     private bool $throwOnUnresolved = true;
+
+    /**
+     * Version of the Promise behavior to use.
+     */
+    private int $version = 0;
 
     /**
      * Used for keeping track of the current Promise callback level.
@@ -127,9 +144,14 @@ class Promise/*<T>*/
         $isCritical = 
             isset($options["critical"]) ? $options["critical"] : true;
 
-        if (isset($cb))
+        if (null != $cb)
         {
             $reflection = new ReflectionFunction($cb);
+
+            // Since we're an anonymous Promise, we always use the latest
+            // version of the Promise behavior. The anonymous Promise backend
+            // code is all familiar with the conventions, so it's fine.
+            $this->setVersion(1);
 
             if ($reflection->isGenerator())
             {
@@ -142,7 +164,19 @@ class Promise/*<T>*/
             }
             else
             {
-                $cb($this->getResolveApi(), $this->getRejectApi());
+                try
+                {
+                    $cb($this->getResolveApi(), $this->getRejectApi());
+                }
+                catch (PromiseHandlerPrematureReturnException $e)
+                {
+                    // Evil, but we use exceptions for control flow. This will
+                    // break the execution of the function early on so that it
+                    // doesn't continue executing anything after resolving or
+                    // rejecting.
+                    //
+                    // [[ fallthrough ]]
+                }
             }
         }
 
@@ -150,6 +184,36 @@ class Promise/*<T>*/
 
         $this->creationTrace = new PromiseStackTrace;
         $this->latestTrace = &$this->creationTrace;
+    }
+
+    /**
+     * Handles promise destruction:
+     */
+    public function __destruct()
+    {
+        if (count($this->deferredRejections) > 0)
+        {
+            foreach ($this->deferredRejections as $rejection)
+            {
+                if (null != $rejection)
+                {
+                    throw UncaughtPromiseException::from($rejection);
+                }
+            }
+        }
+    }
+
+    /**
+     * Sets the version of the Promise behavior.
+     * 
+     * Different versions can influence how which behavior works. The promise
+     * version does not matter for anonymous Promises, which always use the
+     * latest version, but they might matter for manual Promises (i.e. in a
+     * Deferred class).
+     */
+    public function setVersion(int $version): void
+    {
+        $this->version = $version;
     }
 
     /**
@@ -219,10 +283,18 @@ class Promise/*<T>*/
      */
     public function catch(callable/*<Exception>*/ $cb): Promise/*<T>*/
     {
-        $this->catches[$this->getCurrentThenIndex()] = $cb;
+        $current = $this->getCurrentThenIndex();
+
+        $this->catches[$current] = $cb;
 
         // Late binding
-        if (PromiseStatus::REJECTED == $this->status)
+        if (isset($this->deferredRejections[$current]))
+        {
+            self::$promiseCallbackLevel++;
+            $cb($this->deferredRejections[$current]);
+            self::$promiseCallbackLevel--;
+        }
+        else if (PromiseStatus::REJECTED == $this->status)
         {
             self::$promiseCallbackLevel++;
             $cb($this->reason);
@@ -264,6 +336,12 @@ class Promise/*<T>*/
                 )
             );
 
+            if ($this->prematureReturnAllowed())
+            {
+                // Force the caller to exit:
+                throw PromiseHandlerPrematureReturnException::getInstance();
+            }
+
             return; // Should finish here.
         }
 
@@ -303,6 +381,12 @@ class Promise/*<T>*/
         }
 
         $this->setStatus(PromiseStatus::RESOLVED);
+
+        if ($this->prematureReturnAllowed())
+        {
+            // Force the caller to exit:
+            throw PromiseHandlerPrematureReturnException::getInstance();
+        }
     }
 
     /**
@@ -337,6 +421,12 @@ class Promise/*<T>*/
                 )
             );
 
+            if ($this->prematureReturnAllowed())
+            {
+                // Force the caller to exit:
+                throw PromiseHandlerPrematureReturnException::getInstance();
+            }
+
             return; // Should finish here.
         }
 
@@ -363,22 +453,43 @@ class Promise/*<T>*/
 
         if (isset($this->catches[$current]))
         {
+            // If we already have a catch registered at the time of rejection,
+            // then we can simply register now:
             self::$promiseCallbackLevel++;
             $this->catches[$current]($this->reason);
             self::$promiseCallbackLevel--;
         }
         else
         {
-            throw UncaughtPromiseException::from($this->reason);
+            // Otherwise, if the corresponding catch is not registered, then we
+            // want to defer the registration:
+            $this->deferredRejections[$current] = $this->reason;
         }
 
-        // KILL YOUR FUCKING SELF TANIKO FUCK YOU FUCK YOU FUCK YOU
         if ($this->throwOnUnresolved)
         {
             PromiseResolutionTracker::unregisterPendingPromise($this);
         }
 
         $this->setStatus(PromiseStatus::REJECTED);
+
+        if ($this->prematureReturnAllowed())
+        {
+            // Force the caller to exit:
+            throw PromiseHandlerPrematureReturnException::getInstance();
+        }
+    }
+
+    /**
+     * Determines if premature returning is allowed.
+     * 
+     * Premature returning behavior is only allowed if enabled globally (which
+     * is the default) and the Promise version is 1 or greater.
+     */
+    protected function prematureReturnAllowed(): bool
+    {
+        return PromiseSettings::getEnableHandlerPrematureReturn() &&
+            $this->version >= 1;
     }
 
     /**

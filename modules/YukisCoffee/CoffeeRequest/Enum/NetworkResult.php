@@ -4,7 +4,7 @@ namespace YukisCoffee\CoffeeRequest\Enum;
 /**
  * Network result status codes.
  *
- * @author Isabella <kawapure@gmail.com>
+ * @author Daylin Cooper <dcoop2004@gmail.com>
  * @author The Rehike Maintainers
  */
 class NetworkResult
