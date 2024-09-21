@@ -105,7 +105,7 @@ class WatchBakery
                 // If it's age restriction, show that
                 if ("LOGIN_REQUIRED" == $status)
                 {
-                    $yt->playerUnavailable = new MPlayerAgeGate();
+                    $yt->playerUnavailable = new MPlayerAgeGate($error);
                 }
                 else if ("AGE_CHECK_REQUIRED" == $status)
                 {

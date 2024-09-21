@@ -2,6 +2,7 @@
 namespace Rehike\Model\Watch\AgeGate;
 
 use Rehike\i18n\i18n;
+use Rehike\Util\ParsingUtils;
 
 /**
  * Content class for the Age Gate screen.
@@ -21,6 +22,11 @@ class MPlayerAgeGateContent
             "watch",
             "playerBlockadeInappropriate"
         );
+        
+        if (isset($data->subreason))
+        {
+            $message = ParsingUtils::getText($data->subreason);
+        }
         
         $this->message = $message;
 
