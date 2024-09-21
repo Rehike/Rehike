@@ -56,7 +56,7 @@ class WatchBakery
     public bool $isOwner = false;
 
     // Set with the primary info renderer
-    public string $title;
+    public ?string $title = null;
 
     // Shorthand data references
     public $results = null;
@@ -223,9 +223,9 @@ class WatchBakery
      * Bake results
      * 
      * @param object $data from watch results response
-     * @return object
+     * @return ?object
      */
-    public function bakeResults(object &$data, string &$videoId): object
+    public function bakeResults(object &$data, string &$videoId): ?object
     {
         return async(function () use (&$data, $videoId)
         {
@@ -325,9 +325,9 @@ class WatchBakery
      * to its respective position if so.
      * 
      * @param object $data from watch results response
-     * @return object
+     * @return ?object
      */
-    public function bakeSecondaryResults(object &$data): object
+    public function bakeSecondaryResults(object &$data): ?object
     {
         // Get data from the reference in the datahost
         $origResults = &$this->secondaryResults;
