@@ -68,7 +68,7 @@ final class PromiseResolutionTracker
     {
         foreach (self::$pendingPromises as $i => $pending)
         {
-            if ($pending[0] == $promise)
+            if ($pending[0] === $promise)
             {
                 array_splice(self::$pendingPromises, $i, 1);
                 self::$pendingPromiseCount--;
