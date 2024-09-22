@@ -85,6 +85,14 @@ class ReleasePackager
         let versionInfo = await this.readVersionFile();
         versionInfo.isRelease = true;
         
+        // Remove the build working folder to make sure that we won't have
+        // any conflicts on rebuilding.
+        try
+        {
+            await fs.rm(this.getBuildWorkingFolder(), {recursive: true});
+        }
+        catch (e) { /* ignore */ }
+        
         await this.ensureBuildFolder();
         await this.copyRehikeFiles();
         await this.writeNewVersionFile(versionInfo);

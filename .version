@@ -1,10 +1,10 @@
 {
-	"previousHash": "526a82496a88dcbcb7f9bbb4d1ad9696581afcdf",
-	"currentRevisionId": 1667,
-	"subject": "Fix private video blockade messages",
-	"body": "Fix private video blockade messages",
+	"previousHash": "4ba752074ef137166c8fcba02ba4e50197924a95",
+	"currentRevisionId": 1668,
+	"subject": "[RHBuild] Fix rebuild release error",
+	"body": "[RHBuild] Fix rebuild release error",
 	"branch": "master",
 	"committerName": "Isabella",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1726962272
+	"time": 1726965547
 }
