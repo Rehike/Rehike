@@ -48,6 +48,11 @@ class AsyncFunction
     {
         $this->generator = $g;
         $this->ownPromise = new Promise();
+
+        // PATCH (kirasicecreamm): Make Promises use version 0 in order to
+        // prevent some weird generator error. I'm currently unable to figure
+        // out why this happens.
+        $this->ownPromise->setVersion(0);
     }
 
     /**
