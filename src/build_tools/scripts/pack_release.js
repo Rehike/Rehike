@@ -106,9 +106,18 @@ class ReleasePackager
             new BuildNumberTransformer(buildNumber)
         );
         
+        const constantsTransformerProps = {};
+        
+        // Use "Release Test" versioning for all test releases.
+        // Since we're still testing the system, this is the default.
+        if (true)
+        {
+            constantsTransformerProps.versionDisplayName = "Release Test";
+        }
+        
         await this.transformFile(
             path.join(this.getBuildWorkingFolder(), "includes/constants.php"),
-            new ConstantsTransformer()
+            new ConstantsTransformer(constantsTransformerProps)
         );
         
         /*
