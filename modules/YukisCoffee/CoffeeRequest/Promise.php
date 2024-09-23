@@ -336,12 +336,6 @@ class Promise/*<T>*/
                 )
             );
 
-            if ($this->prematureReturnAllowed())
-            {
-                // Force the caller to exit:
-                throw PromiseHandlerPrematureReturnException::getInstance();
-            }
-
             return; // Should finish here.
         }
 
@@ -420,12 +414,6 @@ class Promise/*<T>*/
                     $e
                 )
             );
-
-            if ($this->prematureReturnAllowed())
-            {
-                // Force the caller to exit:
-                throw PromiseHandlerPrematureReturnException::getInstance();
-            }
 
             return; // Should finish here.
         }
