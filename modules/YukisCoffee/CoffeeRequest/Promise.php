@@ -292,6 +292,7 @@ class Promise/*<T>*/
         {
             self::$promiseCallbackLevel++;
             $cb($this->deferredRejections[$current]);
+            $this->deferredRejections[$current] = null;
             self::$promiseCallbackLevel--;
         }
         else if (PromiseStatus::REJECTED == $this->status)
