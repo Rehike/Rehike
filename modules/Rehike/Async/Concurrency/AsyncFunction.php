@@ -101,8 +101,19 @@ class AsyncFunction
         }
         else // has returned
         {
-            $result = $this->generator->getReturn();
-            $this->ownPromise->resolve($result);
+            try
+            {
+                $result = $this->generator->getReturn();
+                $this->ownPromise->resolve($result);
+            }
+            catch (Exception)
+            {
+                // If the promise threw an exception that was caught before
+                // getting to us (CoffeeRequest can do this internally), then
+                // it will no have return value and will throw an exception. We
+                // just have to ignore it.
+                $this->ownPromise->resolve(null);
+            }
             
             return;
         }

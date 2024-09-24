@@ -155,7 +155,7 @@ class Promise/*<T>*/
 
             if ($reflection->isGenerator())
             {
-                PromiseEvent/*<mixed>*/::fromAnonPromise(
+                PromiseEvent::fromAnonPromise(
                     $this, 
                     $cb,
                     $this->getResolveApi(),
@@ -292,7 +292,6 @@ class Promise/*<T>*/
         {
             self::$promiseCallbackLevel++;
             $cb($this->deferredRejections[$current]);
-            $this->deferredRejections[$current] = null;
             self::$promiseCallbackLevel--;
         }
         else if (PromiseStatus::REJECTED == $this->status)
@@ -336,6 +335,12 @@ class Promise/*<T>*/
                     $data
                 )
             );
+
+            if ($this->prematureReturnAllowed())
+            {
+                // Force the caller to exit:
+                throw PromiseHandlerPrematureReturnException::getInstance();
+            }
 
             return; // Should finish here.
         }
@@ -415,6 +420,12 @@ class Promise/*<T>*/
                     $e
                 )
             );
+
+            if ($this->prematureReturnAllowed())
+            {
+                // Force the caller to exit:
+                throw PromiseHandlerPrematureReturnException::getInstance();
+            }
 
             return; // Should finish here.
         }

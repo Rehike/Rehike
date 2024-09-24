@@ -16,7 +16,7 @@ use YukisCoffee\CoffeeRequest\Exception\GeneralException;
  * Events system and Promises API.
  * 
  * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
- * @version 3.2
+ * @version 3.2.1
  */
 final class CoffeeRequest
 {
@@ -26,7 +26,7 @@ final class CoffeeRequest
      * @see getVersion()
      * @var string
      */
-    private const VERSION = "3.2";
+    private const VERSION = "3.2.1";
 
     /** 
      * Stores references to all currently running requests.

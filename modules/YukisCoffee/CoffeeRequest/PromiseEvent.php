@@ -128,18 +128,47 @@ abstract class PromiseEvent/*<T>*/ extends Event
 
             final protected function onRun(): Generator/*<T>*/
             {
+                // We wrap execution of another generator in order to enable
+                // premature returning, since we need an outer function to
+                // catch the events properly.
+
+                // Set up the inner generator:
                 try
                 {
-                    return ($this->onRunCb)($this->resolveApi, $this->rejectApi);
+                    $gen = ($this->onRunCb)(
+                        $this->resolveApi, $this->rejectApi
+                    );
                 }
-                catch (PromiseHandlerPrematureReturnException $e)
+                catch (PromiseHandlerPrematureReturnException $e) {}
+
+                // Redirect all calls to the inner generator for as long as it's
+                // valid:
+                while ($gen->valid())
                 {
-                    // Evil, but we use exceptions for control flow. This will
-                    // break the execution of the function early on so that it
-                    // doesn't continue executing anything after resolving or
-                    // rejecting.
-                    //
-                    // [[ fallthrough ]]
+                    try
+                    {
+                        yield $gen->next();
+                    }
+                    catch (PromiseHandlerPrematureReturnException $e) {}
+                }
+
+                // Return the return value of the inner generator:
+                try
+                {
+                    return $gen->getReturn();
+                }
+                catch (Exception $e)
+                {
+                    // Generators aren't guaranteed to have a return value even
+                    // if they are invalid. In particular, a generator which has
+                    // thrown an exception that was later caught by a caller
+                    // neither is valid nor has a return value associated. There
+                    // is no way to detect for this case other than to wrap an
+                    // exception check and just pass if we fail to get a value.
+                    if ($gen->valid())
+                        throw $e;
+
+                    return null;
                 }
             }
         };
@@ -165,16 +194,9 @@ abstract class PromiseEvent/*<T>*/ extends Event
             try
             {
                 $api(...$args);
-                $myself->fulfill();
             }
-            catch (PromiseHandlerPrematureReturnException $e)
+            finally
             {
-                // Evil, but we use exceptions for control flow. This will
-                // break the execution of the function early on so that it
-                // doesn't continue executing anything after resolving or
-                // rejecting.
-                //
-                // [[ fallthrough ]]
                 $myself->fulfill();
             }
         };

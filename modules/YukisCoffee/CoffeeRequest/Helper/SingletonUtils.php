@@ -53,7 +53,7 @@ final class SingletonUtils/*<T>*/
     )
     {
         $classRef = new ReflectionClass($instance);
-        $sameClass = ($instance::class == $class);
+        $sameClass = ($instance::class === $class);
 
         $method = $classRef->getMethod($name);
 

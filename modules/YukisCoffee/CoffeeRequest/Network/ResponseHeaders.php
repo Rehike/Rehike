@@ -10,6 +10,122 @@ use function current;
 use function key;
 use function next;
 
+if (PHP_VERSION_ID >= 81000) // PHP 8.1 implementation of ArrayAccess & Iterator
+{
+    trait ResponseHeadersArrayAccessIteratorImpl
+    {
+        public function offsetExists(mixed $offset): bool
+        {
+            return isset($this->boundArray[$offset]);
+        }
+
+        public function offsetSet(mixed $offset, mixed $value): void
+        {
+            trigger_error("RequestMetadata->headers is read only.", E_USER_WARNING);
+        }
+
+        public function offsetUnset(mixed $offset): void
+        {
+            $this->offsetSet(null, null); // inherit warning
+        }
+
+        public function offsetGet(mixed $offset): mixed
+        {
+            return isset($this->boundArray[$offset])
+                ? $this->boundArray[$offset]
+                : null
+            ;
+        }
+
+        public function rewind(): void
+        {
+            reset($this->boundArray);
+        }
+
+        public function current(): mixed
+        {
+            return current($this->boundArray);
+        }
+
+        public function key(): mixed
+        {
+            return key($this->boundArray);
+        }
+
+        public function next(): void
+        {
+            next($this->boundArray);
+        }
+
+        public function valid(): bool
+        {
+            return key($this->boundArray) !== null;
+        }
+    }
+}
+else // PHP 7.x & 8.0 implementation of ArrayAccess & Iterator
+{
+    trait ResponseHeadersArrayAccessIteratorImpl
+    {
+        #[ReturnTypeWillChange]
+        public function offsetExists($offset)
+        {
+            return isset($this->boundArray[$offset]);
+        }
+
+        #[ReturnTypeWillChange]
+        public function offsetSet($offset, $value)
+        {
+            trigger_error("RequestMetadata->headers is read only.", E_USER_WARNING);
+        }
+
+        #[ReturnTypeWillChange]
+        public function offsetUnset($offset)
+        {
+            $this->offsetSet(null, null); // inherit warning
+        }
+
+        #[ReturnTypeWillChange]
+        public function offsetGet($offset)
+        {
+            return isset($this->boundArray[$offset])
+                ? $this->boundArray[$offset]
+                : null
+            ;
+        }
+
+        #[ReturnTypeWillChange]
+        public function rewind()
+        {
+            return reset($this->boundArray);
+        }
+
+        #[ReturnTypeWillChange]
+        public function current()
+        {
+            return current($this->boundArray);
+        }
+
+        #[ReturnTypeWillChange]
+        public function key()
+        {
+            return key($this->boundArray);
+        }
+
+        #[ReturnTypeWillChange]
+        public function next()
+        {
+            return next($this->boundArray);
+        }
+
+        #[ReturnTypeWillChange]
+        public function valid()
+        {
+            return key($this->boundArray) !== null;
+        }
+    }
+}
+
 /**
  * Implements an array for accessing HTTP headers.
  * 
@@ -21,6 +137,8 @@ use function next;
  */
 class ResponseHeaders implements ArrayAccess, Iterator
 {
+    use ResponseHeadersArrayAccessIteratorImpl;
+
     /**
      * Bound array that stores definitions.
      * 
@@ -80,74 +198,5 @@ class ResponseHeaders implements ArrayAccess, Iterator
     public function __set($a, $b)
     {
         $this->offsetSet(null, null); // inherit warning
-    }
-
-    /*
-     * Array access functions
-     * 
-     * In order to maintain compatibility with both PHP 7.x and
-     * PHP 8.1, the ReturnTypeWillChange attribute is required on all
-     * methods.
-     * 
-     * This is to avoid a conflict where PHP 8.1 requires strict type
-     * signatures on methods and PHP 7.x doesn't even support them at
-     * all.
-     */
-
-    #[ReturnTypeWillChange]
-    public function offsetExists($offset)
-    {
-        return isset($this->boundArray[$offset]);
-    }
-
-    #[ReturnTypeWillChange]
-    public function offsetSet($offset, $value)
-    {
-        trigger_error("RequestMetadata->headers is read only.", E_USER_WARNING);
-    }
-
-    #[ReturnTypeWillChange]
-    public function offsetUnset($offset)
-    {
-        $this->offsetSet(null, null); // inherit warning
-    }
-
-    #[ReturnTypeWillChange]
-    public function offsetGet($offset)
-    {
-        return isset($this->boundArray[$offset])
-            ? $this->boundArray[$offset]
-            : null
-        ;
-    }
-
-    #[ReturnTypeWillChange]
-    public function rewind()
-    {
-        return reset($this->boundArray);
-    }
-
-    #[ReturnTypeWillChange]
-    public function current()
-    {
-        return current($this->boundArray);
-    }
-
-    #[ReturnTypeWillChange]
-    public function key()
-    {
-        return key($this->boundArray);
-    }
-
-    #[ReturnTypeWillChange]
-    public function next()
-    {
-        return next($this->boundArray);
-    }
-
-    #[ReturnTypeWillChange]
-    public function valid()
-    {
-        return key($this->boundArray) !== null;
     }
 }

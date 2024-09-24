@@ -8,7 +8,7 @@ namespace YukisCoffee\CoffeeRequest\Util;
  */
 class PromiseSettings
 {
-    private static bool $enableHandlerPrematureReturn = false;
+    private static bool $enableHandlerPrematureReturn = true;
 
     /**
      * Get if premature returning from Promise handlers is enabled.
