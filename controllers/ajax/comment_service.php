@@ -251,6 +251,7 @@ return new class extends AjaxController
             }
             else
             {
+                // TODO: This causes an unhandled promise error.
                 self::error();
             }
         });
