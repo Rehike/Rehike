@@ -3,12 +3,12 @@ namespace YukisCoffee\CoffeeRequest;
 
 use YukisCoffee\CoffeeRequest\Enum\PromiseStatus;
 use YukisCoffee\CoffeeRequest\Exception\UncaughtPromiseException;
-use YukisCoffee\CoffeeRequest\Util\PromiseAllBase;
+use YukisCoffee\CoffeeRequest\Util\PromiseAllController;
 use YukisCoffee\CoffeeRequest\Util\QueuedPromiseResolver;
 use YukisCoffee\CoffeeRequest\Util\PromiseResolutionTracker;
-use YukisCoffee\CoffeeRequest\Util\PromiseHandlerPrematureReturnException;
 use YukisCoffee\CoffeeRequest\Debugging\PromiseStackTrace;
 
+use Throwable;
 use Exception;
 use ReflectionFunction;
 use ReflectionMethod;
@@ -24,10 +24,12 @@ use YukisCoffee\CoffeeRequest\Util\PromiseSettings;
  * I haven't tested interoperability with proper asynchronous libraries,
  * i.e. Amp or ReactPHP, so I don't know how compatible this is.
  * 
+ * @implements IPromise<T>
+ * 
  * @template T
  * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  */
-class Promise/*<T>*/
+class Promise/*<T>*/ implements IPromise/*<T>*/
 {
     /**
      * Represents the current status of a Promise.
@@ -52,7 +54,7 @@ class Promise/*<T>*/
      * 
      * Ditto $result for publicity.
      */
-    public Exception $reason;
+    public Throwable $reason;
 
     /**
      * The stack trace of the Promise at its creation.
@@ -92,7 +94,7 @@ class Promise/*<T>*/
      * This is actually an associative array for ease of use, so some
      * indices may be skipped. Just be careful with this thing, alright?
      * 
-     * @var callable<Exception>|null[]
+     * @var callable<Throwable>|null[]
      */
     private array $catches = [];
 
@@ -102,7 +104,7 @@ class Promise/*<T>*/
      * This handles cases where rejection catch callbacks are registered after
      * a Promise has already been rejected.
      * 
-     * @var ?Exception[]
+     * @var ?Throwable[]
      */
     private array $deferredRejections = [];
 
@@ -151,7 +153,7 @@ class Promise/*<T>*/
             // Since we're an anonymous Promise, we always use the latest
             // version of the Promise behavior. The anonymous Promise backend
             // code is all familiar with the conventions, so it's fine.
-            $this->setVersion(1);
+            $this->setVersion(0);
 
             if ($reflection->isGenerator())
             {
@@ -164,19 +166,7 @@ class Promise/*<T>*/
             }
             else
             {
-                try
-                {
-                    $cb($this->getResolveApi(), $this->getRejectApi());
-                }
-                catch (PromiseHandlerPrematureReturnException $e)
-                {
-                    // Evil, but we use exceptions for control flow. This will
-                    // break the execution of the function early on so that it
-                    // doesn't continue executing anything after resolving or
-                    // rejecting.
-                    //
-                    // [[ fallthrough ]]
-                }
+                $cb($this->getResolveApi(), $this->getRejectApi());
             }
         }
 
@@ -220,7 +210,7 @@ class Promise/*<T>*/
      * API function to await an array of Promises, and then
      * return a new Promise with its values.
      * 
-     * @param Promise<mixed>[]|...Promise $promises
+     * @param IPromise<mixed>[]|...IPromise $promises
      * @return Promise<mixed[]>
      */
     public static function all(...$promises): Promise/*<array>*/
@@ -231,7 +221,7 @@ class Promise/*<T>*/
             $promises = $promises[0];
         }
 
-        return (new PromiseAllBase($promises))->getPromise();
+        return (new PromiseAllController($promises))->getPromise();
     }
 
     /**
@@ -278,10 +268,10 @@ class Promise/*<T>*/
      * Register a function to be called upon an error occurring
      * during a Promise's resolution.
      * 
-     * @param callable<Exception> $cb
+     * @param callable<Throwable> $cb
      * @return Promise<T>
      */
-    public function catch(callable/*<Exception>*/ $cb): Promise/*<T>*/
+    public function catch(callable/*<Throwable>*/ $cb): Promise/*<T>*/
     {
         $current = $this->getCurrentThenIndex();
 
@@ -336,12 +326,6 @@ class Promise/*<T>*/
                 )
             );
 
-            if ($this->prematureReturnAllowed())
-            {
-                // Force the caller to exit:
-                throw PromiseHandlerPrematureReturnException::getInstance();
-            }
-
             return; // Should finish here.
         }
 
@@ -381,18 +365,12 @@ class Promise/*<T>*/
         }
 
         $this->setStatus(PromiseStatus::RESOLVED);
-
-        if ($this->prematureReturnAllowed())
-        {
-            // Force the caller to exit:
-            throw PromiseHandlerPrematureReturnException::getInstance();
-        }
     }
 
     /**
      * Reject a Promise (error).
      * 
-     * @param string|Exception $e (union types are PHP 8.0+)
+     * @param string|Throwable $e (union types are PHP 8.0+)
      * 
      * @internal
      * @param 
@@ -421,12 +399,6 @@ class Promise/*<T>*/
                 )
             );
 
-            if ($this->prematureReturnAllowed())
-            {
-                // Force the caller to exit:
-                throw PromiseHandlerPrematureReturnException::getInstance();
-            }
-
             return; // Should finish here.
         }
 
@@ -443,7 +415,7 @@ class Promise/*<T>*/
         {
             $this->reason = new Exception($e);
         }
-        else if ($e instanceof Exception)
+        else if ($e instanceof Throwable)
         {
             $this->reason = $e;
         }
@@ -472,24 +444,6 @@ class Promise/*<T>*/
         }
 
         $this->setStatus(PromiseStatus::REJECTED);
-
-        if ($this->prematureReturnAllowed())
-        {
-            // Force the caller to exit:
-            throw PromiseHandlerPrematureReturnException::getInstance();
-        }
-    }
-
-    /**
-     * Determines if premature returning is allowed.
-     * 
-     * Premature returning behavior is only allowed if enabled globally (which
-     * is the default) and the Promise version is 1 or greater.
-     */
-    protected function prematureReturnAllowed(): bool
-    {
-        return PromiseSettings::getEnableHandlerPrematureReturn() &&
-            $this->version >= 1;
     }
 
     /**

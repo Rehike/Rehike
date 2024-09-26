@@ -14,7 +14,7 @@ use YukisCoffee\CoffeeRequest\Util\NameserverInfo;
  * 
  * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  */
-class Request
+class Request implements IRequest
 {
     use Deferred/*<Response>*/ { 
         getPromise as public;

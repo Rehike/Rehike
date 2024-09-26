@@ -3,9 +3,9 @@ namespace YukisCoffee\CoffeeRequest;
 
 use YukisCoffee\CoffeeRequest\Exception\GeneralException;
 use YukisCoffee\CoffeeRequest\Debugging\PromiseStackTrace;
-use YukisCoffee\CoffeeRequest\Util\PromiseHandlerPrematureReturnException;
 
 use Exception;
+use Throwable;
 use Generator;
 use ReflectionFunction;
 
@@ -56,7 +56,7 @@ abstract class PromiseEvent/*<T>*/ extends Event
      * @param Promise<T> $p
      * @param callable<Generator<T>> $cb
      * @param callable<T> $res Resolve API
-     * @param callable<Exception|string> $rej Reject API
+     * @param callable<Throwable|string> $rej Reject API
      * 
      * @return PromiseEvent<T>
      */
@@ -64,7 +64,7 @@ abstract class PromiseEvent/*<T>*/ extends Event
             Promise/*<T>*/ $p,
             callable/*<Generator<T>>*/ $cb,
             callable/*<T>*/ $res,
-            callable/*<Exception|string>*/ $rej
+            callable/*<Throwable|string>*/ $rej
     ): PromiseEvent/*<T>*/
     {
         if (!(new ReflectionFunction($cb))->isGenerator())
@@ -93,20 +93,20 @@ abstract class PromiseEvent/*<T>*/ extends Event
             /** @var callable<T> */
             private $resolveApi;
 
-            /** @var callable<Exception|string> */
+            /** @var callable<Throwable|string> */
             private $rejectApi;
 
             /**
              * @param Promise<T> $p
              * @param Generator<T> $cb
              * @param callable<T> $res
-             * @param callable<Exception|string> $rej
+             * @param callable<Throwable|string> $rej
              */
             final public function __construct(
                     Promise/*<T>*/ $p,
                     callable/*<Generator<T>>*/& $cb,
                     callable/*<T>*/ $res,
-                    callable/*<Exception|string>*/ $rej
+                    callable/*<Throwable|string>*/ $rej
             )
             {
                 parent::__construct();
@@ -128,48 +128,7 @@ abstract class PromiseEvent/*<T>*/ extends Event
 
             final protected function onRun(): Generator/*<T>*/
             {
-                // We wrap execution of another generator in order to enable
-                // premature returning, since we need an outer function to
-                // catch the events properly.
-
-                // Set up the inner generator:
-                try
-                {
-                    $gen = ($this->onRunCb)(
-                        $this->resolveApi, $this->rejectApi
-                    );
-                }
-                catch (PromiseHandlerPrematureReturnException $e) {}
-
-                // Redirect all calls to the inner generator for as long as it's
-                // valid:
-                while ($gen->valid())
-                {
-                    try
-                    {
-                        yield $gen->next();
-                    }
-                    catch (PromiseHandlerPrematureReturnException $e) {}
-                }
-
-                // Return the return value of the inner generator:
-                try
-                {
-                    return $gen->getReturn();
-                }
-                catch (Exception $e)
-                {
-                    // Generators aren't guaranteed to have a return value even
-                    // if they are invalid. In particular, a generator which has
-                    // thrown an exception that was later caught by a caller
-                    // neither is valid nor has a return value associated. There
-                    // is no way to detect for this case other than to wrap an
-                    // exception check and just pass if we fail to get a value.
-                    if ($gen->valid())
-                        throw $e;
-
-                    return null;
-                }
+                return ($this->onRunCb)($this->resolveApi, $this->rejectApi);
             }
         };
     }

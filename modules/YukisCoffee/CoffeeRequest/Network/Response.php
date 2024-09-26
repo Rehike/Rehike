@@ -13,12 +13,12 @@ use function json_decode;
  * 
  * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  */
-class Response
+class Response implements IResponse
 {
     /**
      * A reference to the source request.
      */
-    public Request $sourceRequest;
+    public IRequest $sourceRequest;
 
     /**
      * The response status.

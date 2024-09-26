@@ -1,7 +1,7 @@
 <?php
 namespace YukisCoffee\CoffeeRequest\Exception;
 
-use Exception;
+use Throwable;
 
 /**
  * Triggered when a Promise::all() call is rejected.
@@ -15,15 +15,15 @@ use Exception;
  */
 final class PromiseAllException extends BaseException
 {
-    private Exception $subexception;
+    private Throwable $subexception;
 
-    public function __construct(string $reason, Exception $subexception)
+    public function __construct(string $reason, Throwable $subexception)
     {
         parent::__construct($reason);
         $this->subexception = $subexception;
     }
 
-    public function getReason(): Exception
+    public function getReason(): Throwable
     {
         return $this->subexception;
     }

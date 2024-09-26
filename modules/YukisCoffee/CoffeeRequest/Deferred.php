@@ -4,6 +4,7 @@ namespace YukisCoffee\CoffeeRequest;
 use YukisCoffee\CoffeeRequest\Exception\GeneralException;
 
 use Exception;
+use Throwable;
 
 /**
  * A template for a Promise controller.
@@ -57,7 +58,7 @@ trait Deferred/*<T>*/
     /**
      * Reject the Promise controlled by this class.
      * 
-     * @param Exception|string $reason
+     * @param Throwable|string $reason
      */
     private function reject($reason): void
     {

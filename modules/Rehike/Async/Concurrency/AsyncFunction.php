@@ -2,6 +2,7 @@
 namespace Rehike\Async\Concurrency;
 
 use Generator, Exception;
+use Throwable;
 use Rehike\Async\Promise;
 
 /**
@@ -92,7 +93,7 @@ class AsyncFunction
                  */
                 $value = $this->generator->current();
             }
-            catch (Exception $e)
+            catch (Throwable $e)
             {
                 // Capture the exception thrown by the Generator and carry
                 // it over to the internal Promise.
@@ -106,7 +107,7 @@ class AsyncFunction
                 $result = $this->generator->getReturn();
                 $this->ownPromise->resolve($result);
             }
-            catch (Exception)
+            catch (Throwable)
             {
                 // If the promise threw an exception that was caught before
                 // getting to us (CoffeeRequest can do this internally), then

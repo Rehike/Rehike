@@ -5,7 +5,6 @@ use YukisCoffee\CoffeeRequest\Network\Request;
 use YukisCoffee\CoffeeRequest\Network\Response;
 use YukisCoffee\CoffeeRequest\Handler\NetworkHandler;
 use YukisCoffee\CoffeeRequest\Handler\NetworkHandlerFactory;
-use YukisCoffee\CoffeeRequest\Hooks\Hooks;
 use YukisCoffee\CoffeeRequest\Exception\GeneralException;
 
 /**
@@ -16,7 +15,7 @@ use YukisCoffee\CoffeeRequest\Exception\GeneralException;
  * Events system and Promises API.
  * 
  * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
- * @version 3.2.1
+ * @version 3.3
  */
 final class CoffeeRequest
 {
@@ -26,7 +25,7 @@ final class CoffeeRequest
      * @see getVersion()
      * @var string
      */
-    private const VERSION = "3.2.1";
+    private const VERSION = "3.3";
 
     /** 
      * Stores references to all currently running requests.
@@ -126,8 +125,6 @@ final class CoffeeRequest
      */
     public static function awaitAll(): Promise/*<array>*/
     {
-        // wrong $requests type, 
-        // needs to be Promise<Response>[] not Response[]!!
         return Promise::all(self::$requests);
     }
 
@@ -159,7 +156,7 @@ final class CoffeeRequest
      * 
      * @internal
      */
-    public static function reportFinishedRequest(): void
+    public static function reportFinishedRequest($request = null): void
     {
         if (self::$activeRequests > 1)
         {

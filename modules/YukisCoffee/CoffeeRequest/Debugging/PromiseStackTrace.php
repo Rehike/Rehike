@@ -20,7 +20,7 @@ use Exception;
  * 
  * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  */
-class PromiseStackTrace
+class PromiseStackTrace implements IPromiseStackTrace
 {
     /**
      * Stores the original stack trace at the time of construction.
