@@ -2,19 +2,16 @@
 namespace Rehike\Exception\Network;
 
 use Rehike\Exception\AbstractException;
-use YukisCoffee\CoffeeRequest\Network\Response;
+use Rehike\Network\IResponse;
 
 use Exception;
 
-// BUG(ev): cannot change call signature of __construct due to ICoffeeRequest
-// (?!??!?!?!?!??!?!?!!?!?!??!?!?!?!)
-// taniko FUCK YOU
 class InnertubeFailedRequestException extends Exception
 {
-    public Response $failedResponse;
+    public IResponse $failedResponse;
 
     public function __construct(
-            Response $failedResponse
+            IResponse $failedResponse
     )
     {
         $this->failedResponse = $failedResponse;

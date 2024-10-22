@@ -1,14 +1,13 @@
 <?php
 namespace Rehike\Boot;
 
-use YukisCoffee\CoffeeRequest\CoffeeRequest;
-
 use Rehike\{
     ConfigDefinitions,
     ContextManager,
     TemplateManager,
     YtApp,
     Network,
+    Network\NetworkCore,
     Async\Concurrency,
     Async\Promise,
     ControllerV2\Core as ControllerV2,
@@ -36,7 +35,7 @@ final class Tasks
 {
     public static function initNetwork(): void
     {
-        CoffeeRequest::setResolve([
+        NetworkCore::setResolve([
             Nameserver::get("www.youtube.com", "1.1.1.1", 443)->serialize()
         ]);
     }
@@ -74,7 +73,7 @@ final class Tasks
         // Apply early configuration properties for other modules:
         if (Config::getConfigProp("advanced.developer.ignoreUnresolvedPromises"))
         {
-            \YukisCoffee\CoffeeRequest\Util\PromiseResolutionTracker::disable();
+            \Rehike\Async\Promise\PromiseResolutionTracker::disable();
         }
     }
 

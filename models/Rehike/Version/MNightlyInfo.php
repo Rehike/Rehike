@@ -4,7 +4,7 @@ namespace Rehike\Model\Rehike\Version;
 use Rehike\Controller\Version\GetVersionController as Controller;
 use Rehike\i18n\i18n;
 use Rehike\Version\VersionInfo;
-use YukisCoffee\CoffeeTranslation\DateTimeFormats;
+use Rehike\i18n\Internal\DateTimeFormats;
 
 class MNightlyInfo
 {

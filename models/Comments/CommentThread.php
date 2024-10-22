@@ -1,8 +1,8 @@
 <?php
 namespace Rehike\Model\Comments;
 
-use YukisCoffee\PropertyAtPath;
-use YukisCoffee\CoffeeRequest\Promise;
+use Rehike\PropertyAtPath;
+use Rehike\Async\Promise;
 
 // These are aliased to be a bit shorter.
 use \Rehike\Model\Comments\{
@@ -428,7 +428,7 @@ class CommentThread
         {
             $context->replyButton = MReplyButton::fromData(PropertyAtPath::get($context, self::REPLY_BUTTON_PATH), $context->commentId);
         }
-        catch (\YukisCoffee\PropertyAtPathException $e)
+        catch (\Rehike\PropertyAtPathException $e)
         {
             $context->replyButton = null;
         }
@@ -437,7 +437,7 @@ class CommentThread
         {
             $context->creatorHeart = PropertyAtPath::get($context, self::HEART_BUTTON_PATH);
         }
-        catch (\YukisCoffee\PropertyAtPathException $e)
+        catch (\Rehike\PropertyAtPathException $e)
         {
             $context->creatorHeart = null;
         }

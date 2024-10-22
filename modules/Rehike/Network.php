@@ -4,10 +4,15 @@ namespace Rehike;
 use Rehike\Exception\Network\InnertubeFailedRequestException;
 use Rehike\Signin\AuthManager;
 
-use YukisCoffee\CoffeeRequest\CoffeeRequest;
-use YukisCoffee\CoffeeRequest\Promise;
-use YukisCoffee\CoffeeRequest\Network\Request;
-use YukisCoffee\CoffeeRequest\Network\Response;
+use Rehike\Network\{
+    NetworkCore,
+    Internal\Request as InternalRequest, // hack
+    Internal\Response as InternalResponse, // hack
+    IRequest,
+    IResponse,
+};
+
+use Rehike\Async\Promise;
 
 /**
  * Implements a network manager for Rehike.
@@ -54,11 +59,11 @@ class Network
     /**
      * Make a generic URL request.
      * 
-     * @return Promise<Response>
+     * @return Promise<IResponse>
      */
-    public static function urlRequest(string $url, array $opts = []): Promise/*<Response>*/
+    public static function urlRequest(string $url, array $opts = []): Promise/*<IResponse>*/
     {
-        $result = CoffeeRequest::request($url, $opts);
+        $result = NetworkCore::request($url, $opts);
 
         self::$sessionRequestLog[] = [
             "type" => "url",
@@ -79,9 +84,9 @@ class Network
      * This is used occassionally for non-InnerTube APIs that still need access to the user's
      * account, i.e. /getAccountSwitcherEndpoint.
      * 
-     * @return Promise<Response>
+     * @return Promise<IResponse>
      */
-    public static function urlRequestFirstParty(string $url, array $opts = []): Promise/*<Response>*/
+    public static function urlRequestFirstParty(string $url, array $opts = []): Promise/*<IResponse>*/
     {
         if (isset($opts["headers"]))
         {
@@ -98,7 +103,7 @@ class Network
     /**
      * Make a InnerTube request.
      * 
-     * @return Promise<Response>
+     * @return Promise<IResponse>
      */
     public static function innertubeRequest(
         string $action, 
@@ -107,7 +112,7 @@ class Network
         string $clientVersion = "2.20240816.01.00",
         bool $ignoreErrors = false,
         bool $useAuthentication = true
-    ): Promise/*<Response>*/
+    ): Promise/*<IResponse>*/
     {
         $profilerRid = rand(10000, 99999);
         \Rehike\Profiler::start("innertube-$action-$profilerRid");
@@ -152,7 +157,7 @@ class Network
                  $requestHeaders,
                  $profilerRid)
         {
-            CoffeeRequest::request(
+            NetworkCore::request(
                 "{$host}/youtubei/v1/{$action}?key={$key}",
                 [
                     "headers" => $requestHeaders,
@@ -208,7 +213,7 @@ class Network
      * In addition, if $localFilePath is "error", then an InnerTube error will be forced. This
      * may be used to test error handling.
      * 
-     * @return Promise<Response>
+     * @return Promise<IResponse>
      */
     public static function innertubeRequestFake(
         string $localFilePath,
@@ -218,7 +223,7 @@ class Network
         string $clientVersion = "2.20240816.01.00",
         bool $ignoreErrors = false,
         bool $useAuthentication = true
-    ): Promise/*<Response>*/
+    ): Promise/*<IResponse>*/
     {
         $result = new Promise(function ($resolve, $reject)
             use ($action, 
@@ -228,14 +233,14 @@ class Network
                  $ignoreErrors,
                  $localFilePath)
         {
-            $fakeRequestInstance = new class extends Request {
+            $fakeRequestInstance = new class extends InternalRequest {
                 final public function __construct() {}
             };
 
             if ($localFilePath == "error")
             {
                 $reject(new InnertubeFailedRequestException(
-                    new Response(
+                    new InternalResponse(
                         $fakeRequestInstance,
                         400,
                         "fake innertube error",
@@ -246,7 +251,7 @@ class Network
 
             $fileContents = FileSystem::getFileContents($localFilePath);
 
-            $resolve(new Response(
+            $resolve(new InternalResponse(
                 $fakeRequestInstance,
                 200,
                 $fileContents,
@@ -280,7 +285,7 @@ class Network
         string $action, 
         array $params, 
         bool $post = false
-    ): Promise/*<Response>*/
+    ): Promise/*<IResponse>*/
     {
         $host = self::V3_API_HOST;
         $key = self::V3_API_KEY;
@@ -333,7 +338,7 @@ class Network
             ];
         }
 
-        $result = CoffeeRequest::request(
+        $result = NetworkCore::request(
             "{$host}/youtube/v3/{$action}?key={$key}{$urlParams}",
             $body
         );
@@ -370,7 +375,7 @@ class Network
      */
     public static function run(): void
     {
-        CoffeeRequest::run();
+        NetworkCore::run();
     }
 
     /**

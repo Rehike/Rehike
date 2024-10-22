@@ -5,7 +5,7 @@ use Rehike\Model\Common\MButton;
 use Rehike\Model\Traits\Runs;
 use Rehike\i18n\i18n;
 
-use YukisCoffee\CoffeeTranslation\Lang\NamespaceBoundLanguageApi;
+use Rehike\i18n\Internal\Lang\NamespaceBoundLanguageApi;
 
 /**
  * Informs the user of a security vulnerability via a lightbox.

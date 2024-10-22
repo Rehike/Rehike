@@ -7,7 +7,6 @@ use Rehike\Util\FormattedStringBuilder\{
     PrintfTemplateBuilderParams,
     RunBuilder
 };
-use YukisCoffee\CoffeeRequest\Util\PromiseResolutionTracker;
 
 /**
  * Builder for formatted strings like InnerTube.

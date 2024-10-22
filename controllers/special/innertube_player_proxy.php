@@ -9,7 +9,7 @@ use Rehike\ConfigManager\Config;
 use function Rehike\Async\async;
 use Rehike\SimpleFunnel;
 use Rehike\SimpleFunnelResponse;
-use YukisCoffee\CoffeeRequest\Network\Response;
+use Rehike\Network\Internal\Response;
 use Rehike\Controller\core\HitchhikerController;
 
 /**

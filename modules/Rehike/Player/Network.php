@@ -4,8 +4,8 @@ namespace Rehike\Player;
 require_once "Constants.php";
 
 // --- REHIKE-SPECIFIC IMPORTS ---
-use YukisCoffee\CoffeeRequest\CoffeeRequest;
-use YukisCoffee\CoffeeRequest\Enum\PromiseStatus;
+use Rehike\Network\NetworkCore;
+use Rehike\Async\Promise\PromiseStatus;
 // -------------------------------
 
 /**
@@ -20,10 +20,10 @@ use YukisCoffee\CoffeeRequest\Enum\PromiseStatus;
  */
 class Network
 {
-    const COFFEEREQUEST_LIBRARY = "YukisCoffee\\CoffeeRequest\\CoffeeRequest";
+    const RH_NETWORK_LIBRARY = "Rehike\\Network\\NetworkCore";
 
     private static string $mode = "curl";
-    private static CoffeeRequest $coffeeRequest;
+    private static NetworkCore $rehikeNetworkCore;
 
     /**
      * Initialise the class
@@ -41,23 +41,22 @@ class Network
         switch (self::$mode)
         {
             case "curl": return self::curlRequest($url);
-            case "coffee": return self::coffeeRequest($url);
+            case "rehike": return self::rehikeRequest($url);
         }
     }
 
     /**
-     * Perform a network request using the CoffeeRequest library.
+     * Perform a network request using the Rehike network library.
      * 
-     * This is used within Rehike itself or when CoffeeRequest is 
-     * otherwise available.
+     * This is used within Rehike itself.
      */
-    protected static function coffeeRequest(string $url): string
+    protected static function rehikeRequest(string $url): string
     {
-        $p = CoffeeRequest::request($url);
+        $p = NetworkCore::request($url);
 
         do
         {
-            CoffeeRequest::run();
+            NetworkCore::run();
         }
         while (PromiseStatus::PENDING == $p->status);
 
@@ -67,7 +66,7 @@ class Network
     /**
      * Perform a network request using CURL.
      * 
-     * This is used as a fallback when CoffeeRequest is not
+     * This is used as a fallback when the Rehike network library is not
      * available, such as when used by a third party project.
      */
     protected static function curlRequest(string $url): string
@@ -89,14 +88,14 @@ class Network
      * Set the internal request method.
      * 
      * The available options are
-     *    - coffee (for CoffeeRequest)
+     *    - rehike (for the Rehike network library)
      *    - curl (for cURL)
      */
     protected static function determineMode(): void
     {
-        if (self::coffeeAvailable())
+        if (self::rehikeNetAvailable())
         {
-            self::$mode = "coffee";
+            self::$mode = "rehike";
         }
         else
         {
@@ -105,11 +104,11 @@ class Network
     }
 
     /**
-     * Check the availability of CoffeeRequest.
+     * Check the availability of the Rehike network library.
      */
-    protected static function coffeeAvailable(): bool
+    protected static function rehikeNetAvailable(): bool
     {
-        return class_exists(self::COFFEEREQUEST_LIBRARY);
+        return class_exists(self::RH_NETWORK_LIBRARY);
     }
 }
 

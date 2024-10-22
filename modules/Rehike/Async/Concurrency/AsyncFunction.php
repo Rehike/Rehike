@@ -42,7 +42,7 @@ class AsyncFunction
 
     public static function __initStatic()
     {
-        \YukisCoffee\CoffeeRequest\Debugging\PromiseStackTrace::registerSkippedFile(__FILE__);
+        \Rehike\Async\Debugging\PromiseStackTrace::registerSkippedFile(__FILE__);
     }
 
     public function __construct(Generator $g)
@@ -110,7 +110,7 @@ class AsyncFunction
             catch (Throwable)
             {
                 // If the promise threw an exception that was caught before
-                // getting to us (CoffeeRequest can do this internally), then
+                // getting to us (the network library can do this internally), then
                 // it will no have return value and will throw an exception. We
                 // just have to ignore it.
                 $this->ownPromise->resolve(null);

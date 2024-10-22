@@ -1,7 +1,7 @@
 <?php
 namespace Rehike;
 
-use YukisCoffee\CoffeeRequest\Enum\NetworkResult;
+use Rehike\Network\Enum\NetworkResult;
 
 /**
  * Controller for the no internet page, which displays when the server is

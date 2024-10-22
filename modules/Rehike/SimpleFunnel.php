@@ -1,11 +1,12 @@
 <?php
 namespace Rehike;
 
-use YukisCoffee\CoffeeRequest\CoffeeRequest;
-use YukisCoffee\CoffeeRequest\Promise;
-use YukisCoffee\CoffeeRequest\Network\Request;
-use YukisCoffee\CoffeeRequest\Network\Response;
-use YukisCoffee\CoffeeRequest\Network\ResponseHeaders;
+use Rehike\Async\Promise;
+
+use Rehike\Network\NetworkCore;
+use Rehike\Network\IRequest;
+use Rehike\Network\IResponse;
+use Rehike\Network\ResponseHeaders;
 
 /**
  * A simple tool to funnel requests from a certain domain, while ignoring any
@@ -104,13 +105,13 @@ class SimpleFunnel
 
         $wrappedResponse = new Promise/*<Response>*/;
 
-        $request = CoffeeRequest::request($url, $params);
+        $request = NetworkCore::request($url, $params);
 
         $request->then(function($response) use ($wrappedResponse) {
             $wrappedResponse->resolve(SimpleFunnelResponse::fromResponse($response));
         });
 
-        CoffeeRequest::run();
+        NetworkCore::run();
 
         return $wrappedResponse;
     }
@@ -181,10 +182,11 @@ class SimpleFunnel
  * A custom class that represents a SimpleFunnel response.
  * 
  * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
+ * @author The Rehike Maintainers
  */
-class SimpleFunnelResponse extends Response
+class SimpleFunnelResponse extends \Rehike\Network\Internal\Response
 {
-    public static function fromResponse(Response $response): self
+    public static function fromResponse(IResponse $response): self
     {
         return new self(
             source: $response->sourceRequest,

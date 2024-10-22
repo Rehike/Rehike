@@ -9,8 +9,7 @@ use Rehike\FileSystem;
 use Rehike\i18n\i18n;
 use function Rehike\Async\async;
 
-use YukisCoffee\CoffeeRequest\Network\Response;
-use YukisCoffee\CoffeeRequest\Network\ResponseHeaders;
+use Rehike\Network\ResponseHeaders;
 
 /**
  * Responsible for requesting and modifying the Polymer document to inject the

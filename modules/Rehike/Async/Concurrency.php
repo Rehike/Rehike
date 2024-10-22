@@ -3,9 +3,11 @@ namespace Rehike\Async;
 
 use Rehike\Async\Concurrency\AsyncFunction;
 
-use YukisCoffee\CoffeeRequest\Promise;
-use YukisCoffee\CoffeeRequest\Loop;
-use YukisCoffee\CoffeeRequest\Enum\PromiseStatus;
+use Rehike\Async\Promise;
+use Rehike\Async\EventLoop\EventLoop;
+use Rehike\Async\Promise\PromiseStatus;
+
+use Rehike\Async\Debugging\PromiseStackTrace;
 
 use Generator;
 
@@ -26,8 +28,8 @@ class Concurrency
 {
     public static function __initStatic()
     {
-        \YukisCoffee\CoffeeRequest\Debugging\PromiseStackTrace::registerSkippedFile(__FILE__);
-        \YukisCoffee\CoffeeRequest\Debugging\PromiseStackTrace::registerSkippedFile(ASYNC_FUNCTION_FILE);
+        PromiseStackTrace::registerSkippedFile(__FILE__);
+        PromiseStackTrace::registerSkippedFile(ASYNC_FUNCTION_FILE);
     }
 
     /**
@@ -168,7 +170,7 @@ class Concurrency
 
         do
         {
-            Loop::run();
+            EventLoop::run();
         }
         while (PromiseStatus::PENDING == $p->status);
 

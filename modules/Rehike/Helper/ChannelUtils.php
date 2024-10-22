@@ -3,11 +3,12 @@ namespace Rehike\Helper;
 
 use Rehike\Exception\Network\InnertubeFailedRequestException;
 use Rehike\Network;
-use YukisCoffee\CoffeeRequest\Promise;
+use Rehike\Async\Promise;
 use Rehike\SignInV2\SignIn;
-use YukisCoffee\CoffeeRequest\Exception\GeneralException;
 
 use function Rehike\Async\async;
+
+use Exception;
 
 /**
  * General utilties for channels.
@@ -88,7 +89,7 @@ class ChannelUtils
                     {
                         $adata = $analytics->getJson();
                     }
-                    catch (GeneralException $e) 
+                    catch (Exception $e) 
                     {
                         return null;
                     }

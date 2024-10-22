@@ -17,8 +17,6 @@ use Rehike\Helper\WatchUtils;
 use Rehike\Util\ExtractUtils;
 use Rehike\Util\ParsingUtils;
 
-use YukisCoffee\CoffeeRequest\Exception\GeneralException;
-
 /**
  * Annotations invideo controller.
  * 
@@ -116,7 +114,7 @@ return new class extends HitchhikerController {
             {
                 $rydResponse = $responses["ryd"]?->getJson() ?? (object)[];
             }
-            catch (GeneralException $e)
+            catch (Exception $e)
             {
                 $rydResponse = (object) [];
             }

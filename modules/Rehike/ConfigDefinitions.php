@@ -2,7 +2,7 @@
 namespace Rehike;
 
 use Rehike\ConfigManager\Config;
-use YukisCoffee\PropertyAtPath;
+use Rehike\PropertyAtPath;
 
 use Rehike\ConfigManager\Properties\{
     BoolProp,

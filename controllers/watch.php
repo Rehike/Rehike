@@ -16,7 +16,6 @@ use Rehike\Helper\WatchUtils;
 use Rehike\Util\ExtractUtils;
 
 use Rehike\Model\Watch\WatchBakery;
-use YukisCoffee\CoffeeRequest\Exception\GeneralException;
 
 /**
  * Controller for the watch page.
@@ -233,7 +232,7 @@ return new class extends NirvanaController {
             {
                 $rydResponse = $responses["ryd"]?->getJson() ?? (object)[];
             }
-            catch (GeneralException $e)
+            catch (Exception $e)
             {
                 $rydResponse = (object) [];
             }

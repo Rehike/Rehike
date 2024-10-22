@@ -11,8 +11,8 @@ use Rehike\ConfigManager\Properties\{
 use Rehike\Exception\FileSystem\FsWriteFileException;
 use Rehike\FileSystem;
 
-use YukisCoffee\PropertyAtPath;
-use YukisCoffee\PropertyAtPathException;
+use Rehike\PropertyAtPath;
+use Rehike\PropertyAtPathException;
 
 /**
  * Manages Rehike user configuration.
@@ -202,7 +202,7 @@ class Config
         {
             $value = PropertyAtPath::get($cfg, $path);
         }
-        catch (\YukisCoffee\PropertyAtPathException $e)
+        catch (\Rehike\PropertyAtPathException $e)
         {
             return null;
         }
@@ -233,9 +233,9 @@ class Config
                     $prop->onUpdate();
                 }
             }
-            catch (\YukisCoffee\PropertyAtPathException $e) {}
+            catch (\Rehike\PropertyAtPathException $e) {}
         }
-        catch (\YukisCoffee\PropertyAtPathException $e)
+        catch (\Rehike\PropertyAtPathException $e)
         {
             return;
         }
@@ -280,7 +280,7 @@ class Config
         {
             $value = PropertyAtPath::get($types, $path);
         }
-        catch(\YukisCoffee\PropertyAtPathException $e)
+        catch(\Rehike\PropertyAtPathException $e)
         {
             return null;
         }

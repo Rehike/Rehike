@@ -1,11 +1,12 @@
 <?php
 namespace Rehike\i18n\Internal;
 
-use YukisCoffee\CoffeeTranslation\Router\SimpleRouter;
-use YukisCoffee\CoffeeTranslation\Router\IRouter;
-use YukisCoffee\CoffeeTranslation\Lang\Record\LanguageRecord;
-use YukisCoffee\CoffeeTranslation\Lang\Record\RecordEntries;
-use YukisCoffee\CoffeeTranslation\Attributes\Override;
+use Rehike\Attributes\Override;
+
+use Rehike\i18n\Internal\Router\SimpleRouter;
+use Rehike\i18n\Internal\Router\IRouter;
+use Rehike\i18n\Internal\Lang\Record\LanguageRecord;
+use Rehike\i18n\Internal\Lang\Record\RecordEntries;
 
 use Rehike\FileSystem;
 
@@ -21,6 +22,14 @@ use ReflectionObject;
  */
 class RehikeTranslationRouter extends SimpleRouter implements IRouter
 {
+    /**
+     * Version of the cache system to use. Change this string when making breaking
+     * changes to invalidate the cache.
+     * 
+     * @var string
+     */
+    private const VERSION = "2";
+    
     /**
      * The folder path to store cached language files in.
      */
@@ -77,7 +86,8 @@ class RehikeTranslationRouter extends SimpleRouter implements IRouter
     {
         $baseName = basename($path, "." . FileSystem::getExtension($path));
         $hash = $this->getCacheNameHash($path);
-        return "$baseName-$hash-$timestamp.php";
+        $version = self::VERSION;
+        return "$baseName-$hash-$timestamp-v$version.php";
     }
     
     /**

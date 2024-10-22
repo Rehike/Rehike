@@ -4,7 +4,7 @@ namespace Rehike\Model\Rehike\Version;
 use Rehike\i18n\i18n;
 use Rehike\Model\Common\MButton;
 use Rehike\Version\VersionInfo;
-use YukisCoffee\CoffeeTranslation\DateTimeFormats;
+use Rehike\i18n\Internal\DateTimeFormats;
 
 use const Rehike\Constants\GH_ENABLED;
 use const Rehike\Constants\GH_REPO;

@@ -1,10 +1,7 @@
 <?php
 namespace Rehike\Signin;
 
-use YukisCoffee\CoffeeRequest\CoffeeRequest;
-use YukisCoffee\CoffeeRequest\Promise;
-use YukisCoffee\CoffeeRequest\Network\Request;
-use YukisCoffee\CoffeeRequest\Network\Response;
+use Rehike\Async\Promise;
 
 use Rehike\Network;
 use Rehike\FileSystem as FS;

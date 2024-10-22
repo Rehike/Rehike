@@ -35,13 +35,13 @@ final class Bootloader
     public static function doEarlyShutdown(): void
     {
         // Silence shutdown errors such as the unhandled promise error
-        if (class_exists("YukisCoffee\\CoffeeRequest\\Promise", false))
+        if (class_exists("Rehike\\Async\\Promise", false))
         {
-            if (\YukisCoffee\CoffeeRequest\Promise::isCurrentlyInPromise())
+            if (\Rehike\Async\Promise::isCurrentlyInPromise())
             {
-                if (class_exists("YukisCoffee\\CoffeeRequest\\Util\\PromiseResolutionTracker", false))
+                if (class_exists("Rehike\\Async\\Promise\\PromiseResolutionTracker", false))
                 {
-                    \YukisCoffee\CoffeeRequest\Util\PromiseResolutionTracker::disable();
+                    \Rehike\Async\Promise\PromiseResolutionTracker::disable();
                 }
             }
         }

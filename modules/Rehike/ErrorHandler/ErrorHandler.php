@@ -15,9 +15,9 @@ use Rehike\ErrorHandler\ErrorPage\{
 use Rehike\Logging\LogFileManager;
 use Rehike\Logging\ExceptionLogger;
 use Rehike\Exception\Network\InnertubeFailedRequestException;
-use YukisCoffee\CoffeeRequest\Exception\UnhandledPromiseException;
-use YukisCoffee\CoffeeRequest\Exception\UncaughtPromiseException;
-use YukisCoffee\CoffeeRequest\Exception\PromiseAllException;
+use Rehike\Async\Exception\UnhandledPromiseException;
+use Rehike\Async\Exception\UncaughtPromiseException;
+use Rehike\Async\Exception\PromiseAllException;
 
 /**
  * Implements a general error handler for Rehike.
@@ -62,7 +62,7 @@ final class ErrorHandler
     
     public static function reportFailedToWriteConfig(): void
     {
-        self::exileCoffeeRequestErrorHandling();
+        self::exileAsyncErrorHandling();
         
         self::$pageModel = new FailedToWriteConfigPage();
         self::renderErrorTemplate();
@@ -74,7 +74,7 @@ final class ErrorHandler
         if (!self::$isEnabled)
             return;
         
-        self::exileCoffeeRequestErrorHandling();
+        self::exileAsyncErrorHandling();
 
         /*
          * BUG (kirasicecreamm): Unhandled Promises are not compatible with the custom
@@ -164,22 +164,22 @@ final class ErrorHandler
         self::$logFileName = $name;
     }
     
-    private static function exileCoffeeRequestErrorHandling(): void
+    private static function exileAsyncErrorHandling(): void
     {
-        if (class_exists("YukisCoffee\\CoffeeRequest\\Util\\PromiseResolutionTracker", false))
+        if (class_exists("Rehike\\Async\\Promise\\PromiseResolutionTracker", false))
         {
             // Disable promise resolution tracker because it may trigger additional
             // error messages on top of our own.
-            \YukisCoffee\CoffeeRequest\Util\PromiseResolutionTracker::disable();
+            \Rehike\Async\Promise\PromiseResolutionTracker::disable();
         }
 
-        // Unpack uncaught promise exceptions in order to handle them too:
-        if ($e instanceof UncaughtPromiseException)
-        {
-            $promiseException = $e;
-            $e = $e->getOriginal();
-            $wasInPromise = true;
-        }
+        // // Unpack uncaught promise exceptions in order to handle them too:
+        // if ($e instanceof UncaughtPromiseException)
+        // {
+        //     $promiseException = $e;
+        //     $e = $e->getOriginal();
+        //     $wasInPromise = true;
+        // }
     }
 
     private static function renderErrorTemplate(): void

@@ -4,7 +4,7 @@ namespace Rehike\Model\Rehike\Version;
 use Rehike\RuntimeInfo;
 use Rehike\i18n\i18n;
 use Rehike\Model\Common\MButton;
-use YukisCoffee\CoffeeTranslation\Lang\NamespaceBoundLanguageApi;
+use Rehike\i18n\Internal\Lang\NamespaceBoundLanguageApi;
 
 /**
  * Gets information about the user's runtime environment, namely the operating

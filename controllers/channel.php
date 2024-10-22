@@ -14,14 +14,12 @@ use \Com\Youtube\Innertube\Request\BrowseRequestParams;
 use Rehike\Network;
 use Rehike\Async\Promise;
 use Rehike\Exception\Network\InnertubeFailedRequestException;
-use YukisCoffee\CoffeeRequest\Network\Response;
 use Rehike\Util\Base64Url;
 use Rehike\Util\ExtractUtils;
 use Rehike\Helper\ChannelUtils;
 use Rehike\SignInV2\SignIn;
 
 use \Rehike\Model\Channels\Channels4Model as Channels4;
-use YukisCoffee\CoffeeRequest\Exception\PromiseAllException;
 
 use function Rehike\Async\async;
 
@@ -379,7 +377,7 @@ class channel extends NirvanaController
 
             // Hack to generate a new, modified network response since we're
             // expecting it earlier in the code.
-            return new \YukisCoffee\CoffeeRequest\Network\Response(
+            return new \Rehike\Network\Internal\Response(
                 $responses["header"]->sourceRequest, 
                 200, 
                 json_encode($baseResponse),

@@ -10,9 +10,9 @@ use Rehike\SignInV2\SignIn;
 use Rehike\Network;
 use Rehike\ErrorHandler\ErrorPage\FatalErrorPage;
 
-use YukisCoffee\CoffeeRequest\Promise;
-use YukisCoffee\CoffeeRequest\Network\Response;
-use YukisCoffee\CoffeeRequest\Enum\PromiseStatus;
+use Rehike\Async\Promise;
+use Rehike\Async\Promise\PromiseStatus;
+use Rehike\Network\IResponse;
 
 use const Rehike\Constants\GH_ENABLED;
 
