@@ -1,10 +1,10 @@
 {
-	"previousHash": "ea4a69f979d1031e2ec8f740b5c3a8c24ea177f1",
-	"currentRevisionId": 1678,
-	"subject": "Hard fork all YukisCoffee code",
-	"body": "Hard fork all YukisCoffee code",
+	"previousHash": "ffd518c1f36efc007be19db3fcd83019673b8791",
+	"currentRevisionId": 1679,
+	"subject": "Use TVHTML5 for homepage requests instead of ANDROID",
+	"body": "Use TVHTML5 for homepage requests instead of ANDROID",
 	"branch": "master",
 	"committerName": "Isabella",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1729638105
+	"time": 1729814961
 }

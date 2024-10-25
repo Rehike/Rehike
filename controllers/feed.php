@@ -126,19 +126,18 @@ return new class extends \Rehike\Controller\core\NirvanaController {
                 body: [
                     "browseId" => "FEwhat_to_watch"
                 ],
-                clientName: "ANDROID",
-                clientVersion: "18.22.36",
+                clientName: "TVHTML5",
+                clientVersion: "7.20241024.10.00",
                 useAuthentication: $useAuthentication
             );
 
             $ytdata = $response->getJson();
-
-            // Why we need to write better InnerTube parsing tools:
-            foreach ($ytdata->contents->singleColumnBrowseResultsRenderer->tabs as $tab)
-            if (isset($tab->tabRenderer->content->sectionListRenderer))
-            foreach($tab->tabRenderer->content->sectionListRenderer->continuations as $cont)
-            if (isset($cont->reloadContinuationData))
-            $continuation = $cont->reloadContinuationData->continuation;
+            
+            foreach ($ytdata->contents->tvBrowseRenderer->content->tvSurfaceContentRenderer->content->sectionListRenderer->continuations as $continuation)
+            if (isset($continuation->nextContinuationData))
+            {
+                $continuation = $continuation->nextContinuationData->continuation;
+            }
 
             $newContinuation = WebV2Shelves::continuationToWeb($continuation);
 

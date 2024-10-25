@@ -42,7 +42,8 @@ class WebV2Shelves
         $rawTypeWrapper = Base64Url::decode($innerWrapper->getEncodedAction());
         $contTypeWrapper->mergeFromString($rawTypeWrapper);
 
-        $rawBrowseContinuation = Base64Url::decode($contTypeWrapper->getReloadContinuation());
+        // $rawBrowseContinuation = Base64Url::decode($contTypeWrapper->getReloadContinuation());
+        $rawBrowseContinuation = Base64Url::decode($contTypeWrapper->getAppendContinuation());
         $browseCont->mergeFromString($rawBrowseContinuation);
 
         // Now work in reverse to form a new continuation token.
