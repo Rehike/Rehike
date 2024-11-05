@@ -77,6 +77,7 @@ class ConfigDefinitions
                 "showNewInfoOnChannelAboutPage" => new BoolProp(true),
                 "largeSearchResults" => new BoolProp(true),
                 "swapSearchViewsAndDate" => new BoolProp(false),
+	        "showOldUploadedOnText" => new BoolProp(false),
                 "showVersionInFooter" => new BoolProp(true),
                 "usernamePrepends" => new BoolProp(false),
                 "useRyd" => new BoolProp(true),
