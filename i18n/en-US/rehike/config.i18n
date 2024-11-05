@@ -54,6 +54,11 @@ props:
       title: "Swap view and date on search page"
       subtitle: >
         Show the view count before the date on search page video renderers.
+    showOldUploadedOnText: 
+      title: "Use \"Uploaded on\" string for pre-2012 videos"
+      subtitle: >
+        Before June 2017, YouTube displayed "Uploaded on" string for videos
+        from 2005-2011, while using "Published on" string for newer videos.
     showVersionInFooter:
       title: "Show Rehike version in the footer"
       subtitle: >
