@@ -55,6 +55,11 @@ props:
       subtitle: >
         Mostrar a contagem de visualizações antes da data nos renderizadores
         de vídeo na página de pesquisa.
+    showOldUploadedOnText:
+      title: "Usar \"Enviado em\" para vídeos anteriores a 2012"
+      subtitle: > 
+        Antes de junho de 2017, o YouTube exibia \"Enviado em\" para vídeos de 2005-2011, 
+        enquanto usava \"Publicado em\" para vídeos mais recentes.
     showVersionInFooter:
       title: "Mostrar a versão do Rehike no rodapé"
       subtitle: >
