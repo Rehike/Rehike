@@ -2,6 +2,7 @@
 namespace Rehike\Util;
 
 use Rehike\i18n\i18n;
+use Rehike\ConfigManager\Config;
 
 /**
  * General string handler/substring extraction utilities for Rehike.
