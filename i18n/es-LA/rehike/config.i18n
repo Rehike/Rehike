@@ -29,6 +29,11 @@ props:
       title: "Intercambiar visualizaciones y fecha en la página de búsqueda"
       subtitle: >
         Mostrar las visualizaciones antes de la fecha en los videos de la página de búsqueda.
+    showOldUploadedOnText:
+      title: "Usar \"Subido el\" para videos anteriores a 2012"
+      subtitle: >
+        Antes de junio de 2017, YouTube mostraba \"Subido el\" para videos de 2005-2011, 
+        mientras que usaba \"Publicado el\" para videos más recientes.
     showVersionInFooter:
       title: "Mostrar versión de Rehike en el pie de página"
       subtitle: >
