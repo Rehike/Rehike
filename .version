@@ -1,10 +1,10 @@
 {
-	"previousHash": "ffd518c1f36efc007be19db3fcd83019673b8791",
-	"currentRevisionId": 1679,
-	"subject": "Use TVHTML5 for homepage requests instead of ANDROID",
-	"body": "Use TVHTML5 for homepage requests instead of ANDROID",
+	"previousHash": "65e7d9424e926aa6408a5a02ab7ed564f4276e1b",
+	"currentRevisionId": 1693,
+	"subject": "Add the pre-June 2017 upload date behavior",
+	"body": "Add the pre-June 2017 upload date behavior",
 	"branch": "master",
-	"committerName": "Isabella",
-	"committerEmail": "kawapure@gmail.com",
-	"time": 1729814961
+	"committerName": "VexorionReal",
+	"committerEmail": "katarinmedia@gmail.com",
+	"time": 1730813999
 }
