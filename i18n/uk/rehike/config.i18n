@@ -29,6 +29,11 @@ props:
       title: "Swap view and date on search page"
       subtitle: >
         Show the view count before the date on search page video renderers.
+    showOldUploadedOnText:
+      title: "Використовувати напис \"Завантажено\" для відео до 2012 року"
+      subtitle: > 
+        До червня 2017 року YouTube відображав напис \"Завантажено\" для відео 2005-2011 років, 
+        тоді як для новіших відео використовував \"Опубліковано\".
     showVersionInFooter:
       title: "Показати версію Rehike нижче"
       subtitle: >
