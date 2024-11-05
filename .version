@@ -1,10 +1,10 @@
 {
-	"previousHash": "65e7d9424e926aa6408a5a02ab7ed564f4276e1b",
-	"currentRevisionId": 1693,
-	"subject": "Add the pre-June 2017 upload date behavior",
-	"body": "Add the pre-June 2017 upload date behavior",
+	"previousHash": "5478381761a3c7e3e62977d5786b582e3b07ad8b",
+	"currentRevisionId": 1694,
+	"subject": "feat(config): restore pre-2017 YouTube upload/publish date behavior",
+	"body": "feat(config): restore pre-2017 YouTube upload/publish date behavior",
 	"branch": "master",
 	"committerName": "VexorionReal",
 	"committerEmail": "katarinmedia@gmail.com",
-	"time": 1730813999
+	"time": 1730826152
 }
