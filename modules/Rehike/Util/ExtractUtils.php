@@ -96,29 +96,41 @@ class ExtractUtils
         }
     }
     
-    /**
-     * Resolve the date string to use within a video's secondary info renderer
-     * above the description on the watch page.
-     * 
-     * @param string|object $date       Original date.
-     * @param bool          $isPrivate  Is the video unlisted or private?
-     * 
-     * @return string
-     */
-    public static function resolveDate(string|object $date, bool $isPrivate = false): string
-    {
-        $i18n = i18n::getNamespace("regex");
-        $misc = i18n::getNamespace("misc");
+/**
+ * Resolve the date string to use within a video's secondary info renderer
+ * above the description on the watch page.
+ * 
+ * @param string|object $date       Original date.
+ * @param bool          $isPrivate  Is the video unlisted or private?
+ * 
+ * @return string
+ */
+public static function resolveDate(string|object $date, bool $isPrivate = false): string
+{
+    $i18n = i18n::getNamespace("regex");
+    $misc = i18n::getNamespace("misc");
 
-        if (is_object($date)) $date = $date->simpleText;
-        if (!preg_match($i18n->get("nonPublishCheck"), $date))
-        {
-            $string = $isPrivate ? "dateTextPrivate" : "dateTextPublic";
-            return $misc->format($string, $date);
+    if (is_object($date)) $date = $date->simpleText;
+    if (!preg_match($i18n->get("nonPublishCheck"), $date))
+    {
+        if ($isPrivate) {
+            return $misc->format("dateTextPrivate", $date);
         }
-        else
-        {
-            return $date;
+
+        if (Config::getConfigProp("appearance.showOldUploadedOnText")) {
+            if (preg_match("/.*\b(20[01][0-9])\b.*/", $date, $matches)) {
+                $year = (int)$matches[1];
+                if ($year >= 2005 && $year <= 2011) {
+                    return $misc->format("dateTextPrivate", $date);
+                }
+            }
         }
+
+        return $misc->format("dateTextPublic", $date);
     }
+    else
+    {
+        return $date;
+    }
+  }
 }
