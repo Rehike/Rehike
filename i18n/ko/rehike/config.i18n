@@ -51,6 +51,11 @@ props:
       title: "검색 결과에서 조회수와 날짜의 위치를 서로 바꾸기"
       subtitle: >
         조회수를 날짜 앞에 표시합니다.
+    showOldUploadedOnText:
+      title: "2012년 이전 동영상에 \"업로드 날짜\" 표시 사용"
+      subtitle: > 
+        2017년 6월 이전에는 YouTube가 2005-2011년 동영상에 \"업로드 날짜\"를, 
+        그 이후 동영상에는 \"게시 날짜\"를 표시했습니다.
     showVersionInFooter:
       title: "하단에 Rehike 버전 보이기"
       subtitle: >
