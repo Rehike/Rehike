@@ -78,6 +78,7 @@ class ConfigDefinitions
                 "largeSearchResults" => new BoolProp(true),
                 "swapSearchViewsAndDate" => new BoolProp(false),
 	        "showOldUploadedOnText" => new BoolProp(false),
+                "useLegacyRoboto" => new BoolProp(false),
                 "showVersionInFooter" => new BoolProp(true),
                 "usernamePrepends" => new BoolProp(false),
                 "useRyd" => new BoolProp(true),

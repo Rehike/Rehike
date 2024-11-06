@@ -62,6 +62,10 @@ props:
       subtitle: > 
         2017年6月以前、YouTubeは2005年から2011年の動画に「アップロード日」、
         それ以降の動画には「公開日」と表示していました。
+	useLegacyRoboto:
+      title: "レガシーRobotoフォントを使用"
+      subtitle: >
+        2017年以前に使用されていました。
     showVersionInFooter:
       title: "フッターにRehikeバージョンを表示"
       subtitle: >

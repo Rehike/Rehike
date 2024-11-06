@@ -60,6 +60,10 @@ props:
       subtitle: > 
         Antes de junho de 2017, o YouTube exibia "Enviado em" para vídeos de 2005-2011, 
         enquanto usava "Publicado em" para vídeos mais recentes.
+	useLegacyRoboto:
+      title: "Usar fonte Roboto antiga"
+      subtitle: >
+        Usada antes de 2017.
     showVersionInFooter:
       title: "Mostrar a versão do Rehike no rodapé"
       subtitle: >

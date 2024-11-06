@@ -56,6 +56,10 @@ props:
       subtitle: > 
         2017년 6월 이전에는 YouTube가 2005-2011년 동영상에 "업로드 날짜"를, 
         그 이후 동영상에는 "게시 날짜"를 표시했습니다.
+	useLegacyRoboto:
+      title: "이전 Roboto 글꼴 사용"
+      subtitle: >
+        2017년 이전에 사용됨.
     showVersionInFooter:
       title: "하단에 Rehike 버전 보이기"
       subtitle: >

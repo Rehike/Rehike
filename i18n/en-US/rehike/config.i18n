@@ -59,6 +59,10 @@ props:
       subtitle: >
         Before June 2017, YouTube displayed "Uploaded on" string for videos
         from 2005-2011, while using "Published on" string for newer videos.
+    useLegacyRoboto:
+	  title: "Use legacy Roboto font"
+	  subtitle: >
+	    Used before 2017.
     showVersionInFooter:
       title: "Show Rehike version in the footer"
       subtitle: >

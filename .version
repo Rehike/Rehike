@@ -1,10 +1,10 @@
 {
-	"previousHash": "5478381761a3c7e3e62977d5786b582e3b07ad8b",
-	"currentRevisionId": 1694,
-	"subject": "feat(config): restore pre-2017 YouTube upload/publish date behavior",
-	"body": "feat(config): restore pre-2017 YouTube upload/publish date behavior",
+	"previousHash": "4a84bf3da9b7bcbf170b9e8e203b46a3d41074cc",
+	"currentRevisionId": 1696,
+	"subject": "feat(config): add an option to use legacy Roboto font",
+	"body": "feat(config): add an option to use legacy Roboto font",
 	"branch": "master",
 	"committerName": "VexorionReal",
 	"committerEmail": "katarinmedia@gmail.com",
-	"time": 1730826152
+	"time": 1730887162
 }

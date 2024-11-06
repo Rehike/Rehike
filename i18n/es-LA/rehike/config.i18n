@@ -34,6 +34,10 @@ props:
       subtitle: >
         Antes de junio de 2017, YouTube mostraba "Subido el" para videos de 2005-2011, 
         mientras que usaba "Publicado el" para videos más recientes.
+	useLegacyRoboto:
+      title: "Usar fuente Roboto anterior"
+      subtitle: >
+        Utilizada antes de 2017.
     showVersionInFooter:
       title: "Mostrar versión de Rehike en el pie de página"
       subtitle: >
