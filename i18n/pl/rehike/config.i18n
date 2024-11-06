@@ -58,8 +58,8 @@ props:
     showOldUploadedOnText:
       title: "Użyj oznaczenia \"Przesłany\" dla filmów sprzed 2012 roku"
       subtitle: > 
-        Przed czerwcem 2017 YouTube wyświetlał tekst \"Przesłany\" dla filmów
-        z lat 2005-2011, podczas gdy dla nowszych używał oznaczenia \"Opublikowany\".
+        Przed czerwcem 2017 YouTube wyświetlał tekst "Przesłany" dla filmów
+        z lat 2005-2011, podczas gdy dla nowszych używał oznaczenia "Opublikowany".
     showVersionInFooter:
       title: "Pokaż wersję Rehike w stopce"
       subtitle: >

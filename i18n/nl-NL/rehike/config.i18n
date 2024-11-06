@@ -56,8 +56,8 @@ props:
     showOldUploadedOnText:
       title: "Gebruik \"Geüpload op\" voor video's van vóór 2012"
       subtitle: > 
-       Vóór juni 2017 toonde YouTube \"Geüpload op\" voor video's uit 2005-2011, 
-       terwijl \"Gepubliceerd op\" werd gebruikt voor nieuwere video's.
+       Vóór juni 2017 toonde YouTube "Geüpload op" voor video's uit 2005-2011, 
+       terwijl "Gepubliceerd op" werd gebruikt voor nieuwere video's.
     showVersionInFooter:
       title: "Laat de Rehike versie in de footer zien"
       subtitle: >
