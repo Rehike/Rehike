@@ -30,9 +30,6 @@ return new class extends HitchhikerController
             if (true == Config::getConfigProp("appearance.enableAdblock"))
             {
                 $data = $response->getJson();
-                
-                if (isset($data->streamingData->serverAbrStreamingUrl))
-                    unset($data->streamingData->serverAbrStreamingUrl);
 
                 if (isset($data->playerAds))
                     unset($data->playerAds);

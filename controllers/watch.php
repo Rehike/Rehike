@@ -327,9 +327,6 @@ return new class extends NirvanaController {
      */
     protected function removeAds(object $playerResponse): void
     {
-        if (isset($playerResponse->streamingData->serverAbrStreamingUrl))
-            unset($playerResponse->streamingData->serverAbrStreamingUrl);
-        
         if (isset($playerResponse->playerAds))
             unset($playerResponse->playerAds);
 

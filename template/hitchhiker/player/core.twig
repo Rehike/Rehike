@@ -118,6 +118,11 @@ ytplayer.load = function() {
       document.body.appendChild(a);
    }
 </script>
+{% if rehike.config.appearance.enableAdBlock %}
+   <script>
+      {% include "player/adblock_script.twig" %}
+   </script>
+{% endif %}
 {% if rehike.config.appearance.smallPlayer and rehike.config.appearance.playerChoice == "CURRENT" %}
    <style id="rehike-ext-config-small-player">
       {% include "player/small_style.css.twig" %}

@@ -1,0 +1,66 @@
+/**
+ * @fileoverview Hack for adblocking in SSAP streams.
+ *
+ * @author Isabella Lulamoon <kawapure@gmail.com>
+ * @author The Rehike Maintainers
+ */
+
+(function(){
+
+/**
+ * Fix player result.
+ * 
+ * Implementation copied from uBlock Origin quick fixes.
+ * 
+ * @see https://raw.githubusercontent.com/uBlockOrigin/uAssets/aa1fe4848c9c74215290dbff561b4298bca0727e/filters/quick-fixes.txt
+ */
+function rhFixPlayer()
+{
+    var p = document.getElementById("movie_player");
+    
+    if (!p)
+    {
+        return;
+    }
+    
+    var stats; // reference to movie_player.getStatsForNerds() result
+    if (!p.getStatsForNerds || (stats = p.getStatsForNerds()) || !stats.debug_info || stats.debug_info.indexOf("SSAP, AD") != 0)
+    {
+        return;
+    }
+    
+    var progressState = p.getProgressState && p.getProgressState();
+    
+    if (progressState && progressState.duration > 0 && (progressState.loaded < progressState.duration || progressState.duration - progressState.current > 1))
+    {
+        p.seekTo && p.seekTo(progressState.duration);
+    }
+}
+
+rhFixPlayer();
+
+var g_mutationObserver = null;
+
+if (window.MutationObserver)
+{
+    // If MutationObserver is available in the browser (Chrome 26+, Firefox 14+),
+    // then we'll prefer to use it.
+    
+    g_mutationObserver = new MutationObserver(function rhFixPlayerMutationObserverDelegate() {
+        rhFixPlayer();
+    });
+    g_mutationObserver.observe(document, {
+        childList: true,
+        subtree: true
+    });
+}
+else
+{
+    // Otherwise, we'll just fall back to using setInterval if we have to.
+    
+    setInterval(function rhFixPlayerSetIntervalDelegate() {
+        rhFixPlayer();
+    }, 10);
+}
+    
+})();
