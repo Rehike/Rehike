@@ -1,10 +1,10 @@
 {
-	"previousHash": "d741cf1ef599b9a48e83aaf15afe060bfe90f6f3",
-	"currentRevisionId": 1697,
-	"subject": "Fix (hopefully) adblocking with SABR streams",
-	"body": "Fix (hopefully) adblocking with SABR streams",
+	"previousHash": "16232edbcf8e1451e4eac3728bfde984d105f22b",
+	"currentRevisionId": 1698,
+	"subject": "Fix comments crashing",
+	"body": "Fix comments crashing",
 	"branch": "master",
 	"committerName": "Isabella",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1731365223
+	"time": 1731367295
 }

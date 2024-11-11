@@ -150,8 +150,8 @@ class DisplayNameManager
             
             foreach ($cids as $channelId)
             {
-                $requestPromises[$channelId] = yield Network::urlRequestFirstParty(
-                    "/subscribe_embed?channelid=$channelId&layout=full"
+                $requestPromises[$channelId] = Network::urlRequestFirstParty(
+                    "https://www.youtube.com/subscribe_embed?channelid=$channelId&layout=full"
                 );
             }
             
