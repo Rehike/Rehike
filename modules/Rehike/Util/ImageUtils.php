@@ -6,7 +6,7 @@ namespace Rehike\Util;
  * image URLs
  * 
  * @author Aubrey Pankow <aubyomori@gmail.com>
- * @author Isabella <kawapure@gmail.com>
+ * @author Isabella Lulamoon <kawapure@gmail.com>
  */
 class ImageUtils
 {

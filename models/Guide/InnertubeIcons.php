@@ -7,7 +7,7 @@ namespace Rehike\Model\Guide;
  * This is required as the InnerTube icon names are beginning to change as part
  * of a server-side experiment. See issue #600 for more information.
  * 
- * @author Isabella <kawapure@gmail.com>
+ * @author Isabella Lulamoon <kawapure@gmail.com>
  * @author The Rehike Maintainers
  */
 final class InnertubeIcons

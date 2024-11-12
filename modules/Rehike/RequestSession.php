@@ -6,7 +6,7 @@ use Rehike\Ds\EasyAccessMap;
 /**
  * Utilities for querying information about the request session.
  * 
- * @author Isabella <kawapure@gmail.com>
+ * @author Isabella Lulamoon <kawapure@gmail.com>
  * @author The Rehike Maintainers
  */
 class RequestSession

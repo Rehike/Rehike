@@ -15,7 +15,7 @@ use Rehike\Util\FormattedStringBuilder\PrintfTemplateBuilderParams;
  * Restricted mode is known internally as "safety mode", which is the
  * terminology which carried over to Rehike.
  * 
- * @author Isabella <kawapure@gmail.com>
+ * @author Isabella Lulamoon <kawapure@gmail.com>
  * @author The Rehike Maintainers
  */
 class SafetyModePickerModel extends PickerModel

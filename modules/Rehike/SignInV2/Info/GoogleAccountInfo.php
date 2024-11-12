@@ -10,7 +10,7 @@ use Rehike\SignInV2\Cache\CacheReader;
 /**
  * Used to store and retrieve information about a Google Account.
  * 
- * @author Isabella <kawapure@gmail.com>
+ * @author Isabella Lulamoon <kawapure@gmail.com>
  * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */

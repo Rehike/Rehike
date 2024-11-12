@@ -9,7 +9,7 @@ use Throwable;
 /**
  * Exception thrown when the config file cannot be loaded.
  * 
- * @author Isabella <kawapure@gmail.com>
+ * @author Isabella Lulamoon <kawapure@gmail.com>
  * @author The Rehike Maintainers
  */
 class LoadConfigException extends AbstractException

@@ -10,7 +10,7 @@ use Rehike\Util\ParsingUtils;
  * These are handled separately from age-gated content by the YouTube API, and
  * it is easier to handle them as such for Rehike.
  * 
- * @author Isabella <kawapure@gmail.com>
+ * @author Isabella Lulamoon <kawapure@gmail.com>
  * @author The Rehike Maintainers
  */
 class MPlayerContentGate

@@ -9,7 +9,7 @@ namespace Rehike\SignInV2\Cache;
  * we don't want "parent" or "currentObj" to access the names of the properties
  * on this object.
  * 
- * @author Isabella <kawapure@gmail.com>
+ * @author Isabella Lulamoon <kawapure@gmail.com>
  * @author The Rehike Maintainers
  */
 class CacheReaderImpl

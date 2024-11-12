@@ -13,7 +13,7 @@ use Rehike\SignInV2\Cache\ICacheable;
  * Google Accounts and are implemented as a subclass of the base class
  * as a result.
  * 
- * @author Isabella <kawapure@gmail.com>
+ * @author Isabella Lulamoon <kawapure@gmail.com>
  * @author The Rehike Maintainers
  */
 class YtChannelAccountInfo extends GoogleAccountInfoBase implements IBuiltObject, ICacheable

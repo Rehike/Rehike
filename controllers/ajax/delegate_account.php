@@ -12,7 +12,7 @@ use Rehike\SignInV2\SignIn;
  * This is a lazy hack to maintain the model structure that the template expects
  * from sign in V1.
  * 
- * @author Isabella <kawapure@gmail.com>
+ * @author Isabella Lulamoon <kawapure@gmail.com>
  * @author The Rehike Maintainers
  */
 class MDelegateAccountItem

@@ -21,7 +21,7 @@ use Rehike\ConfigManager\Config;
  * to cache the result for some reasonable amount of time instead
  * of requerying each subsequent visit.
  * 
- * @author Isabella <kawapure@gmail.com>
+ * @author Isabella Lulamoon <kawapure@gmail.com>
  * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  */
 class PlayerUpdater

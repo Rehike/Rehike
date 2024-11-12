@@ -21,7 +21,7 @@ use stdClass;
  * class will implement all alias properties.
  * 
  * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
- * @author Isabella <kawapure@gmail.com>
+ * @author Isabella Lulamoon <kawapure@gmail.com>
  * @author The Rehike Maintainers
  */
 abstract class RehikeUtilsDelegateBase extends stdClass

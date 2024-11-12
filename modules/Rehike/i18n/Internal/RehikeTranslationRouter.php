@@ -17,7 +17,7 @@ use ReflectionObject;
  * 
  * This custom router provides support for caching to disk.
  * 
- * @author Isabella <kawapure@gmail.com>
+ * @author Isabella Lulamoon <kawapure@gmail.com>
  * @author The Rehike Maintainers
  */
 class RehikeTranslationRouter extends SimpleRouter implements IRouter

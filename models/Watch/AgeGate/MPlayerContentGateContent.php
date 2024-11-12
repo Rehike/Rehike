@@ -4,7 +4,7 @@ namespace Rehike\Model\Watch\AgeGate;
 /**
  * Content class for the Content Gate.
  * 
- * @author Isabella <kawapure@gmail.com>
+ * @author Isabella Lulamoon <kawapure@gmail.com>
  * @author The Rehike Maintainers
  */
 class MPlayerContentGateContent

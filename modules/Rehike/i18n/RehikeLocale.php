@@ -7,7 +7,7 @@ use Rehike\i18n\Internal\Core;
  * API for retrieving Rehike-specific locale information for the current
  * session.
  * 
- * @author Isabella <kawapure@gmail.com>
+ * @author Isabella Lulamoon <kawapure@gmail.com>
  * @author The Rehike Maintainers
  */
 class RehikeLocale

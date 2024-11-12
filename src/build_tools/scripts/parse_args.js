@@ -1,7 +1,7 @@
 /**
  * @fileoverview Command-line arguments parsing for RehikeBuild.
  * 
- * @author Isabella <kawapure@gmail.com>
+ * @author Isabella Lulamoon <kawapure@gmail.com>
  * @author The Rehike Maintainers
  */
 

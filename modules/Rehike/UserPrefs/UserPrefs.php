@@ -12,7 +12,7 @@ namespace Rehike\UserPrefs;
  * permitted by YouTube's code, but they seem to be unused.
  * 
  * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
- * @author Isabella <kawapure@gmail.com>
+ * @author Isabella Lulamoon <kawapure@gmail.com>
  * @author The Rehike Maintainers
  */
 class UserPrefs

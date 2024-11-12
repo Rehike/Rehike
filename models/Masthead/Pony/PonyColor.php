@@ -8,7 +8,7 @@ use Attribute;
  * 
  * This is applied as a CSS background to the masthead.
  * 
- * @author Isabella <kawapure@gmail.com>
+ * @author Isabella Lulamoon <kawapure@gmail.com>
  * @author The Rehike Maintainers
  */
 #[Attribute(Attribute::TARGET_CLASS_CONSTANT)]

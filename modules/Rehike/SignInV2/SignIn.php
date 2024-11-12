@@ -22,7 +22,7 @@ use Rehike\SignInV2\Info\YtChannelAccountInfo;
 /**
  * Implements the main sign-in API.
  * 
- * @author Isabella <kawapure@gmail.com>
+ * @author Isabella Lulamoon <kawapure@gmail.com>
  * @author The Rehike Maintainers
  */
 class SignIn

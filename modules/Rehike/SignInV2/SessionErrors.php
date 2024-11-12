@@ -5,7 +5,7 @@ namespace Rehike\SignInV2;
  * Defines enumerations for types of session errors. These are used as a
  * bitmask.
  * 
- * @author Isabella <kawapure@gmail.com>
+ * @author Isabella Lulamoon <kawapure@gmail.com>
  * @author The Rehike Maintainers
  */
 class SessionErrors

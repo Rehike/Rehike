@@ -13,7 +13,7 @@ use UnexpectedValueException;
  * @see https://github.com/antecedent/patchwork Project with a similar goal.
  * @see https://gist.github.com/hakre/45df61688fb3f6f10101bd2cdb24d0e6 Reference PoC.
  * 
- * @author Isabella <kawapure@gmail.com>
+ * @author Isabella Lulamoon <kawapure@gmail.com>
  * @author The Rehike Maintainers
  */
 class FileOverrideStreamWrapper

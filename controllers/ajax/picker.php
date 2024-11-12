@@ -14,7 +14,7 @@ use \Rehike\TemplateManager;
  * Controller for the account picker AJAX endpoint.
  * 
  * @author Aubrey Pankow <aubyomori@gmail.com>
- * @author Isabella <kawapure@gmail.com>
+ * @author Isabella Lulamoon <kawapure@gmail.com>
  * @author The Rehike Maintainers
  */
 return new class extends AjaxController

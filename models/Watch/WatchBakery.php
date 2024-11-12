@@ -41,7 +41,7 @@ use Rehike\YtApp;
  * Please perform any processing within this scope.
  * 
  * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
- * @author Isabella <kawapure@gmail.com>
+ * @author Isabella Lulamoon <kawapure@gmail.com>
  * @author The Rehike Maintainers
  */
 class WatchBakery

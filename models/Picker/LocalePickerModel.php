@@ -9,7 +9,7 @@ use Rehike\Util\ParsingUtils;
 /**
  * Used for locale (language and country) pickers.
  * 
- * @author Isabella <kawapure@gmail.com>
+ * @author Isabella Lulamoon <kawapure@gmail.com>
  * @author The Rehike Maintainers
  */
 class LocalePickerModel extends PickerModel

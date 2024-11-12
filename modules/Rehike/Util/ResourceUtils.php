@@ -14,7 +14,7 @@ use Rehike\Util\Exception\ResourceUtils\BadResourceException;
  * Provides helper functions for getting resource locations.
  * 
  * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
- * @author Isabella <kawapure@gmail.com>
+ * @author Isabella Lulamoon <kawapure@gmail.com>
  * @author The Rehike Maintainers
  */
 class ResourceUtils

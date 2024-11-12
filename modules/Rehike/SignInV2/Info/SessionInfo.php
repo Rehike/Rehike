@@ -11,7 +11,7 @@ use Rehike\SignInV2\SessionErrors;
  * Provides information about the current user session. This is the top-most
  * class for accessing data about the user session in the PHP world.
  * 
- * @author Isabella <kawapure@gmail.com>
+ * @author Isabella Lulamoon <kawapure@gmail.com>
  * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */

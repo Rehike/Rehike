@@ -12,7 +12,7 @@ use stdClass;
  * This avoids issues with reporting private and protected variables present
  * with the default json_encode method.
  * 
- * @author Isabella <kawapure@gmail.com>
+ * @author Isabella Lulamoon <kawapure@gmail.com>
  * @author The Rehike Maintainers
  */
 class RebugJsonEncodeManager

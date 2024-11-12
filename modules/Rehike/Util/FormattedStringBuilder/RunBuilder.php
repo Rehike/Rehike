@@ -6,7 +6,7 @@ use stdClass;
 /**
  * A single run in a formatted string.
  * 
- * @author Isabella <kawapure@gmail.com>
+ * @author Isabella Lulamoon <kawapure@gmail.com>
  * @author The Rehike Maintainers
  */
 class RunBuilder extends stdClass

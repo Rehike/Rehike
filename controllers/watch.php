@@ -21,7 +21,7 @@ use Rehike\Model\Watch\WatchBakery;
  * Controller for the watch page.
  * 
  * @author Aubrey Pankow <aubyomori@gmail.com>
- * @author Isabella <kawapure@gmail.com>
+ * @author Isabella Lulamoon <kawapure@gmail.com>
  * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */

@@ -1,7 +1,7 @@
 /**
  * @fileoverview Transformer for Rehike\Version\BuildNumber
  * 
- * @author Isabella <kawapure@gmail.com>
+ * @author Isabella Lulamoon <kawapure@gmail.com>
  * @author The Rehike Maintainers
  */
 

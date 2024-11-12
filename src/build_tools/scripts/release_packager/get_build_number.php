@@ -3,7 +3,7 @@
 /**
  * Script for getting the Rehike build number.
  * 
- * @author Isabella <kawapure@gmail.com>
+ * @author Isabella Lulamoon <kawapure@gmail.com>
  * @author The Rehike Maintainers
  */
 

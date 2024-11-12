@@ -1,10 +1,10 @@
 {
-	"previousHash": "16232edbcf8e1451e4eac3728bfde984d105f22b",
-	"currentRevisionId": 1698,
-	"subject": "Fix comments crashing",
-	"body": "Fix comments crashing",
+	"previousHash": "b815e583e0f5887547f9fa4613ce20bcf26cc962",
+	"currentRevisionId": 1699,
+	"subject": "Standardise last name usage in main developer attribution",
+	"body": "Standardise last name usage in main developer attribution",
 	"branch": "master",
-	"committerName": "Isabella",
+	"committerName": "Isabella Lulamoon",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1731367295
+	"time": 1731376380
 }

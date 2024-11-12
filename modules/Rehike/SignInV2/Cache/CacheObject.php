@@ -6,7 +6,7 @@ use stdClass;
 /**
  * Represents a cache object.
  * 
- * @author Isabella <kawapure@gmail.com>
+ * @author Isabella Lulamoon <kawapure@gmail.com>
  * @author The Rehike Maintainers
  */
 class CacheObject extends stdClass

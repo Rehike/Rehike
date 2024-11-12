@@ -6,7 +6,7 @@ namespace Rehike\Model\Masthead\Pony;
  * 
  * This is a base class to separate it from the Pony object class.
  * 
- * @author Isabella <kawapure@gmail.com>
+ * @author Isabella Lulamoon <kawapure@gmail.com>
  * @author The Rehike Maintainers
  */
 abstract class PonyConstantsBase

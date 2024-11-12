@@ -9,7 +9,7 @@ use Rehike\SignInV2\Info\SessionInfo;
  * The builder is not a public interface, so it can be considered less volatile
  * than the final class. Temporary state can be stored here.
  * 
- * @author Isabella <kawapure@gmail.com>
+ * @author Isabella Lulamoon <kawapure@gmail.com>
  * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */

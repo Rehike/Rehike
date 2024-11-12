@@ -10,7 +10,7 @@ use ReflectionObject;
  * cannot implement interfaces, all users must manually specify that they
  * implement this interface instead.
  * 
- * @author Isabella <kawapure@gmail.com>
+ * @author Isabella Lulamoon <kawapure@gmail.com>
  * @author The Rehike Maintainers
  */
 trait AutoCacheable

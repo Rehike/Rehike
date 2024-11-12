@@ -5,7 +5,7 @@ namespace Rehike\Helper;
  * Common watch utilities for Rehike.
  * 
  * @author Aubrey Pankow <aubyomori@gmail.com>
- * @author Isabella <kawapure@gmail.com>
+ * @author Isabella Lulamoon <kawapure@gmail.com>
  * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */

@@ -1,7 +1,7 @@
 /**
  * @fileoverview Transformer for Rehike\Constants namespace.
  * 
- * @author Isabella <kawapure@gmail.com>
+ * @author Isabella Lulamoon <kawapure@gmail.com>
  * @author The Rehike Maintainers
  */
 

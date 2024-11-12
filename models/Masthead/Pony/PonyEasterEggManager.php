@@ -12,7 +12,7 @@ namespace Rehike\Model\Masthead\Pony;
  * @see https://www.equestriadaily.com/2013/08/youtube-geek-week-is-over-ponies.html
  * @see https://www.youtube.com/watch?v=sMs-TGmfZNw    Video showing it off in action
  * 
- * @author Isabella <kawapure@gmail.com>
+ * @author Isabella Lulamoon <kawapure@gmail.com>
  * @author The Rehike Maintainers
  */
 class PonyEasterEggManager

@@ -6,7 +6,7 @@ use Rehike\Logging\DebugLogger;
 /**
  * Implements the log messages tab.
  * 
- * @author Isabella <kawapure@gmail.com>
+ * @author Isabella Lulamoon <kawapure@gmail.com>
  * @author The Rehike Developers
  */
 class MLogTab extends MTabContent

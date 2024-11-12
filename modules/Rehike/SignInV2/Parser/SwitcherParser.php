@@ -13,7 +13,7 @@ use Rehike\Util\ParsingUtils;
  * Parses and retrieves information from the account switcher, requested at
  * /getAccountSwitcherEndpoint and outputs it into the session info builder.
  * 
- * @author Isabella <kawapure@gmail.com>
+ * @author Isabella Lulamoon <kawapure@gmail.com>
  * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */

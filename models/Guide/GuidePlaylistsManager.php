@@ -12,7 +12,7 @@ use Rehike\Async\Promise;
 /**
  * Manages the playlist items that appear in the guide when signed in.
  *
- * @author Isabella <kawapure@gmail.com>
+ * @author Isabella Lulamoon <kawapure@gmail.com>
  * @author The Rehike Maintainers
  */
 class GuidePlaylistsManager

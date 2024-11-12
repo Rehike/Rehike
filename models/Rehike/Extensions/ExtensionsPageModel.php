@@ -6,7 +6,7 @@ use Rehike\Model\Rehike\Panel\RehikePanelPage;
 /**
  * Page model for the extensions page.
  * 
- * @author Isabella <kawapure@gmail.com>
+ * @author Isabella Lulamoon <kawapure@gmail.com>
  * @author The Rehike Maintainers
  */
 class ExtensionsPageModel extends RehikePanelPage

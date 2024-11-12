@@ -4,7 +4,7 @@ namespace Rehike\SignInV2\Cache;
 /**
  * Reads cache objects.
  * 
- * @author Isabella <kawapure@gmail.com>
+ * @author Isabella Lulamoon <kawapure@gmail.com>
  * @author The Rehike Maintainers
  */
 final class CacheReader extends CacheReaderImpl

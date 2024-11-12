@@ -8,7 +8,7 @@ use Rehike\Util\ParsingUtils;
  * Content class for the Age Gate screen.
  * 
  * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
- * @author Isabella <kawapure@gmail.com>
+ * @author Isabella Lulamoon <kawapure@gmail.com>
  * @author The Rehike Maintainers
  */
 class MPlayerAgeGateContent

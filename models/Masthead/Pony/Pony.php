@@ -7,7 +7,7 @@ use ReflectionClassConstant;
 /**
  * API for getting information about a pony.
  * 
- * @author Isabella <kawapure@gmail.com>
+ * @author Isabella Lulamoon <kawapure@gmail.com>
  * @author The Rehike Maintainers
  */
 class Pony extends PonyConstantsBase

@@ -1,7 +1,7 @@
 /**
  * @fileoverview Manages Gulp use in RehikeBuild.
  * 
- * @author Isabella <kawapure@gmail.com>
+ * @author Isabella Lulamoon <kawapure@gmail.com>
  */
 
 const gulp = require("gulp");

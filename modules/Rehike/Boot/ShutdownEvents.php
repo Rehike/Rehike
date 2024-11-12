@@ -7,7 +7,7 @@ use InvalidArgumentException;
 /**
  * Manages events to run before Rehike shutdown.
  * 
- * @author Isabella <kawapure@gmail.com>
+ * @author Isabella Lulamoon <kawapure@gmail.com>
  * @author The Rehike Maintainers
  */
 class ShutdownEvents

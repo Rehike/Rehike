@@ -8,7 +8,7 @@ use stdClass;
 /**
  * Custom comments continuation.
  * 
- * @author Isabella <kawapure@gmail.com>
+ * @author Isabella Lulamoon <kawapure@gmail.com>
  * @author The Rehike Maintainers
  */
 class CommentsContinuation extends stdClass

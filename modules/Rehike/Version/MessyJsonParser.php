@@ -8,7 +8,7 @@ namespace Rehike\Version;
  * can produce invalid output, especially when double quote literals are
  * used in the commit message or body.
  * 
- * @author Isabella <kawapure@gmail.com>
+ * @author Isabella Lulamoon <kawapure@gmail.com>
  * @author The Rehike Maintainers
  */
 class MessyJsonParser

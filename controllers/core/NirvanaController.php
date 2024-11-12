@@ -18,7 +18,7 @@ use Rehike\Model\{
  * 
  * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author Aubrey Pankow <aubyomori@gmail.com>
- * @author Isabella <kawapure@gmail.com>
+ * @author Isabella Lulamoon <kawapure@gmail.com>
  */
 abstract class NirvanaController extends HitchhikerController
 {

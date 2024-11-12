@@ -18,7 +18,7 @@ use Rehike\Signin\AuthManager as LegacyAuthManager;
  * Provides backward compatibility for interacting with the old SignInV1
  * backend with the V2 API.
  * 
- * @author Isabella <kawapure@gmail.com>
+ * @author Isabella Lulamoon <kawapure@gmail.com>
  * @author The Rehike Maintainers
  */
 class BackwardsCompatibilitySessionInfoFactory implements IBuilder

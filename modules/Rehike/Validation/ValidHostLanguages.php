@@ -4,7 +4,7 @@ namespace Rehike\Validation;
 /**
  * Validates InnerTube HL values.
  * 
- * @author Isabella <kawapure@gmail.com>
+ * @author Isabella Lulamoon <kawapure@gmail.com>
  * @author The Rehike Maintainers
  */
 class ValidHostLanguages implements IValidator

@@ -11,7 +11,7 @@ use Throwable;
  * Represents the error page for a failed InnerTube request (or the exception
  * class: InnertubeFailedRequestException).
  * 
- * @author Isabella <kawapure@gmail.com>
+ * @author Isabella Lulamoon <kawapure@gmail.com>
  * @author The Rehike Maintainers
  */
 class FailedToWriteConfigPage extends AbstractErrorPage

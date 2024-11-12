@@ -10,7 +10,7 @@ namespace Rehike\Version;
  * This system is like that used by pre-Steampipe Source games and other
  * Network Neighborhood projects like KappaBar.
  * 
- * @author Isabella <kawapure@gmail.com>
+ * @author Isabella Lulamoon <kawapure@gmail.com>
  * @author The Rehike Maintainers
  */
 class BuildNumber

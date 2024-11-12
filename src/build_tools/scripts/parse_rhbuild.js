@@ -1,7 +1,7 @@
 /**
  * @fileoverview Parsing utilities for rhbuild files.
  * 
- * @author Isabella <kawapure@gmail.com>
+ * @author Isabella Lulamoon <kawapure@gmail.com>
  * @author The Rehike Maintainers
  */
 
