@@ -1,10 +1,10 @@
 {
-	"previousHash": "b815e583e0f5887547f9fa4613ce20bcf26cc962",
-	"currentRevisionId": 1699,
-	"subject": "Standardise last name usage in main developer attribution",
-	"body": "Standardise last name usage in main developer attribution",
+	"previousHash": "2d38612f0155b588dfd7650a12908afddd9ad1c4",
+	"currentRevisionId": 1700,
+	"subject": "Fix name usage in index.php",
+	"body": "Fix name usage in index.php",
 	"branch": "master",
 	"committerName": "Isabella Lulamoon",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1731376380
+	"time": 1731376716
 }

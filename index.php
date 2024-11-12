@@ -34,7 +34,7 @@
 // And check out some of the cool people that brought it to you!
 //    - Taniko Yamamoto (@kirasicecreamm or @YukisCoffee on everything)
 //    - Aubrey Pankow (@aubymori on Twitter and YouTube)
-//    - Isabella (@kawapure on everything)
+//    - Isabella Lulamoon (@kawapure on everything)
 //
 //-----------------------------------------------------------------------------
 //
