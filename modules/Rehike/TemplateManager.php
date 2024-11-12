@@ -3,7 +3,6 @@ namespace Rehike;
 
 use Twig\TwigFunction, Twig\TwigFilter;
 use Rehike\ControllerV2\Core as ControllerV2;
-use Rehike\Nepeta\NepetaApi;
 
 /**
  * Implements the template manager.
@@ -36,33 +35,6 @@ class TemplateManager
         
         $templateDirs = [];
 
-        // Load override themes from Nepeta if it's available.
-        if (NepetaApi::isNepetaEnabled())
-        {
-            // This is available in above scopes.
-            $theme = NepetaApi::getTheme();
-
-            if (null != $theme)
-            foreach ($theme->getOverrideTemplatesPaths() as $namespace => $path)
-            {
-                $overrideNamespace = explode("override:", $namespace)[1];
-
-                $fileSystemLoader->addPath(
-                    $path,
-                    $overrideNamespace
-                );
-
-                // If the override namespace is the Rehike templates namespace,
-                // then we also 
-                if ("rehike" == $overrideNamespace)
-                {
-                    $fileSystemLoader->addPath(
-                        $path
-                    );
-                }
-            }
-        }
-
         // Add default (no extensions) template paths:
         $fileSystemLoader->addPath(
             $_SERVER["DOCUMENT_ROOT"] . "/" . $defaultViewsDir,
@@ -72,18 +44,6 @@ class TemplateManager
         $fileSystemLoader->addPath(
             $_SERVER["DOCUMENT_ROOT"] . "/" . $defaultViewsDir
         );
-
-        // Add extra template paths provided by Nepeta mods:
-        if (NepetaApi::isNepetaEnabled() && null != $theme)
-        {
-            foreach ($theme->getAddedTemplatePaths() as $namespace => $path)
-            {
-                $fileSystemLoader->addPath(
-                    $path,
-                    $namespace
-                );
-            }
-        }
 
         self::$twig = new \Twig\Environment(
             $fileSystemLoader,

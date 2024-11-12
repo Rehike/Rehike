@@ -6,7 +6,6 @@ use Rehike\i18n\i18n;
 use Rehike\ConfigManager\Config;
 use Rehike\Model\Common\MButton;
 use Rehike\Model\Dialog\MConfirmDialog;
-use Rehike\Nepeta\NepetaApi;
 
 /**
  * Data model for the shared sidebar for Rehike Panel pages (version/config).
@@ -56,7 +55,7 @@ class Sidebar
     {
         $configStrings = i18n::getNamespace("rehike/config");
         
-        $nepetaEnabled = NepetaApi::isNepetaEnabled();
+        // $nepetaEnabled = NepetaApi::isNepetaEnabled();
         
         return [
             $this->createSidebarSectionLink(
@@ -71,14 +70,14 @@ class Sidebar
                 icon: "rehike-experiments",
                 href: "/rehike/config/experiments"
             ),
-            ...($nepetaEnabled ? [
-                $this->createSidebarSectionLink(
-                    id: "extensions",
-                    title: "Nepeta",
-                    icon: "rehike-nepeta",
-                    href: "/rehike/extensions"
-                )
-            ] : []),
+            // ...($nepetaEnabled ? [
+            //     $this->createSidebarSectionLink(
+            //         id: "extensions",
+            //         title: "Nepeta",
+            //         icon: "rehike-nepeta",
+            //         href: "/rehike/extensions"
+            //     )
+            // ] : []),
             $this->createSidebarSectionLink(
                 id: "advanced",
                 title: $configStrings->get("tabs.advanced"),

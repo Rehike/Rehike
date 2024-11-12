@@ -15,7 +15,7 @@ use Rehike\ConfigManager\Properties\{
 /**
  * Defines Rehike configuration definitions.
  * 
- * @author Taniko Yamamoto <kiraicecreamm@gmail.com>
+ * @author Isabella Lulamoon <kawapure@gmail.com>
  * @author The Rehike Maintainers
  */
 class ConfigDefinitions
@@ -101,14 +101,6 @@ class ConfigDefinitions
                     Config::dumpConfig();
                 }),
                 "useSignInV2" => new BoolProp(false),
-                "enableNepeta" => (new BoolProp(false))->registerUpdateCb(function () {
-                    // Nepeta hooks depend on tick injection.
-                    if (function_exists("opcache_reset"))
-                        opcache_reset();
-
-                    Config::setConfigProp("experiments.tickInjectionForScheduling", true);
-                    Config::dumpConfig();
-                }),
                 "disableSignInOnHome" => new BoolProp(false),
                 "tickInjectionForScheduling" => (new BoolProp(false))->registerUpdateCb(function() {
                     // When this configuration property changes, the contents of the PHP files
