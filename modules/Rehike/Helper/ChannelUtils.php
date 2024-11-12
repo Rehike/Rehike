@@ -14,7 +14,6 @@ use Exception;
  * General utilties for channels.
  * 
  * @author Aubrey Pankow <aubyomori@gmail.com>
- * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class ChannelUtils

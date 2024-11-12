@@ -197,7 +197,7 @@ Rehike hides this away for the most part (i.e. in the base controller source cod
 
 The event loop is based around PHP's Generator system, and allows code registered in events to be called back in a loop. Note that the event loop isn't directly compatible with the standard runtime design, so events aren't checked for in between the execution of any ordinary functions.
 
-The event loop can manually be invoked by importing `YukisCoffee\CoffeeRequest\Loop` and then calling `Loop::run()`. Once the event loop is started, it will only be closed once all events have finished running, or an event ends the event loop prematurely.
+The event loop can manually be invoked by importing `Rehike\Async\Loop` and then calling `Loop::run()`. Once the event loop is started, it will only be closed once all events have finished running, or an event ends the event loop prematurely.
 
 The standard creation of a Promise (provided a callback) internally creates an event whose resolution corresponds with the resolution or rejection of the wrapping Promise. However, a Promise created with no callback will have no automatically-created corresponding event, so this mechanism may be used to wrap an existing event. We consider this to be an advanced use, and it is used internally within the CoffeeRequest library.
 

@@ -5,7 +5,6 @@ namespace Rehike\SignInV2\Info;
  * Used to store and retrieve information about a Google Account.
  * 
  * @author Isabella Lulamoon <kawapure@gmail.com>
- * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 abstract class GoogleAccountInfoBase

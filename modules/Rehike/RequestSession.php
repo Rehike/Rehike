@@ -22,8 +22,6 @@ class RequestSession
     
     /**
      * Get all requested headers.
-     * 
-     * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
      */
     public static function getRequestHeaders(): EasyAccessMap
     {
@@ -78,8 +76,6 @@ class RequestSession
     
     /**
      * Get the POST body, attempt to decode it, and then return it.
-     * 
-     * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
      */
     public static function getPostBody(string $contentType = ""): mixed
     {

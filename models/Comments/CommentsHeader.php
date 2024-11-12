@@ -8,7 +8,6 @@ use Rehike\i18n\i18n;
  * Model for the comments header on the watch page.
  * 
  * @author Aubrey Pankow <aubyomori@gmail.com>
- * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class CommentsHeader

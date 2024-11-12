@@ -11,7 +11,7 @@ require "includes/functions/safe_class_alias.php";
  * Implements the Rehike autoloader.
  * 
  * @version 2.0
- * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
+ * @author Isabella Lulamoon <kawapure@gmail.com>
  * @author The Rehike Maintainers
  */
 class Autoloader

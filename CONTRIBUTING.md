@@ -60,7 +60,6 @@ There are a few standards that we wish for all contributors to abide by to ensur
                   // This is a function expression. In PHP, these actually work
                   // quite a bit different from regular functions, so there is
                   // somewhat of a significance to distinguish them in syntax.
-                  // (but really Taniko is just petty)
                   $cb = function() use ($obj) {
                       // This is a match expression. This language feature is only
                       // implemented as an expression, so sometimes we break the

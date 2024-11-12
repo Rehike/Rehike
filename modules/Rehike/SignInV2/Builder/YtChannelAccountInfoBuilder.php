@@ -10,7 +10,6 @@ use Rehike\SignInV2\Info\IBuiltObject;
  * Builder for the YtChannelAccountInfo class.
  * 
  * @author Isabella Lulamoon <kawapure@gmail.com>
- * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class YtChannelAccountInfoBuilder implements IBuilder, IBuilderWithParent

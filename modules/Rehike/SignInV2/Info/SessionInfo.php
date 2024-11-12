@@ -12,7 +12,6 @@ use Rehike\SignInV2\SessionErrors;
  * class for accessing data about the user session in the PHP world.
  * 
  * @author Isabella Lulamoon <kawapure@gmail.com>
- * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class SessionInfo implements IBuiltObject, ICacheable

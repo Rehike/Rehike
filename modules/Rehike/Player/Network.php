@@ -12,10 +12,10 @@ use Rehike\Async\Promise\PromiseStatus;
  * A wrapper class for networking. 
  * 
  * This allows portability of this portion of Rehike for freer 
- * reuse in other projects, without them having to include YukisCoffee
- * modules.
+ * reuse in other projects, without them having to include Rehike's
+ * heavy network + async stack.
  * 
- * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
+ * @author Isabella Lulamoon <kawapure@gmail.com>
  * @author The Rehike Maintainers
  */
 class Network

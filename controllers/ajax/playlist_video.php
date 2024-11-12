@@ -11,7 +11,6 @@ use \Rehike\Network;
  * Controller for playlist AJAX endpoints.
  * 
  * @author Aubrey Pankow <aubyomori@gmail.com>
- * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 return new class extends AjaxController

@@ -13,7 +13,6 @@ use Rehike\Network\ResponseHeaders;
  * proxies active
  * 
  * @author Aubrey Pankow <aubyomori@gmail.com>
- * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  */
 class SimpleFunnel
 {

@@ -200,8 +200,6 @@ class ParsingUtils
      * 
      * This is meant to be used as a helper function for Twig.
      * 
-     * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
-     * 
      * @param object $array of the thumbnail overlays
      * @param string $name of the overlay identifier
      * 

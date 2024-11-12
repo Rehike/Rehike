@@ -9,9 +9,9 @@
 # https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
 
 # Language translation owners:
-/i18n/en-US @YukisCoffee
-/i18n/en-GB @YukisCoffee @kawapure
-/i18n/ja @YukisCoffee
+/i18n/en-US @kawapure
+/i18n/en-GB @kawapure
+/i18n/ja @kawapure
 /i18n/ko @bluedragon-cairo
 /i18n/es-LA @Erizur
 /i18n/nl-NL @Zehnter
@@ -20,51 +20,50 @@
 /i18n/ru @malina-1797
 
 # General code
-/.git-hooks @YukisCoffee
-/.github @YukisCoffee @kawapure @aubymori
+/.git-hooks @kawapure
+/.github @kawapure @aubymori
 
-/controllers @YukisCoffee @aubymori @kawapure
+/controllers @aubymori @kawapure
 /controllers/ajax @aubymori
-/controllers/core @YukisCoffee @kawapure
-/controllers/rehike @YukisCoffee
+/controllers/core @kawapure
+/controllers/rehike @kawapure
 /controllers/rehike/config.php @aubymori
 
-/docs @YukisCoffee @kawapure
+/docs @kawapure
 
-/includes @YukisCoffee @kawapure @aubymori
+/includes @kawapure @aubymori
 
-/models @YukisCoffee @aubymori @kawapure
-/models/Browse @YukisCoffee
-/models/Comments @YukisCoffee
-/models/Rehike @YukisCoffee
+/models @aubymori @kawapure
+/models/Browse @kawapure
+/models/Comments @kawapure
+/models/Rehike @kawapure
 /models/Results @kawapure
 /models/Share @syndiate
 
-/modules/generated @YukisCoffee
-/modules/Rehike @YukisCoffee @aubymori @kawapure
-/modules/Rehike/Async @YukisCoffee
-/modules/Rehike/ControllerV2 @YukisCoffee
-/modules/Rehike/Debugger @YukisCoffee
-/modules/Rehike/i18n @YukisCoffee
-/modules/Rehike/Player @YukisCoffee @kawapure @TorutheRedFox @DavidCGranger
-/modules/Rehike/Signin @YukisCoffee @kawapure
-/modules/Rehike/SignInV2 @YukisCoffee @kawapure
-/modules/Rehike/Spf @YukisCoffee @kawapure
-/modules/Rehike/Version @YukisCoffee
-/modules/YukisCoffee @YukisCoffee
+/modules/generated @kawapure
+/modules/Rehike  @aubymori @kawapure
+/modules/Rehike/Async @kawapure
+/modules/Rehike/ControllerV2 @kawapure
+/modules/Rehike/Debugger @kawapure
+/modules/Rehike/i18n @kawapure
+/modules/Rehike/Player  @kawapure @TorutheRedFox @DavidCGranger
+/modules/Rehike/Signin  @kawapure
+/modules/Rehike/SignInV2  @kawapure
+/modules/Rehike/Spf  @kawapure
+/modules/Rehike/Version 
 
-/src @YukisCoffee @aubymori @kawapure
+/src @aubymori @kawapure
 /src/build_tools @kawapure
-/src/img @YukisCoffee
-/src/protos @YukisCoffee
+/src/img @kawapure
+/src/protos @kawapure
 
-/static/js/html5player @TorutheRedFox @YukisCoffee
-/static/js/www-base-rehike.js @YukisCoffee
+/static/js/html5player @TorutheRedFox @kawapure
+/static/js/www-base-rehike.js @kawapure
 
-/template/hitchhiker @YukisCoffee @kawapure @aubymori
-/template/hitchhiker/rehike @YukisCoffee
-/template/hitchhiker/page_fragments @YukisCoffee @kawapure
-/template/hitchhiker/player @YukisCoffee @TorutheRedFox
+/template/hitchhiker @kawapure @aubymori
+/template/hitchhiker/rehike @kawapure
+/template/hitchhiker/page_fragments @kawapure
+/template/hitchhiker/player @TorutheRedFox
 
-/index.php @YukisCoffee @kawapure @aubymori
-/router.php @YukisCoffee @kawapure @aubymori
+/index.php @kawapure @aubymori
+/router.php @kawapure @aubymori

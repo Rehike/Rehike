@@ -11,7 +11,6 @@ namespace Rehike\UserPrefs;
  * implemented efficiently through a bitmask. Other implementations are
  * permitted by YouTube's code, but they seem to be unused.
  * 
- * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author Isabella Lulamoon <kawapure@gmail.com>
  * @author The Rehike Maintainers
  */

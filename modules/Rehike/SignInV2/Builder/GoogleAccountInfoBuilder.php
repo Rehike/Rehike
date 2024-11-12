@@ -6,7 +6,7 @@ use Rehike\SignInV2\Info\GoogleAccountInfo;
 /**
  * Builder for the GoogleAccountInfo class.
  * 
- * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
+ * @author Isabella Lulamoon <kawapure@gmail.com>
  * @author The Rehike Maintainers
  */
 final class GoogleAccountInfoBuilder implements IBuilder

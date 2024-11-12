@@ -2,7 +2,7 @@
 
 This documents changes made in this rewrite of the sign-in API Rehike uses and the motivations for rewriting it.
 
-The original sign-in API was created early on in Rehike's life by Taniko. At the time, the team didn't focus on code quality as much as we do now, and the original implementation made some very weird choices. With Rehike v0.7 "Asynchike", these became very abundant and the sign-in system was lazily patched to adopt the new networking system.
+The original sign-in API was created early on in Rehike's life. At the time, the team didn't focus on code quality as much as we do now, and the original implementation made some very weird choices. With Rehike v0.7 "Asynchike", these became very abundant and the sign-in system was lazily patched to adopt the new networking system.
 
 ## Problems with the original API
 

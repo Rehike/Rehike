@@ -15,7 +15,6 @@ use Rehike\Model\Common\Subscription\MSubscriptionActions;
  * Model for the channels4 page header.
  * 
  * @author Aubrey Pankow <aubyomori@gmail.com>
- * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class MHeader

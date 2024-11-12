@@ -27,7 +27,6 @@ use Rehike\Player\PlayerInfo;
  * class still allows us to benefit from type safety and IDE static analysis.
  * 
  * @author Aubrey Pankow <aubyomori@gmail.com>
- * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author Isabella Lulamoon <kawapure@gmail.com>
  * @author The Rehike Maintainers
  */

@@ -17,7 +17,6 @@ use \Rehike\Network;
  * Controller for the primary comment service AJAX.
  *
  * @author Aubrey Pankow <aubyomori@gmail.com>
- * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 return new class extends AjaxController

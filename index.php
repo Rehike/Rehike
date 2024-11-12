@@ -32,7 +32,6 @@
 // If you wish to contribute, please see CONTRIBUTING.md.
 //
 // And check out some of the cool people that brought it to you!
-//    - Taniko Yamamoto (@kirasicecreamm or @YukisCoffee on everything)
 //    - Aubrey Pankow (@aubymori on Twitter and YouTube)
 //    - Isabella Lulamoon (@kawapure on everything)
 //
