@@ -7,7 +7,6 @@ namespace Rehike\ControllerV2\Util;
  * This implementation is somewhat nonstandard, but it works for the
  * purpose Rehike uses it. Probably unsafe to use it elsewhere...
  * 
- * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class GlobToRegexp

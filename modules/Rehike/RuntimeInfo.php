@@ -4,7 +4,6 @@ namespace Rehike;
 /**
  * Gets information about the current runtime environment.
  * 
- * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class RuntimeInfo

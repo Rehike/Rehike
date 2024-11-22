@@ -4,7 +4,6 @@ namespace Rehike\i18n\Internal\Parsing;
 /**
  * A common interface for all string parser bases.
  * 
- * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  */
 interface IStringParser
 {

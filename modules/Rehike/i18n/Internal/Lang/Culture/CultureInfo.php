@@ -4,7 +4,6 @@ namespace Rehike\i18n\Internal\Lang\Culture;
 /**
  * Describes cultural information about a given language.
  * 
- * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  */
 class CultureInfo
 {

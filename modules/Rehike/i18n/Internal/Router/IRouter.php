@@ -11,7 +11,6 @@ namespace Rehike\i18n\Internal\Router;
  * object, which is sent to the parser and used to produce the final data
  * record.
  * 
- * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  */
 interface IRouter
 {

@@ -6,7 +6,6 @@ use Rehike\i18n\i18n;
 /**
  * Model for the create playlist page of the add to playlist menu.
  * 
- * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class MCreatePlaylist

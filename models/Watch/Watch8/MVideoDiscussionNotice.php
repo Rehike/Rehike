@@ -6,7 +6,6 @@ namespace Rehike\Model\Watch\Watch8;
  * place of a video discussion render, such as in the event
  * of disabled comments.
  * 
- * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class MVideoDiscussionNotice

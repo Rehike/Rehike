@@ -12,7 +12,6 @@ namespace Rehike\Network\Enum;
  * with cases. As such, please use the enum constant exclusively, never the
  * corresponding integer value, as it will make this transition harder.
  * 
- * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class RequestErrorPolicy

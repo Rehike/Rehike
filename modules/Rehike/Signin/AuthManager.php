@@ -14,7 +14,6 @@ use Rehike\Helper\ChannelUtils;
  * This handles most of the internal behaviour. I'm too lazy
  * to clean it up.
  * 
- * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class AuthManager

@@ -15,7 +15,6 @@ use Rehike\Async\Deferred;
 /**
  * Represents a network request.
  * 
- * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class Request implements IRequest

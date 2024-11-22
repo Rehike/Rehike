@@ -6,7 +6,6 @@ use Rehike\Debugger\ErrorWrapper;
 /**
  * Implements the error tab.
  * 
- * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Developers
  */
 class MErrorTab extends MTabContent

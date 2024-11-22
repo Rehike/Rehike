@@ -15,7 +15,6 @@ use Rehike\Network\ResponseHeaders;
  * Responsible for requesting and modifying the Polymer document to inject the
  * custom script.
  * 
- * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class PolymerDocument

@@ -15,7 +15,6 @@ use Generator;
  * This may only throw an error notifying the user of a lack of
  * any supported interface.
  * 
- * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  */
 final class NullHandler extends NetworkHandler
 {

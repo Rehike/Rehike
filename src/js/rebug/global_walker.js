@@ -1,7 +1,6 @@
 /**
  * @fileoverview Implements scripts for the Rebug global variable viewer.
  * 
- * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 

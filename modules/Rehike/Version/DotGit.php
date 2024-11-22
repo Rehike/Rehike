@@ -4,7 +4,6 @@ namespace Rehike\Version;
 /**
  * Get version information from the .git folder if it exists
  * 
- * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class DotGit

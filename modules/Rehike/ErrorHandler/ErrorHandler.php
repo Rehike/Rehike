@@ -22,7 +22,6 @@ use Rehike\Async\Exception\PromiseAllException;
 /**
  * Implements a general error handler for Rehike.
  * 
- * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 final class ErrorHandler

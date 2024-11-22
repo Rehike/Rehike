@@ -14,7 +14,6 @@ use Rehike\Network\Enum\NetworkResult;
  * @property ResponseHeaders $headers  An array of HTTP headers sent back from
  *                                     the server with the response.
  * 
- * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  */
 interface IResponse
 {

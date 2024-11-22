@@ -11,7 +11,6 @@ use Rehike\Ds\EasyAccessMap;
  * function. It provides various metadata, such as the request
  * method, path (as an array), and parameters (for GET/POST).
  * 
- * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class RequestMetadata

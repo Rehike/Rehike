@@ -24,7 +24,6 @@ use ReflectionFunction;
  * 
  * @template T
  * 
- * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 abstract class PromiseEvent/*<T>*/ extends Event 

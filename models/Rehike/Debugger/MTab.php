@@ -5,7 +5,6 @@ namespace Rehike\Model\Rehike\Debugger;
  * Implements the tab wrapper. General use should use the
  * createTab method of a MTabContent child.
  * 
- * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Developers
  */
 class MTab

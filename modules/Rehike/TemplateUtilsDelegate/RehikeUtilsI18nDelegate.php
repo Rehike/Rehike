@@ -7,7 +7,6 @@ use Throwable;
 /**
  * Internationalization engine delegate for use in Twig land.
  * 
- * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class RehikeUtilsI18nDelegate

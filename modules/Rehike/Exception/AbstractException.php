@@ -4,7 +4,6 @@ namespace Rehike\Exception;
 /**
  * Base exception class for most Rehike exceptions.
  * 
- * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 abstract class AbstractException extends \Exception

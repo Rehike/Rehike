@@ -28,7 +28,6 @@ use Rehike\SignInV2\SignIn;
 /**
  * Implements boot tasks for Rehike.
  * 
- * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 final class Tasks

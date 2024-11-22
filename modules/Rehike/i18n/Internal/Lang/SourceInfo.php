@@ -7,7 +7,6 @@ namespace Rehike\i18n\Internal\Lang;
  * This includes a name (FS path or other identifier), the encoding type of the
  * content, and the source contents themselves.
  * 
- * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  */
 class SourceInfo
 {

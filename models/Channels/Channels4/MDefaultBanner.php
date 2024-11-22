@@ -6,7 +6,6 @@ use Rehike\Util\ResourceUtils;
 /**
  * Implements the (very hacky) Channels4 default banner.
  * 
- * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class MDefaultBanner

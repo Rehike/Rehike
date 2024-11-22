@@ -12,7 +12,6 @@ use Exception;
  * incidating the index of the failed Promise, as well as the reason for 
  * that Promise's rejection.
  * 
- * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  */
 final class PromiseAllException extends Exception
 {

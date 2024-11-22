@@ -4,7 +4,6 @@ namespace Rehike\ControllerV2;
 /**
  * Implements a wrapper for working with imported controllers.
  * 
- * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class GetControllerInstance

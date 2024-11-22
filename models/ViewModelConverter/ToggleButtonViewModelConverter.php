@@ -9,7 +9,6 @@ namespace Rehike\Model\ViewModelConverter;
  * renderers extend from the button models and add additional fields for their
  * respective states.
  * 
- * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class ToggleButtonViewModelConverter extends BasicVMC

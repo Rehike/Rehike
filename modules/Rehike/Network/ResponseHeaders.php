@@ -133,7 +133,6 @@ else // PHP 7.x & 8.0 implementation of ArrayAccess & Iterator
  * used by the Rehike project, except this is also iterable using foreach
  * loops.
  * 
- * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  */
 class ResponseHeaders implements ArrayAccess, Iterator
 {

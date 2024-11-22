@@ -16,7 +16,6 @@ use Rehike\SignInV2\SignIn;
  * This class implements all alises to other utility classes. The parent
  * class handles unique properties and all methods.
  * 
- * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class RehikeUtilsDelegate extends RehikeUtilsDelegateBase

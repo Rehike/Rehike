@@ -11,7 +11,6 @@ use Rehike\Async\Promise\PromiseStatus;
  * This allows a Promise resolution or rejection to be delayed. This is used
  * internally by the Event Loop API for memory management.
  * 
- * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class QueuedPromiseResolver

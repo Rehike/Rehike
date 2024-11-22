@@ -9,7 +9,6 @@ use Throwable;
 /**
  * Represents the error page for an uncaught exception.
  * 
- * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class UncaughtExceptionPage extends AbstractErrorPage 

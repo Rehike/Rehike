@@ -4,7 +4,6 @@ namespace Rehike\Model\Rehike\Debugger;
 /**
  * TODO!!
  * 
- * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Developers
  */
 class MNetworkTab extends MTabContent

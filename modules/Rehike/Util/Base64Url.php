@@ -4,7 +4,6 @@ namespace Rehike\Util;
 /**
  * Utilities for generating URL format base64.
  * 
- * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class Base64Url

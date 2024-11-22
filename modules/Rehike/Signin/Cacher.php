@@ -16,7 +16,6 @@ const WEEKS = 7 * DAYS;
 /**
  * Implements the cache manager for the Rehike Signin component.
  * 
- * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class Cacher

@@ -1,7 +1,6 @@
 /**
  * @fileoverview Implements network handlers for rebug.
  * 
- * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 

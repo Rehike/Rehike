@@ -180,7 +180,6 @@ class SimpleFunnel
 /**
  * A custom class that represents a SimpleFunnel response.
  * 
- * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class SimpleFunnelResponse extends \Rehike\Network\Internal\Response

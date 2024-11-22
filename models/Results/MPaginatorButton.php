@@ -6,7 +6,6 @@ use Rehike\Model\Common\MButton;
 /**
  * A button in the pagination view.
  * 
- * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class MPaginatorButton extends MButton

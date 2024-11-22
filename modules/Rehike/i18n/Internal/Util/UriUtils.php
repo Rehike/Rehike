@@ -8,7 +8,6 @@ use Rehike\i18n\i18n;
 /**
  * Provides useful utilities for parsing translation URIs.
  * 
- * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  */
 #[StaticClass]
 final class UriUtils

@@ -7,7 +7,6 @@ namespace Rehike\i18n\Internal\Lang\Culture;
  * The defaults specified in this file are for en-US.
  * 
  * @see https://www.php.net/manual/en/datetime.format.php
- * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  */
 class CultureDateTimeInfo
 {

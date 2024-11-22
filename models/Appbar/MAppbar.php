@@ -8,7 +8,6 @@ use Rehike\Model\Guide\MGuide;
 /**
  * Model for the appbar on Nirvana pages.
  * 
- * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class MAppbar

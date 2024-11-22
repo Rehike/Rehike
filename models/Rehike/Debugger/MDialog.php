@@ -4,7 +4,6 @@ namespace Rehike\Model\Rehike\Debugger;
 /**
  * Implements the dialog model for the Rehike debugger.
  * 
- * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Developers
  */
 class MDialog

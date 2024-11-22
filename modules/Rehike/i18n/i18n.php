@@ -16,7 +16,6 @@ use Rehike\i18n\Internal\{
  * 
  * @version 1.0
  * 
- * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 #[StaticClass]

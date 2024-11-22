@@ -1,7 +1,6 @@
 /**
  * Implements the event manager of the Rehike JS core.
  * 
- * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 

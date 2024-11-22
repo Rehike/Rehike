@@ -22,7 +22,6 @@ use Rehike\Async\Pubsub\Topic;
  * structure of source code while making it wait for another task to continue
  * elsewhere.
  * 
- * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class Pubsub

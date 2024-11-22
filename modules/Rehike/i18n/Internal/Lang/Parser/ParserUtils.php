@@ -6,7 +6,6 @@ use Rehike\Attributes\StaticClass;
 /**
  * Utilities for parsing i18n files.
  * 
- * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  */
 #[StaticClass]
 final class ParserUtils

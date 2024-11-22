@@ -9,7 +9,6 @@ namespace Rehike\Async\EventLoop;
  * 
  * @internal
  * 
- * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class NullEvent implements IFulfillableEvent

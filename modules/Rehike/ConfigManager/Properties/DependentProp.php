@@ -8,7 +8,6 @@ namespace Rehike\ConfigManager\Properties;
  * Note that this has no effect on loading or the configuration API, only the
  * configuration GUI is affected by this.
  * 
- * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class DependentProp extends AbstractConfigProperty

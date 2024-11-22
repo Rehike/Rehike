@@ -8,7 +8,6 @@ use Exception;
 /**
  * Thrown when any exception is uncaught in a Promise.
  * 
- * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  */
 class UncaughtPromiseException extends Exception
 {

@@ -7,7 +7,6 @@ namespace Rehike\Logging;
  * Honestly, I can't believe that it took us nearly two year to get around to
  * this, but it's finally here.
  * 
- * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class DebugLogger

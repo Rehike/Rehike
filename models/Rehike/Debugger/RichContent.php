@@ -10,7 +10,6 @@ use \Rehike\FileSystem;
  * A general trait for rich text content as used by the
  * debugger.
  * 
- * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Developers
  */
 trait RichContent

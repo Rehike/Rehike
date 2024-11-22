@@ -4,7 +4,6 @@ namespace Rehike\Util;
 /**
  * Provides common string case conversion utilities.
  * 
- * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class CasingUtils

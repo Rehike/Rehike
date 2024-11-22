@@ -5,7 +5,6 @@ namespace Rehike\i18n\Internal\Lang\Culture;
  * Used for translating the English date-time strings which PHP returns natively
  * to other languages.
  * 
- * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  */
 class DateTimeStringTranslator
 {

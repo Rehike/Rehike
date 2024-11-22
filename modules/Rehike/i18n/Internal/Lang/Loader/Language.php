@@ -9,7 +9,6 @@ use Rehike\i18n\Internal\{
 /**
  * Declares information for a given language.
  * 
- * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  */
 class Language
 {

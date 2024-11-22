@@ -5,7 +5,6 @@ use Rehike\Logging\DebugLogger;
 use Rehike\i18n\Internal\Lang\LanguageApi;
 
 /**
- * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  */
 class NamespaceBoundLanguageApi
 {

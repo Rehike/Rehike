@@ -8,7 +8,6 @@ use Iterator;
 /**
  * Represents an entries list in an i18n record.
  * 
- * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  */
 class RecordEntries extends stdClass implements ArrayAccess
 {

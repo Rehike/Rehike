@@ -13,7 +13,6 @@ use Rehike\ControllerV2\Core as ControllerV2;
  * It generally exists just to get the Twig instance away from the global
  * scope for code safety.
  * 
- * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class TemplateManager

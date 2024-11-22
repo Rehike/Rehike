@@ -5,7 +5,6 @@ namespace Rehike\Network\Exception;
  * Thrown to notify a developer that no supported network handler
  * is present with their current PHP setup.
  * 
- * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  */
 final class NoSupportedHandlerException extends BaseHardMessageException
 {

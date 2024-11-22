@@ -17,7 +17,6 @@ namespace Rehike\ControllerV2;
  *                    request.
  * ...and then any custom defined arguments after that.
  * 
- * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  * @version 2.0
  */

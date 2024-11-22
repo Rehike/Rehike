@@ -6,7 +6,6 @@ package com.youtube.innertube.request;
  * Reverse-engineered search request parameters protobuf message for the
  * YouTube search engine.
  *
- * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 message SearchRequestParams {

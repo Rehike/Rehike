@@ -12,7 +12,6 @@ use Closure;
  * 
  * @static
  * 
- * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 final class PromiseResolutionTracker

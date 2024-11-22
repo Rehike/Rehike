@@ -22,7 +22,6 @@ use Rehike\Network\{
  * perform a network request. This already operates asynchronously, but
  * most PHP-land uses are blocking.
  * 
- * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class CurlHandler extends NetworkHandler

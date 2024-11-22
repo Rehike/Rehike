@@ -5,7 +5,6 @@ namespace Rehike\Network\Handler;
  * This is a factory class that is used internally to determine
  * the best default network handler to use.
  * 
- * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  */
 class NetworkHandlerFactory
 {

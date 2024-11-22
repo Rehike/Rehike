@@ -1,7 +1,6 @@
 /**
  * @fileoverview Provides basic dialog behaviours for Rehike core JS.
  * 
- * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 

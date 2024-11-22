@@ -13,7 +13,6 @@ use Rehike\i18n\Internal\Lang\NamespaceBoundLanguageApi;
  * Examples include having Apache installed as a service, which involves
  * misconfiguration of middleware and which can be exploited by malware.
  * 
- * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class SecurityLightbox

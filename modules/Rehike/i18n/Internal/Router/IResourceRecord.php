@@ -7,7 +7,6 @@ namespace Rehike\i18n\Internal\Router;
  * A resource record must be able to be converted into an object, and otherwise
  * does not represent much value.
  * 
- * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  */
 interface IResourceRecord
 {

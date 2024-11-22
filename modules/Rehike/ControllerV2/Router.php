@@ -7,7 +7,6 @@ use Rehike\SimpleFunnel;
 /**
  * Implements the Controller V2 router.
  * 
- * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class Router

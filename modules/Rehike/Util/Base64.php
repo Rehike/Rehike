@@ -7,7 +7,6 @@ use function base64_decode;
 /**
  * Provides common base64 utilities.
  * 
- * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class Base64

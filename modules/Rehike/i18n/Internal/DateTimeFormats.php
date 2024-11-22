@@ -5,7 +5,6 @@ namespace Rehike\i18n\Internal;
  * Enumeration for date/time formats.
  * 
  * @enum
- * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  */
 class DateTimeFormats
 {

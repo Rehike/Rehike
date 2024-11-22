@@ -10,7 +10,6 @@ use const Rehike\Constants\GH_REPO;
  * Each successful request shall be cached for the next 60 minutes. This is
  * to avoid hitting the request cap for unauthenticated GitHub rest API requests.
  * 
- * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class RemoteGit

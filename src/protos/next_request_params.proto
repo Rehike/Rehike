@@ -5,7 +5,6 @@ package com.youtube.innertube.request;
 /*
  * Next request parameters (used for linked comment IDs in Rehike).
  *
- * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 message NextRequestParams {

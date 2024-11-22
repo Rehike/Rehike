@@ -5,7 +5,6 @@ namespace Rehike\Model\Traits;
  * A common Runs trait that can be implemented and used
  * by all models.
  * 
- * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 trait Runs

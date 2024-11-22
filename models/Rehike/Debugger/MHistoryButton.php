@@ -13,7 +13,6 @@ use Rehike\Model\Common\MButton;
  * 
  * This feature is currently a work in progress.
  * 
- * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class MHistoryButton extends MButton

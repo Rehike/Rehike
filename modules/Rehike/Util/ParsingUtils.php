@@ -8,7 +8,6 @@ use function preg_replace;
 /**
  * Provides common InnerTube parsing utilities for Rehike.
  * 
- * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class ParsingUtils

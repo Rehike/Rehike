@@ -4,7 +4,6 @@ namespace Rehike\Debugger;
 /**
  * Implements a general error wrapper class.
  * 
- * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Developers
  */
 class ErrorWrapper

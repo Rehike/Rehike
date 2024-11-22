@@ -18,7 +18,6 @@ use Exception;
 /**
  * Manages language definitions loading.
  * 
- * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  */
 final class Loader
 {

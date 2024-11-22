@@ -5,7 +5,6 @@ namespace Rehike\i18n\Internal\Lang\Culture;
  * Defines the types of writing direction a language may have.
  * 
  * @enum
- * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  */
 class WritingDirection
 {
