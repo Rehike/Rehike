@@ -11,6 +11,7 @@ use Exception;
  * little-endian type without a byte-order mark at the start of the file, and
  * without introducing additional parameters to the base constructor.
  * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  */
 final class Utf16LeStringParser extends Utf16StringParser
 {

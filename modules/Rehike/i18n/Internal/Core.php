@@ -9,6 +9,7 @@ use Rehike\Validation\ValidGeolocations;
 /**
  * Implements core services pertaining to the Rehike i18n system.
  * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class Core

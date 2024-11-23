@@ -21,6 +21,7 @@ use Generator;
  * functions in ES6, when generators were available but async functions
  * were not.
  * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class Concurrency

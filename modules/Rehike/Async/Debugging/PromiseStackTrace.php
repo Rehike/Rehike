@@ -18,6 +18,7 @@ use Exception;
  * 
  * The original (full) stack trace is preserved for advanced readings.
  * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class PromiseStackTrace implements IPromiseStackTrace

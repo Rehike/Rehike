@@ -9,6 +9,7 @@ use Exception;
  * Thus, no arguments are used to construct one. This is sometimes
  * useful where exception types tend not to differ.
  * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  */
 abstract class BaseHardMessageException extends Exception
 {

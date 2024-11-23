@@ -6,6 +6,7 @@ namespace Rehike\i18n\Internal\Parsing;
  * 
  * This supports both big-endian and little-endian UTF-16 encoding types.
  * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  */
 class Utf16StringParser implements IStringParser
 {

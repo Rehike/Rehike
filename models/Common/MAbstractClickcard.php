@@ -4,6 +4,7 @@ namespace Rehike\Model\Common;
 /**
  * Abstract clickcard definitions.
  * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 abstract class MAbstractClickcard

@@ -4,6 +4,7 @@ namespace Rehike;
 /**
  * A simple profiler utility.
  * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class Profiler

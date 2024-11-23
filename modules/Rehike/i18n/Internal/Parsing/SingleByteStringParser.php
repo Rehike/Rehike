@@ -12,6 +12,7 @@ namespace Rehike\i18n\Internal\Parsing;
  * ASCII characters during the parsing process, but the input and output may
  * contain characters of other character sets (again, I have UTF-8 in mind).
  * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  */
 class SingleByteStringParser implements IStringParser
 {

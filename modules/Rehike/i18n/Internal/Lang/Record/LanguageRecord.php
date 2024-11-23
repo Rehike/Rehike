@@ -6,6 +6,7 @@ use Rehike\i18n\Internal\Router\IResourceRecord;
 /**
  * A data representation of an i18n record.
  * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  */
 class LanguageRecord implements IResourceRecord
 {

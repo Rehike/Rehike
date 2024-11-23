@@ -8,6 +8,7 @@ use Rehike\Model\Common\MButton;
 /**
  * Implements a common model for the signin clickcard.
  * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class MSigninClickcard extends MAbstractClickcard

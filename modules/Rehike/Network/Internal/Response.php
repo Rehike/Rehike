@@ -17,6 +17,7 @@ use function json_decode;
 /**
  * Represents a network response.
  * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class Response implements IResponse

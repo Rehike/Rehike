@@ -4,6 +4,7 @@ namespace Rehike\Model\ViewModelConverter;
 /**
  * Converts InnerTube button view models to renderers.
  * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class ButtonViewModelConverter extends BasicVMC

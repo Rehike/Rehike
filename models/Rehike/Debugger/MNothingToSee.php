@@ -9,6 +9,7 @@ use Rehike\i18n\i18n;
  * This is a general placeholder that can be used when there's no content
  * to display.
  * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Developers
  */
 class MNothingToSee

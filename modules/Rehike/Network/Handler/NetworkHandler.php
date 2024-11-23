@@ -12,6 +12,7 @@ use Rehike\Network\{
 /**
  * A template for all network handlers.
  * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  */
 abstract class NetworkHandler extends Event
 {

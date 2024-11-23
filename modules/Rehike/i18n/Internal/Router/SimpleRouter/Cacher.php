@@ -11,6 +11,7 @@ use Rehike\i18n\Internal\Lang\Record\LanguageRecord;
  * is only performed once for a single cache file, and then the result's cached
  * here for subsequent access.
  * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  */
 #[StaticClass]
 final class Cacher

@@ -27,6 +27,7 @@ use function trigger_error;
  * does not necessarily let synchronous functions continue executing in
  * between events.
  * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  */
 abstract class Event implements IFulfillableEvent
 {

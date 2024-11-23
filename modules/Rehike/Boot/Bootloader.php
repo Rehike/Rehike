@@ -11,6 +11,7 @@ use Rehike\ConfigManager\Config;
 /**
  * Main bootstrapper insertion point for Rehike.
  * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 final class Bootloader

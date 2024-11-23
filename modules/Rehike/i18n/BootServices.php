@@ -10,6 +10,7 @@ use Rehike\Validation\ValidHostLanguages;
 /**
  * Code organization stub for i18n boot services.
  * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class BootServices

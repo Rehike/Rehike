@@ -21,6 +21,7 @@ use Rehike\Model\Watch\WatchBakery;
  * This is generally a restructuring of the Kevlar formatted data
  * returned by InnerTube with WEB v2 as parameters.
  * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class MVideoPrimaryInfoRenderer

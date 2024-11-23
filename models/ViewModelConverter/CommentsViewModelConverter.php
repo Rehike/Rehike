@@ -8,6 +8,7 @@ use Rehike\i18n\i18n;
 /**
  * Converts comment view models to renderers.
  * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class CommentsViewModelConverter extends BasicVMC

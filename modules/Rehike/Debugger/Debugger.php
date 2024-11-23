@@ -24,6 +24,7 @@ use \Rehike\Model\Rehike\Debugger\{
  * 
  * HTML and JS lands are implemented in template/hitchhiker/rehike/debugger.
  * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Developers
  */
 class Debugger

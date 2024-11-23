@@ -9,6 +9,7 @@ use Rehike\Model\Watch\WatchBakery;
 /**
  * Implement the model used by the video's secondary info renderer.
  * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class MVideoSecondaryInfoRenderer

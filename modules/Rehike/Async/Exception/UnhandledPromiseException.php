@@ -7,6 +7,7 @@ use Rehike\Async\Debugging\PromiseStackTrace;
 /**
  * Thrown when a Promise is unhandled within a session.
  * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  */
 class UnhandledPromiseException extends PromiseException
 {

@@ -8,6 +8,7 @@ package com.youtube.innertube.navigation;
  * The fun part is!!! Desktop YouTube doesn't really use protobuf, it uses
  * JSON. So I didn't have to get creative with the names.
  *
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 message NavigationEndpoint {

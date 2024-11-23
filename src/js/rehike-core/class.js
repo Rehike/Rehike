@@ -1,6 +1,7 @@
 /**
  * @fileoverview CSS class utilities for Rehike Core JS.
  * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 

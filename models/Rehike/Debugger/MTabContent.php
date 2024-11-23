@@ -4,6 +4,7 @@ namespace Rehike\Model\Rehike\Debugger;
 /**
  * Implements the tab content wrapper.
  * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Developers
  */
 abstract class MTabContent

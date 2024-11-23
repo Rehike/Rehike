@@ -11,6 +11,7 @@ use Exception;
 /**
  * Helper for getting the correct string parser for a given encoding type.
  * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  */
 #[StaticClass]
 final class StringParserFactory

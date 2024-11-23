@@ -6,6 +6,7 @@ use Rehike\ViewModelParser;
 /**
  * Converts like button view models to renderers.
  * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class LikeButtonViewModelConverter extends BasicVMC

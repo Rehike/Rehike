@@ -7,6 +7,7 @@ namespace Rehike\Model\Rehike\Panel;
  * This is a shared base for GUI pages accessible through /rehike/
  * URLs, which includes Config and Version.
  * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class RehikePanelPage

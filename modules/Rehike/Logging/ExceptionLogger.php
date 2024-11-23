@@ -14,6 +14,7 @@ use Throwable;
  * logs. Most of the implementation is inspired by this post:
  * https://www.php.net/manual/en/exception.gettraceasstring.php#114980
  * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class ExceptionLogger

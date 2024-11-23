@@ -21,6 +21,7 @@ use Rehike\ConfigManager\Config;
  * module in order to retain portability. Unfortunately,
  * that does mean some code redundancy.
  * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class Cacher

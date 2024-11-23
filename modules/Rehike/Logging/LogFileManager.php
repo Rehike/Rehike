@@ -11,6 +11,7 @@ use DateTime;
 /**
  * Manages the creation of log files.
  * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class LogFileManager

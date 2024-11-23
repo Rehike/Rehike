@@ -4,6 +4,7 @@ namespace Rehike\Util\Nameserver;
 /**
  * Structure storing information used to override the nameserver.
  * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class NameserverInfo

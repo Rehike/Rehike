@@ -11,6 +11,7 @@ use Rehike\Async\Promise;
  * This is a very barren class. Most of the functionality is implemented
  * in the Converter.
  * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class MGuide

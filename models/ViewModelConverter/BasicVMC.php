@@ -4,6 +4,7 @@ namespace Rehike\Model\ViewModelConverter;
 /**
  * Provides basic functionality common to most view model converters.
  * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 abstract class BasicVMC

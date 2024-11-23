@@ -17,6 +17,7 @@ use Rehike\PropertyAtPathException;
 /**
  * Manages Rehike user configuration.
  * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class Config

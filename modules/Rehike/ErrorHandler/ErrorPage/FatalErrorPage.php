@@ -6,6 +6,7 @@ use Rehike\FileSystem;
 /**
  * Represents the page for a fatal PHP error.
  * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class FatalErrorPage extends AbstractErrorPage 

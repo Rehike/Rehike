@@ -4,6 +4,7 @@ namespace Rehike\Version;
 /**
  * Get version information from the .version file
  * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class DotVersion

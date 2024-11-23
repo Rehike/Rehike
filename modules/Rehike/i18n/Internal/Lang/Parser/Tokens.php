@@ -4,6 +4,7 @@ namespace Rehike\i18n\Internal\Lang\Parser;
 /**
  * I18N language token definitions.
  * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  */
 class Tokens
 {

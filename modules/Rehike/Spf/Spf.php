@@ -7,6 +7,7 @@ namespace Rehike\Spf;
  * This is used for providing support for YouTube's SPF.js library for
  * single-page applications.
  * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class Spf

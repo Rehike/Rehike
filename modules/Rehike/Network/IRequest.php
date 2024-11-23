@@ -31,6 +31,7 @@ use Rehike\Network\Enum\RequestErrorPolicy;
  *                              for the request. If not specified, then the
  *                              behavior is left to the implementer. 
  * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  */
 interface IRequest
 {

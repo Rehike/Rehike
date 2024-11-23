@@ -9,6 +9,7 @@ use CurlHandle;
  * A structure that stores a cURL handle and the original Request object
  * for easy internal use.
  * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  */
 class RequestWrapper
 {

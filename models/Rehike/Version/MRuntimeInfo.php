@@ -10,6 +10,7 @@ use Rehike\i18n\Internal\Lang\NamespaceBoundLanguageApi;
  * Gets information about the user's runtime environment, namely the operating
  * system and PHP version.
  * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class MRuntimeInfo
