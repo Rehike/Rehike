@@ -62,6 +62,13 @@
     <div class="title">{{ rehike.i18n.get("rehike/version", "creditsDevelopersTitle") }}</div>
     <ul>
         {{ _self.developer_entry(
+            rehike.i18n.get("rehike/version", "creditsTaniko"),
+            "/rehike/static/version/taniko.jpg",
+            {
+                githubLink: "//github.com/YukisCoffee"
+            }
+        ) }}
+        {{ _self.developer_entry(
             rehike.i18n.get("rehike/version", "creditsAubrey"),
             "/rehike/static/version/aubrey.png",
             {

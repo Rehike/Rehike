@@ -17,6 +17,7 @@ use Rehike\i18n\i18n;
  * Bakes the contents of the configuration model.
  * 
  * @author Aubrey Pankow <aubyomori@gmail.com>
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class ConfigModelContents

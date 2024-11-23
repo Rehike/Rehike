@@ -20,6 +20,7 @@ use stdClass;
  * This implements unique properties directly on the class. The child
  * class will implement all alias properties.
  * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author Isabella Lulamoon <kawapure@gmail.com>
  * @author The Rehike Maintainers
  */
@@ -112,6 +113,9 @@ abstract class RehikeUtilsDelegateBase extends stdClass
      * in Twig. Twig only supports iterating associative arrays, not
      * objects.
      * 
+     * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
+     * @author The Rehike Maintainers
+     * 
      * @param string $obj to cast
      * @return array of the casted object
      */
@@ -122,6 +126,8 @@ abstract class RehikeUtilsDelegateBase extends stdClass
 
     /**
      * Generate a template level RID.
+     * 
+     * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
      */
     public static function generateRid(): int
     {
@@ -303,6 +309,7 @@ abstract class RehikeUtilsDelegateBase extends stdClass
      * 
      * This is meant to be used as a helper function for Twig.
      * 
+     * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
      * @author Aubrey Pankow <aubyomori@gmail.com>
      * 
      * @param object $array of the thumbnail overlays
@@ -334,6 +341,8 @@ abstract class RehikeUtilsDelegateBase extends stdClass
      * 
      * This is meant to be used as a helper function for Twig.
      * 
+     * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
+     * 
      * @param object $array of the thumbnail overlays
      * 
      * @return ?object
@@ -359,6 +368,9 @@ abstract class RehikeUtilsDelegateBase extends stdClass
 
     /**
      * Resolve a guide endpoint (used for some attributes on guide items, like the IDs).
+     * 
+     * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
+     * @author The Rehike Maintainers
      * 
      * @param object $guideItem
      * @return string
@@ -413,6 +425,9 @@ abstract class RehikeUtilsDelegateBase extends stdClass
      * Serialise a guide navigation endpoint in URL-base64 protobuf.
      * 
      * This is very accurate to the official Hitchhiker implementation.
+     * 
+     * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
+     * @author The Rehike Maintainers
      * 
      * @param object $endpoint
      * @return string

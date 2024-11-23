@@ -32,6 +32,7 @@ use Rehike\DisableRehike\DisableRehike;
  * This implements the base API and data used to render a Hitchhiker
  * page.
  * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author Aubrey Pankow <aubyomori@gmail.com>
  * @author Isabella Lulamoon <kawapure@gmail.com>
  */

@@ -13,6 +13,7 @@ use \Com\Google\Protos\Youtube\Api\Innertube\ContinuationWrapper;
  * Used to request shelves homepage using the WEB v2 InnerTube client.
  * 
  * @author Aubrey Pankow <aubyomori@gmail.com>
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class WebV2Shelves

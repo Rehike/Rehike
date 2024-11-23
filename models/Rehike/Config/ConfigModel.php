@@ -15,6 +15,7 @@ use Rehike\Model\Common\MAlert;
  * Configuration GUI.
  * 
  * @author Aubrey Pankow <aubyomori@gmail.com>
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class ConfigModel extends RehikePanelPage

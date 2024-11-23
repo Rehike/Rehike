@@ -10,6 +10,7 @@ use Rehike\SignInV2\Info\SessionInfo;
  * than the final class. Temporary state can be stored here.
  * 
  * @author Isabella Lulamoon <kawapure@gmail.com>
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class SessionInfoBuilder implements IBuilder

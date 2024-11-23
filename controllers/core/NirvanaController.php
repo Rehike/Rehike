@@ -16,6 +16,7 @@ use Rehike\Model\{
  * This implements the base API and data used to render a Nirvana (Appbar)
  * page.
  * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author Aubrey Pankow <aubyomori@gmail.com>
  * @author Isabella Lulamoon <kawapure@gmail.com>
  */

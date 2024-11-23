@@ -105,6 +105,9 @@ class MMetadataRowContainer
                     $data = @$row->infoRowRenderer;
                     $element = isset($data->expandedMetadata) ? "expandedMetadata" : "defaultMetadata"; 
 
+                    // WHY IS THE FUCKING TITLE HARDCODED UPPERCASE
+                    // I AM GOING TO FUCKING KILL MYSELF
+                    // love taniko
                     $title = ucfirst(strtolower(ParsingUtils::getText(@$data->title)));
 
                     $content = ParsingUtils::getText(@$data->{$element});

@@ -22,6 +22,7 @@ use Rehike\ConfigManager\Config;
  * of requerying each subsequent visit.
  * 
  * @author Isabella Lulamoon <kawapure@gmail.com>
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  */
 class PlayerUpdater
 {

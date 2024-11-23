@@ -16,6 +16,7 @@ use \Rehike\Model\Common\Subscription\MSubscriptionPreferencesOverlay;
  * preferences.
  * 
  * @author Aubrey Pankow <aubyomori@gmail.com>
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 return new class extends AjaxController

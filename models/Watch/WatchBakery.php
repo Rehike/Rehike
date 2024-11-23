@@ -40,6 +40,7 @@ use Rehike\YtApp;
  * This is fed into the templater just as a raw response would.
  * Please perform any processing within this scope.
  * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author Isabella Lulamoon <kawapure@gmail.com>
  * @author The Rehike Maintainers
  */
