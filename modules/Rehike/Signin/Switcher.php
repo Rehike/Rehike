@@ -6,6 +6,7 @@ namespace Rehike\Signin;
  * 
  * Needless to say, it's one of the messier Rehike modules.
  * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class Switcher

@@ -23,6 +23,7 @@ use function curl_setopt_array;
  * Utility class for transforming a Request object into a
  * cURL handler.
  * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class RequestTransformer

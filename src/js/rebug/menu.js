@@ -4,6 +4,7 @@
  * This is work in progress and currently unimplemented; I pushed
  * what was working early because I was sick.
  * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 

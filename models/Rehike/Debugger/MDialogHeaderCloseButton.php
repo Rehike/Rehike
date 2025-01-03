@@ -8,6 +8,7 @@ use \Rehike\Model\Common\MButton;
  * Implements the close button used in the header. This is used in the JS
  * world to close the dialog.
  * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class MDialogHeaderCloseButton extends MButton

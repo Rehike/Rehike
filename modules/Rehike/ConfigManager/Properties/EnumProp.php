@@ -4,6 +4,7 @@ namespace Rehike\ConfigManager\Properties;
 /**
  * Enumerated property.
  * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class EnumProp extends AbstractAssociativeProp

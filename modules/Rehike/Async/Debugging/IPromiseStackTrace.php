@@ -4,6 +4,7 @@ namespace Rehike\Async\Debugging;
 /**
  * An object providing access to stack traces for debugging a Promise.
  * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 interface IPromiseStackTrace

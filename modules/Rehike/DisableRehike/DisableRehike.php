@@ -11,6 +11,7 @@ use Rehike\{
 /**
  * Allows to user to bypass Rehike without disabling the Rehike server itself.
  * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class DisableRehike

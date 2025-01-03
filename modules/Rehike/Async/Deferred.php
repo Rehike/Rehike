@@ -8,6 +8,7 @@ use Throwable;
  * A template for a Promise controller.
  * 
  * @template T
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  */
 trait Deferred/*<T>*/
 {

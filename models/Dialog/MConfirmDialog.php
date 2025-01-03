@@ -4,6 +4,7 @@ namespace Rehike\Model\Dialog;
 /**
  * Confirmation dialog model.
  * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class MConfirmDialog extends MDialog

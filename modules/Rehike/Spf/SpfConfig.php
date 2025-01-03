@@ -6,6 +6,7 @@ namespace Rehike\Spf;
  * 
  * This is exposed via yt.spfConfig.
  * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class SpfConfig

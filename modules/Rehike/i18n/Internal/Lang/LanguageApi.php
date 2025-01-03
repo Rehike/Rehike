@@ -14,6 +14,7 @@ use Exception;
 /**
  * Implements various language APIs.
  * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  */
 #[StaticClass]
 class LanguageApi

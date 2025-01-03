@@ -10,6 +10,7 @@ use function PHPSTORM_META\map;
 /**
  * Declares translatable date/time APIs.
  * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  */
 class DateTimeApi
 {

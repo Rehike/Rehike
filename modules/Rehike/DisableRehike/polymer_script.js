@@ -3,6 +3,7 @@
  * Soft-disable client script: allows the user to easily return to Rehike using
  * the Polymer menu.
  * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 

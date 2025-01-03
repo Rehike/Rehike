@@ -13,6 +13,7 @@ class PropertyAtPathException extends \Exception {}
  * 
  * This is an eval mess, be warned.
  * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author Aubrey Pankow <aubyomori@gmail.com>
  * @author The Rehike Maintainers
  */

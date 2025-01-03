@@ -18,6 +18,7 @@ use Rehike\Model\Channels\Channels4\MHeader;
  * Model bakery for the channels page.
  * 
  * @author Aubrey Pankow <aubyomori@gmail.com>
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author Isabella Lulamoon <kawapure@gmail.com>
  * @author The Rehike Maintainers
  */

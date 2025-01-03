@@ -11,6 +11,7 @@ use ReflectionObject, ReflectionProperty, ReflectionMethod;
  * walker "$yt walker" after the global $yt object. The name of this class
  * still reflects that earlier era.
  * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Developers
  */
 class MYtWalker extends MTabContent

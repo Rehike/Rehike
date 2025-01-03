@@ -19,6 +19,7 @@ use Rehike\Async\Promise;
  * 
  * @version 2.0
  * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class Network

@@ -5,6 +5,7 @@ namespace Rehike\ControllerV2;
  * Implements session caching functionality for imported
  * Controller v2 controller modules.
  * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class ControllerStore

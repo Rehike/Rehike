@@ -18,6 +18,7 @@ use Rehike\i18n\Internal\Router\SimpleRouter\Cacher;
  * is provided, whose subdirectories are named language identifiers (i.e. en-US),
  * which then may contain additional files and subdirectories for namespaces.
  * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  */
 class SimpleRouter implements IRouter
 {

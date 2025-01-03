@@ -13,6 +13,7 @@ use Rehike\Network\ResponseHeaders;
  * proxies active
  * 
  * @author Aubrey Pankow <aubyomori@gmail.com>
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  */
 class SimpleFunnel
 {
@@ -180,6 +181,7 @@ class SimpleFunnel
 /**
  * A custom class that represents a SimpleFunnel response.
  * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class SimpleFunnelResponse extends \Rehike\Network\Internal\Response

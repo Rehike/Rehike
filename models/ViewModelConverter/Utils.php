@@ -4,6 +4,7 @@ namespace Rehike\Model\ViewModelConverter;
 /**
  * Provides common utilities for the view model converters.
  * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class Utils
@@ -11,6 +12,9 @@ class Utils
     /**
      * Detects the type of an InnerTube command, which is ambiguous in view
      * models.
+     * 
+     * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
+     * @author The Rehike Maintainers
      */
     public static function detectInnertubeCommandType(object $command): string
     {

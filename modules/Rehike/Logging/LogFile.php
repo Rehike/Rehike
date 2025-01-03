@@ -19,6 +19,7 @@ use const Rehike\Constants\GH_ENABLED;
 /**
  * Puts together log files.
  * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class LogFile

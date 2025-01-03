@@ -31,6 +31,7 @@ use Rehike\Player\{
  * or completely different purposes.
  * 
  * @author Isabella Lulamoon <kawapure@gmail.com>
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  * 
  * @license Mozilla Public License 2.0

@@ -15,6 +15,11 @@ use Rehike\Async\Promise;
  * A god class for converting InnerTube guide responses to
  * the Rehike format.
  * 
+ * It's messy because I was lazy and sick while writing this,
+ * sorry. <--- hi taniko from the past i love you and it really wasn't bad
+ * code at all :3 it's very readable and well documented
+ * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class Converter

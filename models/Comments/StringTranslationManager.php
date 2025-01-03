@@ -10,6 +10,7 @@ use Rehike\i18n\i18n;
  * Here is a translation manager to make the German -> user language translation
  * process simple.
  * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class StringTranslationManager

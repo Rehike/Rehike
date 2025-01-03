@@ -1,6 +1,7 @@
 /**
  * Implements the base JS for the Rehike debugger.
  * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 

@@ -10,6 +10,7 @@ use Rehike\i18n\Internal\Core as I18nCore;
  * 
  * TODO: Deprecate?
  * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class InnertubeContext

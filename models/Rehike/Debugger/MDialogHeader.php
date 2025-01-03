@@ -6,6 +6,7 @@ use \Rehike\i18n\i18n;
 /**
  * Implements the dialog header.
  * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Developers
  */
 class MDialogHeader

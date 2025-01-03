@@ -24,6 +24,7 @@ use Exception;
  * This is designed to be an ultra fast parser, so it only parses through the
  * file linearly, and no tokenization or preprocessing is done on the input.
  * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  */
 class RecordFileParser
 {

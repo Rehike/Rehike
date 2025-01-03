@@ -22,6 +22,7 @@ namespace Rehike;
  * so it may not be entirely necessary for all view models.
  *
  * @author Isabella Lulamoon <kawapure@gmail.com>
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class ViewModelParser

@@ -1,10 +1,10 @@
 {
-	"previousHash": "40d5f54229c6a08bbcbf24f5c0edc9d94be8a04b",
-	"currentRevisionId": 1704,
-	"subject": "Memory holed (part 2!!)",
-	"body": "Memory holed (part 2!!)",
+	"previousHash": "3af334775ebddf5f1b7766daaf8810d2734b382b",
+	"currentRevisionId": 1708,
+	"subject": "Revert the memory hole (partially)",
+	"body": "Revert the memory hole (partially)",
 	"branch": "master",
 	"committerName": "Isabella Lulamoon",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1732313920
+	"time": 1735865268
 }

@@ -12,6 +12,7 @@ require "includes/functions/safe_class_alias.php";
  * 
  * @version 2.0
  * @author Isabella Lulamoon <kawapure@gmail.com>
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class Autoloader

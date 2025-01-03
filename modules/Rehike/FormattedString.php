@@ -5,6 +5,7 @@ namespace Rehike;
  * A class representing a formatted string, similar to InnerTube's formatted
  * strings.
  * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class FormattedString

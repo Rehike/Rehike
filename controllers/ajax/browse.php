@@ -16,6 +16,7 @@ use function Rehike\Async\async;
  * Controller for browse AJAX requests.
  * 
  * @author Aubrey Pankow <aubyomori@gmail.com>
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 return new class extends \Rehike\Controller\core\AjaxController

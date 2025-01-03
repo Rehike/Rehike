@@ -7,6 +7,7 @@ use Exception;
  * Used by the Nameserver module when an error is encountered during
  * DNS lookup.
  * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  */
 class NameserverDnsLookupException extends Exception
 {

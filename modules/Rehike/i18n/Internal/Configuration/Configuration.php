@@ -4,6 +4,7 @@ namespace Rehike\i18n\Internal\Configuration;
 /**
  * Stores global framework configuration.
  * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  */
 final class Configuration
 {

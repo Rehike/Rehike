@@ -15,6 +15,7 @@ use Rehike\Async\Promise\PromiseStatus;
  * reuse in other projects, without them having to include Rehike's
  * heavy network + async stack.
  * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author Isabella Lulamoon <kawapure@gmail.com>
  * @author The Rehike Maintainers
  */

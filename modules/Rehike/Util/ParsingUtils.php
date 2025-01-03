@@ -8,6 +8,7 @@ use function preg_replace;
 /**
  * Provides common InnerTube parsing utilities for Rehike.
  * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class ParsingUtils
@@ -198,6 +199,8 @@ class ParsingUtils
      * provided identifier.
      * 
      * This is meant to be used as a helper function for Twig.
+     * 
+     * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
      * 
      * @param object $array of the thumbnail overlays
      * @param string $name of the overlay identifier

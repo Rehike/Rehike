@@ -14,6 +14,7 @@ use Rehike\Util\ParsingUtils;
  * /getAccountSwitcherEndpoint and outputs it into the session info builder.
  * 
  * @author Isabella Lulamoon <kawapure@gmail.com>
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class SwitcherParser

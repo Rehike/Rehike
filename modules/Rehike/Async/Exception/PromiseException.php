@@ -10,6 +10,7 @@ use Exception;
 /**
  * Represents an Exception that occurs within or regarding Promises.
  * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class PromiseException extends Exception

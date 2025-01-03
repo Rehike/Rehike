@@ -1,6 +1,7 @@
 /**
  * @fileoverview Implements the history manager for Rebug.
  * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 

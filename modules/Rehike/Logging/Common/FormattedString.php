@@ -4,6 +4,7 @@ namespace Rehike\Logging\Common;
 /**
  * A simple formatted string system for the logger.
  * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class FormattedString

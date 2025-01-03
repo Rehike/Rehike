@@ -17,6 +17,7 @@ use stdClass;
  * 
  * This extends stdClass in order to support dynamic properties.
  * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class Context extends stdClass

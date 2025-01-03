@@ -8,6 +8,7 @@ use \Rehike\Model\Common\MButton;
 /**
  * Implements the Rehike debugger popup open button.
  * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Developers
  */
 class MOpenButton extends MButton

@@ -10,6 +10,7 @@ use Rehike\Model\Dialog\MConfirmDialog;
 /**
  * Data model for the shared sidebar for Rehike Panel pages (version/config).
  * 
+ * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
 class Sidebar
