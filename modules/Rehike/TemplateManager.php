@@ -74,8 +74,6 @@ class TemplateManager
 
         $passedVars = [self::$yt] + $vars;
 
-        if ("" == $template) $template = self::$template;
-
         return self::$twig->render("$template.twig", $passedVars);
     }
 

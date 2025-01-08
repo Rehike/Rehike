@@ -81,7 +81,7 @@ class PickerFragmentsAjax extends AjaxController implements IGetController, IPos
         header("Content-Type: application/json");
         
         $obj = (object)["html" => null];
-        $obj->html = TemplateManager::render();
+        $obj->html = TemplateManager::render([], $this->template);
         
         echo json_encode($obj);
     }
