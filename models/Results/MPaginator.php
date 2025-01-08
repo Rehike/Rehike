@@ -1,7 +1,7 @@
 <?php
 namespace Rehike\Model\Results;
 
-use Rehike\Controller\ResultsController;
+use Rehike\Controller\ResultsPageController;
 use Rehike\i18n\i18n;
 
 /**
@@ -89,7 +89,7 @@ class MPaginator
             $response[] = new MPaginatorButton(
                 text: $strings->get("pagePrev"), 
                 selected: false, 
-                url: ResultsController::getPageParamUrl(ResultsController::$param, $pageNumber - 1)
+                url: ResultsPageController::getPageParamUrl(ResultsPageController::$param, $pageNumber - 1)
             );
         }
 
@@ -97,7 +97,7 @@ class MPaginator
         {
             $text = $displayedPages[$i];
             $selected = $displayedPages[$i] == $pageNumber;
-            $url = ResultsController::getPageParamUrl(ResultsController::$param, $displayedPages[$i]);
+            $url = ResultsPageController::getPageParamUrl(ResultsPageController::$param, $displayedPages[$i]);
             
             $response[] = new MPaginatorButton($text, $selected, $url);
         }
@@ -107,7 +107,7 @@ class MPaginator
             $response[] = new MPaginatorButton(
                 text: $strings->get("pageNext"), 
                 selected: false, 
-                url: ResultsController::getPageParamUrl(ResultsController::$param, $pageNumber + 1)
+                url: ResultsPageController::getPageParamUrl(ResultsPageController::$param, $pageNumber + 1)
             );
         }
 

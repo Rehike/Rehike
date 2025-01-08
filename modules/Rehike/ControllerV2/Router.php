@@ -58,7 +58,7 @@ class Router
     /**
      * Configure router definitions for redirections.
      * 
-     * @param string[]|callback[] $defs
+     * @param string[] $defs
      */
     public static function redirect(array $defs): void
     {
@@ -189,55 +189,84 @@ class Router
         // include only one match as well.
         if (!is_null($bestMatch) && !is_null($definitions[$bestMatch]))
         {
-            return self::pointerHandler($definitions[$bestMatch], $method);
+            return self::invokeHandlerForMatch($definitions[$bestMatch], $method);
         }
 
         // If the current URI does not exist, fall back to the
         // default condition.
         if (isset($definitions["default"]))
         {
-            return self::pointerHandler($definitions["default"], $method);
+            return self::invokeHandlerForMatch($definitions["default"], $method);
         }
     }
 
     /**
-     * Handle a definition's pointer.
-     * 
-     * As of right now, only direct callbacks and strings 
-     * pointing to a file path are supported.
+     * Invokes the controller handler for a match to a class.
      * 
      * @param string|callable $pointer
      * @param string $method that now finally gets used by the module!
      * @return mixed|void
      */
-    protected static function pointerHandler(
+    protected static function invokeHandlerForMatch(
             string|callable $pointer, 
             string $method
     )
     {
-        /** @var GetControllerInstance $import */
-        $import;
         if (is_callable($pointer))
         {
             // Premature return since this is a unique case
+            // XXX (kawapure): This style of handling keeps the arguments from CV2 for now.
+            // This should be reworked in the future to abandon the CV2 style. No function
+            // controller in Rehike makes use of these arguments or even acknowledges them,
+            // as the feature is only used to hastily exit.
             return $pointer(Core::$state, Core::$template, new RequestMetadata());
         }
         else if (is_string($pointer))
         {
-            foreach ([
-                "controllers/$pointer.php",
-                "controllers/$pointer",
-                "$pointer.php",
-                $pointer
-            ] as $path) if (file_exists($path) && is_file($path))
+            // String pointers are class name references, so we will query for information
+            // about this class.
+            if (!class_exists($pointer))
             {
-                self::$debugLog = [
-                    "type" => "GET",
-                    "route" => $path
-                ];
-
-                $import = Core::import($path, false);
-                break;
+                throw new \Exception("Controller class does not exist: " . $pointer);
+            }
+            
+            if (!in_array(IController::class, class_implements($pointer)))
+            {
+                throw new \Exception("Attempting to use non-controller class \"$pointer\" as controller.");
+            }
+            
+            if ($method == "get")
+            {
+                if (!in_array(IGetController::class, class_implements($pointer)))
+                {
+                    throw new \Exception("Using non-GET controller \"$pointer\" as GET controller.");
+                }
+            }
+            else if ($method == "post")
+            {
+                if (!in_array(IPostController::class, class_implements($pointer)))
+                {
+                    throw new \Exception("Using non-POST controller \"$pointer\" as POST controller.");
+                }
+            }
+            
+            /**
+             * @var IController
+             */
+            $instance = new $pointer();
+            $instance->initializeController(new RequestMetadata());
+            
+            if ($method == "get")
+            {
+                /** @var IGetController */
+                $getControllerInstance = $instance;
+                return $getControllerInstance->get();
+            }
+            else if ($method == "post")
+            {
+                /** @var IPostController */
+                $postControllerInstance = $instance;
+                return $postControllerInstance->post();
             }
         }
         else
@@ -248,8 +277,7 @@ class Router
                 "Controller pointer of type $type is not supported."
             );
         }
-
-        // Handle imports
-        return $import->{$method}();
+        
+        throw new \Exception("Should never get here.");
     }
 }

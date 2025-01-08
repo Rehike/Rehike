@@ -21,9 +21,6 @@ class TemplateManager
     // Must be an reference to the global Twig instance.
     public static \Twig\Environment $twig;
 
-    /** @var string */
-    public static string $template = "";
-
     // Must be a reference to the global context variable.
     public static YtApp $yt;
 
@@ -52,8 +49,6 @@ class TemplateManager
                 "auto_reload" => true
             ]
         );
-
-        ControllerV2::registerTemplateVariable(self::$template);
     }
 
     /**

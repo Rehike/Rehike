@@ -38,7 +38,6 @@ final class YtStateManager
     protected static function bindToEverything(YtApp $yt): void
     {
         TemplateManager::registerGlobalState($yt);
-        ControllerV2::registerStateVariable($yt);
         Debugger::init($yt);
         $yt->playerConfig = PlayerCore::getInfo();
 

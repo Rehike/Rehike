@@ -36,7 +36,7 @@ use Rehike\DisableRehike\DisableRehike;
  * @author Aubrey Pankow <aubyomori@gmail.com>
  * @author Isabella Lulamoon <kawapure@gmail.com>
  */
-abstract class HitchhikerController
+abstract class HitchhikerController extends PageController
 {
     /**
      * Stores information about the current page endpoint.
@@ -96,17 +96,17 @@ abstract class HitchhikerController
      * 
      * @param RequestMetadata $request   Reports request metadata.
      */
-    public function get(YtApp $yt, string &$template, RequestMetadata $request): void
+    public function get(): void
     {
         header("Content-Type: " .  $this->contentType);
-        $this->yt = $yt;
-        $this->init($yt, $template);
+        $this->yt = \Rehike\YtApp::getInstance();
+        $this->init();
 
-        $this->onGet($yt, $request);
+        $this->onGet($this->yt, $this->getRequest());
 
         Network::run();
 
-        $this->postInit($yt, $template);
+        $this->postInit();
 
         if ($this->useTemplate) $this->doGeneralRender();
     }
@@ -125,17 +125,17 @@ abstract class HitchhikerController
      * 
      * @param RequestMetadata $request   Reports request metadata.
      */
-    public function post(YtApp $yt, string &$template, RequestMetadata $request): void
+    public function post(): void
     {
         header("Content-Type: " .  $this->contentType);
-        $this->yt = $yt;
-        $this->init($yt, $template);
+        $this->yt = \Rehike\YtApp::getInstance();
+        $this->init();
 
-        $this->onPost($yt, $request);
+        $this->onPost($this->yt, $this->getRequest());
 
         Network::run();
 
-        $this->postInit($yt, $template);
+        $this->postInit();
 
         if ($this->useTemplate) $this->doGeneralRender();
     }
@@ -249,16 +249,16 @@ abstract class HitchhikerController
      * 
      * @return void
      */
-    protected function init(YtApp $yt, string &$template): void
+    protected function init(): void
     {
-        $yt->spfEnabled = false;
-        $yt->useModularCore = false;
-        $yt->page = (object)[];
+        $this->yt->spfEnabled = false;
+        $this->yt->useModularCore = false;
+        $this->yt->page = (object)[];
 
         if ($this->useTemplate)
         {
-            $yt->masthead = new MMasthead(false);
-            $yt->footer = new MFooter();
+            $this->yt->masthead = new MMasthead(false);
+            $this->yt->footer = new MFooter();
         }
     }
 
@@ -270,43 +270,43 @@ abstract class HitchhikerController
      * @param $yt        Template data.
      * @param $template  Backend template data.
      */
-    public function postInit(YtApp $yt, string &$template): void
+    public function postInit(): void
     {
         $template = $this->template;
         
         if (isset(self::$currentEndpoint))
         {
-            $yt->currentEndpoint = self::$currentEndpoint;
+            $this->yt->currentEndpoint = self::$currentEndpoint;
         }
         else
         {
-            $yt->currentEndpoint = null;
+            $this->yt->currentEndpoint = null;
         }
 
         if (!SecurityChecker::isSecure() && !Spf::isSpfRequested())
         {
-            $yt->rehikeSecurityNotice = new SecurityLightbox();
+            $this->yt->rehikeSecurityNotice = new SecurityLightbox();
         }
 
         if (Config::getConfigProp("hidden.disableRehike") == true)
         {
-            if (!isset($yt->page->alerts))
-                $yt->page->alerts = [];
+            if (!isset($this->yt->page->alerts))
+                $this->yt->page->alerts = [];
 
             $i18n = i18n::getNamespace("rehike/disable_rehike");
             
-            $yt->page->alerts[] = new MAlert([
+            $this->yt->page->alerts[] = new MAlert([
                 "type" => MAlert::TypeWarning,
                 "text" => $i18n->get("currentlyDisabledMessage"),
                 "hasCloseButton" => false
             ]);
         }
 		
-        if (isset($yt->masthead) && $yt->masthead instanceof MMasthead)
+        if (isset($this->yt->masthead) && $this->yt->masthead instanceof MMasthead)
         {
             // Since we have a template, we should have a masthead, so we'll try to apply
             // the yoodle.
-            $this->checkAndApplyYoodles($yt);
+            $this->checkAndApplyYoodles($this->yt);
         }
     }
     
@@ -350,7 +350,7 @@ abstract class HitchhikerController
             // recursion, but I don't care to look into it.
             $this->yt->spfConfig->rebugData = json_encode(Debugger::exposeSpf());
 
-            $capturedRender = TemplateManager::render();
+            $capturedRender = TemplateManager::render([], $this->template);
 
             header("Content-Type: application/json");
             echo $capturedRender;
@@ -363,7 +363,7 @@ abstract class HitchhikerController
              */
             Debugger::expose();
 
-            $capturedRender = TemplateManager::render();
+            $capturedRender = TemplateManager::render([], $this->template);
 
             // In the case this is not an SPF request, we don't have to do anything.
             echo $capturedRender;

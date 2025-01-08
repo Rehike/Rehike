@@ -31,28 +31,28 @@ abstract class NirvanaController extends HitchhikerController
     protected bool $delayLoadGuide = false;
 
     /** @inheritdoc */
-    protected function init(YtApp $yt, string &$template): void
+    protected function init(): void
     {
-        $yt->spfEnabled = true;
-        $yt->useModularCore = true;
-        $yt->modularCoreModules = [];
-        $yt->appbar = new MAppbar();
-        $yt->page = (object)[];
+        $this->yt->spfEnabled = true;
+        $this->yt->useModularCore = true;
+        $this->yt->modularCoreModules = [];
+        $this->yt->appbar = new MAppbar();
+        $this->yt->page = (object)[];
 
         if ($this->useTemplate)
         {
-            $yt->masthead = new MMasthead(true);
-            $yt->footer = new MFooter();
+            $this->yt->masthead = new MMasthead(true);
+            $this->yt->footer = new MFooter();
         }
-        $yt->footer = new MFooter();
+        $this->yt->footer = new MFooter();
 
         // Request appbar guide fragments if the page has the
         // guide enabled, the request is not SPF, and the guide
         // is open by default.
         if (!$this->delayLoadGuide && !Spf::isSpfRequested())
         {
-            $this->getPageGuide()->then(function ($guide) use ($yt) {
-                $yt->appbar->addGuide($guide);
+            $this->getPageGuide()->then(function ($guide) {
+                $this->yt->appbar->addGuide($guide);
             });
         }
     }

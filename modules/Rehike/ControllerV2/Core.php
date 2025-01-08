@@ -2,24 +2,12 @@
 namespace Rehike\ControllerV2;
 
 /**
- * Implements core behaviours of the Controller v2
+ * Implements core behaviours of the Rehike controller loading
  * architecture.
  * 
- * These behaviours include the storing the common state
- * and template variables. It also provides an API for
- * basic interaction with the system, i.e. importing.
- * 
- * The variables passed to all CV2 controllers are, in this
- * precise order:
- *    - &$state       Reference to the global state variable.
- *    - &$template    Reference to the global template variable.
- *    - $request      Contains information about the current
- *                    request.
- * ...and then any custom defined arguments after that.
- * 
- * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
+ * @author Isabella Lulamoon <kawapure@gmail.com>
  * @author The Rehike Maintainers
- * @version 2.0
+ * @version 3.0
  */
 class Core
 {
@@ -29,6 +17,8 @@ class Core
      * This variable gets passed to each controller, but
      * modifications exceed it so that closing services
      * may access its contents.
+     * 
+     * @deprecated
      * 
      * @var object|array
      */
@@ -45,62 +35,11 @@ class Core
      * Template rendering should ideally be done by the
      * controllers themselves.
      * 
+     * @deprecated
+     * 
      * @var string
      */
     public static string $template;
-
-    /**
-     * Register a state reference. 
-     * 
-     * @see $state 
-     */
-    public static function registerStateVariable(object|array &$state): void
-    {
-        self::$state = &$state;
-    }
-
-    /**
-     * Register a template reference. 
-     * 
-     * @see $template 
-     */
-    public static function registerTemplateVariable(string &$template): void
-    {
-        self::$template = &$template;
-    }
-
-    /**
-     * Import a controller's file or pull it from the session
-     * cache.
-     * 
-     * The contents are cached in order to allow reimports without
-     * causing additional errors, such as in the event of a
-     * function redeclaration.
-     * 
-     * @return GetControllerInstance
-     */
-    public static function import(
-            string $controllerName, 
-            bool $appendPhp = true
-    ): GetControllerInstance
-    {
-        if (ControllerStore::hasController($controllerName))
-        {
-            // Import from cache
-            $controller = ControllerStore::getController($controllerName);
-
-            return new GetControllerInstance($controllerName, $controller);
-        }
-        else
-        {
-            // Import from file (or die)
-            $imports = require $controllerName . ($appendPhp ? ".php" : "");
-
-            ControllerStore::registerController($controllerName, $imports);
-
-            return new GetControllerInstance($controllerName, $imports);
-        }
-    }
 
     /**
      * @see CallbackStore::setRedirectHandler

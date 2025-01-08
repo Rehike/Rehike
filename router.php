@@ -1,4 +1,6 @@
 <?php
+namespace Rehike\Controller;
+
 use Rehike\ControllerV2\Router;
 
 // Passed through the Rehike server. These simply request the YouTube server
@@ -79,64 +81,63 @@ Router::redirect([
 ]);
 
 Router::get([
-    "/" => "feed",
-    "/feed/**" => "feed",
-    "/watch" => "watch",
-    "/user/**" => "channel",
-    "/channel/**" => "channel",
-    "/c/**" => "channel",
-    "/live_chat" => "special/get_live_chat",
-    "/live_chat_replay" => "special/get_live_chat",
-    "/feed_ajax" => "ajax/feed",
-    "/results" => "results",
-    "/playlist" => "playlist",
-    "/oops" => "oops",
-    "/related_ajax" => "ajax/related",
-    "/browse_ajax" => "ajax/browse",
-    "/addto_ajax" => "ajax/addto",
-    "/rehike/version" => "rehike/version",
-    "/rehike/static/**" => "rehike/static_router",
-    "/share_ajax" => "ajax/share",
-    "/picker_ajax" => "ajax/picker",
-    "/attribution" => "attribution",
-    "/profile" => "profile",
-    "/channel_switcher" => "channel_switcher",
-    "/rehike/config" => "rehike/config",
-    "/rehike/config/**" => "rehike/config",
-    "/rehike/ajax/git_ajax" => "rehike/ajax/git_ajax",
-    "/rehike/server_info" => "rehike/server_info",
-    "/rehike/extensions" => "rehike/extensions",
-	"/watch" => "watch",
-	"/html5" => "html5",
-	"/annotations_invideo" => "ajax/annotations_invideo",
-	"/get_video_metadata" => "ajax/get_video_metadata",
+    "/" => \Rehike\Controller\FeedPageController::class,
+    "/feed/**" => \Rehike\Controller\FeedPageController::class,
+    "/watch" => \Rehike\Controller\WatchPageController::class,
+    "/user/**" => \Rehike\Controller\ChannelPageController::class,
+    "/channel/**" => \Rehike\Controller\ChannelPageController::class,
+    "/c/**" => \Rehike\Controller\ChannelPageController::class,
+    "/live_chat" => \Rehike\Controller\special\GetLiveChatController::class,
+    "/live_chat_replay" => \Rehike\Controller\special\GetLiveChatController::class,
+    "/feed_ajax" => \Rehike\Controller\ajax\FeedAjaxController::class,
+    "/results" => \Rehike\Controller\ResultsPageController::class,
+    "/playlist" => \Rehike\Controller\PlaylistPageController::class,
+    "/oops" => \Rehike\Controller\OopsPageController::class,
+    "/related_ajax" => \Rehike\Controller\ajax\RelatedAjaxController::class,
+    "/browse_ajax" => \Rehike\Controller\ajax\BrowseFragmentsController::class,
+    "/addto_ajax" => \Rehike\Controller\ajax\AddtoFragmentsController::class,
+    "/rehike/version" => \Rehike\Controller\rehike\RehikeVersionPageController::class,
+    "/rehike/static/**" => \Rehike\Controller\rehike\StaticRouter::class,
+    "/share_ajax" => \Rehike\Controller\ajax\ShareFragmentsAjax::class,
+    "/picker_ajax" => \Rehike\Controller\ajax\PickerFragmentsAjax::class,
+    "/attribution" => \Rehike\Controller\AttributionPageController::class,
+    "/profile" => \Rehike\Controller\ProfileRedirectEndpointController::class,
+    "/channel_switcher" => \Rehike\Controller\ChannelSwitcherPageController::class,
+    "/rehike/config" => \Rehike\Controller\rehike\RehikeConfigPageController::class,
+    "/rehike/config/**" => \Rehike\Controller\rehike\RehikeConfigPageController::class,
+    "/rehike/ajax/git_ajax" => \Rehike\Controller\rehike\ajax\RehikeVersionGitAjaxController::class,
+    "/rehike/server_info" => \Rehike\Controller\rehike\RehikeServerInfoPageController::class,
+    "/rehike/extensions" => \Rehike\Controller\rehike\RehikeExtensionsPageController::class,
+	"/html5" => \Rehike\Controller\Html5PageController::class,
+	"/annotations_invideo" => \Rehike\Controller\ajax\AnnotationsInvideoController::class,
+	"/get_video_metadata" => \Rehike\Controller\ajax\GetVideoMetadataController::class,
     "/player_204" => function() { exit(); },
-    "default" => "channel"
+    "default" => \Rehike\Controller\ChannelPageController::class
 ]);
 
 Router::post([
-    "/youtubei/v1/player" => "special/innertube_player_proxy",
-    "/feed_ajax" => "ajax/feed",
-    "/browse_ajax" => "ajax/browse",
-    "/watch_fragments2_ajax" => "ajax/watch_fragments2",
-    "/related_ajax" => "ajax/related",
-    "/playlist_video_ajax" => "ajax/playlist_video",
-    "/playlist_ajax" => "ajax/playlist",
-    "/picker_ajax" => "ajax/picker",
-    "/subscription_ajax" => "ajax/subscription",
-    "/service_ajax" => "ajax/service",
-    "/comment_service_ajax" => "ajax/comment_service",
-    "/addto_ajax" => "ajax/addto",
-    "/live_events_reminders_ajax" => "ajax/live_events_reminders",
-    "/delegate_account_ajax" => "ajax/delegate_account",
-    "/rehike/update_config" => "rehike/update_config",
-	"/annotations_invideo" => "ajax/annotations_invideo",
-	"/get_video_metadata" => "ajax/get_video_metadata",
+    "/youtubei/v1/player" => \Rehike\Controller\special\InnertubePlayerProxyController::class,
+    "/feed_ajax" => \Rehike\Controller\ajax\FeedAjaxController::class,
+    "/browse_ajax" => \Rehike\Controller\ajax\BrowseFragmentsController::class,
+    "/watch_fragments2_ajax" => \Rehike\Controller\ajax\WatchFragments2AjaxController::class,
+    "/related_ajax" => \Rehike\Controller\ajax\RelatedAjaxController::class,
+    "/playlist_video_ajax" => \Rehike\Controller\ajax\PlaylistVideoAjaxController::class,
+    "/playlist_ajax" => \Rehike\Controller\ajax\PlaylistAjaxController::class,
+    "/picker_ajax" => \Rehike\Controller\ajax\PickerFragmentsAjax::class,
+    "/subscription_ajax" => \Rehike\Controller\ajax\SubscriptionAjaxController::class,
+    "/service_ajax" => \Rehike\Controller\ajax\ServiceAjaxController::class,
+    "/comment_service_ajax" => \Rehike\Controller\ajax\CommentServiceAjaxController::class,
+    "/addto_ajax" => \Rehike\Controller\ajax\AddtoFragmentsController::class,
+    "/live_events_reminders_ajax" => \Rehike\Controller\ajax\LiveEventsRemindersAjaxController::class,
+    "/delegate_account_ajax" => \Rehike\Controller\ajax\DelegateAccountFragmentsController::class,
+    "/rehike/update_config" => \Rehike\Controller\rehike\ajax\RehikeUpdateConfigRouter::class,
+	"/annotations_invideo" => \Rehike\Controller\ajax\AnnotationsInvideoController::class,
+	"/get_video_metadata" => \Rehike\Controller\ajax\GetVideoMetadataController::class,
     "/player_204" => function() { exit(); },
     
     // The default route is the channel controller. This is so we can handle
     // username shorthand URLs (i.e. /PewDiePie -> /user/PewDiePie)
     // Channel controller is responsible for showing the 404 page if lookup
     // fails.
-    "default" => "channel"
+    "default" => \Rehike\Controller\ChannelPageController::class
 ]);
