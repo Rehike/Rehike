@@ -63,8 +63,6 @@ class MSubnav
         else
         {
             $baseUrl = $instance->parent->getBaseUrl();
-
-            \Rehike\ControllerV2\Core::$state->test = $instance->parent->extraVideoTabs;
         
             $options = [];
     
