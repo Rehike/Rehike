@@ -8,6 +8,7 @@ use Rehike\Model\Channels\Channels4\BrandedPageV2\MSubnav;
 use Rehike\SignInV2\SignIn;
 
 use Rehike\Model\Common\Subscription\MSubscriptionActions;
+use Rehike\Model\ViewModelConverter\LockupViewModelConverter;
 
 class InnertubeBrowseConverter
 {
@@ -35,6 +36,22 @@ class InnertubeBrowseConverter
                     $item->{$list ? "videoRenderer" : "gridVideoRenderer"}
                     = self::reelItemRenderer($content, $context);
                     unset($item->reelItemRenderer);
+                    break;
+                
+                // View model renderers:
+                case "lockupViewModel":
+                    unset($item->{$name});
+                    
+                    // TODO: Not passing along framework updates is a hack because we can't
+                    // access it at this time.
+                    $lockupConv = new LockupViewModelConverter($content, (object)[]);
+                    $newEntry = $lockupConv->bakeClassicRenderer();
+                    
+                    foreach ($newEntry as $newName => &$newContext)
+                    {
+                        $item->{$newName} = $newContext;
+                    }
+                    
                     break;
             }
         }
@@ -104,6 +121,23 @@ class InnertubeBrowseConverter
                     break;
                 case "channelFeaturedContentRenderer":
                     $value->items = self::generalLockupConverter($value->items, $context);
+                    break;
+                    
+                // View model renderers:
+                case "lockupViewModel":
+                    unset($content->{$name});
+                    
+                    // TODO: Not passing along framework updates is a hack because we can't
+                    // access it at this time.
+                    $lockupConv = new LockupViewModelConverter($value, (object)[]);
+                    $lockupConv->setDirection(LockupViewModelConverter::DIRECTION_LIST);
+                    $newEntry = $lockupConv->bakeClassicRenderer();
+                    
+                    foreach ($newEntry as $newName => &$newContext)
+                    {
+                        $content->{$newName} = $newContext;
+                    }
+                    
                     break;
             }
         }

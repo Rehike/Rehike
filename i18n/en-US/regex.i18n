@@ -3,6 +3,9 @@
 likeCountIsolator: "/[^0-9]/"
 viewCountIsolator: "/[^0-9]/"
 
+# Matches any number
+numberMatch: "/(\\b\\d[\\d,.]*[K|M|B]?\\b)/"
+
 # The like button accessibility string when likes are disabled on a video.
 # This is used to isolate this case and replace the string with 0.
 # You can easily access this string here:
