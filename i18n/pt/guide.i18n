@@ -1,0 +1,52 @@
+# Guide strings:
+
+# Note that many strings are taken from InnerTube rather than this file.
+# For example, the signed-out subscription promo.
+# This file only contains strings that are not built into InnerTube anymore.
+
+# Common strings:
+showMore: "Mostrar mais"
+showFewer: "Mostrar menos"
+
+# Primary section items:
+trending: "Em alta"
+myChannel: "Meu canal"
+subscriptions: "Inscrições"
+
+# Bottom section items:
+guideBuilderLabel: "Procurar canais"
+manageSubscriptionsLabel: "Gerenciar inscrições"
+
+# Section names:
+bestOfYouTubeTitle: "Melhor do YouTube"
+libraryTitle: "Biblioteca"
+
+# Best of YouTube section item names:
+bestOfYouTubePopularOnYouTube: "Popular no YouTube"
+bestOfYouTubeMusic: "Música"
+bestOfYouTubeSports: "Esportes"
+bestOfYouTubeGaming: "Jogos"
+bestOfYouTubeMoviesTv: "Filmes & Séries"
+bestOfYouTubeNews: "Notícias"
+bestOfYouTubeLive: "Ao vivo"
+bestOfYouTubeSpotlight: "Spotlight"
+bestOfYouTube360: "Vídeo em 360°"
+
+# Subscriptions promo:
+subscriptionsPromoButton: "Adicionar canais"
+subscriptionsPromoTooltip: >
+  Suas inscrições serão mostradas aqui Procure alguns canais.
+
+# Guide notification messages:
+watchLaterVideoAdded: "Adicionado ao Assistir mais tarde"
+watchLaterVideoRemoved: "Removido de Assistir mais tarde"
+subscription: "Inscrição adicionada"
+unsubscription: "Inscrição removida"
+playlistLike: "Adicionado a playlist"
+playlistUnlike: "Removido da playlist"
+playlistVideoAdded: "Adicionado a playlist"
+playlistVideoRemoved: "Removido da playlist"
+videoLike: "Adicionado a Videos marcados com \"Gostei\""
+videoUnlike: "Removido de Videos marcados com \"Gostei\""
+eventReminderSet: "Você será notificado sobre esse evento"
+eventReminderRemoved: "Lembrete de evento removido"

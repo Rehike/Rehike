@@ -1,10 +1,10 @@
 {
-	"previousHash": "3e3bc50047fdaccd72e125ea682102f041987b78",
-	"currentRevisionId": 1712,
-	"subject": "Fix playlist renderers",
-	"body": "Fix playlist renderers",
+	"previousHash": "1f042bc56a889aadac9b16728e689f156bfe7dca",
+	"currentRevisionId": 1713,
+	"subject": "[i18n] Fix pt-BR",
+	"body": "[i18n] Fix pt-BR",
 	"branch": "master",
 	"committerName": "Isabella Lulamoon",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1737244748
+	"time": 1737350008
 }

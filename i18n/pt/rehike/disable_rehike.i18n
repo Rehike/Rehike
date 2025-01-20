@@ -1,0 +1,21 @@
+# Strings related to the soft-disable feature:
+
+# Shows in configuration settings:
+disableRehike: "Desabilitar o Rehike"
+rhSettingsEnableRehike: "Habilitar o Rehike"
+
+# Shows in the account menu in Polymer:
+enableRehike: "Voltar pro Rehike"
+
+# Disabled message:
+currentlyDisabledMessage: >
+    O Rehike atualmente está desabilitado. Funcionalidades
+    podem estar limitadas.
+# Dialog box strings:
+disableRehikeInfoHeader: "Tem certeza?"
+disableRehikeInfoDescription: >
+    Isso vai desabilitar o Rehike até você re-habilitar ele no menu
+    de contas ou no parâmetro de URL: ?enable_rehike=1
+# Dialog buttons:
+disableRehikeInfoCancel: "Cancelar"
+disableRehikeInfoDisable: "Desabilitar"

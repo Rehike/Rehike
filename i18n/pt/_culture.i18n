@@ -1,0 +1,73 @@
+languageName: "Português"
+expandedLanguageName: "Português (Brasil)"
+writingDirection: ltr
+
+thousandsSeparator: "."
+decimalSeparator: ","
+
+numberOfMonths: 12
+daysInWeek: 7
+
+spaceOnLineBreak: true
+
+standardDateOrder: dmy
+
+firstDayOfWeek: 1 # Sunday
+
+am: "AM"
+pm: "PM"
+
+# https://www.php.net/manual/en/datetime.format.php
+expandedDateWithTime: "l, F j, Y g:i A" # Tuesday, October 17, 2023 12:50 AM
+expandedDate: "l, F j, Y" # Tuesday, October 17, 2023
+dateWithTime: "F j, Y g:i A" # October 17, 2023 12:50 AM
+date: "F j, Y" # October 17 2023
+shortDateWithTime: "m/d/Y g:i A" # 10/17/2023 12:50 AM
+shortDate: "m/d/Y" # 10/17/2023
+time: "g:i A" # 12:50 AM
+
+daysOfWeek:
+  1: "Domingo"
+  2: "Segunda"
+  3: "Terça"
+  4: "Quarta"
+  5: "Quinta"
+  6: "Sexta"
+  7: "Sábado"
+
+shortDaysOfWeek:
+  1: "Dom"
+  2: "Seg"
+  3: "Ter"
+  4: "Qua"
+  5: "Qui"
+  6: "Sex"
+  7: "Sab"
+
+monthNames:
+  1: "Janeiro"
+  2: "Fevereiro"
+  3: "Março"
+  4: "Abril"
+  5: "Maio"
+  6: "Junho"
+  7: "Julho"
+  8: "Agosto"
+  9: "Setembro"
+  10: "Outubro"
+  11: "Novembro"
+  12: "Dezembro"
+
+shortMonthNames:
+  1: "Jan"
+  2: "Fev"
+  3: "Mar"
+  4: "Abr"
+  5: "Mai"
+  6: "Jun"
+  7: "Jul"
+  8: "Ago"
+  9: "Set"
+  10: "Out"
+  11: "Nov"
+  12: "Dez"

@@ -1,0 +1,25 @@
+# Channels common strings:
+
+tabChannels: "Canais"
+tabAbout: "Sobre"
+
+flowGrid: "Grade"
+flowList: "Lista"
+viewUploads: "Vídeos"
+viewAllVideos: "Todos os vídeos"
+viewLiveStreams: "Transmissões ao vivo"
+viewShorts: "Shorts"
+seeAll: "Ver tudo"
+backstageViewAllCommentsSingular: "Ver comentário"
+backstageViewAllCommentsPlural: "Ver todos os %s comentários"
+videoSortPopular: "Mais popular"
+videoSortOldest: "Mais antigo"
+videoSortNewest: "Mais recente"
+subscriptionConfirmationHeader: "Confirmar inscrição no canal"
+nonexistent: "O canal não existe."
+secondaryHeaderViews: "%s visualizações"
+secondaryHeaderManager: "Gerenciador de vídeos"
+
+# about tab strings
+aboutTabDetails: "Detalhes"
+aboutTabCountry: "País"

@@ -1,0 +1,32 @@
+# Displays substrings used to isolate simple counts. These ones can usually
+# just replace all non-numerical characters, since they're full counts.
+likeCountIsolator: "/[^0-9]/"
+viewCountIsolator: "/[^0-9]/"
+
+# The like button accessibility string when likes are disabled on a video.
+# This is used to isolate this case and replace the string with 0.
+# You can easily access this string here:
+# https://www.youtube.com/watch?v=UKY3scPIMd8&pp=4AQB&ab_channel=YouTubeViewers
+likeTextDisabled: "Eu gostei"
+
+# A like button accessibility substring used specifically in the case of
+# 0 likes in some languages. This is used to replace it with "0".
+countZero: "Não"
+
+# Used to isolate the subscriber count. Note that since subscriber counts are
+# abbreviated by YouTube, you can't just replace all numerical data, or you
+# would display wrong counts. Instead, you must replace all text that can occur
+# in the string except for the units.
+subscriberCountIsolator: "/( de)|( inscritos)|( inscrito)/"
+
+# Used for detecting if the date string in watch descriptions should be
+# modified. If none of these words are found in the string, then it is assumed
+# that the string should be modified.
+nonPublishCheck: "/(Estreia)|(Começou)|(Estreou)|(Programado)|(Transmissão ao vivo)/"
+
+# Used to isolate a channel name from the unsubscription modal message.
+unsubChannelNameMatch: "/Remover inscrição de (.*?)\\?/"
+
+# Miscellaneous isolators
+videoTimeIsolator: "/([0-9]?[0-9])( segundos)|(1 segundo)/"
+secondsIsolator: "/( segundos)|( segundo)/"

@@ -1,0 +1,7 @@
+nonexistent: "Essa playlist não existe."
+unsupported: "Esse tipo de playlist não é compatível."
+playAll: "Reproduzir todos"
+shareTooltip: "Partilhar ou incorporar esta lista de reprodução",
+saveText: "Salvar",
+savedText: "Salvo",
+saveTooltip: "Salvar para as listas de reprodução"

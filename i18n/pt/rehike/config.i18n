@@ -1,0 +1,167 @@
+title: "Configurações do Rehike"
+saveChanges: "Salvar configurações"
+saveChangesSuccess: "Configurações atualizadas!"
+saveChangesFailure: "Erro ao atualizar as configurações."
+
+tabs:
+  appearance: "Aparência"
+  experiments: "Experimentos"
+  advanced: "Avançado"
+
+props:
+  appearance:
+    playerChoice:
+      title: "Escolha uma revisão do player de vídeo:"
+      values:
+        CURRENT: "Player atual" # Sem data específica; verdadeiro player mais recente.
+        PLAYER_2022: "2022 - Cantos quadrados, storyboard antiga"
+        PLAYER_2020: "2020 - UI menor"
+        PLAYER_2015_NEW: "2015 - UI moderna, ícones antigos"
+        PLAYER_2015: "2015 - UI clássica, mais funções e nova tela final"
+        PLAYER_2014: "2014 - UI clássica, comportamento de buffering antigo"
+    classicPlayerForcePersistentControls:
+      title: "Sempre mostrar controles"
+      subtitle: >
+        Pode causar problemas com CSS customizado já que isso foi feito pra
+        versão mais recente do CSS oficial do Hitchhiker.
+    classicPlayerTheme:
+      title: "Tema do player:"
+      values:
+        DARK: "Tema escuro" # O tema padrão utilizado praticamente desde 2012, mas foi introduzido em 2011.
+        LIGHT: "Tema claro"
+    classicPlayerColor:
+      title: "Cor da barra de progresso do player:"
+      values:
+        RED: "Vermelho"
+        WHITE: "Branco" # Por algum motivo isso existe
+    branding:
+      title: "Logótipo do YouTube"
+      values:
+        BRANDING_2015: "2015: Logótipo antigo, vermelhos escuros"
+        BRANDING_2017_RINGO: "2017: Nova logótipo, vermelhos claros"
+        BRANDING_2024_RINGO2: "2024: Nova logótipo, vermelhos rosados com gradientes"
+    uploadButtonType:
+      title: "Tipo do botão de \"Enviar\":"
+      values:
+        BUTTON: "Botão (2013-2016)"
+        ICON: "Ícone material (2016-2018)"
+        MENU: "Menu de criação (2018+)"
+    largeSearchResults:
+      title: "Thumbnails maiores na página de pesquisa"
+      subtitle: >
+        Pode quebrar alguns temas feitos antes de 2017.
+    swapSearchViewsAndDate:
+      title: "Trocar data e visualização nas páginas de pesquisa"
+      subtitle: >
+        Mostrar a contagem de visualizações antes da data nos renderizadores
+        de vídeo na página de pesquisa.
+    showOldUploadedOnText:
+      title: "Usar \"Enviado em\" para vídeos anteriores a 2012"
+      subtitle: > 
+        Antes de junho de 2017, o YouTube exibia "Enviado em" para vídeos de 2005-2011, 
+        enquanto usava "Publicado em" para vídeos mais recentes.
+	useLegacyRoboto:
+      title: "Usar fonte Roboto antiga"
+      subtitle: >
+        Usada antes de 2017.
+    showVersionInFooter:
+      title: "Mostrar a versão do Rehike no rodapé"
+      subtitle: >
+        Mostra um link bem conveniente no final do rodapé que te leva pra página
+        "Sobre" do Rehike.
+    useRyd:
+      title: "Mostrar dislikes nos vídeos"
+      subtitle: >
+        Estatísticas do Return Youtube Dislike API.
+    usernamePrepends:
+      title: "Mostrar \"por\" antes do nome do autor nos links de vídeo"
+      subtitle: >
+        Usado antes de 2016.
+    noViewsText:
+      title: "Tirar o texto de \"visualizações\" do contador de visualizações na watchpage"
+      subtitle: >
+        Antes de 2016, só os números erão exibidos, sem nenhum indicador.
+    movingThumbnails:
+      title: "Animar as thumbnails ao passar o mouse"
+      subtitle: >
+        Usado desde 2018.
+    cssFixes:
+      title: "Consertos no CSS do YouTube"
+      subtitle: >
+        Conserta bugs ou inconsistências com o CSS original do Hitchhiker. Talvez 
+        quebre compatibilidade com alguns userstyles.
+    watchSidebarDates:
+      title: "Mostrar data dos uploads nas recomendações"
+      subtitle: >
+        Diferente do Polymer, o Hitchhiker não fazia isso por padrão.
+    watchSidebarVerification:
+      title: "Mostrar ícone de verificado nos vídeos recomendados da watchpage"
+      subtitle: >
+        Diferente do Polymer, o Hitchhiker não fazia isso por padrão.
+    oldBestOfYouTubeIcons:
+      title: "Ícones vermelhos antigos na seção do \"Melhores do YouTube\" na guia"
+      subtitle: >
+        Mostrar os ícones vermelhos antigos, diferente dos ícones pretos 
+        de hoje em dia.
+    smallPlayer:
+      title: "Usar um estilo personalizado de player menor"
+      subtitle: >
+        Usa um estilo pro player ficar parecido com o de 2019, que pode
+        ser mais confortável pra janelas menores.
+    enableAdblock:
+      title: "Ativar o ad-blocker incluso"
+      subtitle: >
+        Providência um ad-blocker estável pro player.
+    showNewInfoOnChannelAboutPage:
+      title: "Mostrar fragmentos de informações recentemente adicionados na página \"Sobre\" do canal"
+      subtitle: >
+        Mostra os pronomes do canal e a contagem de vídeos na página sobre o canal.
+  
+  experiments:
+    displayPlayerChoice:
+      title: "Habilita o uso de players mais antigos"
+      subtitle: >
+        Habilita a opção de mudar a revisão do player do YouTube na
+        página de aparência.
+    useSignInV2:
+      title: "Usar o sign in V2"
+      subtitle: >
+        Utilizar a nova reescrita experimental da página de login.
+        Essa opção deve estar disponível durante todo o desenvolvimento
+        da V2, após o qual se tornará a configuração padrão, e a versão
+        antiga será removida.
+    disableSignInOnHome:
+      title: "Desabilitar os requests da página de ínicio autenticados"
+      subtitle: >
+        Faz a página inicial ficar sem login. Essa opção serve
+        de quebra-galho pro YouTube bloqueando acesso caso
+        não tenha o histórico de vídeo ativado.
+        (18/08/2023).
+
+  advanced:
+    enableDebugger:
+      title: "Ativar o debugger"
+      subtitle: >
+        O debugger dá informação avançada para os devs.
+        Use somente se for um dev, ou se for reportar um bug e precisa de mais informação.
+    clearSigninCache:
+      title: "Cache do login"
+      subtitle: >
+        Rehike armazena os dados de login em cache pra evitar
+        fazer muitos requests pro YouTube
+      button: "Limpar cache do login"
+    clearPlayerCache:
+      title: "Cache do player"
+      subtitle: >
+        Rehike armazena os dados do player em cache pra evitar
+        fazer muitos requests pro YouTube
+      button: "Limpar cache do player"
+    factoryReset:
+      title: "Resetar o Rehike"
+      subtitle: >
+        Reseta o Rehike pro padrão, incluindo opções, cache, e qualquer
+        coisa que não estiver definido como padrão.
+      button: "Resetar o Rehike"
+    updateRehike:
+      title: "Atualizar o Rehike"
+      button: "Atualizar"
