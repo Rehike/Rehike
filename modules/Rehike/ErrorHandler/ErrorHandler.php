@@ -193,14 +193,6 @@ final class ErrorHandler
             // error messages on top of our own.
             \Rehike\Async\Promise\PromiseResolutionTracker::disable();
         }
-
-        // // Unpack uncaught promise exceptions in order to handle them too:
-        // if ($e instanceof UncaughtPromiseException)
-        // {
-        //     $promiseException = $e;
-        //     $e = $e->getOriginal();
-        //     $wasInPromise = true;
-        // }
     }
 
     private static function renderErrorTemplate(): void

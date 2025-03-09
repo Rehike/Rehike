@@ -85,8 +85,6 @@ class SimpleFunnel
         }
 
         $headers["Host"] = $opts["host"];
-        // $headers["Origin"] = "https://" . $opts["host"];
-        // $headers["Referer"] = "https://" . $opts["host"] . $opts["uri"];
 
         // Set up cURL and perform the request
         $url = "https://" . $opts["host"] . $opts["uri"];

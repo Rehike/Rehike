@@ -55,8 +55,6 @@ class Sidebar
     {
         $configStrings = i18n::getNamespace("rehike/config");
         
-        // $nepetaEnabled = NepetaApi::isNepetaEnabled();
-        
         return [
             $this->createSidebarSectionLink(
                 id: "appearance",
@@ -70,14 +68,6 @@ class Sidebar
                 icon: "rehike-experiments",
                 href: "/rehike/config/experiments"
             ),
-            // ...($nepetaEnabled ? [
-            //     $this->createSidebarSectionLink(
-            //         id: "extensions",
-            //         title: "Nepeta",
-            //         icon: "rehike-nepeta",
-            //         href: "/rehike/extensions"
-            //     )
-            // ] : []),
             $this->createSidebarSectionLink(
                 id: "advanced",
                 title: $configStrings->get("tabs.advanced"),

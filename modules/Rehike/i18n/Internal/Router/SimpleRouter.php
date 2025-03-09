@@ -83,11 +83,6 @@ class SimpleRouter implements IRouter
 
     protected function getLanguageRecord(string $path, string $encoding): LanguageRecord
     {
-        // if (Cacher::has($path))
-        // {
-        //     return Cacher::get($path);
-        // }
-
         $contents = file_get_contents($path);
 
         if (empty($encoding))
@@ -108,7 +103,6 @@ class SimpleRouter implements IRouter
         $source = new SourceInfo($path, $encoding, $contents);
 
         $result = RecordFileParser::parse($source);
-        //Cacher::insert($path, $result);
 
         return $result;
     }

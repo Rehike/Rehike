@@ -88,11 +88,6 @@ class CSSBuildTask extends BuildTask
                     g_buildTaskRegistry.push(buildTask2x);
                 }
                 
-                // if (currentBuildTask.is2xBuild)
-                // {
-                //     file.contents = Buffer.from(currentBuildTask._do2xTransform(file.contents.toString()));
-                // }
-                
                 this.push(file);
                 callback();
             }));

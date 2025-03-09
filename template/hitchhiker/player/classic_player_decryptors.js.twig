@@ -391,14 +391,6 @@ function getDecryptorForPlayerN(playerScript)
                     "(" + v + ")" + "\\s*\\=\\s*" + v + "\\s*\\[([0-9]+)?\\]\\s*\\(\\1\\),\\s*" + v +
                     "\\.set\\(\\\"n\\\",\\s*\\1\\)";
                 
-                // var matches = playerScript.slice(N_REFERENCING_FUNCTION_PATTERN)
-                //     .match(DIRECT_ACCESS_PATTERN);
-                    
-                // if (!matches)
-                // {
-                //     return TACTIC_STATUS.MISS;
-                // }
-                
                 baseCallPattern = DIRECT_ACCESS_PATTERN;
                 
                 // If we succeeded, then we already know the declaration variable as it's
