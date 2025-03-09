@@ -23,6 +23,7 @@ use Rehike\Async\Exception\PromiseAllException;
  * Implements a general error handler for Rehike.
  * 
  * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
+ * @author Isabella Lulamoon <kawapure@gmail.com>
  * @author The Rehike Maintainers
  */
 final class ErrorHandler
@@ -36,6 +37,13 @@ final class ErrorHandler
 
     private static bool $hasLogFile = false;
     private static string $logFileName = "";
+    
+    /**
+     * Determines if we are allowed to render for Twig.
+     * 
+     * This is true by default.
+     */
+    private static bool $allowRenderForTwig = true;
 
     public static function getErrorPageModel(): AbstractErrorPage
     {
@@ -164,6 +172,19 @@ final class ErrorHandler
         self::$logFileName = $name;
     }
     
+    /**
+     * @internal
+     */
+    public static function shouldRenderForTwig(): bool
+    {
+        // We will render for Twig if the Twig context is sufficiently set-up:
+        return self::$allowRenderForTwig &&
+            class_exists("Rehike\\YtApp") &&
+            class_exists("Rehike\\Debugger\\Debugger") && // Debugger is required for render
+            class_exists("Rehike\\TemplateManager") &&
+            class_exists("Twig\\Environment");
+    }
+    
     private static function exileAsyncErrorHandling(): void
     {
         if (class_exists("Rehike\\Async\\Promise\\PromiseResolutionTracker", false))
@@ -187,6 +208,8 @@ final class ErrorHandler
         static $hasRendered = false;
 
         if ($hasRendered) return;
+        
+        // Render for Twig if the Twig template is set up.
 
         while (ob_get_level() != 0)
         {
@@ -195,7 +218,51 @@ final class ErrorHandler
 
         ob_start();
         require "includes/fatal_templates/fatal_error_page.html.php";
-        ob_end_flush();
+        
+        if (self::shouldRenderForTwig())
+        {
+            try
+            {
+                // Prepare the page context:                
+                $pageContents = ob_get_clean();
+                \Rehike\YtApp::getInstance()->page = (object)[
+                    "errorHtml" => $pageContents
+                ];
+                \Rehike\YtApp::getInstance()->title = "Rehike fatal error";
+                
+                // Check if we were navigating via SPF (if SPF is set up):
+                if (class_exists("Rehike\\Spf\\Spf") && \Rehike\Spf\Spf::isSpfRequested())
+                {
+                    // We pre-serialize Rebug data via SPF because it doesn't encode
+                    // anything in the Twig context itself. This is probably due to
+                    // recursion, but I don't care to look into it. - Taniko Yamamoto (2023/11/15)
+                    \Rehike\YtApp::getInstance()->spfConfig->rebugData = json_encode(\Rehike\Debugger\Debugger::exposeSpf());
+                    
+                    \Rehike\YtApp::getInstance()->spf = true;
+                    header("Content-Type: application/json");
+                }
+                else
+                {
+                    // We need to expose the debugger in order to render a page.
+                    \Rehike\Debugger\Debugger::expose();
+                }
+                
+                echo \Rehike\TemplateManager::render([], "fatal_error_stub");
+            }
+            catch (Throwable $e)
+            {
+                // Re-render without rendering for Twig being allowed if any error occurred trying
+                // to render with Twig.
+                \Rehike\Logging\DebugLogger::print("??? %s", $e->getMessage());
+                self::$allowRenderForTwig = false;
+                self::renderErrorTemplate();
+                return;
+            }
+        }
+        else
+        {
+            ob_end_flush();
+        }
 
         $hasRendered = true;
     }

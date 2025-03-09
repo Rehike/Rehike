@@ -1,5 +1,12 @@
-<?php ?>
+<?php
+    // Inherit from including context:
+    if (!isset($shouldRenderForTwig))
+    {
+        $shouldRenderForTwig = false;
+    }
+?>
 <style>
+<?php if (!$shouldRenderForTwig): ?>
 html, body
 {
     min-height: 100vh;
@@ -20,6 +27,8 @@ body, input, button, textarea, select
 {
     font-family: Roboto, Arial, Helvetica, sans-serif;
 }
+
+<?php endif ?>
 
 #rehike-fatal-error
 {

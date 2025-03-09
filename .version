@@ -1,10 +1,10 @@
 {
-	"previousHash": "1f042bc56a889aadac9b16728e689f156bfe7dca",
-	"currentRevisionId": 1713,
-	"subject": "[i18n] Fix pt-BR",
-	"body": "[i18n] Fix pt-BR",
+	"previousHash": "132c32c6168ef82d5de01581e092ebdd901b1cdb",
+	"currentRevisionId": 1714,
+	"subject": "Improve fatal error handling",
+	"body": "Improve fatal error handling",
 	"branch": "master",
 	"committerName": "Isabella Lulamoon",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1737350008
+	"time": 1741563646
 }

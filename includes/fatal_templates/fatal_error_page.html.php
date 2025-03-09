@@ -13,10 +13,12 @@
     include_once "includes/fatal_templates/fatal_template_functions.php";
 
     $page = ErrorHandler::getErrorPageModel();
+    $shouldRenderForTwig = ErrorHandler::shouldRenderForTwig();
 
     $hasLogFile = ErrorHandler::getHasLogFile();
     $logFileName = ErrorHandler::getLogFileName();
 ?>
+<?php if (!$shouldRenderForTwig): ?>
 <!DOCTYPE html>
 <!-- Page URL: <?php echo $_SERVER['REQUEST_URI']; ?> -->
 <!-- thanks aubrey <33 -->
@@ -24,10 +26,13 @@
     <head>
         <title>Rehike fatal error</title>
         <?php include "fatal_roboto.css.php" ?>
+<?php endif ?>
         <?php include "fatal.css.php" ?>
         <?php include "fatal.js.php" ?>
+<?php if (!$shouldRenderForTwig): ?>
     </head>
     <body>
+<?php endif ?>
         <div id="rehike-fatal-error">
             <div class="header">
                 <svg xmlns="http://www.w3.org/2000/svg" height="48px" viewBox="0 0 24 24" width="48px" fill="#cc181e">
@@ -52,7 +57,9 @@
                         <?php if ($hasLogFile): ?>
                             <br><br>
                             A detailed log file has been created at
-                            <?= htmlspecialchars("rehike://" . $logFileName) ?>.
+                            <a href="vscode://file/<?= htmlspecialchars($_SERVER["DOCUMENT_ROOT"] . "/" . $logFileName, ENT_QUOTES) ?>">
+                                <?= htmlspecialchars("rehike://" . $logFileName) ?>
+                            </a>.
                             Please attach that when submitting debug logs.
                         <?php endif ?>
                     </div>
@@ -148,5 +155,7 @@
                 <?php endif ?>
             </p>
         </div>
+<?php if (!$shouldRenderForTwig): ?>
     </body>
 </html>
+<?php endif ?>

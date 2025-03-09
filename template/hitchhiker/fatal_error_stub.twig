@@ -1,0 +1,12 @@
+{# Used to display fatal error information within the official YouTube pageframe, which allows navigation to continue as normal. #}
+
+{% extends "core.twig" %}
+
+{% set appbarEnabled = true %}
+{% set defaultGuideVisibility = false %}
+{% set defaultAppbarVisibility = false %}
+{% set enableSnapScaling = false %}
+
+{% set pageType = "channel" %}{# Just a random value to appease it #}
+
+{% block content %}{{ yt.page.errorHtml|raw }}{% endblock %}
