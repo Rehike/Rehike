@@ -119,7 +119,44 @@ class FeedPageController extends NirvanaController implements IGetController
 
             // The homepage also had the searchbox in the masthead autofocus.
             $yt->masthead->searchbox->autofocus = true;
-
+            
+            $STRATEGIES = [
+                "getWhatToWatchShelves",
+                "getWhatToWatchModern",
+            ];
+            
+            $anySuccess = false;
+            
+            foreach ($STRATEGIES as $strat)
+            {
+                $success = yield $this->{$strat}($yt);
+                if ($success)
+                {
+                    $anySuccess = true;
+                    break;
+                }
+            }
+            
+            // // Try strategies:
+            // if (true == yield $this->getWhatToWatchShelves($yt) ||
+            //     true == yield $this->getWhatToWatchModern($yt)
+            // );
+            // else
+            if (!$anySuccess)
+            {
+                throw new \Exception("Failed to get what to watch feed");
+            }
+        });
+    }
+    
+    /**
+     * Try to get the homepage feed using the shelves style.
+     * 
+     * @return Promise<bool>
+     */
+    private function getWhatToWatchShelves(YtApp $yt): Promise/*<bool>*/
+    {
+        return async(function() use ($yt) {
             if ($a = Config::getConfigProp("experiments.disableSignInOnHome"))
             {
                 $useAuthentication = !(bool)$a;
@@ -128,7 +165,7 @@ class FeedPageController extends NirvanaController implements IGetController
             {
                 $useAuthentication = true;
             }
-
+            
             // Initial Android request to get continuation
             $response = yield Network::innertubeRequest(
                 action: "browse",
@@ -136,16 +173,24 @@ class FeedPageController extends NirvanaController implements IGetController
                     "browseId" => "FEwhat_to_watch"
                 ],
                 clientName: "TVHTML5",
-                clientVersion: "7.20241024.10.00",
+                clientVersion: "7.20250309.10.00",
                 useAuthentication: $useAuthentication
             );
 
             $ytdata = $response->getJson();
+            $yt->testaaaa = $ytdata;
             
+            if (isset($ytdata->contents->tvBrowseRenderer->content->tvSurfaceContentRenderer->content->sectionListRenderer->continuations))
             foreach ($ytdata->contents->tvBrowseRenderer->content->tvSurfaceContentRenderer->content->sectionListRenderer->continuations as $continuation)
             if (isset($continuation->nextContinuationData))
             {
                 $continuation = $continuation->nextContinuationData->continuation;
+            }
+            
+            if (!isset($continuation))
+            {
+                // We failed to get a valid continuation, so fall through to the next strategy:
+                return false;
             }
 
             $newContinuation = WebV2Shelves::continuationToWeb($continuation);
@@ -164,6 +209,47 @@ class FeedPageController extends NirvanaController implements IGetController
             $yt->page->content = (object) [
                 "sectionListRenderer" => InnertubeBrowseConverter::sectionListRenderer(RichShelfUtils::reformatResponse($data)->sectionListRenderer)
             ];
+            
+            return true;
+        });
+    }
+    
+    /**
+     * Try to get the homepage feed using the modern (web V2) style.
+     * 
+     * @return Promise<bool>
+     */
+    private function getWhatToWatchModern(YtApp $yt): Promise/*<bool>*/
+    {
+        return async(function() use ($yt) {
+            if ($a = Config::getConfigProp("experiments.disableSignInOnHome"))
+            {
+                $useAuthentication = !(bool)$a;
+            }
+            else
+            {
+                $useAuthentication = true;
+            }
+            
+            // Initial Android request to get continuation
+            $response = yield Network::innertubeRequest(
+                action: "browse",
+                body: [
+                    "browseId" => "FEwhat_to_watch"
+                ],
+                clientName: "WEB",
+                clientVersion: "2.20250309.10.00",
+                useAuthentication: $useAuthentication
+            );
+
+            $ytdata = $response->getJson();
+            $yt->testbbbb = $ytdata;
+
+            $yt->page->content = (object) [
+                "items" => InnertubeBrowseConverter::richGridRenderer($ytdata->contents->twoColumnBrowseResultsRenderer->tabs[0]->tabRenderer->content->richGridRenderer)->items
+            ];
+            
+            return true;
         });
     }
 
