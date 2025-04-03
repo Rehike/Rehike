@@ -294,3 +294,49 @@
 .ytp-menuitem-icon {
     display: none !important;
 }
+
+.ytp-scrubber-button {
+    transform: scale(0);
+}
+
+{%- if rehike.config.appearance.branding == "BRANDING_2017_RINGO" -%}
+.ytp-play-progress,
+.ytp-scrubber-button,
+.ytp-menuitem[aria-checked="true"] .ytp-menuitem-toggle-checkbox {
+    background: #f00;
+}
+
+.ytp-chrome-controls .ytp-button[aria-pressed]::after,
+.ytp-settings-button.ytp-hd-quality-badge::after,
+.ytp-settings-button.ytp-hdr-quality-badge::after,
+.ytp-settings-button.ytp-4k-quality-badge::after,
+.ytp-settings-button.ytp-5k-quality-badge::after,
+.ytp-settings-button.ytp-8k-quality-badge::after,
+.ytp-settings-button.ytp-3d-badge-grey::after,
+.ytp-settings-button.ytp-3d-badge::after {
+    background-color: #f00;
+}
+.ytp-swatch-color {
+    color: #f00;
+}
+{%- elseif rehike.config.appearance.branding == "BRANDING_2015" -%}
+.ytp-play-progress,
+.ytp-scrubber-button,
+.ytp-menuitem[aria-checked="true"] .ytp-menuitem-toggle-checkbox {
+    background: #f12b24;
+}
+
+.ytp-chrome-controls .ytp-button[aria-pressed]::after,
+.ytp-settings-button.ytp-hd-quality-badge::after,
+.ytp-settings-button.ytp-hdr-quality-badge::after,
+.ytp-settings-button.ytp-4k-quality-badge::after,
+.ytp-settings-button.ytp-5k-quality-badge::after,
+.ytp-settings-button.ytp-8k-quality-badge::after,
+.ytp-settings-button.ytp-3d-badge-grey::after,
+.ytp-settings-button.ytp-3d-badge::after {
+    background-color: #f12b24;
+}
+.ytp-swatch-color {
+    color: #f12b24;
+}
+{% endif %}
