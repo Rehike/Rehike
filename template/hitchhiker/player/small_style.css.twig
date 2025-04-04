@@ -191,7 +191,7 @@
 .ytp-tooltip.ytp-preview:not(.ytp-text-detail),
 .ytp-embed:not(.ytp-big-mode) .ytp-tooltip.ytp-preview:not(.ytp-text-detail),
 .ytp-small-mode .ytp-tooltip.ytp-preview:not(.ytp-text-detail) {
-    transform: unset;
+    transform: translateY(-29px);
 }
 
 .ytp-autonav-toggle-button,
@@ -297,28 +297,6 @@
 
 .ytp-scrubber-button {
     transform: scale(0);
-}
-
-.ytp-tooltip-bottom-text.ytp-tooltip-text-no-title {
-  background-color: rgba(28,28,28,0.9) !important;
-  border-radius: 2px !important;
-  border-bottom-right-radius: 0px !important;
-  border-bottom-left-radius: 0px !important;
-  padding: 5px 9px !important;
-}
-
-.ytp-tooltip-text-wrapper {
-    bottom: 38px !important;
-}
-
-.ytp-tooltip.ytp-preview:not(.ytp-text-detail) {
-  padding: 2px;
-  background-color: rgba(28,28,28,0.9);
-  border-radius: 2px;
-}
-
-.ytp-tooltip-bg {
-  border-radius: 0px;
 }
 
 {%- if rehike.config.appearance.branding == "BRANDING_2017_RINGO" -%}
