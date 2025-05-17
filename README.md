@@ -29,38 +29,20 @@ See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Installation
 
-***Rehike is in development. You should not expect a perfect user experience, should you choose to use it.*** If you encounter any problems while using Rehike, [please make an issue](//github.com/Rehike/Rehike/issues) so that we can track them easily.
+## Step 1:
+Download the zip file of the repository or click [here](https://github.com/Rehike/rehike/archive/refs/heads/main.zip)
 
-We currently do not support an automated install. If you wish to use Rehike, you must set it up manually. Fortunately, that isn't too hard!
+## Step 2:
+Extract the archive to obtain a folder 'Rehike'.
 
-[See this page for manual installation instructions.](//github.com/Rehike/Rehike/wiki/Installation)
+## Step 3
+Open your browser, click on extension icon and go to manage extensions.
 
-## Configuration
+## Step 4
+Turn on the developers mode at top-right and click on 'Load unpacked'.
 
-[Once Rehike is installed, you can visit this link to configure it.](//www.youtube.com/rehike/config)
+## Step 5
+Finally go inside the Numerade Scraper folder and select the 'Rehike Extension' folder.
 
-## Acknowledgements
-
-Rehike makes use of the following software or services:
-
-- [Composer](//getcomposer.org)
-- [Twig](//twig.symfony.com)
-- [Protocol Buffers](//developers.google.com/protocol-buffers/)
-- [Return YouTube Dislike API](https://www.returnyoutubedislike.com/)
-- [BlueLibraries DNS](//github.com/bluelibraries/dns)
-
-Use of these third party services is governed by their respective licenses. Where possible, their application will be optional.
-
-Thank you to [Prototaxis](//github.com/Prototaxis) for his work on shelves homepage on InnerTube WEB v2. We use this valuable work for the homepage.
-
-## License
-
-It is the belief of the team that code should generally be open and unrestricted.
-
-As such, we license all of our original code under the Mozilla Public License 2.0 (MPL 2.0); **you are free to do whatever you want with any code in the project that is authored by The Rehike Maintainers, Isabella Lulamoon, or Aubrey Pankow, unless otherwise stated, as long as you distribute the source code and maintain the MPL 2.0 license.**
-
-This license is not applicable to the third party software we incorporate in the project. Please see their respective `LICENSE` files for more information on each.
-
-## Thank you!
-
-Whether or not you choose to contribute to or use Rehike, we appreciate you checking out our project!
+## Step 6
+Go to your required numerade question and click on the extension button to see the solution
