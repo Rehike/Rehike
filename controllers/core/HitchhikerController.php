@@ -319,7 +319,7 @@ abstract class HitchhikerController extends PageController
     
         if ($curMonth == 6)
         {
-            $prideYoodleUrl = Config::getConfigProp("appearance.modernLogo")
+            $prideYoodleUrl = Config::getConfigProp("appearance.branding") != "BRANDING_2015"
                 ? "/rehike/static/logo/pride_2017_custom.png"
                 : "//s.ytimg.com/yts/img/doodles/yt_doodle_pride_2013-vflG2_e_y.png";
             

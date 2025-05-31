@@ -1,10 +1,10 @@
 {
-	"previousHash": "26a263e2c356f9de95c20cda5f35136920deb2a1",
-	"currentRevisionId": 1716,
-	"subject": "Homepage workaround",
-	"body": "Homepage workaround",
+	"previousHash": "31b6a939bb690c8ae390f749261d8fc3e39eaaf7",
+	"currentRevisionId": 1721,
+	"subject": "Fix Pride yoodle after logo config change",
+	"body": "Fix Pride yoodle after logo config change",
 	"branch": "master",
-	"committerName": "Isabella Lulamoon",
-	"committerEmail": "kawapure@gmail.com",
-	"time": 1741567175
+	"committerName": "aubymori",
+	"committerEmail": "aubyomori@gmail.com",
+	"time": 1748732426
 }
