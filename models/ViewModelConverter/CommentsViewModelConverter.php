@@ -58,7 +58,7 @@ class CommentsViewModelConverter extends BasicVMC
 
         // To add insult to injury, they also moved comment text to use commandRuns.
         // I call for a firebombing on YouTube's offices tbh
-        $commentText = ParsingUtils::commandRunsToRuns($commentPayload->properties->content);
+        $commentText = ParsingUtils::indexedRunsToRuns($commentPayload->properties->content);
         $publishedTimeText = $commentPayload->properties->publishedTime;
         $commentId = $commentPayload->properties->commentId;
 

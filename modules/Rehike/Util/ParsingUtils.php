@@ -52,7 +52,7 @@ class ParsingUtils
             }
             else if (isset($source->content))
             {
-                return self::getText(self::commandRunsToRuns($source));
+                return self::getText(self::indexedRunsToRuns($source));
             }
         }
         else if (is_string($source))
@@ -225,9 +225,7 @@ class ParsingUtils
     }
 
     /**
-     * Convert a commandRuns object to the conventional runs format.
-     * Does not support text formatting, only links.
-     * Was originally only for description on watch page.
+     * Convert an indexed runs object to the older runs format.
      * 
      * Original comment:
      * Welp, the fucktards have done it again. The shitty description experiment is back,
@@ -237,63 +235,112 @@ class ParsingUtils
      * this point. What a bunch of fucking retards.
      *     - Love, Aubrey <3
      * 
-     * Anyways, this function just converts it back to the standard runs format.
-     * 
      * We use mb_substr with UTF-8 here, because the indices are set up for a JS environment.
      * 
-     * @param object $cruns     Object containing commandRuns
+     * @param object $iruns     Object containing commandRuns
      * 
      * @return ?object
      */
-    public static function commandRunsToRuns(object $cruns): ?object
+    public static function indexedRunsToRuns(object $iruns): ?object
     {
-        // If there's no links
-        if (!isset($cruns->commandRuns))
+        // If there's no styleRuns data
+        if (!isset($iruns->styleRuns))
         {
             return (object) [
                 "runs" => [
                     (object) [
-                        "text" => $cruns->content
+                        "text" => $iruns->content
                     ]
                 ]
             ];
         }
 
         $runs = [];
+        $commandRuns = @$iruns->commandRuns ?? [];
 
-        // Start at the beginning of the string
-        $start = 0;
+        $previousStart = 0;
+        $previousLength = 0;
 
-        foreach ($cruns->commandRuns as $run)
+        foreach ($iruns->styleRuns as $irun)
         {
-            // Text from before the link
-            $beforeText = self::mb_substr_ex($cruns->content, $start, $run->startIndex - $start);
+            $text = self::mb_substr_ex($iruns->content, $irun->startIndex, $irun->length);
+            $run = (object)[
+                "text" => $text
+            ];
 
-            if (!empty($beforeText))
+            $commandRun = null;
+            foreach ($commandRuns as $crun)
             {
-                $runs[] = (object) [
-                    "text" => $beforeText
+                if ($crun->length == $irun->length && $crun->startIndex == $irun->startIndex)
+                {
+                    $commandRun = $crun;
+                    break;
+                }
+            }
+
+            // WHY WHY WHY WHY WHY WHY WHY
+            if (isset($irun->fontName))
+            switch($irun->fontName)
+            {
+                case "Roboto-Medium":
+                    $run->bold = true;
+                    break;
+                case "Roboto-Italic":
+                    $run->italics = true;
+                    break;
+                case "Roboto-Medium-Italic":
+                    $run->bold = true;
+                    $run->italics = true;
+                    break;
+            }
+
+            if (@$irun->strikethrough == "LINE_STYLE_SINGLE")
+            {
+                $run->strikethrough = true;
+            }
+
+            if (@$irun->italic)
+            {
+                $run->italics = true;
+            }
+
+            if (@$irun->weightLabel == "FONT_WEIGHT_MEDIUM")
+            {
+                $run->bold = true;
+            }
+
+            $endpoint = null;
+            if ($endpoint = @$commandRun->onTap->innertubeCommand)
+            {
+                $run->navigationEndpoint = $endpoint;
+            }
+
+            if ($previousStart + $previousLength < $irun->startIndex)
+            {
+                $start = 0; $length = 0;
+                if ($previousStart == 0 && $previousLength == 0)
+                {
+                    $start = 0;
+                    $length = $irun->startIndex;
+                }
+                else
+                {
+                    $start = $previousStart + $previousLength;
+                    $length = $irun->startIndex - $start;
+                }
+
+                $runs[] = (object)[
+                    "text" => self::mb_substr_ex(
+                        $iruns->content,
+                        $start, $length
+                    )
                 ];
             }
 
-            // Add the actual link
-            $text = self::mb_substr_ex($cruns->content, $run->startIndex, $run->length);
-            $endpoint = $run->onTap->innertubeCommand;
-            $runs[] = (object) [
-                "text" => $text,
-                "navigationEndpoint" => $endpoint
-            ];
+            $runs[] = $run;
 
-            $start = $run->startIndex + $run->length;
-        }
-
-        // Add the text after the last link
-        $lastText = self::mb_substr_ex($cruns->content, $start, null);
-        if (!empty($lastText))
-        {
-            $runs[] = (object) [
-                "text" => $lastText
-            ];
+            $previousStart = $irun->startIndex;
+            $previousLength = $irun->length;
         }
 
         return (object) [

@@ -32,7 +32,7 @@ class MVideoSecondaryInfoRenderer
             
             if (isset($info->attributedDescription))
             {
-                $this->description = ParsingUtils::commandRunsToRuns($info->attributedDescription);
+                $this->description = ParsingUtils::indexedRunsToRuns($info->attributedDescription);
                 self::fixDescLinks($this->description->runs);
             }
 

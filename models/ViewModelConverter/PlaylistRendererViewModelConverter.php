@@ -22,7 +22,7 @@ class PlaylistRendererViewModelConverter extends BasicVMC
         $thumbnailVM = $this->viewModel->contentImage->collectionThumbnailViewModel->primaryThumbnail->thumbnailViewModel;
         $thumbnailBadgeVM = $thumbnailVM->overlays[0]->thumbnailOverlayBadgeViewModel->thumbnailBadges[0]->thumbnailBadgeViewModel;
         
-        $result->title = ParsingUtils::commandRunsToRuns($metadataVM->title);
+        $result->title = ParsingUtils::indexedRunsToRuns($metadataVM->title);
         $result->playlistId = $this->viewModel->contentId;
         
         $result->thumbnail = (object)[
@@ -55,7 +55,7 @@ class PlaylistRendererViewModelConverter extends BasicVMC
                         if ($webPageType == "WEB_PAGE_TYPE_CHANNEL" && $rowId == 0 && !isset($result->longBylineText))
                         {
                             // This is almost certainly a link to the channel of the creator of the playlist.
-                            $result->longBylineText = ParsingUtils::commandRunsToRuns($parts[0]->text);
+                            $result->longBylineText = ParsingUtils::indexedRunsToRuns($parts[0]->text);
                         }
                         else if ($webPageType == "WEB_PAGE_TYPE_WATCH")
                         {

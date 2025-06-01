@@ -1,10 +1,10 @@
 {
-	"previousHash": "31b6a939bb690c8ae390f749261d8fc3e39eaaf7",
-	"currentRevisionId": 1721,
-	"subject": "Fix Pride yoodle after logo config change",
-	"body": "Fix Pride yoodle after logo config change",
+	"previousHash": "a0384dafe755fc43a5fc0ad2b781597cf583a514",
+	"currentRevisionId": 1722,
+	"subject": "Support text formatting in video descriptions and comments",
+	"body": "Support text formatting in video descriptions and comments",
 	"branch": "master",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1748732426
+	"time": 1748821928
 }

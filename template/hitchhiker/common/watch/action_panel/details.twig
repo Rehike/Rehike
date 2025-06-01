@@ -1,5 +1,8 @@
 {% macro description(data) %}
 {%- for snippet in data.runs -%}
+{{ snippet.bold ? "<b>" }}
+{{ snippet.italics ? "<i>" }}
+{{ snippet.strikethrough ? "<s>" }}
 {%- if (snippet.navigationEndpoint) -%}
     {%- set href = rehike.getUrl(snippet) -%}
     {%- set spf = (href|first == "/") -%}
@@ -13,6 +16,9 @@
 {%- if (snippet.navigationEndpoint) -%}
     </a>
 {%- endif -%}
+{{ snippet.strikethrough ? "</s>" }}
+{{ snippet.italics ? "</i>" }}
+{{ snippet.bold ? "</b>" }}
 {% endfor %}
 {% endmacro %}
 
