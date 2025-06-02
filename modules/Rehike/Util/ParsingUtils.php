@@ -261,12 +261,15 @@ class ParsingUtils
         $previousStart = 0;
         $previousLength = 0;
 
+        $textLength = 0;
+
         foreach ($iruns->styleRuns as $irun)
         {
             $text = self::mb_substr_ex($iruns->content, $irun->startIndex, $irun->length);
             $run = (object)[
                 "text" => $text
             ];
+            $textLength += mb_strlen($text);
 
             $commandRun = null;
             foreach ($commandRuns as $crun)
@@ -329,18 +332,32 @@ class ParsingUtils
                     $length = $irun->startIndex - $start;
                 }
 
+                $text = self::mb_substr_ex(
+                    $iruns->content,
+                    $start, $length
+                );
+
                 $runs[] = (object)[
-                    "text" => self::mb_substr_ex(
-                        $iruns->content,
-                        $start, $length
-                    )
+                    "text" => $text
                 ];
+                $textLength += mb_strlen($text);
             }
 
             $runs[] = $run;
 
             $previousStart = $irun->startIndex;
             $previousLength = $irun->length;
+        }
+
+        if (mb_strlen($iruns->content) > $textLength)
+        {
+            $runs[] = (object)[
+                "text" => self::mb_substr_ex(
+                    $iruns->content,
+                    $textLength,
+                    mb_strlen($iruns->content) - $textLength
+                )
+            ];
         }
 
         return (object) [
