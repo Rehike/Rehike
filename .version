@@ -1,10 +1,10 @@
 {
-	"previousHash": "e8f9df0fe2c91c37a3b351bdf4f0a390ada68c5a",
-	"currentRevisionId": 1723,
-	"subject": "Support string data after the end of indexed runs",
-	"body": "Support string data after the end of indexed runs",
+	"previousHash": "30c89a1d858bd47db9381fdf4951dd19d5b05863",
+	"currentRevisionId": 1724,
+	"subject": "Work around June 2025 legacy player initialisation removal",
+	"body": "Work around June 2025 legacy player initialisation removal",
 	"branch": "master",
-	"committerName": "aubymori",
-	"committerEmail": "aubyomori@gmail.com",
-	"time": 1748822411
+	"committerName": "Isabella Lulamoon",
+	"committerEmail": "kawapure@gmail.com",
+	"time": 1748939809
 }

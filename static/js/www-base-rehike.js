@@ -5,6 +5,9 @@
  * 
  * - Patched qn @ "qn=function(a,b,c)"... to support newer player
  *   versions.
+ * - Added a function `rhBuildWebContextConfig` to convert legacy player initialisation
+ *   configuration format to modern context config format. This is required to boot newer
+ *   players starting in late May 2025.
  * - Patched en @ "en=function(a)"... to support delayloading for loading
  *   old player revisions whose arguments are built asynchronously by Rehike.
  */
@@ -679,10 +682,78 @@ gn=function(a){a.i&&!a.i.loaded&&(a.i.loaded=!0,"0"!=a.i.args.autoplay?a.api.loa
 kn=function(a){var b=!0,c=hn(a);c&&a.i&&(a=jn(a),b=g.J(c,"version")===a);return b&&!!g.u("yt.player.Application.create")};
 
 /**
+ * Rehike-specific change: Starting just before the beginning of June 2025, the player now
+ * requires modern web context configuration and will not start up without it.
+ * 
+ * Since Hitchhiker serves legacy web context, we will just convert the data on the fly
+ * to the modern format in order to make the player start up.
+ */
+function rhBuildWebContextConfig(srcConfig)
+{
+    var result = {
+        allowWoffleManagement: true,
+        canaryStage: "",
+        canaryState: "none",
+        cinematicSettingsAvailable: true,
+        
+        // This importantly must be "WEB", and not one of the context-config-specific IDs, or Hitchhiker
+        // events will not work (i.e. theatre mode or autoplay toggle).
+        contextId: "WEB",
+        
+        csiPageType: "watch",
+        showMiniplayerButton: false,
+        showMiniplayerUiWhenMinimized: false,
+        transparentBackground: false
+    };
+    
+    if (!srcConfig.i || !("assets" in srcConfig.i) || !("args" in srcConfig.i) || !("attrs" in srcConfig.i))
+    {
+        console.info("[Rehike] Player configuration: ", srcConfig);
+        throw "Rehike player builder error: Invalid configuration (or not initialised)";
+    }
+    
+    if (srcConfig.i.assets.css)
+    {
+        result.cssUrl = srcConfig.i.assets.css;
+    }
+    
+    if (srcConfig.i.assets.js)
+    {
+        result.jsUrl = srcConfig.i.assets.js;
+    }
+    
+    if (srcConfig.i.args["innertube_api_key"])
+        result.innertubeApiKey = srcConfig.i.args["innertube_api_key"];
+    
+    if (srcConfig.i.args["innertube_context_client_version"])
+        result.innertubeContextClientVersion = srcConfig.i.args["innertube_context_client_version"];
+    
+    if (srcConfig.i.args["hl"])
+        result.hl = srcConfig.i.args["hl"];
+    
+    if (srcConfig.i.args["host_language"])
+        result.hostLanguage = srcConfig.i.args["host_language"];
+    
+    if (srcConfig.i.args["cr"])
+        result.contentRegion = srcConfig.i.args["cr"];
+    
+    if (srcConfig.i.args["fflags"])
+        result.serializedExperimentFlags = srcConfig.i.args["fflags"];
+    
+    if (srcConfig.i.args["fexp"])
+        result.serializedExperimentIds = srcConfig.i.args["fexp"];
+    
+    if (srcConfig.i.attrs.id)
+        result.rootElementId = srcConfig.i.attrs.id;
+    
+    return result;
+}
+
+/**
  * Rehike-specific change: Support delayed player bootstrapping when Rehike is
  * using the legacy player.
  */
-en = function(a) {
+en=function(a) {
     if (!a.Ha() && !a.V) {
         var b = kn(a);
         if (b && "html5" == (hn(a) ? "html5" : null)) a.aa = "html5", a.F || ln(a);
@@ -717,7 +788,7 @@ en = function(a) {
                 else
                 {
                     var e = a.i ? a.i.clone() : void 0;
-                    d(a.Pa, e, a.l);
+                    d(a.Pa, e, a.l ? a.l : rhBuildWebContextConfig(a));
                     ln(a)
                 }
             };
