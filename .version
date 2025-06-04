@@ -1,10 +1,10 @@
 {
-	"previousHash": "30c89a1d858bd47db9381fdf4951dd19d5b05863",
-	"currentRevisionId": 1724,
-	"subject": "Work around June 2025 legacy player initialisation removal",
-	"body": "Work around June 2025 legacy player initialisation removal",
+	"previousHash": "60be32bb77f8186d24cdd42e78e2aad47eeab6a8",
+	"currentRevisionId": 1725,
+	"subject": "Revert a887d1e",
+	"body": "Revert a887d1e",
 	"branch": "master",
 	"committerName": "Isabella Lulamoon",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1748939809
+	"time": 1749001856
 }
