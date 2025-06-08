@@ -265,6 +265,9 @@ class ParsingUtils
 
         foreach ($iruns->styleRuns as $irun)
         {
+            if (!isset($irun->length))
+                $irun->length = mb_strlen($iruns->content);
+            
             $text = self::mb_substr_ex($iruns->content, $irun->startIndex, $irun->length);
             $run = (object)[
                 "text" => $text
