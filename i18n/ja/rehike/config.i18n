@@ -60,9 +60,9 @@ props:
     showOldUploadedOnText:
       title: "2012年以前の動画に「アップロード日」の表示を使用"
       subtitle: > 
-        2017年6月以前、YouTubeは2005年から2011年の動画に「アップロード日」、
+        2017年6月以前、YouTubeは2005年から2011年までの動画に「アップロード日」、
         それ以降の動画には「公開日」と表示していました。
-	useLegacyRoboto:
+    useLegacyRoboto:
       title: "レガシーRobotoフォントを使用"
       subtitle: >
         2017年以前に使用されていました。
@@ -113,6 +113,10 @@ props:
       title: "組み込みの広告ブロッカーを有効にする"
       subtitle: >
         動画プレーヤー内の広告に対する安定した広告ブロッカーを提供します。
+    showNewInfoOnChannelAboutPage:
+      title: "チャンネルの「概要」ページで新しい詳細を表示"
+      subtitle: >
+        概要ページでチャンネルの代名詞と動画数を表示します。
 
   
   experiments:
