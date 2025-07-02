@@ -143,7 +143,7 @@ class MVideoSecondaryInfoRenderer
         }
         else
         {
-            return substr($string, 0, 37) . "...";
+            return ParsingUtils::mb_substr_ex($string, 0, 37) . "...";
         }
     }
 }

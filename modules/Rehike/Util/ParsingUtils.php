@@ -369,10 +369,10 @@ class ParsingUtils
     }
 
     /**
-     * Custom mb_substr function for commandRunsToRuns.
+     * Custom mb_substr function for indexedRunsToRuns.
      * The default mb_substr will cause breakage with emojis.
      * 
-     * @see   commandRunsToRuns()
+     * @see   indexedRunsToRuns()
      * 
      * @param string $str     String to crop.
      * @param int    $offset  Zero-indexed offset to begin cropping at.
@@ -380,7 +380,7 @@ class ParsingUtils
      * 
      * @return string
      */
-    private static function mb_substr_ex(string $str, int $offset, ?int $length): string {
+    public static function mb_substr_ex(string $str, int $offset, ?int $length): string {
         $bmp = [];
         for($i = 0; $i < mb_strlen($str); $i++)
         {

@@ -1,10 +1,10 @@
 {
-	"previousHash": "04ddd5ad66cb090400e405f39040bcaf0add21ca",
-	"currentRevisionId": 1731,
-	"subject": "Merge branch 'master' of https://github.com/Rehike/Rehike",
-	"body": "Merge branch 'master' of https://github.com/Rehike/Rehike",
+	"previousHash": "0c0595f90c04b7fe1366e61990551f0ecaf6d388",
+	"currentRevisionId": 1732,
+	"subject": "Fix truncated description link text encoding Issue could be seen here before: https://youtu.be/b87i07uLJIw",
+	"body": "Fix truncated description link text encoding Issue could be seen here before: https://youtu.be/b87i07uLJIw",
 	"branch": "master",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1749950097
+	"time": 1751488635
 }
