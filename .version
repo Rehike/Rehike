@@ -1,10 +1,10 @@
 {
-	"previousHash": "0c0595f90c04b7fe1366e61990551f0ecaf6d388",
-	"currentRevisionId": 1732,
-	"subject": "Fix truncated description link text encoding Issue could be seen here before: https://youtu.be/b87i07uLJIw",
-	"body": "Fix truncated description link text encoding Issue could be seen here before: https://youtu.be/b87i07uLJIw",
+	"previousHash": "37d261ac5f9d14432dfab8394ff3c19e0bf876bf",
+	"currentRevisionId": 1733,
+	"subject": "Truncation fix 2: Use mb_strlen to determine string width",
+	"body": "Truncation fix 2: Use mb_strlen to determine string width",
 	"branch": "master",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1751488635
+	"time": 1751488920
 }

@@ -137,7 +137,7 @@ class MVideoSecondaryInfoRenderer
     {
         if (is_null($string)) return null;
         if ($prefix) $string = "https://www.youtube.com" . $string;
-        if (strlen($string) <= 37)
+        if (mb_strlen($string) <= 37)
         {
             return $string;
         }
