@@ -45,6 +45,8 @@ class InnertubeBrowseConverter
                     // TODO: Not passing along framework updates is a hack because we can't
                     // access it at this time.
                     $lockupConv = new LockupViewModelConverter($content, (object)[]);
+                    if (isset($context["lockupStyle"]))
+                        $lockupConv->setStyle($context["lockupStyle"]);
                     $newEntry = $lockupConv->bakeClassicRenderer();
                     
                     foreach ($newEntry as $newName => &$newContext)
@@ -130,7 +132,7 @@ class InnertubeBrowseConverter
                     // TODO: Not passing along framework updates is a hack because we can't
                     // access it at this time.
                     $lockupConv = new LockupViewModelConverter($value, (object)[]);
-                    $lockupConv->setDirection(LockupViewModelConverter::DIRECTION_LIST);
+                    $lockupConv->setStyle(LockupViewModelConverter::STYLE_LIST);
                     $newEntry = $lockupConv->bakeClassicRenderer();
                     
                     foreach ($newEntry as $newName => &$newContext)

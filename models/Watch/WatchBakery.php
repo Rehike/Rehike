@@ -31,6 +31,7 @@ use Rehike\Model\Traits\NavigationEndpoint;
 use Rehike\Async\Promise;
 use function Rehike\Async\async;
 use Rehike\i18n\i18n;
+use Rehike\Model\ViewModelConverter\LockupViewModelConverter;
 use Rehike\YtApp;
 
 /**
@@ -61,6 +62,7 @@ class WatchBakery
     // Shorthand data references
     public $results = null;
     public $secondaryResults = null;
+    public $autoplay = null;
     public $playlist = null;
     public $primaryInfo = null;
     public $secondaryInfo = null;
@@ -175,6 +177,12 @@ class WatchBakery
         if (isset($data->twoColumnWatchNextResults->secondaryResults->secondaryResults))
         {
             $this->secondaryResults = &$data->twoColumnWatchNextResults->secondaryResults->secondaryResults;
+        }
+
+        $this->autoplay = null;
+        if (isset($data->twoColumnWatchNextResults->autoplay->autoplay))
+        {
+            $this->autoplay = &$data->twoColumnWatchNextResults->autoplay->autoplay;
         }
 
         if (isset($data->twoColumnWatchNextResults->conversationBar->liveChatRenderer))
@@ -360,36 +368,41 @@ class WatchBakery
                 return null;
             }
 
-            InnertubeBrowseConverter::generalLockupConverter($recomsList);
+            InnertubeBrowseConverter::generalLockupConverter(
+                $recomsList,
+                [ "lockupStyle" => LockupViewModelConverter::STYLE_COMPACT ]
+            );
 
             if ($this->shouldUseAutoplay())
             {
                 if (is_countable($recomsList) && count($recomsList) > 0)
                 {
                     $autoplayIndex = $this->getRecomAutoplay($recomsList);
-
-                    if (isset($_COOKIE["PREF"]))
+                    if ($autoplayIndex != -1)
                     {
-                        $pref = PrefUtils::parse($_COOKIE["PREF"]);
-                    }
-                    else
-                    {
-                        $pref = (object) [];
-                    }
+                        if (isset($_COOKIE["PREF"]))
+                        {
+                            $pref = PrefUtils::parse($_COOKIE["PREF"]);
+                        }
+                        else
+                        {
+                            $pref = (object) [];
+                        }
 
-                    // Move autoplay video to its own object
-                    $compactAutoplayRenderer = (object)[
-                        "contents" => [ $recomsList[$autoplayIndex] ],
-                        "infoText" => $i18n->get("autoplayInfoText"),
-                        "title" => $i18n->get("autoplayTitle"),
-                        "toggleDesc" => $i18n->get("autoplayToggleDesc"),
-                        "checked" => PrefUtils::autoplayEnabled($pref)
-                    ];
-                    $response += ["compactAutoplayRenderer" => $compactAutoplayRenderer];
+                        // Move autoplay video to its own object
+                        $compactAutoplayRenderer = (object)[
+                            "contents" => [ $recomsList[$autoplayIndex] ],
+                            "infoText" => $i18n->get("autoplayInfoText"),
+                            "title" => $i18n->get("autoplayTitle"),
+                            "toggleDesc" => $i18n->get("autoplayToggleDesc"),
+                            "checked" => PrefUtils::autoplayEnabled($pref)
+                        ];
+                        $response += ["compactAutoplayRenderer" => $compactAutoplayRenderer];
 
-                    // Remove the original reference to prevent it from 
-                    // rendering twice
-                    array_splice($recomsList, $autoplayIndex, 1); // ignore IDE type error
+                        // Remove the original reference to prevent it from 
+                        // rendering twice
+                        array_splice($recomsList, $autoplayIndex, 1); // ignore IDE type error
+                    }
                 }
             }
 
@@ -565,31 +578,27 @@ class WatchBakery
      */
     public function shouldUseAutoplay(): bool
     {
-        // Disable if watch playlists available at all.
-        if (is_null($this->playlist))
-        {
-            return true;
-        }
-
-        // If none of the conditions above are hit, always
-        // return false as a catch all
-        return false;
+        return !is_null($this->autoplay);
     }
 
     /**
      * Get autoplay recommendation
      * 
      * @param object $results (index of the results)
-     * @return int The index of the recommendation.
+     * @return int The index of the recommendation, or -1 if no autoplay video.
      */
-    public function getRecomAutoplay(&$results)
+    public function getRecomAutoplay(array $results)
     {
-        for ($i = 0; $i < count($results); $i++) if (isset($results[$i]->compactVideoRenderer))
+        if (!is_null($this->autoplay))
         {
-            return $i;
+            $videoId = $this->autoplay->sets[0]->autoplayVideo->watchEndpoint->videoId;
+            foreach ($results as $i => $result)
+            {
+                if (@$result->compactVideoRenderer->videoId == $videoId)
+                    return $i;
+            }
         }
-
-        return 0;
+        return -1;
     }
 
     /**

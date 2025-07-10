@@ -1,10 +1,10 @@
 {
-	"previousHash": "c8d2e651778ae7e2770a3a4a953ae937be58eff0",
-	"currentRevisionId": 1734,
-	"subject": "Fix for watch sidebar video view models (no full view counts)",
-	"body": "Fix for watch sidebar video view models (no full view counts)",
+	"previousHash": "be8f6434b7f70d6addd76f4012a18d306accbd3e",
+	"currentRevisionId": 1735,
+	"subject": "Fix up compact autoplay renderer This got broken due to the new experiment and renderers being converted to the wrong type (grid instead of compact). I went ahead and renamed the lockup view model converter's "direction" to "style" and added a "compact" entry to it. I also took this time to go ahead and use the proper autoplay video instead of just grabbing the first video from the recommendations list, which most of the time actually was not the autoplay video. This also removes the necessity for checking whether or not we have a playlist, since InnerTube simply won't report an autoplay video on next with a playlist.",
+	"body": "Fix up compact autoplay renderer This got broken due to the new experiment and renderers being converted to the wrong type (grid instead of compact). I went ahead and renamed the lockup view model converter's "direction" to "style" and added a "compact" entry to it. I also took this time to go ahead and use the proper autoplay video instead of just grabbing the first video from the recommendations list, which most of the time actually was not the autoplay video. This also removes the necessity for checking whether or not we have a playlist, since InnerTube simply won't report an autoplay video on next with a playlist.",
 	"branch": "master",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1752171556
+	"time": 1752182062
 }

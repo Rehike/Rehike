@@ -9,19 +9,20 @@ namespace Rehike\Model\ViewModelConverter;
  */
 class LockupViewModelConverter extends BasicVMC
 {
-    public const DIRECTION_GRID = 0;
-    public const DIRECTION_LIST = 1;
+    public const STYLE_GRID    = 0;
+    public const STYLE_LIST    = 1;
+    public const STYLE_COMPACT = 2;
     
-    private int $direction = self::DIRECTION_GRID;
+    private int $style = self::STYLE_GRID;
     
-    public function getDirection(): int
+    public function getStyle(): int
     {
-        return $this->direction;
+        return $this->style;
     }
     
-    public function setDirection(int $newDirection): self
+    public function setStyle(int $newStyle): self
     {
-        $this->direction = $newDirection;
+        $this->style = $newStyle;
         return $this;
     }
     
@@ -29,7 +30,7 @@ class LockupViewModelConverter extends BasicVMC
     {
         $rootPropName = $this->determineClassicPropertyName(
             $this->viewModel->contentType,
-            $this->direction
+            $this->style
         );
         
         $resultObj = (object)[];
@@ -62,14 +63,16 @@ class LockupViewModelConverter extends BasicVMC
         {
             "LOCKUP_CONTENT_TYPE_PLAYLIST" => match ($direction)
             {
-                self::DIRECTION_GRID => "gridPlaylistRenderer",
-                self::DIRECTION_LIST => "playlistRenderer",
+                self::STYLE_GRID    => "gridPlaylistRenderer",
+                self::STYLE_LIST    => "playlistRenderer",
+                self::STYLE_COMPACT => "compactPlaylistRenderer",
             },
 
             "LOCKUP_CONTENT_TYPE_VIDEO" => match ($direction)
             {
-                self::DIRECTION_GRID => "gridVideoRenderer",
-                self::DIRECTION_LIST => "videoRenderer",
+                self::STYLE_GRID    => "gridVideoRenderer",
+                self::STYLE_LIST    => "videoRenderer",
+                self::STYLE_COMPACT => "compactVideoRenderer",
             },
             
             default => "videoRenderer",
