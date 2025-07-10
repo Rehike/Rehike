@@ -32,6 +32,22 @@ class PlaylistRendererViewModelConverter extends BasicVMC
         $result->videoCountText = (object)[
             "simpleText" => $thumbnailBadgeVM->text
         ];
+
+        $result->thumbnailOverlays = [];
+        foreach ($thumbnailVM->overlays as $overlay)
+        {
+            if (isset($overlay->thumbnailHoverOverlayViewModel))
+            {
+                $text = $overlay->thumbnailHoverOverlayViewModel->text->content;
+                $result->thumbnailOverlays[] = (object)[
+                    "thumbnailOverlayHoverTextRenderer" => (object)[
+                        "text" => (object)[
+                            "simpleText" => $text
+                        ]
+                    ]
+                ];
+            }
+        }
         
         $result->thumbnailText = $this->formatThumbnailText($thumbnailBadgeVM->text);
         $result->navigationEndpoint = $this->viewModel->rendererContext->commandContext->onTap->innertubeCommand;
