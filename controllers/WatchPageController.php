@@ -20,6 +20,7 @@ use Rehike\Async\Promise;
 use Rehike\Util\Base64Url;
 use Rehike\ConfigManager\Config;
 use Rehike\Helper\WatchUtils;
+use Rehike\Model\Common\MAlert;
 use Rehike\Util\ExtractUtils;
 
 use Rehike\Model\Watch\WatchBakery;
@@ -283,6 +284,17 @@ class WatchPageController extends NirvanaController implements IGetController
                     $this->setTitle($yt->page->title);
                 }
             });
+
+            if (@$yt->hasEvilWatchSidebarExperimentFromHell)
+            {
+                $yt->page->alerts = [
+                    new MAlert([
+                        "type" => MAlert::TypeWarning,
+                        "text" => "You currently have an experiment that reformats watch sidebar videos, and as a result, "
+                        . "full view counts can no longer be displayed. Sorry for the inconvenience."
+                    ])
+                ];
+            }
             
             \Rehike\Profiler::end("modelbake");
         });

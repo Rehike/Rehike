@@ -1,10 +1,10 @@
 {
-	"previousHash": "37d261ac5f9d14432dfab8394ff3c19e0bf876bf",
-	"currentRevisionId": 1733,
-	"subject": "Truncation fix 2: Use mb_strlen to determine string width",
-	"body": "Truncation fix 2: Use mb_strlen to determine string width",
+	"previousHash": "c8d2e651778ae7e2770a3a4a953ae937be58eff0",
+	"currentRevisionId": 1734,
+	"subject": "Fix for watch sidebar video view models (no full view counts)",
+	"body": "Fix for watch sidebar video view models (no full view counts)",
 	"branch": "master",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1751488920
+	"time": 1752171556
 }

@@ -33,11 +33,22 @@ class LockupViewModelConverter extends BasicVMC
         );
         
         $resultObj = (object)[];
-        
-        if ($this->viewModel->contentType == "LOCKUP_CONTENT_TYPE_PLAYLIST")
+
+        switch ($this->viewModel->contentType)
         {
-            $playlistConv = new PlaylistRendererViewModelConverter($this->viewModel, $this->frameworkUpdates);
-            $resultObj = $playlistConv->bake($this);
+            case "LOCKUP_CONTENT_TYPE_PLAYLIST":
+            {
+                $playlistConv = new PlaylistRendererViewModelConverter($this->viewModel, $this->frameworkUpdates);
+                $resultObj = $playlistConv->bake($this);
+                break;
+            }
+            case "LOCKUP_CONTENT_TYPE_VIDEO":
+            {
+                \Rehike\YtApp::getInstance()->hasEvilWatchSidebarExperimentFromHell = true;
+                $videoConv = new VideoRendererViewModelConverter($this->viewModel, $this->frameworkUpdates);
+                $resultObj = $videoConv->bake($this);
+                break;
+            }
         }
         
         return (object)[
@@ -53,6 +64,12 @@ class LockupViewModelConverter extends BasicVMC
             {
                 self::DIRECTION_GRID => "gridPlaylistRenderer",
                 self::DIRECTION_LIST => "playlistRenderer",
+            },
+
+            "LOCKUP_CONTENT_TYPE_VIDEO" => match ($direction)
+            {
+                self::DIRECTION_GRID => "gridVideoRenderer",
+                self::DIRECTION_LIST => "videoRenderer",
             },
             
             default => "videoRenderer",
