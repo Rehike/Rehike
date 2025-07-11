@@ -130,6 +130,44 @@ class VideoRendererViewModelConverter extends BasicVMC
                             ];
                         }
                         break;
+                        case "thumbnailBottomOverlayViewModel":
+                            {
+                                $result->thumbnailOverlays[] = (object)[
+                                    "thumbnailOverlayResumePlaybackRenderer" => (object)[
+                                        "percentDurationWatched" => $content->progressBar->thumbnailOverlayProgressBarViewModel->startPercent
+                                    ]
+                                ];
+                                
+                                $badge = @$content->badges[0]->thumbnailBadgeViewModel ?? null;
+                                if (!is_null($badge))
+                                {
+                                    $result->thumbnailOverlays[] = (object)[
+                                        "thumbnailOverlayTimeStatusRenderer" => (object)[
+                                            "style" => "DEFAULT",
+                                            "text" => (object)[
+                                                "accessibility" => (object)[
+                                                    "accessibilityData" => (object)[
+                                                        "label" => @$badge->rendererContext->accessibilityContext->label ?? ""
+                                                    ]
+                                                ],
+                                                "simpleText" => $badge->text
+                                            ]
+                                        ]
+                                    ];
+                                    $result->thumbnailOverlays[] = (object)[
+                                        "thumbnailOverlayNowPlayingRenderer" => (object)[
+                                            "text" => (object)[
+                                                "runs" => [
+                                                    (object)[
+                                                        "text" => $badge->animatedText
+                                                    ]
+                                                ]
+                                            ]
+                                        ]
+                                    ];
+                                }
+                                break;
+                            }
                 }
             }
         }

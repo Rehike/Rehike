@@ -1,10 +1,10 @@
 {
-	"previousHash": "34f51f80fda88f1d4fcebb08806e62f72b7e6815",
-	"currentRevisionId": 1736,
-	"subject": "Fix playlist renderer "Play all" hover overlay text",
-	"body": "Fix playlist renderer "Play all" hover overlay text",
+	"previousHash": "2f191bc2159eedaea3523bfa2ec9fde8b36a29af",
+	"currentRevisionId": 1737,
+	"subject": "Fix video lockup view models with percent duration watched",
+	"body": "Fix video lockup view models with percent duration watched",
 	"branch": "master",
 	"committerName": "aubymori",
 	"committerEmail": "aubyomori@gmail.com",
-	"time": 1752182557
+	"time": 1752192828
 }
