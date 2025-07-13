@@ -75,6 +75,27 @@ final class Loader
         $out = $language->cultureInfo;
         return true;
     }
+    
+    /**
+     * Ensures that the requested language can be opened and is valid.
+     * 
+     * @return bool True if the language can be opened, false otherwise.
+     */
+    public static function ensureInitializationAndValidity(string $langId): bool
+    {
+        try
+        {
+            self::openLanguage($langId);
+            return true;
+        }
+        catch (\Exception $e)
+        {
+            $message = $e->getMessage();
+            trigger_error("Error loading language file \"$langId\": $message", E_USER_WARNING);
+            
+            return false;
+        }
+    }
 
     private static function tryLoadFromCache(
             string $langId, 
@@ -125,7 +146,7 @@ final class Loader
         }
         else
         {
-            throw new \Exception("fuck $culture");
+            throw new \Exception("Failed to load culture file for language $langId; expected \"$culture\"");
         }
 
         self::$languages[$langId] = $lang;

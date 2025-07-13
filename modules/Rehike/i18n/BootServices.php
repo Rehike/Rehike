@@ -44,6 +44,24 @@ class BootServices
         
         i18n::setRouter(new RehikeTranslationRouter());
 
+        self::initializeCoffeeTranslation($langId);
+        
+        // Make sure that the requested language can actually be loaded. If it cannot be, then
+        // the code here will internally report a warning, and we'll set the language over to
+        // en-US. This prevents an invalid language from making Rehike completely unusable.
+        if (!Internal\Lang\Loader::ensureInitializationAndValidity($langId))
+        {
+            $langId = "en-US";
+            self::initializeCoffeeTranslation($langId);
+        }
+
+        YtApp::getInstance()->gl = I18nCore::getInnertubeGeolocation();
+        YtApp::getInstance()->hl = I18nCore::getInnertubeLanguageId();
+        \Rehike\Profiler::end("i18nboot");
+    }
+    
+    private static function initializeCoffeeTranslation(string $langId)
+    {
         i18n::getConfigApi()
             ->setCultureFileName("_culture.i18n")
             ->setDefaultFileExtension("i18n")
@@ -51,9 +69,5 @@ class BootServices
             ->setCurrentLanguageId($langId)
             ->setExceptionOnFailure(true)
         ;
-
-        YtApp::getInstance()->gl = I18nCore::getInnertubeGeolocation();
-        YtApp::getInstance()->hl = I18nCore::getInnertubeLanguageId();
-        \Rehike\Profiler::end("i18nboot");
     }
 }

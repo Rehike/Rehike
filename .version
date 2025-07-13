@@ -1,10 +1,10 @@
 {
-	"previousHash": "2f191bc2159eedaea3523bfa2ec9fde8b36a29af",
-	"currentRevisionId": 1737,
-	"subject": "Fix video lockup view models with percent duration watched",
-	"body": "Fix video lockup view models with percent duration watched",
+	"previousHash": "e51e8a279363dc6d78047d255bfe1c217e6e3ea6",
+	"currentRevisionId": 1738,
+	"subject": "Prevent crash when trying to load an unsupported language",
+	"body": "Prevent crash when trying to load an unsupported language",
 	"branch": "master",
-	"committerName": "aubymori",
-	"committerEmail": "aubyomori@gmail.com",
-	"time": 1752192828
+	"committerName": "Isabella Lulamoon",
+	"committerEmail": "kawapure@gmail.com",
+	"time": 1752449019
 }
