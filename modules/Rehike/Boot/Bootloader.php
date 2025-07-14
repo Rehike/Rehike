@@ -2,10 +2,13 @@
 namespace Rehike\Boot;
 
 use Rehike\{
+    Async\Promise,
+    Async\EventLoop\EventLoop,
     Debugger\Debugger,
     DisableRehike\DisableRehike,
     Logging\LogFileManager,
 };
+use Rehike\Async\Promise\PromiseStatus;
 use Rehike\ConfigManager\Config;
 
 /**
@@ -26,6 +29,12 @@ final class Bootloader
         \Rehike\Profiler::end("rhboot");
         self::postboot();
         self::shutdown();
+    }
+    
+    public static function handleAsyncControllerRequest(Promise $controllerPromise): void
+    {
+        EventLoop::run();
+        //assert($controllerPromise->status == PromiseStatus::RESOLVED);
     }
 
     /**

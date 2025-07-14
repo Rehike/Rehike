@@ -1,6 +1,7 @@
 <?php
 namespace Rehike\ControllerV2;
 
+use Rehike\Boot\Bootloader;
 use Rehike\ControllerV2\Util\GlobToRegexp;
 use Rehike\SimpleFunnel;
 
@@ -235,16 +236,28 @@ class Router
                 throw new \Exception("Attempting to use non-controller class \"$pointer\" as controller.");
             }
             
+            $isControllerAsync =
+                in_array(IGetControllerAsync::class, class_implements($pointer)) ||
+                in_array(IPostControllerAsync::class, class_implements($pointer));
+            
             if ($method == "get")
             {
-                if (!in_array(IGetController::class, class_implements($pointer)))
+                $className = $isControllerAsync
+                    ? IGetControllerAsync::class
+                    : IGetController::class;
+                
+                if (!in_array($className, class_implements($pointer)))
                 {
                     throw new \Exception("Using non-GET controller \"$pointer\" as GET controller.");
                 }
             }
             else if ($method == "post")
             {
-                if (!in_array(IPostController::class, class_implements($pointer)))
+                $className = $isControllerAsync
+                    ? IPostControllerAsync::class
+                    : IPostController::class;
+                
+                if (!in_array($className, class_implements($pointer)))
                 {
                     throw new \Exception("Using non-POST controller \"$pointer\" as POST controller.");
                 }
@@ -258,15 +271,35 @@ class Router
             
             if ($method == "get")
             {
-                /** @var IGetController */
-                $getControllerInstance = $instance;
-                return $getControllerInstance->get();
+                if ($isControllerAsync)
+                {
+                    /** @var IGetControllerAsync */
+                    $getControllerInstance = $instance;
+                    Bootloader::handleAsyncControllerRequest($getControllerInstance->getAsync());
+                    return;
+                }
+                else
+                {   
+                    /** @var IGetController */
+                    $getControllerInstance = $instance;
+                    return $getControllerInstance->get();
+                }
             }
             else if ($method == "post")
             {
-                /** @var IPostController */
-                $postControllerInstance = $instance;
-                return $postControllerInstance->post();
+                if ($isControllerAsync)
+                {
+                    /** @var IPostControllerAsync */
+                    $postControllerInstance = $instance;
+                    Bootloader::handleAsyncControllerRequest($postControllerInstance->postAsync());
+                    return;
+                }
+                else
+                {
+                    /** @var IPostController */
+                    $postControllerInstance = $instance;
+                    return $postControllerInstance->post();
+                }
             }
         }
         else

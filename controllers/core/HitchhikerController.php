@@ -20,6 +20,7 @@ use Rehike\Model\{
 };
 
 use Rehike\Async\Promise;
+use function Rehike\Async\async;
 
 use Rehike\Player\PlayerCore;
 use Rehike\ControllerV2\RequestMetadata;
@@ -95,6 +96,8 @@ abstract class HitchhikerController extends PageController
      *                                   matters on the technical end.
      * 
      * @param RequestMetadata $request   Reports request metadata.
+     * 
+     * @deprecated Should be moved to getAsync() in the future.
      */
     public function get(): void
     {
@@ -124,6 +127,8 @@ abstract class HitchhikerController extends PageController
      *                                   matters on the technical end.
      * 
      * @param RequestMetadata $request   Reports request metadata.
+     * 
+     * @deprecated Should be moved to postAsync() in the future
      */
     public function post(): void
     {
@@ -138,6 +143,50 @@ abstract class HitchhikerController extends PageController
         $this->postInit();
 
         if ($this->useTemplate) $this->doGeneralRender();
+    }
+    
+    /**
+     * Implements the base functionality that is ran on every GET request.
+     * 
+     * This function should not be overridden for page-specific
+     * functionality. Use the controller's API (onGet()) for that.
+     */
+    public function getAsync(): Promise
+    {
+        return async(function()
+        {
+            header("Content-Type: " .  $this->contentType);
+            $this->yt = \Rehike\YtApp::getInstance();
+            $this->init();
+
+            yield $this->onGetAsync($this->yt, $this->getRequest());
+
+            $this->postInit();
+
+            if ($this->useTemplate) $this->doGeneralRender();
+        });   
+    }
+
+    /**
+     * Implements the base functionality that is ran on every POST request.
+     * 
+     * This function should not be overridden for page-specific
+     * functionality. Use the controller's API (onPost()) for that.
+     */
+    public function postAsync(): Promise
+    {
+        return async(function()
+        {
+            header("Content-Type: " .  $this->contentType);
+            $this->yt = \Rehike\YtApp::getInstance();
+            $this->init();
+            
+            yield $this->onPostAsync($this->yt, $this->getRequest());
+            
+            $this->postInit();
+            
+            if ($this->useTemplate) $this->doGeneralRender();
+        });
     }
 
     public function setTitle(string $title): void
@@ -240,6 +289,34 @@ abstract class HitchhikerController extends PageController
      * @param RequestMetadata $request  Reports request metadata.
      */
     public function onPost(YtApp $yt, RequestMetadata $request): void {}
+    
+    /**
+     * Defines the API for handling GET requests. Pages should always use this;
+     * only subcontrollers may override onGetAsync() directly.
+     */
+    public function onGetAsync(): Promise
+    {
+        // The default implement thunks to the non-async handler.
+        return new Promise(function($resolve)
+        {
+            $this->onGet($this->yt, $this->getRequest());
+            $resolve();
+        });
+    }
+
+    /**
+     * Defines the API for handling POST requests. Pages should always use this;
+     * only subcontrollers may override onPostAsync() directly.
+     */
+    public function onPostAsync(): Promise
+    {
+        // The default implement thunks to the non-async handler.
+        return new Promise(function($resolve)
+        {
+            $this->onPost($this->yt, $this->getRequest());
+            $resolve();
+        });
+    }
 
     /**
      * Set initial variables for this controller type.
