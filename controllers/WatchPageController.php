@@ -8,6 +8,7 @@ use Rehike\ControllerV2\RequestMetadata;
 
 use Rehike\ControllerV2\{
     IGetController,
+    IGetControllerAsync,
     IPostController,
 };
 
@@ -16,6 +17,7 @@ use Com\Youtube\Innertube\Request\NextRequestParams\UnknownThing;
 
 use Rehike\Network;
 use Rehike\Async\Promise;
+use function Rehike\Async\async;
 
 use Rehike\Util\Base64Url;
 use Rehike\ConfigManager\Config;
@@ -33,15 +35,19 @@ use Rehike\Model\Watch\WatchBakery;
  * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
-class WatchPageController extends NirvanaController implements IGetController
+class WatchPageController extends NirvanaController implements IGetControllerAsync
 {
     public string $template = 'watch';
     
     // Watch should only load the guide after everything else is done.
     protected bool $delayLoadGuide = true;
-
-    public function onGet(YtApp $yt, RequestMetadata $request): void
+    
+    public function onGetAsync(): Promise
     {
+        return async(function(){
+        
+        $yt = $this->yt;
+        $request = $this->getRequest();
         $this->useJsModule("www/watch");
 
         // invalid request redirect
@@ -227,12 +233,15 @@ class WatchPageController extends NirvanaController implements IGetController
             $rydRequest = new Promise(fn($r) => $r());
         }
 
-        Promise::all([
+        $responses = yield Promise::all([
             "next"       => $nextRequest,
             "player"     => $playerRequest,
             "ryd"        => $rydRequest,
             "storyboard" => $storyboardRequest
-        ])->then(function ($responses) use ($yt) {
+        ]);
+        
+        // Block maintained to not affect Git history after refactor. That's all.
+        {
             \Rehike\Profiler::end("watch_requests");
             $nextResponse = $responses["next"]->getJson();
             $playerResponse = $responses["player"]->getJson();
@@ -271,32 +280,23 @@ class WatchPageController extends NirvanaController implements IGetController
             
             $watchBakery = new WatchBakery();
 
-            $watchBakery->bake(
+            $watchModelResult = yield $watchBakery->bake(
                 yt:      $yt,
                 data:    $nextResponse,
                 videoId: $yt->videoId,
                 rydData: $rydResponse
-            )->then(function ($watchModelResult) use ($yt) {
-                $yt->page = $watchModelResult;
+            );
+            
+            $yt->page = $watchModelResult;
 
-                if (isset($yt->page->title))
-                {
-                    $this->setTitle($yt->page->title);
-                }
-            });
-
-            if (@$yt->hasEvilWatchSidebarExperimentFromHell)
+            if (isset($yt->page->title))
             {
-                $yt->page->alerts = [
-                    new MAlert([
-                        "type" => MAlert::TypeWarning,
-                        "text" => "You currently have an experiment that reformats watch sidebar videos, and as a result, "
-                        . "full view counts can no longer be displayed. Sorry for the inconvenience."
-                    ])
-                ];
+                $this->setTitle($yt->page->title);
             }
             
             \Rehike\Profiler::end("modelbake");
+        }
+        
         });
     }
 

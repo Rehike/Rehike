@@ -150,7 +150,7 @@ class WatchBakery
                 "isLive" => $this->isLive,
                 "isOwner" => $this->isOwner,
                 "results" => yield $this->bakeResults($data, $videoId),
-                "secondaryResults" => $this->bakeSecondaryResults($data),
+                "secondaryResults" => yield $this->bakeSecondaryResults($data),
                 "title" => $this->title,
                 "playlist" => $this->bakePlaylist(),
                 "liveChat" => $this->liveChat,
@@ -333,10 +333,11 @@ class WatchBakery
      * to its respective position if so.
      * 
      * @param object $data from watch results response
-     * @return ?object
+     * @return Promise<?object>
      */
-    public function bakeSecondaryResults(object &$data): ?object
+    public function bakeSecondaryResults(object &$data): Promise/*<?object>*/
     {
+        return async(function() use ($data) {
         // Get data from the reference in the datahost
         $origResults = &$this->secondaryResults;
         $response = [];
@@ -372,6 +373,32 @@ class WatchBakery
                 $recomsList,
                 [ "lockupStyle" => LockupViewModelConverter::STYLE_COMPACT ]
             );
+            
+            $targetObjs = [];
+            $videoIds = [];
+            $fullViewCountsMgr = new FullViewCountsManager();
+            
+            foreach ($recomsList as $recom)
+            {
+                if (isset($recom->compactVideoRenderer))
+                {
+                    $videoId = $recom->compactVideoRenderer->videoId;
+                    
+                    $videoIds[] = $videoId;
+                    $targetObjs[$videoId] = $recom->compactVideoRenderer;
+                }
+            }
+            
+            /** @var FullViewCountsStrategy */
+            $fullViewCountsResult = yield $fullViewCountsMgr->requestFullViewCountsForSet($videoIds);
+            
+            if ($fullViewCountsResult->isSuccessful())
+            {
+                foreach ($fullViewCountsResult->map as $videoId => $viewCount)
+                {
+                    $targetObjs[$videoId]->viewCountText = $this->getFormattedFullViewCountText($viewCount);
+                }
+            }
 
             if ($this->shouldUseAutoplay())
             {
@@ -411,6 +438,7 @@ class WatchBakery
         }
 
         return null;
+        });
     }
 
     /**
@@ -662,6 +690,34 @@ class WatchBakery
         else
         {
             return false;
+        }
+    }
+    
+    private function getFormattedFullViewCountText(FullViewCountsViewCount $fullViewCount): string
+    {
+        return match ($fullViewCount->format)
+        {
+            FullViewCountsViewCountFormat::RawNumber => self::formatViewCountTextWithNumber((int)$fullViewCount->viewCount),
+            
+            FullViewCountsViewCountFormat::BadResult => 
+                trigger_error("BadResult should not make it into " . __METHOD__, E_USER_WARNING),
+            
+            // The data is already formatted by InnerTube, so we'll just return it raw.
+            FullViewCountsViewCountFormat::FormattedByInnertube, _ => $fullViewCount->viewCount,
+        };
+    }
+    
+    private static function formatViewCountTextWithNumber(int $number): string
+    {
+        $i18n = i18n::getNamespace("misc");
+        
+        if ($number == 1)
+        {
+            return $i18n->format("viewTextSingular", "1");
+        }
+        else
+        {
+            return $i18n->format("viewTextPlural", $i18n->formatNumber($number));
         }
     }
 }
