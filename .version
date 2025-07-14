@@ -1,10 +1,10 @@
 {
-	"previousHash": "e51e8a279363dc6d78047d255bfe1c217e6e3ea6",
-	"currentRevisionId": 1738,
-	"subject": "Prevent crash when trying to load an unsupported language",
-	"body": "Prevent crash when trying to load an unsupported language",
+	"previousHash": "b8559b57dc52e046a7e469879d542909e40cc68c",
+	"currentRevisionId": 1739,
+	"subject": "Fix Promise::all stale promise when 0 bound promises",
+	"body": "Fix Promise::all stale promise when 0 bound promises",
 	"branch": "master",
 	"committerName": "Isabella Lulamoon",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1752449019
+	"time": 1752461181
 }

@@ -59,6 +59,14 @@ class PromiseAllController
 
         // Used to track the number of responses internally.
         $this->boundPromiseCount = count($promises);
+        
+        if ($this->boundPromiseCount == 0)
+        {
+            // PATCH (isabella): If we didn't have any promises to wait for, then we would create
+            // a stale promise which would unravel the execution of the entire program.
+            $this->resolve();
+            return;
+        }
 
         $this->awaitPromiseArray($promises);
     }
