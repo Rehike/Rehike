@@ -23,6 +23,12 @@ use Rehike\Async\Debugging\IObjectWithTrackingCookie;
 use Rehike\Async\Debugging\TrackingCookie;
 
 /**
+ * Enables promise resolution to be deferred to optimise garbage collection cycle
+ * throughput and flatten the call stack a bit.
+ */
+const ENABLE_DEFERRED_PROMISES = true;
+
+/**
  * A simple Promise implementation for PHP.
  * 
  * Due to the lack of any native event loop in PHP, and thus the reliance 
@@ -323,6 +329,7 @@ class Promise/*<T>*/ implements IPromise/*<T>*/,
      */
     public function resolve(/*T*/ $data = null): void
     {
+if (ENABLE_DEFERRED_PROMISES) {
         /*
          * A promise's resolution should not be called if the event
          * loop is still running.
@@ -347,6 +354,7 @@ class Promise/*<T>*/ implements IPromise/*<T>*/,
 
             return; // Should finish here.
         }
+}
 
         $this->result = $data;
 
@@ -396,6 +404,7 @@ class Promise/*<T>*/ implements IPromise/*<T>*/,
      */
     public function reject($e): void
     {
+if (ENABLE_DEFERRED_PROMISES) {
         /*
          * A promise's rejection should not be called if the event
          * loop is still running.
@@ -420,6 +429,7 @@ class Promise/*<T>*/ implements IPromise/*<T>*/,
 
             return; // Should finish here.
         }
+}
 
         /*
          * Do nothing if the Promise already has a set status.
