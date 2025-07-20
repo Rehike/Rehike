@@ -2,6 +2,7 @@
 namespace Rehike\Async\Concurrency;
 
 use Generator, Exception;
+use Rehike\Async\EventLoop\EventLoop;
 use Throwable;
 use Rehike\Async\Promise;
 
@@ -39,6 +40,12 @@ class AsyncFunction
      * respectively.
      */
     private Promise $ownPromise;
+    
+    /**
+     * A reference to the internal event we use to put the async function onto
+     * the event loop.
+     */
+    private AsyncFunctionEvent $event;
 
     public static function __initStatic()
     {
@@ -49,6 +56,9 @@ class AsyncFunction
     {
         $this->generator = $g;
         $this->ownPromise = new Promise();
+        
+        $this->event = new AsyncFunctionEvent($this);
+        EventLoop::addEvent($this->event);
     }
 
     /**
@@ -97,11 +107,14 @@ class AsyncFunction
             {
                 // Capture the exception thrown by the Generator and carry
                 // it over to the internal Promise.
+                $this->event->fulfill();
                 $this->ownPromise->reject($e);
             }
         }
         else // has returned
         {
+            $this->event->fulfill();
+            
             try
             {
                 $result = $this->generator->getReturn();
