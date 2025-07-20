@@ -14,9 +14,6 @@ use Throwable;
  *                      promise is resolved.
  * @property Throwable $reason  The promise failure reason. This should only be
  *                              accessed if the promise is rejected.
- * @property IPromiseStackTrace $creationTrace  Stack trace at promise creation.
- * @property IPromiseStackTrace $latestTrace  Stack trace as of the latest
- *                                            update to the object.
  * 
  * @template T
  * 

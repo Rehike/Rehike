@@ -2,6 +2,7 @@
 namespace Rehike\Async;
 
 use Rehike\Async\Promise\{
+    IPromiseWithStackTrace,
     PromiseStatus,
     PromiseEvent,
     QueuedPromiseResolver,
@@ -36,7 +37,8 @@ use ReflectionMethod;
  * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
-class Promise/*<T>*/ implements IPromise/*<T>*/
+class Promise/*<T>*/ implements IPromise/*<T>*/,
+    IPromiseWithStackTrace,
 {
     /**
      * Represents the current status of a Promise.
