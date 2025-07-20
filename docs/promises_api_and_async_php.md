@@ -51,7 +51,7 @@ Now, writing code like this gets pretty ugly pretty quickly, which is why abstra
 
 So, enough introduction to asynchronous programming! How do we get to actually using them?
 
-Promises are implemented in the CoffeeRequest library, but we have an alias class just for Rehike purposes. You can import Promises into a PHP file like such:
+Promises are implemented as part of the Rehike async framework. You can import Promises into a PHP file like such:
 
 ```php
 use Rehike\Async\Promise;
