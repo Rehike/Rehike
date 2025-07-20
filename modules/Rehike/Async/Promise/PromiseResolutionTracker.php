@@ -60,6 +60,11 @@ final class PromiseResolutionTracker
 
     public static function registerPendingPromise(Promise $promise): void
     {
+        // Of course, we don't want to accept already-resolved promises.
+        // They can never become pending again, anyway.
+        if ($promise->status != PromiseStatus::PENDING)
+            return;
+        
         // Save a reference to the Promise and a copy of its latest trace.
         self::$pendingPromises[] = [$promise, $promise->latestTrace];
 
