@@ -19,6 +19,8 @@ use Throwable;
 use Exception;
 use ReflectionFunction;
 use ReflectionMethod;
+use Rehike\Async\Debugging\IObjectWithTrackingCookie;
+use Rehike\Async\Debugging\TrackingCookie;
 
 /**
  * A simple Promise implementation for PHP.
@@ -39,6 +41,7 @@ use ReflectionMethod;
  */
 class Promise/*<T>*/ implements IPromise/*<T>*/,
     IPromiseWithStackTrace,
+    IObjectWithTrackingCookie
 {
     /**
      * Represents the current status of a Promise.
@@ -74,6 +77,11 @@ class Promise/*<T>*/ implements IPromise/*<T>*/,
      * The stack trace of the Promise as of the last update.
      */
     public PromiseStackTrace $latestTrace;
+    
+    /**
+     * Tracking cookie for debug purposes.
+     */
+    private TrackingCookie $cookie;
 
     /** 
      * Callbacks to be ran when the promise is resolved.
@@ -155,6 +163,8 @@ class Promise/*<T>*/ implements IPromise/*<T>*/,
         $isCritical = 
             isset($options["critical"]) ? $options["critical"] : true;
 
+        $this->cookie = new TrackingCookie(__CLASS__);
+        
         $this->creationTrace = new PromiseStackTrace;
         $this->latestTrace = &$this->creationTrace;
 
@@ -511,6 +521,11 @@ class Promise/*<T>*/ implements IPromise/*<T>*/,
     protected function getCurrentThenIndex(): int
     {
         return count($this->thens) - 1;
+    }
+    
+    public function getTrackingCookie(): TrackingCookie
+    {
+        return $this->cookie;
     }
 }
 
