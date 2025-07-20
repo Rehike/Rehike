@@ -155,6 +155,9 @@ class Promise/*<T>*/ implements IPromise/*<T>*/,
         $isCritical = 
             isset($options["critical"]) ? $options["critical"] : true;
 
+        $this->creationTrace = new PromiseStackTrace;
+        $this->latestTrace = &$this->creationTrace;
+
         if (null != $cb)
         {
             $reflection = new ReflectionFunction($cb);
@@ -180,9 +183,6 @@ class Promise/*<T>*/ implements IPromise/*<T>*/,
         }
 
         $this->throwOnUnresolved = $isCritical;
-
-        $this->creationTrace = new PromiseStackTrace;
-        $this->latestTrace = &$this->creationTrace;
     }
 
     /**
