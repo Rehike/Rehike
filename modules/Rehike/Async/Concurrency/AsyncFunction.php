@@ -123,6 +123,7 @@ class AsyncFunction
         if ($value instanceof Promise)
         {
             $value->then($this->getThenHandler());
+            $value->catch($this->getCatchHandler());
         }
         else
         {
@@ -144,6 +145,23 @@ class AsyncFunction
         return function (mixed $value) {
             $this->generator->send($value);
             $this->run();
+        };
+    }
+    
+    /**
+     * Get a catch handler for the internal Promise.
+     */
+    protected function getCatchHandler(): callable
+    {
+        return function (mixed $value) {
+            if ($value instanceof Throwable)
+            {
+                throw $value;
+            }
+            else
+            {
+                throw new \Exception((string)$value);
+            }
         };
     }
 }
