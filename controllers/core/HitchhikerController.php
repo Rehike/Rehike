@@ -108,6 +108,8 @@ abstract class HitchhikerController extends PageController
         $this->onGet($this->yt, $this->getRequest());
 
         Network::run();
+        
+        \Rehike\Async\Promise\PromiseResolutionTracker::logPendingPromisesNow();
 
         $this->postInit();
 
