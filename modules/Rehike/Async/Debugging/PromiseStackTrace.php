@@ -81,9 +81,9 @@ class PromiseStackTrace implements IPromiseStackTrace
 
         foreach ($this->originalTrace as $item)
         {
-            if (!in_array($item["file"], self::$skippedFiles))
+            if (!in_array(@$item["file"], self::$skippedFiles))
             {
-                $result[] = $item;
+                $result[] = $item;  
             }
         }
 
@@ -124,9 +124,9 @@ class PromiseStackTrace implements IPromiseStackTrace
         $i = 0;
         foreach ($trace as $item)
         {
-            $file = $item["file"];
-            $line = $item["line"];
-            $function = $item["function"];
+            $file = @$item["file"] ?? "[unknown file]";
+            $line = @$item["line"] ?? null;
+            $function = @$item["function"];
 
             if (!is_string($file))
             {
