@@ -58,7 +58,7 @@ final class PromiseResolutionTracker
         self::$isEnabled = true;
     }
 
-    public static function registerPendingPromise(Promise $promise): void
+    public static function registerPendingPromise(IPromise $promise): void
     {
         // Of course, we don't want to accept already-resolved promises.
         // They can never become pending again, anyway.
@@ -71,7 +71,7 @@ final class PromiseResolutionTracker
         self::$pendingPromiseCount++;
     }
 
-    public static function unregisterPendingPromise(Promise $promise): void
+    public static function unregisterPendingPromise(IPromise $promise): void
     {
         foreach (self::$pendingPromises as $i => $pending)
         {
