@@ -7,6 +7,13 @@ use Rehike\Async\Debugging\PromiseStackTrace;
 use Exception;
 
 /**
+ * The maximum number of times that the event loop can nest.
+ * 
+ * This makes it easy to catch infinite recursion loops.
+ */
+const EVENT_LOOP_NESTING_LIMIT = 512;
+
+/**
  * Implements the Rehike event loop.
  * 
  * The event loop is very simple, simply checking iterating over the
@@ -25,7 +32,7 @@ final class EventLoop
     /**
      * Stores all current events.
      * 
-     * @var IFulfillableEvent[]
+     * @var IEvent[]
      */
     private static array $events = [];
 
@@ -46,10 +53,15 @@ final class EventLoop
      * Keeps track of the current call level.
      */
     private static int $level = 0;
+    
+    /**
+     * Track the number of times that {@see run()} is called.
+     */
+    private static int $s_internalRunLevel = 0;
 
     // Disable instances
     private function __construct() {}
-
+    
     /**
      * Run the event loop.
      * 
@@ -62,13 +74,20 @@ final class EventLoop
      */
     public static function run(): void
     {
+        self::$s_internalRunLevel++;
+        
+        if (self::$s_internalRunLevel >= EVENT_LOOP_NESTING_LIMIT)
+        {
+            throw new Exception("The event loop entered an infinite recursion loop.");
+        }
+        
         self::$level++;
 
         do
         {
             foreach (self::$events as $event) if (
                 !$event->isFulfilled() &&
-                $event instanceof Event
+                !((int)$event->getEventFlags() & EventFlags::Suspended)
             )
             {
                 $event->run();
@@ -80,15 +99,23 @@ final class EventLoop
         // function stops being called, as it can also be paused.
         if (self::isFinished())
         {
+            // XXX(isabella): I do not know why the level system is designed like this.
+            // It decrements even though we can remain on the call stack in the case of
+            // queued promise resolution calling us again (which is a new stack frame),
+            // so it's useless for checking for i.e. stack overflow. In the future,
+            // consider restructuring this model to make it not recursively call run()
+            // to avoid this being an issue.
             self::$level--;
             self::cleanup();
         }
+        
+        self::$s_internalRunLevel--;
     }
 
     /**
      * Determine if the event loop has an event.
      */
-    public static function hasEvent(Event $e): bool
+    public static function hasEvent(IEvent $e): bool
     {
         return (bool)array_search($e, self::$events);
     }
@@ -96,7 +123,7 @@ final class EventLoop
     /**
      * Add an event to the event loop.
      */
-    public static function addEvent(Event $e): void
+    public static function addEvent(IEvent $e): void
     {
         self::$events[] = $e;
     }
@@ -104,7 +131,7 @@ final class EventLoop
     /**
      * Add an event to the event loop if it's not already there.
      */
-    public static function addEventIfNotAdded(Event $e): void
+    public static function addEventIfNotAdded(IEvent $e): void
     {
         if (!self::hasEvent($e))
         {
@@ -115,7 +142,7 @@ final class EventLoop
     /**
      * Remove an event from the event loop.
      */
-    public static function removeEvent(IFulfillableEvent $e): void
+    public static function removeEvent(IEvent $e): void
     {
         $index = array_search($e, self::$events);
 
@@ -187,7 +214,10 @@ final class EventLoop
      */
     public static function addQueuedPromise(QueuedPromiseResolver $p): void
     {
-        self::$queuedPromises[] = $p;
+        if (!in_array($p, self::$queuedPromises))
+        {
+            self::$queuedPromises[] = $p;
+        }
     }
 
     /**
@@ -201,12 +231,17 @@ final class EventLoop
         {
             if (
                 !$event->isFulfilled() &&
-                $event instanceof Event
+                // If we only have events with the AllowQueuedPromisesToPass flag, then we
+                // naturally meet the criteria to not continue running. In this case, the
+                // natural endpoint is to break out of the event loop, dispatch queued
+                // promises, and in doing so re-enter the event loop.
+                !((int)$event->getEventFlags() & EventFlags::AllowQueuedPromisesToPass) &&
+                !((int)$event->getEventFlags() & EventFlags::Suspended)
             )
             {
                 return true;
             }
-            else if (!@$event->preventNullification)
+            else if ($event->isFulfilled() && !((int)$event->getEventFlags() & EventFlags::MayResetFulfillment))
             {
                 // The event is no longer needed at all since it's
                 // no longer accessed after being fulfilled. Might as well
@@ -224,10 +259,21 @@ final class EventLoop
     private static function cleanup(): void
     {
         // Rely on GC to CL34NUP memory afterwards >:]
-        self::$events = [];
+        self::cullFulfilledEvents();
 
         // Notify the delayed promise resolutions to finish.
         self::finishQueuedPromises();
+    }
+    
+    private static function cullFulfilledEvents(): void
+    {
+        foreach (self::$events as $i => $event)
+        {
+            if ($event->isFulfilled() && !((int)$event->getEventFlags() & EventFlags::MayResetFulfillment))
+            {
+                array_splice(self::$events, $i, 1);
+            }
+        }
     }
 
     /**
@@ -238,16 +284,19 @@ final class EventLoop
         foreach (self::$queuedPromises as $promise)
         {
             $promise->finish();
-
-            if (self::$level == 0 && count(self::$events) > 0)
-            {
-                self::run();
-            }
         }
-
+        
         // Since all queued Promise callbacks have been gotten to,
         // the queues aren't necessary.
         self::$queuedPromises = [];
+        
+        // XXX(isabella): This code was previously located in the foreach loop,
+        // which was a design error from Taniko which hindered performance, and
+        // could result in repeated resolution.
+        if (self::$level == 0 && self::shouldContinueRunning())
+        {
+            self::run();
+        }        
     }
 }
 

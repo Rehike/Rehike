@@ -1,6 +1,8 @@
 <?php
 namespace Rehike\Async\EventLoop;
 
+use Rehike\Attributes\Override;
+
 /**
  * Represents a null event in memory, i.e. one with nothing bound to it.
  * 
@@ -12,10 +14,27 @@ namespace Rehike\Async\EventLoop;
  * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
-class NullEvent implements IFulfillableEvent
+class NullEvent implements IEvent
 {
     public function isFulfilled(): bool
     {
         return true;
+    }
+    
+    /**
+     * @return EventFlags
+     */
+    #[Override]
+    public function getEventFlags(): int
+    {
+        // Null events have basically no reason to block the event loop,
+        // so they're treated as suspended.
+        return EventFlags::Suspended;
+    }
+    
+    #[Override]
+    final public function run(bool $reset = false): void
+    {
+        // Do nothing.
     }
 }

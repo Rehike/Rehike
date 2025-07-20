@@ -1,11 +1,32 @@
 <?php
 namespace Rehike\Async\EventLoop;
 
+use Exception;
 use Rehike\Async\Debugging\PromiseStackTrace;
 
 use Generator;
+use Rehike\Async\Debugging\IObjectWithTrackingCookie;
+use Rehike\Async\Debugging\TrackingCookie;
+use Rehike\Attributes\Override;
+
 use const E_USER_WARNING;
 use function trigger_error;
+
+/**
+ * Enables the run limit on events in the async framework.
+ * 
+ * The run limit is a primitive debugging utility which makes it easier to catch
+ * if an event is locked up.
+ */
+const ENABLE_EVENT_RUN_LIMIT = true;
+
+/**
+ * Limits the number of times a single event may be ran.
+ * 
+ * Events in Rehike never even run up to 10,000 times under normal execution, so
+ * such a high number may even be considered overkill.
+ */
+const EVENT_RUN_LIMIT = 32767;
 
 /**
  * Represents an asynchronous event.
@@ -29,13 +50,17 @@ use function trigger_error;
  * 
  * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  */
-abstract class Event implements IFulfillableEvent
+abstract class Event implements IEvent, IObjectWithTrackingCookie
 {
     /**
      * Stores whether or not the event is fulfilled.
      * 
      * An event ceases to be called upon being fulfilled and is
      * eventually culled from the event loop to free memory.
+     * 
+     * However, the programmer can manually override automatic management
+     * of the events by specifying the MayResetFulfillment flag. In this
+     * case, the lifetime of the event is fully-controlled by the programmer.
      */
     protected bool $fulfilled = false;
 
@@ -55,12 +80,65 @@ abstract class Event implements IFulfillableEvent
      * @see __destruct()
      */
     protected static bool $echoedDeveloperWarning = false;
+    
+    /**
+     * Tracking cookie for debug purposes.
+     */
+    private TrackingCookie $cookie;
+    
+    /**
+     * Tracks the number of times this event has been ran.
+     */
+    private int $runAmount = 0;
+    
+    public function __construct()
+    {
+        // Some children can override the constructor without calling the
+        // parent constructor, so we ensure initialisation of any dependencies
+        // in multiple locations.
+        $this->ensureTrackingCookie();
+    }
+    
+    public function getTrackingCookie(): TrackingCookie
+    {
+        $this->ensureTrackingCookie();
+        return $this->cookie;
+    }
+    
+    private function ensureTrackingCookie(): void
+    {
+        if (!isset($this->cookie))
+        {
+            $this->cookie = new TrackingCookie(__CLASS__);
+        }
+    }
 
     /**
      * Run the event.
      */
-    final public function run($reset = false): void
+    #[Override]
+    final public function run(bool $reset = false): void
     {
+        $this->ensureTrackingCookie();
+        
+        if (ENABLE_EVENT_RUN_LIMIT)
+        {
+            if ($this->runAmount >= EVENT_RUN_LIMIT && !((int)$this->getEventFlags() & EventFlags::NoRunLimit))
+            {
+                $this->fulfill();
+                
+                \Rehike\Logging\DebugLogger::print(
+                    __METHOD__.": Stopped event %s in its tracks because it ran %d times",
+                    $this->cookie,
+                    $this->runAmount
+                );
+                
+                throw new \Exception("An event is locked up.");
+            }
+        }
+        
+        $this->runAmount++;
+        
         // If the generator is not running, then start the generator
         // and mark it as running. Otherwise, progress the currently
         // running generator.
@@ -91,6 +169,12 @@ abstract class Event implements IFulfillableEvent
      * @return Generator<void>
      */
     abstract protected function onRun(): Generator/*<void>*/;
+    
+    #[Override]
+    public function getEventFlags(): int
+    {
+        return EventFlags::None;
+    }
 
     /**
      * Check if the event is fulfilled.
