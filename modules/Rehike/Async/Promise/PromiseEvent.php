@@ -40,21 +40,6 @@ abstract class PromiseEvent/*<T>*/ extends Event
     }
 
     /**
-     * Create a new PromiseEvent from a previously established Promise.
-     * 
-     * @param Promise<T> $promise
-     * @return PromiseEvent<T>
-     */
-    public static function fromPromise(Promise/*<T>*/ $p): PromiseEvent/*<T>*/
-    {
-        $self = new static/*<T>*/();
-
-        $self->promise = $p;
-
-        return $self;
-    }
-
-    /**
      * Create a new PromiseEvent from an anonymous Promise.
      * 
      * This will not accept a non-generator callback, which is handled
