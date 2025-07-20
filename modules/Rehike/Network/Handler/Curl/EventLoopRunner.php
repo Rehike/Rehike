@@ -21,8 +21,9 @@ use function curl_close;
 use const CURLM_OK;
 use const CURLINFO_HTTP_CODE;
 use CurlMultiHandle;
+use Rehike\Async\Promise\PromiseStatus;
 
-if (PHP_VERSION_ID >= 81000)
+if (PHP_VERSION_ID >= 80100)
 {
 
 //=====================================================================
@@ -31,17 +32,11 @@ if (PHP_VERSION_ID >= 81000)
 trait EventLoopRunner // implements Event::onRun()
 {
 
-    private array $normalItems = [];
-    private array $fiberItems = [];
-
     #[Override]
     public function onRun(): Generator/*<void>*/
     {
         // Defined in CurlHandler
         $requests = &$this->requests;
-
-        $normalItems = [];
-        $fiberItems = [];
 
         $halfOfList = floor(count($this->requests) / 2);
 
@@ -50,6 +45,8 @@ trait EventLoopRunner // implements Event::onRun()
             $this->fulfil();
             return;
         }
+        
+        $knownRequests = [];
 
         $mhFiber = curl_multi_init();
         $mhNormal = curl_multi_init();
@@ -61,6 +58,8 @@ trait EventLoopRunner // implements Event::onRun()
             $index > $halfOfList
                 ? curl_multi_add_handle($mhFiber, $request->handle)
                 : curl_multi_add_handle($mhNormal, $request->handle);
+
+            $knownRequests[] = $request;
         }
 
         // Initialize fiber:
@@ -78,7 +77,10 @@ trait EventLoopRunner // implements Event::onRun()
             }
             while ($active);
         });
-        $fiber->start();
+        $fiber->start($mhFiber);
+        
+        // We've already handled all existing requests, so clear the dirty flag.
+        $this->requestsDirty = false;
 
         do
         {
@@ -93,10 +95,45 @@ trait EventLoopRunner // implements Event::onRun()
                 {
                     usleep(10);
                 }
+                
                 yield;
+                
+                // Now we're resuming. If some more requests came through,
+                // we need to add them to the active stream now.
+                if ($this->requestsDirty)
+                {
+                    // Since our list can grow or shrink, we will now recompute the
+                    // half of list variable. We'll get a good average from our starting
+                    // value and the would-be starting value if we had this many to begin
+                    // with, since we obviously can't move between handlers.
+                    $halfOfList = floor($halfOfList + floor(count($this->requests) / 2) / 2);
+                    
+                    foreach ($requests as $index => $request)
+                    {
+                        if (in_array($request, $knownRequests))
+                        {
+                            continue;
+                        }
+                        
+                        $index > $halfOfList
+                            ? curl_multi_add_handle($mhFiber, $request->handle)
+                            : curl_multi_add_handle($mhNormal, $request->handle);
+
+                        $knownRequests[] = $request;
+                    }
+                    
+                    $this->requestsDirty = false;
+                }
             }
         }
         while ($active && CURLM_OK == $status);
+        
+        // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! //
+        //                *** END OF EVENT LOOP AREA ***                     //
+        //         The code should never "yield" past this point.            //
+        //        All code here must be synchronous as we will be            //
+        //                   processing responses.                           //
+        // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! //
 
         // Close fiber:
         do
@@ -130,6 +167,20 @@ trait EventLoopRunner // implements Event::onRun()
 
         curl_multi_close($mhNormal);
         curl_multi_close($mhFiber);
+        
+        foreach ($this->requests as $request)
+        {
+            if ($request->instance->getPromise()->status == PromiseStatus::PENDING)
+            {
+                // XXX(isabella): New requests can STILL be added before we fulfill,
+                // i.e. from a synchronous Promise::then() callback in sendResponse()
+                // when deferred promises are disabled in the async library. In this
+                // case, we will have to reset the network handler without clearing
+                // requests and let them run like normal.
+                $this->restartManager();
+                return;
+            }
+        }
 
         $this->fulfill();
     }
@@ -151,6 +202,8 @@ trait EventLoopRunner // implements Event::onRun()
     {
         // Defined in CurlHandler
         $requests = &$this->requests;
+        
+        $knownRequests = [];
 
         if (count($requests) == 0)
         {
@@ -165,6 +218,7 @@ trait EventLoopRunner // implements Event::onRun()
         foreach ($requests as $request)
         {
             curl_multi_add_handle($mh, $request->handle);
+            $knownRequests[] = $request;
             $codesMap[(int)$request->handle] = 0;
         }
 
@@ -185,6 +239,24 @@ trait EventLoopRunner // implements Event::onRun()
                 }
 
                 yield;
+                
+                // Now we're resuming. If some more requests came through,
+                // we need to add them to the active stream now.
+                if ($this->requestsDirty)
+                {
+                    foreach ($requests as $request)
+                    {
+                        if (in_array($request, $knownRequests))
+                        {
+                            continue;
+                        }
+                        
+                        curl_multi_add_handle($mh, $request->handle);
+                        $knownRequests[] = $request;
+                    }
+                    
+                    $this->requestsDirty = false;
+                }
             }
         }
         while ($active && CURLM_OK == $status);
@@ -211,10 +283,24 @@ trait EventLoopRunner // implements Event::onRun()
         }
 
         curl_multi_close($mh);
+        
+        foreach ($this->requests as $request)
+        {
+            if ($request->instance->getPromise()->status == PromiseStatus::PENDING)
+            {
+                // XXX(isabella): New requests can STILL be added before we fulfill,
+                // i.e. from a synchronous Promise::then() callback in sendResponse()
+                // when deferred promises are disabled in the async library. In this
+                // case, we will have to reset the network handler without clearing
+                // requests and let them run like normal.
+                $this->restartManager();
+                return;
+            }
+        }
 
         $this->fulfill();
     }
 
 } // EventLoopRunner
 
-} // PHP_VERSION_ID >= 81000
+} // PHP_VERSION_ID >= 80100

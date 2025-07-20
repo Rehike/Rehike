@@ -4,7 +4,7 @@ namespace Rehike\Network\Handler;
 use Rehike\Attributes\Override;
 
 use Rehike\Async\EventLoop\Event;
-
+use Rehike\Async\EventLoop\EventFlags;
 use Rehike\Network\{
     IRequest,
 };
@@ -16,12 +16,6 @@ use Rehike\Network\{
  */
 abstract class NetworkHandler extends Event
 {
-    /**
-     * Used internally to prevent the event loop from nullifying this
-     * event when it's reported as fulfilled.
-     */
-    public bool $preventNullification = true;
-
     /**
      * Add a request to the request manager.
      */
@@ -43,5 +37,11 @@ abstract class NetworkHandler extends Event
     {
         unset($this->generator);
         $this->fulfilled = false;
+    }
+    
+    #[Override]
+    public function getEventFlags(): int
+    {
+        return EventFlags::MayResetFulfillment;
     }
 }

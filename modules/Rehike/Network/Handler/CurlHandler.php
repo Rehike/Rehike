@@ -37,17 +37,26 @@ class CurlHandler extends NetworkHandler
      * @var RequestWrapper[] 
      */
     private array $requests = [];
+    
+    /**
+     * Marks {@see $requests} as dirty.
+     */
+    private bool $requestsDirty = false;
 
     #[Override]
     public function addRequest(IRequest $request): void
     {
         $this->requests[] = $this->convertRequest($request);
+        $this->requestsDirty = true;
     }
 
     #[Override]
     public function clearRequests(): void
     {
         $this->requests = [];
+        
+        // XXX(isabella): $requestsDirty is intentionally not set here in order
+        // to allow ongoing requests to clean up.
     }
 
     /**
