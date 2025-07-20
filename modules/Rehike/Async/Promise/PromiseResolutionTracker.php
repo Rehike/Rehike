@@ -1,10 +1,12 @@
 <?php
 namespace Rehike\Async\Promise;
 
+use Rehike\Async\IPromise;
 use Rehike\Async\Promise;
 use Rehike\Async\Exception\UnhandledPromiseException;
 
 use Closure;
+use Rehike\Async\Utils;
 
 /**
  * Tracks pending Promises and displays an error if the Promise is uncaught
@@ -57,6 +59,40 @@ final class PromiseResolutionTracker
     {
         self::$isEnabled = true;
     }
+    
+    public static function logPendingPromisesNow(): void
+    {
+        assert(count(self::$pendingPromises) == self::$pendingPromiseCount);
+        
+        \Rehike\Logging\DebugLogger::print(
+            "There are %d pending promise(s)",
+            count(self::$pendingPromises)
+        );
+        
+        foreach (self::$pendingPromises as $i => $promiseList)
+        {
+            $promise = $promiseList[0];
+            $originTrace = $promiseList[1];
+            
+            \Rehike\Logging\DebugLogger::print(
+                (
+                    "  %d. %s\n" .
+                    "      Status: %s\n" .
+                    "      Result: %s\n" .
+                    "      Cookie: %s\n" .
+                    "      Creation trace:\n%s\n" .
+                    "      Latest trace:\n%s\n"
+                ),
+                $i + 1,
+                json_encode($promiseList),
+                Utils::getEnumValueName(PromiseStatus::class, $promise->status),
+                $promise->getTrackingCookie(),
+                json_encode($promise->result),
+                implode(\array_map(fn($in) => "         " . $in . "\n", explode("\n", $promise->creationTrace?->getTraceAsString() ?? "<Trace unavailable>"))),
+                implode(\array_map(fn($in) => "         " . $in . "\n", explode("\n", $promise->latestTrace?->getTraceAsString() ?? "<Trace unavailable>")))
+            );
+        }
+    }
 
     public static function registerPendingPromise(IPromise $promise): void
     {
@@ -83,11 +119,6 @@ final class PromiseResolutionTracker
         }
     }
 
-    private static function getLatestPromiseList(): array
-    {
-        return self::$pendingPromises[count(self::$pendingPromises) - 1];
-    }
-
     private static function handleShutdown(): void
     {
         if (!self::$isEnabled)
@@ -102,17 +133,22 @@ final class PromiseResolutionTracker
                 return;
             }
 
-            self::throwUnhandledError();
+            self::throwUnhandledErrorIfNecessary();
         }
     }
 
-    private static function throwUnhandledError(): void
+    private static function throwUnhandledErrorIfNecessary(): void
     {
-        $promiseList = self::getLatestPromiseList();
-        $promise = $promiseList[0];
-        $originTrace = $promiseList[1];
-
-        throw new UnhandledPromiseException($promise, $originTrace);
+        foreach (self::$pendingPromises as $promiseList)
+        {
+            $promise = $promiseList[0];
+            $originTrace = $promiseList[1];
+            
+            if ($promise instanceof IPromiseResolutionTrackerSupport && $promise->throwsOnUnresolved())
+            {
+                throw new UnhandledPromiseException($promise, $originTrace);
+            }
+        }
     }
 }
 

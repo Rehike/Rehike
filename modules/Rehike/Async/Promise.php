@@ -2,6 +2,7 @@
 namespace Rehike\Async;
 
 use Rehike\Async\Promise\{
+    IPromiseResolutionTrackerSupport,
     IPromiseWithStackTrace,
     PromiseStatus,
     PromiseEvent,
@@ -47,6 +48,7 @@ const ENABLE_DEFERRED_PROMISES = true;
  */
 class Promise/*<T>*/ implements IPromise/*<T>*/,
     IPromiseWithStackTrace,
+    IPromiseResolutionTrackerSupport,
     IObjectWithTrackingCookie
 {
     /**
@@ -199,6 +201,13 @@ class Promise/*<T>*/ implements IPromise/*<T>*/,
         }
 
         $this->throwOnUnresolved = $isCritical;
+        
+        // XXX (isabella): In the case of statically-called (non-generator) promises, we
+        // resolve or reject before we exit the constructor, so we try to register the
+        // promise with the resolution tracker AFTER it's already resolved or rejected.
+        // In reality, the resolution tracker ignores this, but it used to not do so, and
+        // I changed it specifically for this case.
+        PromiseResolutionTracker::registerPendingPromise($this);
     }
 
     /**
@@ -277,14 +286,6 @@ class Promise/*<T>*/ implements IPromise/*<T>*/,
         }
 
         $this->latestTrace = new PromiseStackTrace;
-
-        if (
-            count($this->thens) == 1 && $this->throwOnUnresolved &&
-            $this->status == PromiseStatus::PENDING
-        )
-        {
-            PromiseResolutionTracker::registerPendingPromise($this);
-        }
 
         return $this;
     }
@@ -386,10 +387,7 @@ if (ENABLE_DEFERRED_PROMISES) {
             }
         }
 
-        if ($this->throwOnUnresolved)
-        {
-            PromiseResolutionTracker::unregisterPendingPromise($this);
-        }
+        PromiseResolutionTracker::unregisterPendingPromise($this);
 
         $this->setStatus(PromiseStatus::RESOLVED);
     }
@@ -467,10 +465,7 @@ if (ENABLE_DEFERRED_PROMISES) {
             $this->deferredRejections[$current] = $this->reason;
         }
 
-        if ($this->throwOnUnresolved)
-        {
-            PromiseResolutionTracker::unregisterPendingPromise($this);
-        }
+        PromiseResolutionTracker::unregisterPendingPromise($this);
 
         $this->setStatus(PromiseStatus::REJECTED);
     }
@@ -519,7 +514,7 @@ if (ENABLE_DEFERRED_PROMISES) {
      */
     protected function setStatus(int $newStatus): void
     {
-        $this->status = $newStatus;
+        $this->status = (int)$newStatus;
     }
 
     /**
@@ -536,6 +531,11 @@ if (ENABLE_DEFERRED_PROMISES) {
     public function getTrackingCookie(): TrackingCookie
     {
         return $this->cookie;
+    }
+    
+    public function throwsOnUnresolved(): bool
+    {
+        return $this->throwOnUnresolved;
     }
 }
 
