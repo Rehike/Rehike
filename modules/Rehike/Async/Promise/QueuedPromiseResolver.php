@@ -2,7 +2,6 @@
 namespace Rehike\Async\Promise;
 
 use Rehike\Async\Promise;
-use Rehike\Async\EventLoop\Loop;
 use Rehike\Async\Promise\PromiseStatus;
 
 /**
