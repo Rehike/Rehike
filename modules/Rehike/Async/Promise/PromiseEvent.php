@@ -32,10 +32,17 @@ abstract class PromiseEvent/*<T>*/ extends Event
     /** @var Promise<T> */
     private Promise/*<T>*/ $promise;
 
-    use Deferred { getPromise as public; }
+    use Deferred
+    { 
+        getPromise as public;
+        resolve as protected;
+        reject as protected;
+    }
 
     public function __construct()
     {
+        parent::__construct();
+        
         $this->initPromise();
     }
 
