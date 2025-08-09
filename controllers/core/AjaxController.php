@@ -9,7 +9,7 @@ use \Rehike\Controller\core\NirvanaController;
  * @author Aubrey Pankow <aubyomori@gmail.com>
  * @author The Rehike Maintainers
  */
-abstract class AjaxController extends NirvanaController
+abstract class AjaxController extends HitchhikerController
 {
     public string $contentType = "application/json";
 
