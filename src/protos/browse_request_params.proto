@@ -56,4 +56,61 @@ message BrowseRequestParams {
 
   // TODO, unreserve, this is documented
   reserved 15;
+  
+  optional ModernMetadata modern_metadata = 110;
 }
+
+message ModernMetadata {
+  optional ModernWebParams web_params = 1;
+  
+  // 2 is certain mobile parameters, but we don't need them in Rehike.
+  
+  optional ModernContinuationParams continuation_params = 3;
+}
+
+message ModernWebParams {
+  // Thanks to Prototaxis for this list.
+  optional ModernBrowseAboutParams about_params = 2;
+  optional ModernBrowseShoppingParams shopping_params = 3;
+  optional ModernBrowseFeaturedParams featured_params = 6;
+  optional ModernBrowseVideoParams videos_params = 7;
+  optional ModernBrowsePlaylistParams playlist_params = 8;
+  optional ModernBrowseCommunityParams community_params = 9;
+  optional ModernBrowseChannelsParams channels_params = 10;
+  optional ModernBrowseSearchParams search_params = 11;
+  optional ModernBrowseLiveParams live_params = 15;
+  optional ModernBrowseShortsParams shorts_params = 19;
+  optional ModernBrowseReleasesParams releases_params = 22;
+  optional ModernBrowsePodcastsParams podcasts_params = 23;
+  optional ModernBrowseCoursesParams courses_params = 24;
+}
+
+message ModernContinuationParams {
+  // An example is the about request in Rehike controllers/ChannelPageController.php.
+  // This message is not done yet.
+}
+
+message ModernBrowseAboutParams {}
+message ModernBrowseShoppingParams {}
+message ModernBrowseFeaturedParams {}
+message ModernBrowseVideoParams {
+  optional BrowseRequestParams.Sort legacy_sort = 1;
+  
+  enum ModernSort {
+    DEFAULT_SORT = 0;
+    POPULAR = 2;
+    LATEST = 4;
+    OLDEST = 5;
+  }
+  
+  optional ModernSort sort = 2;
+}
+message ModernBrowsePlaylistParams {}
+message ModernBrowseCommunityParams {}
+message ModernBrowseChannelsParams {}
+message ModernBrowseSearchParams {}
+message ModernBrowseLiveParams {}
+message ModernBrowseShortsParams {}
+message ModernBrowseReleasesParams {}
+message ModernBrowsePodcastsParams {}
+message ModernBrowseCoursesParams {}

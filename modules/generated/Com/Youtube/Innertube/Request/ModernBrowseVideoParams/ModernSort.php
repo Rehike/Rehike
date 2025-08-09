@@ -3,42 +3,37 @@
 # NO CHECKED-IN PROTOBUF GENCODE
 # source: browse_request_params.proto
 
-namespace Com\Youtube\Innertube\Request\BrowseRequestParams;
+namespace Com\Youtube\Innertube\Request\ModernBrowseVideoParams;
 
 use UnexpectedValueException;
 
 /**
- * Protobuf type <code>com.youtube.innertube.request.BrowseRequestParams.LiveView</code>
+ * Protobuf type <code>com.youtube.innertube.request.ModernBrowseVideoParams.ModernSort</code>
  */
-class LiveView
+class ModernSort
 {
     /**
-     * Generated from protobuf enum <code>DEFAULT_LIVEVIEW = 0;</code>
+     * Generated from protobuf enum <code>DEFAULT_SORT = 0;</code>
      */
-    const DEFAULT_LIVEVIEW = 0;
+    const DEFAULT_SORT = 0;
     /**
-     * Generated from protobuf enum <code>ALL = 1;</code>
+     * Generated from protobuf enum <code>POPULAR = 2;</code>
      */
-    const ALL = 1;
+    const POPULAR = 2;
     /**
-     * Generated from protobuf enum <code>LIVE = 2;</code>
+     * Generated from protobuf enum <code>LATEST = 4;</code>
      */
-    const LIVE = 2;
+    const LATEST = 4;
     /**
-     * Generated from protobuf enum <code>UPCOMING = 3;</code>
+     * Generated from protobuf enum <code>OLDEST = 5;</code>
      */
-    const UPCOMING = 3;
-    /**
-     * Generated from protobuf enum <code>PAST = 4;</code>
-     */
-    const PAST = 4;
+    const OLDEST = 5;
 
     private static $valueToName = [
-        self::DEFAULT_LIVEVIEW => 'DEFAULT_LIVEVIEW',
-        self::ALL => 'ALL',
-        self::LIVE => 'LIVE',
-        self::UPCOMING => 'UPCOMING',
-        self::PAST => 'PAST',
+        self::DEFAULT_SORT => 'DEFAULT_SORT',
+        self::POPULAR => 'POPULAR',
+        self::LATEST => 'LATEST',
+        self::OLDEST => 'OLDEST',
     ];
 
     public static function name($value)
