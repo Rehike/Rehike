@@ -286,17 +286,17 @@ final class EventLoop
             $promise->finish();
         }
         
-        // Since all queued Promise callbacks have been gotten to,
-        // the queues aren't necessary.
-        self::$queuedPromises = [];
-        
         // XXX(isabella): This code was previously located in the foreach loop,
         // which was a design error from Taniko which hindered performance, and
         // could result in repeated resolution.
         if (self::$level == 0 && self::shouldContinueRunning())
         {
             self::run();
-        }        
+        }
+        
+        // Since all queued Promise callbacks have been gotten to,
+        // the queues aren't necessary.
+        self::$queuedPromises = [];
     }
 }
 
