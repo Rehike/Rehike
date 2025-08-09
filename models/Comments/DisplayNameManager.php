@@ -64,7 +64,7 @@ class DisplayNameManager
             // request at all.
             if (empty($remoteCids))
             {
-                return new Promise(fn($r) => $r());
+                return;
             }
             
             // Try to request from data API:
