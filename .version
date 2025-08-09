@@ -1,10 +1,10 @@
 {
-	"previousHash": "3dbcd74c6ae088586c3ee85a921698764527a0da",
-	"currentRevisionId": 1768,
-	"subject": "Fix InnerTube request rejection on channel other-tab requests",
-	"body": "Fix InnerTube request rejection on channel other-tab requests",
+	"previousHash": "379b9c72cfa672168f7d225fed3ae8bdf5b5c5b6",
+	"currentRevisionId": 1769,
+	"subject": "Fix crash on viewing owned playlists",
+	"body": "Fix crash on viewing owned playlists",
 	"branch": "master",
 	"committerName": "Isabella Lulamoon",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1754759886
+	"time": 1754760186
 }

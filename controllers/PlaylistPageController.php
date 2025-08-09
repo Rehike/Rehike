@@ -2,7 +2,9 @@
 namespace Rehike\Controller;
 
 use \Com\Youtube\Innertube\Request\BrowseRequestParams;
-
+use Com\Youtube\Innertube\Request\ModernBrowsePlaylistParams;
+use Com\Youtube\Innertube\Request\ModernMetadata;
+use Com\Youtube\Innertube\Request\ModernWebParams;
 use Rehike\ControllerV2\{
     IGetController,
     IPostController,
@@ -71,6 +73,11 @@ class PlaylistPageController extends NirvanaController implements IGetController
             {
                 $params = new BrowseRequestParams();
                 $params->setTab("playlists");
+                $modernMetadata = new ModernMetadata();
+                $modernParams = new ModernWebParams();
+                $modernParams->setPlaylistParams(new ModernBrowsePlaylistParams());
+                $modernMetadata->setWebParams($modernParams);
+                $params->setModernMetadata($modernMetadata);
                 $yt->partiallySelectTabs = true;
 
                 $channelResponse = yield Network::innertubeRequest(
