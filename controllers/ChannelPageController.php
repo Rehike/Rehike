@@ -16,7 +16,22 @@ use Rehike\YtApp;
 use Rehike\ControllerV2\RequestMetadata;
 
 use \Com\Youtube\Innertube\Request\BrowseRequestParams;
-
+use Com\Youtube\Innertube\Request\ModernBrowseAboutParams;
+use Com\Youtube\Innertube\Request\ModernBrowseChannelsParams;
+use Com\Youtube\Innertube\Request\ModernBrowseCommunityParams;
+use Com\Youtube\Innertube\Request\ModernBrowseCoursesParams;
+use Com\Youtube\Innertube\Request\ModernBrowseFeaturedParams;
+use Com\Youtube\Innertube\Request\ModernBrowseLiveParams;
+use Com\Youtube\Innertube\Request\ModernBrowsePlaylistParams;
+use Com\Youtube\Innertube\Request\ModernBrowsePodcastsParams;
+use Com\Youtube\Innertube\Request\ModernBrowseReleasesParams;
+use Com\Youtube\Innertube\Request\ModernBrowseSearchParams;
+use Com\Youtube\Innertube\Request\ModernBrowseShoppingParams;
+use Com\Youtube\Innertube\Request\ModernBrowseShortsParams;
+use Com\Youtube\Innertube\Request\ModernBrowseVideoParams;
+use Com\Youtube\Innertube\Request\ModernBrowseVideoParams\ModernSort;
+use Com\Youtube\Innertube\Request\ModernMetadata;
+use Com\Youtube\Innertube\Request\ModernWebParams;
 use Rehike\Network;
 use Rehike\Async\Promise;
 use Rehike\Exception\Network\InnertubeFailedRequestException;
@@ -111,6 +126,48 @@ class ChannelPageController extends NirvanaController implements IGetController,
 
             // Expose tab to configure frontend JS
             $yt->tab = $tab;
+            
+            $params = new BrowseRequestParams();
+            $useParams = false;
+            
+            // 2025-07 (or so): Browse requests now require additional protobuf metadata to work.
+            $modernMetadata = new ModernMetadata();
+            $modernParams = new ModernWebParams();
+            switch ($tab)
+            {
+                case "videos":
+                {
+                    // Videos tab is a unique case where sort information must be specified.
+                    // The default sort order is newest first.
+                    $modernVideoParams = new ModernBrowseVideoParams();
+                    $modernVideoParams->setSort(ModernSort::LATEST);
+                    $modernParams->setVideosParams($modernVideoParams);
+                    break;
+                }
+                
+                default:
+                {
+                    match ($tab)
+                    {
+                        "featured" => $modernParams->setFeaturedParams(new ModernBrowseFeaturedParams()), 
+                        "about" => $modernParams->setAboutParams(new ModernBrowseAboutParams()),
+                        "shopping" => $modernParams->setShoppingParams(new ModernBrowseShoppingParams()),
+                        "playlists" => $modernParams->setPlaylistParams(new ModernBrowsePlaylistParams()),
+                        "community", "posts" => $modernParams->setCommunityParams(new ModernBrowseCommunityParams()),
+                        "channels" => $modernParams->setChannelsParams(new ModernBrowseChannelsParams()),
+                        "search" => $modernParams->setSearchParams(new ModernBrowseSearchParams()),
+                        "live" => $modernParams->setLiveParams(new ModernBrowseLiveParams()),
+                        "shorts" => $modernParams->setShortsParams(new ModernBrowseShortsParams()),
+                        "releases" => $modernParams->setReleasesParams(new ModernBrowseReleasesParams()),
+                        "podcasts" => $modernParams->setPodcastsParams(new ModernBrowsePodcastsParams()),
+                        "courses" => $modernParams->setCoursesParams(new ModernBrowseCoursesParams()),
+                        
+                        // If this is an unspecified tab, do nothing.
+                        default => null,
+                    };
+                }
+            }
+            $modernMetadata->setWebParams($modernParams);
 
             // Configure request params
             if ("featured" != $tab ||
@@ -118,8 +175,9 @@ class ChannelPageController extends NirvanaController implements IGetController,
                 isset($request->params->view) ||
                 (isset($request->params->sort) && !in_array($tab, ["videos", "streams", "shorts"])))
             {
-                $params = new BrowseRequestParams();
+                $useParams = true;
                 $params->setTab($tab);
+                $params->setModernMetadata($modernMetadata);
             }
             
             if (isset($request->params->shelf_id))
@@ -152,7 +210,7 @@ class ChannelPageController extends NirvanaController implements IGetController,
                     action: "browse",
                     body: [
                         "browseId" => $ucid,
-                        "params" => isset($params)
+                        "params" => $useParams
                             ? Base64Url::encode($params->serializeToString())
                             : null,
                         "query" => $request->params->query ?? null
