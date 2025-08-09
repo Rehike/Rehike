@@ -39,7 +39,7 @@ class TrackingCookie implements Stringable
             $this->creationTrace = $creationException->getTraceAsString();
         }
         
-        if (in_array($category, self::$s_categoryTracker))
+        if (isset(self::$s_categoryTracker[$category]))
         {
             self::$s_categoryTracker[$category] += 1;
         }
