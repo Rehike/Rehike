@@ -1,0 +1,20 @@
+syntax = "proto3"
+
+/**
+  * Used as the outermost wrapper of a browse continuation,
+  * provides certain client-specific information.
+  *
+  * @author aubymori
+  */
+message BrowseContinuationWrapper
+{
+    string browse_id = 2;
+    
+    /*
+     * An embedded message (encoded in base64) that includes specific information
+     * for the particular browse page. This stores a ContinuationTypeWrapper.
+     */
+    string encoded_action = 3;
+    
+    string target_id = 35;
+}
