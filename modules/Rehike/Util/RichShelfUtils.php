@@ -87,13 +87,15 @@ class RichShelfUtils
      * @param bool $list Format in list form?
      * @return object $richItemRenderer->content
      */
-    public static function reformatShelfItem(object $item, bool $list = false): object
+    public static function reformatShelfItem(object $item, bool $list = false): ?object
     {
         if (isset($item->richItemRenderer->content))
         {
             foreach ($item->richItemRenderer->content as $key => $val)
             {
-                if (!$list) $key = "grid" . ucfirst($key);
+                // If we get a lockup view model, then we don't want to prepend "grid" because it will
+                // mess up the converter.
+                if (!$list && $key != "lockupViewModel") $key = "grid" . ucfirst($key);
                 return (object) [
                     $key => $val
                 ];
@@ -103,5 +105,7 @@ class RichShelfUtils
         {
             return $item;
         }
+        
+        return null;
     }
 }

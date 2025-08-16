@@ -1,10 +1,10 @@
 {
-	"previousHash": "379b9c72cfa672168f7d225fed3ae8bdf5b5c5b6",
-	"currentRevisionId": 1769,
-	"subject": "Fix crash on viewing owned playlists",
-	"body": "Fix crash on viewing owned playlists",
+	"previousHash": "6f11a58c4aeee40d5dc5d768ed7824b7482d8e82",
+	"currentRevisionId": 1770,
+	"subject": "Fix homepage rich shelf converter from making fake "gridLockupViewModel"",
+	"body": "Fix homepage rich shelf converter from making fake "gridLockupViewModel"",
 	"branch": "master",
 	"committerName": "Isabella Lulamoon",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1754760186
+	"time": 1755328791
 }
