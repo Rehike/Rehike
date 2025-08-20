@@ -1,10 +1,10 @@
 {
-	"previousHash": "6f11a58c4aeee40d5dc5d768ed7824b7482d8e82",
-	"currentRevisionId": 1770,
-	"subject": "Fix homepage rich shelf converter from making fake "gridLockupViewModel"",
-	"body": "Fix homepage rich shelf converter from making fake "gridLockupViewModel"",
+	"previousHash": "67e61082b000eb70fe1c3984cb16d264e97711ff",
+	"currentRevisionId": 1771,
+	"subject": "Bandaid fix for list view homepage",
+	"body": "Bandaid fix for list view homepage",
 	"branch": "master",
 	"committerName": "Isabella Lulamoon",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1755328791
+	"time": 1755666551
 }

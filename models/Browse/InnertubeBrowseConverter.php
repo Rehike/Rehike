@@ -367,6 +367,12 @@ class InnertubeBrowseConverter
         {
             foreach ($data->content as $name => $value)
             {
+                if ($name == "lockupViewModel")
+                {
+                    // Bandaid to fix homepage:
+                    return self::generalLockupConverter([$data->content])[0];
+                }
+                
                 return (object) [
                     "grid" . ucfirst($name) => $value
                 ];
