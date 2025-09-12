@@ -1,10 +1,10 @@
 {
-	"previousHash": "67e61082b000eb70fe1c3984cb16d264e97711ff",
-	"currentRevisionId": 1771,
-	"subject": "Bandaid fix for list view homepage",
-	"body": "Bandaid fix for list view homepage",
+	"previousHash": "f3411da27ff8579a1516e09196b85f3f50a04232",
+	"currentRevisionId": 1772,
+	"subject": "Fix #682",
+	"body": "Fix #682",
 	"branch": "master",
 	"committerName": "Isabella Lulamoon",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1755666551
+	"time": 1757662450
 }

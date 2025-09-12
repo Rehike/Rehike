@@ -120,13 +120,24 @@ class AsyncFunction
                 $result = $this->generator->getReturn();
                 $this->ownPromise->resolve($result);
             }
-            catch (Throwable)
+            catch (Throwable $e)
             {
                 // If the promise threw an exception that was caught before
                 // getting to us (the network library can do this internally), then
                 // it will no have return value and will throw an exception. We
                 // just have to ignore it.
-                $this->ownPromise->resolve(null);
+                // PATCH (izzy): Resolved issue #682, thanks lemon-pumpkin-pie!
+                if ($e instanceof Exception
+                    && $e->getMessage() == "Cannot get return value of a generator that hasn't returned"
+                )
+                {
+                    $this->ownPromise->resolve(null);
+                    return;
+                }
+
+                // Regular exceptions still need to be passed to the async
+                // function for handling.
+                $this->ownPromise->reject($e);
             }
             
             return;
