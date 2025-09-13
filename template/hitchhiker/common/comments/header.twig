@@ -4,6 +4,7 @@
     <h2 class="comment-section-header-renderer" tabindex="0">
         <b>{{ data.title }}</b>{% if data.commentsCountText %} • {{data.commentsCountText}}{% endif %}
     </h2>
+    {% if data.simpleBoxRenderer %}
     <div class="comment-simplebox-renderer  {{ not rehike.signin.isSignedIn() ? "" }}">
         <span class="video-thumb comment-author-thumbnail yt-thumb yt-thumb-48">
         <span class="yt-thumb-square">
@@ -22,6 +23,19 @@
         </div>
         </div>
     </div>
+    {% elseif data.pausedCommentsMessage %}
+        <div class="display-message" id="rehike-paused-comments-message">
+            {%- for run in data.pausedCommentsMessage.messageRenderer.text.runs -%}
+                {%- if run.navigationEndpoint -%}
+                    {%- set href = run.navigationEndpoint.commandMetadata.webCommandMetadata.url -%}
+                    {%- set spf = (href|first == "/") -%}
+                    <a href="{{ href }}" class="{{ spf ? 'spf-link' }}" target="_blank">{{ run.text }}</a>
+                {%- else -%}
+                    {{ run.text }}
+                {%- endif -%}
+            {%- endfor -%}
+        </div>
+    {% endif %}
     {% if data.sortRenderer %}
     {% set sortRenderer = data.sortRenderer %}
     <div class="yt-uix-menu comment-section-sort-menu">

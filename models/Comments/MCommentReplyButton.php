@@ -21,6 +21,7 @@ class MCommentReplyButton extends MButton
         $this->attributes["simplebox-params"] = $data["params"] ?? null;
         $this->attributes["simplebox-label"] = $data["label"] ?? "";
         $this->attributes["placeholder"] = $data["placeholder"] ?? "";
+        $this->isDisabled = $data["isDisabled"];
         $this->text = $data["text"];
     }
 
@@ -41,7 +42,8 @@ class MCommentReplyButton extends MButton
             "params" => $params,
             "label" => $label,
             "placeholder" => $placeholder,
-            "text" => $text
+            "text" => $text,
+            "isDisabled" => $data->isDisabled,
         ]);
     }
 }

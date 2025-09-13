@@ -1,10 +1,10 @@
 {
-	"previousHash": "f3411da27ff8579a1516e09196b85f3f50a04232",
-	"currentRevisionId": 1772,
-	"subject": "Fix #682",
-	"body": "Fix #682",
+	"previousHash": "3cbda26e07ec64e55ceee5b68c8c75b6eb7ec626",
+	"currentRevisionId": 1773,
+	"subject": "Properly handle paused comments (new YouTube feature)",
+	"body": "Properly handle paused comments (new YouTube feature)",
 	"branch": "master",
 	"committerName": "Isabella Lulamoon",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1757662450
+	"time": 1757729868
 }

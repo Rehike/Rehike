@@ -252,6 +252,7 @@ class CommentsViewModelConverter extends BasicVMC
                     ],
                     "defaultTooltip" => $commentPayload->toolbar->likeInactiveTooltip,
                     "toggledTooltip" => $commentPayload->toolbar->likeActiveTooltip,
+                    "isDisabled" => $this->areCommentsPaused(),
                 ]
             ],
             "dislikeButton" => (object)[
@@ -268,6 +269,7 @@ class CommentsViewModelConverter extends BasicVMC
                     ],
                     "defaultTooltip" => $commentPayload->toolbar->dislikeInactiveTooltip,
                     "toggledTooltip" => $commentPayload->toolbar->dislikeActiveTooltip,
+                    "isDisabled" => $this->areCommentsPaused(),
                 ]
             ]
         ];
@@ -327,11 +329,17 @@ class CommentsViewModelConverter extends BasicVMC
                         "runs" => [ (object)[ "text" => $replyButtonText ] ]
                     ],
                     "size" => "SIZE_DEFAULT",
-                    "style" => "STYLE_TEXT"
+                    "style" => "STYLE_TEXT",
+                    "isDisabled" => $this->areCommentsPaused(),
                 ]
             ];
         }
 
         return (object)$out;
+    }
+    
+    private function areCommentsPaused(): bool
+    {
+        return isset($this->toolbarPayload->commentDisabledActionCommand);
     }
 }

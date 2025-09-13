@@ -3,6 +3,9 @@ namespace Rehike\Model\Comments;
 
 use Rehike\Util\ParsingUtils;
 use Rehike\i18n\i18n;
+use Rehike\Util\FormattedStringBuilder;
+use Rehike\Util\FormattedStringBuilder\PrintfTemplateBuilderParams;
+use Rehike\i18n\Internal\Core as I18nCore;
 
 /**
  * Model for the comments header on the watch page.
@@ -17,6 +20,7 @@ class CommentsHeader
     public ?string $commentsCountText;
     public ?object $sortRenderer;
     public ?object $simpleBoxRenderer;
+    public ?object $pausedCommentsMessage = null;
     public ?string $createParams;
     public ?string $commentText;
 
@@ -85,6 +89,23 @@ class CommentsHeader
             $_sbr->placeholderText = StringTranslationManager::get(
                 ParsingUtils::getText($a->placeholderText)
             );
+        }
+        else if ($a = ($data->pausedCommentsMessage))
+        {
+            $i18n = i18n::getNamespace("comments");
+            $hl = I18nCore::getInnertubeLanguageId();
+            
+            $new->pausedCommentsMessage = (object)[
+                "messageRenderer" => (object)[
+                    "text" => (new FormattedStringBuilder())->parseFromPrintfTemplates(
+                        new PrintfTemplateBuilderParams($i18n->get("commentsPaused")),
+                        new PrintfTemplateBuilderParams($i18n->get("commentsPausedLearnMore"),
+                            FormattedStringBuilder::RUN_AS_LINK, 
+                            "https://support.google.com/youtube/?p=pause_comments&hl=$hl"
+                        )
+                    )->build(),
+                ],
+            ];
         }
 
         return $new;

@@ -65,3 +65,6 @@ reportText: "報告"
 deleteText: "削除"
 editText: "編集"
 pinText: "固定"
+
+commentsPaused: "コメントは一時停止されています。%s"
+commentsPausedLearnMore: "詳細"

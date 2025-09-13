@@ -64,3 +64,6 @@ reportText: "Report"
 deleteText: "Delete"
 editText: "Edit"
 pinText: "Pin"
+
+commentsPaused: "Comments are paused. %s"
+commentsPausedLearnMore: "Learn more"

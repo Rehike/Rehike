@@ -36,6 +36,7 @@ class MCommentVoteButton extends MButton
             ]
         ];
 		$this->checked = $data["checked"];
+        $this->isDisabled = $data["isDisabled"];
     }
 
     public static function fromData($data)
@@ -49,7 +50,8 @@ class MCommentVoteButton extends MButton
             "type" => $type,
             "action" => $action,
             "a11yLabel" => $a11yLabel,
-            "checked" => $checked
+            "checked" => $checked,
+            "isDisabled" => $data->isDisabled
         ]);
     }
 }
