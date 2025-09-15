@@ -2,6 +2,7 @@
 namespace Rehike\Debugger;
 
 use Closure;
+use JsonException;
 use ReflectionObject;
 use ReflectionProperty;
 use stdClass;
@@ -22,10 +23,29 @@ class RebugJsonEncodeManager
      */
     public static function jsonEncode(object $object): string
     {
-        return json_encode(self::extractProps($object));
+        try
+        {
+            return json_encode(
+                self::extractProps($object), 
+                JSON_THROW_ON_ERROR
+            );
+        }
+        catch (JsonException $e)
+        {
+            return json_encode(
+                self::extractProps(
+                    in: $object, 
+                    enableOptimizations: false
+                ),
+                JSON_THROW_ON_ERROR
+            );
+        }
     }
     
-    private static function extractProps(object $in): object|string
+    private static function extractProps(
+        object $in,
+        bool $enableOptimizations = true,
+    ): object|string
     {
         static $visitedStack = [];
         
@@ -63,12 +83,15 @@ class RebugJsonEncodeManager
          * than using instanceof (which would accept child classes, something we
          * want to avoid).
          */
-        if (get_class($in) == stdClass::class)
+        if ($enableOptimizations && get_class($in) == stdClass::class)
         {
             $useOptimization = true;
             
             foreach ($in as $key => $value)
             {
+                // NOTE: This will cause json_encode to throw if the data
+                // contains an enum, which must be shadowed. This case is
+                // exceptionally rare, so it's not really a problem.
                 if (is_object($value) && get_class($in) != stdClass::class)
                 {
                     $useOptimization = false;
@@ -103,29 +126,7 @@ class RebugJsonEncodeManager
         
         $reflection = new ReflectionObject($in);
         
-        /*
-         * We'll also optimise shadowing for classes which don't have any private
-         * properties, although there's a marginal benefit from doing this.
-         */
-        $shouldShadow = false;
-        
-        // First pass: Check if shadowing should be employed:
-        foreach ($reflection->getProperties() as $prop)
-        {
-            if ($prop->isProtected() || $prop->isPrivate())
-            {
-                $shouldShadow = true;
-            }
-        }
-        
-        if (!$shouldShadow)
-        {
-            array_pop($visitedStack);
-            return $in;
-        }
-        
-        // Second pass: employ shadowing if necessary:
-        if ($shouldShadow)
+        // Second pass: employ shadowing:
         foreach ($reflection->getProperties() as $prop)
         {
             $prop->setAccessible(true);
@@ -168,7 +169,7 @@ class RebugJsonEncodeManager
                 
                 $shadow->{$name} = [];
                 
-                foreach ($value as $index => $item)
+                foreach ($value as $index => &$item)
                 {
                     if (is_object($item))
                     {
@@ -177,9 +178,15 @@ class RebugJsonEncodeManager
                     }
                     else
                     {
-                        $shadow->{$name}[$index] = $item;
+                        $shadow->{$name}[$index] = &$item;
                     }
                 }
+            }
+            else if (PHP_VERSION_ID > 80100
+            && $value instanceof \UnitEnum
+            && !($value instanceof \BackedEnum) )
+            {
+                $shadow->{$name} = $value->name;
             }
             else if (is_object($value))
             {

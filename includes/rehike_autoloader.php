@@ -60,7 +60,7 @@ class Autoloader
                 \class_exists($class, false) ||
                 \interface_exists($class, false) ||
                 \trait_exists($class, false) ||
-                (PHP_VERSION_ID > 81000 && \enum_exists($class, false))
+                (PHP_VERSION_ID > 80100 && \enum_exists($class, false))
             )
             {
                 /*
