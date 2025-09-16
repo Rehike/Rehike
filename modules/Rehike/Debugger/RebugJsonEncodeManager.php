@@ -138,13 +138,23 @@ class RebugJsonEncodeManager
             
             if ($reflection->isUserDefined() && $prop->isInitialized($in))
             {
-                // If we're a user class, then we can use a hack to get a
-                // reference to the property's value instead of copying it,
-                // which is preferable for memory benefits.
-                $value = &Closure::bind(function &() use ($prop)
+                try
                 {
-                    return $this->{$prop->getName()};
-                }, $in, $in)->__invoke();
+                    // If we're a user class, then we can use a hack to get a
+                    // reference to the property's value instead of copying it,
+                    // which is preferable for memory benefits.
+                    $value = &Closure::bind(function &() use ($prop)
+                    {
+                        return $this->{$prop->getName()};
+                    }, $in, $in)->__invoke();
+                }
+                catch (\Error $e)
+                {
+                    if (0 == strpos($e->getMessage(), "Cannot modify readonly property "))
+                    {
+                        $value = $prop->getValue($in);
+                    }
+                }
             }
             else if ($prop->isInitialized($in))
             {
