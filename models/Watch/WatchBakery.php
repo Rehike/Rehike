@@ -396,6 +396,19 @@ class WatchBakery
             {
                 foreach ($fullViewCountsResult->map as $videoId => $viewCount)
                 {
+                    // Members-only videos have inaccessible view counts to non-members. In such cases, no view
+                    // count is displayed at all.
+                    // XXX(isabella): This currently displays the publish time even when the setting is disabled
+                    // in Rehike. This is because of a limitation in VideoRendererViewModelConverter which
+                    // always assumes that the first metadata row is the video view count, and the second metadata
+                    // row is the video publication date. In the case of such videos, the entire view count row
+                    // is missing, so the publish time IS the view count and there's really no proper publish time
+                    // attribute.
+                    if ($viewCount->format == FullViewCountsViewCountFormat::BadResult)
+                    {
+                        continue;
+                    }
+                    
                     $targetObjs[$videoId]->viewCountText = $this->getFormattedFullViewCountText($viewCount);
                 }
             }
@@ -703,7 +716,8 @@ class WatchBakery
                 trigger_error("BadResult should not make it into " . __METHOD__, E_USER_WARNING),
             
             // The data is already formatted by InnerTube, so we'll just return it raw.
-            FullViewCountsViewCountFormat::FormattedByInnertube, _ => $fullViewCount->viewCount,
+            FullViewCountsViewCountFormat::FormattedByInnertube => $fullViewCount->viewCount,
+            default => $fullViewCount->viewCount,
         };
     }
     

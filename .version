@@ -1,10 +1,10 @@
 {
-	"previousHash": "3cbda26e07ec64e55ceee5b68c8c75b6eb7ec626",
-	"currentRevisionId": 1773,
-	"subject": "Properly handle paused comments (new YouTube feature)",
-	"body": "Properly handle paused comments (new YouTube feature)",
+	"previousHash": "48f08cef6c6b7f0ab18dcc6fbd3e589301c416ba",
+	"currentRevisionId": 1776,
+	"subject": "Ignore members-only videos in watch recommendation view count manager",
+	"body": "Ignore members-only videos in watch recommendation view count manager",
 	"branch": "master",
 	"committerName": "Isabella Lulamoon",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1757729868
+	"time": 1758073552
 }
