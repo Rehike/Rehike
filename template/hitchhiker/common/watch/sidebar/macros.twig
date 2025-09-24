@@ -22,9 +22,9 @@
 {% import "common/thumbnail_overlays.twig" as overlays %}
 {% from "core/html/img.twig" import img %}
 {% from "common/uix/badge_list.twig" import render as badge_list %}
+{% if data != null %}
 <li class="video-list-item related-list-item related-list-item-compact-{{ data.type }}">
     {# playlist html structure is entirely different #}
-    {% if data != null %}
     {% if data.type == "playlist" or data.type == "radio" %}
     <a href="{{ rehike.getUrl(info) }}" class="related-playlist yt-pl-thumb-link spf-link {{ data.type == "radio" ? "mix-playlist" }} resumable-list">
         <span class="yt-pl-thumb {{ data.type == "radio" ? "yt-mix-thumb" }}">

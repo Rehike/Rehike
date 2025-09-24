@@ -1,10 +1,10 @@
 {
-	"previousHash": "48f08cef6c6b7f0ab18dcc6fbd3e589301c416ba",
-	"currentRevisionId": 1776,
-	"subject": "Ignore members-only videos in watch recommendation view count manager",
-	"body": "Ignore members-only videos in watch recommendation view count manager",
+	"previousHash": "f99326a519e5740e0c13067ede2e7a2ee04ccc05",
+	"currentRevisionId": 1777,
+	"subject": "Fix opened-but-not-closed li when bad watch recommendation renderer",
+	"body": "Fix opened-but-not-closed li when bad watch recommendation renderer",
 	"branch": "master",
 	"committerName": "Isabella Lulamoon",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1758073552
+	"time": 1758684716
 }
