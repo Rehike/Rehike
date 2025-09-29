@@ -70,6 +70,8 @@ class WatchBakery
     public $liveChat = null;
     public $engagementPanels = null;
     public $frameworkUpdates = null;
+    
+    public ?CollaboratorsParser $collaborators = null;
 
     /**
      * Bake a watch page model
@@ -98,6 +100,11 @@ class WatchBakery
             $this->isKidsVideo = $this->getIsKidsVideo($this->secondaryInfo);
             $this->isLive = $this->getIsLive($this->primaryInfo);
             $this->isOwner = $this->getIsOwner($this->secondaryInfo);
+            
+            if ($this->getHasMultipleOwners())
+            {
+                $this->collaborators = new CollaboratorsParser($this);
+            }
 
             // Get player error
             if ($error = @$yt->playerResponse->playabilityStatus->errorScreen->playerErrorMessageRenderer)
@@ -704,6 +711,11 @@ class WatchBakery
         {
             return false;
         }
+    }
+    
+    public function getHasMultipleOwners()
+    {
+        return isset($this->secondaryInfo->owner->videoOwnerRenderer->avatarStack);
     }
     
     private function getFormattedFullViewCountText(FullViewCountsViewCount $fullViewCount): string

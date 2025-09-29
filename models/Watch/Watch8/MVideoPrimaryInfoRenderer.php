@@ -71,7 +71,15 @@ class MVideoPrimaryInfoRenderer
             }
             $this->superTitle = isset($info->superTitleLink) ? new MSuperTitle($info->superTitleLink) : null;
             $this->likeButtonRenderer = new MLikeButtonRenderer($bakery, $info->videoActions->menuRenderer, $videoId);
-            $this->owner = new MOwner($bakery);
+            
+            if ($bakery->getHasMultipleOwners())
+            {
+                $this->owner = MOwner::fromFirstCollaborator($bakery);
+            }
+            else
+            {
+                $this->owner = MOwner::fromSingleUser($bakery);
+            }
 
             if (isset($info->badges))
             foreach ($info->badges as $badge)

@@ -8,6 +8,7 @@ use Rehike\SignInV2\SignIn;
 use Rehike\Util\ExtractUtils;
 use Rehike\i18n\i18n;
 use Rehike\Model\Watch\WatchBakery;
+use Rehike\ViewModelParser;
 
 /**
  * Defines the video owner information, which appears in the bottom
@@ -45,7 +46,30 @@ class MOwner
      */
     public $channelSettingsButtonRenderer;
 
-    public function __construct(WatchBakery $bakery)
+    private function __construct()
+    {
+    }
+    
+    public static function fromSingleUser(WatchBakery $bakery): self
+    {
+        $instance = new self();
+        $instance->initSingleUser($bakery);
+        
+        return $instance;
+    }
+    
+    public static function fromFirstCollaborator(WatchBakery $bakery): self
+    {
+        $instance = new self();
+        $instance->initFromFirstCollaborator($bakery);
+        
+        return $instance;
+    }
+
+    /**
+     * Initialises from a standard single-owner video.
+     */
+    private function initSingleUser(WatchBakery $bakery)
     {
         $secInfo = &$bakery->secondaryInfo;
         $info = $secInfo->owner->videoOwnerRenderer;
@@ -104,6 +128,69 @@ class MOwner
                     ]
                 ]);
             }
+        }
+    }
+    
+    /**
+     * Initialises for a video with multiple collaborators.
+     * 
+     * In this case, the first collaborator's information is the main one shown.
+     */
+    private function initFromFirstCollaborator(WatchBakery $bakery)
+    {
+        $collaboratorsDialog = $bakery->collaborators->getRootData();
+        $firstItem = $collaboratorsDialog->customContent->listViewModel->listItems[0]->listItemViewModel;
+        
+        $this->title = ParsingUtils::getText($firstItem->title);
+        $this->thumbnail = (object)[
+            "thumbnails" => [
+                [
+                    "url" => $firstItem->leadingAccessory->avatarViewModel->image->sources[0]->url,
+                ],
+            ],
+        ];
+        
+        if (isset($firstItem->title->attachmentRuns[0]->element->type->imageType->image->sources[0]->clientResource))
+        {
+            // XXX(isabella): For now, we will just assume any case like this means there's a badge. If
+            // this has some false positives, then uncomment the below condition (and expand it with
+            // other cases)
+            $attachment = $firstItem->title->attachmentRuns[0]->element->type->imageType->image->sources[0]->clientResource;
+            //if ($attachment->imageName == "CHECK_CIRCLE_FILLED")
+            //{
+                $this->badges = (object)[];
+            //}
+        }
+        
+        $this->navigationEndpoint = $firstItem->title->commandRuns[0]->onTap->innertubeCommand;
+        
+        // Get subscription count:
+        $baseSubtitle = ParsingUtils::getText($firstItem->subtitle);
+        \Rehike\Logging\DebugLogger::print($baseSubtitle);
+        $subtitleParts = explode("•", $baseSubtitle);
+        \Rehike\Logging\DebugLogger::print(var_export($subtitleParts, true));
+        
+        $subscribeCount = null;
+        
+        if (isset($subtitleParts[1]))
+        {
+            $formattedSubscriberCount = trim($subtitleParts[1]);
+            $subscribeCount = ExtractUtils::isolateSubCnt($formattedSubscriberCount);
+        }
+        
+        // Build the subscription button:
+        if (!SignIn::isSignedIn())
+        {
+            $this->subscriptionButtonRenderer = MSubscriptionActions::signedOutStub($subscribeCount);
+        }
+        else if (isset($firstItem->trailingButtons->buttons[0]->subscribeButtonViewModel))
+        {
+            $viewModel = $firstItem->trailingButtons->buttons[0]->subscribeButtonViewModel;
+            $viewModelParser = new ViewModelParser($viewModel, $bakery->frameworkUpdates);
+            
+            $this->subscriptionButtonRenderer = MSubscriptionActions::fromViewModel(
+                $viewModel, $viewModelParser, $subscribeCount
+            );
         }
     }
 }
