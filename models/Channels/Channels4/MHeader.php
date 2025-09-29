@@ -120,39 +120,12 @@ class MHeader
             // Logged-in subscribe button
             if ($this->frameworkUpdates)
             {
-                // In order to determine whether or not the user is subscribed, we need to parse
-                // the mutation entities.
                 $parser = new ViewModelParser($viewModel, $this->frameworkUpdates);
-                $entities = $parser->getViewModelEntities([
-                    "stateEntityStoreKey" => "state"
-                ]);
-                
-                $subscribeStatus = $entities["state"]->payload->subscriptionStateEntity->subscribed;
-                    
-                if ($subscribeStatus == true)
-                {
-                    $actionsModelStatus = @$viewModel->unsubscribeButtonContent->onTapCommand->innertubeCommand
-                        ->signalServiceEndpoint->actions[0]->openPopupAction->popup->confirmDialogRenderer
-                        ->confirmButton->serviceEndpoint->unsubscribeEndpoint->params ?? "";
-                }
-                else
-                {
-                    $actionsModelStatus = @$viewModel->subscribeButtonContent->onTapCommand->innertubeCommand
-                        ->subscribeEndpoint->params ?? "";
-                }
-                    
-                $this->subscriptionButton = new MSubscriptionActions([
-                    "branded" => true,
-                    "longText" => $subscriberCount,
-                    "shortText" => $subscriberCount,
-                    "isSubscribed" => $subscribeStatus ?? false,
-                    "channelExternalId" => $viewModel->channelId,
-                    "params" => $actionsModelStatus,
-                    "unsubConfirmDialog" => @$viewModel->unsubscribeButtonContent->onTapCommand
-                        ->innertubeCommand->signalServiceEndpoint->actions[0]->openPopupAction->popup
-                        ->confirmDialogRenderer ?? null,
-                    //"notificationStateId" => $data->notificationPreferenceButton->subscriptionNotificationToggleButtonRenderer->currentStateId ?? 3
-                ]);
+                $this->subscriptionButton = MSubscriptionActions::fromViewModel(
+                    $viewModel,
+                    $parser,
+                    $subscriberCount,
+                );
             }
         }
         else if (

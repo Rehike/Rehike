@@ -3,6 +3,7 @@ namespace Rehike\Model\Common\Subscription;
 
 use Rehike\i18n\i18n;
 use Rehike\Util\ParsingUtils;
+use Rehike\ViewModelParser;
 
 class MSubscriptionActions
 {
@@ -107,6 +108,47 @@ class MSubscriptionActions
             "unsubscribeText" => ParsingUtils::getText($data->unsubscribeButtonText ?? null),
             "unsubConfirmDialog" => $data->onUnsubscribeEndpoints[0]->signalServiceEndpoint->actions[0]->openPopupAction->popup->confirmDialogRenderer ?? null,
             "notificationStateId" => $data->notificationPreferenceButton->subscriptionNotificationToggleButtonRenderer->currentStateId ?? 3
+        ]);
+    }
+    
+    public static function fromViewModel(
+        object $viewModel,
+        ViewModelParser $viewModelParser,
+        string $subscriberCount = "",
+        bool $branded = true
+    )
+    {
+        // In order to determine whether or not the user is subscribed, we need to parse
+        // the mutation entities.
+        $entities = $viewModelParser->getViewModelEntities([
+            "stateEntityStoreKey" => "state"
+        ]);
+        
+        $subscribeStatus = $entities["state"]->payload->subscriptionStateEntity->subscribed;
+            
+        if ($subscribeStatus == true)
+        {
+            $actionsModelStatus = @$viewModel->unsubscribeButtonContent->onTapCommand->innertubeCommand
+                ->signalServiceEndpoint->actions[0]->openPopupAction->popup->confirmDialogRenderer
+                ->confirmButton->serviceEndpoint->unsubscribeEndpoint->params ?? "";
+        }
+        else
+        {
+            $actionsModelStatus = @$viewModel->subscribeButtonContent->onTapCommand->innertubeCommand
+                ->subscribeEndpoint->params ?? "";
+        }
+            
+        return new self([
+            "branded" => true,
+            "longText" => $subscriberCount,
+            "shortText" => $subscriberCount,
+            "isSubscribed" => $subscribeStatus ?? false,
+            "channelExternalId" => $viewModel->channelId,
+            "params" => $actionsModelStatus,
+            "unsubConfirmDialog" => @$viewModel->unsubscribeButtonContent->onTapCommand
+                ->innertubeCommand->signalServiceEndpoint->actions[0]->openPopupAction->popup
+                ->confirmDialogRenderer ?? null,
+            //"notificationStateId" => $data->notificationPreferenceButton->subscriptionNotificationToggleButtonRenderer->currentStateId ?? 3
         ]);
     }
 
