@@ -12,6 +12,7 @@ use Generator;
 use Rehike\Async\EventLoop\EventFlags;
 use Rehike\Async\EventLoop\EventLoop;
 use Rehike\Attributes\Override;
+use Throwable;
 
 /**
  * Used as a base class for Promise::all() implementation.
@@ -174,7 +175,7 @@ class PromiseAllController extends PromiseEvent
                 ->then(function($result) use ($promise) {
                     $this->handlePromiseResolution($promise);
                 })
-                ->catch(function(Exception $e) use ($promise) {
+                ->catch(function(Throwable $e) use ($promise) {
                     $this->handlePromiseRejection($promise);
                 })
             ;
