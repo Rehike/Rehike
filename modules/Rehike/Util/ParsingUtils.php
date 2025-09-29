@@ -265,6 +265,9 @@ class ParsingUtils
 
         foreach ($iruns->styleRuns as $irun)
         {
+            if (!isset($irun->startLength))
+                continue;
+            
             if (!isset($irun->length))
                 $irun->length = mb_strlen($iruns->content);
             

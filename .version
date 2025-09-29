@@ -1,10 +1,10 @@
 {
-	"previousHash": "8609dfa1469fd4bd2306ecda1780d305610980b9",
-	"currentRevisionId": 1780,
-	"subject": "Refactor subscribe button view model parser into MSubscriptionActions",
-	"body": "Refactor subscribe button view model parser into MSubscriptionActions",
+	"previousHash": "fae674cb948efa13884bc0298908fe5c27747ead",
+	"currentRevisionId": 1781,
+	"subject": "Fix crash if attachment runs style run doesn't have startLength",
+	"body": "Fix crash if attachment runs style run doesn't have startLength",
 	"branch": "master",
 	"committerName": "Isabella Lulamoon",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1759116940
+	"time": 1759118069
 }
