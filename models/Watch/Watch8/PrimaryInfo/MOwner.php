@@ -166,9 +166,7 @@ class MOwner
         
         // Get subscription count:
         $baseSubtitle = ParsingUtils::getText($firstItem->subtitle);
-        \Rehike\Logging\DebugLogger::print($baseSubtitle);
         $subtitleParts = explode("•", $baseSubtitle);
-        \Rehike\Logging\DebugLogger::print(var_export($subtitleParts, true));
         
         $subscribeCount = null;
         

@@ -1,10 +1,10 @@
 {
-	"previousHash": "8c625a568ab94d4dcae817dc19f096584d5caa1c",
-	"currentRevisionId": 1782,
-	"subject": "Fix video owner info on watch page with new multiple owners (#686)",
-	"body": "Fix video owner info on watch page with new multiple owners (#686)",
+	"previousHash": "01cfe8bec54579591202c047642ccca8337de13c",
+	"currentRevisionId": 1783,
+	"subject": "Remove debug prints",
+	"body": "Remove debug prints",
 	"branch": "master",
 	"committerName": "Isabella Lulamoon",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1759118178
+	"time": 1759118398
 }
