@@ -515,25 +515,28 @@ class Converter
             array_splice($section->items, count($section->items) - 1, 1);
         }
 
-        // Iterate all remaining and add counts if needed
-        foreach ($section->items as &$item)
-        {
-            $content = &$item->guideEntryRenderer;
+		// Iterate all remaining and add counts if needed
+		foreach ($section->items as &$item)
+		{
+		    // Check if guideEntryRenderer exists before accessing it
+		    if (!isset($item->guideEntryRenderer)) continue;
+    
+		    $content = &$item->guideEntryRenderer;
 
-            // Live badge trumps count badge, but this check is done on the
-            // templater end. Both are reported otherwise.
-            // In addition, this may be reformed in the future to
-            // actually count the number of unwatched videos from a user's subscribed
-            // channels :O (when? how?)
-            if ("GUIDE_ENTRY_PRESENTATION_STYLE_NEW_CONTENT" == $content->presentationStyle)
-            {
-                if (!isset($content->badges)) $content->badges = (object)[];
+		    // Live badge trumps count badge, but this check is done on the
+		    // templater end. Both are reported otherwise.
+		    // In addition, this may be reformed in the future to
+		    // actually count the number of unwatched videos from a user's subscribed
+		    // channels :O (when? how?)
+		    if ("GUIDE_ENTRY_PRESENTATION_STYLE_NEW_CONTENT" == $content->presentationStyle)
+		    {
+		        if (!isset($content->badges)) $content->badges = (object)[];
 
-                // Hardcoded feed count since feeds no longer exist
-                // Hitchhiker also used the hardcoded value of 1
-                $content->badges->count = 1;
-            }
-        }
+		        // Hardcoded feed count since feeds no longer exist
+		        // Hitchhiker also used the hardcoded value of 1
+		        $content->badges->count = 1;
+		    }
+		}
 
         return $responseItem;
     }
