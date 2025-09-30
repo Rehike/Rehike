@@ -55,7 +55,7 @@ class VideoRendererViewModelConverter extends BasicVMC
                             {
                                 case "THUMBNAIL_OVERLAY_BADGE_STYLE_LIVE":
                                     $strings = i18n::getNamespace("browse");
-                                    $text = $tcontent->text;
+                                    $text = $tcontent->text ?? '';
                                     $text = ($text == $strings->get("liveBadgeOriginal"))
                                         ? $strings->get("liveBadge")
                                         : $text;
@@ -69,30 +69,36 @@ class VideoRendererViewModelConverter extends BasicVMC
                                     ];
                                     break;
                                 default:
-                                    $result->thumbnailOverlays[] = (object)[
-                                        "thumbnailOverlayTimeStatusRenderer" => (object)[
-                                            "style" => "DEFAULT",
-                                            "text" => (object)[
-                                                "accessibility" => (object)[
-                                                    "accessibilityData" => (object)[
-                                                        "label" => @$tcontent->rendererContext->accessibilityContext->label ?? ""
-                                                    ]
-                                                ],
-                                                "simpleText" => $tcontent->text
+                                    if (isset($tcontent->text))
+                                    {
+                                        $result->thumbnailOverlays[] = (object)[
+                                            "thumbnailOverlayTimeStatusRenderer" => (object)[
+                                                "style" => "DEFAULT",
+                                                "text" => (object)[
+                                                    "accessibility" => (object)[
+                                                        "accessibilityData" => (object)[
+                                                            "label" => @$tcontent->rendererContext->accessibilityContext->label ?? ""
+                                                        ]
+                                                    ],
+                                                    "simpleText" => $tcontent->text
+                                                ]
                                             ]
-                                        ]
-                                    ];
-                                    $result->thumbnailOverlays[] = (object)[
-                                        "thumbnailOverlayNowPlayingRenderer" => (object)[
-                                            "text" => (object)[
-                                                "runs" => [
-                                                    (object)[
-                                                        "text" => $tcontent->animatedText
+                                        ];
+                                    }
+                                    if (isset($tcontent->animatedText))
+                                    {
+                                        $result->thumbnailOverlays[] = (object)[
+                                            "thumbnailOverlayNowPlayingRenderer" => (object)[
+                                                "text" => (object)[
+                                                    "runs" => [
+                                                        (object)[
+                                                            "text" => $tcontent->animatedText
+                                                        ]
                                                     ]
                                                 ]
                                             ]
-                                        ]
-                                    ];
+                                        ];
+                                    }
                                     break;
                             }
                             
@@ -141,30 +147,36 @@ class VideoRendererViewModelConverter extends BasicVMC
                                 $badge = @$content->badges[0]->thumbnailBadgeViewModel ?? null;
                                 if (!is_null($badge))
                                 {
-                                    $result->thumbnailOverlays[] = (object)[
-                                        "thumbnailOverlayTimeStatusRenderer" => (object)[
-                                            "style" => "DEFAULT",
-                                            "text" => (object)[
-                                                "accessibility" => (object)[
-                                                    "accessibilityData" => (object)[
-                                                        "label" => @$badge->rendererContext->accessibilityContext->label ?? ""
-                                                    ]
-                                                ],
-                                                "simpleText" => $badge->text
+                                    if (isset($badge->text))
+                                    {
+                                        $result->thumbnailOverlays[] = (object)[
+                                            "thumbnailOverlayTimeStatusRenderer" => (object)[
+                                                "style" => "DEFAULT",
+                                                "text" => (object)[
+                                                    "accessibility" => (object)[
+                                                        "accessibilityData" => (object)[
+                                                            "label" => @$badge->rendererContext->accessibilityContext->label ?? ""
+                                                        ]
+                                                    ],
+                                                    "simpleText" => $badge->text
+                                                ]
                                             ]
-                                        ]
-                                    ];
-                                    $result->thumbnailOverlays[] = (object)[
-                                        "thumbnailOverlayNowPlayingRenderer" => (object)[
-                                            "text" => (object)[
-                                                "runs" => [
-                                                    (object)[
-                                                        "text" => $badge->animatedText
+                                        ];
+                                    }
+                                    if (isset($badge->animatedText))
+                                    {
+                                        $result->thumbnailOverlays[] = (object)[
+                                            "thumbnailOverlayNowPlayingRenderer" => (object)[
+                                                "text" => (object)[
+                                                    "runs" => [
+                                                        (object)[
+                                                            "text" => $badge->animatedText
+                                                        ]
                                                     ]
                                                 ]
                                             ]
-                                        ]
-                                    ];
+                                        ];
+                                    }
                                 }
                                 break;
                             }
