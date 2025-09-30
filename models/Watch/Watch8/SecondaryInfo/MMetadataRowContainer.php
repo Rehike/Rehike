@@ -73,6 +73,8 @@ class MMetadataRowContainer
         if (isset($bakery->engagementPanels))
         // Go through the panels
         foreach ($bakery->engagementPanels as $panel)
+        // Check if the panel has the required structure
+        if (isset($panel->engagementPanelSectionListRenderer->content))
         // Check the name of the current panel
         foreach ($panel->engagementPanelSectionListRenderer->content as $name => $content)
         if ("structuredDescriptionContentRenderer" == $name)
