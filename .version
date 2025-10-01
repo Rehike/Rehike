@@ -1,10 +1,10 @@
 {
-	"previousHash": "8e295931ee5df3804ee769bd54b0bb40f7d3b88e",
-	"currentRevisionId": 1788,
-	"subject": "Update VideoRendererViewModelConverter.php",
-	"body": "Update VideoRendererViewModelConverter.php",
+	"previousHash": "56179b7faabdde15d4c703716bfb5bbad8dfee00",
+	"currentRevisionId": 1790,
+	"subject": "Fix collaborators on browse video renderers",
+	"body": "Fix collaborators on browse video renderers",
 	"branch": "master",
-	"committerName": "VexorionReal",
-	"committerEmail": "katarinmedia@gmail.com",
-	"time": 1759239180
+	"committerName": "Isabella Lulamoon",
+	"committerEmail": "kawapure@gmail.com",
+	"time": 1759284419
 }

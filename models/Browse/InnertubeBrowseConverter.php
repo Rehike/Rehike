@@ -10,6 +10,8 @@ use Rehike\SignInV2\SignIn;
 use Rehike\Model\Common\Subscription\MSubscriptionActions;
 use Rehike\Model\ViewModelConverter\LockupViewModelConverter;
 
+use Rehike\Model\Common\MCollaborator;
+
 class InnertubeBrowseConverter
 {
     public static function generalLockupConverter($items, $context = [])
@@ -320,6 +322,46 @@ class InnertubeBrowseConverter
                             break;
                     }
                     break;
+            }
+        }
+        
+        // Handle the multiple authors bullshit by just grabbing the first one.
+        if (isset($data->longBylineText->runs[0]))
+        {
+            $run = &$data->longBylineText->runs[0];
+            if (isset($run->navigationEndpoint->showDialogCommand->panelLoadingStrategy))
+            {
+                try
+                {
+                    $channel = new MCollaborator($run->navigationEndpoint->showDialogCommand->panelLoadingStrategy->inlineContent->dialogViewModel->customContent
+                        ->listViewModel->listItems[0]->listItemViewModel);
+
+                    $run->text = $channel->name;
+                    $run->navigationEndpoint = $channel->navigationEndpoint;
+                    $badgeIcon = @$channel->rawData->title->attachmentRuns[0]->element->type->imageType->image->sources[0]->clientResource->imageName ?? null;
+                    
+                    if ($badgeIcon)
+                    {
+                        $data->ownerBadges = [
+                            (object)[
+                                "metadataBadgeRenderer" => (object)[
+                                    "icon" => (object)[
+                                        "iconType" => "CHECK_CIRCLE_THICK",
+                                    ],
+                                    "style" => "BADGE_STYLE_TYPE_VERIFIED",
+                                    "tooltip" => i18n::getNamespace("global", "verified"),
+                                    "accessibilityData" => (object)[
+                                        "label" => i18n::getNamespace("global", "verified"),
+                                    ],
+                                ]
+                            ]
+                        ];
+                    }
+                }
+                catch (\Exception $e)
+                {
+                    \Rehike\Logging\DebugLogger::print("Failed to get byline text for %s: %s", $data->videoId, $e);
+                }
             }
         }
 

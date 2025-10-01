@@ -138,56 +138,36 @@ class MOwner
      */
     private function initFromFirstCollaborator(WatchBakery $bakery)
     {
-        $collaboratorsDialog = $bakery->collaborators->getRootData();
-        $firstItem = $collaboratorsDialog->customContent->listViewModel->listItems[0]->listItemViewModel;
+        $firstItem = $bakery->collaborators->getCollaborators()[0];
         
-        $this->title = ParsingUtils::getText($firstItem->title);
+        $this->title = $firstItem->name;
         $this->thumbnail = (object)[
             "thumbnails" => [
                 [
-                    "url" => $firstItem->leadingAccessory->avatarViewModel->image->sources[0]->url,
+                    "url" => $firstItem->avatarUrl,
                 ],
             ],
         ];
         
-        if (isset($firstItem->title->attachmentRuns[0]->element->type->imageType->image->sources[0]->clientResource))
+        if ($firstItem->verified)
         {
-            // XXX(isabella): For now, we will just assume any case like this means there's a badge. If
-            // this has some false positives, then uncomment the below condition (and expand it with
-            // other cases)
-            $attachment = $firstItem->title->attachmentRuns[0]->element->type->imageType->image->sources[0]->clientResource;
-            //if ($attachment->imageName == "CHECK_CIRCLE_FILLED")
-            //{
-                $this->badges = (object)[];
-            //}
+            $this->badges = (object)[];
         }
         
-        $this->navigationEndpoint = $firstItem->title->commandRuns[0]->onTap->innertubeCommand;
+        $this->navigationEndpoint = $firstItem->navigationEndpoint;
         
-        // Get subscription count:
-        $baseSubtitle = ParsingUtils::getText($firstItem->subtitle);
-        $subtitleParts = explode("•", $baseSubtitle);
-        
-        $subscribeCount = null;
-        
-        if (isset($subtitleParts[1]))
-        {
-            $formattedSubscriberCount = trim($subtitleParts[1]);
-            $subscribeCount = ExtractUtils::isolateSubCnt($formattedSubscriberCount);
-        }
-        
-        // Build the subscription button:
+        // Build the subscription button (this data is unique to this specific variant of the renderer):
         if (!SignIn::isSignedIn())
         {
-            $this->subscriptionButtonRenderer = MSubscriptionActions::signedOutStub($subscribeCount);
+            $this->subscriptionButtonRenderer = MSubscriptionActions::signedOutStub($firstItem->subscriberCount);
         }
-        else if (isset($firstItem->trailingButtons->buttons[0]->subscribeButtonViewModel))
+        else if (isset($firstItem->rawData->trailingButtons->buttons[0]->subscribeButtonViewModel))
         {
-            $viewModel = $firstItem->trailingButtons->buttons[0]->subscribeButtonViewModel;
+            $viewModel = $firstItem->rawData->trailingButtons->buttons[0]->subscribeButtonViewModel;
             $viewModelParser = new ViewModelParser($viewModel, $bakery->frameworkUpdates);
             
             $this->subscriptionButtonRenderer = MSubscriptionActions::fromViewModel(
-                $viewModel, $viewModelParser, $subscribeCount
+                $viewModel, $viewModelParser, $firstItem->subscriberCount
             );
         }
     }

@@ -265,7 +265,7 @@ class ParsingUtils
 
         foreach ($iruns->styleRuns as $irun)
         {
-            if (!isset($irun->startLength))
+            if (!isset($irun->startIndex))
                 continue;
             
             if (!isset($irun->length))

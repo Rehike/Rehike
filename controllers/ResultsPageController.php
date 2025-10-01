@@ -120,6 +120,8 @@ class ResultsPageController extends NirvanaController implements IGetController
             $paginatorInfo = self::getPaginatorInfo(
                 $resultsCount, $resultsIndex
             );
+            
+            $yt->originalData = $ytdata;
     
             $yt->page = ResultsModel::bake(
                 data:           $ytdata, 

@@ -3,6 +3,7 @@ namespace Rehike\Model\ViewModelConverter;
 
 use Rehike\Util\ParsingUtils;
 use Rehike\i18n\i18n;
+use Rehike\Model\Common\MCollaborator;
 
 /**
  * Converts a video renderer view model to the classic format that Rehike expects.
@@ -197,6 +198,19 @@ class VideoRendererViewModelConverter extends BasicVMC
                 ((!$hasBadges && $rowCount == 2) || ($hasBadges && $rowCount == 3)))
                 {
                     $bylineText = ParsingUtils::indexedRunsToRuns($part->text);
+                    
+                    // Handle the multiple authors bullshit by just grabbing the first one.
+                    $run = &$bylineText->runs[0];
+                    if (isset($run->navigationEndpoint->showDialogCommand))
+                    {
+                        $channel = new MCollaborator($run->navigationEndpoint->showDialogCommand->panelLoadingStrategy->inlineContent->dialogViewModel->customContent
+                            ->listViewModel->listItems[0]);
+
+                        $run->text = $channel->name;
+                        $run->navigationEndpoint = $channel->navigationEndpoint;
+                        $badgeIcon = @$channel->rawData->title->attachmentRuns[0]->element->type->imageType->image->sources[0]->clientResource->imageName ?? null;
+                    }
+                    
                     $result->shortBylineText = $bylineText;
                     $result->longBylineText = $bylineText;
 
