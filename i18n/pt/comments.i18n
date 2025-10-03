@@ -66,3 +66,6 @@ reportText: "Denunciar"
 deleteText: "Excluir"
 editText: "Editar"
 pinText: "Fixar"
+
+commentsPaused: "Os comentários foram pausados. %s"
+commentsPausedLearnMore: "Saiba mais"
