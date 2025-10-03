@@ -453,4 +453,12 @@ abstract class RehikeUtilsDelegateBase extends stdClass
     
         return Base64Url::encode($data);
     }
+
+    /**
+     * Marks a HTML string from Twig as safe HTML for interpolation.
+     */
+    public static function toSafeHtml(string $str): SafeHtml
+    {
+        return new SafeHtml($str);
+    }
 }
