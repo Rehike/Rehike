@@ -45,10 +45,10 @@
             {% set prototaxis_credits_link_html %}
             <a href="//github.com/Prototaxis">Prototaxis</a>
             {% endset %}
-            {{ rehike.i18n.format(
+            {{ rehike.i18n.formatHtml(
                 "rehike/version", 
                 "creditsPrototaxisTemplate",
-                prototaxis_credits_link_html)|raw 
+                rehike.toSafeHtml(prototaxis_credits_link_html))|raw 
             }}
         </li>
     </ul>

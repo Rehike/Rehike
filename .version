@@ -1,10 +1,10 @@
 {
-	"previousHash": "56179b7faabdde15d4c703716bfb5bbad8dfee00",
-	"currentRevisionId": 1790,
-	"subject": "Fix collaborators on browse video renderers",
-	"body": "Fix collaborators on browse video renderers",
+	"previousHash": "17830e6f63d0c98e6e63ef75e87f7dc706b6550e",
+	"currentRevisionId": 1794,
+	"subject": "Safe HTML interpolation for Prototaxis credit link",
+	"body": "Safe HTML interpolation for Prototaxis credit link",
 	"branch": "master",
 	"committerName": "Isabella Lulamoon",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1759284419
+	"time": 1759533530
 }
