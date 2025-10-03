@@ -39,6 +39,12 @@ class Nameserver
 {
     public const DEFAULT_NS = "1.1.1.1";
 
+    /**
+     * Used to prevent rewriting the same contents we get from the cache back
+     * into it.
+     */
+    private static bool $gotFromCache = false;
+
     private function __construct() {}
     
     /**
@@ -60,7 +66,12 @@ class Nameserver
         // URI.
         $hostname = self::getHostName($uri);
 
-        return self::lookup($hostname, $port);
+        $result = self::lookup($hostname, $port);
+        if (false == self::$gotFromCache)
+        {
+            NameserverCache::write($result);
+        }
+        return $result;
     }
 
     /**
@@ -74,6 +85,7 @@ class Nameserver
     ): NameserverInfo
     {
         $strategies = [
+            "lookupCache",
             "lookupBlueLibraries",
             "lookupNative",
             "lookupViaShell"
@@ -96,6 +108,26 @@ class Nameserver
         // If we got here, all strategies have failed, so throw another
         // exception.
         throw new DnsLookupException($uri, $lookupServer);
+    }
+
+    /**
+     * Looks up the IP address of this server in the cache.
+     */
+    public static function lookupCache(
+            string $uri,
+            int $port,
+            string $lookupServer
+    ): NameserverInfo
+    {
+        $cachedInfo = NameserverCache::get("$uri:$port");
+
+        if (null === $cachedInfo)
+        {
+            throw new DnsLookupException($uri, $lookupServer);
+        }
+
+        self::$gotFromCache = true;
+        return $cachedInfo;
     }
     
     /**
