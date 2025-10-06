@@ -50,11 +50,35 @@
     </span>
 {% endmacro %}
 
+{% macro textbox_renderer(this) %}
+    <label>
+        {{ this.label }}
+        <span class="{{ [
+                'rehike-config-option',
+                'rehike-config-option-string',
+                'yt-uix-form-input-text-container',
+            ]|join(' ') }}" data-cfg-name="{{ this.name }}"
+            data-original-value="{{ this.value }}">
+            <input class="yt-uix-form-input-text" 
+                type="text"
+                placeholder="{{ this.defaultValue }}"
+                value="{{ this.value }}">
+        </span>
+        {% if this.subtitle %}
+            <p class="setting-reminder">
+                {{ this.subtitle }}
+            </p>
+        {% endif %}
+    </label>
+{% endmacro %}
+
 {% macro try_render_associative_prop(option) %}
     {% if option.checkboxRenderer %}
         {{ _self.checkbox_renderer(option.checkboxRenderer) }}
     {% elseif option.selectRenderer %}
         {{ _self.select_renderer(option.selectRenderer) }}
+    {% elseif option.textboxRenderer %}
+        {{ _self.textbox_renderer(option.textboxRenderer) }}
     {% elseif option.dependentPropertyRenderer %}
         {% set this = option.dependentPropertyRenderer %}
         <div class="dependent-property" data-condition="{{ this.condition }}">

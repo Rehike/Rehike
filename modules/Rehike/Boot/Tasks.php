@@ -35,8 +35,11 @@ final class Tasks
 {
     public static function initNetwork(): void
     {
+        $desiredDns = Config::getConfigProp("advanced.dnsAddress")
+            ?? "1.1.1.1";
+
         NetworkCore::setResolve([
-            Nameserver::get("www.youtube.com", "1.1.1.1", 443)->serialize()
+            Nameserver::get("www.youtube.com", $desiredDns, 443)->serialize()
         ]);
     }
 

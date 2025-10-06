@@ -55,6 +55,9 @@ rehike.config.init = function() {
     
     rehike.eventDelegate.add('change', 'rehike-config-option-enum',
         rehike.config.onModifyEnum_);
+    
+    rehike.eventDelegate.add('input', 'rehike-config-option-string',
+        rehike.config.onModifyString_);
 
     rehike.eventDelegate.add('click', 'rehike-config-save-button',
         rehike.config.submit_);
@@ -96,6 +99,21 @@ rehike.config.onModifyBool_ = function(prop) {
 rehike.config.onModifyEnum_ = function(prop) {
     var name = prop.getAttribute('data-cfg-name');
     var value = prop.querySelector('select').value;
+
+    rehike.config.modifyProp_(name, value);
+};
+
+/**
+ * Called whenever an string is modified.
+ * 
+ * @private
+ * 
+ * @param {Element} prop 
+ * @return {void}
+ */
+rehike.config.onModifyString_ = function(prop) {
+    var name = prop.getAttribute('data-cfg-name');
+    var value = prop.querySelector('input').value;
 
     rehike.config.modifyProp_(name, value);
 };

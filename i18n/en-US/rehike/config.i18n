@@ -136,6 +136,11 @@ props:
         (2023/08/18).
 
   advanced:
+    dnsAddress:
+      title: "DNS address for YouTube requests"
+      subtitle: >
+        Only change this value if you know what you're doing. An invalid value
+        will make all API requests fail.
     enableDebugger:
       title: "Enable the debugger"
       subtitle: >

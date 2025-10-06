@@ -139,6 +139,11 @@ props:
         (18/08/2023).
 
   advanced:
+    dnsAddress:
+      title: "Endereço DNS para solicitações do YouTube"
+      subtitle: >
+        Altere este valor apenas se souber o que está fazendo.
+        Um valor inválido fará com que todas as solicitações da API falhem.
     enableDebugger:
       title: "Ativar o debugger"
       subtitle: >

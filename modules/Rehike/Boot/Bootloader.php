@@ -174,9 +174,9 @@ final class Bootloader
      */
     private static function runInitTasks(): void
     {
+        Tasks::initConfigManager();
         Tasks::initNetwork();
         Tasks::initResourceConstants();
-        Tasks::initConfigManager();
     }
 
     /**

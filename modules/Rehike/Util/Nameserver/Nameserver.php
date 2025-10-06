@@ -66,10 +66,10 @@ class Nameserver
         // URI.
         $hostname = self::getHostName($uri);
 
-        $result = self::lookup($hostname, $port);
+        $result = self::lookup($hostname, $port, $nameserver);
         if (false == self::$gotFromCache)
         {
-            NameserverCache::write($result);
+            NameserverCache::write($nameserver, $result);
         }
         return $result;
     }
@@ -119,7 +119,7 @@ class Nameserver
             string $lookupServer
     ): NameserverInfo
     {
-        $cachedInfo = NameserverCache::get("$uri:$port");
+        $cachedInfo = NameserverCache::get($lookupServer, "$uri:$port");
 
         if (null === $cachedInfo)
         {
