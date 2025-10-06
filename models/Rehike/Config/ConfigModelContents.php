@@ -9,7 +9,8 @@ use Rehike\ConfigManager\Properties\{
     DependentProp,
     BoolProp,
     EnumProp,
-    PropGroup
+    PropGroup,
+    StringProp,
 };
 use Rehike\i18n\i18n;
 
@@ -190,9 +191,19 @@ class ConfigModelContents
         {
             return $this->bakeBoolPropRenderer($params);
         }
+        else if ($prop instanceof StringProp)
+        {
+            return $this->bakeStringPropRenderer($params);
+        }
         else
         {
             // Unsupported.
+            trigger_error(
+                sprintf("Tried to render unsupported string property type %s",
+                    get_class($prop)
+                ),
+                E_USER_WARNING,
+            );
             return (object)[];
         }
     }
@@ -301,6 +312,43 @@ class ConfigModelContents
                 "name" => $params->path,
                 "values" => $values,
                 "selectedValue" => $selectedValue
+            ]
+        ];
+    }
+
+    /**
+     * textboxRenderer baker
+     */
+    private function bakeStringPropRenderer(AssociativePropParams $params): object
+    {
+        $i18n = $this->getI18nInfo($params->path);
+        $value = $this->getPropValue($params->path);
+
+        $title = $params->name;
+        if (isset($i18n->title))
+        {
+            $title = $i18n->title;
+        }
+
+        $subtitle = null;
+        if (isset($i18n->subtitle))
+        {
+            $subtitle = $i18n->subtitle;
+        }
+
+        /**
+         * @var StringProp
+         */
+        $propDef = $params->source;
+        $defaultValue = $propDef->getDefaultValue();
+
+        return (object) [
+            "textboxRenderer" => (object) [
+                "label" => $title,
+                "subtitle" => $subtitle,
+                "name" => $params->path,
+                "defaultValue" => $defaultValue,
+                "value" => $value,
             ]
         ];
     }

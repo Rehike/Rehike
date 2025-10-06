@@ -93,6 +93,11 @@ props:
         (2023/08/18).
   
   advanced:
+    dnsAddress:
+      title: "Dirección DNS para solicitudes de YouTube"
+      subtitle: >
+        Cambia este valor solo si sabes lo que estás haciendo.
+        Un valor no válido hará que todas las solicitudes de la API fallen.
     enableDebugger:
       title: "Habilita el depurador"
       subtitle: >

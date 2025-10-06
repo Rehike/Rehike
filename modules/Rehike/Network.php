@@ -1,6 +1,7 @@
 <?php
 namespace Rehike;
 
+use Rehike\ConfigManager\Config;
 use Rehike\Exception\Network\InnertubeFailedRequestException;
 use Rehike\Signin\AuthManager;
 
@@ -29,8 +30,6 @@ class Network
     
     protected const V3_API_HOST = "https://www.googleapis.com";
     protected const V3_API_KEY = "AIzaSyAdXYhjVjFVmN4Txzxf0Lt3HS8FsxBPhSM"; // old key: "AIzaSyBeo4NGA__U6Xxy-aBE6yFm19pgq8TY-TM";
-
-    protected const DNS_OVERRIDE_HOST = "1.1.1.1";
 
     private static array $sessionRequestLog = [];
 
@@ -157,6 +156,9 @@ class Network
                  $requestHeaders,
                  $profilerRid)
         {
+            $desiredDns = Config::getConfigProp("advanced.dnsAddress")
+                ?? "1.1.1.1";
+
             NetworkCore::request(
                 "{$host}/youtubei/v1/{$action}?key={$key}",
                 [
@@ -164,7 +166,7 @@ class Network
                     "method" => "POST",
                     "body" => json_encode($body),
                     "onError" => "ignore",
-                    "dnsOverride" => self::DNS_OVERRIDE_HOST
+                    "dnsOverride" => $desiredDns,
                 ]
             )->then(function ($response) use ($resolve, $reject, $ignoreErrors, $profilerRid, $action) {
                 if ((200 == $response->status) || (true == $ignoreErrors) )
@@ -362,8 +364,11 @@ class Network
      */
     public static function getDefaultYoutubeOpts(): array
     {
+        $desiredDns = Config::getConfigProp("advanced.dnsAddress")
+                ?? "1.1.1.1";
+
         return [
-            "dnsOverride" => self::DNS_OVERRIDE_HOST,
+            "dnsOverride" => $desiredDns,
             "headers" => [
                 "Cookie" => self::getCurrentRequestCookie()
             ]

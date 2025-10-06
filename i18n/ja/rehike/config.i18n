@@ -134,6 +134,11 @@ props:
         ブロックする回避策です（2023/08/18）。
   
   advanced:
+    dnsAddress:
+      title: "YouTube リクエスト用の DNS アドレス"
+      subtitle: >
+        何をしているか理解している場合のみ、この値を変更してください。
+        無効な値を設定すると、すべての API リクエストが失敗します。
     enableDebugger:
       title: "デバッガーを有効化"
       subtitle: >

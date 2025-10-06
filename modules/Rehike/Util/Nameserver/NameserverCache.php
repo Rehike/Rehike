@@ -14,6 +14,13 @@ use Rehike\Logging\DebugLogger;
 class NameserverCache
 {
     /**
+     * Version of the cache.
+     * 
+     * @var int
+     */
+    public const CACHE_VERSION = 2;
+
+    /**
      * The path to the file used to store the cache.
      * 
      * @var string
@@ -32,7 +39,7 @@ class NameserverCache
      * 
      * @return ?NameserverInfo Null if failed or the cache file doesn't exist.
      */
-    public static function get(string $domain): ?NameserverInfo
+    public static function get(string $dns, string $domain): ?NameserverInfo
     {
         if (!FileSystem::fileExists(self::CACHE_FILE))
         {
@@ -78,8 +85,12 @@ class NameserverCache
         $entry = $data->{$domain};
 
         if (isset($entry)
+            && isset($entry->version)
+            && isset($entry->dns)
             && isset($entry->domain)
             && isset($entry->expire)
+            && $entry->version == self::CACHE_VERSION
+            && $entry->dns == $dns
             && $entry->domain == $domain
             && $entry->expire > time()
         )
@@ -92,11 +103,13 @@ class NameserverCache
             " - Entry is set: %s\n" .
             " - Entry domain is set: %s\n" .
             " - Entry expire is set: %s\n" .
+            " - Entry DNS server is same: %s\n" .
             " - Entry domain is same: %s\n" .
             " - Entry expire time is less than current time: %s\n",
             isset($entry) ? "true" : "false",
             isset($entry->domain) ? "true" : "false",
             isset($entry->expire) ? "true" : "false",
+            @$entry->dns == $dns ? "true" : "false",
             @$entry->domain == $domain ? "true" : "false",
             @$entry->expire > time() ? "true" : "false",
         );
@@ -109,7 +122,7 @@ class NameserverCache
      * 
      * @return bool True on success, false on failure.
      */
-    public static function write(NameserverInfo $info): bool
+    public static function write(string $dns, NameserverInfo $info): bool
     {
         $data = (object)[];
 
@@ -140,6 +153,8 @@ class NameserverCache
         }
 
         $serializedInfo = (object)[];
+        $serializedInfo->version = self::CACHE_VERSION;
+        $serializedInfo->dns = $dns;
         $serializedInfo->domain = $info->domain;
         $serializedInfo->ip = $info->ipAddress;
         $serializedInfo->expire = time() + self::VALID_TIME;
