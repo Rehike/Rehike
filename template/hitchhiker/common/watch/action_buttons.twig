@@ -6,44 +6,36 @@
     {%- endfor -%}
     </div>
     <div id="watch8-sentiment-actions">
-    <div id="watch7-views-info">
-        {% if info.viewCount %}
-        <div class="watch-view-count{{ yt.page.isLive ? " metadata-updateable-viewership" }}">{{ info.viewCount }}</div>
-        {% endif %}
-        {% if info.likeButtonRenderer.sparkbars %}
-        <div class="video-extras-sparkbars">
-            <div class="video-extras-sparkbar-likes" style="width: {{ info.likeButtonRenderer.sparkbars.likePercent }}%"></div>
-            <div class="video-extras-sparkbar-dislikes" style="width: {{ info.likeButtonRenderer.sparkbars.dislikePercent }}%"></div>
+        <div id="watch7-views-info">
+            {% if info.viewCount %}
+            <div class="watch-view-count{{ yt.page.isLive ? " metadata-updateable-viewership" }}">{{ info.viewCount }}</div>
+            {% endif %}
+            {% if info.likeButtonRenderer.sparkbars %}
+            <div class="video-extras-sparkbars">
+                <div class="video-extras-sparkbar-likes" style="width: {{ info.likeButtonRenderer.sparkbars.likePercent }}%"></div>
+                <div class="video-extras-sparkbar-dislikes" style="width: {{ info.likeButtonRenderer.sparkbars.dislikePercent }}%"></div>
+            </div>
+            {% endif %}
         </div>
-        {% endif %}
-    </div>
-    {% set likeButton = info.sentimentActions.likeButton %}
-    {% set dislikeButton = info.sentimentActions.dislikeButton %}
-    {# TODO: refined clickcards #}
-    <span class="like-button-renderer {{ rehike.signin.isSignedIn() ? "actionable" }}" data-button-toggle-group="optional" {{ rehike.signin.isSignedIn() ? "data-logged-in=\"1\"" }}>
-        {# This isn't iterable oops #}
-        {%- if rehike.signin.isSignedIn() -%}
-        <span>
-        {%- endif -%}
-        {{ button(info.likeButtonRenderer.likeButton) }}
-        {%- if rehike.signin.isSignedIn() -%}
+        {% set likeButton = info.sentimentActions.likeButton %}
+        {% set dislikeButton = info.sentimentActions.dislikeButton %}
+        <span class="like-button-renderer {{ rehike.signin.isSignedIn() ? "actionable" }}" data-button-toggle-group="optional" {{ rehike.signin.isSignedIn() ? "data-logged-in=\"1\"" }}>
+            {{ _self.wrap_clickcard_button(button(info.likeButtonRenderer.likeButton)) }}        
+            {{ _self.wrap_clickcard_button(button(info.likeButtonRenderer.activeLikeButton)) }}        
+            {{ _self.wrap_clickcard_button(button(info.likeButtonRenderer.dislikeButton)) }}        
+            {{ _self.wrap_clickcard_button(button(info.likeButtonRenderer.activeDislikeButton)) }}        
         </span>
-        <span>
-        {%- endif -%}
-        {{ button(info.likeButtonRenderer.activeLikeButton) }}
-        {%- if rehike.signin.isSignedIn() -%}
-        </span>
-        <span>
-        {%- endif -%}
-        {{ button(info.likeButtonRenderer.dislikeButton) }}
-        {%- if rehike.signin.isSignedIn() -%}
-        </span>
-        <span>
-        {%- endif -%}
-        {{ button(info.likeButtonRenderer.activeDislikeButton) }}
-        {%- if rehike.signin.isSignedIn() -%}
-        </span>
-        {%- endif -%}
-    </span>
     </div>
 </div>
+
+{% macro wrap_clickcard_button(button_html) %}
+    {% if rehike.signin.isSignedIn() %}
+        {# These are wrapped in spans if the user is signed in. #}
+        <span>
+            {{ button_html }}
+        </span>
+    {% else %}
+        {# Otherwise they're bare if the user is signed out. #}
+        {{ button_html }}
+    {% endif %}
+{% endmacro %}

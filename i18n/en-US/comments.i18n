@@ -64,6 +64,7 @@ reportText: "Report"
 deleteText: "Delete"
 editText: "Edit"
 pinText: "Pin"
+blockText: "Block"
 
 commentsPaused: "Comments are paused. %s"
 commentsPausedLearnMore: "Learn more"

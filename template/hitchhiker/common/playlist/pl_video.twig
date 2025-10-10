@@ -29,9 +29,18 @@
     <td class="pl-video-title">
         <a href="{{ rehike.getUrl(this) }}" class="pl-video-title-link yt-uix-tile-link spf-link">{{ rehike.getText(this.title) }}</a>
         <div class="pl-video-owner">
-            {% set byline = this.shortBylineText %}
-            {{ rehike.config.appearance.usernamePrepends ? yt.msgs.usernamePrepend }}
-            <a href="{{ rehike.getUrl(byline.runs[0]) }}" class="spf-link" data-ytid="{{ byline.navigationEndpoint.browseEndpoint.browseId }}" data-name="playlist">{{ rehike.getText(byline) }}</a>
+            {% with %}
+                {% set byline = this.shortBylineText %}
+                {% set anchor_html %}
+                    <a href="{{ rehike.getUrl(byline.runs[0]) }}" class="spf-link" data-ytid="{{ byline.navigationEndpoint.browseEndpoint.browseId }}" data-name="playlist">{{ rehike.getText(byline) }}</a>
+                {% endset %}
+                {{ rehike.config.appearance.usernamePrepends
+                    ? rehike.i18n.formatHtml("global", "bylineFormat",
+                        rehike.toSafeHtml(anchor_html)
+                    )
+                    : anchor_html
+                }}
+            {% endwith %}
         </div>
         <div class="pl-video-bottom-standalone-badge"></div>
     </td>

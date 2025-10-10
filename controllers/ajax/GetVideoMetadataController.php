@@ -64,31 +64,6 @@ class GetVideoMetadataController extends HitchhikerController implements IGetCon
             $sharedRequestParams
         );
 		
-		// Unlike Polymer, Hitchhiker had all of the player data already
-        // available in the initial response. So an additional player request
-        // is used.
-        // TODO (kirasicecreamm): Remove this commented-out snippet?
-        /*$playerRequest = Network::innertubeRequest(
-            "player",
-            [
-                "playbackContext" => [
-                    'contentPlaybackContext' => (object) [
-                        'autoCaptionsDefaultOn' => false,
-                        'autonavState' => 'STATE_OFF',
-                        'html5Preference' => 'HTML5_PREF_WANTS',
-                        'lactMilliseconds' => '13407',
-                        'mdxContext' => (object) [],
-                        'playerHeightPixels' => 1080,
-                        'playerWidthPixels' => 1920,
-                        'signatureTimestamp' => $yt->playerConfig->signatureTimestamp
-                    ]   
-                ],
-                "startTimeSecs" => $startTime ?? 0,
-                "params" => $yt->playerParams
-            ] + $sharedRequestParams
-        );
-        $storyboardRequest = new Promise(fn($r) => $r());*/
-		
 		/**
          * Determine whether or not to use the Return YouTube Dislike
          * API to return dislikes. Retrieved from application config.
@@ -107,14 +82,11 @@ class GetVideoMetadataController extends HitchhikerController implements IGetCon
         }
 
         Promise::all([
-			//"player"     => $playerRequest,
             "next"       => $nextRequest,
 			"ryd"        => $rydRequest,
         ])->then(function ($responses) use ($yt) {
             \Rehike\Profiler::end("watch_requests");
             $nextResponse = $responses["next"]->getJson();
-			//$playerResponse = $responses["player"]->getJson();
-	
 			// Push these over to the global object.
 			$yt->watchNextResponse = $nextResponse;
 			
@@ -185,8 +157,6 @@ class GetVideoMetadataController extends HitchhikerController implements IGetCon
             }
 			
 			$metadata = (object) [];
-			
-			$brandingData = $playerResponse->annotations[0]->playerAnnotationsExpandedRenderer;
 			
 			$metadata->video_info = (object) [];
 			$metadata->user_info = (object) [];

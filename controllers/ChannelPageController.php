@@ -69,12 +69,11 @@ class ChannelPageController extends NirvanaController implements IGetController,
         async(function() use (&$yt, $request) {
             $this->useJsModule("www/channels");
 
-            // TODO (kirasicecreamm): ChannelUtils::getUcid is hardcoded
-            // to look at the path property of the input object.
-            // This is bad design.
             if ($request->path[0] != "channel")
             {
-                $ucid = yield ChannelUtils::getUcid($request);
+                $ucid = yield ChannelUtils::getUcid(
+                    implode("/", $request->path)
+                );
             }
             else
             {

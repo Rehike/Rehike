@@ -21,7 +21,9 @@
                     {{ title }}
                 </h4>
                 <span class="video-uploader-byline">
-                <span class="">{{ rehike.config.byTextOnByline ? yt.msgs.usernamePrepend }}{{ byline }}</span>
+                <span class="">{{ rehike.config.appearance.usernamePrepends 
+                    ? rehike.i18n.format("global", "bylineFormat", byline)
+                    : byline }}</span>
                 </span>
             </div>
         </a>

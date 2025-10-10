@@ -36,11 +36,31 @@
                     {% if playlist.shortBylineText.runs.0 %}
                     {% set author = playlist.shortBylineText.runs.0 %}
                     <li class="author-attribution">
-                        {{ rehike.config.appearance.usernamePrepends ? yt.msgs.usernamePrepend }}<a href="{{ rehike.getUrl(author) }}" class="spf-link">{{ author.text }}</a>
+                        {% with %}
+                            {% set anchor_html %}
+                                <a href="{{ rehike.getUrl(author) }}" class="spf-link">{{ author.text }}</a>
+                            {% endset %}
+                            {{ rehike.config.appearance.usernamePrepends
+                                ? rehike.i18n.formatHtml(
+                                    "global",
+                                    "bylineFormat",
+                                    rehike.toSafeHtml(anchor_html), 
+                                )
+                                : anchor_html }}
+                        {% endwith %}
                     </li>
                     {% else %}
                     <li class="author-attribution">
-                        {{ rehike.config.appearance.usernamePrepends ? yt.msgs.usernamePrepend }}{{ playlist.shortBylineText.simpleText }}
+                        {% with %}
+                            {% set text = playlist.shortBylineText.simpleText %}
+                            {{ rehike.config.appearance.usernamePrepends
+                                ? rehike.i18n.format(
+                                    "global",
+                                    "bylineFormat",
+                                    text,
+                                )
+                                : text }}
+                        {% endwith %}
                     </li>
                     {% endif %}
                 {% endif %}

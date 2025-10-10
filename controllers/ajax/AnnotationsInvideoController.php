@@ -27,6 +27,8 @@ use Rehike\ControllerV2\{
 /**
  * Annotations invideo controller.
  * 
+ * CONSIDER(pumpkin): Deduplicate code from watch controller.
+ * 
  * @author Toru the Red Fox
  * @author The Rehike Maintainers
  */
@@ -101,26 +103,31 @@ class AnnotationsInvideoController extends AjaxController implements IGetControl
         }
 
         // Parse complex &t parameter timestamps (such as "2h12m43s")
-		// TODO (kirasicecreamm): Clean up this algo, make better
         if (isset($request->params->t))
         {
-            preg_match_all("/\d{1,6}/", $request->params->t, $times);
-            $times = $times[0];
-            if (count($times) == 1)
+            $t = strtolower($request->params->t);
+            $startTime = 0;
+        
+            if (preg_match_all('/(\d+)([hms]?)/', $t, $matches, PREG_SET_ORDER))
             {
-                $startTime = (int) $times[0];
-            } 
-            else if (count($times) == 2)
-            {
-                $startTime = ((int) $times[0] * 60) + (int) $times[0];
-            } 
-            else if (count($times) == 3)
-            {
-                $startTime = ((int) $times[0] * 3600) + ((int) $times[1] * 60) + (int) $times[2];
-            } 
-            else
-            {
-                $startTime = 0;
+                // 0th member of match is full string, so it's ignored.
+                foreach ($matches as [, $value, $unit])
+                {
+                    $value = (int)$value;
+                    switch ($unit)
+                    {
+                        case 'h':
+                            $startTime += $value * 3600;
+                            break;
+                        case 'm':
+                            $startTime += $value * 60;
+                            break;
+                        case 's':
+                        case '':
+                            $startTime += $value;
+                            break;
+                    }
+                }
             }
         }
 
