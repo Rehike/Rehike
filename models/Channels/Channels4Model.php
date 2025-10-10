@@ -486,11 +486,22 @@ class Channels4Model
         }
         else if ($a = @$content->sectionListRenderer->contents[0]->itemSectionRenderer->contents[0]->gridRenderer)
         {
-            return $this->handleGridTab($a, $content);
+            return $this->handleGridTab(
+                data: $a,
+                parentTab: $content,
+                rich: false
+            );
         }
         else if ($a = @$content->richGridRenderer)
         {
-            return $this->handleGridTab(InnertubeBrowseConverter::richGridRenderer($a), $content, true);
+            return $this->handleGridTab(
+                data: InnertubeBrowseConverter::richGridRenderer(
+                    data: $a, 
+                    context: $this->getFrameworkUpdatesContext()
+                ), 
+                parentTab: $content, 
+                rich: true
+            );
         }
         else if (($a = @$content->sectionListRenderer->contents[0]->itemSectionRenderer) && (isset($a->contents[0]->backstagePostThreadRenderer)))
         {
@@ -507,7 +518,7 @@ class Channels4Model
             return (object) [
                 "sectionListRenderer" => InnertubeBrowseConverter::sectionListRenderer($a, [
                     "channelRendererUnbrandedSubscribeButton" => true
-                ]),
+                ] + $this->getFrameworkUpdatesContext()),
                 "brandedPageV2SubnavRenderer" => $brandedPageV2SubnavRenderer ?? null
             ];
         }
@@ -561,11 +572,7 @@ class Channels4Model
             $response += [
                 "items" => InnertubeBrowseConverter::generalLockupConverter($data->items, [
                     "listView" => true,
-                ] + (isset($this->responseData->frameworkUpdates)
-                    ? [
-                        "frameworkUpdates" => $this->responseData->frameworkUpdates,
-                    ]
-                    : []),
+                ] + $this->getFrameworkUpdatesContext(),
                 )
             ];
         }
@@ -574,7 +581,7 @@ class Channels4Model
             $response += [
                 "browseContentGridRenderer" => InnertubeBrowseConverter::gridRenderer($data, [
                     "channelRendererUnbrandedSubscribeButton" => true
-                ])
+                ] + $this->getFrameworkUpdatesContext())
             ];
         }
 
@@ -767,5 +774,23 @@ class Channels4Model
         }
         
         return "";
+    }
+
+    /**
+     * Gets the converter context containing frameworkUpdates if the property is
+     * available in the response.
+     *
+     * The reason for this is that we can't pass our own stub or the converter
+     * would think that it's a proper value from a response. The only code that
+     * currently relies on this is a debug print, but it's best not to let
+     * anything be confused.
+     */
+    private function getFrameworkUpdatesContext()
+    {
+        return (isset($this->responseData->frameworkUpdates)
+            ? [
+                "frameworkUpdates" => $this->responseData->frameworkUpdates,
+            ]
+            : []);
     }
 }

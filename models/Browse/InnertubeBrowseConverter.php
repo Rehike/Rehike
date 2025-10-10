@@ -142,9 +142,19 @@ class InnertubeBrowseConverter
                 case "lockupViewModel":
                     unset($content->{$name});
                     
-                    // TODO: Not passing along framework updates is a hack because we can't
-                    // access it at this time.
-                    $lockupConv = new LockupViewModelConverter($value, (object)[]);
+                    $frameworkUpdates = isset($context["frameworkUpdates"])
+                        ? $context["frameworkUpdates"]
+                        : (object)[];
+                    
+                    DebugLogger::print(
+                        "Converting lockupViewModel{%s} with %s frameworkUpdates",
+                        json_encode($content),
+                        isset($context["frameworkUpdates"])
+                            ? "SPECIFIED"
+                            : "STUB",
+                    );
+
+                    $lockupConv = new LockupViewModelConverter($value, $frameworkUpdates);
                     $lockupConv->setStyle(LockupViewModelConverter::STYLE_LIST);
                     $newEntry = $lockupConv->bakeClassicRenderer();
                     
@@ -423,7 +433,7 @@ class InnertubeBrowseConverter
                 if ($name == "lockupViewModel")
                 {
                     // Bandaid to fix homepage:
-                    return self::generalLockupConverter([$data->content])[0];
+                    return self::generalLockupConverter([$data->content], $context)[0];
                 }
                 
                 return (object) [
