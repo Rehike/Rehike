@@ -378,7 +378,10 @@ class WatchBakery
 
             InnertubeBrowseConverter::generalLockupConverter(
                 $recomsList,
-                [ "lockupStyle" => LockupViewModelConverter::STYLE_COMPACT ]
+                [
+                    "lockupStyle" => LockupViewModelConverter::STYLE_COMPACT,
+                    "frameworkUpdates" => $this->frameworkUpdates,
+                ],
             );
             
             $targetObjs = [];

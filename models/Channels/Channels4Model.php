@@ -560,8 +560,13 @@ class Channels4Model
 
             $response += [
                 "items" => InnertubeBrowseConverter::generalLockupConverter($data->items, [
-                    "listView" => true
-                ])
+                    "listView" => true,
+                ] + (isset($this->responseData->frameworkUpdates)
+                    ? [
+                        "frameworkUpdates" => $this->responseData->frameworkUpdates,
+                    ]
+                    : []),
+                )
             ];
         }
         else
