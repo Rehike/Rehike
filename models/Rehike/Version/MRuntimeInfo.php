@@ -64,8 +64,6 @@ class MRuntimeInfo
 
     /**
      * Gets platform information for Windows NT platforms.
-     * 
-     * TODO: Windows 9x support :P
      */
     private function getWindowsInfo(): object
     {
@@ -101,8 +99,6 @@ class MRuntimeInfo
 
     /**
      * Gets platform information for Mac OS X platforms.
-     * 
-     * Mac OS 9 support???
      */
     private function getMacOsInfo(): object
     {
