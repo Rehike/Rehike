@@ -19,10 +19,12 @@ showLess: "一部を表示"
 
 durationA11y: " - 長さ: %s。"
 
-# TODO-i18n: make this use printf formatting so it can be more
-# versatile.
+# Left for some pages which don't reasonably # support rich formatting of the
+# byline (i.e. attribution)
 usernamePrepend: "作者: "
 verified: "確認済み"
+
+bylineFormat: "作者: %s"
 
 # Video thumbnail watch later button strings:
 addToWatchLater: "後で見る"

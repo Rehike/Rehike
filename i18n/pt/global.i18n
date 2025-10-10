@@ -22,10 +22,12 @@ loadMore: "Carregar mais"
 # Duration accessibility strings (shown on watch)
 durationA11y: " - Duração: %s."
 
-# TODO-i18n: make this use printf formatting so it can be more
-# versatile.
+# Left for some pages which don't reasonably # support rich formatting of the
+# byline (i.e. attribution)
 usernamePrepend: "por "
 verified: "Verificado"
+
+bylineFormat: "por %s"
 
 # Video thumbnail watch later button strings:
 addToWatchLater: "Assistir mais tarde"

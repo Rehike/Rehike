@@ -82,6 +82,8 @@
             <p>
                 <a href="/watch?v={{ video.videoId }}" class="video-title">{{ rehike.getText(video.title) }}</a>
                 <span class="video-username">
+                    {# Due to the nature of the byline here, usernamePrepend
+                       must be used instead of bylineFormat. #}
                     {%- if rehike.config.appearance.usernamePrepends -%}
                     <span class="username-prepend">{{ yt.msgs.usernamePrepend }}</span>
                     {%- endif -%}

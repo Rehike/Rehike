@@ -46,11 +46,21 @@
                     <div class="yt-lockup-byline">
                         {% set bylineUrl = rehike.getUrl(byline.runs[0]) %}
                         {% if bylineUrl %}
-                            {{ rehike.config.appearance.usernamePrepends ? yt.msgs.usernamePrepend }}
-                            <a href="{{ bylineUrl }}" class="spf-link">{{ rehike.getText(byline) }}</a>
-                            {% if info.ownerBadges %}
-                                <span title="{{ yt.msgs.verified }}" class="yt-uix-tooltip yt-channel-title-icon-verified yt-sprite"></span>
-                            {% endif %}
+                            {% with %}
+                                {% set anchor_html %}
+                                    <a href="{{ bylineUrl }}" class="spf-link">{{ rehike.getText(byline) }}</a>
+                                {% endset %}
+                                {{ rehike.config.appearance.usernamePrepends
+                                    ? rehike.i18n.formatHtml(
+                                        "global",
+                                        "bylineFormat",
+                                        rehike.toSafeHtml(anchor_html)
+                                      )
+                                    : anchor_html }}
+                                {% if info.ownerBadges %}
+                                    <span title="{{ yt.msgs.verified }}" class="yt-uix-tooltip yt-channel-title-icon-verified yt-sprite"></span>
+                                {% endif %}
+                            {% endwith %}
                         {% else %}
                             {# If there is no byline URL, then it's probably something else (like mixes byline) #}
                             {{ rehike.getText(byline) }}

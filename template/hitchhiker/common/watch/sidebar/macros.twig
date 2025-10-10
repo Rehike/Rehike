@@ -49,6 +49,8 @@
         {% set author = rehike.getByline(info) %}
         {% if author != null %}
         <span class="stat attribution">
+            {# This one has to use the old usernamePrepend property due to its
+               markup. #}
             {% if rehike.config.appearance.usernamePrepends %}
                 <span>{{ yt.msgs.usernamePrepend }}</span>
             {% endif %}
@@ -69,6 +71,8 @@
             {% set author = rehike.getByline(info) %}
             {% if author != null %}
             <span class="stat attribution">
+                {# This one has to use the old usernamePrepend property due to
+                   its markup. #}
                 {% if rehike.config.appearance.usernamePrepends %}
                 <span>{{ yt.msgs.usernamePrepend }}</span>
                 {% endif %}
