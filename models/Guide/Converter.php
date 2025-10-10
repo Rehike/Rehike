@@ -496,6 +496,17 @@ class Converter
 
         if (!isset($section)) return self::buildSubscriptionsPromoSection();
 
+        // The actual title is in a new object:
+        // guideCollapsibleSectionEntryRenderer.headerEntry.guideEntryRenderer
+        // .formattedTitle
+        // but it's too much effort to pull that, and besides, hardcoding it
+        // makes it more consistent with the logged out promo section.
+        $i18n = i18n::getNamespace("guide");
+        $section->formattedTitle = (object) [
+            "simpleText" => $i18n->get("subscriptions"),
+            "navigationEndpoint" => NavigationEndpoint::createEndpoint("/feed/subscriptions")
+        ];
+
         // Ugly last item hack to get rid of the "show more" button WEB v2
         // reports
         if (isset($section->items[count($section->items ?? []) - 1]->guideCollapsibleEntryRenderer))
