@@ -1,10 +1,10 @@
 {
-	"previousHash": "17830e6f63d0c98e6e63ef75e87f7dc706b6550e",
-	"currentRevisionId": 1794,
-	"subject": "Safe HTML interpolation for Prototaxis credit link",
-	"body": "Safe HTML interpolation for Prototaxis credit link",
+	"previousHash": "411bf86df5df5f32946a34b5a2b714d0b731d7d2",
+	"currentRevisionId": 1800,
+	"subject": "Improve uncaught Promise::All exception error screen",
+	"body": "Improve uncaught Promise::All exception error screen",
 	"branch": "master",
 	"committerName": "Isabella Lulamoon",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1759533530
+	"time": 1760272614
 }

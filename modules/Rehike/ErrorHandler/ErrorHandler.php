@@ -9,7 +9,8 @@ use Rehike\ErrorHandler\ErrorPage\{
     FatalErrorPage,
     UncaughtExceptionPage,
     UnhandledPromisePage,
-    InnertubeFailedRequestPage
+    InnertubeFailedRequestPage,
+    PromiseAllExceptionPage
 };
 
 use Rehike\Logging\LogFileManager;
@@ -107,7 +108,7 @@ final class ErrorHandler
             }
             else
             {
-                self::$pageModel = new UncaughtExceptionPage($e);
+                self::$pageModel = new PromiseAllExceptionPage($e);
             }
         }
         else
