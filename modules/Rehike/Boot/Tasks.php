@@ -23,6 +23,7 @@ use Rehike\{
     ErrorHandler\ErrorHandler,
     InnertubeContext
 };
+use Rehike\Helper\Watch\ExperimentFlagManager;
 use Rehike\SignInV2\SignIn;
 
 /**
@@ -142,6 +143,9 @@ final class Tasks
             // data string.
             preg_match("/ytcfg\.set\(({.*?})\);/", $response, $matches);
             $ytcfg = json_decode(@$matches[1]);
+            
+            // Optimise cases where this class is used:
+            ExperimentFlagManager::giveYtConfig($ytcfg);
 
             $visitor = $ytcfg->INNERTUBE_CONTEXT->client->visitorData;
 

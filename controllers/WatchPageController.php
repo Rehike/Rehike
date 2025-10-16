@@ -21,6 +21,7 @@ use function Rehike\Async\async;
 
 use Rehike\Util\Base64Url;
 use Rehike\ConfigManager\Config;
+use Rehike\Helper\Watch\ExperimentFlagManager;
 use Rehike\Helper\WatchUtils;
 use Rehike\Model\Common\MAlert;
 use Rehike\Util\ExtractUtils;
@@ -169,7 +170,7 @@ class WatchPageController extends NirvanaController implements IGetControllerAsy
         );
         
         $playerRequestClient = "WEB";
-        $playerRequestClientVersion = "2.20230331.00.00";
+        $playerRequestClientVersion = "2.20251014.00.00";
         
         if (Config::getConfigProp("experiments.temp20240827_playerMode") == "USE_EMBEDDED_PLAYER_REQUEST")
         {
@@ -280,6 +281,22 @@ class WatchPageController extends NirvanaController implements IGetControllerAsy
              // Push these over to the global object.
              $yt->playerResponse = $playerResponse;
              $yt->watchNextResponse = $nextResponse;
+
+            // Ensure that PO tokens are configured alright for the player.
+            $flagManager = new ExperimentFlagManager();
+            yield $flagManager->initialize();
+            $flags = $flagManager->getWatchPlayerExperimentFlags();
+            if (isset($flags->html5_generate_content_po_token))
+            {
+                // PO token is based on the video ID. This is the common case nowadays.
+                $yt->playerPoTokenFlag = "html5_generate_content_po_token=true";
+            }
+            else
+            {
+                // PO token is based on the session using either visitor data string or
+                // datasync ID.
+                $yt->playerPoTokenFlag = "html5_generate_session_po_token=true";
+            }
 
             \Rehike\Profiler::start("modelbake");
             
