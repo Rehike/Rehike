@@ -90,7 +90,6 @@ function getRehikeLogoIcon()
  */
 async function createEnableRehikePolymerButton(beforeEl)
 {
-    let currentUrl = getEnableRehikeUrlForCurrentUrl();
     let rhSection = document.createElement("yt-multi-page-menu-section-renderer");
     rhSection.setAttribute("class", "style-scope ytd-multi-page-menu-renderer");
     rhSection.data = {
@@ -107,17 +106,6 @@ async function createEnableRehikePolymerButton(beforeEl)
                                 text: DISABLE_POLYMER_CONFIG.strings.enableRehike || "Enable Rehike"
                             }
                         ]
-                    },
-                    navigationEndpoint: {
-                        commandMetadata: {
-                            webCommandMetadata: {
-                                url: currentUrl,
-                                webPageType: "WEB_PAGE_TYPE_UNKNOWN"
-                            }
-                        },
-                        urlEndpoint: {
-                            url: currentUrl
-                        }
                     }
                 }
             }
@@ -133,6 +121,11 @@ async function createEnableRehikePolymerButton(beforeEl)
     icon.innerHTML = iconHtml;
     icon = icon.firstChild;
     iconContainer.insertAdjacentElement("beforeend", icon);
+    
+    const linkRenderer = await waitForChildElm(rhSection, "ytd-compact-link-renderer");
+    linkRenderer.addEventListener("click", function() {
+        window.location.href = getEnableRehikeUrlForCurrentUrl();
+    });
 
     // Observe the icon to make sure that we remove ourself when needed.
     let iconObserver = new MutationObserver(function(records, self) {

@@ -1,10 +1,10 @@
 {
-	"previousHash": "8a233e35fdedcf3391bdde4a199ee6ebf09a5888",
-	"currentRevisionId": 1801,
-	"subject": "Account for new content-based PO tokens",
-	"body": "Account for new content-based PO tokens",
+	"previousHash": "a847e38ea2e4a0a6a77dbd373fb8158afffa8f3e",
+	"currentRevisionId": 1802,
+	"subject": "Fix "return to Rehike" button in disable-Rehike mode",
+	"body": "Fix "return to Rehike" button in disable-Rehike mode",
 	"branch": "master",
 	"committerName": "Isabella Lulamoon",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1760585644
+	"time": 1761142692
 }

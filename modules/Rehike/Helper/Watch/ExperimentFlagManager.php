@@ -171,8 +171,6 @@ class ExperimentFlagManager
                 return;
             }
             
-            // TODO(isabella): This should be cascaded into the similar code in Rehike\Boot\Tasks
-            // to avoid a double request on initial watch routes.
             $response = yield Network::urlRequest(
                 "https://www.youtube.com",
                 [
