@@ -1,10 +1,10 @@
 {
-	"previousHash": "a847e38ea2e4a0a6a77dbd373fb8158afffa8f3e",
-	"currentRevisionId": 1802,
-	"subject": "Fix "return to Rehike" button in disable-Rehike mode",
-	"body": "Fix "return to Rehike" button in disable-Rehike mode",
+	"previousHash": "e504f1e5dc48cc58c59ffdf7879de76b388e60ab",
+	"currentRevisionId": 1803,
+	"subject": "Fix SponsorBlock breaking #watch7-headline appearance (#685)",
+	"body": "Fix SponsorBlock breaking #watch7-headline appearance (#685)",
 	"branch": "master",
 	"committerName": "Isabella Lulamoon",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1761142692
+	"time": 1761183069
 }

@@ -77,18 +77,19 @@ class ConfigDefinitions
                 "showNewInfoOnChannelAboutPage" => new BoolProp(true),
                 "largeSearchResults" => new BoolProp(true),
                 "swapSearchViewsAndDate" => new BoolProp(false),
-	        "showOldUploadedOnText" => new BoolProp(false),
+                "showOldUploadedOnText" => new BoolProp(false),
                 "useLegacyRoboto" => new BoolProp(false),
                 "showVersionInFooter" => new BoolProp(true),
                 "usernamePrepends" => new BoolProp(false),
                 "useRyd" => new BoolProp(true),
+                "enableSponsorblockFixes" => new BoolProp(true),
                 "noViewsText" => new BoolProp(false),
                 "movingThumbnails" => new BoolProp(true),
                 "cssFixes" => new BoolProp(true),
                 "watchSidebarDates" => new BoolProp(false),
                 "watchSidebarVerification" => new BoolProp(false),
                 "oldBestOfYouTubeIcons" => new BoolProp(false),
-                "enableAdblock" => new BoolProp(true)
+                "enableAdblock" => new BoolProp(true),
             ],
             "experiments" => [
                 "displayPlayerChoice" => (new BoolProp(false))->registerUpdateCb(function() {

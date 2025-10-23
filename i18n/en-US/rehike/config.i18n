@@ -72,6 +72,11 @@ props:
       title: "Show dislikes on videos"
       subtitle: >
         Stats from the Return YouTube Dislike API.
+    enableSponsorblockFixes:
+      title: "Enable SponsorBlock fixes"
+      subtitle: >
+        Negates some override styles from SponsorBlock to improve default
+        appearance at the expense of breaking custom CSS.
     usernamePrepends:
       title: "Show \"by\" before the author's name on video links"
       subtitle: >

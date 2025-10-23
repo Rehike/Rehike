@@ -124,6 +124,22 @@ video-{{ yt.videoId }} {{ (yt.theaterMode) ? 'watch-wide watch-stage-mode' }}
     'GUIDED_HELP_LOCALE': "en_US",
     'GUIDED_HELP_ENVIRONMENT': "prod"
   });
+  
+  {% if rehike.config.appearance.enableSponsorblockFixes %}
+   // Check if the user is using SponsorBlock. SponsorBlock adds an additional inline style
+   // to #watch7-headline, for some reason, which breaks the display of the headline when it
+   // has anything but a simple title (i.e. hashtags are shown above the video title)
+   if (document.getElementById("sponsorblock-document-script"))
+   {
+      var content = document.getElementById("content");
+      if (content)
+      {
+         var fixStyle = document.createElement("style");
+         fixStyle.textContent = "/* Rehike SponsorBlock fix. */\n#watch7-headline { display: unset !important; }";
+         content.appendChild(fixStyle);
+      }
+   }
+   {% endif %}
 
 </script>
 {#
