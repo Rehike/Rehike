@@ -139,7 +139,11 @@ class ChannelPageController extends NirvanaController implements IGetController,
                     // Videos tab is a unique case where sort information must be specified.
                     // The default sort order is newest first.
                     $modernVideoParams = new ModernBrowseVideoParams();
-                    $modernVideoParams->setSort(ModernSort::LATEST);
+                    
+                    // 2025-10: This is now counted as an invalid parameter. Whatever man.
+                    // I don't even care.
+                    //$modernVideoParams->setSort(ModernSort::LATEST);
+                    
                     $modernParams->setVideosParams($modernVideoParams);
                     break;
                 }

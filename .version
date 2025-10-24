@@ -1,10 +1,10 @@
 {
-	"previousHash": "e504f1e5dc48cc58c59ffdf7879de76b388e60ab",
-	"currentRevisionId": 1803,
-	"subject": "Fix SponsorBlock breaking #watch7-headline appearance (#685)",
-	"body": "Fix SponsorBlock breaking #watch7-headline appearance (#685)",
+	"previousHash": "5dd6b8a20f69f75c73159712b9a8db475f7edb31",
+	"currentRevisionId": 1804,
+	"subject": "Fix channels videos tab + core_legacy template",
+	"body": "Fix channels videos tab + core_legacy template",
 	"branch": "master",
 	"committerName": "Isabella Lulamoon",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1761183069
+	"time": 1761272797
 }
