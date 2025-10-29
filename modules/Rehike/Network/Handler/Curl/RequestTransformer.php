@@ -97,6 +97,13 @@ class RequestTransformer
                 $target[CURLOPT_FOLLOWLOCATION] = false;
                 break;
         }
+        
+        // SSL verification disablement:
+        if (isset($request->disableSslVerification) && $request->disableSslVerification)
+        {
+            $target[CURLOPT_SSL_VERIFYHOST] = false;
+            $target[CURLOPT_SSL_VERIFYPEER] = false;
+        }
 
         // Misc:
         $target[CURLOPT_RESOLVE] = NetworkCore::getResolve();

@@ -1,10 +1,10 @@
 {
-	"previousHash": "5dd6b8a20f69f75c73159712b9a8db475f7edb31",
-	"currentRevisionId": 1804,
-	"subject": "Fix channels videos tab + core_legacy template",
-	"body": "Fix channels videos tab + core_legacy template",
+	"previousHash": "3c9f4fcd002651db0a66a133d95b68881261e636",
+	"currentRevisionId": 1805,
+	"subject": "Add option to disable SSL verification",
+	"body": "Add option to disable SSL verification",
 	"branch": "master",
 	"committerName": "Isabella Lulamoon",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1761272797
+	"time": 1761766712
 }

@@ -62,6 +62,11 @@ class Network
      */
     public static function urlRequest(string $url, array $opts = []): Promise/*<IResponse>*/
     {
+        if (Config::getConfigProp("advanced.disableSslVerification") === true)
+        {
+            $opts["disableSslVerification"] = true;
+        }
+        
         $result = NetworkCore::request($url, $opts);
 
         self::$sessionRequestLog[] = [
@@ -167,6 +172,7 @@ class Network
                     "body" => json_encode($body),
                     "onError" => "ignore",
                     "dnsOverride" => $desiredDns,
+                    "disableSslVerification" => Config::getConfigProp("advanced.disableSslVerification") ?? false,
                 ]
             )->then(function ($response) use ($resolve, $reject, $ignoreErrors, $profilerRid, $action) {
                 if ((200 == $response->status) || (true == $ignoreErrors) )
@@ -323,7 +329,8 @@ class Network
         }
 
         $body = [
-            "headers" => $headers
+            "headers" => $headers,
+            "disableSslVerification" => Config::getConfigProp("advanced.disableSslVerification") ?? false,
         ];
 
         if ($post)

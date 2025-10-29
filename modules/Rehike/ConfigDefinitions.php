@@ -118,6 +118,7 @@ class ConfigDefinitions
             ],
             "advanced" => [
                 "dnsAddress" => new StringProp("1.1.1.1"),
+                "disableSslVerification" => new BoolProp(false),
                 "enableDebugger" => new BoolProp(false),
                 "developer" => [
                     "ignoreUnresolvedPromises" => new BoolProp(false)

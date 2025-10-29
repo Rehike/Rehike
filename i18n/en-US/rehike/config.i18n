@@ -146,6 +146,14 @@ props:
       subtitle: >
         Only change this value if you know what you're doing. An invalid value
         will make all API requests fail.
+    disableSslVerification:
+      title: "Disable SSL verification"
+      subtitle: >
+        Disables SSL certificate verification of network responses. This is not
+        recommended, especially on public networks, as it makes your traffic to
+        YouTube susceptible to man-in-the-middle attacks. Still, it may be
+        necessary on servers running on particularly-old operating systems without
+        newer root certificates.
     enableDebugger:
       title: "Enable the debugger"
       subtitle: >

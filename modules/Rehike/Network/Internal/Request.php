@@ -72,6 +72,11 @@ class Request implements IRequest
      * @var RequestErrorPolicy
      */
     public int $onError = RequestErrorPolicy::THROW;
+    
+    /**
+     * If specified, disables SSL verification for the request.
+     */
+    public bool $disableSslVerification = false;
 
     /**
      * If specified, sets the user agent of the request.
@@ -128,6 +133,9 @@ class Request implements IRequest
                 break;
             case "onError":
                 $this->onError = self::handleOnErrorOpt($value);
+                break;
+            case "disableSslVerification":
+                $this->disableSslVerification = (bool)$value;
                 break;
             case "userAgent":
                 $this->userAgent = $value;
