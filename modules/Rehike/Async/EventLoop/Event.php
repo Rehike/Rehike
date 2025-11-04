@@ -6,6 +6,8 @@ use Rehike\Async\Debugging\PromiseStackTrace;
 
 use Generator;
 use Rehike\Async\Debugging\IObjectWithTrackingCookie;
+use Rehike\Async\Debugging\TraceEventId;
+use Rehike\Async\Debugging\Tracing;
 use Rehike\Async\Debugging\TrackingCookie;
 use Rehike\Attributes\Override;
 
@@ -110,6 +112,7 @@ abstract class Event implements IEvent, IObjectWithTrackingCookie
         if (!isset($this->cookie))
         {
             $this->cookie = new TrackingCookie(__CLASS__);
+            Tracing::logEvent(TraceEventId::EventCreate, $this->cookie);
         }
     }
 
@@ -120,6 +123,7 @@ abstract class Event implements IEvent, IObjectWithTrackingCookie
     final public function run(bool $reset = false): void
     {
         $this->ensureTrackingCookie();
+        Tracing::logEvent(TraceEventId::EventRun, $this->cookie);
         
         if (ENABLE_EVENT_RUN_LIMIT)
         {
@@ -189,6 +193,7 @@ abstract class Event implements IEvent, IObjectWithTrackingCookie
      */
     protected function fulfill(): void
     {
+        Tracing::logEvent(TraceEventId::EventFulfill, $this->cookie);
         $this->fulfilled = true;
     }
 
@@ -204,6 +209,8 @@ abstract class Event implements IEvent, IObjectWithTrackingCookie
      */
     public function __destruct()
     {
+        Tracing::logEvent(TraceEventId::EventDestroy, $this->cookie);
+        
         // If this is the case, then another crash has already occurred
         // and it's pointless to echo.
         if (!class_exists("Rehike\\Async\\EventLoop\\EventLoop")) return;

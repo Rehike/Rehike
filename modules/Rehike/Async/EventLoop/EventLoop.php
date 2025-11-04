@@ -5,6 +5,9 @@ use Rehike\Async\Promise\QueuedPromiseResolver;
 use Rehike\Async\Debugging\PromiseStackTrace;
 
 use Exception;
+use Rehike\Async\Debugging\IObjectWithTrackingCookie;
+use Rehike\Async\Debugging\TraceEventId;
+use Rehike\Async\Debugging\Tracing;
 
 /**
  * The maximum number of times that the event loop can nest.
@@ -74,6 +77,7 @@ final class EventLoop
      */
     public static function run(): void
     {
+        Tracing::logEvent(TraceEventId::EventLoopRun);
         self::$s_internalRunLevel++;
         
         if (self::$s_internalRunLevel >= EVENT_LOOP_NESTING_LIMIT)
@@ -110,6 +114,7 @@ final class EventLoop
         }
         
         self::$s_internalRunLevel--;
+        Tracing::logEvent(TraceEventId::EventLoopCycleComplete);
     }
 
     /**
@@ -125,6 +130,7 @@ final class EventLoop
      */
     public static function addEvent(IEvent $e): void
     {
+        Tracing::logEvent(TraceEventId::EventLoopAdd);
         self::$events[] = $e;
     }
 
@@ -144,6 +150,7 @@ final class EventLoop
      */
     public static function removeEvent(IEvent $e): void
     {
+        Tracing::logEvent(TraceEventId::EventLoopRemove);
         $index = array_search($e, self::$events);
 
         if (false != $index)
@@ -196,6 +203,7 @@ final class EventLoop
      */
     public static function pause(): void
     {
+        Tracing::logEvent(TraceEventId::EventLoopPause);
         self::$isPaused = true;
     }
 
@@ -204,6 +212,7 @@ final class EventLoop
      */
     public static function continue($autoRun = true): void
     {
+        Tracing::logEvent(TraceEventId::EventLoopUnpause);
         self::$isPaused = false;
         
         if ($autoRun) self::run();
@@ -216,6 +225,7 @@ final class EventLoop
     {
         if (!in_array($p, self::$queuedPromises))
         {
+            Tracing::logEvent(TraceEventId::EventLoopQueuedPromiseAdd);
             self::$queuedPromises[] = $p;
         }
     }
@@ -246,6 +256,9 @@ final class EventLoop
                 // The event is no longer needed at all since it's
                 // no longer accessed after being fulfilled. Might as well
                 // clean it from memory and get it over with.
+                Tracing::logEvent(TraceEventId::EventLoopEventNullified, $event instanceof IObjectWithTrackingCookie
+                    ? $event->getTrackingCookie()
+                    : null);
                 $event = new NullEvent();
             }
         }
@@ -281,6 +294,8 @@ final class EventLoop
      */
     private static function finishQueuedPromises(): void
     {
+        Tracing::logEvent(TraceEventId::EventLoopFinishQueuedPromises);
+        
         foreach (self::$queuedPromises as $promise)
         {
             $promise->finish();
@@ -293,9 +308,15 @@ final class EventLoop
         {
             self::run();
         }
+        else if (self::$level == 0)
+        {
+            // At this point, we're bound to drop out of the event loop, so log that.
+            Tracing::logEvent(TraceEventId::EventLoopDropOut);
+        }
         
         // Since all queued Promise callbacks have been gotten to,
         // the queues aren't necessary.
+        Tracing::logEvent(TraceEventId::EventLoopQueuedPromiseClear);
         self::$queuedPromises = [];
     }
 }

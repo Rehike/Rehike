@@ -1,10 +1,10 @@
 {
-	"previousHash": "3c9f4fcd002651db0a66a133d95b68881261e636",
-	"currentRevisionId": 1805,
-	"subject": "Add option to disable SSL verification",
-	"body": "Add option to disable SSL verification",
+	"previousHash": "897762b15b5115b794003a1e02e667cdfcb81b61",
+	"currentRevisionId": 1806,
+	"subject": "Improve debugging and documentation for the async framework",
+	"body": "Improve debugging and documentation for the async framework",
 	"branch": "master",
 	"committerName": "Isabella Lulamoon",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1761766712
+	"time": 1762224065
 }

@@ -1,6 +1,8 @@
 <?php
 namespace Rehike\Async\Promise;
 
+use Rehike\Async\Debugging\TraceEventId;
+use Rehike\Async\Debugging\Tracing;
 use Rehike\Async\Promise;
 use Rehike\Async\Promise\PromiseStatus;
 
@@ -44,13 +46,20 @@ class QueuedPromiseResolver
      */
     public function __construct(Promise $p, int $state, $data)
     {
+        Tracing::logEvent(TraceEventId::QueuedPromiseCreate, [$p->getTrackingCookie(), $state]);
         $this->promise = $p;
         $this->state = $state;
         $this->data = $data;
     }
+    
+    public function __destruct()
+    {
+        Tracing::logEvent(TraceEventId::QueuedPromiseDestroy, [$this->promise->getTrackingCookie(), $this->state]);
+    }
 
     public function finish(): void
     {
+        Tracing::logEvent(TraceEventId::QueuedPromiseFinish, [$this->promise->getTrackingCookie(), $this->state]);
         switch ($this->state)
         {
             case PromiseStatus::RESOLVED:

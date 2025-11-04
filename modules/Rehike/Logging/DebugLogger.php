@@ -1,6 +1,8 @@
 <?php
 namespace Rehike\Logging;
 
+use Rehike\Async\Debugging\Tracing;
+
 /**
  * A proper debug log system that can be logged to globally.
  * 
@@ -56,6 +58,14 @@ class DebugLogger
      */
     public static function getLogs(): array
     {
+        static $filledIn = false;
+        
+        if (!$filledIn)
+        {
+            Tracing::logToDebugLogger();
+            $filledIn = true;
+        }
+        
         return self::$logs;
     }
 }

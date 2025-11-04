@@ -21,6 +21,8 @@ use Exception;
 use ReflectionFunction;
 use ReflectionMethod;
 use Rehike\Async\Debugging\IObjectWithTrackingCookie;
+use Rehike\Async\Debugging\TraceEventId;
+use Rehike\Async\Debugging\Tracing;
 use Rehike\Async\Debugging\TrackingCookie;
 
 /**
@@ -140,6 +142,10 @@ class Promise/*<T>*/ implements IPromise/*<T>*/,
 
     /**
      * Version of the Promise behavior to use.
+     * 
+     * The default version of the Promise behaviour should stay at 0 for now, and be
+     * set by the user. Anonymous promises have their version set in the constructor
+     * of this class.
      */
     private int $version = 0;
 
@@ -175,6 +181,8 @@ class Promise/*<T>*/ implements IPromise/*<T>*/,
         
         $this->creationTrace = new PromiseStackTrace;
         $this->latestTrace = &$this->creationTrace;
+        
+        Tracing::logEvent(TraceEventId::PromiseCreate, $this->cookie);
 
         if (null != $cb)
         {
@@ -225,6 +233,10 @@ class Promise/*<T>*/ implements IPromise/*<T>*/,
                 }
             }
         }
+        
+        // If tracing is enabled for the promise component, then this will leak the
+        // cookie. This is fine and intentional.
+        Tracing::logEvent(TraceEventId::PromiseDestroy, $this->cookie);
     }
 
     /**
@@ -275,6 +287,8 @@ class Promise/*<T>*/ implements IPromise/*<T>*/,
      */
     public function then(callable/*<mixed>*/ $cb): Promise/*<T>*/
     {
+        Tracing::logEvent(TraceEventId::PromiseThen, $this->cookie);
+        
         $this->thens[] = $cb;
 
         // Enable late binding (i.e. for internal versatility)
@@ -299,6 +313,8 @@ class Promise/*<T>*/ implements IPromise/*<T>*/,
      */
     public function catch(callable/*<Throwable>*/ $cb): Promise/*<T>*/
     {
+        Tracing::logEvent(TraceEventId::PromiseCatch, $this->cookie);
+        
         $current = $this->getCurrentThenIndex();
 
         $this->catches[$current] = $cb;
@@ -345,6 +361,7 @@ if (ENABLE_DEFERRED_PROMISES) {
          */
         if (!EventLoop::isFinished())
         {
+            Tracing::logEvent(TraceEventId::PromiseDeferResolve, $this->cookie);
             EventLoop::addQueuedPromise(
                 new QueuedPromiseResolver(
                     $this,
@@ -357,6 +374,8 @@ if (ENABLE_DEFERRED_PROMISES) {
         }
 }
 
+        // TODO(isabella): Move this line to run after the subsequent operation.
+        // This will be a breaking change.
         $this->result = $data;
 
         /*
@@ -367,6 +386,8 @@ if (ENABLE_DEFERRED_PROMISES) {
          * thus causing odd behaviour.
          */
         if (PromiseStatus::PENDING != $this->status) return;
+        
+        Tracing::logEvent(TraceEventId::PromiseResolve, $this->cookie);
 
         // If there's nothing to resolve, do nothing
         if (($count = count($this->thens)) > 0)
@@ -417,6 +438,7 @@ if (ENABLE_DEFERRED_PROMISES) {
          */
         if (!EventLoop::isFinished())
         {
+            Tracing::logEvent(TraceEventId::PromiseDeferReject, $this->cookie);
             EventLoop::addQueuedPromise(
                 new QueuedPromiseResolver(
                     $this,
@@ -437,6 +459,8 @@ if (ENABLE_DEFERRED_PROMISES) {
          * thus causing odd behaviour.
          */
         if (PromiseStatus::PENDING != $this->status) return;
+        
+        Tracing::logEvent(TraceEventId::PromiseReject, $this->cookie);
 
         if (is_string($e))
         {

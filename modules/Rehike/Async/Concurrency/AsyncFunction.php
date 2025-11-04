@@ -2,6 +2,10 @@
 namespace Rehike\Async\Concurrency;
 
 use Generator, Exception;
+use Rehike\Async\Debugging\IObjectWithTrackingCookie;
+use Rehike\Async\Debugging\TraceEventId;
+use Rehike\Async\Debugging\Tracing;
+use Rehike\Async\Debugging\TrackingCookie;
 use Rehike\Async\EventLoop\EventLoop;
 use Throwable;
 use Rehike\Async\Promise;
@@ -18,7 +22,7 @@ use Rehike\Async\Promise;
  * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
-class AsyncFunction
+class AsyncFunction implements IObjectWithTrackingCookie
 {
     /**
      * The generator is the backend of the whole thing.
@@ -57,8 +61,24 @@ class AsyncFunction
         $this->generator = $g;
         $this->ownPromise = new Promise();
         
+        // XXX(isabella): Since async functions are just wrappers for promises, we'll
+        // actually just share the tracking cookie with the promise.
+        Tracing::logEvent(TraceEventId::AsyncFunctionCreate, $this->ownPromise->getTrackingCookie());
+        
         $this->event = new AsyncFunctionEvent($this);
         EventLoop::addEvent($this->event);
+    }
+    
+    public function __destruct()
+    {
+        Tracing::logEvent(TraceEventId::AsyncFunctionDestroy, $this->getTrackingCookie());
+    }
+    
+    // XXX(isabella): Since async functions are just wrappers for promises, we'll
+    // actually just share the tracking cookie with the promise.
+    public function getTrackingCookie(): TrackingCookie
+    {
+        return $this->ownPromise->getTrackingCookie();
     }
 
     /**
@@ -84,6 +104,8 @@ class AsyncFunction
      */
     public function run(): void
     {
+        Tracing::logEvent(TraceEventId::AsyncFunctionRun, $this->getTrackingCookie());
+        
         // A valid generator is one that has not returned.
         if ($this->generator->valid())
         {
@@ -107,12 +129,14 @@ class AsyncFunction
             {
                 // Capture the exception thrown by the Generator and carry
                 // it over to the internal Promise.
+                Tracing::logEvent(TraceEventId::AsyncFunctionCatchUnderlyingException, $this->getTrackingCookie());
                 $this->event->fulfill();
                 $this->ownPromise->reject($e);
             }
         }
         else // has returned
         {
+            Tracing::logEvent(TraceEventId::AsyncFunctionFinishingUp, $this->getTrackingCookie());
             $this->event->fulfill();
             
             try
@@ -152,7 +176,8 @@ class AsyncFunction
         else
         {
             throw new \Exception(
-                "An async function must take in a Promise."
+                "An async function must take in a Promise. Note that you may be yielding on an already-unwrapped " .
+                "Promise result rather than the Promise itself."
             );
         }
     }
