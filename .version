@@ -1,10 +1,10 @@
 {
-	"previousHash": "897762b15b5115b794003a1e02e667cdfcb81b61",
-	"currentRevisionId": 1806,
-	"subject": "Improve debugging and documentation for the async framework",
-	"body": "Improve debugging and documentation for the async framework",
+	"previousHash": "4309bb730e12d783fec70fcc76fdbcad76d4eb82",
+	"currentRevisionId": 1807,
+	"subject": "Fix PlayerCore crash",
+	"body": "Fix PlayerCore crash",
 	"branch": "master",
 	"committerName": "Isabella Lulamoon",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1762224065
+	"time": 1764820799
 }
