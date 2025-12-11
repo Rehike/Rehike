@@ -282,22 +282,6 @@ class WatchPageController extends NirvanaController implements IGetControllerAsy
              $yt->playerResponse = $playerResponse;
              $yt->watchNextResponse = $nextResponse;
 
-            // Ensure that PO tokens are configured alright for the player.
-            $flagManager = new ExperimentFlagManager();
-            yield $flagManager->initialize();
-            $flags = $flagManager->getWatchPlayerExperimentFlags();
-            if (isset($flags->html5_generate_content_po_token))
-            {
-                // PO token is based on the video ID. This is the common case nowadays.
-                $yt->playerPoTokenFlag = "html5_generate_content_po_token=true";
-            }
-            else
-            {
-                // PO token is based on the session using either visitor data string or
-                // datasync ID.
-                $yt->playerPoTokenFlag = "html5_generate_session_po_token=true";
-            }
-
             \Rehike\Profiler::start("modelbake");
             
             $watchBakery = new WatchBakery();
