@@ -39,6 +39,10 @@ abstract class NirvanaController extends HitchhikerController
         $this->yt->appbar = new MAppbar();
         $this->yt->page = (object)[];
 
+        // Nirvana pages support SPF, so player experiments must be initialized
+        // in this case in order for videos to play properly on SPF navigation.
+        $this->initPlayerExperiments();
+
         if ($this->useTemplate)
         {
             $this->yt->masthead = new MMasthead(true);

@@ -127,6 +127,11 @@ class YtApp extends stdClass
     public PlayerInfo $playerConfig;
 
     /**
+     * The string value of the player token flag to use during JS runtime.
+     */
+    public string $playerPoTokenFlag;
+
+    /**
      * Client-side preferences of the user.
      */
     public object $PREF;
