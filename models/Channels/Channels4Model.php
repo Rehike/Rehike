@@ -336,6 +336,55 @@ class Channels4Model
                         $aboutTab = &$tabR;
                     }
                 }
+                // due to modern polymer's about popup behaviour, it's possible
+                // for channels to have only one tab, in which case innertube
+                // decides there will be no tab view, and thus no endpoint
+                // because nothing can be clicked. if there is no endpoint,
+                // assume that this is the case, and add a fake one to the tab
+                // pointing to the base url, as this is a decent assumption.
+                // this is required else the home tab's href will be "",
+                // causing broken navigation.
+                else {
+                    $tabR->tabRenderer->endpoint = (object)[
+                        "commandMetadata" => (object)[
+                            "webCommandMetadata" => (object)[
+                                "url" => $this->baseUrl
+                            ]
+                        ],
+                        "browseEndpoint" => (object)[
+                            "browseId" => $yt->ucid
+                        ]
+                    ];
+                }
+                // HACK: rehike can't (and shouldn't) render
+                // channelOwnerEmptyStateRenderer, so we'll turn it into an
+                // itemSectionRenderer as it is normally, and insert a
+                // messageRenderer to make it look how it should on hitchiker, like this:
+                // https://web.archive.org/web/20151114024240/http://www.youtube.com/user/ilias
+                // this looks rather ugly, feel free to refactor it as long as it works!
+                if (isset($tabR->tabRenderer->content?->sectionListRenderer) && count((array)$tabR->tabRenderer->content->sectionListRenderer->contents) == 1 && isset($tabR->tabRenderer->content->sectionListRenderer->contents[0]->channelOwnerEmptyStateRenderer)) $tabR->tabRenderer->content->sectionListRenderer->contents = [
+                    (object)[
+                        "itemSectionRenderer" => (object)[
+                            "contents" => [
+                                (object)[
+                                    "messageRenderer" => (object)[
+                                        "subtext" => (object)[
+                                            "messageSubtextRenderer" => (object)[
+                                                "text" => (object)[
+                                                    "runs" => [
+                                                        (object)[
+                                                            "text" => i18n::getRawString("channels", "hasNoContent")
+                                                        ]
+                                                    ]
+                                                ]
+                                            ]
+                                        ]
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ]
+                ];
             }
         }
 

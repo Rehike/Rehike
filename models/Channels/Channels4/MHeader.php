@@ -108,7 +108,7 @@ class MHeader
         // subscription count of the channel, meaning that there is a possibility that
         // we will need to apply another fucking heuristic to determine if the string
         // is the subscriber count.
-        $subscriberCountFullString = $metadata->subscriberCountText->text->content;
+        $subscriberCountFullString = $metadata->subscriberCountText?->text->content;
         $subscriberCount = ExtractUtils::isolateSubCnt(ParsingUtils::getText($subscriberCountFullString));
         $this->subscriptionCount = $subscriberCount;
         
