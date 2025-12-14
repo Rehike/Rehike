@@ -17,6 +17,7 @@ videoSortOldest: "Date added (oldest)"
 videoSortNewest: "Date added (newest)"
 subscriptionConfirmationHeader: "Confirm Channel Subscription"
 nonexistent: "This channel does not exist."
+hasNoContent: "This channel has no content."
 secondaryHeaderViews: "%s views"
 secondaryHeaderManager: "Video Manager"
 
