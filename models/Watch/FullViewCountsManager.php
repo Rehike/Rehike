@@ -269,6 +269,7 @@ class FullViewCountsManager
                 ],
                 "WEB_CREATOR",
                 "1.20220207.02.00",
+                ignoreErrors: true,
             );
             
             $data = $response->getJson();
