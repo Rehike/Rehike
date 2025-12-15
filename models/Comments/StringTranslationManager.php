@@ -34,6 +34,8 @@ class StringTranslationManager
             "Kommentare" => $i18n->get("commentsHeader"),
             "Top-Kommentare" => $i18n->get("topComments"),
             "Neueste zuerst" => $i18n->get("newestFirst"),
+            "Beliebteste" => $i18n->get("topComments"),
+            "Neueste" => $i18n->get("newestFirst"),
             "Kommentar hinzufügen…" => $i18n->get("addAComment"),
             "Antwort hinzufügen…" => $i18n->get("addAReply"),
             "Mehr Antworten ansehen" => $i18n->get("loadMoreReplies"),
