@@ -1,6 +1,7 @@
 <?php
 namespace Rehike\Controller\ajax;
 
+use Rehike\Model\Watch\WatchBakery;
 use Rehike\YtApp;
 use Rehike\ControllerV2\RequestMetadata;
 
@@ -11,6 +12,8 @@ use Rehike\ControllerV2\{
     IGetController,
     IPostController,
 };
+
+use function Rehike\Async\async;
 
 /**
  * Related (watch) ajax controller
@@ -34,23 +37,31 @@ class RelatedAjaxController extends AjaxController implements IGetController, IP
 
     public function onPost(YtApp $yt, RequestMetadata $request): void
     {
-        if (!isset($_GET["continuation"]))
-        {
-            die('{"name":"other"}');
-        }
+        async(function() use ($yt, $request) {
+            if (!isset($_GET["continuation"]))
+            {
+                die('{"name":"other"}');
+            }
 
-        Network::innertubeRequest(
-            action: "next",
-            body: [
-                "continuation" => $_GET["continuation"]
-            ]
-        )->then(function ($response) use ($yt) {
+            $response = yield Network::innertubeRequest(
+                action: "next",
+                body: [
+                    "continuation" => $_GET["continuation"]
+                ]
+            );
+
             $ytdata = $response->getJson();
 
-            $yt->page->items = $ytdata
-                ->onResponseReceivedEndpoints[0]
-                ->appendContinuationItemsAction
-                ->continuationItems;
+            $watchBakery = new WatchBakery();
+
+            $resultsWrapper = yield $watchBakery->bakeSecondaryResults(
+                $ytdata
+                    ->onResponseReceivedEndpoints[0]
+                    ->appendContinuationItemsAction
+                    ->continuationItems
+            );
+
+            $yt->page->items = $resultsWrapper->results;
         });
     }
 }

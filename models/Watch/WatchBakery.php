@@ -157,7 +157,9 @@ class WatchBakery
                 "isLive" => $this->isLive,
                 "isOwner" => $this->isOwner,
                 "results" => yield $this->bakeResults($data, $videoId),
-                "secondaryResults" => yield $this->bakeSecondaryResults($data),
+                "secondaryResults" => yield $this->bakeSecondaryResults(
+                    $this->secondaryResults->results
+                ),
                 "title" => $this->title,
                 "playlist" => $this->bakePlaylist(),
                 "liveChat" => $this->liveChat,
@@ -339,20 +341,15 @@ class WatchBakery
      * This performs check for autoplay and moves the video
      * to its respective position if so.
      * 
-     * @param object $data from watch results response
+     * @param array $results from watch results response
      * @return Promise<?object>
      */
-    public function bakeSecondaryResults(object &$data): Promise/*<?object>*/
+    public function bakeSecondaryResults(array $results): Promise/*<?object>*/
     {
-        return async(function() use ($data) {
-        // Get data from the reference in the datahost
-        $origResults = &$this->secondaryResults;
-        $response = [];
-        $i18n = i18n::getNamespace("watch");
-
-        if (isset($origResults->results))
-        {
-            $secondaryResults = $origResults;
+        return async(function() use ($results) {
+            // Get data from the reference in the datahost
+            $response = [];
+            $i18n = i18n::getNamespace("watch");
 
             /*
              * FIX (kirasicecreamm): Detection cannot rely purely upon assumption that the renderer
@@ -363,20 +360,20 @@ class WatchBakery
              * autoplay condition below, which prevented it from displaying on playlists, as they
              * lack the autoplay condition.
              */
-            if (isset($secondaryResults->results[1]->itemSectionRenderer->contents))
+            if (isset($results[1]->itemSectionRenderer->contents))
             {
-                $recomsList = $secondaryResults->results[1]->itemSectionRenderer->contents;
+                $recomsList = $results[1]->itemSectionRenderer->contents;
             }
-            else if (isset($secondaryResults->results))
+            else if (isset($results))
             {
-                $recomsList = $secondaryResults->results;
+                $recomsList = $results;
             }
             else
             {
                 return null;
             }
 
-            InnertubeBrowseConverter::generalLockupConverter(
+            $recomsList = InnertubeBrowseConverter::generalLockupConverter(
                 $recomsList,
                 [
                     "lockupStyle" => LockupViewModelConverter::STYLE_COMPACT,
@@ -458,9 +455,6 @@ class WatchBakery
 
             $response += ["results" => $recomsList];
             return (object)$response;
-        }
-
-        return null;
         });
     }
 
