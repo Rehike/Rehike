@@ -57,9 +57,17 @@ class PlayerUpdater
 
         // Attempt to get application URLs from the
         // response.
-        $latestJsUrl = self::extractApplicationUrl($html);
-        $latestCssUrl = self::extractApplicationCss($html);
-        $embedJsUrl = self::extractEmbedUrl($html);
+        try
+        {
+            $latestJsUrl = self::extractApplicationUrl($html);
+            $latestCssUrl = self::extractApplicationCss($html);
+            $embedJsUrl = self::extractEmbedUrl($html);
+        }
+        catch (\Throwable $e)
+        {
+            \Rehike\Logging\DebugLogger::print("Embed app HTML: %s", $html);
+            throw $e;
+        }
 
         // Now get the sts from the application itself.
         $js = self::requestApplication(self::unrelativize($latestJsUrl));
@@ -187,7 +195,7 @@ class PlayerUpdater
         }
         else
         {
-            throw new UpdaterException("Failed to extract application URL");
+            throw new UpdaterException("Failed to extract embed URL");
         }
     }
 
