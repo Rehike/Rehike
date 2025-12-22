@@ -3,41 +3,41 @@ brandName: "Rehike"
 versionHeader: "Версия %s"
 nightly: "Nightly"
 nightlyInfoTooltip: >
-  Этот релиз является новейшим и может содержать нестандартные ошибки.
+  Эта версия является нестабильной и может показывать ошибки в самых неожиданных местах.
 
 subheaderNightlyInfo: "Текущая информация о ветке"
 nonGitNotice: "В этом выпуске Rehike отсутствует информация о Git."
 nonGitExtended: >
-  Это может произойти, если вы загрузили репозиторий непосредственно с GitHub, например 
-  например, с помощью функции "Загрузить ZIP". Некоторые сведения о версии могут быть утеряны или 
-  недоступна.
+  Это может произойти, если вы загрузили репозиторий непосредственно с GitHub. 
+  Например, с помощью функции "Загрузить ZIP". Некоторые сведения о версии могут быть утеряны или 
+  недоступны.
 syncGithubButton: "Синхронизация с GitHub"
 failedNotice: "Не удалось получить информацию о версии."
-remoteFailedNotice: "Не удалось получить информацию об удаленной версии."
+remoteFailedNotice: "Не удалось получить информацию об удалённой версии."
 remoteFailedExtended: "Информация о версии ограничена."
-noDotVersionNotice: "Файл .version отсутствует или поврежден."
+noDotVersionNotice: "Файл .version отсутствует или повреждён."
 noNewVersions: "Новые версии отсутствуют."
 oneNewVersion: "Доступна 1 новая версия."
 varNewVersions: "Доступны %s новых(е) версий(и)."
 unknownNewVersions: "Эта версия критически устарела."
 
-updatesAvailable: "Обновления доступны"
-upToDate: "Вы находитесь в курсе событий в удаленной ветке."
+updatesAvailable: "Доступны обновления"
+upToDate: "Вы находитесь в курсе событий в удалённой ветке."
 
 headingVersionInfo: "О Rehike"
 viewOnGithub: "Посмотреть на GitHub"
 
-extraInfo: "Информация о времени выполнения"
+extraInfo: "Дополнительная информация"
 operatingSystem: "Операционная система"
 phpVersion: "Версия PHP"
 browserVersion: "Версия браузера"
 
 githubLinkButton: "Rehike на GitHub"
-creditsButton: "Признательности"
+creditsButton: "Благодарность"
 runtimeInfoMoreInfoButton: "Доп. информация"
-gitManagerPullButton: "Вытащить"
+gitManagerPullButton: "Извлечь"
 gitManagerUnpushedChanges: >
-  Вы распаковали локальные изменения, так что на самом деле это более старая версия.
+  Вы распаковали локальные изменения, так что, на самом деле это более старая версия.
 
 # -- Сообщения менеджера Git --
 
@@ -50,7 +50,7 @@ gitManagerDialogFailedPullMessage: >
 
 # -- Переводы для раздела титров --
 
-creditsTitle: "Credits"
+creditsTitle: "Благодарность"
 creditsDevelopersTitle: "Разработчики Rehike"
 
 # Major contributor names.
@@ -69,8 +69,8 @@ creditsThirdPartyHeader: >
 # GitHub profile, but it's not featured here in order to avoid embedding
 # HTML content.
 creditsPrototaxisTemplate: >
-  %s за документирование эксплойтов API InnerTube, которые мы используем для восстановления
-  классического дизайна домашней страницы по полочкам.
+  %s за документирование эксплоитов API InnerTube, которые мы используем для восстановления
+  классического дизайна домашней страницы с "полочками".
 
 creditsThirdPartyFooter: >
   Использование этих сторонних сервисов регулируется соответствующими лицензиями.
