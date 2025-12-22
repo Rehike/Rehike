@@ -9,7 +9,7 @@ enableRehike: "Вернуться в Rehike"
 
 # Disabled message:
 currentlyDisabledMessage: >
-   В настоящее время у вас отключен Rehike. Функциональность может быть ограничена.
+   В настоящее время у вас отключён Rehike. Функциональность может быть ограничена.
 
 # Dialog box strings:
 disableRehikeInfoHeader: "Вы уверены?"

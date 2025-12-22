@@ -1,14 +1,14 @@
-openButtonLabel: "Откладка"
+openButtonLabel: "Отладка"
 openButtonErrorCountSingular: "(1 ошибка)"
 openButtonErrorCountPlural: "(%s ошибок)"
 condensedButtonLabelSingular: >
   Произошла ошибка. Нажмите, чтобы узнать больше.
 condensedButtonLabelPlural: >
-  %s произошло ошибок. Нажмите, чтобы узнать больше.
+  Произошло %s ошибок. Нажмите, чтобы узнать больше.
 
-debuggerTitle: "Откладка"
+debuggerTitle: "Отладка"
 condensedDebuggerTitle: "Ошибок"
-condensedDebuggerHelpLink: "Что я должен сделать?"
+condensedDebuggerHelpLink: "Что я могу сделать?"
 debuggerClose: "Закрыть"
 
 errorWarning: "Внимание"
@@ -16,11 +16,11 @@ errorError: "Ошибка"
 errorNotice: "Уведомление"
 errorDeprecated: "Устарело"
 
-tabErrorTitle: "Ошибок (%s)"
+tabErrorTitle: "Ошибки (%s)"
 tabConsoleTitle: "PHP Консоль"
 tabNetworkTitle: "Сеть"
 tabPerformanceTitle: "Производительность"
-tabYtWalkerTitle: "Variable walker"
+tabYtWalkerTitle: "Просмотр переменных"
 nothingToSee: "Здесь нечего смотреть!"
 
 historyCurrent: "Текущая страница"
