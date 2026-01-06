@@ -101,3 +101,7 @@ categoryPetsAndAnimals: "Pets & Animals"
 categoryScienceAndTechnology: "Science & Technology"
 categorySports: "Sports"
 categoryTravelAndEvents: "Travel & Events"
+
+# Chat replay
+chatReplayShow: "Show chat replay"
+chatReplayHide: "Hide chat replay"

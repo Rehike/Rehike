@@ -10,12 +10,16 @@
             {% set btn = data.showHideButton.toggleButtonRenderer %}
             <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-expander yt-uix-expander-head yt-uix-expander-body" type="button" onclick=";return false;" id="hide-live-chat-button">
                 <span class="yt-uix-button-content">
-                    {{ collapsed ? rehike.getText(btn.toggledText) : rehike.getText(btn.defaultText) }}
+                    {{ collapsed
+                        ? rehike.i18n.get("watch", "chatReplayHide")
+                        : rehike.i18n.get("watch", "chatReplayShow") }}
                 </span>
             </button>
             <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-expander yt-uix-expander-head yt-uix-expander-collapsed-body" type="button" onclick=";return false;" id="show-live-chat-button">
                 <span class="yt-uix-button-content">
-                    {{ collapsed ? rehike.getText(btn.defaultText) : rehike.getText(btn.toggledText) }}
+                    {{ collapsed
+                        ? rehike.i18n.get("watch", "chatReplayShow")
+                        : rehike.i18n.get("watch", "chatReplayHide") }}
                 </span>
             </button>
        </div>
