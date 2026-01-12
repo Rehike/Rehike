@@ -1,10 +1,10 @@
 {
-	"previousHash": "4309bb730e12d783fec70fcc76fdbcad76d4eb82",
-	"currentRevisionId": 1807,
-	"subject": "Fix PlayerCore crash",
-	"body": "Fix PlayerCore crash",
+	"previousHash": "47a51363a0bdfb04ec270d1ddfd1363bb59f9dd2",
+	"currentRevisionId": 1815,
+	"subject": "Fix crash if no view count string exists",
+	"body": "Fix crash if no view count string exists",
 	"branch": "master",
 	"committerName": "Isabella Lulamoon",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1764820799
+	"time": 1768187569
 }

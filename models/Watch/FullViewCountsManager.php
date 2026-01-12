@@ -199,9 +199,12 @@ class FullViewCountsManager
                                 
                             $viewCountStr = ParsingUtils::getText($viewCountObj);
                             
-                            $fullCounts[$videoId]->format = FullViewCountsViewCountFormat::FormattedByInnertube;
-                            $fullCounts[$videoId]->viewCount = $viewCountStr;
-                            $anySuccess = true;
+                            if ($viewCountStr)
+                            {
+                                $fullCounts[$videoId]->format = FullViewCountsViewCountFormat::FormattedByInnertube;
+                                $fullCounts[$videoId]->viewCount = $viewCountStr;
+                                $anySuccess = true;
+                            }
                         }
                     }
                 }
