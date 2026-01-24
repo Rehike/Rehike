@@ -12,7 +12,6 @@ class JSBuildTask extends BuildTask
     /** @inheritdoc @override */
     _buildGulpTask()
     {
-        console.log("JSBuildTask._buildGulpTask");
         const task = this._prepareGulpBackend();
         let result = task
             .pipe(GulpPreprocess({

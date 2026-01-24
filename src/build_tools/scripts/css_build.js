@@ -52,7 +52,6 @@ class CSSBuildTask extends BuildTask
     /** @inheritdoc @override */
     _buildGulpTask()
     {
-        console.log("CSSBuildTask._buildGulpTask");
         const task = this._prepareGulpBackend();
         let currentBuildTask = this;
         let result = task
@@ -74,8 +73,6 @@ class CSSBuildTask extends BuildTask
                 {
                     let descriptor2x = JSON.parse(JSON.stringify(currentBuildTask.descriptor));
                     descriptor2x.cssIsCurrently2xBuildTask = true;
-                    
-                    console.log("aaaa: " + currentBuildTask._determine2xPath(currentBuildTask.outputFileName));
                     
                     let buildTask2x = new CSSBuildTask(
                         descriptor2x, 
@@ -159,8 +156,6 @@ class CSSBuildTask extends BuildTask
                     
                 result = result.replace(fnCall[0], newText);
             }
-            
-            console.log(result);
             
             return result;
         }
