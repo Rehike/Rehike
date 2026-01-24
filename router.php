@@ -7,7 +7,8 @@ use Rehike\ControllerV2\Router;
 // directly.
 Router::funnel([
     "/api/*",
-    "~/youtubei/v1/player*", // exclude player
+    "~/youtubei/v1/player", // exclude player
+    "/youtubei/v1/player/heartbeat",
     "/youtubei/*", // all youtubei/ except player, which is proxied elsewhere
     "/s/*",
     "/embed/*",
