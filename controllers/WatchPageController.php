@@ -21,7 +21,7 @@ use function Rehike\Async\async;
 
 use Rehike\Util\Base64Url;
 use Rehike\ConfigManager\Config;
-use Rehike\Helper\Watch\ExperimentFlagManager;
+use Rehike\Util\ExperimentFlagManager;
 use Rehike\Helper\WatchUtils;
 use Rehike\Model\Common\MAlert;
 use Rehike\Util\ExtractUtils;

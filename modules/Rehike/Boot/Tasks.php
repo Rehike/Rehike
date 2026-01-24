@@ -23,7 +23,7 @@ use Rehike\{
     ErrorHandler\ErrorHandler,
     InnertubeContext
 };
-use Rehike\Helper\Watch\ExperimentFlagManager;
+use Rehike\Util\ExperimentFlagManager;
 use Rehike\SignInV2\SignIn;
 
 /**

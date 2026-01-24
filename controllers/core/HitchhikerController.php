@@ -27,7 +27,7 @@ use Rehike\ControllerV2\RequestMetadata;
 use Rehike\Debugger\Debugger;
 use Rehike\DisableRehike\DisableRehike;
 
-use Rehike\Helper\Watch\ExperimentFlagManager;
+use Rehike\Util\ExperimentFlagManager;
 
 /**
  * Defines a general YouTube Hitchhiker controller.

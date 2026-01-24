@@ -1,5 +1,5 @@
 <?php
-namespace Rehike\Helper\Watch;
+namespace Rehike\Util;
 
 use Rehike\Async\Promise;
 use Rehike\FileSystem;
