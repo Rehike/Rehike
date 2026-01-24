@@ -9,6 +9,7 @@ use Rehike\Model\{
     Footer\MFooter,
     Masthead\MMasthead
 };
+use Rehike\Network;
 
 /**
  * Defines a general YouTube Nirvana controller.
@@ -41,7 +42,19 @@ abstract class NirvanaController extends HitchhikerController
 
         // Nirvana pages support SPF, so player experiments must be initialized
         // in this case in order for videos to play properly on SPF navigation.
-        $this->initPlayerExperiments();
+        $this->initPlayer();
+        
+        if (!Spf::isSpfRequested())
+        {
+            Network::innertubeRequest(
+                "att/get",
+                [
+                    "engagementType" => "ENGAGEMENT_TYPE_UNBOUND",
+                ],
+            )->then(function ($response) {
+                $this->yt->attestation = $response->getJson();
+            });
+        }
 
         if ($this->useTemplate)
         {

@@ -8,7 +8,7 @@ use Rehike\Model\{
     Masthead\MMasthead,
     Footer\MFooter
 };
-
+use Rehike\Helper\Player\PlayerExperimentFlags;
 use Rehike\Spf\SpfConfig;
 use Rehike\Player\PlayerInfo;
 
@@ -127,9 +127,9 @@ class YtApp extends stdClass
     public PlayerInfo $playerConfig;
 
     /**
-     * The string value of the player token flag to use during JS runtime.
+     * The set of player experiment flags to use.
      */
-    public string $playerPoTokenFlag;
+    public ?PlayerExperimentFlags $playerExperimentFlags = null;
 
     /**
      * Client-side preferences of the user.
@@ -161,4 +161,12 @@ class YtApp extends stdClass
      * The raw visitor data string (i.e. how it's represented in the cookie).
      */
     public string $rawVisitorData = "";
+    
+    /**
+     * An InnerTube att/get response, used for controlling botguard.
+     * 
+     * This is only needed by the WebPO client, which currently cannot make InnerTube
+     * requests.
+     */
+    public ?object $attestation = null;
 }

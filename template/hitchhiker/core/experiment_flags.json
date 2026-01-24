@@ -1,4 +1,5 @@
 {
+    "bg_st_hr": "true",
     "use_watch_fragments2": true,
     "desktop_polymer_video_masthead_session_tempdata_ttl": 30,
     "player_external_control_on_classic_desktop": true,

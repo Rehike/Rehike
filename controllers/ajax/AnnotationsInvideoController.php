@@ -39,7 +39,6 @@ class AnnotationsInvideoController extends AjaxController implements IGetControl
 	
 	public function onPost(YtApp $yt, RequestMetadata $request): void
     {
-		$this->initPlayer($yt); // post doesn't initialize this by itself because it usually doesn't need to
         $this->onGet($yt, $request);
     }
 

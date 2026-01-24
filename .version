@@ -1,10 +1,10 @@
 {
-	"previousHash": "55944b603010dbc44748d7f70dfeec2ec73bbc46",
-	"currentRevisionId": 1818,
-	"subject": "Remove debug logs from RHBuild",
-	"body": "Remove debug logs from RHBuild",
+	"previousHash": "59c589d1592502183cf8a6b1d52e53285b27a6ab",
+	"currentRevisionId": 1819,
+	"subject": "The huge player POT fix",
+	"body": "The huge player POT fix",
 	"branch": "master",
 	"committerName": "Isabella Lulamoon",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1769293927
+	"time": 1769293979
 }

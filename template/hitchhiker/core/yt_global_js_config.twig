@@ -4,6 +4,14 @@
         {% if rehike.config.appearance.playerChoice == "PLAYER_2014" or rehike.config.appearance.playerChoice == "PLAYER_2015" or rehike.config.appearance.playerChoice == "PLAYER_2015_NEW" %}
         ,REHIKE_CLASSIC_PLAYER: true
         {% endif %}
+        {% if yt.attestation %}
+            , REHIKE_ATT: {{ yt.attestation|json_encode|raw }}
+        {% endif %}
+    });
+    yt.setConfig({
+        "client-screen-nonce-store": {
+            0: "w5YWnH12u36CIB7l"
+        },
     });
     yt.setConfig({
         APIARY_HOST_FIRSTPARTY: "",

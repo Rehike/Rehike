@@ -28,6 +28,7 @@ use Rehike\Debugger\Debugger;
 use Rehike\DisableRehike\DisableRehike;
 
 use Rehike\Util\ExperimentFlagManager;
+use Rehike\Helper\Player\PlayerExperimentFlags;
 
 /**
  * Defines a general YouTube Hitchhiker controller.
@@ -209,16 +210,13 @@ abstract class HitchhikerController extends PageController
 
     /**
      * Initialise the player.
-     *
-     * @deprecated Moved to YtStateManager. This function is a no-op now.
      */
-    public function initPlayer(YtApp $yt): void
-    {
-    }
-
-    public function initPlayerExperiments(): Promise
+    public function initPlayer(): Promise
     {
         return async(function() {
+            $playerFlags = new PlayerExperimentFlags();
+            YtApp::getInstance()->playerExperimentFlags = $playerFlags;
+            
             // Ensure that PO tokens are configured alright for the player.
             $flagManager = new ExperimentFlagManager();
             yield $flagManager->initialize();
@@ -227,15 +225,13 @@ abstract class HitchhikerController extends PageController
             {
                 // PO token is based on the video ID. This is the common case
                 // nowadays.
-                $this->yt->playerPoTokenFlag =
-                    "html5_generate_content_po_token=true";
+                $playerFlags->setFlag("html5_generate_content_po_token", "true");
             }
             else
             {
                 // PO token is based on the session using either visitor data
                 // string or datasync ID.
-                $this->yt->playerPoTokenFlag =
-                    "html5_generate_session_po_token=true";
+                $playerFlags->setFlag("html5_generate_session_po_token", "true");
             }
         });
     }

@@ -59,7 +59,7 @@ ytplayer.config = {
         "c": "WEB",
         "innertube_context_client_version": "2.20251014.00.00",
         "hl": "en_US",
-        "fflags": "{% include "player/flags.twig" %}",
+        "fflags": {{ yt.playerExperimentFlags.serialize()|json_encode|raw }},
         "xhr_apiary_host": "youtubei.youtube.com",
         "gapi_hint_params": "m;\/_\/scs\/abc-static\/_\/js\/k=gapi.gapi.en.fXLlmSb25lg.O\/m=__features__\/rt=j\/d=1\/rs=AHpOoo87O_nfyKCryZ5rvwwhVwktxKhiRA",
         "autoplay": "1",
