@@ -350,7 +350,7 @@
                             "interfaceVersion": "1.20221206.01.00"
                         },
                         "serializedExperimentIds": "23983296,24001373,24002022,24002025,24004644,24007246,24080738,24135310,24169501,24255165,24292955,24407200,24408610,24411032,24415864,24416291,24423887,24434209",
-                        "serializedExperimentFlags": "{% include "player/flags.twig" %}",
+                        "serializedExperimentFlags": "{{ yt.playerExperimentFlags.serialize() }}",
                         "startMuted": false,
                         "enableMutedAutoplay": false,
                         "mobileIphoneSupportsInlinePlayback": true,

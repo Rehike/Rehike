@@ -1,10 +1,10 @@
 {
-	"previousHash": "59c589d1592502183cf8a6b1d52e53285b27a6ab",
-	"currentRevisionId": 1819,
-	"subject": "The huge player POT fix",
-	"body": "The huge player POT fix",
+	"previousHash": "aaaf4a1d07cc01047e109171f8339603327a425f",
+	"currentRevisionId": 1820,
+	"subject": "Fix crashes relating to now-removed player/flags.twig",
+	"body": "Fix crashes relating to now-removed player/flags.twig",
 	"branch": "master",
 	"committerName": "Isabella Lulamoon",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1769293979
+	"time": 1769384677
 }
