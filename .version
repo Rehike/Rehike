@@ -1,10 +1,10 @@
 {
-	"previousHash": "9077a5f95840e366bfd60771dc3b2c7b6442c7b3",
-	"currentRevisionId": 1822,
-	"subject": "Move config JS to RehikeBuild instead of inlined",
-	"body": "Move config JS to RehikeBuild instead of inlined",
+	"previousHash": "557dfbcb348230719f8f4dc8d54df06e3143a1ed",
+	"currentRevisionId": 1823,
+	"subject": "Move panel JS to RehikeBuild instead of inlined",
+	"body": "Move panel JS to RehikeBuild instead of inlined",
 	"branch": "master",
 	"committerName": "Isabella Lulamoon",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1769471486
+	"time": 1769471906
 }

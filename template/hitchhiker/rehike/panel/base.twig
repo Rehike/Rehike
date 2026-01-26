@@ -5,9 +5,7 @@
 
 {% block creator_page_sidebar %}
 {{ creator_sidebar(yt.page.sidebar.creatorSidebarRenderer) }}
-<script>
-    {% include "rehike/panel/panel.js.twig" %}
-</script>
+<script type="text/javascript" src="{{ rehike.resource.resolveVersioned("rehike/js/www-panel.js") }}"></script>
 {% endblock %}
 
 {% block creator_page_content %}
