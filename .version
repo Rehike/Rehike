@@ -1,10 +1,10 @@
 {
-	"previousHash": "aaaf4a1d07cc01047e109171f8339603327a425f",
-	"currentRevisionId": 1820,
-	"subject": "Fix crashes relating to now-removed player/flags.twig",
-	"body": "Fix crashes relating to now-removed player/flags.twig",
+	"previousHash": "2a68842aa9179f8706ec6b92b47ead9929a349c3",
+	"currentRevisionId": 1821,
+	"subject": "Fix report item (and maybe others) in comment overflow menu",
+	"body": "Fix report item (and maybe others) in comment overflow menu",
 	"branch": "master",
 	"committerName": "Isabella Lulamoon",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1769384677
+	"time": 1769468301
 }

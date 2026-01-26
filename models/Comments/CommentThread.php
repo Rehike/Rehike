@@ -452,10 +452,11 @@ class CommentThread
             
             foreach ($nativeMenu->items as $menuItem)
             {
-                if (isset($menuItem->menuNavigationItemRenderer->icon->iconType))
+                foreach (["menuNavigationItemRenderer", "menuServiceItemRenderer"] as $type)
+                if (isset($menuItem->{$type}->icon->iconType))
                 {
-                    $item = $menuItem->menuNavigationItemRenderer;
-                    $iconType = $menuItem->menuNavigationItemRenderer->icon->iconType;
+                    $item = $menuItem->{$type};
+                    $iconType = $menuItem->{$type}->icon->iconType;
                     
                     if ($iconType == "FLAG") // Report
                     {
