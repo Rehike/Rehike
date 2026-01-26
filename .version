@@ -1,10 +1,10 @@
 {
-	"previousHash": "2a68842aa9179f8706ec6b92b47ead9929a349c3",
-	"currentRevisionId": 1821,
-	"subject": "Fix report item (and maybe others) in comment overflow menu",
-	"body": "Fix report item (and maybe others) in comment overflow menu",
+	"previousHash": "9077a5f95840e366bfd60771dc3b2c7b6442c7b3",
+	"currentRevisionId": 1822,
+	"subject": "Move config JS to RehikeBuild instead of inlined",
+	"body": "Move config JS to RehikeBuild instead of inlined",
 	"branch": "master",
 	"committerName": "Isabella Lulamoon",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1769468301
+	"time": 1769471486
 }

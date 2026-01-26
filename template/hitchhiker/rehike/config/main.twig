@@ -120,9 +120,7 @@
 {% endmacro %}
 
 {% macro render_scripts() %}
-<script>
-{% include "rehike/config/js.twig" %}
-</script>
+<script type="text/javascript" src="{{ rehike.resource.resolveVersioned("rehike/js/www-rehike-config.js") }}"></script>
 <script>
     rehike.config.init();
 </script>
