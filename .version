@@ -1,10 +1,10 @@
 {
-	"previousHash": "759c88fb62fcee564e94d486b63773ffd03effde",
-	"currentRevisionId": 1824,
-	"subject": "Push compiled www-panel.js",
-	"body": "Push compiled www-panel.js",
+	"previousHash": "81a55bae472da1f08146219f16176c5cee623baf",
+	"currentRevisionId": 1825,
+	"subject": "Move version JS to RehikeBuild instead of inlined",
+	"body": "Move version JS to RehikeBuild instead of inlined",
 	"branch": "master",
 	"committerName": "Isabella Lulamoon",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1769471945
+	"time": 1769472117
 }

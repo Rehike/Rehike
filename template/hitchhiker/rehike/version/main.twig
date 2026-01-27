@@ -123,9 +123,7 @@
 		title: rehike.i18n.get("rehike/version", "aboutRehike"),
 		inner_content: _self.render_inner()
 	}) }}
-	<script>
-	{% include "rehike/version/version.js.twig" %}
-	</script>
+	<script type="text/javascript" src="{{ rehike.resource.resolveVersioned("rehike/js/www-version.js") }}"></script>
 {% endblock %}
 
 {% endembed %}
