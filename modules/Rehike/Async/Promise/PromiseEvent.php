@@ -159,6 +159,7 @@ abstract class PromiseEvent/*<T>*/ extends Event
             }
             finally
             {
+                $myself->resolve();
                 $myself->fulfill();
             }
         };
