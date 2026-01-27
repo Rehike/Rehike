@@ -25,8 +25,9 @@ class ToggleButtonViewModelConverter extends BasicVMC
 
         if (isset($vm->defaultButtonViewModel->buttonViewModel))
         {
+            $defaultVm = $vm->defaultButtonViewModel->buttonViewModel;
             $converter = new ButtonViewModelConverter(
-                $vm->defaultButtonViewModel->buttonViewModel,
+                $defaultVm,
                 $this->frameworkUpdates
             );
             $defaultButton = $converter->bakeButtonRenderer($sharedButtonContext);
@@ -34,8 +35,9 @@ class ToggleButtonViewModelConverter extends BasicVMC
 
         if (isset($vm->toggledButtonViewModel->buttonViewModel))
         {
+            $toggledVm = $vm->toggledButtonViewModel->buttonViewModel;
             $converter = new ButtonViewModelConverter(
-                $vm->toggledButtonViewModel->buttonViewModel,
+                $toggledVm,
                 $this->frameworkUpdates
             );
             $toggledButton = $converter->bakeButtonRenderer($sharedButtonContext);
@@ -48,7 +50,6 @@ class ToggleButtonViewModelConverter extends BasicVMC
                 "accessibility" => "accessibility",
                 "isDisabled" => "isDisabled",
                 "trackingParams" => "trackingParams",
-
                 "style" => "style",
                 "size" => "size",
                 "accessibilityData" => "accessibilityData",
@@ -67,6 +68,19 @@ class ToggleButtonViewModelConverter extends BasicVMC
                 "serviceEndpoint" => "toggledServiceEndpoint"
             ]
         ];
+        
+        if (isset($defaultVm->iconName))
+        {
+            $out["defaultIcon"] = (object)[
+                "iconType" => $defaultVm->iconName,
+            ];
+        }
+        if (isset($toggledVm->iconName))
+        {
+            $out["toggledIcon"] = (object)[
+                "iconType" => $defaultVm->iconName,
+            ];
+        }
 
         foreach ($propertyMaps as $var => $defs)
         {
