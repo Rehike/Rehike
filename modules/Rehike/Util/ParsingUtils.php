@@ -165,14 +165,29 @@ class ParsingUtils
             // There is also an isOriginalAspectRatio variable that indicates
             // if the thumbnail is not 16:9 and that the URL is a link to the
             // image in its original aspect ratio (would be stretched).
-            $isShort = !($ratio >= 1.7 && $ratio < 1.8) || @$container->isOriginalAspectRatio;
+            $isNotSixteenByNine =
+                !($ratio >= 1.7 && $ratio < 1.8) || @$container->isOriginalAspectRatio;
+
+            // Album playlist thumbnails are always encrypted with an SQP
+            // parameter, and usually not 16:9. This results in somewhat
+            // problematic behavior, as the functionality to remove cropping
+            // from Shorts thumbnail URLs will break the encryption of the album
+            // thumbnail and result in the 404 image.
+            //
+            // This does, unfortunately, for the time being, result in album
+            // playlists having stretched thumbnails in Rehike due to Hitchhiker
+            // CSS always expecting 16:9 thumbnail images. This is still better
+            // than nothing at all.
+            //
+            // Album playlists can be detected by their ID prefix, "OL".
+            $isAlbumPlaylist = false !== strstr($thumb->url, "/s_p/OL");
 
             // If the video is a Short, we want to remove the sqp param to 
             // remove any cropping. We also want to switch the oar2 thumb
             // type for hqdefault, since oar2 contains cropping by default.
             // With an ideal i.ytimg.com server, we could use maxresdefault.
             // However, not every thumbnail has a maxresdefault/hq720 variant.
-            if ($isShort)
+            if ($isNotSixteenByNine && !$isAlbumPlaylist)
             {
                 $url = preg_replace("/\?sqp=.*/", "", $thumb->url);
                 return str_replace("oar2", "hqdefault", $url);

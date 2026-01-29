@@ -38,6 +38,7 @@ class LockupViewModelConverter extends BasicVMC
         switch ($this->viewModel->contentType)
         {
             case "LOCKUP_CONTENT_TYPE_PLAYLIST":
+            case "LOCKUP_CONTENT_TYPE_ALBUM":
             {
                 $playlistConv = new PlaylistRendererViewModelConverter($this->viewModel, $this->frameworkUpdates);
                 $resultObj = $playlistConv->bake($this);
@@ -62,6 +63,13 @@ class LockupViewModelConverter extends BasicVMC
         return match ($lockupType)
         {
             "LOCKUP_CONTENT_TYPE_PLAYLIST" => match ($direction)
+            {
+                self::STYLE_GRID    => "gridPlaylistRenderer",
+                self::STYLE_LIST    => "playlistRenderer",
+                self::STYLE_COMPACT => "compactPlaylistRenderer",
+            },
+
+            "LOCKUP_CONTENT_TYPE_ALBUM" => match ($direction)
             {
                 self::STYLE_GRID    => "gridPlaylistRenderer",
                 self::STYLE_LIST    => "playlistRenderer",
