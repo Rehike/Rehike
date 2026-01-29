@@ -6,6 +6,8 @@
         {% endif %}
         {% if yt.attestation %}
             , REHIKE_ATT: {{ yt.attestation|json_encode|raw }}
+        {% elseif rehike.config.experiments.asyncAttestationRequest %}
+            , REHIKE_ASYNC_ATT_REQUEST: true
         {% endif %}
     });
     yt.setConfig({
@@ -16,7 +18,6 @@
     yt.setConfig({
         APIARY_HOST_FIRSTPARTY: "",
         INNERTUBE_CONTEXT_CLIENT_NAME: 1,
-        INNERTUBE_CONTEXT_CLIENT_VERSION: "1.20180501",
         XHR_APIARY_HOST: "youtubei.youtube.com",
         GAPI_HINT_PARAMS: "m;\/_\/scs\/abc-static\/_\/js\/k=gapi.gapi.en.fXLlmSb25lg.O\/m=__features__\/rt=j\/d=1\/rs=AHpOoo87O_nfyKCryZ5rvwwhVwktxKhiRA",
         INNERTUBE_API_KEY: "AIzaSyAO_FJ2SlqU8Q4STEHLGCilw_Y9_11qcW8",

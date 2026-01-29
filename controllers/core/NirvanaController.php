@@ -1,6 +1,7 @@
 <?php
 namespace Rehike\Controller\core;
 
+use Rehike\ConfigManager\Config;
 use Rehike\YtApp;
 use Rehike\Spf\Spf;
 
@@ -44,7 +45,8 @@ abstract class NirvanaController extends HitchhikerController
         // in this case in order for videos to play properly on SPF navigation.
         $this->initPlayer();
         
-        if (!Spf::isSpfRequested())
+        if (!Spf::isSpfRequested()
+            && !Config::getConfigProp("experiments.asyncAttestationRequest"))
         {
             Network::innertubeRequest(
                 "att/get",

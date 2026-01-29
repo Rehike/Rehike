@@ -62,17 +62,34 @@ module.botguard.getClient = function()
         return logAndReject("Called too early.");
     }
     
-    if (!("REHIKE_ATT" in yt.config_))
+    if (!("REHIKE_ATT" in yt.config_)
+        && !("REHIKE_ASYNC_ATT_REQUEST" in yt.config_))
     {
         return logAndReject("Unable to create the botguard client. Missing yt.config_.REHIKE_ATT.");
     }
+
+    var getAttPromise;
+
+    if (yt.getConfig("REHIKE_ASYNC_ATT_REQUEST"))
+    {
+        getAttPromise = module.botguard.requestAttestationClient_();
+    }
+    else if (yt.getConfig("REHIKE_ATT"))
+    {
+        getAttPromise = Promise.resolve(yt.getConfig("REHIKE_ATT"));
+    }
+
+    var boundAtt;
     
-    var att = yt.config_.REHIKE_ATT;
-    
-    return module.botguard.runBotguardScript_(att.bgChallenge)
+    return getAttPromise
+        .then(function(att)
+        {
+            boundAtt = att;
+            return module.botguard.runBotguardScript_(att.bgChallenge);
+        })
         .then(function(vm)
         {
-            var result = module.botguard.wrapBotguardInterface_(vm, att);
+            var result = module.botguard.wrapBotguardInterface_(vm, boundAtt);
             module.botguard.api = result;
             rehike.pubsub.publish("webpo-botguard-vm-api-available", result);
             return result;
@@ -253,4 +270,51 @@ module.botguard.wrapBotguardInterface_ = function(vm, att)
         syncSnapshotFunction: syncSnapshotFunction,
         vmFunctions: vmFunctions
     };
+};
+
+module.botguard.requestAttestationClient_ = function()
+{
+    var tooEarlyRejection =
+        Promise.reject("Attempted request before page initialization completed.");
+
+    if (!window.yt || !window.yt.getConfig)
+    {
+        return tooEarlyRejection;
+    }
+
+    var ytiApiVer = yt.getConfig("INNERTUBE_API_VERSION");
+    var ytiApiKey = yt.getConfig("INNERTUBE_API_KEY");
+    var ytiApiClientName = yt.getConfig("INNERTUBE_CONTEXT_CLIENT_NAME");
+    var ytiApiClientVer = yt.getConfig("INNERTUBE_CONTEXT_CLIENT_VERSION");
+    var ytiApiClientContext = yt.getConfig("INNERTUBE_CONTEXT");
+
+    if (!ytiApiVer || !ytiApiKey || !ytiApiClientName || !ytiApiClientVer
+        || !ytiApiClientContext)
+    {
+        return tooEarlyRejection;
+    }
+
+    var endpoint = "att/get";
+
+    var url = new URL(window.location.origin);
+    url.pathname = "/youtubei/" + ytiApiVer + "/" + endpoint;
+    url.searchParams.set("key", ytiApiKey);
+
+    return fetch(url.toString(), {
+        method: "POST",
+        mode: "cors",
+        credentials: "include",
+        headers: {
+            "Content-Type": "application/json",
+            "X-Goog-Visitor-Id": yt.getConfig("VISITOR_DATA") || ""
+        },
+        referrer: window.location.url,
+        body: JSON.stringify({
+            "context": ytiApiClientContext,
+            "engagementType": "ENGAGEMENT_TYPE_UNBOUND"
+        })
+    }).then(function(result)
+    {
+        return result.json();
+    });
 };

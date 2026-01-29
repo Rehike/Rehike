@@ -102,6 +102,7 @@ class ConfigDefinitions
                     Config::dumpConfig();
                 }),
                 "useSignInV2" => new BoolProp(false),
+                "asyncAttestationRequest" => new BoolProp(true),
                 "disableSignInOnHome" => new BoolProp(false),
                 "tickInjectionForScheduling" => (new BoolProp(false))->registerUpdateCb(function() {
                     // When this configuration property changes, the contents of the PHP files
