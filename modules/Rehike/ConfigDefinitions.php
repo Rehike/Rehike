@@ -24,46 +24,7 @@ class ConfigDefinitions
     {
         return [
             "appearance" => [
-                new PropGroup(...[
-                    // Temporarily a dependent property until the experimental
-                    // phase is over.
-                    "playerChoice" => new DependentProp(
-                        "experiments.displayPlayerChoice",
-                        new EnumProp("CURRENT", [
-                            "CURRENT",
-                            "PLAYER_2014",
-							"PLAYER_2015",
-							"PLAYER_2015_NEW",
-                            "PLAYER_2020",
-                            "PLAYER_2022"
-                        ])
-                    ),
-					"classicPlayerColor" =>
-                        new DependentProp(
-                            "appearance.playerChoice == PLAYER_2014 || appearance.playerChoice == PLAYER_2015 || appearance.playerChoice == PLAYER_2015_NEW", // temporarily 2014 player only as idk how to set it on newer players
-                            new EnumProp("RED", [
-								"RED",
-								"WHITE"
-							])
-                        ),
-					"classicPlayerTheme" =>
-                        new DependentProp(
-                            "appearance.playerChoice == PLAYER_2014 || appearance.playerChoice == PLAYER_2015", // deprecated when they introduced the current player design
-                            new EnumProp("DARK", [
-								"DARK",
-								"LIGHT"
-							])
-                        ),
-					"smallPlayer" => new DependentProp(
-                            "appearance.playerChoice == PLAYER_2022 || appearance.playerChoice == CURRENT",
-							new BoolProp(true)
-						),
-                    "classicPlayerForcePersistentControls" =>
-                        new DependentProp(
-                            "appearance.playerChoice == PLAYER_2014 || appearance.playerChoice == PLAYER_2015",
-                            new BoolProp(true)
-                        ),
-                ]),
+                "smallPlayer" => new BoolProp(true),
                 "branding" => new EnumProp("BRANDING_2024_RINGO2", [
                     "BRANDING_2024_RINGO2",
                     "BRANDING_2017_RINGO",

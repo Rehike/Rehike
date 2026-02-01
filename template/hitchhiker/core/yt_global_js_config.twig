@@ -1,9 +1,6 @@
 <script>
     yt.setConfig({
-        REHIKE_LATEST_PLAYER: {{ rehike.config.appearance.playerChoice == "CURRENT" ? "true" : "false" }}
-        {% if rehike.config.appearance.playerChoice == "PLAYER_2014" or rehike.config.appearance.playerChoice == "PLAYER_2015" or rehike.config.appearance.playerChoice == "PLAYER_2015_NEW" %}
-        ,REHIKE_CLASSIC_PLAYER: true
-        {% endif %}
+        REHIKE_LATEST_PLAYER: true
         {% if yt.attestation %}
             , REHIKE_ATT: {{ yt.attestation|json_encode|raw }}
         {% elseif rehike.config.experiments.asyncAttestationRequest %}

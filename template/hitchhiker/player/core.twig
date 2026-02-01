@@ -23,9 +23,6 @@
    for synchronous loading of core JS. It used to be located here, but this code is loaded before YouTube's
    JS, so it failed to load correctly. #}
       <script>
-{% if rehike.config.appearance.playerChoice == "PLAYER_2014" or rehike.config.appearance.playerChoice == "PLAYER_2015" or rehike.config.appearance.playerChoice == "PLAYER_2015_NEW" %}
-   {% include "player/classic_player_boot.twig" %}
-{% else %}
 {% apply spaceless %}
 var ytplayer = ytplayer || {};
 ytplayer.config = {
@@ -93,7 +90,6 @@ ytplayer.load = function() {
     yt.player.Application.create("player-api", ytplayer.config);
     ytplayer.config.loaded = true;
 };
-{% endif %}
 </script>
 {% else %}
 <div id="player-api" class="player-width player-height off-screen-target player-api" tabIndex="-1">
@@ -126,10 +122,5 @@ ytplayer.load = function() {
 {% if rehike.config.appearance.smallPlayer and rehike.config.appearance.playerChoice == "CURRENT" %}
    <style id="rehike-ext-config-small-player">
       {% include "player/small_style.css.twig" %}
-   </style>
-{% endif %}
-{% if (rehike.config.appearance.playerChoice == "PLAYER_2014" or rehike.config.appearance.playerChoice == "PLAYER_2015") and (rehike.config.appearance.classicPlayerForcePersistentControls) %}
-   <style id="rehike-ext-config-classic-player-persistent-controls">
-      {% include "player/classic_player_persistent_controls.css.twig" %}
    </style>
 {% endif %}
