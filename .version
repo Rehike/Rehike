@@ -1,10 +1,10 @@
 {
-	"previousHash": "b5b7e27d981bd0a8daa55c4fa8634cb03a98dddc",
-	"currentRevisionId": 1831,
-	"subject": "Remove classic player leftovers",
-	"body": "Remove classic player leftovers",
+	"previousHash": "9b5924257f5680ba675c439e08ec592d0bd1a223",
+	"currentRevisionId": 1832,
+	"subject": "Remove more cases of classic player",
+	"body": "Remove more cases of classic player",
 	"branch": "master",
 	"committerName": "Isabella Lulamoon",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1769981127
+	"time": 1770928686
 }
