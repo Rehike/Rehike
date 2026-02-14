@@ -20,6 +20,10 @@ class PonyEasterEggManager
     /**
      * Determines if there is a pony related to the given search query, and
      * returns a pony API if there is one.
+     *
+     * @suppress (PHP6606)
+     *           "Constant from class '...' referenced through child"
+     *           This is desired behavior.
      */
     public static function getPonyForSearchQuery(string $rawQuery): ?Pony
     {
