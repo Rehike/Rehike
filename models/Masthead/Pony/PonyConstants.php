@@ -4,12 +4,10 @@ namespace Rehike\Model\Masthead\Pony;
 /**
  * Stores pony configurations.
  * 
- * This is a base class to separate it from the Pony object class.
- * 
  * @author Isabella Lulamoon <kawapure@gmail.com>
  * @author The Rehike Maintainers
  */
-abstract class PonyConstantsBase
+trait PonyConstants
 {
     // placeholder value
     #[PonyName("<unknown pony>")]

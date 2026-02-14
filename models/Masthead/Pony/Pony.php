@@ -10,8 +10,10 @@ use ReflectionClassConstant;
  * @author Isabella Lulamoon <kawapure@gmail.com>
  * @author The Rehike Maintainers
  */
-class Pony extends PonyConstantsBase
+class Pony
 {
+    use PonyConstants;
+
     protected int $type = self::UNKNOWN_PONY;
     protected PonyColor $color;
     
