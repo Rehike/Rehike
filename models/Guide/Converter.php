@@ -106,7 +106,7 @@ class Converter
      * 
      * @param object $data
      * @param bool $signedIn
-     * @return object {guideSectionRenderer}
+     * @return object (guideSectionRenderer)
      */
     public static function getMainSection($data, $signedIn = false)
     {
@@ -479,7 +479,7 @@ class Converter
      * It should contain all user subscriptions.
      * 
      * @param object $data
-     * @return object {guideSubscriptionsSectionRenderer} (from InnerTube)
+     * @return object (guideSubscriptionsSectionRenderer) (from InnerTube)
      */
     public static function getSubscriptionSection($data)
     {
@@ -634,7 +634,7 @@ class Converter
      *    - Manage subscriptions [if logged in]
      * 
      * @param bool $signedIn
-     * @return object {guideSectionRenderer}
+     * @return object (guideSectionRenderer})
      */
     public static function getEndSection($signedIn = false)
     {
@@ -674,7 +674,7 @@ class Converter
      * @param string $endpoint
      * @param string $name
      * @param string $icon (will be a thumbnail unless prefixed with SYSTEM::)
-     * @return object {guideEntryRenderer}
+     * @return object (guideEntryRenderer)
      */
     public static function bakeGuideItem($endpoint, $name, $icon)
     {
