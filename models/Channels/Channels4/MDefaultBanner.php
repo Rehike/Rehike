@@ -17,16 +17,12 @@ class MDefaultBanner
 
     public function __construct()
     {
-        $resources = include "includes/resource_constants.php";
-
         $this->image = ResourceUtils::imgPath(
             "channels/c4/default_banner",
-            $resources
         );
 
         $this->hdImage = ResourceUtils::imgPath(
             "channels/c4/default_banner_hq",
-            $resources
         );
     }
 }
