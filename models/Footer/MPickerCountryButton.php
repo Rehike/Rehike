@@ -9,7 +9,6 @@ class MPickerCountryButton extends MPickerButton
 {
     public string $targetId = "yt-picker-country-button";
     public string $pickerTarget = "yt-picker-country-footer";
-    public $icon;
     public bool $hasArrow = true;
     
     public function __construct()

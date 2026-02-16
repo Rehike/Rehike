@@ -6,14 +6,19 @@ use Rehike\SignInV2\SignIn;
 
 class MCreationClickcard
 {
-    public $template = "masthead_creation_menu";
-    public $cardClass = [
+    public string $template = "masthead_creation_menu";
+
+    /**
+     * @inheritDoc
+     */
+    public array $cardClass = [
         "yt-scrollbar",
         "yt-masthead-creation-clickcard"
     ];
-    public $id = "yt-masthead-creation-menu";
-    public $cardId = "yt-masthead-creation-clickcard";
-    public $content;
+
+    public string $id = "yt-masthead-creation-menu";
+    public string $cardId = "yt-masthead-creation-clickcard";
+    public object $content;
 
     public function __construct()
     {

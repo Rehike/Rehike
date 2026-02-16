@@ -6,8 +6,8 @@ use Rehike\i18n\i18n;
 
 class MNotificationSettingsButton extends MButton
 {
-    public $targetId = "yt-masthead-notifications-settings";
-    public $style = "STYLE_OPACITY";
+    public string $targetId = "yt-masthead-notifications-settings";
+    public string $style = "STYLE_OPACITY";
 
     public function __construct()
     {

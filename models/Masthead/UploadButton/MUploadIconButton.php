@@ -7,8 +7,8 @@ use Rehike\SignInV2\SignIn;
 
 class MUploadIconButton extends MButton
 {
-    public $targetId = "upload-btn";
-    public $style = "STYLE_OPACITY";
+    public string $targetId = "upload-btn";
+    public string $style = "STYLE_OPACITY";
 
     public function __construct()
     {

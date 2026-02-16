@@ -9,11 +9,19 @@ use Rehike\Util\ImageUtils;
 
 class MAccountPickerButton extends MButton
 {
-    public $noStyle = true;
-    public $class = [
+    public bool $noStyle = true;
+
+    /**
+     * @inheritDoc
+     */
+    public array $class = [
         "yt-masthead-user-icon"
     ];
-    public $attributes = [
+
+    /**
+     * @inheritDoc
+     */
+    public array $attributes = [
         "force-position" => "true",
         "position-fixed" => "true",
         "orientation" => "vertical",

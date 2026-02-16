@@ -7,7 +7,10 @@ use Rehike\SignInV2\SignIn;
 
 class MAccountPickerStudioButton extends MButton
 {
-    public $class = [
+    /**
+     * @inheritDoc
+     */
+    public array $class = [
         "yt-masthead-picker-button",
         "yt-masthead-picker-button-primary"
     ];

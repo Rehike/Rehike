@@ -18,9 +18,15 @@ use Rehike\Model\Common\MButton;
  */
 class MHistoryButton extends MButton
 {
-    public $class = ["rebug-history-button"];
+    /**
+     * @inheritDoc
+     */
+    public array $class = ["rebug-history-button"];
 
-    public $attributes = [];
+    /**
+     * @inheritDoc
+     */
+    public array $attributes = [];
 
     public function __construct()
     {

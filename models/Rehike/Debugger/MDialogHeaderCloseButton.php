@@ -13,14 +13,14 @@ use \Rehike\Model\Common\MButton;
  */
 class MDialogHeaderCloseButton extends MButton
 {
-    public $style = "STYLE_OPACITY";
-    public $icon;
+    public string $style = "STYLE_OPACITY";
 
-    public $class = [
+    /**
+     * @inheritDoc
+     */
+    public array $class = [
         "rebug-close-button"
     ];
-
-    public $tooltip;
 
     public function __construct()
     {

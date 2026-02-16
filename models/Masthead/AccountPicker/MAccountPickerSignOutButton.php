@@ -6,7 +6,10 @@ use Rehike\i18n\i18n;
 
 class MAccountPickerSignOutButton extends MButton
 {
-    public $class = ["yt-masthead-picker-button"];
+    /**
+     * @inheritDoc
+     */
+    public array $class = ["yt-masthead-picker-button"];
 
     public function __construct()
     {

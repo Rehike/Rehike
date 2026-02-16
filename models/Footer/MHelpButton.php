@@ -9,12 +9,20 @@ use Rehike\Player\Configurable;
 class MHelpButton extends MButton
 {
     public $targetId = "google-help";
-    public $class = [
+
+    /**
+     * @inheritdoc
+     */
+    public array $class = [
         "yt-uix-button-reverse",
         "yt-google-help-link",
         "inq-no-click"
     ];
-    public $attributes = [
+
+    /**
+     * @inheritDoc
+     */
+    public array $attributes = [
         "ghelp-tracking-param" => "",
         "ghelp-anchor" => "google-help",
         "load-chat-support" => "true",

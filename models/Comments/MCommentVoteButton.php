@@ -4,16 +4,20 @@ use \Rehike\Model\Common\MButton;
 
 class MCommentVoteButton extends MButton
 {
-    // from MButton
-    public $icon;
-    public $class = [
+    /**
+     * @inheritdoc
+     */
+    public array $class = [
         "comment-action-buttons-renderer-thumb",
         "sprite-comment-actions"
     ];
-    public $attributes = [
+
+    /**
+     * @inheritdoc
+     */
+    public array $attributes = [
         "url" => "/comment_service_ajax?action_perform_comment_action=1"
     ];
-
  
     public string $type;
     public string $action;

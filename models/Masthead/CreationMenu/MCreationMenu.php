@@ -5,8 +5,12 @@ use Rehike\Model\Common\MButton;
 
 class MCreationMenu extends MButton
 {
-    public $targetId = "yt-masthead-creation-button";
-    public $attributes = [
+    public string $targetId = "yt-masthead-creation-button";
+    
+    /**
+     * @inheritDoc
+     */
+    public array $attributes = [
         "force-position" => "true",
         "position-fixed" => "true",
         "orientation" => "vertical",

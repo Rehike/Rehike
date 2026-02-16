@@ -13,9 +13,12 @@ use \Rehike\Model\Common\MButton;
  */
 class MOpenButton extends MButton
 {
-    public $style = "STYLE_OPACITY";
+    public string $style = "STYLE_OPACITY";
 
-    public $class = [
+    /**
+     * @inheritDoc
+     */
+    public array $class = [
         "yt-uix-button-reverse",
         "rebug-open-button"
     ];

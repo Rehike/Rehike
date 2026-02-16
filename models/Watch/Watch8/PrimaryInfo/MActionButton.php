@@ -15,9 +15,12 @@ use Rehike\i18n\i18n;
 class MActionButton extends MButton
 {
     // Define default button properties.
-    public $style = "STYLE_OPACITY";
-    public $icon;
-    public $class = [
+    public string $style = "STYLE_OPACITY";
+
+    /**
+     * @inheritDoc
+     */
+    public array $class = [
         "pause-resume-autoplay"
     ];
 

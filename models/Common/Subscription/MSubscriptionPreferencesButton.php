@@ -6,7 +6,10 @@ use Rehike\i18n\i18n;
 
 class MSubscriptionPreferencesButton extends MButton
 {
-    public $class = [
+    /**
+     * @inheritdoc
+     */
+    public array $class = [
         "yt-uix-subscription-preferences-button"
     ];
 

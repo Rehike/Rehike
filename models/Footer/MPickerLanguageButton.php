@@ -8,7 +8,6 @@ class MPickerLanguageButton extends MPickerButton
 {
     public string $targetId = "yt-picker-language-button";
     public string $pickerTarget = "yt-picker-language-footer";
-    public $icon;
     public bool $hasArrow = true;
     
     public function __construct()

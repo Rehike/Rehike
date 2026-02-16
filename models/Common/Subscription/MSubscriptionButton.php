@@ -11,23 +11,18 @@ use Rehike\Model\Common\MButton;
  */
 class MSubscriptionButton extends MButton
 {
-    /** @var string */
-    public $style = "";
+    public string $style = "";
 
-    /** @var object */
-    public $icon;
-
-    /** @var string[] */
-    public $class = [
+    /**
+     * @inheritDoc
+     */
+    public array $class = [
         "yt-uix-subscription-button",
         "yt-can-buffer"
     ];
 
-    /** @var string[] */
-    public $accessibility;
-
-    /** @var string[] */
-    public $attributes = [
+    /** @inheritdoc */
+    public array $attributes = [
         "subscribed-timestamp" => "0",
         "style-type" => "", // branded/unbranded
         "clicktracking" => "",
@@ -36,17 +31,13 @@ class MSubscriptionButton extends MButton
         "channel-external-id" => ""
     ];
 
-    /** @var bool */
-    public $disabled;
+    public bool $disabled;
 
-    /** @var bool */
-    public $subscribed;
+    public bool $subscribed;
 
-    /** @var bool */
-    public $branded;
+    public bool $branded;
 
-    /** @var string */
-    public $type;
+    public string $type;
 
     public function __construct($opts)
     {

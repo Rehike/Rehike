@@ -7,7 +7,7 @@ use Rehike\SignInV2\SignIn;
 
 class MUploadButton extends MButton
 {
-    public $targetId = "upload-btn";
+    public string $targetId = "upload-btn";
 
     public function __construct()
     {

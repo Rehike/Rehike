@@ -6,7 +6,10 @@ use Rehike\i18n\i18n;
 
 class MAccountPickerSettingsButton extends MButton
 {
-    public $class = [
+    /**
+     * @inheritDoc
+     */
+    public array $class = [
         "yt-masthead-picker-button",
         "yt-masthead-picker-settings-button"
     ];

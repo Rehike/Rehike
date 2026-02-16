@@ -5,11 +5,19 @@ use Rehike\Model\Common\MButton;
 
 class MNotificationButton extends MButton
 {
-    public $targetId = "yt-masthead-notifications-button";
-    public $class = [
+    public string $targetId = "yt-masthead-notifications-button";
+
+    /**
+     * @inheritDoc
+     */
+    public array $class = [
         "sb-notif-off"
     ];
-    public $attributes = [
+
+    /**
+     * @inheritDoc
+     */
+    public array $attributes = [
         "force-position" => "true",
         "position-fixed" => "true",
         "orientation" => "vertical",

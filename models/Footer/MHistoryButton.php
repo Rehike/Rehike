@@ -8,7 +8,10 @@ use Rehike\Player\Configurable;
 
 class MHistoryButton extends MButton
 {
-    public $class = [
+    /**
+     * @inheritDoc
+     */
+    public array $class = [
         "footer-history"
     ];
 

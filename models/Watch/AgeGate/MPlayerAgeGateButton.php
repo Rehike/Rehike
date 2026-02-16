@@ -14,8 +14,8 @@ use Rehike\i18n\i18n;
  */
 class MPlayerAgeGateButton extends MButton
 {
-    public $style = "STYLE_PRIMARY";
-    public $role = "link";
+    public string $style = "STYLE_PRIMARY";
+    public string $role = "link";
 
     public object $commandMetadata;
 

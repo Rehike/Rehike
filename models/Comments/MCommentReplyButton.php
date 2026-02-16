@@ -5,13 +5,21 @@ use \Rehike\Util\ParsingUtils;
 
 class MCommentReplyButton extends MButton
 {
-    public $size = "SIZE_SMALL";
-    public $style = "STYLE_LINK";
-    public $class = [
+    public string $size = "SIZE_SMALL";
+    public string $style = "STYLE_LINK";
+
+    /**
+     * @inheritdoc
+     */
+    public array $class = [
         "comment-renderer-reply",
         "comment-simplebox-trigger",  
     ];
-    public $attributes = [
+
+    /**
+     * @inheritdoc
+     */
+    public array $attributes = [
         "simplebox-target" => "/comment_service_ajax?action_create_comment_reply=1"
     ];
 

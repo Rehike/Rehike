@@ -8,7 +8,6 @@ class MPickerSafetyButton extends MPickerButton
 {
     public string $targetId = "yt-picker-safetymode-button";
     public string $pickerTarget = "yt-picker-safetymode-footer";
-    public $icon;
     public bool $hasArrow = true;
     
     public function __construct()

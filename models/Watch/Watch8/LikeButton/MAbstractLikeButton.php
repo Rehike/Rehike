@@ -11,9 +11,12 @@ class MAbstractLikeButton extends MToggleButton
 {
     protected $hideNotToggled = true;
 
-    public $style = "opacity";
-    public $icon;
-    public $attributes = [
+    public string $style = "opacity";
+    
+    /**
+     * @inheritDoc
+     */
+    public array $attributes = [
         "orientation" => "vertical",
         "position" => "bottomright",
         "force-position" => "true"

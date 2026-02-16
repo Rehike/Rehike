@@ -6,10 +6,14 @@ use Rehike\i18n\i18n;
 
 class MAppbarGuideToggle extends MButton
 {
-    public $style = "STYLE_TEXT";
-    public $size = "SIZE_DEFAULT";
-    public $targetId = "appbar-guide-button";
-    public $class = [
+    public string $style = "STYLE_TEXT";
+    public string $size = "SIZE_DEFAULT";
+    public string $targetId = "appbar-guide-button";
+
+    /**
+     * @inheritDoc
+     */
+    public array $class = [
         "appbar-guide-toggle",
         "appbar-guide-clickable-ancestor"
     ];

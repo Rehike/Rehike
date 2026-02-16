@@ -5,7 +5,7 @@ use Rehike\Model\Common\MButton;
 
 class MCreatorBarEditButton extends MButton
 {
-    public $style = "STYLE_TEXT_DARK";
+    public string $style = "STYLE_TEXT_DARK";
 
     public function __construct($data)
     {
