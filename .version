@@ -1,10 +1,10 @@
 {
-	"previousHash": "9b5924257f5680ba675c439e08ec592d0bd1a223",
-	"currentRevisionId": 1832,
-	"subject": "Remove more cases of classic player",
-	"body": "Remove more cases of classic player",
+	"previousHash": "3f32581325a3495a972ececf138367a5b3b49dcb",
+	"currentRevisionId": 1842,
+	"subject": "Add alert for users using uBlock Origin",
+	"body": "Add alert for users using uBlock Origin",
 	"branch": "master",
-	"committerName": "Isabella Lulamoon",
-	"committerEmail": "kawapure@gmail.com",
-	"time": 1770928686
+	"committerName": "aubymori",
+	"committerEmail": "aubyomori@gmail.com",
+	"time": 1771556275
 }

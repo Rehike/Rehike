@@ -119,6 +119,7 @@
          {{ core.js('www-core/www-core') }}
       {% endif %}
       <script>if (window.ytcsi) {window.ytcsi.tick("je", null, '');}</script>  
+      <script type="text/javascript" src="{{ rehike.resource.resolveVersioned("rehike/js/www-ublock-detector.js") }}"></script>
       {%- block foot_scripts -%}{% endblock %}
       {% include 'core/yt_global_js_config.twig' %}
       {#
