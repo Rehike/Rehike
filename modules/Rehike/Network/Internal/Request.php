@@ -44,6 +44,8 @@ class Request implements IRequest
 
     /**
      * If specified, the POST body to be sent.
+     * 
+     * @TODO(leymonaide): Change the type to nullable.
      */
     public string $body;
 
@@ -52,6 +54,8 @@ class Request implements IRequest
      * 
      * This option should be used instead of the Accept-Encoding header,
      * as it can better tell the request handler what to do.
+     * 
+     * @TODO(leymonaide): Change the type to nullable.
      */
     public string $preferredEncoding;
 
