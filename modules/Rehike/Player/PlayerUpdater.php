@@ -157,7 +157,9 @@ class PlayerUpdater
 
         if (false != $status)
         {
-            return $matches[0];
+            $url = $matches[0];
+            $url = str_replace("player_embed", "player", $url);
+            return $url;
         }
         else
         {
@@ -187,7 +189,7 @@ class PlayerUpdater
      */
     public static function extractEmbedUrl(string $html): string
     {
-        $status = preg_match(PlayerCore::$embedJsRegex, $html, $matches);
+        $status = preg_match(PlayerCore::$embedJsRegex2, $html, $matches);
 
         if (false != $status)
         {
@@ -195,7 +197,15 @@ class PlayerUpdater
         }
         else
         {
-            throw new UpdaterException("Failed to extract embed URL");
+            $status = preg_match(PlayerCore::$embedJsRegex2, $html, $matches);
+            if (false != $status)
+            {
+                return $matches[0];
+            }
+            else
+            {
+                throw new UpdaterException("Failed to extract embed URL");
+            }
         }
     }
 

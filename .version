@@ -1,10 +1,10 @@
 {
-	"previousHash": "3f32581325a3495a972ececf138367a5b3b49dcb",
-	"currentRevisionId": 1842,
-	"subject": "Add alert for users using uBlock Origin",
-	"body": "Add alert for users using uBlock Origin",
+	"previousHash": "135982c1ff5249fb3bff4603a9cd3fa0743ca289",
+	"currentRevisionId": 1846,
+	"subject": "Fix PlayerUpdate to account for changes in embed URL format",
+	"body": "Fix PlayerUpdate to account for changes in embed URL format",
 	"branch": "master",
-	"committerName": "aubymori",
-	"committerEmail": "aubyomori@gmail.com",
-	"time": 1771556275
+	"committerName": "Isabella Lulamoon",
+	"committerEmail": "kawapure@gmail.com",
+	"time": 1774640521
 }
