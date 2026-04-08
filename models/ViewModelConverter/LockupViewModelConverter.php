@@ -28,14 +28,22 @@ class LockupViewModelConverter extends BasicVMC
     
     public function bakeClassicRenderer(): object
     {
+        // XXX(isabella): For some reason, it is possible in rare circumstances for a video
+        // renderer to lack this property. Without research, this seems to occur on TV-like
+        // YPC videos like https://www.youtube.com/watch?v=waYebPQ-pNk&pp=sAQB0gcJCdkKAYcqIYzv
+        // so I will assume it's just this content type which is affected. For now, it seems
+        // safe to assume that anything lacking a content type property can be assumed to be
+        // a video.
+        $contentType = $this->viewModel->contentType ?? "LOCKUP_CONTENT_TYPE_VIDEO";
+        
         $rootPropName = $this->determineClassicPropertyName(
-            $this->viewModel->contentType,
+            $contentType,
             $this->style
         );
         
         $resultObj = (object)[];
 
-        switch ($this->viewModel->contentType)
+        switch ($contentType)
         {
             case "LOCKUP_CONTENT_TYPE_PLAYLIST":
             case "LOCKUP_CONTENT_TYPE_ALBUM":
@@ -46,7 +54,6 @@ class LockupViewModelConverter extends BasicVMC
             }
             case "LOCKUP_CONTENT_TYPE_VIDEO":
             {
-                \Rehike\YtApp::getInstance()->hasEvilWatchSidebarExperimentFromHell = true;
                 $videoConv = new VideoRendererViewModelConverter($this->viewModel, $this->frameworkUpdates);
                 $resultObj = $videoConv->bake($this);
                 break;

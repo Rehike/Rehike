@@ -1,10 +1,10 @@
 {
-	"previousHash": "135982c1ff5249fb3bff4603a9cd3fa0743ca289",
-	"currentRevisionId": 1846,
-	"subject": "Fix PlayerUpdate to account for changes in embed URL format",
-	"body": "Fix PlayerUpdate to account for changes in embed URL format",
+	"previousHash": "64d47cf23cea11afe4238ddb501787007fab9202",
+	"currentRevisionId": 1847,
+	"subject": "Fix crash with (seemingly) TV recommendations on WN",
+	"body": "Fix crash with (seemingly) TV recommendations on WN",
 	"branch": "master",
 	"committerName": "Isabella Lulamoon",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1774640521
+	"time": 1775671705
 }
