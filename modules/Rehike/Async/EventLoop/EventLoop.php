@@ -80,41 +80,55 @@ final class EventLoop
         Tracing::logEvent(TraceEventId::EventLoopRun);
         self::$s_internalRunLevel++;
         
-        if (self::$s_internalRunLevel >= EVENT_LOOP_NESTING_LIMIT)
-        {
-            throw new Exception("The event loop entered an infinite recursion loop.");
-        }
-        
         self::$level++;
 
-        do
+        // XXX(leymonaide): This logic is wrapped in a try/finally to allow
+        // event loop exceptions to be caught by the caller.
+        try
         {
-            foreach (self::$events as $event) if (
-                !$event->isFulfilled() &&
-                !((int)$event->getEventFlags() & EventFlags::Suspended)
-            )
+            if (self::$s_internalRunLevel >= EVENT_LOOP_NESTING_LIMIT)
             {
-                $event->run();
+                throw new Exception("The event loop entered an infinite recursion loop.");
             }
-        }
-        while (self::shouldContinueRunning());
 
-        // We can't just assume that the event is finished when this
-        // function stops being called, as it can also be paused.
-        if (self::isFinished())
-        {
-            // XXX(isabella): I do not know why the level system is designed like this.
-            // It decrements even though we can remain on the call stack in the case of
-            // queued promise resolution calling us again (which is a new stack frame),
-            // so it's useless for checking for i.e. stack overflow. In the future,
-            // consider restructuring this model to make it not recursively call run()
-            // to avoid this being an issue.
-            self::$level--;
-            self::cleanup();
+            do
+            {
+                foreach (self::$events as $event) if (
+                    !$event->isFulfilled() &&
+                    !((int)$event->getEventFlags() & EventFlags::Suspended)
+                )
+                {
+                    try
+                    {
+                        $event->run();
+                    }
+                    catch (\Throwable $e)
+                    {
+                        throw new EventException($event, $e);
+                    }
+                }
+            }
+            while (self::shouldContinueRunning());
         }
-        
-        self::$s_internalRunLevel--;
-        Tracing::logEvent(TraceEventId::EventLoopCycleComplete);
+        finally
+        {
+            // We can't just assume that the event is finished when this
+            // function stops being called, as it can also be paused.
+            if (self::isFinished())
+            {
+                // XXX(isabella): I do not know why the level system is designed like this.
+                // It decrements even though we can remain on the call stack in the case of
+                // queued promise resolution calling us again (which is a new stack frame),
+                // so it's useless for checking for i.e. stack overflow. In the future,
+                // consider restructuring this model to make it not recursively call run()
+                // to avoid this being an issue.
+                self::$level--;
+                self::cleanup();
+            }
+            
+            self::$s_internalRunLevel--;
+            Tracing::logEvent(TraceEventId::EventLoopCycleComplete);
+        }
     }
 
     /**
