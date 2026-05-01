@@ -1,10 +1,10 @@
 {
-	"previousHash": "64d47cf23cea11afe4238ddb501787007fab9202",
-	"currentRevisionId": 1847,
-	"subject": "Fix crash with (seemingly) TV recommendations on WN",
-	"body": "Fix crash with (seemingly) TV recommendations on WN",
+	"previousHash": "b285ebb4f9e0b89e48aa7a068aeef4a77b99d399",
+	"currentRevisionId": 1849,
+	"subject": "Make album playlist prefix more specific (thanks Hovo)",
+	"body": "Make album playlist prefix more specific (thanks Hovo)",
 	"branch": "master",
-	"committerName": "Isabella Lulamoon",
-	"committerEmail": "kawapure@gmail.com",
-	"time": 1775671705
+	"committerName": "Pumpkin",
+	"committerEmail": "230778645+lemon-pumpkin-pie@users.noreply.github.com",
+	"time": 1777675462
 }

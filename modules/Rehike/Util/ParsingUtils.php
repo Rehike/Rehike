@@ -179,8 +179,8 @@ class ParsingUtils
             // CSS always expecting 16:9 thumbnail images. This is still better
             // than nothing at all.
             //
-            // Album playlists can be detected by their ID prefix, "OL".
-            $isAlbumPlaylist = false !== strstr($thumb->url, "/s_p/OL");
+            // Album playlists can be detected by their ID prefix, "OLAK5uy_".
+            $isAlbumPlaylist = false !== strstr($thumb->url, "/s_p/OLAK5uy_");
 
             // If the video is a Short, we want to remove the sqp param to 
             // remove any cropping. We also want to switch the oar2 thumb
