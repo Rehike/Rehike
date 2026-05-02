@@ -23,7 +23,6 @@ class RequestMetadata
 
     public string $rawPath;
 
-    /** @var string[] */
     public EasyAccessMap $headers;
 
     public EasyAccessMap $params;
@@ -74,8 +73,6 @@ class RequestMetadata
 
     /**
      * Get all requested headers.
-     * 
-     * @return string[]
      */
     protected static function getHeaders(): EasyAccessMap
     {

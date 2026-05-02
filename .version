@@ -1,10 +1,10 @@
 {
-	"previousHash": "b285ebb4f9e0b89e48aa7a068aeef4a77b99d399",
-	"currentRevisionId": 1849,
-	"subject": "Make album playlist prefix more specific (thanks Hovo)",
-	"body": "Make album playlist prefix more specific (thanks Hovo)",
+	"previousHash": "6447011fdc7b56aba05dd3c4838fad8abd3574ba",
+	"currentRevisionId": 1850,
+	"subject": "Fix up IDE type errors in RequestMetadata",
+	"body": "Fix up IDE type errors in RequestMetadata",
 	"branch": "master",
 	"committerName": "Pumpkin",
 	"committerEmail": "230778645+lemon-pumpkin-pie@users.noreply.github.com",
-	"time": 1777675462
+	"time": 1777681097
 }
