@@ -1,10 +1,10 @@
 {
-	"previousHash": "6447011fdc7b56aba05dd3c4838fad8abd3574ba",
-	"currentRevisionId": 1850,
-	"subject": "Fix up IDE type errors in RequestMetadata",
-	"body": "Fix up IDE type errors in RequestMetadata",
+	"previousHash": "8fa4c6979b163b5c4bd5de74dacccf2bf6722893",
+	"currentRevisionId": 1851,
+	"subject": "Refine ExperimentFlagManager",
+	"body": "Refine ExperimentFlagManager",
 	"branch": "master",
-	"committerName": "Pumpkin",
-	"committerEmail": "230778645+lemon-pumpkin-pie@users.noreply.github.com",
-	"time": 1777681097
+	"committerName": "Isabella Lulamoon",
+	"committerEmail": "kawapure@gmail.com",
+	"time": 1778092821
 }

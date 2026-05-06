@@ -3,6 +3,7 @@ namespace Rehike\Util;
 
 use Rehike\Async\Promise;
 use Rehike\FileSystem;
+use Rehike\Logging\DebugLogger;
 use Rehike\Network;
 use RuntimeException;
 
@@ -175,16 +176,102 @@ class ExperimentFlagManager
                 "https://www.youtube.com",
                 [
                     // Force Chrome user agent to ensure we don't get an "Update your browser" message
-                    "userAgent" => "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36"
+                    "userAgent" => "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36"
                 ]
             );
 
             // Find the configuration set property that contains the visitor
             // data string.
-            preg_match("/ytcfg\.set\(({.*?})\);/", $response, $matches);
-            $ytcfg = json_decode(@$matches[1]);
+            $ytcfg = (object)[];
+            
+            preg_match_all("/ytcfg\.set\(({.*?})\);/", $response, $matches, PREG_OFFSET_CAPTURE | PREG_SET_ORDER);
+            \Rehike\Logging\DebugLogger::print("ytcfg matches: %s", var_export($matches, true));
+            for ($i = 0; $i < count($matches); $i++)
+            {
+                $index = $matches[$i][1][1];
+                try
+                {
+                    $ytcfg = $this->extractJson($response, $index);
+                }
+                catch (\Throwable $e)
+                {
+                    \Rehike\Logging\DebugLogger::print(
+                        "Failed to extract state from ytcfg object #%d in the response: %s", 
+                        $i, (string)$e
+                    );
+                }
+            }
             
             $this->data = $ytcfg;
         });
+    }
+    
+    /**
+     * Extracts a JSON string from the document string and parses it into a PHP object.
+     * 
+     * @see https://github.com/Leymonaide/Retwitter/blob/49a84fbabec7fb69ced9c87350a779fe4cd79b8f/modules/Retwitter/SignIn/AuthManager.php#L107-L218
+     * 
+     * @param string $rawDoc  The original document.
+     * @param int $index      The index of the JSON object in the document.
+     */
+    private function extractJson(
+        string $rawDoc,
+        int $index,
+    ): ?object
+    {
+        $docLength = strlen($rawDoc);
+        
+        // Private working variables for JSON extractor:
+        $braceCounter = 0;
+        $parsingString = false;
+        $stringTerminator = "";
+        
+        // Output variables of JSON extractor:
+        $jsonBegin = 0;
+        $jsonEnd = 0;
+        
+        // JSON extractor:
+        while ($index < $docLength)
+        {
+            $char = $rawDoc[$index];
+            
+            if (($char == '{') && !$parsingString)
+            {
+                if ($braceCounter == 0)
+                {
+                    $jsonBegin = $index;
+                }
+                $braceCounter++;
+            }
+            else if (($char == '}') && !$parsingString)
+            {
+                $braceCounter--;
+                if ($braceCounter == 0)
+                {
+                    // End of JSON object.
+                    $jsonEnd = $index;
+                    break;
+                }
+            }
+            else if (($char == '"' || $char == '\'') && !$parsingString)
+            {
+                $parsingString = true;
+                $stringTerminator = $char;
+            }
+            else if (($char == $stringTerminator) && $parsingString)
+            {
+                if ($rawDoc[$index - 1] != '\\')
+                {
+                    $parsingString = false;
+                }
+            }
+            
+            $index++;
+        }
+        
+        $length = $jsonEnd - $jsonBegin + 1;
+        $jsonStr = substr($rawDoc, $jsonBegin, $length);
+        
+        return json_decode($jsonStr, flags: JSON_THROW_ON_ERROR);
     }
 }
