@@ -185,13 +185,16 @@ class ExperimentFlagManager
             $ytcfg = (object)[];
             
             preg_match_all("/ytcfg\.set\(({.*?})\);/", $response, $matches, PREG_OFFSET_CAPTURE | PREG_SET_ORDER);
-            \Rehike\Logging\DebugLogger::print("ytcfg matches: %s", var_export($matches, true));
             for ($i = 0; $i < count($matches); $i++)
             {
                 $index = $matches[$i][1][1];
                 try
                 {
-                    $ytcfg = $this->extractJson($response, $index);
+                    $result = $this->extractJson($response, $index);
+                    foreach ($result as $key => $value)
+                    {
+                        $ytcfg->{$key} = $value;
+                    }
                 }
                 catch (\Throwable $e)
                 {
