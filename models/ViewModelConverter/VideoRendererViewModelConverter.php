@@ -27,10 +27,26 @@ class VideoRendererViewModelConverter extends BasicVMC
         $result->thumbnail = (object)[
             "thumbnails" => $thumbnail->image->sources
         ];
+        
+        $i18n = i18n::getNamespace("global");
+        
+        $result->thumbnailOverlays = [];
+        $result->thumbnailOverlays[] = (object)[
+            "thumbnailOverlayToggleButtonRenderer" => (object)[
+                "untoggledIcon" => (object)[
+                    "iconType" => "WATCH_LATER",
+                ],
+                "toggledIcon" => (object)[
+                    "iconType" => "WATCH_LATER",
+                ],
+                "untoggledTooltip" => $i18n->get("addToWatchLater"),
+                "toggledTooltip" => $i18n->get("addedToWatchLater"),
+                "isToggled" => false,
+            ],
+        ];
 
         if (is_array(@$thumbnail->overlays))
         {
-            $result->thumbnailOverlays = [];
             foreach ($thumbnail->overlays as $overlay)
             foreach ($overlay as $name => $content)
             {
@@ -103,38 +119,6 @@ class VideoRendererViewModelConverter extends BasicVMC
                                     break;
                             }
                             
-                        }
-                        break;
-                    case "thumbnailHoverOverlayToggleActionsViewModel":
-                        foreach ($content->buttons as $button)
-                        {
-                            $tbConverter = new ToggleButtonViewModelConverter(
-                                $button->toggleButtonViewModel,
-                                $this->frameworkUpdates
-                            );
-
-                            $convertedButton = $tbConverter->bakeToggleButtonRenderer(["isToggled" => false]);
-                            $memberMap = [
-                                "defaultIcon" => "untoggledIcon",
-                                "defaultServiceEndpoint" => "untoggledServiceEndpoint",
-                                "accessibilityData" => "untoggledAccessibility",
-                                "toggledAccessibilityData" => "toggledAccessibility",
-                            ];
-                            foreach ($memberMap as $name => $newName)
-                            {
-                                if (isset($convertedButton->{$name}))
-                                {
-                                    $convertedButton->{$newName} = $convertedButton->{$name};
-                                    unset($convertedButton->{$name});
-                                }
-                            }
-
-                            $convertedButton->untoggledTooltip = $convertedButton->accessibility->label;
-                            $convertedButton->toggledTooltip = $convertedButton->toggledAccessibility->accessibilityData->label;
-
-                            $result->thumbnailOverlays[] = (object)[
-                                "thumbnailOverlayToggleButtonRenderer" => $convertedButton
-                            ];
                         }
                         break;
                     case "thumbnailBottomOverlayViewModel":
