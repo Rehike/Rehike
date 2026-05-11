@@ -19,6 +19,7 @@ final class Tracing
     private const LOG_DATA = 2;
     
     // Filters:
+    private static bool $s_enableTracing = true;
     private static bool $s_logSuccessful = false;
     
     /**
@@ -30,6 +31,11 @@ final class Tracing
      */
     public static function logEvent(int $traceEventId, mixed $data = null): void
     {
+        if (!self::$s_enableTracing)
+        {
+            return;
+        }
+
         // The time is retrieved as a float because it weighs less in that format
         // than as a string. A float will just be a processor word, such as 4 or
         // 8 bytes.
@@ -46,7 +52,20 @@ final class Tracing
      */
     public static function logFailure(int $traceEventId, mixed $data = null): void
     {
+        if (!self::$s_enableTracing)
+        {
+            return;
+        }
+
         self::logEvent(TraceEventId::makeFailed($traceEventId), $data);
+    }
+
+    /**
+     * Sets whether or not tracing is enabled.
+     */
+    public static function enableTracing(bool $value): void
+    {
+        self::$s_enableTracing = false;
     }
     
     /**
