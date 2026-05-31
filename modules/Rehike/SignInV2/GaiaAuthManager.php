@@ -144,7 +144,7 @@ class GaiaAuthManager
                 // This information needs to be passed off to the network manager in order to
                 // make the request to obtain the UCID for the current channel.
                 $gaiaId = $infoBuilder->activeChannelBuilder->gaiaId;
-                $authUser = (string)$infoBuilder->activeChannelBuilder->parentBuilder->authUserId ?? "0";
+                $authUser = (string)($infoBuilder->activeChannelBuilder->parentBuilder->authUserId ?? "0");
                 DebugLogger::print("[GaiaAuthManager::tryGetInfo] Channel GAIA ID: %s", $gaiaId);
                 DebugLogger::print("[GaiaAuthManager::tryGetInfo] Auth user ID: %s", $authUser);
                 Network::useAuthGaiaId2($gaiaId, $authUser);

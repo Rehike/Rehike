@@ -1,10 +1,10 @@
 {
-	"previousHash": "7246d117d3f7ed7a2bcf72d8c76d74e762667884",
-	"currentRevisionId": 1855,
-	"subject": "[SignInV2] Finish the remaining 5% of work",
-	"body": "[SignInV2] Finish the remaining 5% of work",
+	"previousHash": "f3e39e6da0f492c4d6d37978795f565c6832fd5d",
+	"currentRevisionId": 1856,
+	"subject": "[SignInV2] Fix single Google account case",
+	"body": "[SignInV2] Fix single Google account case",
 	"branch": "master",
 	"committerName": "Isabella Lulamoon",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1780241838
+	"time": 1780244249
 }
