@@ -67,7 +67,8 @@ class SwitcherParser
     {
         $accountSections = $this->getAccountSections();
         
-        foreach ($accountSections as $accountSectionIndex => $accountSection)
+        foreach ($accountSections as $accountSectionIndex => $accountSectionWrapper)
+        if ($accountSection = $accountSectionWrapper->accountSectionListRenderer)
         {
             $googleAccountBuilder = new GoogleAccountInfoBuilder($this->builder);
             
@@ -75,7 +76,7 @@ class SwitcherParser
             $googleAccountBuilder->displayName = $accountHeaderInfo->displayName;
             $googleAccountBuilder->accountEmail = $accountHeaderInfo->email;
             
-            // The default Google here means the active one:
+            // The default Google account here means the active one:
             if ($accountHeaderInfo->isDefault)
             {
                 $googleAccountBuilder->isActive = true;
@@ -83,34 +84,38 @@ class SwitcherParser
             
             foreach ($accountSection->contents as $contentSection)
             {
-                if (isset($contentSection->accountItemSectionRenderer->contents[0]->accountItem))
+                foreach ($contentSection->accountItemSectionRenderer->contents as $accountItemSection)
                 {
-                    $channelItem = $contentSection->accountItemSectionRenderer->contents[0]->accountItem;
-                    
-                    // If the current channel item is the default channel for the Google
-                    // account, then we can obtain a lot of information about the Google
-                    // account from it:
-                    if ($this->isGoogleAccountDefaultChannel($channelItem))
+                    if (isset($accountItemSection->accountItem))
                     {
-                        $this->addInfoToGoogleAccountBuilderFromDefaultChannel(
-                            $googleAccountBuilder,
-                            $channelItem
-                        );
-                    }
-                    
-                    // If we don't already know the authuser ID for the current Google
-                    // account, then we'll check to see if we can obtain it from the
-                    // current channel item:
-                    if (!$googleAccountBuilder->authUserId)
-                    {
-                        if ($authUserId = $this->getAuthUserId($channelItem))
+                        $channelItem = $accountItemSection->accountItem;
+                        
+                        // If the current channel item is the default channel for the Google
+                        // account, then we can obtain a lot of information about the Google
+                        // account from it:
+                        if ($this->isGoogleAccountDefaultChannel($channelItem))
                         {
-                            $googleAccountBuilder->authUserId = $authUserId;
+                            $isDefaultChannel = true;
+                            $this->addInfoToGoogleAccountBuilderFromDefaultChannel(
+                                $googleAccountBuilder,
+                                $channelItem
+                            );
                         }
+                        
+                        // If we don't already know the authuser ID for the current Google
+                        // account, then we'll check to see if we can obtain it from the
+                        // current channel item:
+                        if (!$googleAccountBuilder->authUserId)
+                        {
+                            if ($authUserId = $this->getAuthUserId($channelItem))
+                            {
+                                $googleAccountBuilder->authUserId = $authUserId;
+                            }
+                        }
+                        
+                        $channelBuilder = new YtChannelAccountInfoBuilder($googleAccountBuilder);
+                        $this->addInfoToChannelBuilder($channelBuilder, $channelItem, $isDefaultChannel ?? false);
                     }
-                    
-                    $channelBuilder = new YtChannelAccountInfoBuilder($googleAccountBuilder);
-                    $this->addInfoToChannelBuilder($channelBuilder, $channelItem);
                 }
             }
         }
@@ -163,9 +168,12 @@ class SwitcherParser
         {
             return $this->retrieveMainGoogleAccountInfo();
         }
-        else if (isset($accountSection->header->accountItemSectionHeaderRenderer))
+        else if (isset($accountSection->contents[0]->accountItemSectionRenderer->header
+            ->accountItemSectionHeaderRenderer))
         {
-            return $this->retrieveSecondaryGoogleAccountInfo($accountSection);
+            return $this->retrieveSecondaryGoogleAccountInfo(
+                $accountSection->contents[0]->accountItemSectionRenderer,
+            );
         }
         
         return null;
@@ -178,7 +186,8 @@ class SwitcherParser
     {
         // The header information for the zeroth item is a googleAccountHeaderRenderer,
         // which contains information about the user's email address as well as name.
-        $headerInfo = $this->getAccountSections()[0]->header->googleAccountHeaderRenderer;
+        $headerInfo = $this->getAccountSections()[0]->accountSectionListRenderer
+            ->header->googleAccountHeaderRenderer;
         
         return new AccountHeaderInfo(
             email: $headerInfo->email->simpleText,
@@ -246,7 +255,7 @@ class SwitcherParser
             // plus an "||" terminator. This contrasts with brand accounts,
             // which put the brand account GAIA ID first and the primary GAIA
             // ID after the "||" sequence.
-            if ($obfuscatedGaiaId == ($datasyncId . "||"))
+            if (($obfuscatedGaiaId . "||") == ($datasyncId))
             {
                 return true;
             }
@@ -284,7 +293,8 @@ class SwitcherParser
     
     protected function addInfoToChannelBuilder(
         YtChannelAccountInfoBuilder $builder,
-        object $channelItem
+        object $channelItem,
+        bool $isDefaultChannel,
     ): void
     {
         $supportedTokens = $channelItem->serviceEndpoint->selectActiveIdentityEndpoint
@@ -308,6 +318,12 @@ class SwitcherParser
             $builder->avatarUrl = ParsingUtils::getThumb($channelItem->accountPhoto);
         }
         
+        if (!$builder->localizedSubscriberCount)
+        {
+            $builder->localizedSubscriberCount = ParsingUtils::getText($channelItem->accountByline);
+        }
+        
+        $builder->isDefaultChannel = $isDefaultChannel;
         $builder->isActive = $channelItem->isSelected ?? false;
         
         if ($builder->isActive && !isset($this->builder->activeChannelBuilder))

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace Rehike\SignInV2;
 
 use Rehike\SignInV2\{
@@ -49,6 +50,14 @@ class GaiaAuthManager
             self::$loginInfoCookie = $_COOKIE["LOGIN_INFO"];
         }
     }
+    
+    /**
+     * Gets the unique session cookie, LOGIN_INFO.
+     */
+    public static function getUniqueSessionCookie(): string
+    {
+        return self::$loginInfoCookie;
+    }
 
     /**
      * Checks if GAIA authentication should be attempted.
@@ -74,50 +83,111 @@ class GaiaAuthManager
 
         return "SAPISIDHASH {$time}_{$sha1}";
     }
+    
+    /**
+     * Requests session data via the most efficient method.
+     * 
+     * @return Promise<SessionInfo>
+     */
+    public static function getInfo(): Promise/*<SessionInfo>*/
+    {
+        return async(function()
+        {
+            $result = yield self::tryGetInfo(tryFromCache: true);
+            if ($result->getSessionErrors() != SessionErrors::SUCCESS)
+            {
+                $result = yield self::tryGetInfo(tryFromCache: false);
+            }
+            return $result;
+        });
+    }
 
     /**
      * Newly requests session data from YouTube's servers.
      * 
      * For performance reasons, the result will be cached and reused for some
-     * time after the initial request.
+     * time after the initial request. The cached result will be retrieved
+     * thereafter via use of the {@see getInfo()} method.
      * 
      * @return Promise<SessionInfo>
      */
-    public static function getFreshInfoFromRemote(): Promise/*<SessionInfo>*/
+    private static function tryGetInfo(bool $tryFromCache = true): Promise/*<SessionInfo>*/
     {
-        return async(function() {
+        return async(function() use ($tryFromCache) {
             $infoBuilder = new SessionInfoBuilder();
 
             try
             {
-                $accSwitcher = yield self::requestAccountSwitcherData();
+                if ($tryFromCache)
+                {
+                    $cache = CacheManager::getCache();
+                }
+                
+                DebugLogger::print("[GaiaAuthManager::tryGetInfo] %s", $cache
+                    ? "Using cache."
+                    : "Making fresh request...",
+                );
+                
+                $accSwitcher = $cache
+                    ? $cache->switcherResponse
+                    : yield self::requestAccountSwitcherData();
 
                 // If the user is signed out, then do not process further.
                 if (null == $accSwitcher)
                 {
                     return $infoBuilder->build();
                 }
-
+                
                 $switcherParser = new SwitcherParser($infoBuilder, $accSwitcher);
                 $switcherParser->parse();
                 
+                // This information needs to be passed off to the network manager in order to
+                // make the request to obtain the UCID for the current channel.
+                $gaiaId = $infoBuilder->activeChannelBuilder->gaiaId;
+                $authUser = (string)$infoBuilder->activeChannelBuilder->parentBuilder->authUserId ?? "0";
+                DebugLogger::print("[GaiaAuthManager::tryGetInfo] Channel GAIA ID: %s", $gaiaId);
+                DebugLogger::print("[GaiaAuthManager::tryGetInfo] Auth user ID: %s", $authUser);
+                Network::useAuthGaiaId2($gaiaId, $authUser);
+                
                 try
                 {
-                    $ucid = yield self::requestUcid();
+                    $ucid = $cache
+                        ? $cache->currentUcid
+                        : yield self::requestUcid();
                     $infoBuilder->activeChannelBuilder->ucid = $ucid;
                 }
                 catch (Exception $e)
                 {
-                    // cancel build
-                    $infoBuilder->pushSessionError(-1);
+                    // Cancel build:
+                    DebugLogger::print("[GaiaAuthManager::tryGetInfo] %s", $e->getMessage());
+                    $infoBuilder->pushSessionError(SessionErrors::CANCELLED_BUILD);
                     return $infoBuilder->build();
                 }
 
+                // Return the final result:
+                $infoBuilder->isSignedIn = true;
+                
+                // We'll only build the cache if it wasn't requested, so as to not
+                // regenerate the cache with its own data every single request.
+                if (!$cache)
+                {
+                    try
+                    {
+                        CacheManager::writeCache($accSwitcher, $ucid);
+                    }
+                    catch (\Throwable $e)
+                    {
+                        DebugLogger::print("[GaiaAuthManager::tryGetInfo] " .
+                            "Failed to write cache data: %s", (string)$e
+                        );
+                    }
+                }
+                
                 return $infoBuilder->build();
             }
             catch (Exception $e)
             {
-                DebugLogger::print("[GaiaAuthManager::getFreshInfoFromRemote] %s", $e->getMessage());
+                DebugLogger::print("[GaiaAuthManager::tryGetInfo] %s", $e->getMessage());
                 $infoBuilder->pushSessionError(SessionErrors::FAILED_REQUEST);
                 return $infoBuilder->build();
             }
@@ -173,9 +243,9 @@ class GaiaAuthManager
     /**
      * 
      * 
-     * @return Promise<string>
+     * @return Promise<?string>
      */
-    private static function requestUcid(): Promise/*<string>*/
+    private static function requestUcid(): Promise/*<?string>*/
     {
         return async(function() {
             $profileResponseRaw = yield Network::innertubeRequest(
@@ -188,6 +258,8 @@ class GaiaAuthManager
             $profileResponse = $profileResponseRaw->getJson();
             
             $endpoint = $profileResponse->endpoint->urlEndpoint->url;
+            if (!$endpoint)
+                return null;
             
             if (strpos($endpoint, "/channel/") !== false)
             {

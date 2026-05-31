@@ -13,34 +13,7 @@ use Rehike\ControllerV2\{
     IPostController,
 };
 
-/**
- * Model for delegate accounts
- * 
- * This is a lazy hack to maintain the model structure that the template expects
- * from sign in V1.
- * 
- * @author Isabella Lulamoon <kawapure@gmail.com>
- * @author The Rehike Maintainers
- */
-class MDelegateAccountItem
-{
-    public string $name;
-    public string $byline;
-    public string $photo;
-    public string $switchUrl;
-    
-    public YtChannelAccountInfo $infoSource;
-    
-    public function __construct(YtChannelAccountInfo $channelInfo)
-    {
-        $this->name = $channelInfo->getDisplayName() ?? "";
-        $this->byline = $channelInfo->getLocalizedSubscriberCount() ?? "";
-        $this->photo = $channelInfo->getAvatarUrl() ?? "";
-        $this->switchUrl = $channelInfo->getSwitchUrl("/?feature=masthead_switcher") ?? "";
-        
-        $this->infoSource = $channelInfo;
-    }
-}
+use Rehike\Model\Masthead\AccountPicker\MAccountPickerDelegateAccountItem;
 
 /**
  * Delegate account fragments AJAX controller.
@@ -71,7 +44,7 @@ class DelegateAccountFragmentsController extends AjaxController implements IGetC
         $channelList = [];
         foreach ($sessionInfo->getCurrentGoogleAccount()->getYoutubeChannels() as $channel) 
         {
-            $channelList[] = new MDelegateAccountItem($channel);
+            $channelList[] = new MAccountPickerDelegateAccountItem($channel);
         }
 
         for ($i = 0; $i < count($channelList); $i++) 

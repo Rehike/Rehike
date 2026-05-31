@@ -21,8 +21,6 @@ class SessionInfoBuilder implements IBuilder
     
     public ?YtChannelAccountInfoBuilder $activeChannelBuilder = null;
     
-    //public BuilderCollection $otherAccountBuilders;
-    
     public ?string $datasyncId = null;
     
     public int $sessionErrors = 0;
@@ -30,7 +28,6 @@ class SessionInfoBuilder implements IBuilder
     public function __construct()
     {
         $this->googleAccounts = new BuilderCollection(GoogleAccountInfoBuilder::class);
-        //$this->otherAccountBuilders = new BuilderCollection(YtChannelAccountInfoBuilder::class);
     }
 
     public function build(): SessionInfo

@@ -8,14 +8,14 @@ use Rehike\Util\ImageUtils;
 
 class MAccountPickerClickcard
 {
-    public $template = "masthead_account_picker";
-    public $id = "yt-masthead-account-picker";
-    public $cardAction = "yt.www.masthead.handleAccountPickerClick";
-    public $cardClass = [
+    public string $template = "masthead_account_picker";
+    public string $id = "yt-masthead-account-picker";
+    public string $cardAction = "yt.www.masthead.handleAccountPickerClick";
+    public array $cardClass = [
         "yt-masthead-account-picker-card",
     ];
-    public $class = "yt-masthead-account-picker";
-    public $content;
+    public string $class = "yt-masthead-account-picker";
+    public object $content;
 
     public function __construct()
     {
@@ -31,11 +31,12 @@ class MAccountPickerClickcard
             "navigationEndpoint" => (object) [
                 "commandMetadata" => (object) [
                     "webCommandMetadata" => (object) [
-                        "url" => "//myaccount.google.com/u/0"
+                        "url" => "//myaccount.google.com/u/" . $signInInfo->getCurrentGoogleAccount()->getAuthUserId(),
                     ]
                 ]
             ]
         ];
+        $channelAuthUserId = $activeChannel->getOwnerAccount()->getAuthUserId();
         $content->username = $activeChannel->getDisplayName();
         $content->subCount = $activeChannel->getLocalizedSubscriberCount();
         $content->photo = (object) [
@@ -43,7 +44,7 @@ class MAccountPickerClickcard
             "navigationEndpoint" => (object) [
                 "commandMetadata" => (object) [
                     "webCommandMetadata" => (object) [
-                        "url" => "//myaccount.google.com/u/0/profile#profile_photo"
+                        "url" => "//myaccount.google.com/u/$channelAuthUserId/profile#profile_photo"
                     ]
                 ]
             ],
@@ -60,5 +61,31 @@ class MAccountPickerClickcard
         $content->footer = [];
         $content->footer[] = new MAccountPickerAddButton();
         $content->footer[] = new MAccountPickerSignOutButton();
+        
+        $googleAccounts = $signInInfo->getGoogleAccounts();
+        if (count($googleAccounts) > 1)
+        {
+            $this->cardClass[] = "yt-masthead-multilogin";
+            
+            $content->otherAccounts = [];
+            
+            foreach ($googleAccounts as $acc)
+            {
+                if ($acc->isActive())
+                    continue;
+                
+                $defaultChannel = $acc->getYoutubeChannels()[0] ?? null;
+                
+                if ($defaultChannel)
+                {
+                    $content->otherAccounts[] = new MAccountPickerDelegateAccountItem($defaultChannel);
+                }
+                else
+                {
+                    \Rehike\Logging\DebugLogger::print("[MAccountPickerClickcard] Could not find YouTube channels for Google account \""
+                        . $acc->getAccountEmail() ?? $acc->getGaiaId() ?? "<unknown>" . "\"");
+                }
+            }
+        }
     }
 }

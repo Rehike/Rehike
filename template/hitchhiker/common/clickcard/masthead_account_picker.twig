@@ -23,6 +23,25 @@
 </div>
 <div id="yt-masthead-multilogin" class="yt-masthead-multilogin-users">
     <div id="yt-delegate-accounts"></div>
+    {% if data.otherAccounts %}
+        <div class="yt-masthead-multilogin-users-header">{{ rehike.i18n.get("masthead", "accountPickerMultiLoginHeader") }}</div>
+        {%- for account in data.otherAccounts -%}
+            <a href="{{ account.switchUrl }}" class="yt-masthead-account-picker-option yt-masthead-account-picker-user-option">
+                {{ thumb({
+                    type: "square",
+                    width: 36,
+                    height: 36,
+                    delayload: true,
+                    image: account.photo,
+                    class: ["yt-masthead-picker-photo-wrapper"]
+                }) }}
+                <div class="yt-masthead-picker-info">
+                    <div class="yt-masthead-picker-name" dir="ltr">{{ account.name }}</div>
+                    <div class="yt-masthead-picker-account-subtitle">{{ account.byline }}</div>
+                </div>
+            </a>
+        {%- endfor -%}
+    {% endif %}
 </div>
 <div id="yt-channel-switcher-link" class="clearfix"></div>
 <div class="yt-masthead-picker-footer clearfix">

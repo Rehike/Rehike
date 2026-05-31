@@ -246,10 +246,11 @@ class CommentServiceAjaxController extends AjaxController implements IPostContro
                 $commentsBakery->bakeReplies($data)->then(function ($response) use ($yt)
                 {
                     $yt->page = (object)$response;
-                })->catch(function ($exception)
+                })->catch(function ($exception) use ($ytdata)
                 {
                     echo json_encode((object)[
-                        "errors" => [$exception->getMessage()]
+                        "errors" => [$exception->getMessage()],
+                        "response" => $ytdata,
                     ]);
                     \Rehike\Boot\Bootloader::doEarlyShutdown();
                 });

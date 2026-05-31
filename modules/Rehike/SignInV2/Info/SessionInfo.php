@@ -30,7 +30,7 @@ class SessionInfo implements IBuiltObject, ICacheable
     protected array $googleAccounts = [];
     
     /**
-     * 
+     * Stores a reference to information about the currently-active Google account.
      */
     #[CacheProperty(CacheProperty::CACHE_NEVER)]
     protected ?GoogleAccountInfo $activeGoogleAccount = null;

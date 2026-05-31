@@ -10,5 +10,4 @@ use Rehike\SignInV2\Builder\IBuilder;
  */
 interface IBuiltObject
 {
-    //public function __construct(IBuilder $builder);
 }

@@ -47,6 +47,8 @@ class YtChannelAccountInfoBuilder implements IBuilder, IBuilderWithParent
     
     public bool $hasChannel = false;
     
+    public bool $isDefaultChannel = false;
+    
     /**
      * 
      */

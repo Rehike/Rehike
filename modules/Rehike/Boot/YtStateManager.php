@@ -50,5 +50,9 @@ final class YtStateManager
             
             $yt->tempSv2Test = SignIn::getSessionInfo();
         }
+        else
+        {
+            $yt->tempSv2Test = SignIn::getSessionInfo();
+        }
     }
 }

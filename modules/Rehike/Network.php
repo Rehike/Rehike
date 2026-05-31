@@ -14,6 +14,8 @@ use Rehike\Network\{
 };
 
 use Rehike\Async\Promise;
+use Rehike\SignInV2\GaiaAuthManager;
+use Rehike\SignInV2\SignIn;
 
 /**
  * Implements a network manager for Rehike.
@@ -436,6 +438,46 @@ class Network
                  */
                 "X-Goog-AuthUser" => "0",
                 "X-Goog-PageId" => $gaiaId
+            ];
+        }
+    }
+    
+    /**
+     * Called by the auth service in order to request the network
+     * manager use it.
+     * 
+     * @internal
+     */
+    public static function useAuthService2(): void
+    {
+        self::$innertubeHeaders += [
+            "Authorization" => GaiaAuthManager::generateSapisidHash(),
+            "Origin" => "https://www.youtube.com",
+            "Host" => "www.youtube.com",
+            "Cookie" => self::getCurrentRequestCookie()
+        ];
+    }
+
+    /**
+     * Called by the auth service requesting the network manager to use
+     * its GAIA ID.
+     * 
+     * @internal
+     */
+    public static function useAuthGaiaId2(?string $gaiaId, string $authUser): void
+    {
+        self::$innertubeHeaders += [
+            "X-Goog-AuthUser" => $authUser,
+        ];
+            
+        /*
+         * No GAIA ID is reported for channels associated with the Google
+         * account itself. Only brand accounts must account for the distinction.
+         */
+        if (!is_null($gaiaId))
+        {
+            self::$innertubeHeaders += [
+                "X-Goog-PageId" => $gaiaId,
             ];
         }
     }

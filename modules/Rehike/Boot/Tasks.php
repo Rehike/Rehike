@@ -80,6 +80,11 @@ final class Tasks
             \Rehike\Async\Promise\PromiseResolutionTracker::disable();
         }
     }
+    
+    public static function initSignIn(): void
+    {
+        Concurrency::awaitSync(SignIn::init());
+    }
 
     public static function setupTemplateManager(): void
     {

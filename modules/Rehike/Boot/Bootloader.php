@@ -177,6 +177,7 @@ final class Bootloader
         Tasks::initConfigManager();
         Tasks::initNetwork();
         Tasks::initResourceConstants();
+        Tasks::initSignIn();
     }
 
     /**

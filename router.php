@@ -112,6 +112,7 @@ Router::get([
 	"/html5" => Html5PageController::class,
 	"/annotations_invideo" => ajax\AnnotationsInvideoController::class,
 	"/get_video_metadata" => ajax\GetVideoMetadataController::class,
+    "/pagead" => function() { exit(); },
     "/player_204" => function() { exit(); },
     "default" => ChannelPageController::class
 ]);

@@ -1,9 +1,11 @@
 <?php
 namespace Rehike\SignInV2;
 
+use Rehike\Async\Promise;
 use Rehike\SignInV2\Info\SessionInfo;
 
 use Rehike\ConfigManager\Config;
+use Rehike\Network;
 
 // API backwards compatibility:
 const SIGNINV2_ENABLE_V1_BACKWARDS_COMPAT = true;
@@ -18,6 +20,9 @@ use Rehike\SignInV2\{
 };
 use Rehike\SignInV2\Info\GoogleAccountInfo;
 use Rehike\SignInV2\Info\YtChannelAccountInfo;
+use Rehike\YtApp;
+
+use function Rehike\Async\async;
 
 /**
  * Implements the main sign-in API.
@@ -26,7 +31,37 @@ use Rehike\SignInV2\Info\YtChannelAccountInfo;
  * @author The Rehike Maintainers
  */
 class SignIn
-{
+{    
+    /**
+     * Stores the GAIA authentication information for the current application
+     * session.
+     */
+    private static ?SessionInfo $sessionInfo = null;
+    
+    /**
+     * Ensures the initialisation of the sign in system.
+     * 
+     * @return Promise<void>
+     */
+    public static function init(): Promise/*<void>*/
+    {
+        return async(function()
+        {
+            if (!self::shouldUseSV2())
+            {
+                return;
+            }
+            
+            if (!GaiaAuthManager::shouldAttemptAuth())
+            {
+                return;
+            }
+            
+            Network::useAuthService2();
+            self::$sessionInfo = yield GaiaAuthManager::getInfo();
+        });
+    }
+    
     public static function isSignedIn(): bool
     {
         if (SIGNINV2_ENABLE_V1_BACKWARDS_COMPAT && !self::shouldUseSV2())
@@ -34,7 +69,7 @@ class SignIn
             return LegacySigninApi::isSignedIn();
         }
         
-        return false;
+        return self::$sessionInfo != null;
     }
     
     public static function getSessionInfo(): ?SessionInfo
@@ -44,8 +79,7 @@ class SignIn
             return BackwardsCompatibilitySessionInfoFactory::getInstance()->build();
         }
         
-        // temporary
-        return null;
+        return self::$sessionInfo;
     }
     
     public static function getCurrentGoogleAccount(): ?GoogleAccountInfo

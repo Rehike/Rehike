@@ -27,6 +27,8 @@ class YtChannelAccountInfo extends GoogleAccountInfoBase implements IBuiltObject
     protected GoogleAccountInfo $ownerAccount;
     
     protected bool $hasChannel = false;
+    
+    protected bool $isDefaultChannel = false;
 
     /**
      * The unique identifier used to identify the user channel by YouTube.
@@ -50,6 +52,7 @@ class YtChannelAccountInfo extends GoogleAccountInfoBase implements IBuiltObject
         $this->hasChannel = $builder->hasChannel;
         $this->localizedSubscriberCount = $builder->localizedSubscriberCount;
         $this->isActive = $builder->isActive;
+        $this->isDefaultChannel=  $builder->isDefaultChannel;
     }
     
     /**
@@ -82,6 +85,11 @@ class YtChannelAccountInfo extends GoogleAccountInfoBase implements IBuiltObject
     {
         return $this->hasChannel;
     }
+    
+    public function getIsDefaultChannel(): bool
+    {
+        return $this->isDefaultChannel;
+    }
 
     /**
      * Get the unique identifier used to identify the user channel by YouTube.
@@ -110,9 +118,15 @@ class YtChannelAccountInfo extends GoogleAccountInfoBase implements IBuiltObject
             $skipIdentityPromptSegment = "&skip_identity_prompt=true";
         }
         
+        $pageIdIsSameAsGoogleAccount = $this->getGaiaId() == $this->getOwnerAccount()->getGaiaId();
+        
         return "/signin?action_handle_signin=true" .
-            "&authuser=" . urlencode($this->getAuthUserId()) .
-            "&pageid=" . urlencode($this->getGaiaId()).
+            "&authuser=" . urlencode($this->getAuthUserId() ?? "0") .
+            (
+                $pageIdIsSameAsGoogleAccount
+                    ? ""
+                    : "&pageid=" . urlencode($this->getGaiaId() ?? "0")
+            ).
             $nextSegment .
             $skipIdentityPromptSegment;
     }
