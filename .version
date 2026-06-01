@@ -1,10 +1,10 @@
 {
-	"previousHash": "5026d17146ef717ff41ea7240ab3508a5d280b19",
-	"currentRevisionId": 1857,
-	"subject": "Polish SignInV2, formally deprecate V1 APIs, fix up PlayerCore (+ 1)",
-	"body": "Polish SignInV2, formally deprecate V1 APIs, fix up PlayerCore (+ 1)",
+	"previousHash": "989db60882940d82e49409cc01a38986bce56753",
+	"currentRevisionId": 1858,
+	"subject": "I forgot to update the bug report issue template for 0.9",
+	"body": "I forgot to update the bug report issue template for 0.9",
 	"branch": "master",
 	"committerName": "Isabella Lulamoon",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1780333306
+	"time": 1780354318
 }
