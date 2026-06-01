@@ -31,9 +31,9 @@ class GaiaAuthManager
      * Stores the user's "SAPISID" session cookie, which plays a crucial role
      * in authentication.
      * 
-     * If the cookie is unavailable, then this will be unset.
+     * If the cookie is unavailable, then this will be null.
      */
-    private static string $sapisid = "";
+    private static ?string $sapisid = null;
     
     /**
      * Stores the user's "LOGIN_INFO" session cookie. This changes whenever the
@@ -67,7 +67,7 @@ class GaiaAuthManager
      */
     public static function shouldAttemptAuth(): bool
     {
-        return isset(self::$sapisid);
+        return self::$sapisid != null;
     }
 
     /**

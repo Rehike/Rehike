@@ -16,10 +16,8 @@ use Rehike\SignInV2\Cache\ICacheable;
  * @author Isabella Lulamoon <kawapure@gmail.com>
  * @author The Rehike Maintainers
  */
-class YtChannelAccountInfo extends GoogleAccountInfoBase implements IBuiltObject, ICacheable
+class YtChannelAccountInfo extends GoogleAccountInfoBase implements IBuiltObject
 {
-    use AutoCacheable;
-    
     /**
      * The Google Account which owns the channel's Brand Account, or which
      * is used to access it.

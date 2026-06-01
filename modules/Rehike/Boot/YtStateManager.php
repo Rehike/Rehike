@@ -39,7 +39,6 @@ final class YtStateManager
     {
         TemplateManager::registerGlobalState($yt);
         Debugger::init($yt);
-        $yt->playerConfig = PlayerCore::getInfo();
 
         /*
          * TODO: This should be removed when V1 is deprecated.
@@ -48,11 +47,11 @@ final class YtStateManager
         {
             LegacyAuthManager::use($yt);
             
-            $yt->tempSv2Test = SignIn::getSessionInfo();
+            $yt->sv2SessionInfo = SignIn::getSessionInfo();
         }
         else
         {
-            $yt->tempSv2Test = SignIn::getSessionInfo();
+            $yt->sv2SessionInfo = SignIn::getSessionInfo();
         }
     }
 }

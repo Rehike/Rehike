@@ -120,6 +120,8 @@ final class Tasks
             "cacheDestDir"  => "cache",
             "cacheDestName" => "player_cache" // .json
         ]);
+        
+        YtApp::getInstance()->playerConfig = PlayerCore::getInfo();
     }
 
     public static function setupVisitorData(): void

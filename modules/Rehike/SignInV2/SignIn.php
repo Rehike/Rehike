@@ -59,6 +59,12 @@ class SignIn
             
             Network::useAuthService2();
             self::$sessionInfo = yield GaiaAuthManager::getInfo();
+            
+            if (self::$sessionInfo->getSessionErrors() != SessionErrors::SUCCESS)
+            {
+                self::$sessionInfo = null;
+                Network::rejectAuthService();
+            }
         });
     }
     
@@ -69,7 +75,7 @@ class SignIn
             return LegacySigninApi::isSignedIn();
         }
         
-        return self::$sessionInfo != null;
+        return self::$sessionInfo?->getIsSignedIn() ?? false;
     }
     
     public static function getSessionInfo(): ?SessionInfo

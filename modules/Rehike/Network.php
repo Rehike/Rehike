@@ -36,13 +36,11 @@ class Network
     private static array $sessionRequestLog = [];
 
     /**
-     * Contains headers meant to be sent only to InnerTube requests.
-     * 
-     * For example, authentication headers.
+     * Contains authentication headers meant to be sent only to InnerTube requests.
      * 
      * @var string[]
      */
-    protected static array $innertubeHeaders = [];
+    protected static array $innertubeAuthHeaders = [];
 
     // Disable instances
     private function __construct() {}
@@ -96,11 +94,11 @@ class Network
     {
         if (isset($opts["headers"]))
         {
-            $opts["headers"] += self::$innertubeHeaders;
+            $opts["headers"] += self::$innertubeAuthHeaders;
         }
         else
         {
-            $opts["headers"] = self::$innertubeHeaders;
+            $opts["headers"] = self::$innertubeAuthHeaders;
         }
 
         return self::urlRequest($url, $opts);
@@ -149,7 +147,7 @@ class Network
 
         if ($useAuthentication)
         {
-            $requestHeaders += self::$innertubeHeaders;
+            $requestHeaders += self::$innertubeAuthHeaders;
         }
 
         $result = new Promise(function ($resolve, $reject)
@@ -402,7 +400,7 @@ class Network
     {
         if (AuthManager::shouldAuth())
         {
-            self::$innertubeHeaders += [
+            self::$innertubeAuthHeaders += [
                 "Authorization" => AuthManager::getAuthHeader(),
                 "Origin" => "https://www.youtube.com",
                 "Host" => "www.youtube.com",
@@ -427,7 +425,7 @@ class Network
          */
         if ("" != $gaiaId)
         {
-            self::$innertubeHeaders += [
+            self::$innertubeAuthHeaders += [
                 /*
                  * TODO(izzy): Invalid AuthUser use.
                  * 
@@ -450,7 +448,7 @@ class Network
      */
     public static function useAuthService2(): void
     {
-        self::$innertubeHeaders += [
+        self::$innertubeAuthHeaders += [
             "Authorization" => GaiaAuthManager::generateSapisidHash(),
             "Origin" => "https://www.youtube.com",
             "Host" => "www.youtube.com",
@@ -466,7 +464,7 @@ class Network
      */
     public static function useAuthGaiaId2(?string $gaiaId, string $authUser): void
     {
-        self::$innertubeHeaders += [
+        self::$innertubeAuthHeaders += [
             "X-Goog-AuthUser" => $authUser,
         ];
             
@@ -476,10 +474,23 @@ class Network
          */
         if (!is_null($gaiaId))
         {
-            self::$innertubeHeaders += [
+            self::$innertubeAuthHeaders += [
                 "X-Goog-PageId" => $gaiaId,
             ];
         }
+    }
+    
+    /**
+     * Called by the authentication service to reject a previously-issued request to
+     * use authentication headers for InnerTube requests.
+     * 
+     * This is done in case authentication fails.
+     * 
+     * @internal
+     */
+    public static function rejectAuthService(): void
+    {
+        self::$innertubeAuthHeaders = [];
     }
 
     /**

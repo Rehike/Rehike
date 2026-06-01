@@ -1,10 +1,10 @@
 {
-	"previousHash": "f3e39e6da0f492c4d6d37978795f565c6832fd5d",
-	"currentRevisionId": 1856,
-	"subject": "[SignInV2] Fix single Google account case",
-	"body": "[SignInV2] Fix single Google account case",
+	"previousHash": "5026d17146ef717ff41ea7240ab3508a5d280b19",
+	"currentRevisionId": 1857,
+	"subject": "Polish SignInV2, formally deprecate V1 APIs, fix up PlayerCore (+ 1)",
+	"body": "Polish SignInV2, formally deprecate V1 APIs, fix up PlayerCore (+ 1)",
 	"branch": "master",
 	"committerName": "Isabella Lulamoon",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1780244249
+	"time": 1780333306
 }

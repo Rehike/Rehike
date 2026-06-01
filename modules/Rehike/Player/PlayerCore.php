@@ -35,7 +35,7 @@ use Rehike\Player\{
  * @author The Rehike Maintainers
  * 
  * @license Mozilla Public License 2.0
- * @version 3.2
+ * @version 3.3
  */
 class PlayerCore extends Configurable
 {
@@ -48,6 +48,9 @@ class PlayerCore extends Configurable
     static string $cacheDestDir = "cache";
     static string $cacheDestName = "player_cache"; // .json
     static int $cacheMaxTime = 18000; // 5 hours in seconds
+    
+    static string $updaterHostLanguage = "en";
+    static string $updaterGeolocation = "US";
 
     /**
      * Set configuration from an array.

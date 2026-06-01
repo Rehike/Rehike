@@ -3,7 +3,7 @@ declare(strict_types=1);
 namespace Rehike\SignInV2;
 
 use Rehike\FileSystem;
-use Rehike\SignInV2\CacheNew\SigninCache;
+use Rehike\SignInV2;
 
 /**
  * Time constants, relative to time() output which is

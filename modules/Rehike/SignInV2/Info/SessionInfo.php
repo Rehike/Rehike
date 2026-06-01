@@ -15,10 +15,8 @@ use Rehike\SignInV2\SessionErrors;
  * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
-class SessionInfo implements IBuiltObject, ICacheable
+class SessionInfo implements IBuiltObject
 {
-    use AutoCacheable;
-    
     /**
      * States whether or not the user is signed into a valid session.
      */
@@ -32,13 +30,11 @@ class SessionInfo implements IBuiltObject, ICacheable
     /**
      * Stores a reference to information about the currently-active Google account.
      */
-    #[CacheProperty(CacheProperty::CACHE_NEVER)]
     protected ?GoogleAccountInfo $activeGoogleAccount = null;
 
     /**
      * Stores information about the currently used YouTube channel.
      */
-    #[CacheProperty(CacheProperty::CACHE_NEVER)]
     protected ?YtChannelAccountInfo $activeChannel = null;
 
     /**
@@ -47,7 +43,6 @@ class SessionInfo implements IBuiltObject, ICacheable
      * 
      * @var YtChannelAccountInfo[]
      */
-    #[CacheProperty(CacheProperty::CACHE_NEVER)]
     protected array $otherChannels;
     
     protected ?string $currentDatasyncId = null;
@@ -128,7 +123,7 @@ class SessionInfo implements IBuiltObject, ICacheable
             return $this->activeChannel;
         }
         
-        foreach ($this->getCurrentGoogleAccount()->getYoutubeChannels() as $channel)
+        foreach ($this->getCurrentGoogleAccount()?->getYoutubeChannels() as $channel)
         {
             if ($channel->isActive())
             {

@@ -31,10 +31,10 @@ const GH_REPO = "Rehike/Rehike";
  * 
  * @var string
  */
-const VERSION = "0.8.3";
+const VERSION = "0.9";
 const VERSION_MAJOR_INT = 0;
-const VERSION_MINOR_INT = 8;
-const VERSION_SUB_INT   = 3;
+const VERSION_MINOR_INT = 9;
+const VERSION_SUB_INT   = 0;
 
 /**
  * Is the current Rehike build a release build?

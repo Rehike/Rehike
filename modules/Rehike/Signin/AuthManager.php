@@ -93,6 +93,8 @@ class AuthManager
 
     /**
      * Get if authentication is available.
+     * 
+     * @deprecated
      */
     public static function shouldAuth(): bool
     {
@@ -118,6 +120,8 @@ class AuthManager
     /**
      * Get the contents of the authentication HTTP header. This will generate
      * a new SAPISIDHASH.
+     * 
+     * @deprecated
      */
     public static function getAuthHeader(string $origin = "https://www.youtube.com"): string
     {
@@ -129,6 +133,8 @@ class AuthManager
 
     /**
      * Get the current user's GAIA ID.
+     * 
+     * @deprecated
      */
     public static function getGaiaId(): string
     {

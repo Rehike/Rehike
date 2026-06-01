@@ -14,10 +14,8 @@ use Rehike\SignInV2\Cache\CacheReader;
  * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  * @author The Rehike Maintainers
  */
-class GoogleAccountInfo extends GoogleAccountInfoBase implements IBuiltObject, ICacheable
+class GoogleAccountInfo extends GoogleAccountInfoBase implements IBuiltObject
 {
-    use AutoCacheable;
-    
     /**
      * The user session index for this account, used when multiple Google Accounts are
      * accessible.

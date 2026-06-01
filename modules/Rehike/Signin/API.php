@@ -11,6 +11,8 @@ class API
 {
     /**
      * Check if the current session is signed in.
+     * 
+     * @deprecated
      */
     public static function isSignedIn(): bool
     {
@@ -19,6 +21,8 @@ class API
 
     /**
      * Get account information from the private AuthManager.
+     * 
+     * @deprecated
      */
     public static function getInfo(): ?array
     {

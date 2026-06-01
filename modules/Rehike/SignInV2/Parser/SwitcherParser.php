@@ -29,31 +29,6 @@ class SwitcherParser
      */
     private object $response;
 
-    /**
-     * Used in order to determine if the parser has ran yet.
-     */
-    private bool $hasParsed = false;
-
-    /**
-     * Stores the number of Google Accounts accessible by the user.
-     */
-    private int $numberOfGoogleAccounts = 0;
-
-    /**
-     * Stores temporary state about the current Google Account, which is fed
-     * to the builder.
-     */
-    private array $googleAccounts = [];
-
-    /**
-     * Stores temporary state for all other channels that can be accessed by
-     * a Google Account.
-     * 
-     * Children of this array should follow the same schema as
-     * $currentChannelInfo.
-     */
-    private array $channels = [];
-
     public function __construct(SessionInfoBuilder $builder, object $response)
     {
         $this->builder = $builder;
