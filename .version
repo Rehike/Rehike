@@ -1,10 +1,10 @@
 {
-	"previousHash": "0dc5778542f9d90046c814d52a7a4b25658826e7",
-	"currentRevisionId": 1859,
-	"subject": "Fallback to content-based POT if player experiments unavailable",
-	"body": "Fallback to content-based POT if player experiments unavailable",
+	"previousHash": "67056ae268e49b16150438ef74c135448fc31729",
+	"currentRevisionId": 1860,
+	"subject": "Ignore generate_204 requests",
+	"body": "Ignore generate_204 requests",
 	"branch": "master",
 	"committerName": "Isabella Lulamoon",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1780514977
+	"time": 1780526817
 }

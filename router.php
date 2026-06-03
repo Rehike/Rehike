@@ -114,6 +114,7 @@ Router::get([
 	"/get_video_metadata" => ajax\GetVideoMetadataController::class,
     "/pagead" => function() { exit(); },
     "/player_204" => function() { exit(); },
+    "/generate_204" => function() { exit(); },
     "default" => ChannelPageController::class
 ]);
 
@@ -135,7 +136,9 @@ Router::post([
     "/rehike/update_config" => rehike\ajax\RehikeUpdateConfigRouter::class,
 	"/annotations_invideo" => ajax\AnnotationsInvideoController::class,
 	"/get_video_metadata" => ajax\GetVideoMetadataController::class,
+    "/pagead" => function() { exit(); },
     "/player_204" => function() { exit(); },
+    "/generate_204" => function() { exit(); },
     
     // The default route is the channel controller. This is so we can handle
     // username shorthand URLs (i.e. /PewDiePie -> /user/PewDiePie)
