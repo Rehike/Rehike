@@ -1,10 +1,10 @@
 {
-	"previousHash": "989db60882940d82e49409cc01a38986bce56753",
-	"currentRevisionId": 1858,
-	"subject": "I forgot to update the bug report issue template for 0.9",
-	"body": "I forgot to update the bug report issue template for 0.9",
+	"previousHash": "0dc5778542f9d90046c814d52a7a4b25658826e7",
+	"currentRevisionId": 1859,
+	"subject": "Fallback to content-based POT if player experiments unavailable",
+	"body": "Fallback to content-based POT if player experiments unavailable",
 	"branch": "master",
 	"committerName": "Isabella Lulamoon",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1780354318
+	"time": 1780514977
 }

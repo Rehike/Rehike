@@ -221,7 +221,23 @@ abstract class HitchhikerController extends PageController
             $flagManager = new ExperimentFlagManager();
             yield $flagManager->initialize();
             $flags = $flagManager->getWatchPlayerExperimentFlags();
-            if (isset($flags->html5_generate_content_po_token))
+            
+            // XXX(isabella): Content-based PO token seems to always be preferred right now,
+            // but sometimes we seem to get responses lacking player configuration information
+            // when requesting experiment flags (which are then cached for 5 hours). As such,
+            // we should go with content-based PO token generation when the watch player
+            // experiment flags are unavailable.
+            // Notably, the flag to generate session-based PO tokens tends to also be set to
+            // true when the flag to generate content-based ones is. The latter overrides the
+            // former.
+            $wantsContentPoToken = isset($flags->html5_generate_content_po_token) &&
+                $flags->html5_generate_content_po_token;
+            if (Config::getConfigProp("experiments.alwaysUseContentPoToken") != false)
+            {
+                $wantsContentPoToken = true;
+            }
+            
+            if ($wantsContentPoToken || !isset($flags->html5_generate_session_po_token))
             {
                 // PO token is based on the video ID. This is the common case
                 // nowadays.

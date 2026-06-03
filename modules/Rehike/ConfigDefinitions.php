@@ -53,15 +53,6 @@ class ConfigDefinitions
                 "enableAdblock" => new BoolProp(true),
             ],
             "experiments" => [
-                "displayPlayerChoice" => (new BoolProp(false))->registerUpdateCb(function() {
-                    // When this configuration option is changed, there is an expectation from
-                    // the user for it to reset the player setting back to the latest player,
-                    // as would be the only possible state prior to enabling the option.
-                    // https://github.com/Rehike/Rehike/issues/593#issuecomment-2272158302
-                    
-                    Config::setConfigProp("appearance.playerChoice", "CURRENT");
-                    Config::dumpConfig();
-                }),
                 "useSignInV2" => new BoolProp(false),
                 "asyncAttestationRequest" => new BoolProp(true),
                 "disableSignInOnHome" => new BoolProp(false),
@@ -77,6 +68,7 @@ class ConfigDefinitions
                     "USE_EMBEDDED_PLAYER_REQUEST",
                     "USE_EMBEDDED_PLAYER_DIRECTLY",
                 ]),
+                "alwaysUseContentPoToken" => new BoolProp(false),
             ],
             "advanced" => [
                 "dnsAddress" => new StringProp("1.1.1.1"),
