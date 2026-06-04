@@ -108,7 +108,7 @@ class PlaylistPageController extends NirvanaController implements IGetController
                 // If user is signed in and channel owner, get data for the
                 // secondary channel header.
                 $ownerData = null;
-                if ($yt->ucid == @SignIn::getSessionInfo()->getUcid())
+                if ($yt->ucid == @SignIn::getSessionInfo()?->getUcid())
                 {
                     $ownerData = yield ChannelUtils::getOwnerData($yt->ucid);
                 }

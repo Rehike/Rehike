@@ -142,13 +142,13 @@ class ShareFragmentsAjax extends AjaxController implements IGetController
             $priInfo = $vidInfo->videoPrimaryInfoRenderer;
             $secInfo = $vidInfo->videoSecondaryInfoRenderer;
 
-            $userData = SignIn::getSessionInfo()->getCurrentChannel();
+            $userData = SignIn::getSessionInfo()?->getCurrentChannel();
 
             $yt->page = ShareEmailModel::bake(
                 videoId: $this->videoId,
                 title: ParsingUtils::getText($priInfo->title),
-                userId: $userData->getUcid(),
-                userName: $userData->getDisplayName(),
+                userId: $userData?->getUcid() ?? "",
+                userName: $userData?->getDisplayName() ?? "",
                 desc: $secInfo->attributedDescription->content
             );
         });

@@ -693,7 +693,7 @@ class WatchBakery
     {
         if (!SignIn::isSignedIn()) return false;
         
-        if ($ucid = SignIn::getSessionInfo()->getUcid())
+        if ($ucid = SignIn::getSessionInfo()?->getUcid())
         {
             if ($ucid == @$secondaryInfo->owner->videoOwnerRenderer->navigationEndpoint->browseEndpoint->browseId)
             {

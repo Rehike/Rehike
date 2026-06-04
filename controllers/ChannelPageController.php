@@ -93,7 +93,7 @@ class ChannelPageController extends NirvanaController implements IGetController,
             // If user is signed in and channel owner, get data for the
             // secondary channel header.
             $ownerData = null;
-            if ($ucid == SignIn::getSessionInfo()->getUcid())
+            if ($ucid == SignIn::getSessionInfo()?->getUcid())
             {
                 $ownerData = yield ChannelUtils::getOwnerData($ucid);
             }

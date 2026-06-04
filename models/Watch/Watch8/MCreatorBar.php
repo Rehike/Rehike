@@ -19,7 +19,9 @@ class MCreatorBar
     public function __construct($vid)
     {
         $i18n = i18n::getNamespace("watch");
-        $ucid = SignIn::getSessionInfo()->getUcid();
+        
+        // We will assume that the user is logged in if we're able to construct a creator bar.
+        $ucid = SignIn::getSessionInfo()?->getUcid() ?? "";
 
         $this->navButtons[] = new MButton([
             "text" => (object) [

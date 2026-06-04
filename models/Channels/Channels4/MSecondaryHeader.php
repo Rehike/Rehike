@@ -14,7 +14,9 @@ class MSecondaryHeader
     {
         $i18n = i18n::getNamespace("channels");
 
-        $ucid = SignIn::getSessionInfo()->getUcid();
+        // We will assume that the user is signed in if we're able to construct a
+        // secondary header, so we're not too worried about some issues here.
+        $ucid = SignIn::getSessionInfo()?->getUcid() ?? "";
 
         if (isset($data->subscribers))
         {

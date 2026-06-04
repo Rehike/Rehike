@@ -48,6 +48,8 @@ class GuidePlaylistsManager
         }
 
         return async(function() use ($cacheFilePath) {
+            try
+            {
             // Request fresh data from InnerTube.
             $freshData = yield $this->requestFromInnertube();
 
@@ -59,6 +61,12 @@ class GuidePlaylistsManager
 
             // Return what we already have in memory.
             return $freshData;
+            }
+            catch (\Throwable $e)
+            {
+                \Rehike\Logging\DebugLogger::print("[GuidePlaylistsManager::getPlaylists] %s", (string)$e);
+                return [];
+            }
         });
     }
 
