@@ -188,10 +188,14 @@ class ChannelPageController extends NirvanaController implements IGetController,
                 $params->setShelfId((int) $request->params->shelf_id);
             }
 
-            if (isset($request->params->view))
-            {
-                $params->setView((int) $request->params->view);
-            }
+            // XXX(isabella): This method was removed in 2025-10, but the code was only disabled
+            // in 2026-06. There seemed to be no issue caused from its continued presence, because
+            // PHP is a late binding language where calling functions that don't exist only crashes
+            // at call time, but this was dead code regardless.
+            // if (isset($request->params->view))
+            // {
+            //     $params->setView((int) $request->params->view);
+            // }
 
             if (isset($request->params->sort) && !in_array($tab, ["videos", "streams", "shorts"]))
             {

@@ -13,7 +13,7 @@ use Rehike\Model\Common\MCollaborator;
  */
 class VideoRendererViewModelConverter extends BasicVMC
 {
-    public function bake(LockupViewModelConverter $parent): object
+    public function bake(?LockupViewModelConverter $parent): object
     {
         $result = (object)[];
 

@@ -22,6 +22,10 @@ countZero: "No"
 # in the string except for the units.
 subscriberCountIsolator: "/( subscribers)|( subscriber)/"
 
+# Used to isolate a channel name from the byline returned by InnerTube for playlist
+# page headers.
+bylineChannelNameIsolator: "/by (.*)/" # TODO: Test
+
 # Used for detecting if the date string in watch descriptions should be
 # modified. If none of these words are found in the string, then it is assumed
 # that the string should be modified.

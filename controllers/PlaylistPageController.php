@@ -61,6 +61,7 @@ class PlaylistPageController extends NirvanaController implements IGetController
             );
 
             $ytdata = $response->getJson();
+            $yt->rawPlaylistResponse = $response->getJson();
 
             $yt->page = PlaylistModel::bake($ytdata);
 
