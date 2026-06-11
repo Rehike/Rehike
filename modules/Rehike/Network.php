@@ -67,6 +67,7 @@ class Network
             $opts["disableSslVerification"] = true;
         }
         
+        $opts["logType"] = "url";
         $result = NetworkCore::request($url, $opts);
 
         self::$sessionRequestLog[] = [
@@ -159,12 +160,13 @@ class Network
                  $key,
                  $ignoreErrors,
                  $requestHeaders,
+                 $useAuthentication,
                  $profilerRid)
         {
             $desiredDns = Config::getConfigProp("advanced.dnsAddress")
                 ?? "1.1.1.1";
 
-            NetworkCore::request(
+            $request = NetworkCore::request2(
                 "{$host}/youtubei/v1/{$action}?key={$key}",
                 [
                     "headers" => $requestHeaders,
@@ -173,8 +175,16 @@ class Network
                     "onError" => "ignore",
                     "dnsOverride" => $desiredDns,
                     "disableSslVerification" => Config::getConfigProp("advanced.disableSslVerification") ?? false,
+                    "logType" => "innertube",
                 ]
-            )->then(function ($response) use ($resolve, $reject, $ignoreErrors, $profilerRid, $action) {
+            );
+            
+            $request->logContext->clientName = $clientName;
+            $request->logContext->clientVersion = $clientVersion;
+            $request->logContext->ignoreErrors = $ignoreErrors;
+            $request->logContext->useAuthentication = $useAuthentication;
+            
+            $request->getPromise()->then(function ($response) use ($resolve, $reject, $ignoreErrors, $profilerRid, $action) {
                 if ((200 == $response->status) || (true == $ignoreErrors) )
                 {
                     \Rehike\Profiler::end("innertube-$action-$profilerRid");
@@ -331,6 +341,7 @@ class Network
         $body = [
             "headers" => $headers,
             "disableSslVerification" => Config::getConfigProp("advanced.disableSslVerification") ?? false,
+            "logType" => "dataapi",
         ];
 
         if ($post)

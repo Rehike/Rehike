@@ -13,6 +13,7 @@ use \Rehike\Model\Rehike\Debugger\{
     MLogTab,
     MYtWalker,
     MLoadingTab,
+    MNetworkRequest,
     MNetworkTab
 };
 
@@ -155,14 +156,12 @@ class Debugger
 
         if (!self::$condensed)
         {
-            /*
             $context->addTab(
                 MNetworkTab::createTab(
                     $i18n->get("tabNetworkTitle"),
                     "network"
                 )
             );
-            */
             
             $context->addTab(
                 MLogTab::createTab($i18n->get("tabLogTitle"), "logs")
@@ -192,6 +191,14 @@ class Debugger
         $context->openButton = new MOpenButton(self::getErrorCount(), self::$condensed);
 
         $context->dialog = new MDialog(self::$condensed);
+        
+        if (!self::isCondensed())
+        {
+            foreach (NetworkLogging::getLoggedRequests() as $loggedRequest)
+            {
+                $context->networkRequests[] = new MNetworkRequest($loggedRequest);
+            }
+        }
 
         self::setupTabs($context->dialog);
     }

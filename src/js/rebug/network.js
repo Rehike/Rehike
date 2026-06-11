@@ -108,7 +108,9 @@ rebug.network._setupXhook = function()
  */
 rebug.network._onRebugInit = function()
 {
-    if (window._rebugcfg && window._rebugcfg.CONDENSED === false)
+    if (window._rebugcfg && window._rebugcfg.CONDENSED === false &&
+        window.xhook
+    )
     {
         rebug.network._setupXhook();
     }

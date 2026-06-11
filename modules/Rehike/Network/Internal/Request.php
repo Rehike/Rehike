@@ -11,6 +11,9 @@ use Rehike\Network\Enum\RedirectPolicy;
 use Rehike\Network\Enum\RequestErrorPolicy;
 
 use Rehike\Async\Deferred;
+use Rehike\Debugger\LoggedRequestContext;
+use Rehike\Debugger\LoggedRequestType;
+use Rehike\Debugger\NetworkLogging;
 
 /**
  * Represents a network request.
@@ -89,6 +92,21 @@ class Request implements IRequest
      * page will be used instead.
      */
     public string $userAgent = "";
+    
+    /**
+     * Denotes the time at which the request started in microseconds.
+     */
+    public float $startTime = 0;
+    
+    /**
+     * Denotes the time at which the request ended in microseconds.
+     */
+    public ?float $completionTime = 0;
+    
+    /**
+     * Holds a reference to the log context.
+     */
+    public LoggedRequestContext $logContext;
 
     public function __construct(string $url, array $opts)
     {
@@ -100,6 +118,10 @@ class Request implements IRequest
 
         $this->url = $url;
         $this->handleOptions($opts);
+        
+        $this->startTime = microtime(as_float: true);
+        $this->logContext = NetworkLogging::logRequest($this);
+        $this->handleLogContextOptions($opts);
     }
 
     /**
@@ -109,7 +131,9 @@ class Request implements IRequest
      */
     public function resolve(Response $response): void
     {
+        $this->completionTime = microtime(as_float: true);
         NetworkCore::reportFinishedRequest();
+        $this->logContext->finalize($this, $response);
         $this->resolvePromise($response);
     }
 
@@ -146,13 +170,32 @@ class Request implements IRequest
                 break;
         }
     }
+    
+    /**
+     * Handle the array of options that deal with the log context.
+     */
+    private function handleLogContextOptions(array $opts): void
+    {
+        foreach ($opts as $name => $value) switch ($name)
+        {
+            case "logAsType":
+                $this->logContext->type = match ($value)
+                {
+                    "url" => LoggedRequestType::Url,
+                    "innertube"  => LoggedRequestType::Innertube,
+                    "dataapi"  => LoggedRequestType::YoutubeDataApiV3,
+                    default => LoggedRequestType::Unknown,
+                };
+                break;
+        }
+    }
 
     /**
      * Handle the redirect option.
      * 
-     * @param RedirectPolicy|string $value
+     * @param value-of<RedirectPolicy>|string $value
      * 
-     * @return RedirectPolicy
+     * @return value-of<RedirectPolicy>
      */
     private function handleRedirectOpt($value): int
     {
@@ -170,14 +213,16 @@ class Request implements IRequest
                 return RedirectPolicy::MANUAL;
                 break;
         }
+        
+        return 0;
     }
 
     /**
      * Handle the redirect option.
      * 
-     * @param RequestErrorPolicy|string $value
+     * @param value-of<RequestErrorPolicy>|string $value
      * 
-     * @return RedirectPolicy
+     * @return value-of<RedirectPolicy>
      */
     private function handleOnErrorOpt($value): int
     {
@@ -195,5 +240,7 @@ class Request implements IRequest
                 return RequestErrorPolicy::IGNORE;
                 break;
         }
+        
+        return 0;
     }
 }

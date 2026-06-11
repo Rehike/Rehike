@@ -90,7 +90,7 @@ final class NetworkCore
 
         self::$handler = $handler;
     }
-
+    
     /**
      * Send a network request.
      * 
@@ -101,9 +101,26 @@ final class NetworkCore
      * @return Promise<IResponse>
      */
     public static function request(
+        string $url, 
+        array $opts = []
+    ): Promise/*<IResponse>*/
+    {
+        return self::request2($url, $opts)->getPromise();
+    }
+
+    /**
+     * Send a network request.
+     * 
+     * The network request API provided by this library is very
+     * reminiscent of JavaScript's fetch API.
+     * 
+     * @param  mixed[] $opts
+     * @return Request
+     */
+    public static function request2(
             string $url, 
             array $opts = []
-    ): Promise/*<IResponse>*/
+    ): Request
     {
         $request = new Request($url, $opts);
 
@@ -118,7 +135,7 @@ final class NetworkCore
 
         self::$handler->addRequest($request);
 
-        return $request->getPromise();
+        return $request;
     }
 
     /**

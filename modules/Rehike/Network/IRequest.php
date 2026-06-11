@@ -30,6 +30,10 @@ use Rehike\Network\Enum\RequestErrorPolicy;
  * @property string $userAgent  If specified, sets the user agent to be reported
  *                              for the request. If not specified, then the
  *                              behavior is left to the implementer. 
+ * @property float $startTime  Denotes the time at which the request started in
+ *                             microseconds.
+ * @property float $completionTime  Denotes the time at which the request ended
+ *                                  in microseconds.
  * 
  * @author Taniko Yamamoto <kirasicecreamm@gmail.com>
  */

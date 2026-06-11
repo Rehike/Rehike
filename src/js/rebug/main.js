@@ -6,6 +6,7 @@
  */
 
 var _rebug = _rebug || {};
+window.rebug = window.rebug || _rebug;
 
 (function(rebug) {
 

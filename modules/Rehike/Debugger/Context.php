@@ -7,7 +7,8 @@ use \Rehike\Model\Rehike\Debugger\{
     MTab,
     MErrorTab,
     MYtWalker,
-    MLoadingTab
+    MLoadingTab,
+    MNetworkRequest
 };
 
 use stdClass;
@@ -31,6 +32,13 @@ class Context extends stdClass
      * Properties used to build the open button's view.
      */
     public MOpenButton $openButton;
+    
+    /**
+     * Models reporting information about network requests.
+     * 
+     * @var MNetworkRequest[]
+     */
+    public array $networkRequests = [];
 
     /** 
      * Reports if the debugger is in condensed mode (disabled generally).
