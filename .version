@@ -1,10 +1,10 @@
 {
-	"previousHash": "94ff456fb4471741086a45b8e1a6a225d98d243f",
-	"currentRevisionId": 1862,
-	"subject": "WIP: View model conversion for playlist page",
-	"body": "WIP: View model conversion for playlist page",
+	"previousHash": "02b804e81e338f7b605747d07cf4370ceca134fa",
+	"currentRevisionId": 1863,
+	"subject": "Fix crash on channel playlists tab",
+	"body": "Fix crash on channel playlists tab",
 	"branch": "master",
 	"committerName": "Isabella Lulamoon",
 	"committerEmail": "kawapure@gmail.com",
-	"time": 1780702443
+	"time": 1781140395
 }
